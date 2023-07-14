@@ -1002,6 +1002,7 @@ namespace Hl7.Fhir.Model
       /// Details how this designation would be used
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1625,6 +1626,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for code system (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

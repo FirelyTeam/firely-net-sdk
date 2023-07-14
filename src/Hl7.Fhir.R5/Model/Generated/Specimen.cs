@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
       /// Highlighted feature
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("SpecimenFeatureType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -337,6 +338,7 @@ namespace Hl7.Fhir.Model
       /// Technique used to perform collection
       /// </summary>
       [FhirElement("method", Order=80)]
+      [Binding("SpecimenCollectionMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -350,6 +352,7 @@ namespace Hl7.Fhir.Model
       /// Device used to perform collection
       /// </summary>
       [FhirElement("device", Order=90)]
+      [Binding("SpecimenCollectionDevice")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Device
       {
@@ -378,6 +381,7 @@ namespace Hl7.Fhir.Model
       /// Anatomical collection site
       /// </summary>
       [FhirElement("bodySite", Order=110)]
+      [Binding("BodySite")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference BodySite
       {
@@ -391,6 +395,7 @@ namespace Hl7.Fhir.Model
       /// Whether or how long patient abstained from food and/or drink
       /// </summary>
       [FhirElement("fastingStatus", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("FastingStatus")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
@@ -606,6 +611,7 @@ namespace Hl7.Fhir.Model
       /// Indicates the treatment step  applied to the specimen
       /// </summary>
       [FhirElement("method", Order=50)]
+      [Binding("SpecimenProcessingMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -979,6 +985,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material that forms the specimen
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [Binding("SpecimenType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -1103,6 +1110,7 @@ namespace Hl7.Fhir.Model
     /// The role the specimen serves
     /// </summary>
     [FhirElement("role", Order=180)]
+    [Binding("SpecimenRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -1172,6 +1180,7 @@ namespace Hl7.Fhir.Model
     /// State of the specimen
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=230)]
+    [Binding("SpecimenCondition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition

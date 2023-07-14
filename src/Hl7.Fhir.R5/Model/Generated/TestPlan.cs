@@ -1539,6 +1539,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction where the test plan applies (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1646,6 +1647,7 @@ namespace Hl7.Fhir.Model
     /// The category of the Test Plan - can be acceptance, unit, performance
     /// </summary>
     [FhirElement("category", Order=260)]
+    [Binding("TestPlanCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

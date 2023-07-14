@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     /// A broad categorization of the service that is to be performed during this appointment
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
@@ -127,6 +128,7 @@ namespace Hl7.Fhir.Model
     /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -141,6 +143,7 @@ namespace Hl7.Fhir.Model
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -155,6 +158,7 @@ namespace Hl7.Fhir.Model
     /// The style of appointment or patient that may be booked in the slot (not service type)
     /// </summary>
     [FhirElement("appointmentType", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("appointment-type")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AppointmentType
     {

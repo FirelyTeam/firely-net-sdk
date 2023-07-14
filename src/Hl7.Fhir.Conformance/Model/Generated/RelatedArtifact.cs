@@ -319,6 +319,7 @@ namespace Hl7.Fhir.Model
     /// Additional classifiers. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
     [FhirElement("classifier", InSummary=true, Order=40, Since=FhirRelease.R5)]
+    [Binding("RelatedArtifactClassifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classifier

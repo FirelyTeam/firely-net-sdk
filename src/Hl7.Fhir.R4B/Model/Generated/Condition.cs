@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
       /// Simple summary (disease specific)
       /// </summary>
       [FhirElement("summary", Order=40)]
+      [Binding("ConditionStage")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Summary
       {
@@ -194,6 +195,7 @@ namespace Hl7.Fhir.Model
       /// Kind of staging
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("ConditionStageType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -322,6 +324,7 @@ namespace Hl7.Fhir.Model
       /// Manifestation/symptom
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.why[x]")]
+      [Binding("ManifestationOrSymptom")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -458,6 +461,7 @@ namespace Hl7.Fhir.Model
     /// active | recurrence | relapse | inactive | remission | resolved
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [Binding("ConditionClinicalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
     {
@@ -471,6 +475,7 @@ namespace Hl7.Fhir.Model
     /// unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("ConditionVerificationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VerificationStatus
     {
@@ -484,6 +489,7 @@ namespace Hl7.Fhir.Model
     /// problem-list-item | encounter-diagnosis
     /// </summary>
     [FhirElement("category", Order=120, FiveWs="FiveWs.class")]
+    [Binding("ConditionCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -498,6 +504,7 @@ namespace Hl7.Fhir.Model
     /// Subjective severity of condition
     /// </summary>
     [FhirElement("severity", Order=130, FiveWs="FiveWs.grade")]
+    [Binding("ConditionSeverity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Severity
     {
@@ -511,6 +518,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the condition, problem or diagnosis
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("ConditionKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -524,6 +532,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=150)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite

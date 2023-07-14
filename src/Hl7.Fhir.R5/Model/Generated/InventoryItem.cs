@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'
       /// </summary>
       [FhirElement("nameType", InSummary=true, Order=40)]
+      [Binding("NameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding NameType

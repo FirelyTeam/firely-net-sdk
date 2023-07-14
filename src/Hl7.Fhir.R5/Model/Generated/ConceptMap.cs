@@ -2626,6 +2626,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for concept map (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2808,6 +2809,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=290)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic

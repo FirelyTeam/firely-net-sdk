@@ -407,6 +407,7 @@ namespace Hl7.Fhir.Model
     /// Classifications for the study
     /// </summary>
     [FhirElement("category", InSummary=true, Order=140)]
+    [Binding("ResearchStudyCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -421,6 +422,7 @@ namespace Hl7.Fhir.Model
     /// Drugs, devices, conditions, etc. under study
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=150, FiveWs="what")]
+    [Binding("ResearchStudyFocus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
@@ -463,6 +465,7 @@ namespace Hl7.Fhir.Model
     /// Used to search for the study
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=180)]
+    [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -477,6 +480,7 @@ namespace Hl7.Fhir.Model
     /// Geographic region(s) for study
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

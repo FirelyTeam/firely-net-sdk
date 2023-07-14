@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Treatment, dietary, behavioral, etc
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("GoalCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -86,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// Code or text describing the goal
       /// </summary>
       [FhirElement("description", Order=50)]
+      [Binding("GoalDescription")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Description
@@ -100,6 +102,7 @@ namespace Hl7.Fhir.Model
       /// high-priority | medium-priority | low-priority
       /// </summary>
       [FhirElement("priority", Order=60)]
+      [Binding("GoalPriority")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Priority
       {
@@ -113,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// When goal pursuit begins
       /// </summary>
       [FhirElement("start", Order=70)]
+      [Binding("GoalStartEvent")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Start
       {
@@ -126,6 +130,7 @@ namespace Hl7.Fhir.Model
       /// What does the goal address
       /// </summary>
       [FhirElement("addresses", Order=80)]
+      [Binding("GoalAddresses")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Addresses
@@ -319,6 +324,7 @@ namespace Hl7.Fhir.Model
       /// The parameter whose value is to be tracked
       /// </summary>
       [FhirElement("measure", Order=40)]
+      [Binding("GoalTargetMeasure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Measure
       {
@@ -772,6 +778,7 @@ namespace Hl7.Fhir.Model
       /// create | update | remove | fire-event
       /// </summary>
       [FhirElement("type", Order=190)]
+      [Binding("ActionType")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
       {
@@ -1802,6 +1809,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Nurse, Surgeon, Parent, etc
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ActionParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -2293,6 +2301,7 @@ namespace Hl7.Fhir.Model
     /// order-set | protocol | eca-rule
     /// </summary>
     [FhirElement("type", InSummary=true, Order=140)]
+    [Binding("PlanDefinitionType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -2615,6 +2624,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for plan definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=260)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2629,6 +2639,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=270)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic

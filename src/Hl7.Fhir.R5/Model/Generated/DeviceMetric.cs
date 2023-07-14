@@ -421,6 +421,7 @@ namespace Hl7.Fhir.Model
     /// Identity of metric, for example Heart Rate or PEEP Setting
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("MetricType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -435,6 +436,7 @@ namespace Hl7.Fhir.Model
     /// Unit of Measure for the Metric
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=110)]
+    [Binding("MetricUnit")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Unit
     {

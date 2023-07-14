@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// What was found
       /// </summary>
       [FhirElement("item", Order=40)]
+      [Binding("ConditionKind")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
       {
@@ -257,6 +258,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=110)]
+    [Binding("ClinicalImpressionStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -424,6 +426,7 @@ namespace Hl7.Fhir.Model
     /// Change in the status/pattern of a subject's condition since previously assessed, such as worsening, improving, or no change
     /// </summary>
     [FhirElement("changePattern", Order=200)]
+    [Binding("ClinicalImpressionChangePattern")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ChangePattern
     {
@@ -514,6 +517,7 @@ namespace Hl7.Fhir.Model
     /// Estimate of likely outcome
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=240)]
+    [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept

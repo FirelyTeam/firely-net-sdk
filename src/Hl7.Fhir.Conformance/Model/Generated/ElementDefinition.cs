@@ -931,6 +931,7 @@ namespace Hl7.Fhir.Model
       /// Data type or Resource (reference to definition)
       /// </summary>
       [FhirElement("code", InSummary=true, Order=30)]
+      [Binding("ElementDefinitionTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri CodeElement
@@ -2744,6 +2745,7 @@ namespace Hl7.Fhir.Model
     /// Corresponding codes in terminologies
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90)]
+    [Binding("ElementDefinitionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code

@@ -337,6 +337,7 @@ namespace Hl7.Fhir.Model
       /// FHIR-Client | FHIR-SDC-FormFiller
       /// </summary>
       [FhirElement("profile", Order=50)]
+      [Binding("TestScriptProfileOriginType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Profile
@@ -489,6 +490,7 @@ namespace Hl7.Fhir.Model
       /// FHIR-Server | FHIR-SDC-FormManager | FHIR-SDC-FormReceiver | FHIR-SDC-FormProcessor
       /// </summary>
       [FhirElement("profile", Order=50)]
+      [Binding("TestScriptProfileDestinationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Profile
@@ -2131,6 +2133,7 @@ namespace Hl7.Fhir.Model
       /// The operation code type that will be executed
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TestScriptOperationCode")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
       {
@@ -4877,6 +4880,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for test script (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

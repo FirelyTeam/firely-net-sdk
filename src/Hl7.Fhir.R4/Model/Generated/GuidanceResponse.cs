@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("GuidanceResponse","http://hl7.org/fhir/StructureDefinition/GuidanceResponse", IsResource=true)]
-  public partial class GuidanceResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class GuidanceResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
     /// FHIR Type Name
@@ -359,6 +359,8 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DataRequirement> _DataRequirement;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.DataType ICoded<Hl7.Fhir.Model.DataType>.Code { get => Module; set => Module = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

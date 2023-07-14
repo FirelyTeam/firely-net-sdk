@@ -747,6 +747,7 @@ namespace Hl7.Fhir.Model
     /// Code for the event this message represents
     /// </summary>
     [FhirElement("event", InSummary=true, Order=90, FiveWs="what")]
+    [Binding("MessageEvent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Event
@@ -896,6 +897,7 @@ namespace Hl7.Fhir.Model
     /// Cause of event
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=180, FiveWs="why")]
+    [Binding("EventReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {

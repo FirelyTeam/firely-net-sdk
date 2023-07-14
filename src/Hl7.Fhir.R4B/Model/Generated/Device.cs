@@ -1198,6 +1198,7 @@ namespace Hl7.Fhir.Model
     /// online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
     /// </summary>
     [FhirElement("statusReason", Order=130, FiveWs="FiveWs.status")]
+    [Binding("FHIRDeviceStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -1474,6 +1475,7 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=230)]
+    [Binding("DeviceType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

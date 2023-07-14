@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
     /// Kind of document set
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("v3Act")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

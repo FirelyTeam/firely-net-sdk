@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// Device operational condition
       /// </summary>
       [FhirElement("status", InSummary=true, Order=40)]
+      [Binding("DeviceAssociationOperationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
@@ -301,6 +302,7 @@ namespace Hl7.Fhir.Model
     /// implanted | explanted | attached | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [Binding("DeviceAssociationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
@@ -315,6 +317,7 @@ namespace Hl7.Fhir.Model
     /// The reasons given for the current association status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=130)]
+    [Binding("DeviceAssociationStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason

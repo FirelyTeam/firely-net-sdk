@@ -569,6 +569,7 @@ namespace Hl7.Fhir.Model
     /// What kind of device this is
     /// </summary>
     [FhirElement("type", Order=120, FiveWs="what")]
+    [Binding("DeviceKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -872,6 +873,7 @@ namespace Hl7.Fhir.Model
     /// Safety Characteristics of Device
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=250)]
+    [Binding("DeviceSafety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety

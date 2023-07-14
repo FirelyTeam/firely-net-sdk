@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Nurse, Surgeon, Parent, etc
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ActivityParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -907,6 +908,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for activity definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -921,6 +923,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=260)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1057,6 +1060,7 @@ namespace Hl7.Fhir.Model
     /// Detail type of activity
     /// </summary>
     [FhirElement("code", Order=330)]
+    [Binding("ActivityDefinitionType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1114,6 +1118,7 @@ namespace Hl7.Fhir.Model
     /// What's administered/supplied
     /// </summary>
     [FhirElement("product", Order=370, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("ActivityProduct")]
     [CLSCompliant(false)]
     [References("Medication","Substance")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -1157,6 +1162,7 @@ namespace Hl7.Fhir.Model
     /// What part of body to perform on
     /// </summary>
     [FhirElement("bodySite", Order=400)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite

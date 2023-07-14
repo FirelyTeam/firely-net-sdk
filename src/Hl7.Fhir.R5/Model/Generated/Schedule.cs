@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
     /// High-level category
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
@@ -118,6 +119,7 @@ namespace Hl7.Fhir.Model
     /// Specific service
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
@@ -132,6 +134,7 @@ namespace Hl7.Fhir.Model
     /// Type of specialty needed
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty

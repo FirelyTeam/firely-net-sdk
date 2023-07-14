@@ -191,6 +191,7 @@ namespace Hl7.Fhir.Model
     /// The vaccine preventable disease schedule being evaluated
     /// </summary>
     [FhirElement("targetDisease", InSummary=true, Order=140)]
+    [Binding("EvaluationTargetDisease")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TargetDisease
@@ -221,6 +222,7 @@ namespace Hl7.Fhir.Model
     /// Status of the dose relative to published recommendations
     /// </summary>
     [FhirElement("doseStatus", InSummary=true, Order=160)]
+    [Binding("EvaluationDoseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseStatus
@@ -235,6 +237,7 @@ namespace Hl7.Fhir.Model
     /// Reason why the doese is considered valid, invalid or some other status
     /// </summary>
     [FhirElement("doseStatusReason", Order=170)]
+    [Binding("EvaluationDoseStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> DoseStatusReason

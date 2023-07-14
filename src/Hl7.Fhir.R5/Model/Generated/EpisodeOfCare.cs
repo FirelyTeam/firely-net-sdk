@@ -279,6 +279,7 @@ namespace Hl7.Fhir.Model
       /// What the reason value should be used for/as
       /// </summary>
       [FhirElement("use", InSummary=true, Order=40)]
+      [Binding("reason-use")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Use
       {
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
       /// Medical reason to be addressed
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("reason-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Value
@@ -412,6 +414,7 @@ namespace Hl7.Fhir.Model
       /// The medical condition that was addressed during the episode of care
       /// </summary>
       [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("condition-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Condition
@@ -426,6 +429,7 @@ namespace Hl7.Fhir.Model
       /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("DiagnosisUse")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Use
       {
@@ -593,6 +597,7 @@ namespace Hl7.Fhir.Model
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("EpisodeOfCareType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

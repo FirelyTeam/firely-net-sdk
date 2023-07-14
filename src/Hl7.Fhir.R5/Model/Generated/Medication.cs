@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// The ingredient (substance or medication) that the ingredient.strength relates to
       /// </summary>
       [FhirElement("item", Order=40)]
+      [Binding("MedicationFormalRepresentation")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
@@ -146,6 +147,7 @@ namespace Hl7.Fhir.Model
       /// Quantity of ingredient present
       /// </summary>
       [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MedicationIngredientStrength")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
@@ -444,6 +446,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("MedicationFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -505,6 +508,7 @@ namespace Hl7.Fhir.Model
     /// powder | tablets | capsule +
     /// </summary>
     [FhirElement("doseForm", Order=130)]
+    [Binding("MedicationForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseForm
     {

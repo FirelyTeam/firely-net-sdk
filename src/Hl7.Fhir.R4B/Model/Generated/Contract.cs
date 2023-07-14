@@ -273,6 +273,7 @@ namespace Hl7.Fhir.Model
       /// Content structure and use
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ContractDefinitionType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -287,6 +288,7 @@ namespace Hl7.Fhir.Model
       /// Detailed Content Type Definition
       /// </summary>
       [FhirElement("subType", Order=50)]
+      [Binding("ContractDefinitionSubtype")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubType
       {
@@ -626,6 +628,7 @@ namespace Hl7.Fhir.Model
       /// Contract Term Type or Form
       /// </summary>
       [FhirElement("type", Order=80, FiveWs="FiveWs.what[x]")]
+      [Binding("ContractTermType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -639,6 +642,7 @@ namespace Hl7.Fhir.Model
       /// Contract Term Type specific classification
       /// </summary>
       [FhirElement("subType", Order=90, FiveWs="FiveWs.what[x]")]
+      [Binding("ContractTermSubType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubType
       {
@@ -981,6 +985,7 @@ namespace Hl7.Fhir.Model
       /// Confidentiality Protection
       /// </summary>
       [FhirElement("classification", Order=50)]
+      [Binding("ContractSecurityClassification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Classification
@@ -995,6 +1000,7 @@ namespace Hl7.Fhir.Model
       /// Applicable Policy
       /// </summary>
       [FhirElement("category", Order=60)]
+      [Binding("ContractSecurityCategory")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Category
@@ -1009,6 +1015,7 @@ namespace Hl7.Fhir.Model
       /// Handling Instructions
       /// </summary>
       [FhirElement("control", Order=70)]
+      [Binding("ContractSecurityControl")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Control
@@ -1190,6 +1197,7 @@ namespace Hl7.Fhir.Model
       /// Contract Offer Type or Form
       /// </summary>
       [FhirElement("type", Order=70, FiveWs="FiveWs.what[x]")]
+      [Binding("ContractTermType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1203,6 +1211,7 @@ namespace Hl7.Fhir.Model
       /// Accepting party choice
       /// </summary>
       [FhirElement("decision", Order=80, FiveWs="FiveWs.what[x]")]
+      [Binding("ContractDecisionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Decision
       {
@@ -1216,6 +1225,7 @@ namespace Hl7.Fhir.Model
       /// How decision is conveyed
       /// </summary>
       [FhirElement("decisionMode", Order=90)]
+      [Binding("ContractDecisionMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> DecisionMode
@@ -1533,6 +1543,7 @@ namespace Hl7.Fhir.Model
       /// Participant engagement type
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ContractPartyRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -1767,6 +1778,7 @@ namespace Hl7.Fhir.Model
       /// Range of asset
       /// </summary>
       [FhirElement("scope", Order=40)]
+      [Binding("ContractAssetScope")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Scope
       {
@@ -1780,6 +1792,7 @@ namespace Hl7.Fhir.Model
       /// Asset category
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ContractAssetType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1810,6 +1823,7 @@ namespace Hl7.Fhir.Model
       /// Asset sub-category
       /// </summary>
       [FhirElement("subtype", Order=70)]
+      [Binding("ContractAssetSubtype")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Subtype
@@ -1824,6 +1838,7 @@ namespace Hl7.Fhir.Model
       /// Kinship of the asset
       /// </summary>
       [FhirElement("relationship", Order=80)]
+      [Binding("ConsentContentClass")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Relationship
       {
@@ -1882,6 +1897,7 @@ namespace Hl7.Fhir.Model
       /// Asset availability types
       /// </summary>
       [FhirElement("periodType", Order=110)]
+      [Binding("AssetAvailabilityType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PeriodType
@@ -2285,6 +2301,7 @@ namespace Hl7.Fhir.Model
       /// Codeable asset context
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("ContractAssetContext")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -3007,6 +3024,7 @@ namespace Hl7.Fhir.Model
       /// Type or form of the action
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ContractAction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -3035,6 +3053,7 @@ namespace Hl7.Fhir.Model
       /// Purpose for the Contract Term Action
       /// </summary>
       [FhirElement("intent", Order=70, FiveWs="FiveWs.why[x]")]
+      [Binding("ContractActionReason")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Intent
@@ -3081,6 +3100,7 @@ namespace Hl7.Fhir.Model
       /// State of the action
       /// </summary>
       [FhirElement("status", Order=90)]
+      [Binding("ContractActionStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
@@ -3205,6 +3225,7 @@ namespace Hl7.Fhir.Model
       /// Kind of service performer
       /// </summary>
       [FhirElement("performerType", Order=150)]
+      [Binding("ContractActionPerformerType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PerformerType
@@ -3219,6 +3240,7 @@ namespace Hl7.Fhir.Model
       /// Competency of the performer
       /// </summary>
       [FhirElement("performerRole", Order=160)]
+      [Binding("ContractActionPerformerRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept PerformerRole
       {
@@ -3279,6 +3301,7 @@ namespace Hl7.Fhir.Model
       /// Why is action (not) needed?
       /// </summary>
       [FhirElement("reasonCode", Order=190)]
+      [Binding("ContractActionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -3712,6 +3735,7 @@ namespace Hl7.Fhir.Model
       /// Role type of the agent
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ContractActorRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -3831,6 +3855,7 @@ namespace Hl7.Fhir.Model
       /// Contract Signatory Role
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.actor")]
+      [Binding("ContractSignerType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
@@ -4427,6 +4452,7 @@ namespace Hl7.Fhir.Model
     /// Negotiation status
     /// </summary>
     [FhirElement("legalState", Order=130)]
+    [Binding("ContractLegalState")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept LegalState
     {
@@ -4486,6 +4512,7 @@ namespace Hl7.Fhir.Model
     /// Content derived from the basal information
     /// </summary>
     [FhirElement("contentDerivative", Order=160, FiveWs="FiveWs.what[x]")]
+    [Binding("ContractContentDerivative")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ContentDerivative
     {
@@ -4543,6 +4570,7 @@ namespace Hl7.Fhir.Model
     /// Contract cessation cause
     /// </summary>
     [FhirElement("expirationType", Order=190)]
+    [Binding("ContractExpiration")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ExpirationType
     {
@@ -4760,6 +4788,7 @@ namespace Hl7.Fhir.Model
     /// Range of Legal Concerns
     /// </summary>
     [FhirElement("scope", Order=290)]
+    [Binding("ContractScope")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scope
     {
@@ -4789,6 +4818,7 @@ namespace Hl7.Fhir.Model
     /// Legal instrument category
     /// </summary>
     [FhirElement("type", InSummary=true, Order=310, FiveWs="FiveWs.what[x]")]
+    [Binding("ContractType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -4802,6 +4832,7 @@ namespace Hl7.Fhir.Model
     /// Subtype within the context of type
     /// </summary>
     [FhirElement("subType", InSummary=true, Order=320, FiveWs="FiveWs.what[x]")]
+    [Binding("ContractSubtype")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType

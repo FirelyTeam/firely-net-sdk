@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// How the agent participated
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("ProvenanceAgentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -126,6 +127,7 @@ namespace Hl7.Fhir.Model
       /// What the agents role was
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ProvenanceAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -570,6 +572,7 @@ namespace Hl7.Fhir.Model
     /// Reason the activity is occurring
     /// </summary>
     [FhirElement("reason", Order=140, FiveWs="FiveWs.why[x]")]
+    [Binding("ProvenanceReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -584,6 +587,7 @@ namespace Hl7.Fhir.Model
     /// Activity that occurred
     /// </summary>
     [FhirElement("activity", Order=150, FiveWs="FiveWs.why[x]")]
+    [Binding("ProvenanceActivity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Activity
     {

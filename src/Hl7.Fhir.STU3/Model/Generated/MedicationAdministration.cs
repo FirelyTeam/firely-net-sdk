@@ -287,6 +287,7 @@ namespace Hl7.Fhir.Model
       /// Body site administered to
       /// </summary>
       [FhirElement("site", Order=50)]
+      [Binding("MedicationAdministrationSite")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Site
       {
@@ -300,6 +301,7 @@ namespace Hl7.Fhir.Model
       /// Path of substance into body
       /// </summary>
       [FhirElement("route", Order=60)]
+      [Binding("RouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Route
       {
@@ -313,6 +315,7 @@ namespace Hl7.Fhir.Model
       /// How drug was administered
       /// </summary>
       [FhirElement("method", Order=70)]
+      [Binding("MedicationAdministrationMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -562,6 +565,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", Order=130)]
+    [Binding("MedicationAdministrationCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -575,6 +579,7 @@ namespace Hl7.Fhir.Model
     /// What was administered
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -700,6 +705,7 @@ namespace Hl7.Fhir.Model
     /// Reason administration not performed
     /// </summary>
     [FhirElement("reasonNotGiven", Order=210)]
+    [Binding("MedicationAdministrationNegationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
@@ -714,6 +720,7 @@ namespace Hl7.Fhir.Model
     /// Reason administration performed
     /// </summary>
     [FhirElement("reasonCode", Order=220)]
+    [Binding("MedicationAdministrationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode

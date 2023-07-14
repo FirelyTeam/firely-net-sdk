@@ -105,6 +105,7 @@ namespace Hl7.Fhir.Model
       /// Vaccine recommendation applies to
       /// </summary>
       [FhirElement("vaccineCode", InSummary=true, Order=50)]
+      [Binding("VaccineCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VaccineCode
       {
@@ -118,6 +119,7 @@ namespace Hl7.Fhir.Model
       /// Disease to be immunized against
       /// </summary>
       [FhirElement("targetDisease", InSummary=true, Order=60)]
+      [Binding("TargetDisease")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept TargetDisease
       {
@@ -162,6 +164,7 @@ namespace Hl7.Fhir.Model
       /// Vaccine administration status
       /// </summary>
       [FhirElement("forecastStatus", InSummary=true, Order=80)]
+      [Binding("ImmunizationRecommendationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ForecastStatus
@@ -404,6 +407,7 @@ namespace Hl7.Fhir.Model
       /// Type of date
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("ImmunizationRecommendationDateCriterion")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code

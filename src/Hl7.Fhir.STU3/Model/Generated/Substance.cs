@@ -286,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// A component of the substance
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SubstanceIngredient")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -442,6 +443,7 @@ namespace Hl7.Fhir.Model
     /// What class/type of substance this is
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("SubstanceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -456,6 +458,7 @@ namespace Hl7.Fhir.Model
     /// What substance this is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
+    [Binding("SubstanceCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

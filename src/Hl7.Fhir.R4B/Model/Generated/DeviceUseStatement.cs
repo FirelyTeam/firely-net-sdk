@@ -308,6 +308,7 @@ namespace Hl7.Fhir.Model
     /// Target body site
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=200)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {

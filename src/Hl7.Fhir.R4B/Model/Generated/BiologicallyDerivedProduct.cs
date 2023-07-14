@@ -354,6 +354,7 @@ namespace Hl7.Fhir.Model
       /// Procesing code
       /// </summary>
       [FhirElement("procedure", Order=50)]
+      [Binding("BiologicallyDerivedProductProcedure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Procedure
       {
@@ -938,6 +939,7 @@ namespace Hl7.Fhir.Model
     /// What this biologically derived product is
     /// </summary>
     [FhirElement("productCode", Order=110)]
+    [Binding("BiologicallyDerivedProductCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ProductCode
     {

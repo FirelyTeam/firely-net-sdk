@@ -99,6 +99,7 @@ namespace Hl7.Fhir.Model
       /// Reference range qualifier
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("ObservationRangeMeaning")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -112,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// Reference range population
       /// </summary>
       [FhirElement("appliesTo", Order=70)]
+      [Binding("ObservationRangeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
@@ -312,6 +314,7 @@ namespace Hl7.Fhir.Model
       /// Type of component observation (code / type)
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -341,6 +344,7 @@ namespace Hl7.Fhir.Model
       /// Why the component result is missing
       /// </summary>
       [FhirElement("dataAbsentReason", Order=60)]
+      [Binding("ObservationValueAbsentReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
       {
@@ -354,6 +358,7 @@ namespace Hl7.Fhir.Model
       /// High, low, normal, etc.
       /// </summary>
       [FhirElement("interpretation", Order=70)]
+      [Binding("ObservationInterpretation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Interpretation
@@ -581,6 +586,7 @@ namespace Hl7.Fhir.Model
     /// Classification of  type of observation
     /// </summary>
     [FhirElement("category", Order=130, FiveWs="FiveWs.class")]
+    [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -595,6 +601,7 @@ namespace Hl7.Fhir.Model
     /// Type of observation (code / type)
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -732,6 +739,7 @@ namespace Hl7.Fhir.Model
     /// Why the result is missing
     /// </summary>
     [FhirElement("dataAbsentReason", Order=220)]
+    [Binding("ObservationValueAbsentReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
     {
@@ -745,6 +753,7 @@ namespace Hl7.Fhir.Model
     /// High, low, normal, etc.
     /// </summary>
     [FhirElement("interpretation", Order=230)]
+    [Binding("ObservationInterpretation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Interpretation
@@ -773,6 +782,7 @@ namespace Hl7.Fhir.Model
     /// Observed body part
     /// </summary>
     [FhirElement("bodySite", Order=250)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -786,6 +796,7 @@ namespace Hl7.Fhir.Model
     /// How it was done
     /// </summary>
     [FhirElement("method", Order=260)]
+    [Binding("ObservationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {

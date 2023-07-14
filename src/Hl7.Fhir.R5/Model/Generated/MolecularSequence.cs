@@ -145,6 +145,7 @@ namespace Hl7.Fhir.Model
       /// Ways of identifying nucleotides or amino acids within a sequence
       /// </summary>
       [FhirElement("coordinateSystem", InSummary=true, Order=40)]
+      [Binding("LL5323-2")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CoordinateSystem
@@ -363,6 +364,7 @@ namespace Hl7.Fhir.Model
       /// The genome assembly used for starting sequence, e.g. GRCh38
       /// </summary>
       [FhirElement("genomeAssembly", InSummary=true, Order=40)]
+      [Binding("LL1040-6")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept GenomeAssembly
       {
@@ -376,6 +378,7 @@ namespace Hl7.Fhir.Model
       /// Chromosome Identifier
       /// </summary>
       [FhirElement("chromosome", InSummary=true, Order=50)]
+      [Binding("LL2938-0")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Chromosome
       {
@@ -389,6 +392,7 @@ namespace Hl7.Fhir.Model
       /// The reference sequence that represents the starting sequence
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("Multiple bindings acceptable (NCBI or LRG)")]
       [CLSCompliant(false)]
       [References("MolecularSequence")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]

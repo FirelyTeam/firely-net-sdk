@@ -120,6 +120,7 @@ namespace Hl7.Fhir.Model
     /// The nature of the relationship
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("PatientRelationshipType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
     {

@@ -462,6 +462,7 @@ namespace Hl7.Fhir.Model
     /// E.g. patient, expense, depreciation
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("AccountType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

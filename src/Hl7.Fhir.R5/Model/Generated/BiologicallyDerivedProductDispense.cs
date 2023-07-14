@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
       /// Identifies the function of the performer during the dispense
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("BiologicallyDerivedProductDispensPerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -332,6 +333,7 @@ namespace Hl7.Fhir.Model
     /// Relationship between the donor and intended recipient
     /// </summary>
     [FhirElement("originRelationshipType", InSummary=true, Order=130)]
+    [Binding("BiologicallyDerivedProductDispenseOriginRelationship")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept OriginRelationshipType
     {
@@ -377,6 +379,7 @@ namespace Hl7.Fhir.Model
     /// Indicates the type of matching associated with the dispense
     /// </summary>
     [FhirElement("matchStatus", InSummary=true, Order=160)]
+    [Binding("BiologicallyDerivedProductDispenseMatchStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MatchStatus
     {

@@ -143,6 +143,7 @@ namespace Hl7.Fhir.Model
       /// Method used for describing characteristic
       /// </summary>
       [FhirElement("method", Order=60)]
+      [Binding("CharacteristicMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {

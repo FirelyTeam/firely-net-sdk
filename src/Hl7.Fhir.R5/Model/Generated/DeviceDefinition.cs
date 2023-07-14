@@ -987,6 +987,7 @@ namespace Hl7.Fhir.Model
       /// A classification or risk class of the device model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("DeviceKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1121,6 +1122,7 @@ namespace Hl7.Fhir.Model
       /// Describes the common type of the standard, specification, or formal guidance
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
+      [Binding("DeviceSpecificationCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -1134,6 +1136,7 @@ namespace Hl7.Fhir.Model
       /// Identifies the standard, specification, or formal guidance that the device adheres to the Device Specification type
       /// </summary>
       [FhirElement("specification", InSummary=true, Order=50)]
+      [Binding("DeviceSpecificationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Specification
@@ -2038,6 +2041,7 @@ namespace Hl7.Fhir.Model
       /// Code that specifies the property being represented
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("DevicePropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -2174,6 +2178,7 @@ namespace Hl7.Fhir.Model
       /// The type indicates the relationship of the related device to the device instance
       /// </summary>
       [FhirElement("relation", Order=40)]
+      [Binding("DeviceDefinitionRelationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Relation
@@ -3375,6 +3380,7 @@ namespace Hl7.Fhir.Model
     /// Safety characteristics of the device
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=220)]
+    [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety

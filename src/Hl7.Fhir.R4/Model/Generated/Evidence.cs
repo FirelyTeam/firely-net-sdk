@@ -428,6 +428,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for evidence (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -548,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// The category of the Evidence, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=280)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic

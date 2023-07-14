@@ -617,6 +617,7 @@ namespace Hl7.Fhir.Model
     /// The operational status of the location (typically only for a bed/room)
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("OperationalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -757,6 +758,7 @@ namespace Hl7.Fhir.Model
     /// Type of function performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [Binding("LocationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -798,6 +800,7 @@ namespace Hl7.Fhir.Model
     /// Physical form of the location
     /// </summary>
     [FhirElement("physicalType", InSummary=true, Order=190, FiveWs="FiveWs.class")]
+    [Binding("PhysicalType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysicalType
     {

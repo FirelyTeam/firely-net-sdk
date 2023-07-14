@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
     /// Desired processing priority
     /// </summary>
     [FhirElement("priority", Order=110, FiveWs="class")]
+    [Binding("ProcessPriority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -301,6 +302,7 @@ namespace Hl7.Fhir.Model
     /// Type of services covered
     /// </summary>
     [FhirElement("benefitCategory", Order=220)]
+    [Binding("BenefitCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BenefitCategory
     {
@@ -314,6 +316,7 @@ namespace Hl7.Fhir.Model
     /// Detailed services covered within the type
     /// </summary>
     [FhirElement("benefitSubCategory", Order=230)]
+    [Binding("BenefitSubCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory
     {

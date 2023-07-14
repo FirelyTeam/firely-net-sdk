@@ -275,6 +275,7 @@ namespace Hl7.Fhir.Model
     /// Issued or cleared Status of the payment
     /// </summary>
     [FhirElement("paymentStatus", Order=200)]
+    [Binding("PaymentStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PaymentStatus
     {

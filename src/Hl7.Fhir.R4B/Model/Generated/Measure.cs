@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the group
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasureGroupExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -269,6 +270,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasurePopulationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -442,6 +444,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the stratifier
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasureStratifierExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -637,6 +640,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the stratifier component
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasureStratifierExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -810,6 +814,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the supplemental data
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasureSupplementalDataExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -823,6 +828,7 @@ namespace Hl7.Fhir.Model
       /// supplemental-data | risk-adjustment-factor
       /// </summary>
       [FhirElement("usage", Order=50)]
+      [Binding("MeasureDataUsage")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Usage
@@ -1226,6 +1232,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
     /// </summary>
     [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1363,6 +1370,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for measure (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1545,6 +1553,7 @@ namespace Hl7.Fhir.Model
     /// The category of the measure, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=300)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1692,6 +1701,7 @@ namespace Hl7.Fhir.Model
     /// proportion | ratio | continuous-variable | cohort
     /// </summary>
     [FhirElement("scoring", InSummary=true, Order=380)]
+    [Binding("MeasureScoring")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scoring
     {
@@ -1705,6 +1715,7 @@ namespace Hl7.Fhir.Model
     /// opportunity | all-or-nothing | linear | weighted
     /// </summary>
     [FhirElement("compositeScoring", InSummary=true, Order=390)]
+    [Binding("CompositeMeasureScoring")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CompositeScoring
     {
@@ -1718,6 +1729,7 @@ namespace Hl7.Fhir.Model
     /// process | outcome | structure | patient-reported-outcome | composite
     /// </summary>
     [FhirElement("type", InSummary=true, Order=400)]
+    [Binding("MeasureType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1856,6 +1868,7 @@ namespace Hl7.Fhir.Model
     /// increase | decrease
     /// </summary>
     [FhirElement("improvementNotation", InSummary=true, Order=450)]
+    [Binding("MeasureImprovementNotation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
     {

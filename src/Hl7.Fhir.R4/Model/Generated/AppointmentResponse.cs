@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// Role of participant in the appointment
     /// </summary>
     [FhirElement("participantType", InSummary=true, Order=130)]
+    [Binding("ParticipantType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType

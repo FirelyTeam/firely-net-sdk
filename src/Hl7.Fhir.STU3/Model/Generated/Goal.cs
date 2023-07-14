@@ -161,6 +161,7 @@ namespace Hl7.Fhir.Model
       /// The parameter whose value is being tracked
       /// </summary>
       [FhirElement("measure", InSummary=true, Order=40)]
+      [Binding("GoalTargetMeasure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Measure
       {
@@ -174,6 +175,7 @@ namespace Hl7.Fhir.Model
       /// The target value to be achieved
       /// </summary>
       [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("GoalTargetDetail")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
@@ -353,6 +355,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("GoalCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -367,6 +370,7 @@ namespace Hl7.Fhir.Model
     /// high-priority | medium-priority | low-priority
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=120, FiveWs="grade")]
+    [Binding("GoalPriority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -380,6 +384,7 @@ namespace Hl7.Fhir.Model
     /// Code or text describing goal
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130, FiveWs="what")]
+    [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Description
@@ -409,6 +414,7 @@ namespace Hl7.Fhir.Model
     /// When goal pursuit begins
     /// </summary>
     [FhirElement("start", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
+    [Binding("GoalStartEvent")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -544,6 +550,7 @@ namespace Hl7.Fhir.Model
     /// What result was achieved regarding the goal?
     /// </summary>
     [FhirElement("outcomeCode", Order=220)]
+    [Binding("GoalOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCode

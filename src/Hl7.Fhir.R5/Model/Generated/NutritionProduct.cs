@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// The (relevant) nutrients in the product
       /// </summary>
       [FhirElement("item", Order=40)]
+      [Binding("NutritionProductNutrient")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
       {
@@ -368,6 +369,7 @@ namespace Hl7.Fhir.Model
       /// Code specifying the type of characteristic
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PropertyCharacteristic")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -805,6 +807,7 @@ namespace Hl7.Fhir.Model
     /// A code that can identify the detailed nutrients and ingredients in a specific food product
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [Binding("NutritionProductCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -852,6 +855,7 @@ namespace Hl7.Fhir.Model
     /// Broad product groups or categories used to classify the product, such as Legume and Legume Products, Beverages, or Beef Products
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("NutritionProductCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -910,6 +914,7 @@ namespace Hl7.Fhir.Model
     /// Known or suspected allergens that are a part of this product
     /// </summary>
     [FhirElement("knownAllergen", Order=150)]
+    [Binding("AllergenClass")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> KnownAllergen

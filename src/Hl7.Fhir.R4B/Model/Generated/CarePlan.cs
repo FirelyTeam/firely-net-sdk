@@ -229,6 +229,7 @@ namespace Hl7.Fhir.Model
       /// Results of the activity
       /// </summary>
       [FhirElement("outcomeCodeableConcept", Order=40)]
+      [Binding("CarePlanActivityOutcome")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCodeableConcept
@@ -531,6 +532,7 @@ namespace Hl7.Fhir.Model
       /// Detail type of activity
       /// </summary>
       [FhirElement("code", Order=70)]
+      [Binding("CarePlanActivityType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -544,6 +546,7 @@ namespace Hl7.Fhir.Model
       /// Why activity should be done or why activity was prohibited
       /// </summary>
       [FhirElement("reasonCode", Order=80)]
+      [Binding("CarePlanActivityReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -714,6 +717,7 @@ namespace Hl7.Fhir.Model
       /// What is to be administered/supplied
       /// </summary>
       [FhirElement("product", Order=170, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("CarePlanProduct")]
       [CLSCompliant(false)]
       [References("Medication","Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1208,6 +1212,7 @@ namespace Hl7.Fhir.Model
     /// Type of plan
     /// </summary>
     [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
+    [Binding("CarePlanCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

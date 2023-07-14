@@ -390,6 +390,7 @@ namespace Hl7.Fhir.Model
       /// Additional details about the error
       /// </summary>
       [FhirElement("details", InSummary=true, Order=60)]
+      [Binding("IssueDetails")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Details
       {

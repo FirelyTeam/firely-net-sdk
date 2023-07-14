@@ -139,6 +139,7 @@ namespace Hl7.Fhir.Model
     /// Classification of media as image, video, or audio
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("MediaType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -152,6 +153,7 @@ namespace Hl7.Fhir.Model
     /// The type of acquisition equipment/process
     /// </summary>
     [FhirElement("modality", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("MediaModality")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Modality
     {
@@ -165,6 +167,7 @@ namespace Hl7.Fhir.Model
     /// Imaging view, e.g. Lateral or Antero-posterior
     /// </summary>
     [FhirElement("view", InSummary=true, Order=150)]
+    [Binding("MediaView")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept View
     {
@@ -269,6 +272,7 @@ namespace Hl7.Fhir.Model
     /// Why was event performed?
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=210, FiveWs="FiveWs.why[x]")]
+    [Binding("MediaReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -283,6 +287,7 @@ namespace Hl7.Fhir.Model
     /// Observed body part
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=220)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {

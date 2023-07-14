@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
       /// Supporting information role code
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("DiagnosticReportSupportingInfoType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -488,6 +489,7 @@ namespace Hl7.Fhir.Model
     /// Service category
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("DiagnosticServiceSection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -502,6 +504,7 @@ namespace Hl7.Fhir.Model
     /// Name/Code for this diagnostic report
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("DiagnosticReportCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -760,6 +763,7 @@ namespace Hl7.Fhir.Model
     /// Codes for the clinical conclusion of test results
     /// </summary>
     [FhirElement("conclusionCode", Order=280)]
+    [Binding("AdjunctDiagnosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ConclusionCode

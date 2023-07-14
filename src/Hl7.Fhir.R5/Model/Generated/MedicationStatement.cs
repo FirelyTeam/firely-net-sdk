@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Type of adherence
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MedicationStatementAdherence")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -115,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// Details of the reason for the current use of the medication
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("MedicationStatementStatusReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -284,6 +286,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication statement
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("MedicationStatementAdministrationLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -298,6 +301,7 @@ namespace Hl7.Fhir.Model
     /// What medication was taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Medication
@@ -421,6 +425,7 @@ namespace Hl7.Fhir.Model
     /// Reason for why the medication is being/was taken
     /// </summary>
     [FhirElement("reason", Order=200, FiveWs="FiveWs.why[x]")]
+    [Binding("MedicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason

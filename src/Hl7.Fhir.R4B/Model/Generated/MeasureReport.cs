@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the group
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MeasureGroupExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -487,6 +489,7 @@ namespace Hl7.Fhir.Model
       /// What stratifier of the group
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasureStratifierExample")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -621,6 +624,7 @@ namespace Hl7.Fhir.Model
       /// The stratum value, e.g. male
       /// </summary>
       [FhirElement("value", Order=40)]
+      [Binding("MeasureReportStratifierValueExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Value
       {
@@ -799,6 +803,7 @@ namespace Hl7.Fhir.Model
       /// What stratifier component of the group
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasureStratifierExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -813,6 +818,7 @@ namespace Hl7.Fhir.Model
       /// The stratum component value, e.g. male
       /// </summary>
       [FhirElement("value", Order=50)]
+      [Binding("MeasureReportStratifierValueExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Value
@@ -933,6 +939,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -1282,6 +1289,7 @@ namespace Hl7.Fhir.Model
     /// increase | decrease
     /// </summary>
     [FhirElement("improvementNotation", InSummary=true, IsModifier=true, Order=170)]
+    [Binding("MeasureImprovementNotation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
     {

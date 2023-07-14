@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the person about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -565,6 +566,7 @@ namespace Hl7.Fhir.Model
     /// Marital (civil) status of a person
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
+    [Binding("MaritalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MaritalStatus
     {

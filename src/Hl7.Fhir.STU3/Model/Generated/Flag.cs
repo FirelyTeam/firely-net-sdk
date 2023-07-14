@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     /// Clinical, administrative, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("FlagCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -148,6 +149,7 @@ namespace Hl7.Fhir.Model
     /// Coded or textual message to display to user
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
+    [Binding("FlagCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

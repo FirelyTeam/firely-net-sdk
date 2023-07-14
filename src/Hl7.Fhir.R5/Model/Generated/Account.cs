@@ -472,6 +472,7 @@ namespace Hl7.Fhir.Model
       /// The diagnosis relevant to the account
       /// </summary>
       [FhirElement("condition", InSummary=true, Order=50)]
+      [Binding("condition-code")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Condition
@@ -517,6 +518,7 @@ namespace Hl7.Fhir.Model
       /// Type that this diagnosis has relevant to the account (e.g. admission, billing, discharge …)
       /// </summary>
       [FhirElement("type", Order=70)]
+      [Binding("DiagnosisUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -562,6 +564,7 @@ namespace Hl7.Fhir.Model
       /// Package Code specific for billing
       /// </summary>
       [FhirElement("packageCode", Order=90)]
+      [Binding("diagnosis-package-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PackageCode
@@ -794,6 +797,7 @@ namespace Hl7.Fhir.Model
       /// How this procedure value should be used in charging the account
       /// </summary>
       [FhirElement("type", Order=70)]
+      [Binding("procedure-type")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -808,6 +812,7 @@ namespace Hl7.Fhir.Model
       /// Package Code specific for billing
       /// </summary>
       [FhirElement("packageCode", Order=80)]
+      [Binding("procedure-package-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PackageCode
@@ -980,6 +985,7 @@ namespace Hl7.Fhir.Model
       /// Relationship of the associated Account
       /// </summary>
       [FhirElement("relationship", Order=40)]
+      [Binding("AccountRelationship")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Relationship
       {
@@ -1115,6 +1121,7 @@ namespace Hl7.Fhir.Model
       /// Who is expected to pay this part of the balance
       /// </summary>
       [FhirElement("aggregate", Order=40)]
+      [Binding("AccountAggregate")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Aggregate
       {
@@ -1128,6 +1135,7 @@ namespace Hl7.Fhir.Model
       /// current | 30 | 60 | 90 | 120
       /// </summary>
       [FhirElement("term", Order=50)]
+      [Binding("AccountBalanceTerm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -1344,6 +1352,7 @@ namespace Hl7.Fhir.Model
     /// Tracks the lifecycle of the account through the billing process
     /// </summary>
     [FhirElement("billingStatus", InSummary=true, Order=110)]
+    [Binding("AccountBillingStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BillingStatus
     {
@@ -1357,6 +1366,7 @@ namespace Hl7.Fhir.Model
     /// E.g. patient, expense, depreciation
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("AccountType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -1546,6 +1556,7 @@ namespace Hl7.Fhir.Model
     /// The base or default currency
     /// </summary>
     [FhirElement("currency", Order=230)]
+    [Binding("AccountCurrency")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Currency
     {

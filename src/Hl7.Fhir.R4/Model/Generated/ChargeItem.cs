@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("function", Order=40)]
+      [Binding("ChargeItemPerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -374,6 +375,7 @@ namespace Hl7.Fhir.Model
     /// A code that identifies the charge, like a billing code
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("ChargeItemCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -506,6 +508,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodysite", InSummary=true, Order=230)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
@@ -641,6 +644,7 @@ namespace Hl7.Fhir.Model
     /// Why was the charged  service rendered?
     /// </summary>
     [FhirElement("reason", Order=290, FiveWs="FiveWs.why[x]")]
+    [Binding("ChargeItemReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -671,6 +675,7 @@ namespace Hl7.Fhir.Model
     /// Product charged
     /// </summary>
     [FhirElement("product", Order=310, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("ChargeItemProduct")]
     [CLSCompliant(false)]
     [References("Device","Medication","Substance")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]

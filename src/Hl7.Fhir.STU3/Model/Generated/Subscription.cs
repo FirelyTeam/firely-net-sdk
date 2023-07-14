@@ -573,6 +573,7 @@ namespace Hl7.Fhir.Model
     /// A tag to add to matching resources
     /// </summary>
     [FhirElement("tag", InSummary=true, Order=160)]
+    [Binding("SubscriptionTag")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Tag

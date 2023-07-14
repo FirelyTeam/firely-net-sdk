@@ -1127,6 +1127,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for structure definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1234,6 +1235,7 @@ namespace Hl7.Fhir.Model
     /// Assist with indexing and finding
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=260)]
+    [Binding("StructureDefinitionKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Keyword
@@ -1407,6 +1409,7 @@ namespace Hl7.Fhir.Model
     /// Type defined or constrained by this structure
     /// </summary>
     [FhirElement("type", InSummary=true, Order=330)]
+    [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri TypeElement

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Timing","http://hl7.org/fhir/StructureDefinition/Timing")]
-  public partial class Timing : Hl7.Fhir.Model.BackboneType, ICoded<Hl7.Fhir.Model.CodeableConcept>
+  public partial class Timing : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
     /// FHIR Type Name
@@ -1014,6 +1014,7 @@ namespace Hl7.Fhir.Model
     /// BID | TID | QID | AM | PM | QD | QOD | +
     /// </summary>
     [FhirElement("code", InSummary=true, Order=60)]
+    [Binding("TimingAbbreviation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1022,8 +1023,6 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _Code;
-
-    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

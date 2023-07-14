@@ -358,6 +358,7 @@ namespace Hl7.Fhir.Model
       /// Data structure for example
       /// </summary>
       [FhirElement("structureType", Order=50)]
+      [Binding("InstanceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding StructureType
@@ -2551,6 +2552,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for example scenario (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

@@ -288,6 +288,7 @@ namespace Hl7.Fhir.Model
       /// Code signifying whether a different drug was dispensed from what was prescribed
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("MedicationIntendedSubstitutionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -301,6 +302,7 @@ namespace Hl7.Fhir.Model
       /// Why was substitution made
       /// </summary>
       [FhirElement("reason", Order=60)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -504,6 +506,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication dispense
     /// </summary>
     [FhirElement("category", Order=120)]
+    [Binding("MedicationDispenseCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -517,6 +520,7 @@ namespace Hl7.Fhir.Model
     /// What medication was supplied
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -610,6 +614,7 @@ namespace Hl7.Fhir.Model
     /// Trial fill, partial fill, emergency fill, etc.
     /// </summary>
     [FhirElement("type", Order=190)]
+    [Binding("MedicationDispenseType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

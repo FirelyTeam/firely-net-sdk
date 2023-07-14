@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Type of oral diet or diet restrictions that describe what can be consumed orally
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("OralDiet")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -128,6 +129,7 @@ namespace Hl7.Fhir.Model
       /// The required consistency of fluids and liquids provided to the patient
       /// </summary>
       [FhirElement("fluidConsistencyType", Order=80)]
+      [Binding("FluidConsistencyType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
@@ -360,6 +362,7 @@ namespace Hl7.Fhir.Model
       /// Take 'as needed' for x
       /// </summary>
       [FhirElement("asNeededFor", Order=60)]
+      [Binding("OralDietAsNeededReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AsNeededFor
       {
@@ -488,6 +491,7 @@ namespace Hl7.Fhir.Model
       /// Type of nutrient that is being modified
       /// </summary>
       [FhirElement("modifier", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("NutrientModifier")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modifier
       {
@@ -620,6 +624,7 @@ namespace Hl7.Fhir.Model
       /// Code to indicate how to alter the texture of the foods, e.g. pureed
       /// </summary>
       [FhirElement("modifier", Order=40)]
+      [Binding("TextureModifier")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modifier
       {
@@ -633,6 +638,7 @@ namespace Hl7.Fhir.Model
       /// Concepts that are used to identify an entity that is ingested for nutritional purposes
       /// </summary>
       [FhirElement("foodType", Order=50)]
+      [Binding("TextureModifiedFoodType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept FoodType
       {
@@ -752,6 +758,7 @@ namespace Hl7.Fhir.Model
       /// Type of supplement product requested
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("SupplementType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Type
       {
@@ -1031,6 +1038,7 @@ namespace Hl7.Fhir.Model
       /// Take 'as needed' for x
       /// </summary>
       [FhirElement("asNeededFor", Order=60)]
+      [Binding("SupplementAsNeededReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AsNeededFor
       {
@@ -1159,6 +1167,7 @@ namespace Hl7.Fhir.Model
       /// Type of enteral or infant formula
       /// </summary>
       [FhirElement("baseFormulaType", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("EnteralFormulaType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference BaseFormulaType
       {
@@ -1244,6 +1253,7 @@ namespace Hl7.Fhir.Model
       /// How the formula should enter the patient's gastrointestinal tract
       /// </summary>
       [FhirElement("routeOfAdministration", Order=90)]
+      [Binding("EnteralRouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RouteOfAdministration
       {
@@ -1484,6 +1494,7 @@ namespace Hl7.Fhir.Model
       /// Type of modular component to add to the feeding
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("EnteralFormulaAdditiveType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Type
       {
@@ -1857,6 +1868,7 @@ namespace Hl7.Fhir.Model
       /// Take 'as needed' for x
       /// </summary>
       [FhirElement("asNeededFor", Order=60)]
+      [Binding("EnteralFormulaAsNeededReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AsNeededFor
       {
@@ -2335,6 +2347,7 @@ namespace Hl7.Fhir.Model
     /// Order-specific modifier about the type of food that should be given
     /// </summary>
     [FhirElement("foodPreferenceModifier", Order=250)]
+    [Binding("PatientDiet")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
@@ -2349,6 +2362,7 @@ namespace Hl7.Fhir.Model
     /// Order-specific modifier about the type of food that should not be given
     /// </summary>
     [FhirElement("excludeFoodModifier", Order=260)]
+    [Binding("FoodType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier

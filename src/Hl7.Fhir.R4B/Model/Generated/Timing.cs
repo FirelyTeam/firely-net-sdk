@@ -1005,6 +1005,7 @@ namespace Hl7.Fhir.Model
     /// BID | TID | QID | AM | PM | QD | QOD | +
     /// </summary>
     [FhirElement("code", InSummary=true, Order=60)]
+    [Binding("TimingAbbreviation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

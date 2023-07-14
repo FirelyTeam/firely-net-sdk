@@ -782,6 +782,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for charge item definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -951,6 +952,7 @@ namespace Hl7.Fhir.Model
     /// Billing code or product type this definition applies to
     /// </summary>
     [FhirElement("code", InSummary=true, Order=310)]
+    [Binding("ChargeItemDefinitionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

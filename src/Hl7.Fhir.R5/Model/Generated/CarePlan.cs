@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// Results of the activity (concept, or Appointment, Encounter, Procedure, etc.)
       /// </summary>
       [FhirElement("performedActivity", Order=40)]
+      [Binding("CarePlanActivityPerformed")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> PerformedActivity
@@ -451,6 +452,7 @@ namespace Hl7.Fhir.Model
     /// Type of plan
     /// </summary>
     [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
+    [Binding("CarePlanCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -649,6 +651,7 @@ namespace Hl7.Fhir.Model
     /// Health issues this plan addresses
     /// </summary>
     [FhirElement("addresses", InSummary=true, Order=270, FiveWs="FiveWs.why[x]")]
+    [Binding("CarePlanAddresses")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Addresses

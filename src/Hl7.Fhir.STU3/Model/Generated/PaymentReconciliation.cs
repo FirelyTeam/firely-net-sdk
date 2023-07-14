@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Type code
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PaymentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -342,6 +343,7 @@ namespace Hl7.Fhir.Model
       /// display | print | printoper
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("NoteType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -599,6 +601,7 @@ namespace Hl7.Fhir.Model
     /// complete | error | partial
     /// </summary>
     [FhirElement("outcome", Order=150)]
+    [Binding("RemittanceOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -687,6 +690,7 @@ namespace Hl7.Fhir.Model
     /// Printed Form Identifier
     /// </summary>
     [FhirElement("form", Order=200)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {

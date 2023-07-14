@@ -467,6 +467,7 @@ namespace Hl7.Fhir.Model
       /// Label for the input
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TaskInputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -603,6 +604,7 @@ namespace Hl7.Fhir.Model
       /// Label for output
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TaskOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -834,6 +836,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=150)]
+    [Binding("TaskStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -847,6 +850,7 @@ namespace Hl7.Fhir.Model
     /// E.g. "Specimen collected", "IV prepped"
     /// </summary>
     [FhirElement("businessStatus", InSummary=true, Order=160)]
+    [Binding("TaskBusinessStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BusinessStatus
     {
@@ -927,6 +931,7 @@ namespace Hl7.Fhir.Model
     /// Task Type
     /// </summary>
     [FhirElement("code", InSummary=true, Order=190, FiveWs="what")]
+    [Binding("TaskCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1104,6 +1109,7 @@ namespace Hl7.Fhir.Model
     /// requester | dispatcher | scheduler | performer | monitor | manager | acquirer | reviewer
     /// </summary>
     [FhirElement("performerType", Order=280, FiveWs="who.actor")]
+    [Binding("TaskPerformerType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PerformerType
@@ -1133,6 +1139,7 @@ namespace Hl7.Fhir.Model
     /// Why task is needed
     /// </summary>
     [FhirElement("reason", Order=300, FiveWs="why")]
+    [Binding("TaskReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {

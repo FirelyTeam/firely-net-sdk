@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
       /// Type or kind of production specification, for example serial number or software revision
       /// </summary>
       [FhirElement("specType", InSummary=true, Order=40)]
+      [Binding("DeviceSpecificationSpecType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SpecType
       {
@@ -321,6 +322,7 @@ namespace Hl7.Fhir.Model
     /// What kind of component it is
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
+    [Binding("ComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -396,6 +398,7 @@ namespace Hl7.Fhir.Model
     /// Current operational status of the component, for example On, Off or Standby
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=140)]
+    [Binding("DeviceComponentOperationalStatus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OperationalStatus
@@ -410,6 +413,7 @@ namespace Hl7.Fhir.Model
     /// Current supported parameter group
     /// </summary>
     [FhirElement("parameterGroup", InSummary=true, Order=150)]
+    [Binding("DeviceComponentParameterGroup")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ParameterGroup
     {
@@ -470,6 +474,7 @@ namespace Hl7.Fhir.Model
     /// Language code for the human-readable text strings produced by the device
     /// </summary>
     [FhirElement("languageCode", InSummary=true, Order=180)]
+    [Binding("Language")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept LanguageCode
     {

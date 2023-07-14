@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this formulary item
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100)]
+    [Binding("FormularyItemFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

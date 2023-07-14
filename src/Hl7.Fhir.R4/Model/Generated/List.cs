@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Status/Workflow information about this item
       /// </summary>
       [FhirElement("flag", Order=40)]
+      [Binding("ListItemFlag")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Flag
       {
@@ -415,6 +416,7 @@ namespace Hl7.Fhir.Model
     /// What the purpose of this list is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("ListPurpose")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -504,6 +506,7 @@ namespace Hl7.Fhir.Model
     /// What order the list has
     /// </summary>
     [FhirElement("orderedBy", Order=180)]
+    [Binding("ListOrder")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept OrderedBy
     {
@@ -545,6 +548,7 @@ namespace Hl7.Fhir.Model
     /// Why list is empty
     /// </summary>
     [FhirElement("emptyReason", Order=210)]
+    [Binding("ListEmptyReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept EmptyReason
     {

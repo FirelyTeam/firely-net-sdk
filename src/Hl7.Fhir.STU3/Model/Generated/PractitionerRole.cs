@@ -549,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// Roles which this practitioner may perform
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140)]
+    [Binding("PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -563,6 +564,7 @@ namespace Hl7.Fhir.Model
     /// Specific specialty of the practitioner
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=150)]
+    [Binding("PractitionerSpecialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty

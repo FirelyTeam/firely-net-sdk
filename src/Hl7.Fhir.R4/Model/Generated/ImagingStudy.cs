@@ -176,6 +176,7 @@ namespace Hl7.Fhir.Model
       /// The modality of the instances in the series
       /// </summary>
       [FhirElement("modality", InSummary=true, Order=60)]
+      [Binding("ImagingModality")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Modality
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
       /// Body part examined
       /// </summary>
       [FhirElement("bodySite", InSummary=true, Order=100)]
+      [Binding("BodySite")]
       [DataMember]
       public Hl7.Fhir.Model.Coding BodySite
       {
@@ -281,6 +283,7 @@ namespace Hl7.Fhir.Model
       /// Body part laterality
       /// </summary>
       [FhirElement("laterality", InSummary=true, Order=110)]
+      [Binding("Laterality")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Laterality
       {
@@ -565,6 +568,7 @@ namespace Hl7.Fhir.Model
       /// Type of performance
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("EventPerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -732,6 +736,7 @@ namespace Hl7.Fhir.Model
       /// DICOM class type
       /// </summary>
       [FhirElement("sopClass", Order=50)]
+      [Binding("sopClass")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding SopClass
@@ -966,6 +971,7 @@ namespace Hl7.Fhir.Model
     /// All series modality if actual acquisition modalities
     /// </summary>
     [FhirElement("modality", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("ImagingModality")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Modality
@@ -1182,6 +1188,7 @@ namespace Hl7.Fhir.Model
     /// The performed procedure code
     /// </summary>
     [FhirElement("procedureCode", InSummary=true, Order=220)]
+    [Binding("ImagingProcedureCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ProcedureCode
@@ -1211,6 +1218,7 @@ namespace Hl7.Fhir.Model
     /// Why the study was requested
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
+    [Binding("ImagingReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode

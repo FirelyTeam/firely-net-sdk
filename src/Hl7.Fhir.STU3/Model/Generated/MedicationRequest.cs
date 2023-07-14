@@ -586,6 +586,7 @@ namespace Hl7.Fhir.Model
       /// Why should (not) substitution be made
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -817,6 +818,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", Order=150, FiveWs="class")]
+    [Binding("MedicationRequestCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -863,6 +865,7 @@ namespace Hl7.Fhir.Model
     /// Medication to be taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -986,6 +989,7 @@ namespace Hl7.Fhir.Model
     /// Reason or indication for writing the prescription
     /// </summary>
     [FhirElement("reasonCode", Order=240, FiveWs="why")]
+    [Binding("MedicationRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode

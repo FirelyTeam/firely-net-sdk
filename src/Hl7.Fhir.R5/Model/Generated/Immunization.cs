@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("ImmunizationFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -236,6 +237,7 @@ namespace Hl7.Fhir.Model
       /// The program that eligibility is declared for
       /// </summary>
       [FhirElement("program", Order=40)]
+      [Binding("VaccineFundingProgram")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Program
@@ -250,6 +252,7 @@ namespace Hl7.Fhir.Model
       /// The patient's eligibility status for the program
       /// </summary>
       [FhirElement("programStatus", Order=50)]
+      [Binding("ProgramEligibility")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProgramStatus
@@ -606,6 +609,7 @@ namespace Hl7.Fhir.Model
       /// Vaccine preventatable disease being targeted
       /// </summary>
       [FhirElement("targetDisease", Order=60)]
+      [Binding("TargetDisease")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
@@ -866,6 +870,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=120)]
+    [Binding("ImmunizationStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -879,6 +884,7 @@ namespace Hl7.Fhir.Model
     /// Vaccine administered
     /// </summary>
     [FhirElement("vaccineCode", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("VaccineCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -1075,6 +1081,7 @@ namespace Hl7.Fhir.Model
     /// Indicates the source of a  reported record
     /// </summary>
     [FhirElement("informationSource", Order=230, FiveWs="FiveWs.source")]
+    [Binding("ImmunizationReportOrigin")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference InformationSource
     {
@@ -1103,6 +1110,7 @@ namespace Hl7.Fhir.Model
     /// Body site vaccine  was administered
     /// </summary>
     [FhirElement("site", Order=250)]
+    [Binding("ImmunizationSite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Site
     {
@@ -1116,6 +1124,7 @@ namespace Hl7.Fhir.Model
     /// How vaccine entered body
     /// </summary>
     [FhirElement("route", Order=260)]
+    [Binding("ImmunizationRoute")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Route
     {
@@ -1170,6 +1179,7 @@ namespace Hl7.Fhir.Model
     /// Why immunization occurred
     /// </summary>
     [FhirElement("reason", Order=300)]
+    [Binding("ImmunizationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1215,6 +1225,7 @@ namespace Hl7.Fhir.Model
     /// Reason for being subpotent
     /// </summary>
     [FhirElement("subpotentReason", Order=320)]
+    [Binding("SubpotentReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubpotentReason
@@ -1243,6 +1254,7 @@ namespace Hl7.Fhir.Model
     /// Funding source for the vaccine
     /// </summary>
     [FhirElement("fundingSource", Order=340)]
+    [Binding("FundingSource")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FundingSource
     {

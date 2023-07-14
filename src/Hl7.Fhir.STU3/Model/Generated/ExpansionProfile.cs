@@ -758,6 +758,7 @@ namespace Hl7.Fhir.Model
       /// What kind of Designation to include
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1020,6 +1021,7 @@ namespace Hl7.Fhir.Model
       /// What kind of Designation to exclude
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1417,6 +1419,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for expansion profile (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

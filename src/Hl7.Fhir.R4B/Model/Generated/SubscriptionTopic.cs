@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -820,6 +821,7 @@ namespace Hl7.Fhir.Model
       /// Event which can trigger a notification from the SubscriptionTopic
       /// </summary>
       [FhirElement("event", InSummary=true, Order=50)]
+      [Binding("SubscriptionTopicEventTrigger")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Event
@@ -834,6 +836,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -1012,6 +1015,7 @@ namespace Hl7.Fhir.Model
       /// URL of the triggering Resource that this filter applies to
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRDefinedTypeExt")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
       {
@@ -1273,6 +1277,7 @@ namespace Hl7.Fhir.Model
       /// URL of the Resource that is the focus (main) resource in a notification shape
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=40)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -1796,6 +1801,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction of the SubscriptionTopic (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

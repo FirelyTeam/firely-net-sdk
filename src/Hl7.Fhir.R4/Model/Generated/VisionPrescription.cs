@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
       /// Product to be supplied
       /// </summary>
       [FhirElement("product", InSummary=true, Order=40)]
+      [Binding("VisionProduct")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Product

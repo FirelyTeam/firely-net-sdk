@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Manifestation
       /// </summary>
       [FhirElement("code", Order=40, FiveWs="FiveWs.why[x]")]
+      [Binding("DetectedIssueEvidenceCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -237,6 +238,7 @@ namespace Hl7.Fhir.Model
       /// What mitigation?
       /// </summary>
       [FhirElement("action", Order=40)]
+      [Binding("DetectedIssueMitigationAction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
@@ -446,6 +448,7 @@ namespace Hl7.Fhir.Model
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("DetectedIssueCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

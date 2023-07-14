@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Model
       /// Medication, Substance, Device or Biologically Derived Product supplied
       /// </summary>
       [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SupplyDeliverySupplyItemType")]
       [CLSCompliant(false)]
       [References("Medication","Substance","Device","BiologicallyDerivedProduct","NutritionProduct","InventoryItem")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -350,6 +351,7 @@ namespace Hl7.Fhir.Model
     /// Category of supply event
     /// </summary>
     [FhirElement("type", Order=140)]
+    [Binding("SupplyDeliverySupplyItemType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

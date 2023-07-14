@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// What mitigation?
       /// </summary>
       [FhirElement("action", Order=40)]
+      [Binding("DetectedIssueMitigationAction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
@@ -309,6 +310,7 @@ namespace Hl7.Fhir.Model
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("DetectedIssueCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {

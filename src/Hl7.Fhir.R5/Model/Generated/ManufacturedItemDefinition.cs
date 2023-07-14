@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// A code expressing the type of characteristic
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -680,6 +681,7 @@ namespace Hl7.Fhir.Model
     /// Dose form as manufactured (before any necessary transformation)
     /// </summary>
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=120)]
+    [Binding("ManufacturedDoseForm")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
@@ -694,6 +696,7 @@ namespace Hl7.Fhir.Model
     /// The “real-world” units in which the quantity of the item is described
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=130)]
+    [Binding("UnitOfPresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
     {
@@ -737,6 +740,7 @@ namespace Hl7.Fhir.Model
     /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=160)]
+    [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient

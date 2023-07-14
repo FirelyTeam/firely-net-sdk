@@ -847,6 +847,7 @@ namespace Hl7.Fhir.Model
       /// Types of uses of designations
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -860,6 +861,7 @@ namespace Hl7.Fhir.Model
       /// Additional ways how this designation would be used. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
       [FhirElement("additionalUse", Order=60, Since=FhirRelease.R5)]
+      [Binding("ConceptDesignationUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> AdditionalUse
@@ -3185,6 +3187,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for value set (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -3398,6 +3401,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
     [FhirElement("topic", Order=300, Since=FhirRelease.R5)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic

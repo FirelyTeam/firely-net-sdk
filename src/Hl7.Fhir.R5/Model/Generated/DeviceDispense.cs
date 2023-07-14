@@ -338,6 +338,7 @@ namespace Hl7.Fhir.Model
     /// Why a dispense was or was not performed
     /// </summary>
     [FhirElement("statusReason", Order=130)]
+    [Binding("DeviceDispenseStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference StatusReason
     {

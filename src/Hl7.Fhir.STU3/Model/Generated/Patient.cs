@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The kind of relationship
       /// </summary>
       [FhirElement("relationship", Order=40)]
+      [Binding("ContactRelationship")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -373,6 +374,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Dog, Cow
       /// </summary>
       [FhirElement("species", InSummary=true, Order=40)]
+      [Binding("AnimalSpecies")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Species
@@ -387,6 +389,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Poodle, Angus
       /// </summary>
       [FhirElement("breed", InSummary=true, Order=50)]
+      [Binding("AnimalBreed")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Breed
       {
@@ -400,6 +403,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Neutered, Intact
       /// </summary>
       [FhirElement("genderStatus", InSummary=true, Order=60)]
+      [Binding("AnimalGenderStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept GenderStatus
       {
@@ -528,6 +532,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the patient about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -987,6 +992,7 @@ namespace Hl7.Fhir.Model
     /// Marital (civil) status of a patient
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
+    [Binding("MaritalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MaritalStatus
     {

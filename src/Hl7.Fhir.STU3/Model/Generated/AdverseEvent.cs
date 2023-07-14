@@ -212,6 +212,7 @@ namespace Hl7.Fhir.Model
       /// assess1 | assess2
       /// </summary>
       [FhirElement("causalityAssessment", InSummary=true, Order=60)]
+      [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CausalityAssessment
       {
@@ -256,6 +257,7 @@ namespace Hl7.Fhir.Model
       /// method1 | method2
       /// </summary>
       [FhirElement("causalityMethod", InSummary=true, Order=80)]
+      [Binding("AdverseEventCausalityMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CausalityMethod
       {
@@ -284,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// result1 | result2
       /// </summary>
       [FhirElement("causalityResult", InSummary=true, Order=100)]
+      [Binding("AdverseEventCausalityResult")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CausalityResult
       {
@@ -482,6 +485,7 @@ namespace Hl7.Fhir.Model
     /// actual | potential
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="what")]
+    [Binding("AdverseEventType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -572,6 +576,7 @@ namespace Hl7.Fhir.Model
     /// Mild | Moderate | Severe
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=160)]
+    [Binding("AdverseEventSeriousness")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Seriousness
     {
@@ -585,6 +590,7 @@ namespace Hl7.Fhir.Model
     /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=170)]
+    [Binding("AdverseEventOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {

@@ -808,6 +808,7 @@ namespace Hl7.Fhir.Model
     /// e.g. driver,  provider,  patient, bank etc
     /// </summary>
     [FhirElement("type", Order=220)]
+    [Binding("NamingSystemIdentifierSystemType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -866,6 +867,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for naming system (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1048,6 +1050,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=320)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic

@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// always | never | sometimes
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("DeviceUsageAdherenceCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -139,6 +140,7 @@ namespace Hl7.Fhir.Model
       /// lost | stolen | prescribed | broken | burned | forgot
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("DeviceUsageAdherenceReason")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -416,6 +418,7 @@ namespace Hl7.Fhir.Model
     /// The status of the device usage, for example always, sometimes, never. This is not the same as the status of the statement
     /// </summary>
     [FhirElement("usageStatus", Order=180)]
+    [Binding("DeviceUsageStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UsageStatus
     {
@@ -499,6 +502,7 @@ namespace Hl7.Fhir.Model
     /// Target body site
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=240)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference BodySite
     {

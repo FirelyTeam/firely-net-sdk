@@ -137,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// Who performed the dispense and what they did
       /// </summary>
       [FhirElement("function", Order=40)]
+      [Binding("MedicationDispensePerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -304,6 +305,7 @@ namespace Hl7.Fhir.Model
       /// Code signifying whether a different drug was dispensed from what was prescribed
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("MedicationIntendedSubstitutionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -317,6 +319,7 @@ namespace Hl7.Fhir.Model
       /// Why was substitution made
       /// </summary>
       [FhirElement("reason", Order=60)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -536,6 +539,7 @@ namespace Hl7.Fhir.Model
     /// Why a dispense was not performed
     /// </summary>
     [FhirElement("notPerformedReason", Order=130)]
+    [Binding("MedicationDispenseStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference NotPerformedReason
     {
@@ -580,6 +584,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication dispense
     /// </summary>
     [FhirElement("category", Order=150)]
+    [Binding("MedicationDispenseAdminLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -594,6 +599,7 @@ namespace Hl7.Fhir.Model
     /// What medication was supplied
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=160, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Medication
@@ -700,6 +706,7 @@ namespace Hl7.Fhir.Model
     /// Trial fill, partial fill, emergency fill, etc
     /// </summary>
     [FhirElement("type", Order=230)]
+    [Binding("MedicationDispenseType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

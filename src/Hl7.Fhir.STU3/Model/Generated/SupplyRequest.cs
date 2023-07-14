@@ -139,6 +139,7 @@ namespace Hl7.Fhir.Model
       /// Medication, Substance, or Device requested to be supplied
       /// </summary>
       [FhirElement("item", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SupplyRequestItem")]
       [CLSCompliant(false)]
       [References("Medication","Substance","Device")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -430,6 +431,7 @@ namespace Hl7.Fhir.Model
     /// The kind of supply (central, non-stock, etc.)
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("SupplyRequestKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -564,6 +566,7 @@ namespace Hl7.Fhir.Model
     /// Why the supply item was requested
     /// </summary>
     [FhirElement("reason", Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
+    [Binding("SupplyRequestReason")]
     [CLSCompliant(false)]
     [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

@@ -126,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// Type of intended specimen
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("IntendedSpecimenType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -261,6 +262,7 @@ namespace Hl7.Fhir.Model
       /// Criterion specified for specimen rejection
       /// </summary>
       [FhirElement("rejectionCriterion", Order=110)]
+      [Binding("RejectionCriterion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
@@ -289,6 +291,7 @@ namespace Hl7.Fhir.Model
       /// Where the specimen will be tested
       /// </summary>
       [FhirElement("testingDestination", Order=130)]
+      [Binding("TestingDestination")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TestingDestination
@@ -481,6 +484,7 @@ namespace Hl7.Fhir.Model
       /// The material type used for the container
       /// </summary>
       [FhirElement("material", Order=40)]
+      [Binding("ContainerMaterial")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Material
       {
@@ -494,6 +498,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container associated with the kind of specimen
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ContainerType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -507,6 +512,7 @@ namespace Hl7.Fhir.Model
       /// Color of container cap
       /// </summary>
       [FhirElement("cap", Order=60)]
+      [Binding("ContainerCap")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Cap
       {
@@ -784,6 +790,7 @@ namespace Hl7.Fhir.Model
       /// Additive associated with container
       /// </summary>
       [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ContainerAdditive")]
       [CLSCompliant(false)]
       [References("SubstanceDefinition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -898,6 +905,7 @@ namespace Hl7.Fhir.Model
       /// Qualifies the interval of temperature
       /// </summary>
       [FhirElement("temperatureQualifier", Order=40)]
+      [Binding("HandlingConditionSet")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept TemperatureQualifier
       {
@@ -1496,6 +1504,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for this SpecimenDefinition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1678,6 +1687,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material to collect
     /// </summary>
     [FhirElement("typeCollected", InSummary=true, Order=320)]
+    [Binding("CollectedSpecimenType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TypeCollected
     {
@@ -1691,6 +1701,7 @@ namespace Hl7.Fhir.Model
     /// Patient preparation for collection
     /// </summary>
     [FhirElement("patientPreparation", InSummary=true, Order=330)]
+    [Binding("PreparePatient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
@@ -1736,6 +1747,7 @@ namespace Hl7.Fhir.Model
     /// Specimen collection procedure
     /// </summary>
     [FhirElement("collection", InSummary=true, Order=350)]
+    [Binding("SpecimenCollection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection

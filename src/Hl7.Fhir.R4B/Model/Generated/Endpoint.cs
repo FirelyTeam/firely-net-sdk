@@ -153,6 +153,7 @@ namespace Hl7.Fhir.Model
     /// Protocol/Profile/Standard to be used with this endpoint connection
     /// </summary>
     [FhirElement("connectionType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("endpoint-contype")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ConnectionType
@@ -240,6 +241,7 @@ namespace Hl7.Fhir.Model
     /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
     /// </summary>
     [FhirElement("payloadType", InSummary=true, Order=160)]
+    [Binding("PayloadType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PayloadType

@@ -161,6 +161,7 @@ namespace Hl7.Fhir.Model
       /// state | milestone
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ResearchSubjectStateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -174,6 +175,7 @@ namespace Hl7.Fhir.Model
       /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
       /// </summary>
       [FhirElement("subjectState", Order=50, FiveWs="FiveWs.status")]
+      [Binding("ResearchSubjectProgresss")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubjectState
       {
@@ -187,6 +189,7 @@ namespace Hl7.Fhir.Model
       /// SignedUp | Screened | Randomized
       /// </summary>
       [FhirElement("milestone", Order=60, FiveWs="FiveWs.status")]
+      [Binding("ResearchSubjectMilestone")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Milestone
       {
@@ -200,6 +203,7 @@ namespace Hl7.Fhir.Model
       /// State change reason
       /// </summary>
       [FhirElement("reason", Order=70)]
+      [Binding("StateChangeReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {

@@ -153,6 +153,7 @@ namespace Hl7.Fhir.Model
       /// The regulatory grounds upon which this Permission builds
       /// </summary>
       [FhirElement("basis", InSummary=true, Order=40)]
+      [Binding("ConsentRegulatoryBasis")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Basis
@@ -350,6 +351,7 @@ namespace Hl7.Fhir.Model
       /// What limits apply to the use of the data
       /// </summary>
       [FhirElement("limit", InSummary=true, Order=70)]
+      [Binding("PermissionUsageLimits")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Limit
@@ -839,6 +841,7 @@ namespace Hl7.Fhir.Model
       /// Actions controlled by this rule
       /// </summary>
       [FhirElement("action", InSummary=true, Order=50)]
+      [Binding("ProcessingActivityAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -853,6 +856,7 @@ namespace Hl7.Fhir.Model
       /// The purpose for which the permission is given
       /// </summary>
       [FhirElement("purpose", InSummary=true, Order=60)]
+      [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Purpose

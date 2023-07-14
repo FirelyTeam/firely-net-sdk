@@ -1166,6 +1166,7 @@ namespace Hl7.Fhir.Model
       /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates
       /// </summary>
       [FhirElement("service", InSummary=true, Order=50)]
+      [Binding("RestfulSecurityService")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Service
@@ -3155,6 +3156,7 @@ namespace Hl7.Fhir.Model
       /// http | ftp | mllp +
       /// </summary>
       [FhirElement("protocol", Order=40)]
+      [Binding("MessageTransport")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Protocol
@@ -3463,6 +3465,7 @@ namespace Hl7.Fhir.Model
       /// Event type
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MessageEvent")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Code
@@ -4285,6 +4288,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for capability statement (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

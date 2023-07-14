@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// Coded representation of the qualification
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -418,6 +419,7 @@ namespace Hl7.Fhir.Model
     /// A language the practitioner is able to use in patient communication
     /// </summary>
     [FhirElement("communication", Order=180)]
+    [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication

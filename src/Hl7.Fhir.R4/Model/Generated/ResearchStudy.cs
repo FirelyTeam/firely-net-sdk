@@ -372,6 +372,7 @@ namespace Hl7.Fhir.Model
       /// primary | secondary | exploratory
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ResearchStudyObjectiveType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -588,6 +589,7 @@ namespace Hl7.Fhir.Model
     /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
     /// </summary>
     [FhirElement("primaryPurposeType", InSummary=true, Order=140)]
+    [Binding("ResearchStudyPrimaryPurposeType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
     {
@@ -601,6 +603,7 @@ namespace Hl7.Fhir.Model
     /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
     /// </summary>
     [FhirElement("phase", InSummary=true, Order=150)]
+    [Binding("ResearchStudyPhase")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Phase
     {
@@ -614,6 +617,7 @@ namespace Hl7.Fhir.Model
     /// Classifications for the study
     /// </summary>
     [FhirElement("category", InSummary=true, Order=160)]
+    [Binding("ResearchStudyCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -628,6 +632,7 @@ namespace Hl7.Fhir.Model
     /// Drugs, devices, etc. under study
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
+    [Binding("ResearchStudyFocus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
@@ -642,6 +647,7 @@ namespace Hl7.Fhir.Model
     /// Condition being studied
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
+    [Binding("ConditionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
@@ -684,6 +690,7 @@ namespace Hl7.Fhir.Model
     /// Used to search for the study
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=210)]
+    [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -698,6 +705,7 @@ namespace Hl7.Fhir.Model
     /// Geographic region(s) for study
     /// </summary>
     [FhirElement("location", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Location
@@ -818,6 +826,7 @@ namespace Hl7.Fhir.Model
     /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
     /// </summary>
     [FhirElement("reasonStopped", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
+    [Binding("ResearchStudyReasonStopped")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ReasonStopped
     {

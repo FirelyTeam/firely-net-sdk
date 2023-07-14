@@ -368,6 +368,7 @@ namespace Hl7.Fhir.Model
     /// Kind of document set
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("DocumentC80Type")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

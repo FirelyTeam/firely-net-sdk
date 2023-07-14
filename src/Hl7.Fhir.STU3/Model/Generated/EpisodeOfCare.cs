@@ -295,6 +295,7 @@ namespace Hl7.Fhir.Model
       /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
       /// </summary>
       [FhirElement("role", InSummary=true, Order=50)]
+      [Binding("DiagnosisRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -502,6 +503,7 @@ namespace Hl7.Fhir.Model
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("EpisodeOfCareType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

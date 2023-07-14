@@ -303,6 +303,7 @@ namespace Hl7.Fhir.Model
       /// Business case of verification
       /// </summary>
       [FhirElement("verificationType", Order=50)]
+      [Binding("ConsentVerificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VerificationType
       {
@@ -538,6 +539,7 @@ namespace Hl7.Fhir.Model
       /// Actions controlled by this provision
       /// </summary>
       [FhirElement("action", InSummary=true, Order=60)]
+      [Binding("ConsentAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -552,6 +554,7 @@ namespace Hl7.Fhir.Model
       /// Security Labels that define affected resources
       /// </summary>
       [FhirElement("securityLabel", InSummary=true, Order=70)]
+      [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -566,6 +569,7 @@ namespace Hl7.Fhir.Model
       /// Context of activities covered by this provision
       /// </summary>
       [FhirElement("purpose", InSummary=true, Order=80)]
+      [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Purpose
@@ -580,6 +584,7 @@ namespace Hl7.Fhir.Model
       /// e.g. Resource Type, Profile, CDA, etc
       /// </summary>
       [FhirElement("documentType", InSummary=true, Order=90)]
+      [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> DocumentType
@@ -594,6 +599,7 @@ namespace Hl7.Fhir.Model
       /// e.g. Resource Type, Profile, etc
       /// </summary>
       [FhirElement("resourceType", InSummary=true, Order=100)]
+      [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> ResourceType
@@ -608,6 +614,7 @@ namespace Hl7.Fhir.Model
       /// e.g. LOINC or SNOMED CT code, etc. in the content
       /// </summary>
       [FhirElement("code", InSummary=true, Order=110)]
+      [Binding("ConsentContentCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -872,6 +879,7 @@ namespace Hl7.Fhir.Model
       /// How the actor is involved
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ConsentActorRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -1196,6 +1204,7 @@ namespace Hl7.Fhir.Model
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("ConsentCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1363,6 +1372,7 @@ namespace Hl7.Fhir.Model
     /// Regulations establishing base Consent
     /// </summary>
     [FhirElement("regulatoryBasis", Order=210)]
+    [Binding("ConsentRegulatoryBasis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> RegulatoryBasis

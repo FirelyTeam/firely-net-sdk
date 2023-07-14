@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
       /// Type of performer
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("EventPerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -384,6 +385,7 @@ namespace Hl7.Fhir.Model
       /// DICOM SOP Class UID
       /// </summary>
       [FhirElement("sopClass", Order=60)]
+      [Binding("sopClass")]
       [DataMember]
       public Hl7.Fhir.Model.Coding SopClass
       {
@@ -1053,6 +1055,7 @@ namespace Hl7.Fhir.Model
     /// Classifies the imaging selection
     /// </summary>
     [FhirElement("category", InSummary=true, Order=150)]
+    [Binding("ImagingSelectionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1067,6 +1070,7 @@ namespace Hl7.Fhir.Model
     /// Imaging Selection purpose text or code
     /// </summary>
     [FhirElement("code", InSummary=true, Order=160)]
+    [Binding("ImagingSelectionCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -1237,6 +1241,7 @@ namespace Hl7.Fhir.Model
     /// Body part examined
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=230)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference BodySite
     {

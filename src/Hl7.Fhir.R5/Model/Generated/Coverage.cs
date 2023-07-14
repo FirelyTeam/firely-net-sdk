@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// Type of class such as 'group' or 'plan'
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("CoverageClass")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -428,6 +429,7 @@ namespace Hl7.Fhir.Model
       /// Cost category
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("CopayTypes")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -441,6 +443,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=50)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -454,6 +457,7 @@ namespace Hl7.Fhir.Model
       /// In or out of network
       /// </summary>
       [FhirElement("network", Order=60)]
+      [Binding("BenefitNetwork")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Network
       {
@@ -467,6 +471,7 @@ namespace Hl7.Fhir.Model
       /// Individual or family
       /// </summary>
       [FhirElement("unit", Order=70)]
+      [Binding("BenefitUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -480,6 +485,7 @@ namespace Hl7.Fhir.Model
       /// Annual or lifetime
       /// </summary>
       [FhirElement("term", Order=80)]
+      [Binding("BenefitTerm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -673,6 +679,7 @@ namespace Hl7.Fhir.Model
       /// Exception category
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("CoverageFinancialException")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -888,6 +895,7 @@ namespace Hl7.Fhir.Model
     /// Coverage category such as medical or accident
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("CoverageType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -992,6 +1000,7 @@ namespace Hl7.Fhir.Model
     /// Beneficiary relationship to the subscriber
     /// </summary>
     [FhirElement("relationship", Order=190)]
+    [Binding("Relationship")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
     {

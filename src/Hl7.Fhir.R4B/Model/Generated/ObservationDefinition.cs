@@ -177,6 +177,7 @@ namespace Hl7.Fhir.Model
       /// Customary unit for quantitative results
       /// </summary>
       [FhirElement("customaryUnit", Order=40)]
+      [Binding("ObservationUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CustomaryUnit
       {
@@ -190,6 +191,7 @@ namespace Hl7.Fhir.Model
       /// SI unit for quantitative results
       /// </summary>
       [FhirElement("unit", Order=50)]
+      [Binding("ObservationUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -435,6 +437,7 @@ namespace Hl7.Fhir.Model
       /// Range context qualifier
       /// </summary>
       [FhirElement("context", Order=60)]
+      [Binding("ObservationRangeMeaning")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Context
       {
@@ -448,6 +451,7 @@ namespace Hl7.Fhir.Model
       /// Targetted population of the range
       /// </summary>
       [FhirElement("appliesTo", Order=70)]
+      [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
@@ -698,6 +702,7 @@ namespace Hl7.Fhir.Model
     /// Category of observation
     /// </summary>
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
+    [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -712,6 +717,7 @@ namespace Hl7.Fhir.Model
     /// Type of observation (code / type)
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -805,6 +811,7 @@ namespace Hl7.Fhir.Model
     /// Method used to produce the observation
     /// </summary>
     [FhirElement("method", Order=140)]
+    [Binding("ObservationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {

@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// Coded representation of the qualification
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -284,6 +285,7 @@ namespace Hl7.Fhir.Model
     /// Kind of organization
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("OrganizationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

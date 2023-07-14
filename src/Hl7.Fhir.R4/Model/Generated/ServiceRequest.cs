@@ -250,6 +250,7 @@ namespace Hl7.Fhir.Model
     /// Classification of service
     /// </summary>
     [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
+    [Binding("ServiceRequestCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -328,6 +329,7 @@ namespace Hl7.Fhir.Model
     /// What is being requested/ordered
     /// </summary>
     [FhirElement("code", InSummary=true, Order=200, FiveWs="FiveWs.what[x]")]
+    [Binding("ServiceRequestCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -341,6 +343,7 @@ namespace Hl7.Fhir.Model
     /// Additional order information
     /// </summary>
     [FhirElement("orderDetail", InSummary=true, Order=210)]
+    [Binding("OrderDetail")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OrderDetail
@@ -416,6 +419,7 @@ namespace Hl7.Fhir.Model
     /// Preconditions for service
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=260, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("ProcedureAsNeededReason")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -477,6 +481,7 @@ namespace Hl7.Fhir.Model
     /// Performer role
     /// </summary>
     [FhirElement("performerType", InSummary=true, Order=290, FiveWs="FiveWs.actor")]
+    [Binding("ServiceRequestParticipantRole")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PerformerType
     {
@@ -506,6 +511,7 @@ namespace Hl7.Fhir.Model
     /// Requested location
     /// </summary>
     [FhirElement("locationCode", InSummary=true, Order=310, FiveWs="FiveWs.actor")]
+    [Binding("ServiceRequestLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> LocationCode
@@ -536,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// Explanation/Justification for procedure or service
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=330, FiveWs="FiveWs.why[x]")]
+    [Binding("ServiceRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -614,6 +621,7 @@ namespace Hl7.Fhir.Model
     /// Location on Body
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=380)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite

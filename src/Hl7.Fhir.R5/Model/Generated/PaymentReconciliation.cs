@@ -193,6 +193,7 @@ namespace Hl7.Fhir.Model
       /// Category of payment
       /// </summary>
       [FhirElement("type", Order=100)]
+      [Binding("PaymentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -685,6 +686,7 @@ namespace Hl7.Fhir.Model
     /// Category of payment
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [Binding("PaymentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -733,6 +735,7 @@ namespace Hl7.Fhir.Model
     /// Workflow originating payment
     /// </summary>
     [FhirElement("kind", Order=120)]
+    [Binding("PaymentKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Kind
     {
@@ -806,6 +809,7 @@ namespace Hl7.Fhir.Model
     /// Nature of the source
     /// </summary>
     [FhirElement("issuerType", Order=160)]
+    [Binding("PaymentIssuerType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept IssuerType
     {
@@ -975,6 +979,7 @@ namespace Hl7.Fhir.Model
     /// Payment instrument
     /// </summary>
     [FhirElement("method", Order=240)]
+    [Binding("PaymentMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -1241,6 +1246,7 @@ namespace Hl7.Fhir.Model
     /// Printed form identifier
     /// </summary>
     [FhirElement("formCode", Order=360)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FormCode
     {

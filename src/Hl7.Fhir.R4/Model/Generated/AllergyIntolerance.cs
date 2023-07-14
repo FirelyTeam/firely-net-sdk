@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
       /// Specific substance or pharmaceutical product considered to be responsible for event
       /// </summary>
       [FhirElement("substance", Order=40)]
+      [Binding("SubstanceCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Substance
       {
@@ -260,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// Clinical symptoms/signs associated with the Event
       /// </summary>
       [FhirElement("manifestation", Order=50)]
+      [Binding("Manifestation")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
@@ -369,6 +371,7 @@ namespace Hl7.Fhir.Model
       /// How the subject was exposed to the substance
       /// </summary>
       [FhirElement("exposureRoute", Order=90)]
+      [Binding("RouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ExposureRoute
       {
@@ -547,6 +550,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | resolved
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [Binding("AllergyIntoleranceClinicalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
     {
@@ -560,6 +564,7 @@ namespace Hl7.Fhir.Model
     /// unconfirmed | confirmed | refuted | entered-in-error
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("AllergyIntoleranceVerificationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VerificationStatus
     {
@@ -673,6 +678,7 @@ namespace Hl7.Fhir.Model
     /// Code that identifies the allergy or intolerance
     /// </summary>
     [FhirElement("code", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
+    [Binding("AllergyIntoleranceCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

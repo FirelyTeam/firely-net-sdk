@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Model
     /// Note: Since R5 the cardinality is expanded to 0..* (previous it was 1..*).
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
+    [Binding("SignatureType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Type

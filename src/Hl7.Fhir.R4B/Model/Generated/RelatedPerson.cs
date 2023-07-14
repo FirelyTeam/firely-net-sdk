@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the patient about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -271,6 +272,7 @@ namespace Hl7.Fhir.Model
     /// The nature of the relationship
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("PatientRelationshipType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Relationship

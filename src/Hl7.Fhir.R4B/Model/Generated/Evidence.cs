@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
       /// population | subpopulation | exposure | referenceExposure | measuredVariable | confounder
       /// </summary>
       [FhirElement("variableRole", InSummary=true, Order=60)]
+      [Binding("EvidenceVariableRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VariableRole
@@ -162,6 +163,7 @@ namespace Hl7.Fhir.Model
       /// low | moderate | high | exact
       /// </summary>
       [FhirElement("directnessMatch", Order=90)]
+      [Binding("EvidenceDirectness")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DirectnessMatch
       {
@@ -362,6 +364,7 @@ namespace Hl7.Fhir.Model
       /// Type of statistic, eg relative risk
       /// </summary>
       [FhirElement("statisticType", Order=60)]
+      [Binding("StatisticType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept StatisticType
       {
@@ -998,6 +1001,7 @@ namespace Hl7.Fhir.Model
       /// The type of attribute estimate, eg confidence interval or p value
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("AttributeEstimateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1233,6 +1237,7 @@ namespace Hl7.Fhir.Model
       /// Model specification
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("StatisticModelCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1681,6 +1686,7 @@ namespace Hl7.Fhir.Model
       /// Aspect of certainty being rated
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("EvidenceCertaintyType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1694,6 +1700,7 @@ namespace Hl7.Fhir.Model
       /// Assessment or judgement of the aspect
       /// </summary>
       [FhirElement("rating", Order=70)]
+      [Binding("EvidenceCertaintyRating")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Rating
       {
@@ -2349,6 +2356,7 @@ namespace Hl7.Fhir.Model
     /// The method to combine studies
     /// </summary>
     [FhirElement("synthesisType", Order=300)]
+    [Binding("SynthesisType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SynthesisType
     {
@@ -2362,6 +2370,7 @@ namespace Hl7.Fhir.Model
     /// The type of study that produced this evidence
     /// </summary>
     [FhirElement("studyType", Order=310)]
+    [Binding("StudyType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StudyType
     {

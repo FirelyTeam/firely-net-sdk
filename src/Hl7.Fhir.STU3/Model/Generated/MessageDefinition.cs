@@ -771,6 +771,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for message definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -894,6 +895,7 @@ namespace Hl7.Fhir.Model
     /// Event type
     /// </summary>
     [FhirElement("event", InSummary=true, Order=270)]
+    [Binding("MessageEvent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Event

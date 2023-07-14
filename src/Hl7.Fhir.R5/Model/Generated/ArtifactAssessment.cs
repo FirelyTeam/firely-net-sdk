@@ -293,6 +293,7 @@ namespace Hl7.Fhir.Model
       /// What type of content
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("EvidenceCertaintyType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -306,6 +307,7 @@ namespace Hl7.Fhir.Model
       /// Rating, classifier, or assessment
       /// </summary>
       [FhirElement("classifier", Order=70)]
+      [Binding("EvidenceCertaintyRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier

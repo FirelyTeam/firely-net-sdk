@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
     /// Named anatomical location
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// Modification to location code
     /// </summary>
     [FhirElement("qualifier", Order=120, FiveWs="what")]
+    [Binding("BodySiteQualifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Qualifier

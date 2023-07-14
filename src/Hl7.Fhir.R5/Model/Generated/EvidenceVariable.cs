@@ -619,6 +619,7 @@ namespace Hl7.Fhir.Model
       /// Expresses the type of characteristic
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("UsageContextType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -633,6 +634,7 @@ namespace Hl7.Fhir.Model
       /// Method for how the characteristic value was determined
       /// </summary>
       [FhirElement("method", Order=50)]
+      [Binding("DefinitionMethod")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Method
@@ -678,6 +680,7 @@ namespace Hl7.Fhir.Model
       /// Reference point for valueQuantity or valueRange
       /// </summary>
       [FhirElement("offset", Order=80)]
+      [Binding("CharacteristicOffset")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Offset
       {
@@ -1063,6 +1066,7 @@ namespace Hl7.Fhir.Model
       /// The event used as a base point (reference point) in time
       /// </summary>
       [FhirElement("event", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("EvidenceVariableEvent")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Id))]
       [DataMember]

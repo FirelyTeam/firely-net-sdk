@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Model
     /// Description of identifier
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
+    [Binding("IdentifierType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

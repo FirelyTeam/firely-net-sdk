@@ -256,6 +256,7 @@ namespace Hl7.Fhir.Model
       /// A code or full resource that represents the ingredient substance
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTSubstanceCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Code
@@ -513,6 +514,7 @@ namespace Hl7.Fhir.Model
       /// Where the strength range applies
       /// </summary>
       [FhirElement("country", InSummary=true, Order=90)]
+      [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
@@ -692,6 +694,7 @@ namespace Hl7.Fhir.Model
       /// Relevant reference substance
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTSubstanceCodes")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Substance
       {
@@ -752,6 +755,7 @@ namespace Hl7.Fhir.Model
       /// Where the strength range applies
       /// </summary>
       [FhirElement("country", InSummary=true, Order=70)]
+      [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
@@ -939,6 +943,7 @@ namespace Hl7.Fhir.Model
     /// Purpose of the ingredient within the product, e.g. active, inactive
     /// </summary>
     [FhirElement("role", InSummary=true, Order=120)]
+    [Binding("IngredientRole")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Role
@@ -953,6 +958,7 @@ namespace Hl7.Fhir.Model
     /// Precise action within the drug product, e.g. antioxidant, alkalizing agent
     /// </summary>
     [FhirElement("function", InSummary=true, Order=130)]
+    [Binding("IngredientFunction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Function

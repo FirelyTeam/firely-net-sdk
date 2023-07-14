@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Allowed Resource (reference to definition) for this Subscription filter
       /// </summary>
       [FhirElement("resourceType", InSummary=true, Order=40)]
+      [Binding("FHIRTypes")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceTypeElement
       {
@@ -767,6 +768,7 @@ namespace Hl7.Fhir.Model
     /// Channel type for notifications
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=180)]
+    [Binding("SubscriptionChannelType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ChannelType

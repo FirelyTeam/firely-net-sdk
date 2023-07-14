@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Code that represents the included structure
       /// </summary>
       [FhirElement("structure", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("BodySite")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Structure
@@ -87,6 +88,7 @@ namespace Hl7.Fhir.Model
       /// Code that represents the included structure laterality
       /// </summary>
       [FhirElement("laterality", Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("BodyStructureQualifier")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Laterality
       {
@@ -130,6 +132,7 @@ namespace Hl7.Fhir.Model
       /// Code that represents the included structure qualifier
       /// </summary>
       [FhirElement("qualifier", Order=80, FiveWs="FiveWs.what[x]")]
+      [Binding("BodyStructureQualifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
@@ -277,6 +280,7 @@ namespace Hl7.Fhir.Model
       /// Body ]andmark description
       /// </summary>
       [FhirElement("landmarkDescription", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("bodyLandmarkOrientationLandmarkDescription")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> LandmarkDescription
@@ -291,6 +295,7 @@ namespace Hl7.Fhir.Model
       /// Clockface orientation
       /// </summary>
       [FhirElement("clockFacePosition", Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("bodyLandmarkOrientationClockFacePosition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ClockFacePosition
@@ -319,6 +324,7 @@ namespace Hl7.Fhir.Model
       /// Relative landmark surface orientation
       /// </summary>
       [FhirElement("surfaceOrientation", Order=70, FiveWs="FiveWs.what[x]")]
+      [Binding("bodyLandmarkOrientationSurfaceOrientation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SurfaceOrientation
@@ -457,6 +463,7 @@ namespace Hl7.Fhir.Model
       /// Measurement device
       /// </summary>
       [FhirElement("device", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("DeviceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Device
@@ -622,6 +629,7 @@ namespace Hl7.Fhir.Model
     /// Kind of Structure
     /// </summary>
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
+    [Binding("BodyStructureCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Morphology
     {
