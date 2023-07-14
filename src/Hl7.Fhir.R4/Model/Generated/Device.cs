@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device", IsResource=true)]
-  public partial class Device : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class Device : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1474,7 +1474,6 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=230)]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -1660,6 +1659,8 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Parent;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Type; set => Type = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

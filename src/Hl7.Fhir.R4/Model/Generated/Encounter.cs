@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter", IsResource=true)]
-  public partial class Encounter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class Encounter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1361,7 +1361,6 @@ namespace Hl7.Fhir.Model
     /// Specific type of encounter
     /// </summary>
     [FhirElement("type", InSummary=true, Order=140, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1619,6 +1618,8 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PartOf;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Type; set => Type = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

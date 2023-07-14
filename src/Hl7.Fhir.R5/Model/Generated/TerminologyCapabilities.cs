@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CommonLanguages>> LanguageElement
       {
-        get { if(_LanguageElement==null) _LanguageElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>>(); return _LanguageElement; }
+        get { if(_LanguageElement==null) _LanguageElement = new List<Code<Hl7.Fhir.Model.CommonLanguages>>(); return _LanguageElement; }
         set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
       }
 
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             LanguageElement = null;
           else
-            LanguageElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>(elem)));
+            LanguageElement = new List<Code<Hl7.Fhir.Model.CommonLanguages>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CommonLanguages>(elem)));
           OnPropertyChanged("Language");
         }
       }

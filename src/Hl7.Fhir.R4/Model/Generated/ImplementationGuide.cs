@@ -3037,7 +3037,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
       {
-        get { if(_FhirVersionElement==null) _FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(); return _FhirVersionElement; }
+        get { if(_FhirVersionElement==null) _FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(); return _FhirVersionElement; }
         set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
       }
 
@@ -3056,7 +3056,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             FhirVersionElement = null;
           else
-            FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>(elem)));
+            FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(value.Select(elem=>new Code<Hl7.Fhir.Model.FHIRVersion>(elem)));
           OnPropertyChanged("FhirVersion");
         }
       }
@@ -4975,7 +4975,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
     {
-      get { if(_FhirVersionElement==null) _FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(); return _FhirVersionElement; }
+      get { if(_FhirVersionElement==null) _FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(); return _FhirVersionElement; }
       set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
     }
 
@@ -4994,7 +4994,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           FhirVersionElement = null;
         else
-          FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>(elem)));
+          FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(value.Select(elem=>new Code<Hl7.Fhir.Model.FHIRVersion>(elem)));
         OnPropertyChanged("FhirVersion");
       }
     }

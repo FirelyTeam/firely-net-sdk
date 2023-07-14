@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue", IsResource=true)]
-  public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -446,7 +446,6 @@ namespace Hl7.Fhir.Model
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -641,6 +640,8 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

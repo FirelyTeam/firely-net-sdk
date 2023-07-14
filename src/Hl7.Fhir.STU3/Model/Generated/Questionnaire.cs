@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
     {
-      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
+      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
       set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
     }
 
@@ -1587,7 +1587,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           SubjectTypeElement = null;
         else
-          SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("SubjectType");
       }
     }

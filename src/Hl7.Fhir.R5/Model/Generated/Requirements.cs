@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>> ConformanceElement
       {
-        get { if(_ConformanceElement==null) _ConformanceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(); return _ConformanceElement; }
+        get { if(_ConformanceElement==null) _ConformanceElement = new List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(); return _ConformanceElement; }
         set { _ConformanceElement = value; OnPropertyChanged("ConformanceElement"); }
       }
 
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ConformanceElement = null;
           else
-            ConformanceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>(elem)));
+            ConformanceElement = new List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>(elem)));
           OnPropertyChanged("Conformance");
         }
       }

@@ -1317,7 +1317,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> PurposeElement
     {
-      get { if(_PurposeElement==null) _PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(); return _PurposeElement; }
+      get { if(_PurposeElement==null) _PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(); return _PurposeElement; }
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
@@ -1336,7 +1336,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           PurposeElement = null;
         else
-          PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>(elem)));
+          PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>(elem)));
         OnPropertyChanged("Purpose");
       }
     }

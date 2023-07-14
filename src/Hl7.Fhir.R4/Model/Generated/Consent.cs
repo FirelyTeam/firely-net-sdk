@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
-  public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1234,7 +1234,6 @@ namespace Hl7.Fhir.Model
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1394,6 +1393,8 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Consent.provisionComponent _Provision;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

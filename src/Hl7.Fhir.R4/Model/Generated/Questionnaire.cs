@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire", IsResource=true)]
-  public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.FhirString>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1436,7 +1436,6 @@ namespace Hl7.Fhir.Model
     /// Name for this questionnaire (computer friendly)
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -1602,7 +1601,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
     {
-      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
+      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
       set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
     }
 
@@ -1621,7 +1620,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           SubjectTypeElement = null;
         else
-          SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("SubjectType");
       }
     }
@@ -1927,6 +1926,8 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Questionnaire.ItemComponent> _Item;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.FhirString ICoded<Hl7.Fhir.Model.FhirString>.Code { get => NameElement; set => NameElement = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

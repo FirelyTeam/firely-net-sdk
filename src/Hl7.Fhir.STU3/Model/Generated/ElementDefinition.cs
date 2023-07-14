@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
       {
-        get { if(_AggregationElement==null) _AggregationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(); return _AggregationElement; }
+        get { if(_AggregationElement==null) _AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(); return _AggregationElement; }
         set { _AggregationElement = value; OnPropertyChanged("AggregationElement"); }
       }
 
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             AggregationElement = null;
           else
-            AggregationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>(elem)));
+            AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>(elem)));
           OnPropertyChanged("Aggregation");
         }
       }
@@ -2176,7 +2176,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement
     {
-      get { if(_RepresentationElement==null) _RepresentationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(); return _RepresentationElement; }
+      get { if(_RepresentationElement==null) _RepresentationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(); return _RepresentationElement; }
       set { _RepresentationElement = value; OnPropertyChanged("RepresentationElement"); }
     }
 
@@ -2195,7 +2195,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           RepresentationElement = null;
         else
-          RepresentationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>(elem)));
+          RepresentationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>(elem)));
         OnPropertyChanged("Representation");
       }
     }

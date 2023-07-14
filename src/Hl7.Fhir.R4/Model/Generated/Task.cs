@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task", IsResource=true)]
-  public partial class Task : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class Task : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -900,7 +900,6 @@ namespace Hl7.Fhir.Model
     /// Task Type
     /// </summary>
     [FhirElement("code", InSummary=true, Order=200, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1236,6 +1235,8 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Task.OutputComponent> _Output;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

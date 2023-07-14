@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ResourceType>> TypeElement
       {
-        get { if(_TypeElement==null) _TypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _TypeElement; }
+        get { if(_TypeElement==null) _TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             TypeElement = null;
           else
-            TypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+            TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
           OnPropertyChanged("Type");
         }
       }

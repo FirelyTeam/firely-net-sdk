@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> ModeElement
       {
-        get { if(_ModeElement==null) _ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
+        get { if(_ModeElement==null) _ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
         set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
       }
 
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ModeElement = null;
           else
-            ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
+            ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
           OnPropertyChanged("Mode");
         }
       }

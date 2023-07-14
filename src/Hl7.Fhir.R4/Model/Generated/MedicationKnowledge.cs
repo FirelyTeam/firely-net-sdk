@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationKnowledge","http://hl7.org/fhir/StructureDefinition/MedicationKnowledge", IsResource=true)]
-  public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2437,7 +2437,6 @@ namespace Hl7.Fhir.Model
     /// Code that identifies this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -2796,6 +2795,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent> _Kinetics;
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

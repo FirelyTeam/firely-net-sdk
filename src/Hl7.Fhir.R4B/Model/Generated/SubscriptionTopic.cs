@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
       {
-        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
+        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
         set { _SupportedInteractionElement = value; OnPropertyChanged("SupportedInteractionElement"); }
       }
 
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             SupportedInteractionElement = null;
           else
-            SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
+            SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
           OnPropertyChanged("SupportedInteraction");
         }
       }
@@ -1112,7 +1112,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>> ModifierElement
       {
-        get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(); return _ModifierElement; }
+        get { if(_ModifierElement==null) _ModifierElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(); return _ModifierElement; }
         set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
       }
 
@@ -1131,7 +1131,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ModifierElement = null;
           else
-            ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>(elem)));
+            ModifierElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>(elem)));
           OnPropertyChanged("Modifier");
         }
       }

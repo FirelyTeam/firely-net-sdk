@@ -2196,7 +2196,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> ListModeElement
       {
-        get { if(_ListModeElement==null) _ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
+        get { if(_ListModeElement==null) _ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
         set { _ListModeElement = value; OnPropertyChanged("ListModeElement"); }
       }
 
@@ -2215,7 +2215,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ListModeElement = null;
           else
-            ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
+            ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
           OnPropertyChanged("ListMode");
         }
       }

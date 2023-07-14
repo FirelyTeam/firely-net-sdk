@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("List","http://hl7.org/fhir/StructureDefinition/List", IsResource=true)]
-  public partial class List : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class List : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -415,7 +415,6 @@ namespace Hl7.Fhir.Model
     /// What the purpose of this list is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -556,6 +555,8 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

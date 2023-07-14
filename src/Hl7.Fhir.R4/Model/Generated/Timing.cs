@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Timing","http://hl7.org/fhir/StructureDefinition/Timing")]
-  public partial class Timing : Hl7.Fhir.Model.BackboneType
+  public partial class Timing : Hl7.Fhir.Model.BackboneType, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
       {
-        get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
+        get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
         set { _DayOfWeekElement = value; OnPropertyChanged("DayOfWeekElement"); }
       }
 
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             DayOfWeekElement = null;
           else
-            DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+            DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DayOfWeek");
         }
       }
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
       {
-        get { if(_WhenElement==null) _WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
+        get { if(_WhenElement==null) _WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
         set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
       }
 
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             WhenElement = null;
           else
-            WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
+            WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
           OnPropertyChanged("When");
         }
       }
@@ -1014,7 +1014,6 @@ namespace Hl7.Fhir.Model
     /// BID | TID | QID | AM | PM | QD | QOD | +
     /// </summary>
     [FhirElement("code", InSummary=true, Order=60)]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1023,6 +1022,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _Code;
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

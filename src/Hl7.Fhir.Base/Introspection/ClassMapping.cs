@@ -221,11 +221,6 @@ namespace Hl7.Fhir.Introspection
         public PropertyMapping? PrimitiveValueProperty => PropertyMappings.SingleOrDefault(pm => pm.RepresentsValueElement);
 
         /// <summary>
-        /// In Cql, this indicates the property within this class that is the default filter in a retrieve statement.
-        /// </summary>
-        public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.IsPrimaryCodePath);
-
-        /// <summary>
         /// This indicates that this class is representing the Patient data (and implements <see cref="IPatient"/>).
         /// </summary>
         public bool IsPatientClass => typeof(IPatient).IsAssignableFrom(NativeType);

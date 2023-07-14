@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition", IsResource=true)]
-  public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1102,7 +1102,6 @@ namespace Hl7.Fhir.Model
     /// Kind of composition (LOINC if possible)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -1342,6 +1341,8 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
 
     Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Type; set => Type = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

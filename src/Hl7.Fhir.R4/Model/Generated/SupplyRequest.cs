@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest", IsResource=true)]
-  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
+  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -292,7 +292,6 @@ namespace Hl7.Fhir.Model
     /// The kind of supply (central, non-stock, etc.)
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -518,6 +517,8 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _DeliverTo;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Category; set => Category = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
       {
-        get { if(_OperatorElement==null) _OperatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>>(); return _OperatorElement; }
+        get { if(_OperatorElement==null) _OperatorElement = new List<Code<Hl7.Fhir.Model.FilterOperator>>(); return _OperatorElement; }
         set { _OperatorElement = value; OnPropertyChanged("OperatorElement"); }
       }
 
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             OperatorElement = null;
           else
-            OperatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>(elem)));
+            OperatorElement = new List<Code<Hl7.Fhir.Model.FilterOperator>>(value.Select(elem=>new Code<Hl7.Fhir.Model.FilterOperator>(elem)));
           OnPropertyChanged("Operator");
         }
       }

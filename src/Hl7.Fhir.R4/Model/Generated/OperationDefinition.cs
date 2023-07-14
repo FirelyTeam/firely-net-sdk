@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("OperationDefinition","http://hl7.org/fhir/StructureDefinition/OperationDefinition", IsResource=true)]
-  public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, ICoded<Hl7.Fhir.Model.Code>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1499,7 +1499,6 @@ namespace Hl7.Fhir.Model
     /// Name used to invoke the operation
     /// </summary>
     [FhirElement("code", InSummary=true, Order=240)]
-    [CqlElement(IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement
@@ -1600,7 +1599,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> ResourceElement
     {
-      get { if(_ResourceElement==null) _ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _ResourceElement; }
+      get { if(_ResourceElement==null) _ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _ResourceElement; }
       set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
     }
 
@@ -1619,7 +1618,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ResourceElement = null;
         else
-          ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("Resource");
       }
     }
@@ -1809,6 +1808,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> _Overload;
+
+    Hl7.Fhir.Model.Code ICoded<Hl7.Fhir.Model.Code>.Code { get => CodeElement; set => CodeElement = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

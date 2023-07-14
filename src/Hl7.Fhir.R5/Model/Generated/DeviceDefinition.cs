@@ -3508,7 +3508,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>> ProductionIdentifierInUDIElement
     {
-      get { if(_ProductionIdentifierInUDIElement==null) _ProductionIdentifierInUDIElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(); return _ProductionIdentifierInUDIElement; }
+      get { if(_ProductionIdentifierInUDIElement==null) _ProductionIdentifierInUDIElement = new List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(); return _ProductionIdentifierInUDIElement; }
       set { _ProductionIdentifierInUDIElement = value; OnPropertyChanged("ProductionIdentifierInUDIElement"); }
     }
 
@@ -3527,7 +3527,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ProductionIdentifierInUDIElement = null;
         else
-          ProductionIdentifierInUDIElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>(elem)));
+          ProductionIdentifierInUDIElement = new List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>(elem)));
         OnPropertyChanged("ProductionIdentifierInUDI");
       }
     }

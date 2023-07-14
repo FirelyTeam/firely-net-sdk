@@ -781,8 +781,6 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Date _BirthDateElement;
 
-    Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
-
     /// <summary>
     /// The date of birth for the individual
     /// </summary>
@@ -946,6 +944,8 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

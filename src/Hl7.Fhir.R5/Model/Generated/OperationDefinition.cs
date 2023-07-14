@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>> ScopeElement
       {
-        get { if(_ScopeElement==null) _ScopeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>>(); return _ScopeElement; }
+        get { if(_ScopeElement==null) _ScopeElement = new List<Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>>(); return _ScopeElement; }
         set { _ScopeElement = value; OnPropertyChanged("ScopeElement"); }
       }
 
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ScopeElement = null;
           else
-            ScopeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>(elem)));
+            ScopeElement = new List<Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>>(value.Select(elem=>new Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterScope>(elem)));
           OnPropertyChanged("Scope");
         }
       }
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FHIRAllTypes>> AllowedTypeElement
       {
-        get { if(_AllowedTypeElement==null) _AllowedTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRAllTypes>>(); return _AllowedTypeElement; }
+        get { if(_AllowedTypeElement==null) _AllowedTypeElement = new List<Code<Hl7.Fhir.Model.FHIRAllTypes>>(); return _AllowedTypeElement; }
         set { _AllowedTypeElement = value; OnPropertyChanged("AllowedTypeElement"); }
       }
 
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             AllowedTypeElement = null;
           else
-            AllowedTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRAllTypes>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRAllTypes>(elem)));
+            AllowedTypeElement = new List<Code<Hl7.Fhir.Model.FHIRAllTypes>>(value.Select(elem=>new Code<Hl7.Fhir.Model.FHIRAllTypes>(elem)));
           OnPropertyChanged("AllowedType");
         }
       }
@@ -1804,7 +1804,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> ResourceElement
     {
-      get { if(_ResourceElement==null) _ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(); return _ResourceElement; }
+      get { if(_ResourceElement==null) _ResourceElement = new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(); return _ResourceElement; }
       set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
     }
 
@@ -1823,7 +1823,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ResourceElement = null;
         else
-          ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>(elem)));
+          ResourceElement = new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(value.Select(elem=>new Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>(elem)));
         OnPropertyChanged("Resource");
       }
     }
