@@ -27,7 +27,6 @@ namespace Hl7.Fhir.Model
     {
         T Code { get; set; }
     }
-
 }
 
 #nullable restore

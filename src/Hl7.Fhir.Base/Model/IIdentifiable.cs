@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
         public static Identifier? GetIdentifier(this IIdentifiable<List<Identifier>> identifiable, string system)
         {
             if (system is null) throw new ArgumentNullException(nameof(system));
-            return identifiable.Identifier.FirstOrDefault(identifier => identifier.System == system);
+            return identifiable.Identifier?.FirstOrDefault(identifier => identifier.System == system);
         }
 
         /// <summary>
@@ -84,18 +84,35 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Matches the identifier(s) with the specified system. If the systems differ, <c>null</c> will be returned.
+        /// Catches the unsupported invocations of GetIdentifier.
         /// </summary>
-        /// <param name="identifiable">The identifiable containing an identifier(s) to match.</param>
+        public static Identifier? GetIdentifier<X>(this IIdentifiable<X> identifiable, string system)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Catches the unsupported invocations of TryGetIdentifier.
+        /// </summary>
+        public static bool TryGetIdentifier<X>(this IIdentifiable<X> identifiable, string system, out Identifier? identifier)
+        {
+            identifier = GetIdentifier(identifiable, system);
+            return identifier is not null;
+        }
+
+        /// <summary>
+        /// Gets the first identifier having the specified system. If none is being found, <c>null</c> will be returned.
+        /// </summary>
+        /// <param name="identifiable">The identifiable containing the identifiers to search.</param>
         /// <param name="system">The system to search for (case sensitive).</param>
+        /// <returns>The first identifier having the specified system or <c>null</c>.</returns>
         public static Identifier? GetIdentifier(this IIdentifiable identifiable, string system)
         {
-            return identifiable switch
-            {
-                IIdentifiable<List<Identifier>> list => list.GetIdentifier(system),
-                IIdentifiable<Identifier> single => single.GetIdentifier(system),
-                _ => throw new InvalidOperationException()
-            };
+            // Try all interfaces
+            if (identifiable is IIdentifiable<Identifier> single && single.TryGetIdentifier(system, out var identifier)) return identifier;
+            if (identifiable is IIdentifiable<List<Identifier>> list && list.TryGetIdentifier(system, out identifier)) return identifier;
+
+            return null;
         }
 
         /// <summary>
@@ -106,12 +123,8 @@ namespace Hl7.Fhir.Model
         /// <param name="identifier">The identifier if it matches the specified system, otherwise <c>null</c>.</param>
         public static bool TryGetIdentifier(this IIdentifiable identifiable, string system, out Identifier? identifier)
         {
-            return identifiable switch
-            {
-                IIdentifiable<List<Identifier>> list => list.TryGetIdentifier(system, out identifier),
-                IIdentifiable<Identifier> single => single.TryGetIdentifier(system, out identifier),
-                _ => throw new InvalidOperationException()
-            };
+            identifier = GetIdentifier(identifiable, system);
+            return identifier is not null;
         }
     }
 }
