@@ -107,8 +107,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private IEnumerable<ITerminologyService> preferredService(Parameters parameters)
         {
-            var valueSetUrl = new ValidateCodeParameters(parameters).Url.Value;
-            return _termServices.Where(t => matchSystem(t.Settings.PreferredValueSets, valueSetUrl)).Select(t => t.Service);
+            var valueSetUrl = new ValidateCodeParameters(parameters).Url?.Value;
+            return valueSetUrl != null
+                ? _termServices.Where(t => matchSystem(t.Settings.PreferredValueSets, valueSetUrl)).Select(t => t.Service)
+                : Enumerable.Empty<ITerminologyService>();
 
             static bool matchSystem(IEnumerable<string> preferredSystems, string valueSetUrl) =>
                 !preferredSystems.Any() || preferredSystems.Any(valueSetUrl.StartsWith);
