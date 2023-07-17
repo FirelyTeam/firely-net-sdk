@@ -215,7 +215,7 @@ namespace Hl7.Fhir.FhirPath
             return
                 (dtPrecision <= P.DateTimePrecision.Day) ?
                     P.Date.FromDateTimeOffset(dto, dtPrecision, dt.HasOffset) :
-                    new P.DateTime(dto.ToString(), dto, dtPrecision, dt.HasOffset);
+                    new P.DateTime(dto, dtPrecision, dt.HasOffset);
         }
 
         internal static P.Time BoundaryTime(P.Time time, long? precision, int minutes, int seconds, int milliseconds)
