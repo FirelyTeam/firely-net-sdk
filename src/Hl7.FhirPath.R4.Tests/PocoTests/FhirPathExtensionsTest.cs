@@ -60,5 +60,15 @@ namespace Hl7.Fhir.Tests.Introspection
                 return null;
             }
         }
+
+        [TestMethod]
+        public void TestResolveList()
+        {
+            var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
+                         ".resource.generalPractitioner.resolve().all($this is Organization)";
+
+            var result = _bundle.Scalar(statement);
+            result.Should().BeOfType<bool>().Which.Should().BeTrue();
+        }
     }
 }
