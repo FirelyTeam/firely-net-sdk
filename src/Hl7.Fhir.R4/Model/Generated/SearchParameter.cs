@@ -1176,6 +1176,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> _Component;
 
     List<Code<Hl7.Fhir.Model.ResourceType>> ICoded<List<Code<Hl7.Fhir.Model.ResourceType>>>.Code { get => TargetElement; set => TargetElement = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => TargetElement.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

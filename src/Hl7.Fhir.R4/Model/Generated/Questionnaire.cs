@@ -1934,6 +1934,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.FhirString ICoded<Hl7.Fhir.Model.FhirString>.Code { get => NameElement; set => NameElement = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => NameElement.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

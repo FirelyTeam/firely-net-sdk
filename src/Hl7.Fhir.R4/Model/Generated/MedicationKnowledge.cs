@@ -2802,6 +2802,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent> _Kinetics;
 
     Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

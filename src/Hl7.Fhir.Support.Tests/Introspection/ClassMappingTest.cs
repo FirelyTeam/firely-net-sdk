@@ -168,6 +168,7 @@ namespace Hl7.Fhir.Tests.Introspection
         public Date BirthDate => new(1972, 11, 30);
 
         public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
+        public IEnumerable<Coding> ToCodings() => new[] { new Coding(null, Code) };
     }
 
     [FhirType("Way2", Since = Specification.FhirRelease.DSTU2)]

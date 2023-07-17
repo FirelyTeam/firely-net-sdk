@@ -523,6 +523,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Category; set => Category = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Category.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

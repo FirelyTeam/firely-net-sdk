@@ -1306,6 +1306,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.DataType ICoded<Hl7.Fhir.Model.DataType>.Code { get => Medication; set => Medication = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Medication.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -854,6 +854,7 @@ namespace Hl7.Fhir.Model
     Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Event; set => Event = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Event.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

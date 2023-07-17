@@ -433,6 +433,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Relationship; set => Relationship = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Relationship.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

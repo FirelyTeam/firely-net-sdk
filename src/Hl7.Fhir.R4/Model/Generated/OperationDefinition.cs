@@ -1811,6 +1811,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> _Overload;
 
     Hl7.Fhir.Model.Code ICoded<Hl7.Fhir.Model.Code>.Code { get => CodeElement; set => CodeElement = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => CodeElement.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

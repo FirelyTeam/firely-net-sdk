@@ -876,6 +876,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => ServiceType; set => ServiceType = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => ServiceType.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

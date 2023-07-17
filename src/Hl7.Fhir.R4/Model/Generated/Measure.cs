@@ -1968,6 +1968,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Topic; set => Topic = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Topic.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
