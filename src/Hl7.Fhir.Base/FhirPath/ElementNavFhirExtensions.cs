@@ -41,6 +41,7 @@ namespace Hl7.Fhir.FhirPath
         {
             t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (ITypedElement f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
+            t.Add("resolve", (IEnumerable<ITypedElement> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
 
             t.Add("memberOf", (ITypedElement input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 
