@@ -31,10 +31,8 @@ namespace Hl7.Fhir.Specification.Terminology
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
         /// </summary>
         /// <param name="services">Terminology services to be used. Note that the first service in the list will be used first, the others will be used for fallback based on their order.</param>
-        public MultiTerminologyService(IEnumerable<ITerminologyService> services) : this(services.Select(s => new OrderableTerminologyService(s, TerminologyServiceSettings.CreateDefault())))
-        {
+        public MultiTerminologyService(IEnumerable<ITerminologyService> services) : this(services.Select(s => new OrderableTerminologyService(s, TerminologyServiceSettings.CreateDefault()))) { }
 
-        }
 
         /// <summary>
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
@@ -46,7 +44,20 @@ namespace Hl7.Fhir.Specification.Terminology
             _termServices = services.OrderBy(s => s.Settings.Order).ToList();
         }
 
-        public MultiTerminologyService(params ITerminologyService[] services) : this((IEnumerable<ITerminologyService>)services) { }
+
+        /// <summary>
+        /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
+        /// </summary>
+        /// <param name="services">Terminology services to be used. Note that the first service in the list will be used first, the others will be used for fallback based on their order.</param>
+        public MultiTerminologyService(params ITerminologyService[] services) : this(services.Select(s => new OrderableTerminologyService(s, TerminologyServiceSettings.CreateDefault()))) { }
+
+
+        /// <summary>
+        /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
+        /// </summary>
+        /// <param name="services">Orderable terminology services to be used. You can set the order of the services to be used using the settings, the others will be used for fallback based on their order.</param>
+        public MultiTerminologyService(params OrderableTerminologyService[] services) : this((IEnumerable<OrderableTerminologyService>)services) { }
+
 
         ///<inheritdoc/>
         public Task<Resource> Closure(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
