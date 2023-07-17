@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource)) ?? throw new ArgumentException($"{typeof(TResource).Name} is not recognized as a valid FHIR resource.");
+            var resourceType = typeNameOrDie<TResource>();
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource?> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters, CancellationToken? ct = null) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource)) ?? throw new ArgumentException($"{typeof(TResource).Name} is not recognized as a valid FHIR resource.");
+            var resourceType = typeNameOrDie<TResource>();
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
