@@ -6,10 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Rest;
+using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Hl7.Fhir.Test
 {
@@ -107,7 +109,7 @@ namespace Hl7.Fhir.Test
         {
             var patient = new TestPatient();
             var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
-           
+
             var transaction = new TransactionBuilder(endpoint)
                 .Create(patient)
                 .Get("Patient/1");
@@ -117,6 +119,25 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual(2, bundle.Entry.Count);
             Assert.IsFalse(bundle.Entry[0].Request.Url.StartsWith(endpoint), "Entries in the transaction bundle cannot contain absolute url.");
             Assert.AreEqual("Patient", bundle.Entry[0].Request.Url, "Entry must be a relative url");
+        }
+
+        [TestMethod]
+        public void TransactionBuilderWithFullUrlTest()
+        {
+            var fullUrl = "http://myserver.org/fhir/123";
+            var p = new TestPatient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                        .Update(new SearchParams().Where("name=foobar"), p, versionId: "314", fullUrl);
+            var bundle = tx.ToBundle();
+
+            bundle.Entry.Should().ContainSingle().Which.FullUrl.Should().Be(fullUrl);
+
+            tx.Read("TestPatient", "123");
+
+            bundle = tx.ToBundle();
+
+            bundle.Entry.Skip(1).Should().ContainSingle().Which.FullUrl.Should().BeNull();
+
         }
     }
 }
