@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
 
         public static FhirDateTime Now() => new(DateTimeOffset.Now);
 
+        [NonSerialized]  // To prevent binary serialization from serializing this field
         private P.DateTime? _parsedValue = null;
 
         private static readonly P.DateTime INVALID_VALUE = P.DateTime.Now();
