@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Media","http://hl7.org/fhir/StructureDefinition/Media", IsResource=true)]
-  public partial class Media : Hl7.Fhir.Model.DomainResource
+  public partial class Media : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// The type of acquisition equipment/process
     /// </summary>
     [FhirElement("subtype", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("DigitalMediaSubtype")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Subtype
     {
@@ -164,6 +165,7 @@ namespace Hl7.Fhir.Model
     /// Imaging view, e.g. Lateral or Antero-posterior
     /// </summary>
     [FhirElement("view", InSummary=true, Order=130, FiveWs="class")]
+    [Binding("MediaView")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept View
     {
@@ -237,6 +239,7 @@ namespace Hl7.Fhir.Model
     /// Why was event performed?
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=180, FiveWs="why")]
+    [Binding("MediaReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -251,6 +254,7 @@ namespace Hl7.Fhir.Model
     /// Body part in media
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=190)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -426,6 +430,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

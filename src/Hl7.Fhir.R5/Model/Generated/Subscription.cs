@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
-  public partial class Subscription : Hl7.Fhir.Model.DomainResource
+  public partial class Subscription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Allowed Resource (reference to definition) for this Subscription filter
       /// </summary>
       [FhirElement("resourceType", InSummary=true, Order=40)]
+      [Binding("FHIRTypes")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceTypeElement
       {
@@ -767,6 +768,7 @@ namespace Hl7.Fhir.Model
     /// Channel type for notifications
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=180)]
+    [Binding("SubscriptionChannelType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ChannelType
@@ -979,6 +981,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("MaxCount");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

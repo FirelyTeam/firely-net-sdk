@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient", IsResource=true)]
-  public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource
+  public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -949,6 +949,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent _Substance;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

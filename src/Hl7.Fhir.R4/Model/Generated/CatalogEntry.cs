@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CatalogEntry","http://hl7.org/fhir/StructureDefinition/CatalogEntry", IsResource=true)]
-  public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource
+  public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -485,6 +485,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent> _RelatedEntry;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

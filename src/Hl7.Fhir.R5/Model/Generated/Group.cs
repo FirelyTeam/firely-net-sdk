@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Group","http://hl7.org/fhir/StructureDefinition/Group", IsResource=true)]
-  public partial class Group : Hl7.Fhir.Model.DomainResource
+  public partial class Group : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
       /// Kind of characteristic
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("GroupCharacteristicKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -179,6 +180,7 @@ namespace Hl7.Fhir.Model
       /// Value held by characteristic
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("GroupCharacteristicValue")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -637,6 +639,7 @@ namespace Hl7.Fhir.Model
     /// Kind of Group members
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("GroupKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -781,6 +784,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

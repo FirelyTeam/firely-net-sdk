@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("FamilyMemberHistory","http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory", IsResource=true)]
-  public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource
+  public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// Type of involvement
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("FamilyMemberHistoryParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -242,6 +243,7 @@ namespace Hl7.Fhir.Model
       /// Condition suffered by relation
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("ConditionCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -256,6 +258,7 @@ namespace Hl7.Fhir.Model
       /// deceased | permanent disability | etc
       /// </summary>
       [FhirElement("outcome", Order=50)]
+      [Binding("ConditionOutcome")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
       {
@@ -462,6 +465,7 @@ namespace Hl7.Fhir.Model
       /// Procedures performed on the related person
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("ProcedureCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -476,6 +480,7 @@ namespace Hl7.Fhir.Model
       /// What happened following the procedure
       /// </summary>
       [FhirElement("outcome", Order=50)]
+      [Binding("ProcedureOutcome")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
       {
@@ -780,6 +785,7 @@ namespace Hl7.Fhir.Model
     /// subject-unknown | withheld | unable-to-obtain | deferred
     /// </summary>
     [FhirElement("dataAbsentReason", InSummary=true, Order=130)]
+    [Binding("FamilyHistoryAbsentReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
     {
@@ -885,6 +891,7 @@ namespace Hl7.Fhir.Model
     /// Relationship to the subject
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=180)]
+    [Binding("FamilialRelationship")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
@@ -899,6 +906,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown
     /// </summary>
     [FhirElement("sex", InSummary=true, Order=190)]
+    [Binding("Sex")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Sex
     {
@@ -988,6 +996,7 @@ namespace Hl7.Fhir.Model
     /// Why was family member history performed?
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
+    [Binding("FamilyHistoryReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1039,6 +1048,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent> _Procedure;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

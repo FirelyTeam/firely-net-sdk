@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("NutritionIntake","http://hl7.org/fhir/StructureDefinition/NutritionIntake", IsResource=true)]
-  public partial class NutritionIntake : Hl7.Fhir.Model.DomainResource
+  public partial class NutritionIntake : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The type of food or fluid product
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("FoodType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -87,6 +88,7 @@ namespace Hl7.Fhir.Model
       /// Code that identifies the food or fluid product that was consumed
       /// </summary>
       [FhirElement("nutritionProduct", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("FoodProduct")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference NutritionProduct
@@ -171,6 +173,7 @@ namespace Hl7.Fhir.Model
       /// Reason food or fluid was not consumed
       /// </summary>
       [FhirElement("notConsumedReason", Order=100)]
+      [Binding("NotConsumedReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept NotConsumedReason
       {
@@ -335,6 +338,7 @@ namespace Hl7.Fhir.Model
       /// Total nutrient consumed
       /// </summary>
       [FhirElement("nutrient", Order=40)]
+      [Binding("NutrientType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Nutrient
@@ -469,6 +473,7 @@ namespace Hl7.Fhir.Model
       /// Type of performer
       /// </summary>
       [FhirElement("function", Order=40)]
+      [Binding("NutritionPerformerType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -734,6 +739,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=150)]
+    [Binding("NutritionIntakeStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -748,6 +754,7 @@ namespace Hl7.Fhir.Model
     /// Code representing an overall type of nutrition intake
     /// </summary>
     [FhirElement("code", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [Binding("NutritionIntakeCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -927,6 +934,7 @@ namespace Hl7.Fhir.Model
     /// Reason for why the food or fluid is /was consumed
     /// </summary>
     [FhirElement("reason", Order=270, FiveWs="FiveWs.why[x]")]
+    [Binding("IntakeReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -950,6 +958,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -171,6 +171,7 @@ namespace Hl7.Fhir.Model
       /// Whether the event succeeded or failed
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("AuditEventOutcome")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Code
@@ -185,6 +186,7 @@ namespace Hl7.Fhir.Model
       /// Additional outcome detail
       /// </summary>
       [FhirElement("detail", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("AuditEventOutcomeDetail")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Detail
@@ -305,6 +307,7 @@ namespace Hl7.Fhir.Model
       /// How agent participated
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.who")]
+      [Binding("AuditAgentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -318,6 +321,7 @@ namespace Hl7.Fhir.Model
       /// Agent role in the event
       /// </summary>
       [FhirElement("role", Order=50, FiveWs="FiveWs.who")]
+      [Binding("AuditAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -442,6 +446,7 @@ namespace Hl7.Fhir.Model
       /// Allowable authorization for this agent
       /// </summary>
       [FhirElement("authorization", Order=110, FiveWs="FiveWs.why[x]")]
+      [Binding("AuditPurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Authorization
@@ -647,6 +652,7 @@ namespace Hl7.Fhir.Model
       /// The type of source where event originated
       /// </summary>
       [FhirElement("type", Order=60, FiveWs="FiveWs.witness")]
+      [Binding("AuditEventSourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -791,6 +797,7 @@ namespace Hl7.Fhir.Model
       /// What role the entity played
       /// </summary>
       [FhirElement("role", Order=50, FiveWs="FiveWs.context")]
+      [Binding("AuditEventEntityRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -804,6 +811,7 @@ namespace Hl7.Fhir.Model
       /// Security labels on the entity
       /// </summary>
       [FhirElement("securityLabel", Order=60, FiveWs="FiveWs.context")]
+      [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
@@ -1019,6 +1027,7 @@ namespace Hl7.Fhir.Model
       /// Name of the property
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.context")]
+      [Binding("AuditEventDetailType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1141,6 +1150,7 @@ namespace Hl7.Fhir.Model
     /// Type/identifier of event
     /// </summary>
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.what[x]")]
+    [Binding("AuditEventType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1155,6 +1165,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of event
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [Binding("AuditEventSubType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -1295,6 +1306,7 @@ namespace Hl7.Fhir.Model
     /// Authorization related to the event
     /// </summary>
     [FhirElement("authorization", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
+    [Binding("AuditPurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Authorization

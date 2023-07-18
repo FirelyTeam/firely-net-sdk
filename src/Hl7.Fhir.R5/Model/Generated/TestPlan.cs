@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TestPlan","http://hl7.org/fhir/StructureDefinition/TestPlan", IsResource=true)]
-  public partial class TestPlan : Hl7.Fhir.Model.DomainResource
+  public partial class TestPlan : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1539,6 +1539,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction where the test plan applies (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1646,6 +1647,7 @@ namespace Hl7.Fhir.Model
     /// The category of the Test Plan - can be acceptance, unit, performance
     /// </summary>
     [FhirElement("category", Order=260)]
+    [Binding("TestPlanCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1759,6 +1761,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.TestPlan.TestCaseComponent> _TestCase;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

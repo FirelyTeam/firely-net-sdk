@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PackagedProductDefinition","http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition", IsResource=true)]
-  public partial class PackagedProductDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class PackagedProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The actual status of supply. In what situation this package type may be supplied for use
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("LegalStatusOfSupply")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -86,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// The place where the legal status of supply applies
       /// </summary>
       [FhirElement("jurisdiction", InSummary=true, Order=50)]
+      [Binding("Jurisdiction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Jurisdiction
       {
@@ -219,6 +221,7 @@ namespace Hl7.Fhir.Model
       /// The physical type of the container of the items
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("PackagingType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -294,6 +297,7 @@ namespace Hl7.Fhir.Model
       /// Material type of the package item
       /// </summary>
       [FhirElement("material", InSummary=true, Order=80)]
+      [Binding("PackageMaterial")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Material
@@ -308,6 +312,7 @@ namespace Hl7.Fhir.Model
       /// A possible alternate material for this part of the packaging, that is allowed to be used instead of the usual material
       /// </summary>
       [FhirElement("alternateMaterial", InSummary=true, Order=90)]
+      [Binding("PackageMaterial")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AlternateMaterial
@@ -581,6 +586,7 @@ namespace Hl7.Fhir.Model
       /// A code expressing the type of characteristic
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("ProductCharacteristic")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -880,6 +886,7 @@ namespace Hl7.Fhir.Model
     /// A high level category e.g. medicinal product, raw material, shipping container etc
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
+    [Binding("PackageType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -909,6 +916,7 @@ namespace Hl7.Fhir.Model
     /// The status within the lifecycle of this item. High level - not intended to duplicate details elsewhere e.g. legal status, or authorization/marketing status
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
     {
@@ -1111,6 +1119,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.PackagedProductDefinition.PropertyComponent> _Characteristic;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

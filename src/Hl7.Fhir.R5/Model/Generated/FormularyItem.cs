@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("FormularyItem","http://hl7.org/fhir/StructureDefinition/FormularyItem", IsResource=true)]
-  public partial class FormularyItem : Hl7.Fhir.Model.DomainResource
+  public partial class FormularyItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this formulary item
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100)]
+    [Binding("FormularyItemFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -142,6 +143,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Status");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account", IsResource=true)]
-  public partial class Account : Hl7.Fhir.Model.DomainResource
+  public partial class Account : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -462,6 +462,7 @@ namespace Hl7.Fhir.Model
     /// E.g. patient, expense, depreciation
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("AccountType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -629,6 +630,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Account.GuarantorComponent> _Guarantor;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

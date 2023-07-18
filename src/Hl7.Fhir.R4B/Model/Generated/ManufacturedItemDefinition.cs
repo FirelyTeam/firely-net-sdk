@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ManufacturedItemDefinition","http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition", IsResource=true)]
-  public partial class ManufacturedItemDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ManufacturedItemDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// A code expressing the type of characteristic
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -242,6 +243,7 @@ namespace Hl7.Fhir.Model
     /// Dose form as manufactured (before any necessary transformation)
     /// </summary>
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=110)]
+    [Binding("ManufacturedDoseForm")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
@@ -256,6 +258,7 @@ namespace Hl7.Fhir.Model
     /// The “real world” units in which the quantity of the item is described
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=120)]
+    [Binding("UnitOfPresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
     {
@@ -285,6 +288,7 @@ namespace Hl7.Fhir.Model
     /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=140)]
+    [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
@@ -308,6 +312,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

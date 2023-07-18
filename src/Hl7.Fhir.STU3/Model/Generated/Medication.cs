@@ -277,6 +277,7 @@ namespace Hl7.Fhir.Model
       /// E.g. box, vial, blister-pack
       /// </summary>
       [FhirElement("container", Order=40)]
+      [Binding("MedicationContainer")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Container
       {
@@ -723,6 +724,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="class")]
+    [Binding("MedicationFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -846,6 +848,7 @@ namespace Hl7.Fhir.Model
     /// powder | tablets | capsule +
     /// </summary>
     [FhirElement("form", Order=140)]
+    [Binding("MedicationForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {

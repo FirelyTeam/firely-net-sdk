@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceUsage","http://hl7.org/fhir/StructureDefinition/DeviceUsage", IsResource=true)]
-  public partial class DeviceUsage : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceUsage : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// always | never | sometimes
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("DeviceUsageAdherenceCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -139,6 +140,7 @@ namespace Hl7.Fhir.Model
       /// lost | stolen | prescribed | broken | burned | forgot
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("DeviceUsageAdherenceReason")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -416,6 +418,7 @@ namespace Hl7.Fhir.Model
     /// The status of the device usage, for example always, sometimes, never. This is not the same as the status of the statement
     /// </summary>
     [FhirElement("usageStatus", Order=180)]
+    [Binding("DeviceUsageStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UsageStatus
     {
@@ -499,6 +502,7 @@ namespace Hl7.Fhir.Model
     /// Target body site
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=240)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference BodySite
     {
@@ -521,6 +525,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

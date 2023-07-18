@@ -140,6 +140,7 @@ namespace Hl7.Fhir.Model
       /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("primary-source-type")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -154,6 +155,7 @@ namespace Hl7.Fhir.Model
       /// Method for exchanging information with the primary source
       /// </summary>
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
+      [Binding("communication-method")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CommunicationMethod
@@ -168,6 +170,7 @@ namespace Hl7.Fhir.Model
       /// successful | failed | unknown
       /// </summary>
       [FhirElement("validationStatus", Order=70)]
+      [Binding("validation-status")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ValidationStatus
       {
@@ -212,6 +215,7 @@ namespace Hl7.Fhir.Model
       /// yes | no | undetermined
       /// </summary>
       [FhirElement("canPushUpdates", InSummary=true, Order=90)]
+      [Binding("can-push-updates")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CanPushUpdates
       {
@@ -225,6 +229,7 @@ namespace Hl7.Fhir.Model
       /// specific | any | source
       /// </summary>
       [FhirElement("pushTypeAvailable", Order=100)]
+      [Binding("push-type-available")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PushTypeAvailable
@@ -420,6 +425,7 @@ namespace Hl7.Fhir.Model
       /// The method by which attested information was submitted/retrieved
       /// </summary>
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
+      [Binding("communication-method")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CommunicationMethod
       {
@@ -921,6 +927,7 @@ namespace Hl7.Fhir.Model
     /// none | initial | periodic
     /// </summary>
     [FhirElement("need", InSummary=true, Order=110)]
+    [Binding("need")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Need
     {
@@ -999,6 +1006,7 @@ namespace Hl7.Fhir.Model
     /// nothing | primary | multiple
     /// </summary>
     [FhirElement("validationType", InSummary=true, Order=140)]
+    [Binding("validation-type")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ValidationType
     {
@@ -1012,6 +1020,7 @@ namespace Hl7.Fhir.Model
     /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
     /// </summary>
     [FhirElement("validationProcess", InSummary=true, Order=150)]
+    [Binding("validation-process")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
@@ -1101,6 +1110,7 @@ namespace Hl7.Fhir.Model
     /// fatal | warn | rec-only | none
     /// </summary>
     [FhirElement("failureAction", InSummary=true, Order=190)]
+    [Binding("failure-action")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FailureAction
     {

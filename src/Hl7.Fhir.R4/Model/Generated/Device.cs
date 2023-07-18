@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device", IsResource=true)]
-  public partial class Device : Hl7.Fhir.Model.DomainResource
+  public partial class Device : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1198,6 +1198,7 @@ namespace Hl7.Fhir.Model
     /// online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
     /// </summary>
     [FhirElement("statusReason", Order=130, FiveWs="FiveWs.status")]
+    [Binding("FHIRDeviceStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -1474,7 +1475,7 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=230)]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("DeviceType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -1658,6 +1659,11 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Parent;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Type; set => Type = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Type.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

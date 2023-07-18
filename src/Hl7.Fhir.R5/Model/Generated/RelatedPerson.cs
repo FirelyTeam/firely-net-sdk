@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RelatedPerson","http://hl7.org/fhir/StructureDefinition/RelatedPerson", IsResource=true)]
-  public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource
+  public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the related person about the patient's health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -271,6 +272,7 @@ namespace Hl7.Fhir.Model
     /// The relationship of the related person to the patient
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("PatientRelationshipType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -427,6 +429,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent> _Communication;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

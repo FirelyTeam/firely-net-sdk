@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("InsurancePlan","http://hl7.org/fhir/StructureDefinition/InsurancePlan", IsResource=true)]
-  public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource
+  public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// The type of contact
       /// </summary>
       [FhirElement("purpose", Order=40)]
+      [Binding("ContactPartyType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Purpose
       {
@@ -1466,6 +1467,7 @@ namespace Hl7.Fhir.Model
       /// in-network | out-of-network | other
       /// </summary>
       [FhirElement("applicability", Order=50)]
+      [Binding("BenefitCostApplicability")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Applicability
       {
@@ -1663,6 +1665,7 @@ namespace Hl7.Fhir.Model
     /// Kind of product
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("InsurancePlanType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1868,6 +1871,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.InsurancePlan.PlanComponent> _Plan;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

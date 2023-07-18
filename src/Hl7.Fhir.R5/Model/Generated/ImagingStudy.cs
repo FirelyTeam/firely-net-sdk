@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ImagingStudy","http://hl7.org/fhir/StructureDefinition/ImagingStudy", IsResource=true)]
-  public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource
+  public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -176,6 +176,7 @@ namespace Hl7.Fhir.Model
       /// The modality used for this series
       /// </summary>
       [FhirElement("modality", InSummary=true, Order=60)]
+      [Binding("ImagingModality")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modality
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
       /// Body part examined
       /// </summary>
       [FhirElement("bodySite", InSummary=true, Order=100)]
+      [Binding("BodySite")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference BodySite
       {
@@ -281,6 +283,7 @@ namespace Hl7.Fhir.Model
       /// Body part laterality
       /// </summary>
       [FhirElement("laterality", InSummary=true, Order=110)]
+      [Binding("Laterality")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Laterality
       {
@@ -565,6 +568,7 @@ namespace Hl7.Fhir.Model
       /// Type of performance
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("EventPerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -732,6 +736,7 @@ namespace Hl7.Fhir.Model
       /// DICOM class type
       /// </summary>
       [FhirElement("sopClass", Order=50)]
+      [Binding("sopClass")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding SopClass
@@ -966,6 +971,7 @@ namespace Hl7.Fhir.Model
     /// All of the distinct values for series' modalities
     /// </summary>
     [FhirElement("modality", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("ImagingModality")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Modality
@@ -1167,6 +1173,7 @@ namespace Hl7.Fhir.Model
     /// The performed procedure or code
     /// </summary>
     [FhirElement("procedure", InSummary=true, Order=210)]
+    [Binding("ImagingProcedureCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Procedure
@@ -1196,6 +1203,7 @@ namespace Hl7.Fhir.Model
     /// Why the study was requested / performed
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=230, FiveWs="FiveWs.why[x]")]
+    [Binding("ImagingReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1264,6 +1272,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> _Series;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

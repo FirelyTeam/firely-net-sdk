@@ -1452,6 +1452,7 @@ namespace Hl7.Fhir.Model
       /// A code that defines the specific type of packaging that the medication can be found in
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("MedicationPackageType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1584,6 +1585,7 @@ namespace Hl7.Fhir.Model
       /// Code specifying the type of characteristic of medication
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("MedicationCharacteristic")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2437,6 +2439,7 @@ namespace Hl7.Fhir.Model
     /// Code that identifies this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="FiveWs.class")]
+    [Binding("MedicationFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -2498,6 +2501,7 @@ namespace Hl7.Fhir.Model
     /// powder | tablets | capsule +
     /// </summary>
     [FhirElement("doseForm", Order=120)]
+    [Binding("MedicationForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseForm
     {
@@ -2659,6 +2663,7 @@ namespace Hl7.Fhir.Model
     /// The intended or approved route of administration
     /// </summary>
     [FhirElement("intendedRoute", Order=210)]
+    [Binding("MedicationRoute")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> IntendedRoute

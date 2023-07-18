@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ValueSet","http://hl7.org/fhir/StructureDefinition/ValueSet", IsResource=true)]
-  public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+  public partial class ValueSet : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -766,6 +766,7 @@ namespace Hl7.Fhir.Model
       /// Details how this designation would be used
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -2272,6 +2273,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for value set (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2431,6 +2433,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

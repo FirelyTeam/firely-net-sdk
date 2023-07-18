@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CoverageEligibilityRequest","http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest", IsResource=true)]
-  public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource
+  public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -526,6 +526,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=50)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -539,6 +540,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=60)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -552,6 +554,7 @@ namespace Hl7.Fhir.Model
       /// Product or service billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=70)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -830,6 +833,7 @@ namespace Hl7.Fhir.Model
       /// Nature of illness or problem
       /// </summary>
       [FhirElement("diagnosis", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ICD10")]
       [CLSCompliant(false)]
       [References("Condition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -977,6 +981,7 @@ namespace Hl7.Fhir.Model
     /// Desired processing priority
     /// </summary>
     [FhirElement("priority", Order=110, FiveWs="FiveWs.class")]
+    [Binding("ProcessPriority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -996,7 +1001,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> PurposeElement
     {
-      get { if(_PurposeElement==null) _PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(); return _PurposeElement; }
+      get { if(_PurposeElement==null) _PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(); return _PurposeElement; }
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
@@ -1015,7 +1020,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           PurposeElement = null;
         else
-          PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>(elem)));
+          PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>(elem)));
         OnPropertyChanged("Purpose");
       }
     }
@@ -1185,6 +1190,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent> _Item;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

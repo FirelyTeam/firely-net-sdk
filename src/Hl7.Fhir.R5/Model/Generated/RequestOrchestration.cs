@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RequestOrchestration","http://hl7.org/fhir/StructureDefinition/RequestOrchestration", IsResource=true)]
-  public partial class RequestOrchestration : Hl7.Fhir.Model.DomainResource
+  public partial class RequestOrchestration : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -261,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// Code representing the meaning of the action or sub-actions
       /// </summary>
       [FhirElement("code", Order=100)]
+      [Binding("ActionCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -403,6 +404,7 @@ namespace Hl7.Fhir.Model
       /// create | update | remove | fire-event
       /// </summary>
       [FhirElement("type", Order=200)]
+      [Binding("ActionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1851,6 +1853,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Nurse, Surgeon, Parent, etc
       /// </summary>
       [FhirElement("role", Order=70)]
+      [Binding("ActivityParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -1864,6 +1867,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Author, Reviewer, Witness, etc
       /// </summary>
       [FhirElement("function", Order=80)]
+      [Binding("ActionParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -2395,6 +2399,7 @@ namespace Hl7.Fhir.Model
     /// What's being requested/ordered
     /// </summary>
     [FhirElement("code", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
+    [Binding("RequestCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -2484,6 +2489,7 @@ namespace Hl7.Fhir.Model
     /// Why the request orchestration is needed
     /// </summary>
     [FhirElement("reason", Order=230, FiveWs="FiveWs.why[x]")]
+    [Binding("ActionReasonCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -2537,6 +2543,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.RequestOrchestration.ActionComponent> _Action;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

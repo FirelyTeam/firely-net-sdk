@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EpisodeOfCare","http://hl7.org/fhir/StructureDefinition/EpisodeOfCare", IsResource=true)]
-  public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource
+  public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -295,6 +295,7 @@ namespace Hl7.Fhir.Model
       /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
       /// </summary>
       [FhirElement("role", InSummary=true, Order=50)]
+      [Binding("DiagnosisRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -502,6 +503,7 @@ namespace Hl7.Fhir.Model
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("EpisodeOfCareType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -632,6 +634,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Account;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

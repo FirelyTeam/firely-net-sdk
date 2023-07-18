@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
-  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -177,6 +177,7 @@ namespace Hl7.Fhir.Model
       /// Customary unit for quantitative results
       /// </summary>
       [FhirElement("customaryUnit", Order=40)]
+      [Binding("ObservationUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CustomaryUnit
       {
@@ -190,6 +191,7 @@ namespace Hl7.Fhir.Model
       /// SI unit for quantitative results
       /// </summary>
       [FhirElement("unit", Order=50)]
+      [Binding("ObservationUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -435,6 +437,7 @@ namespace Hl7.Fhir.Model
       /// Range context qualifier
       /// </summary>
       [FhirElement("context", Order=60)]
+      [Binding("ObservationRangeMeaning")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Context
       {
@@ -448,6 +451,7 @@ namespace Hl7.Fhir.Model
       /// Targetted population of the range
       /// </summary>
       [FhirElement("appliesTo", Order=70)]
+      [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
@@ -698,6 +702,7 @@ namespace Hl7.Fhir.Model
     /// Category of observation
     /// </summary>
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
+    [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -712,7 +717,7 @@ namespace Hl7.Fhir.Model
     /// Type of observation (code / type)
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -747,7 +752,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
-      get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
+      get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
       set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
     }
 
@@ -766,7 +771,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           PermittedDataTypeElement = null;
         else
-          PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
+          PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
         OnPropertyChanged("PermittedDataType");
       }
     }
@@ -806,6 +811,7 @@ namespace Hl7.Fhir.Model
     /// Method used to produce the observation
     /// </summary>
     [FhirElement("method", Order=140)]
+    [Binding("ObservationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -932,6 +938,11 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _CriticalCodedValueSet;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

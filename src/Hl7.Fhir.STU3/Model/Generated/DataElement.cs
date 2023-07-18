@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DataElement","http://hl7.org/fhir/StructureDefinition/DataElement", IsResource=true)]
-  public partial class DataElement : Hl7.Fhir.Model.DomainResource
+  public partial class DataElement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -647,6 +647,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for data element (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -748,6 +749,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ElementDefinition> _Element;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

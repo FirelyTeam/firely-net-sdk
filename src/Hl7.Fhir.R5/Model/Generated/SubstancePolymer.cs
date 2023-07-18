@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubstancePolymer","http://hl7.org/fhir/StructureDefinition/SubstancePolymer", IsResource=true)]
-  public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource
+  public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1326,6 +1326,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> _Repeat;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ExampleScenario","http://hl7.org/fhir/StructureDefinition/ExampleScenario", IsResource=true)]
-  public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource
+  public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2345,6 +2345,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for example scenario (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2490,6 +2491,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Workflow");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

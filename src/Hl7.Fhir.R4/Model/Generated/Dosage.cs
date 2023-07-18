@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The kind of dose or rate specified
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
+      [Binding("DoseAndRateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -279,6 +280,7 @@ namespace Hl7.Fhir.Model
     /// Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
     /// </summary>
     [FhirElement("additionalInstruction", InSummary=true, Order=60)]
+    [Binding("AdditionalInstruction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
@@ -337,6 +339,7 @@ namespace Hl7.Fhir.Model
     /// Take "as needed" (for x)
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("MedicationAsNeededReason")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -352,6 +355,7 @@ namespace Hl7.Fhir.Model
     /// Body site to administer to
     /// </summary>
     [FhirElement("site", InSummary=true, Order=100)]
+    [Binding("MedicationAdministrationSite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Site
     {
@@ -365,6 +369,7 @@ namespace Hl7.Fhir.Model
     /// How drug should enter body
     /// </summary>
     [FhirElement("route", InSummary=true, Order=110)]
+    [Binding("RouteOfAdministration")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Route
     {
@@ -378,6 +383,7 @@ namespace Hl7.Fhir.Model
     /// Technique for administering medication
     /// </summary>
     [FhirElement("method", InSummary=true, Order=120)]
+    [Binding("MedicationAdministrationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {

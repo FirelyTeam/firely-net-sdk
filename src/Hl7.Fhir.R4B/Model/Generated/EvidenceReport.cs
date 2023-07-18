@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EvidenceReport","http://hl7.org/fhir/StructureDefinition/EvidenceReport", IsResource=true)]
-  public partial class EvidenceReport : Hl7.Fhir.Model.DomainResource
+  public partial class EvidenceReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -265,6 +265,7 @@ namespace Hl7.Fhir.Model
       /// Characteristic code
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("FocusCharacteristicCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -652,6 +653,7 @@ namespace Hl7.Fhir.Model
       /// Classification of section (recommended)
       /// </summary>
       [FhirElement("focus", Order=50)]
+      [Binding("ReportSectionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Focus
       {
@@ -742,6 +744,7 @@ namespace Hl7.Fhir.Model
       /// Order of section entries
       /// </summary>
       [FhirElement("orderedBy", Order=100)]
+      [Binding("SectionEntryOrder")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OrderedBy
       {
@@ -755,6 +758,7 @@ namespace Hl7.Fhir.Model
       /// Extensible classifiers as content
       /// </summary>
       [FhirElement("entryClassifier", Order=110)]
+      [Binding("EvidenceClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> EntryClassifier
@@ -799,6 +803,7 @@ namespace Hl7.Fhir.Model
       /// Why the section is empty
       /// </summary>
       [FhirElement("emptyReason", Order=140)]
+      [Binding("SectionEmptyReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept EmptyReason
       {
@@ -1131,6 +1136,7 @@ namespace Hl7.Fhir.Model
     /// Kind of report
     /// </summary>
     [FhirElement("type", Order=150)]
+    [Binding("EvidenceReportType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -1310,6 +1316,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> _Section;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

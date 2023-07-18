@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
-  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// A name/code for the set
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("InvestigationGroupType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -237,6 +238,7 @@ namespace Hl7.Fhir.Model
       /// What was found
       /// </summary>
       [FhirElement("itemCodeableConcept", Order=40)]
+      [Binding("ConditionKind")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ItemCodeableConcept
       {
@@ -445,6 +447,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=110)]
+    [Binding("ClinicalImpressionStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -458,7 +461,7 @@ namespace Hl7.Fhir.Model
     /// Kind of assessment performed
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("ClinicalImpressionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -717,6 +720,7 @@ namespace Hl7.Fhir.Model
     /// Estimate of likely outcome
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=250)]
+    [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
@@ -772,6 +776,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

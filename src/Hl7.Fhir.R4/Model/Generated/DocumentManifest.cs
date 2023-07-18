@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DocumentManifest","http://hl7.org/fhir/StructureDefinition/DocumentManifest", IsResource=true)]
-  public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource
+  public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
     /// Kind of document set
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("v3Act")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -432,6 +433,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent> _Related;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

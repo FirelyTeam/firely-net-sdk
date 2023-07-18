@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ConditionDefinition","http://hl7.org/fhir/StructureDefinition/ConditionDefinition", IsResource=true)]
-  public partial class ConditionDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ConditionDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
       /// Category that is relevant
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("ObservationCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -136,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// Code for relevant Observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("ObservationCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -255,6 +257,7 @@ namespace Hl7.Fhir.Model
       /// Category that is relevant
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("MedicationRequestCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -268,6 +271,7 @@ namespace Hl7.Fhir.Model
       /// Code for relevant Medication
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MedicationCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -421,6 +425,7 @@ namespace Hl7.Fhir.Model
       /// Code for relevant Observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1212,6 +1217,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for condition definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1226,6 +1232,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the condition, problem or diagnosis
     /// </summary>
     [FhirElement("code", InSummary=true, Order=240)]
+    [Binding("ConditionKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -1240,6 +1247,7 @@ namespace Hl7.Fhir.Model
     /// Subjective severity of condition
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=250)]
+    [Binding("ConditionSeverity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Severity
     {
@@ -1253,6 +1261,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=260)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -1266,6 +1275,7 @@ namespace Hl7.Fhir.Model
     /// Stage/grade, usually assessed formally
     /// </summary>
     [FhirElement("stage", InSummary=true, Order=270)]
+    [Binding("ConditionStage")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Stage
     {
@@ -1485,6 +1495,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent> _Plan;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

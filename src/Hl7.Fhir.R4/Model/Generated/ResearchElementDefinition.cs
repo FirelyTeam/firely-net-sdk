@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ResearchElementDefinition","http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition", IsResource=true)]
-  public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -162,6 +162,7 @@ namespace Hl7.Fhir.Model
       /// What unit is the outcome described in?
       /// </summary>
       [FhirElement("unitOfMeasure", Order=70)]
+      [Binding("UCUMUnits")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept UnitOfMeasure
       {
@@ -806,6 +807,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -975,6 +977,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for research element definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1157,6 +1160,7 @@ namespace Hl7.Fhir.Model
     /// The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=320)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1349,6 +1353,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent> _Characteristic;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

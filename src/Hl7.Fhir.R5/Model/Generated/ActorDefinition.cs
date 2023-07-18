@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ActorDefinition","http://hl7.org/fhir/StructureDefinition/ActorDefinition", IsResource=true)]
-  public partial class ActorDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ActorDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     /// How to compare versions
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("??")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
@@ -398,6 +399,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for actor definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -660,6 +662,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("DerivedFrom");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

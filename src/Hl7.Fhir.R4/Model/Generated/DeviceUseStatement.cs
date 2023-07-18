@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceUseStatement","http://hl7.org/fhir/StructureDefinition/DeviceUseStatement", IsResource=true)]
-  public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -308,6 +308,7 @@ namespace Hl7.Fhir.Model
     /// Target body site
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=200)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -330,6 +331,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TerminologyCapabilities","http://hl7.org/fhir/StructureDefinition/TerminologyCapabilities", IsResource=true)]
-  public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource
+  public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CommonLanguages>> LanguageElement
       {
-        get { if(_LanguageElement==null) _LanguageElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>>(); return _LanguageElement; }
+        get { if(_LanguageElement==null) _LanguageElement = new List<Code<Hl7.Fhir.Model.CommonLanguages>>(); return _LanguageElement; }
         set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
       }
 
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             LanguageElement = null;
           else
-            LanguageElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>(elem)));
+            LanguageElement = new List<Code<Hl7.Fhir.Model.CommonLanguages>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CommonLanguages>(elem)));
           OnPropertyChanged("Language");
         }
       }
@@ -2310,6 +2310,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for terminology capabilities (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2602,6 +2603,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.TerminologyCapabilities.ClosureComponent _Closure;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

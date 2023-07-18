@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EventDefinition","http://hl7.org/fhir/StructureDefinition/EventDefinition", IsResource=true)]
-  public partial class EventDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class EventDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -293,6 +293,7 @@ namespace Hl7.Fhir.Model
     /// Type of individual the event definition is focused on
     /// </summary>
     [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -430,6 +431,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for event definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -612,6 +614,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=300)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -705,6 +708,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.TriggerDefinition> _Trigger;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

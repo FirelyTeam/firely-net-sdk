@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest", IsResource=true)]
-  public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource
+  public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -266,6 +266,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=140)]
+    [Binding("CommunicationRequestStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -279,6 +280,7 @@ namespace Hl7.Fhir.Model
     /// Message category
     /// </summary>
     [FhirElement("category", Order=150, FiveWs="FiveWs.class")]
+    [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -357,6 +359,7 @@ namespace Hl7.Fhir.Model
     /// A channel of communication
     /// </summary>
     [FhirElement("medium", Order=180)]
+    [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -523,6 +526,7 @@ namespace Hl7.Fhir.Model
     /// Why is communication needed?
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=280, FiveWs="FiveWs.why[x]")]
+    [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -562,6 +566,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

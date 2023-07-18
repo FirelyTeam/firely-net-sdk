@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ImmunizationEvaluation","http://hl7.org/fhir/StructureDefinition/ImmunizationEvaluation", IsResource=true)]
-  public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource
+  public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -191,6 +191,7 @@ namespace Hl7.Fhir.Model
     /// Evaluation target disease
     /// </summary>
     [FhirElement("targetDisease", InSummary=true, Order=140)]
+    [Binding("EvaluationTargetDisease")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TargetDisease
@@ -221,6 +222,7 @@ namespace Hl7.Fhir.Model
     /// Status of the dose relative to published recommendations
     /// </summary>
     [FhirElement("doseStatus", InSummary=true, Order=160)]
+    [Binding("EvaluationDoseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseStatus
@@ -235,6 +237,7 @@ namespace Hl7.Fhir.Model
     /// Reason for the dose status
     /// </summary>
     [FhirElement("doseStatusReason", Order=170)]
+    [Binding("EvaluationDoseStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> DoseStatusReason
@@ -336,6 +339,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.DataType _SeriesDoses;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

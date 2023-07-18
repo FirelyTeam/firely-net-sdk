@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceMetric","http://hl7.org/fhir/StructureDefinition/DeviceMetric", IsResource=true)]
-  public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -479,6 +479,7 @@ namespace Hl7.Fhir.Model
     /// Identity of metric, for example Heart Rate or PEEP Setting
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
+    [Binding("MetricType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -493,6 +494,7 @@ namespace Hl7.Fhir.Model
     /// Unit of Measure for the Metric
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=110)]
+    [Binding("MetricUnit")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Unit
     {
@@ -658,6 +660,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

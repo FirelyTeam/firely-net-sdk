@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubstanceDefinition","http://hl7.org/fhir/StructureDefinition/SubstanceDefinition", IsResource=true)]
-  public partial class SubstanceDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class SubstanceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -130,6 +130,7 @@ namespace Hl7.Fhir.Model
       /// Stereochemistry type
       /// </summary>
       [FhirElement("stereochemistry", InSummary=true, Order=70)]
+      [Binding("SubstanceStereochemistry")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Stereochemistry
       {
@@ -143,6 +144,7 @@ namespace Hl7.Fhir.Model
       /// Optical activity type
       /// </summary>
       [FhirElement("opticalActivity", InSummary=true, Order=80)]
+      [Binding("SubstanceOpticalActivity")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OpticalActivity
       {
@@ -202,6 +204,7 @@ namespace Hl7.Fhir.Model
       /// The measurement type of the quantitative value
       /// </summary>
       [FhirElement("measurementType", InSummary=true, Order=110)]
+      [Binding("SubstanceAmountType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept MeasurementType
       {
@@ -375,6 +378,7 @@ namespace Hl7.Fhir.Model
       /// The method used to find the characterization e.g. HPLC
       /// </summary>
       [FhirElement("technique", InSummary=true, Order=40)]
+      [Binding("SubstanceStructureTechnique")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Technique
       {
@@ -388,6 +392,7 @@ namespace Hl7.Fhir.Model
       /// Describes the nature of the chemical entity and explains, for instance, whether this is a base or a salt form
       /// </summary>
       [FhirElement("form", InSummary=true, Order=50)]
+      [Binding("SubstanceForm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Form
       {
@@ -570,6 +575,7 @@ namespace Hl7.Fhir.Model
       /// A code expressing the type of property
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -705,6 +711,7 @@ namespace Hl7.Fhir.Model
       /// The method by which the weight was determined
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
+      [Binding("SubstanceWeightMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -718,6 +725,7 @@ namespace Hl7.Fhir.Model
       /// Type of molecular weight e.g. exact, average, weight average
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("SubstanceWeightType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -860,6 +868,7 @@ namespace Hl7.Fhir.Model
       /// Stereochemistry type
       /// </summary>
       [FhirElement("stereochemistry", InSummary=true, Order=40)]
+      [Binding("SubstanceStereochemistry")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Stereochemistry
       {
@@ -873,6 +882,7 @@ namespace Hl7.Fhir.Model
       /// Optical activity type
       /// </summary>
       [FhirElement("opticalActivity", InSummary=true, Order=50)]
+      [Binding("SubstanceOpticalActivity")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OpticalActivity
       {
@@ -961,6 +971,7 @@ namespace Hl7.Fhir.Model
       /// The method used to find the structure e.g. X-ray, NMR
       /// </summary>
       [FhirElement("technique", InSummary=true, Order=90)]
+      [Binding("SubstanceStructureTechnique")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Technique
@@ -1165,6 +1176,7 @@ namespace Hl7.Fhir.Model
       /// The kind of structural representation (e.g. full, partial)
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("SubstanceRepresentationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1209,6 +1221,7 @@ namespace Hl7.Fhir.Model
       /// The format of the representation e.g. InChI, SMILES, MOLFILE (note: not the physical file format)
       /// </summary>
       [FhirElement("format", InSummary=true, Order=60)]
+      [Binding("SubstanceRepresentationFormat")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Format
       {
@@ -1374,6 +1387,7 @@ namespace Hl7.Fhir.Model
       /// Status of the code assignment, for example 'provisional', 'approved'
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
+      [Binding("PublicationStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
       {
@@ -1613,6 +1627,7 @@ namespace Hl7.Fhir.Model
       /// Name type e.g. 'systematic',  'scientific, 'brand'
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("SubstanceNameType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1626,6 +1641,7 @@ namespace Hl7.Fhir.Model
       /// The status of the name e.g. 'current', 'proposed'
       /// </summary>
       [FhirElement("status", InSummary=true, Order=60)]
+      [Binding("PublicationStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
       {
@@ -1670,6 +1686,7 @@ namespace Hl7.Fhir.Model
       /// Human language that the name is written in
       /// </summary>
       [FhirElement("language", InSummary=true, Order=80)]
+      [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
@@ -1684,6 +1701,7 @@ namespace Hl7.Fhir.Model
       /// The use context of this name e.g. as an active ingredient or as a food colour additive
       /// </summary>
       [FhirElement("domain", InSummary=true, Order=90)]
+      [Binding("SubstanceNameDomain")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Domain
@@ -1698,6 +1716,7 @@ namespace Hl7.Fhir.Model
       /// The jurisdiction where this name applies
       /// </summary>
       [FhirElement("jurisdiction", InSummary=true, Order=100)]
+      [Binding("Jurisdiction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1957,6 +1976,7 @@ namespace Hl7.Fhir.Model
       /// Which authority uses this official name
       /// </summary>
       [FhirElement("authority", InSummary=true, Order=40)]
+      [Binding("SubstanceNameAuthority")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Authority
       {
@@ -1970,6 +1990,7 @@ namespace Hl7.Fhir.Model
       /// The status of the official name, for example 'draft', 'active'
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
+      [Binding("PublicationStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
       {
@@ -2145,6 +2166,7 @@ namespace Hl7.Fhir.Model
       /// For example "salt to parent", "active moiety"
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("SubstanceRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -2218,6 +2240,7 @@ namespace Hl7.Fhir.Model
       /// An operator for the amount, for example "average", "approximately", "less than"
       /// </summary>
       [FhirElement("comparator", InSummary=true, Order=90)]
+      [Binding("SubstanceAmountType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Comparator
       {
@@ -2398,6 +2421,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the origin of the raw material. e.g. cat hair is an Animal source type
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("SourceMaterialType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2411,6 +2435,7 @@ namespace Hl7.Fhir.Model
       /// The genus of an organism e.g. the Latin epithet of the plant/animal scientific name
       /// </summary>
       [FhirElement("genus", InSummary=true, Order=50)]
+      [Binding("SourceMaterialGenus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Genus
       {
@@ -2424,6 +2449,7 @@ namespace Hl7.Fhir.Model
       /// The species of an organism e.g. the Latin epithet of the species of the plant/animal
       /// </summary>
       [FhirElement("species", InSummary=true, Order=60)]
+      [Binding("SourceMaterialSpecies")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Species
       {
@@ -2437,6 +2463,7 @@ namespace Hl7.Fhir.Model
       /// An anatomical origin of the source material within an organism
       /// </summary>
       [FhirElement("part", InSummary=true, Order=70)]
+      [Binding("SourceMaterialPart")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Part
       {
@@ -2450,6 +2477,7 @@ namespace Hl7.Fhir.Model
       /// The country or countries where the material is harvested
       /// </summary>
       [FhirElement("countryOfOrigin", InSummary=true, Order=80)]
+      [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
@@ -2628,6 +2656,7 @@ namespace Hl7.Fhir.Model
     /// Status of substance within the catalogue e.g. active, retired
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
     {
@@ -2655,6 +2684,7 @@ namespace Hl7.Fhir.Model
     /// If the substance applies to human or veterinary use
     /// </summary>
     [FhirElement("domain", InSummary=true, Order=130)]
+    [Binding("MedicinalProductType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Domain
     {
@@ -2668,6 +2698,7 @@ namespace Hl7.Fhir.Model
     /// The quality standard, established benchmark, to which substance complies (e.g. USP/NF, BP)
     /// </summary>
     [FhirElement("grade", InSummary=true, Order=140)]
+    [Binding("SubstanceGrade")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Grade
@@ -2954,6 +2985,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.SubstanceDefinition.SourceMaterialComponent _SourceMaterial;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

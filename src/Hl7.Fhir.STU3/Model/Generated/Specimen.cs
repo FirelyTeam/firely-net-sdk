@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Specimen","http://hl7.org/fhir/StructureDefinition/Specimen", IsResource=true)]
-  public partial class Specimen : Hl7.Fhir.Model.DomainResource
+  public partial class Specimen : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -150,6 +150,7 @@ namespace Hl7.Fhir.Model
       /// Technique used to perform collection
       /// </summary>
       [FhirElement("method", Order=70)]
+      [Binding("SpecimenCollectionMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -163,6 +164,7 @@ namespace Hl7.Fhir.Model
       /// Anatomical collection site
       /// </summary>
       [FhirElement("bodySite", Order=80)]
+      [Binding("BodySite")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept BodySite
       {
@@ -340,6 +342,7 @@ namespace Hl7.Fhir.Model
       /// Indicates the treatment step  applied to the specimen
       /// </summary>
       [FhirElement("procedure", Order=50)]
+      [Binding("SpecimenProcessingProcedure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Procedure
       {
@@ -553,6 +556,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container directly associated with specimen
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("SpecimenContainerType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -592,6 +596,7 @@ namespace Hl7.Fhir.Model
       /// Additive associated with container
       /// </summary>
       [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SpecimenContainerAdditive")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -796,6 +801,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material that forms the specimen
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="what")]
+    [Binding("SpecimenType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -938,6 +944,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure", IsResource=true)]
-  public partial class Procedure : Hl7.Fhir.Model.DomainResource
+  public partial class Procedure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The role the actor was in
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
+      [Binding("ProcedurePerformerRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -232,6 +233,7 @@ namespace Hl7.Fhir.Model
       /// Kind of change to device
       /// </summary>
       [FhirElement("action", Order=40)]
+      [Binding("DeviceActionKind")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
       {
@@ -480,6 +482,7 @@ namespace Hl7.Fhir.Model
     /// Reason procedure was not performed
     /// </summary>
     [FhirElement("notDoneReason", InSummary=true, Order=150)]
+    [Binding("ProcedureNegationReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept NotDoneReason
     {
@@ -493,6 +496,7 @@ namespace Hl7.Fhir.Model
     /// Classification of the procedure
     /// </summary>
     [FhirElement("category", InSummary=true, Order=160, FiveWs="class")]
+    [Binding("ProcedureCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -506,6 +510,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the procedure
     /// </summary>
     [FhirElement("code", InSummary=true, Order=170, FiveWs="what")]
+    [Binding("ProcedureCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -594,6 +599,7 @@ namespace Hl7.Fhir.Model
     /// Coded reason procedure performed
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="why")]
+    [Binding("ProcedureReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -624,6 +630,7 @@ namespace Hl7.Fhir.Model
     /// Target body sites
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=250)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -638,6 +645,7 @@ namespace Hl7.Fhir.Model
     /// The result of procedure
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=260)]
+    [Binding("ProcedureOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -667,6 +675,7 @@ namespace Hl7.Fhir.Model
     /// Complication following the procedure
     /// </summary>
     [FhirElement("complication", Order=280)]
+    [Binding("ProcedureComplication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Complication
@@ -697,6 +706,7 @@ namespace Hl7.Fhir.Model
     /// Instructions for follow up
     /// </summary>
     [FhirElement("followUp", Order=300)]
+    [Binding("ProcedureFollowUp")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
@@ -755,6 +765,7 @@ namespace Hl7.Fhir.Model
     /// Coded items used during the procedure
     /// </summary>
     [FhirElement("usedCode", Order=340)]
+    [Binding("ProcedureUsed")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> UsedCode
@@ -764,6 +775,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

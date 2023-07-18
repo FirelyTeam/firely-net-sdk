@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense", IsResource=true)]
-  public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -137,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// Who performed the dispense and what they did
       /// </summary>
       [FhirElement("function", Order=40)]
+      [Binding("MedicationDispensePerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -304,6 +305,7 @@ namespace Hl7.Fhir.Model
       /// Code signifying whether a different drug was dispensed from what was prescribed
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("MedicationIntendedSubstitutionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -317,6 +319,7 @@ namespace Hl7.Fhir.Model
       /// Why was substitution made
       /// </summary>
       [FhirElement("reason", Order=60)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -521,6 +524,7 @@ namespace Hl7.Fhir.Model
     /// Why a dispense was not performed
     /// </summary>
     [FhirElement("statusReason", Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("MedicationDispenseStatusReason")]
     [CLSCompliant(false)]
     [References("DetectedIssue")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -537,6 +541,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication dispense
     /// </summary>
     [FhirElement("category", Order=130)]
+    [Binding("MedicationDispenseCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -550,6 +555,7 @@ namespace Hl7.Fhir.Model
     /// What medication was supplied
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -658,6 +664,7 @@ namespace Hl7.Fhir.Model
     /// Trial fill, partial fill, emergency fill, etc.
     /// </summary>
     [FhirElement("type", Order=210)]
+    [Binding("MedicationDispenseType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -858,6 +865,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

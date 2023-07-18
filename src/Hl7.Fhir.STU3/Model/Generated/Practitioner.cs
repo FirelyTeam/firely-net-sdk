@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Practitioner","http://hl7.org/fhir/StructureDefinition/Practitioner", IsResource=true)]
-  public partial class Practitioner : Hl7.Fhir.Model.DomainResource
+  public partial class Practitioner : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// Coded representation of the qualification
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -418,6 +419,7 @@ namespace Hl7.Fhir.Model
     /// A language the practitioner is able to use in patient communication
     /// </summary>
     [FhirElement("communication", Order=180)]
+    [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -427,6 +429,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport", IsResource=true)]
-  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
+  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -313,6 +313,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -933,6 +934,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -1282,6 +1284,7 @@ namespace Hl7.Fhir.Model
     /// increase | decrease
     /// </summary>
     [FhirElement("improvementNotation", InSummary=true, IsModifier=true, Order=170)]
+    [Binding("MeasureImprovementNotation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
     {
@@ -1320,6 +1323,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

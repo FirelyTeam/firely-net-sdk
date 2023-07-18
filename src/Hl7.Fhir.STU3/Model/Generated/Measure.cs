@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Measure","http://hl7.org/fhir/StructureDefinition/Measure", IsResource=true)]
-  public partial class Measure : Hl7.Fhir.Model.DomainResource
+  public partial class Measure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -323,6 +323,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasurePopulationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -766,6 +767,7 @@ namespace Hl7.Fhir.Model
       /// supplemental-data | risk-adjustment-factor
       /// </summary>
       [FhirElement("usage", Order=50)]
+      [Binding("MeasureDataUsage")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Usage
@@ -1399,6 +1401,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for measure (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1413,6 +1416,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=260)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1547,6 +1551,7 @@ namespace Hl7.Fhir.Model
     /// proportion | ratio | continuous-variable | cohort
     /// </summary>
     [FhirElement("scoring", InSummary=true, Order=330)]
+    [Binding("MeasureScoring")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scoring
     {
@@ -1560,6 +1565,7 @@ namespace Hl7.Fhir.Model
     /// opportunity | all-or-nothing | linear | weighted
     /// </summary>
     [FhirElement("compositeScoring", InSummary=true, Order=340)]
+    [Binding("CompositeMeasureScoring")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CompositeScoring
     {
@@ -1573,6 +1579,7 @@ namespace Hl7.Fhir.Model
     /// process | outcome | structure | patient-reported-outcome | composite
     /// </summary>
     [FhirElement("type", InSummary=true, Order=350)]
+    [Binding("MeasureType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1859,6 +1866,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> _SupplementalData;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

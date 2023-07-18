@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location", IsResource=true)]
-  public partial class Location : Hl7.Fhir.Model.DomainResource
+  public partial class Location : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -366,6 +366,7 @@ namespace Hl7.Fhir.Model
     /// The Operational status of the location (typically only for a bed/room)
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="status")]
+    [Binding("OperationalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -506,6 +507,7 @@ namespace Hl7.Fhir.Model
     /// Type of function performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="class")]
+    [Binding("LocationType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -546,6 +548,7 @@ namespace Hl7.Fhir.Model
     /// Physical form of the location
     /// </summary>
     [FhirElement("physicalType", InSummary=true, Order=190, FiveWs="class")]
+    [Binding("PhysicalType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysicalType
     {
@@ -613,6 +616,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

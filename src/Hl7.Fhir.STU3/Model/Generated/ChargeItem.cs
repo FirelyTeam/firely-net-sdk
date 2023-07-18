@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ChargeItem","http://hl7.org/fhir/StructureDefinition/ChargeItem", IsResource=true)]
-  public partial class ChargeItem : Hl7.Fhir.Model.DomainResource
+  public partial class ChargeItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ChargeItemPerformerRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -341,6 +342,7 @@ namespace Hl7.Fhir.Model
     /// A code that identifies the charge, like a billing code
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
+    [Binding("ChargeItemCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -458,6 +460,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodysite", InSummary=true, Order=210)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
@@ -593,6 +596,7 @@ namespace Hl7.Fhir.Model
     /// Why was the charged  service rendered?
     /// </summary>
     [FhirElement("reason", Order=270, FiveWs="why")]
+    [Binding("ChargeItemReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -664,6 +668,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

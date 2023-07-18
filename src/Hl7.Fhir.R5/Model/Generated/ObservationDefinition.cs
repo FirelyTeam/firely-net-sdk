@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
-  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -177,6 +177,7 @@ namespace Hl7.Fhir.Model
       /// Context qualifier for the set of qualified values
       /// </summary>
       [FhirElement("context", Order=40)]
+      [Binding("ObservationRangeMeaning")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Context
       {
@@ -190,6 +191,7 @@ namespace Hl7.Fhir.Model
       /// Targetted population for the set of qualified values
       /// </summary>
       [FhirElement("appliesTo", Order=50)]
+      [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
@@ -660,6 +662,7 @@ namespace Hl7.Fhir.Model
       /// Type of observation
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -680,7 +683,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
       {
-        get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
+        get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
         set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
       }
 
@@ -699,7 +702,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             PermittedDataTypeElement = null;
           else
-            PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
+            PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
           OnPropertyChanged("PermittedDataType");
         }
       }
@@ -708,6 +711,7 @@ namespace Hl7.Fhir.Model
       /// Unit for quantitative results
       /// </summary>
       [FhirElement("permittedUnit", Order=60)]
+      [Binding("ObservationUnit")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> PermittedUnit
@@ -1184,6 +1188,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for this ObservationDefinition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1457,6 +1462,7 @@ namespace Hl7.Fhir.Model
     /// General type of observation
     /// </summary>
     [FhirElement("category", InSummary=true, Order=330, FiveWs="FiveWs.class")]
+    [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1471,6 +1477,7 @@ namespace Hl7.Fhir.Model
     /// Type of observation
     /// </summary>
     [FhirElement("code", InSummary=true, Order=340, FiveWs="FiveWs.what[x]")]
+    [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -1491,7 +1498,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
-      get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
+      get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
       set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
     }
 
@@ -1510,7 +1517,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           PermittedDataTypeElement = null;
         else
-          PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
+          PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
         OnPropertyChanged("PermittedDataType");
       }
     }
@@ -1550,6 +1557,7 @@ namespace Hl7.Fhir.Model
     /// Body part to be observed
     /// </summary>
     [FhirElement("bodySite", Order=370)]
+    [Binding("ObservationBodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -1563,6 +1571,7 @@ namespace Hl7.Fhir.Model
     /// Method used to produce the observation
     /// </summary>
     [FhirElement("method", Order=380)]
+    [Binding("ObservationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -1639,6 +1648,7 @@ namespace Hl7.Fhir.Model
     /// Unit for quantitative results
     /// </summary>
     [FhirElement("permittedUnit", Order=420)]
+    [Binding("ObservationUnit")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> PermittedUnit
@@ -1692,6 +1702,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ObservationDefinition.ComponentComponent> _Component;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

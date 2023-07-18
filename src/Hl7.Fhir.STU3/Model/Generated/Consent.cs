@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
-  public partial class Consent : Hl7.Fhir.Model.DomainResource
+  public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -175,6 +175,7 @@ namespace Hl7.Fhir.Model
       /// How the actor is involved
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ConsentActorRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -696,6 +697,7 @@ namespace Hl7.Fhir.Model
       /// Actions controlled by this exception
       /// </summary>
       [FhirElement("action", InSummary=true, Order=70)]
+      [Binding("ConsentAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -710,6 +712,7 @@ namespace Hl7.Fhir.Model
       /// Security Labels that define affected resources
       /// </summary>
       [FhirElement("securityLabel", InSummary=true, Order=80)]
+      [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -724,6 +727,7 @@ namespace Hl7.Fhir.Model
       /// Context of activities covered by this exception
       /// </summary>
       [FhirElement("purpose", InSummary=true, Order=90)]
+      [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Purpose
@@ -738,6 +742,7 @@ namespace Hl7.Fhir.Model
       /// e.g. Resource Type, Profile, or CDA etc
       /// </summary>
       [FhirElement("class", InSummary=true, Order=100)]
+      [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Class
@@ -752,6 +757,7 @@ namespace Hl7.Fhir.Model
       /// e.g. LOINC or SNOMED CT code, etc in the content
       /// </summary>
       [FhirElement("code", InSummary=true, Order=110)]
+      [Binding("ConsentContentCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
@@ -971,6 +977,7 @@ namespace Hl7.Fhir.Model
       /// How the actor is involved
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ConsentActorRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -1296,6 +1303,7 @@ namespace Hl7.Fhir.Model
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("ConsentCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1400,6 +1408,7 @@ namespace Hl7.Fhir.Model
     /// Actions controlled by this consent
     /// </summary>
     [FhirElement("action", InSummary=true, Order=170)]
+    [Binding("ConsentAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -1491,6 +1500,7 @@ namespace Hl7.Fhir.Model
     /// Security Labels that define affected resources
     /// </summary>
     [FhirElement("securityLabel", InSummary=true, Order=220)]
+    [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -1505,6 +1515,7 @@ namespace Hl7.Fhir.Model
     /// Context of activities for which the agreement is made
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=230)]
+    [Binding("PurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Purpose
@@ -1555,6 +1566,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Consent.ExceptComponent> _Except;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

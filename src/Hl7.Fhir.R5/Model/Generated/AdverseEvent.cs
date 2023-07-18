@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
-  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
+  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
       /// Type of involvement
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("AdverseEventParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -400,6 +401,7 @@ namespace Hl7.Fhir.Model
       /// Method of evaluating the relatedness of the suspected entity to the event
       /// </summary>
       [FhirElement("assessmentMethod", InSummary=true, Order=40)]
+      [Binding("AdverseEventCausalityMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AssessmentMethod
       {
@@ -413,6 +415,7 @@ namespace Hl7.Fhir.Model
       /// Result of the assessment regarding the relatedness of the suspected entity to the event
       /// </summary>
       [FhirElement("entityRelatedness", InSummary=true, Order=50)]
+      [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept EntityRelatedness
       {
@@ -556,6 +559,7 @@ namespace Hl7.Fhir.Model
       /// Item suspected to have increased the probability or severity of the adverse event
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventContributingFactor")]
       [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Device","DeviceUsage","DocumentReference","MedicationAdministration","MedicationStatement")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -670,6 +674,7 @@ namespace Hl7.Fhir.Model
       /// Action that contributed to avoiding the adverse event
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventPreventiveAction")]
       [CLSCompliant(false)]
       [References("Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -784,6 +789,7 @@ namespace Hl7.Fhir.Model
       /// Ameliorating action taken after the adverse event occured in order to reduce the extent of harm
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventMitigatingAction")]
       [CLSCompliant(false)]
       [References("Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -898,6 +904,7 @@ namespace Hl7.Fhir.Model
       /// Subject medical history or document relevant to this adverse event
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventSupportingInfo")]
       [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationStatement","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -1080,6 +1087,7 @@ namespace Hl7.Fhir.Model
     /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("AdverseEventCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1094,6 +1102,7 @@ namespace Hl7.Fhir.Model
     /// Event or incident that occurred or was averted
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("AdverseEventType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1246,6 +1255,7 @@ namespace Hl7.Fhir.Model
     /// Seriousness or gravity of the event
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=210)]
+    [Binding("AdverseEventSeriousness")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Seriousness
     {
@@ -1259,6 +1269,7 @@ namespace Hl7.Fhir.Model
     /// Type of outcome from the adverse event
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=220)]
+    [Binding("AdverseEventOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Outcome
@@ -1428,6 +1439,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

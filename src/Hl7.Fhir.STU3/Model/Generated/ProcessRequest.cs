@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ProcessRequest","http://hl7.org/fhir/StructureDefinition/ProcessRequest", IsResource=true)]
-  public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource
+  public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -556,6 +556,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Period _Period;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

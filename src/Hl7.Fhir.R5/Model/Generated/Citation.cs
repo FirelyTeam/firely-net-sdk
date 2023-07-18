@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
-  public partial class Citation : Hl7.Fhir.Model.DomainResource
+  public partial class Citation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -311,6 +311,7 @@ namespace Hl7.Fhir.Model
       /// Format for display of the citation summary
       /// </summary>
       [FhirElement("style", Order=40)]
+      [Binding("CitationSummaryStyle")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Style
       {
@@ -462,6 +463,7 @@ namespace Hl7.Fhir.Model
       /// The kind of classifier (e.g. publication type, keyword)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitationClassificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -475,6 +477,7 @@ namespace Hl7.Fhir.Model
       /// The specific classification value
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -595,6 +598,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the status
       /// </summary>
       [FhirElement("activity", Order=40)]
+      [Binding("CitationStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Activity
@@ -841,6 +845,7 @@ namespace Hl7.Fhir.Model
       /// The status of the cited artifact
       /// </summary>
       [FhirElement("currentState", Order=80)]
+      [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
@@ -1369,6 +1374,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the status
       /// </summary>
       [FhirElement("activity", Order=40)]
+      [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Activity
@@ -1543,6 +1549,7 @@ namespace Hl7.Fhir.Model
       /// The kind of title
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TitleType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1557,6 +1564,7 @@ namespace Hl7.Fhir.Model
       /// Used to express the specific language
       /// </summary>
       [FhirElement("language", Order=50)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -1717,6 +1725,7 @@ namespace Hl7.Fhir.Model
       /// The kind of abstract
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactAbstractType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1730,6 +1739,7 @@ namespace Hl7.Fhir.Model
       /// Used to express the specific language
       /// </summary>
       [FhirElement("language", Order=50)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -1930,6 +1940,7 @@ namespace Hl7.Fhir.Model
       /// The kind of component
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactPartType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2138,6 +2149,7 @@ namespace Hl7.Fhir.Model
       /// Additional classifiers
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -2475,6 +2487,7 @@ namespace Hl7.Fhir.Model
       /// Internet or Print
       /// </summary>
       [FhirElement("citedMedium", Order=50)]
+      [Binding("CitedMedium")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CitedMedium
       {
@@ -2674,6 +2687,7 @@ namespace Hl7.Fhir.Model
       /// Language(s) in which this form of the article is published
       /// </summary>
       [FhirElement("language", Order=120)]
+      [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
@@ -3097,6 +3111,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container (e.g. Periodical, database, or book)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PublishedInType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -3334,6 +3349,7 @@ namespace Hl7.Fhir.Model
       /// Code the reason for different URLs, e.g. abstract and full-text
       /// </summary>
       [FhirElement("classifier", Order=40)]
+      [Binding("ArtifactUrlClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -3485,6 +3501,7 @@ namespace Hl7.Fhir.Model
       /// The kind of classifier (e.g. publication type, keyword)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactClassificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -3498,6 +3515,7 @@ namespace Hl7.Fhir.Model
       /// The specific classification value
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -3880,6 +3898,7 @@ namespace Hl7.Fhir.Model
       /// The specific contribution
       /// </summary>
       [FhirElement("contributionType", Order=70)]
+      [Binding("ArtifactContributionType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ContributionType
@@ -3894,6 +3913,7 @@ namespace Hl7.Fhir.Model
       /// The role of the contributor (e.g. author, editor, reviewer, funder)
       /// </summary>
       [FhirElement("role", Order=80)]
+      [Binding("ContributorRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -4143,6 +4163,7 @@ namespace Hl7.Fhir.Model
       /// The specific contribution
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ArtifactContributionInstanceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -4294,6 +4315,7 @@ namespace Hl7.Fhir.Model
       /// Such as author list, contributorship statement, funding statement, acknowledgements statement, or conflicts of interest statement
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ContributorSummaryType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -4307,6 +4329,7 @@ namespace Hl7.Fhir.Model
       /// The format for the display string
       /// </summary>
       [FhirElement("style", Order=50)]
+      [Binding("ContributorSummaryStyle")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Style
       {
@@ -4320,6 +4343,7 @@ namespace Hl7.Fhir.Model
       /// Used to code the producer or rule for creating the display string
       /// </summary>
       [FhirElement("source", Order=60)]
+      [Binding("ContributorSummarySource")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Source
       {
@@ -4814,6 +4838,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for citation record (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -5094,6 +5119,7 @@ namespace Hl7.Fhir.Model
     /// The status of the citation record
     /// </summary>
     [FhirElement("currentState", Order=360)]
+    [Binding("CitationStatusType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
@@ -5144,6 +5170,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Citation.CitedArtifactComponent _CitedArtifact;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location", IsResource=true)]
-  public partial class Location : Hl7.Fhir.Model.DomainResource
+  public partial class Location : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -366,6 +366,7 @@ namespace Hl7.Fhir.Model
     /// The operational status of the location (typically only for a bed/room)
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("OperationalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -506,6 +507,7 @@ namespace Hl7.Fhir.Model
     /// Type of function performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [Binding("LocationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -547,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// Physical form of the location
     /// </summary>
     [FhirElement("form", InSummary=true, Order=190, FiveWs="FiveWs.class")]
+    [Binding("LocationForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {
@@ -603,6 +606,7 @@ namespace Hl7.Fhir.Model
     /// Collection of characteristics (attributes)
     /// </summary>
     [FhirElement("characteristic", Order=230)]
+    [Binding("LocationCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
@@ -656,6 +660,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("BiologicallyDerivedProduct","http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct", IsResource=true)]
-  public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource
+  public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -233,6 +233,7 @@ namespace Hl7.Fhir.Model
       /// Code that specifies the property
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("BiologicallyDerivedProductPropertyTypeCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -355,6 +356,7 @@ namespace Hl7.Fhir.Model
     /// organ | tissue | fluid | cells | biologicalAgent
     /// </summary>
     [FhirElement("productCategory", Order=90)]
+    [Binding("BiologicallyDerivedProductCategory")]
     [DataMember]
     public Hl7.Fhir.Model.Coding ProductCategory
     {
@@ -368,6 +370,7 @@ namespace Hl7.Fhir.Model
     /// A code that identifies the kind of this biologically derived product
     /// </summary>
     [FhirElement("productCode", Order=100)]
+    [Binding("BiologicallyDerivedProductCodes")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ProductCode
     {
@@ -487,6 +490,7 @@ namespace Hl7.Fhir.Model
     /// available | unavailable
     /// </summary>
     [FhirElement("productStatus", Order=170)]
+    [Binding("BiologicallyDerivedProductStatus")]
     [DataMember]
     public Hl7.Fhir.Model.Coding ProductStatus
     {
@@ -566,6 +570,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent> _Property;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

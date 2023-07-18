@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter", IsResource=true)]
-  public partial class Encounter : Hl7.Fhir.Model.DomainResource
+  public partial class Encounter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -327,6 +327,7 @@ namespace Hl7.Fhir.Model
       /// inpatient | outpatient | ambulatory | emergency +
       /// </summary>
       [FhirElement("class", Order=40)]
+      [Binding("EncounterClass")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Class
@@ -461,6 +462,7 @@ namespace Hl7.Fhir.Model
       /// Role of participant in encounter
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -634,6 +636,7 @@ namespace Hl7.Fhir.Model
       /// Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("DiagnosisRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Use
       {
@@ -821,6 +824,7 @@ namespace Hl7.Fhir.Model
       /// From where patient was admitted (physician referral, transfer)
       /// </summary>
       [FhirElement("admitSource", Order=60)]
+      [Binding("AdmitSource")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AdmitSource
       {
@@ -834,6 +838,7 @@ namespace Hl7.Fhir.Model
       /// The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
       /// </summary>
       [FhirElement("reAdmission", Order=70)]
+      [Binding("ReAdmissionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ReAdmission
       {
@@ -847,6 +852,7 @@ namespace Hl7.Fhir.Model
       /// Diet preferences reported by the patient
       /// </summary>
       [FhirElement("dietPreference", Order=80)]
+      [Binding("PatientDiet")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
@@ -861,6 +867,7 @@ namespace Hl7.Fhir.Model
       /// Special courtesies (VIP, board member)
       /// </summary>
       [FhirElement("specialCourtesy", Order=90)]
+      [Binding("Courtesies")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
@@ -875,6 +882,7 @@ namespace Hl7.Fhir.Model
       /// Wheelchair, translator, stretcher, etc.
       /// </summary>
       [FhirElement("specialArrangement", Order=100)]
+      [Binding("Arrangements")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
@@ -904,6 +912,7 @@ namespace Hl7.Fhir.Model
       /// Category or kind of location after discharge
       /// </summary>
       [FhirElement("dischargeDisposition", Order=120)]
+      [Binding("DischargeDisp")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
       {
@@ -1135,6 +1144,7 @@ namespace Hl7.Fhir.Model
       /// The physical type of the location (usually the level in the location hierachy - bed room ward etc.)
       /// </summary>
       [FhirElement("physicalType", Order=60)]
+      [Binding("PhysicalType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept PhysicalType
       {
@@ -1333,6 +1343,7 @@ namespace Hl7.Fhir.Model
     /// Classification of patient encounter
     /// </summary>
     [FhirElement("class", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("EncounterClass")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Class
@@ -1361,7 +1372,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of encounter
     /// </summary>
     [FhirElement("type", InSummary=true, Order=140, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("EncounterType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1376,6 +1387,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of service
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=150)]
+    [Binding("EncounterServiceType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ServiceType
     {
@@ -1389,6 +1401,7 @@ namespace Hl7.Fhir.Model
     /// Indicates the urgency of the encounter
     /// </summary>
     [FhirElement("priority", Order=160, FiveWs="FiveWs.grade")]
+    [Binding("Priority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -1505,6 +1518,7 @@ namespace Hl7.Fhir.Model
     /// Coded reason the encounter takes place
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
+    [Binding("EncounterReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -1617,6 +1631,11 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _PartOf;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Type; set => Type = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Type.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

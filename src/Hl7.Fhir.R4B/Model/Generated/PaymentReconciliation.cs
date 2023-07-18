@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PaymentReconciliation","http://hl7.org/fhir/StructureDefinition/PaymentReconciliation", IsResource=true)]
-  public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource
+  public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -99,6 +99,7 @@ namespace Hl7.Fhir.Model
       /// Category of payment
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("PaymentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -841,6 +842,7 @@ namespace Hl7.Fhir.Model
     /// Printed form identifier
     /// </summary>
     [FhirElement("formCode", Order=220)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FormCode
     {
@@ -863,6 +865,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> _ProcessNote;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

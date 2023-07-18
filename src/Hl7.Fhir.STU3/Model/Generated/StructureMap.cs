@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("StructureMap","http://hl7.org/fhir/StructureDefinition/StructureMap", IsResource=true)]
-  public partial class StructureMap : Hl7.Fhir.Model.DomainResource
+  public partial class StructureMap : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2035,7 +2035,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> ListModeElement
       {
-        get { if(_ListModeElement==null) _ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
+        get { if(_ListModeElement==null) _ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
         set { _ListModeElement = value; OnPropertyChanged("ListModeElement"); }
       }
 
@@ -2054,7 +2054,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ListModeElement = null;
           else
-            ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
+            ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
           OnPropertyChanged("ListMode");
         }
       }
@@ -2896,6 +2896,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for structure map (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -3027,6 +3028,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.StructureMap.GroupComponent> _Group;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task", IsResource=true)]
-  public partial class Task : Hl7.Fhir.Model.DomainResource
+  public partial class Task : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -219,6 +219,7 @@ namespace Hl7.Fhir.Model
       /// Type of performance
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("TaskPerformerFunctionCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -529,6 +530,7 @@ namespace Hl7.Fhir.Model
       /// Label for the input
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TaskInputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -665,6 +667,7 @@ namespace Hl7.Fhir.Model
       /// Label for output
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TaskOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -942,6 +945,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=160)]
+    [Binding("TaskStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference StatusReason
     {
@@ -955,6 +959,7 @@ namespace Hl7.Fhir.Model
     /// E.g. "Specimen collected", "IV prepped"
     /// </summary>
     [FhirElement("businessStatus", InSummary=true, Order=170)]
+    [Binding("TaskBusinessStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BusinessStatus
     {
@@ -1066,6 +1071,7 @@ namespace Hl7.Fhir.Model
     /// Task Type
     /// </summary>
     [FhirElement("code", InSummary=true, Order=210, FiveWs="FiveWs.what[x]")]
+    [Binding("TaskCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1258,6 +1264,7 @@ namespace Hl7.Fhir.Model
     /// Who should perform Task
     /// </summary>
     [FhirElement("requestedPerformer", Order=310, FiveWs="FiveWs.actor")]
+    [Binding("TaskPerformerType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> RequestedPerformer
@@ -1316,6 +1323,7 @@ namespace Hl7.Fhir.Model
     /// Why task is needed
     /// </summary>
     [FhirElement("reason", Order=350, FiveWs="FiveWs.why[x]")]
+    [Binding("TaskReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1412,6 +1420,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Task.OutputComponent> _Output;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
