@@ -28,8 +28,6 @@
 
 */
 
-using P = Hl7.Fhir.ElementModel.Types;
-
 namespace Hl7.Fhir.Model
 {
     public partial class FhirDateTime
@@ -103,10 +101,7 @@ namespace Hl7.Fhir.Model
                 if (Value == null) return otherValue == null;
                 if (otherValue == null) return false;
 
-                if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
-
-                var left = P.DateTime.Parse(Value);
-                var right = P.DateTime.Parse(otherValue);
+                if (Value == otherValue) return true; // Default reference/string comparison works in most cases
 
                 return ToDateTime() == other.ToDateTime();
             }
