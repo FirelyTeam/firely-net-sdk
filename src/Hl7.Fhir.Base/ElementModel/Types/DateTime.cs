@@ -44,7 +44,7 @@ namespace Hl7.Fhir.ElementModel.Types
             DateTimePrecision.Hour => new DateTimeOffset(source.Year, source.Month, source.Day, source.Hour, 0, 0, withOffset ? source.Offset : TimeSpan.Zero),
             DateTimePrecision.Minute => new DateTimeOffset(source.Year, source.Month, source.Day, source.Hour, source.Minute, 0, withOffset ? source.Offset : TimeSpan.Zero),
             DateTimePrecision.Second => new DateTimeOffset(source.Year, source.Month, source.Day, source.Hour, source.Minute, source.Second, withOffset ? source.Offset : TimeSpan.Zero),
-            _ => new DateTimeOffset(source.Year, source.Month, source.Day, source.Hour, source.Minute, source.Second, source.Millisecond, withOffset ? source.Offset : TimeSpan.Zero),
+            _ => new DateTimeOffset(source.Ticks, withOffset ? source.Offset : TimeSpan.Zero),
         };
 
         public static DateTime FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Fraction, bool includeOffset = true) =>
@@ -96,9 +96,7 @@ namespace Hl7.Fhir.ElementModel.Types
                HasOffset switch
                {
                    true => _value,
-                   false => new(_value.Year, _value.Month, _value.Day,
-                       _value.Hour, _value.Minute, _value.Second, _value.Millisecond,
-                       defaultOffset)
+                   false => new(_value.Ticks, defaultOffset)
                };
 
         public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";

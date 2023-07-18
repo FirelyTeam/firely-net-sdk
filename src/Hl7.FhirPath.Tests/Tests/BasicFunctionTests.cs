@@ -10,9 +10,8 @@
 //extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using Hl7.FhirPath.Functions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -186,6 +185,7 @@ namespace Hl7.FhirPath.Tests
         public void TestExpressionTodayFunction()
         {
             // Check that date comes in
+            var s = scalar("today()");
             Assert.AreEqual(P.Date.Today(), scalar("today()"));
 
             // Check greater than

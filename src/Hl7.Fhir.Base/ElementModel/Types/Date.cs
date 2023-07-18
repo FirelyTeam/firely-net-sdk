@@ -21,7 +21,7 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             if (precision > DateTimePrecision.Day) throw new ArgumentException($"Invalid precision {precision}, cannot be more than {nameof(DateTimePrecision.Day)}.", nameof(precision));
 
-            _value = value;
+            _value = DateTime.RoundToPrecision(value, precision, hasOffset);
             Precision = precision;
             HasOffset = hasOffset;
         }
