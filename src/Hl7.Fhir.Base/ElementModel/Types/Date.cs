@@ -45,7 +45,7 @@ namespace Hl7.Fhir.ElementModel.Types
             return Parse(representation);
         }
 
-        public DateTime ToDateTime() => new(_original, _parsedValue, Precision, HasOffset);
+        public DateTime ToDateTime() => new(_parsedValue, Precision, HasOffset);
 
 
         public static Date Today(bool includeOffset = false) => FromDateTimeOffset(DateTimeOffset.Now, includeOffset: includeOffset);

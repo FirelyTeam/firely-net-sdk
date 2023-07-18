@@ -33,6 +33,7 @@
 using Hl7.Fhir.Serialization;
 using System;
 using System.Text.RegularExpressions;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
 {
@@ -92,13 +93,53 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public static FhirDateTime Now()
+        public static FhirDateTime Now() => new(DateTimeOffset.Now);
+
+        [NonSerialized]  // To prevent binary serialization from serializing this field
+        private P.DateTime? _parsedValue = null;
+
+        private static readonly P.DateTime INVALID_VALUE = P.DateTime.Now();
+
+        /// <summary>
+        /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
+        /// </summary>
+        /// <returns>true if the FhirDateTime contains a valid date/time string, false otherwise.</returns>
+        public bool TryToDateTime(out P.DateTime? dateTime)
         {
-            return new FhirDateTime(PrimitiveTypeConverter.ConvertTo<string>(DateTimeOffset.Now));
+            if (_parsedValue is null)
+            {
+                if (Value is not null && !P.DateTime.TryParse(Value, out _parsedValue))
+                    _parsedValue = INVALID_VALUE;
+            }
+
+            if (hasInvalidParsedValue())
+            {
+                dateTime = null;
+                return false;
+            }
+            else
+            {
+                dateTime = _parsedValue;
+                return true;
+            }
+
+            bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
         }
 
         /// <summary>
-        /// Converts this Fhir DateTime as a .NET DateTimeOffset
+        /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
+        /// </summary>
+        /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR DateTime.</exception>
+        public P.DateTime? ToDateTime() => TryToDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+
+        protected override void OnObjectValueChanged()
+        {
+            _parsedValue = null;
+            base.OnObjectValueChanged();
+        }
+
+        /// <summary>
+        /// Converts this Fhir FhirDateTime to a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <param name="zone">Ensures the returned DateTimeOffset uses the the specified zone.</param>
         /// <remarks>In .NET the minimal value for DateTimeOffset is 1/1/0001 12:00:00 AM +00:00. That means,for example, 
@@ -113,79 +154,56 @@ namespace Hl7.Fhir.Model
 
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
             // When there's no timezone, the UTC is assumed
-            var dto = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value);
+            if (!TryToDateTime(out var dt))
+                throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
-            return dto.ToOffset(zone);
+            // Since Value is not null and the parsed value is valid, dto will not be null
+            return dt!.ToDateTimeOffset(TimeSpan.Zero).ToOffset(zone);
         }
 
         /// <summary>
-        /// Determines whether a Fhir DateTime can be converted to a a .NET DateTimeOffset. Fails in case of a partial DateTime (no timezone), 
-        /// otherwise 'success' will be returned including the DateTimeOffset as out parameter. 
+        /// Convert this FhirDateTime to a <see cref="DateTimeOffset"/>.
         /// </summary>
-        /// <param name="dto">A DateTimeOffset, if a timezone is correctly specified</param>
-        /// <returns>A boolean representing if a DateTimeOffset keeping the original timezone can be converted</returns>
+        /// <returns>True if the value of the FhirDateTime is not null, can be parsed as a DateTimeOffset and has a specified timezone, false otherwise.</returns>
         public bool TryToDateTimeOffset(out DateTimeOffset dto)
         {
-            dto = default;
-
-            if (this.Value == null)
-                return false;
-
-            if (tryGetTimeSpan(out var timespan))
+            if (Value is not null && TryToDateTime(out var dt) && dt!.Offset is not null)
             {
-                dto = ToDateTimeOffset(timespan);
+                dto = dt.ToDateTimeOffset(dt.Offset.Value);
                 return true;
             }
             else
             {
+                dto = default;
                 return false;
             }
         }
 
-        private bool tryGetTimeSpan(out TimeSpan ts)
+        /// <summary>
+        /// Convert this FhirDateTime to a <see cref="DateTimeOffset"/>.
+        /// </summary>
+        /// <param name="defaultOffset">Used when the partial FhirDateTime does not have an offset specified.</param>
+        /// <param name="dto">The converted <see cref="DateTimeOffset"/>.</param>
+        /// <returns>True if the value of the FhirDateTime is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
+        public bool TryToDateTimeOffset(TimeSpan defaultOffset, out DateTimeOffset dto)
         {
-            ts = default;
-
-            if (tryGetTimeZone(out var tz))
+            if (Value is not null && TryToDateTime(out var dt))
             {
-                if (tz == "Z")
-                {
-                    ts = TimeSpan.Zero;
-                    return true;
-                }
-
-                //converts +07:00 to 07:00, and keeps -07:00 as is.
-                tz = tz!.Replace("+", "");
-
-                if (TimeSpan.TryParse(tz, out var timespan))
-                {
-                    ts = timespan;
-                    return true;
-                }
-                else
-                {
-                    //can't determine timezone
-                    return false;
-                }
+                dto = dt!.ToDateTimeOffset(defaultOffset);
+                return true;
             }
             else
             {
+                dto = default;
                 return false;
             }
-        }
-
-        private bool tryGetTimeZone(out string? timezone)
-        {
-            var matches = DATETIMEREGEX.Match(Value);
-            timezone = matches.Groups["offset"]?.Value;
-            return !string.IsNullOrEmpty(timezone);
         }
 
         /// <summary>
         /// Checks whether the given literal is correctly formatted.
         /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.DateTime.TryParse(value, out var parsed) &&
-            (parsed.Precision <= ElementModel.Types.DateTimePrecision.Day == !parsed.HasOffset);
+        public static bool IsValidValue(string value) => P.DateTime.TryParse(value, out var parsed) &&
+            (parsed.Precision <= P.DateTimePrecision.Day == !parsed.HasOffset);
     }
 
 }
