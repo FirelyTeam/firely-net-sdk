@@ -32,7 +32,6 @@
 
 using Hl7.Fhir.Serialization;
 using System;
-using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
@@ -58,15 +57,6 @@ namespace Hl7.Fhir.Model
         /// A <c>string.Format</c> pattern to use when formatting a date.
         /// </summary>
         public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
-
-        private static readonly string DATEFORMAT =
-          $"(?<year>[0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000) (?<month>-(0[1-9]|1[0-2]) (?<day>-(0[1-9]|[1-2][0-9]|3[0-1])";
-        private static readonly string TIMEFORMAT =
-            $"(T(?<hours>[01][0-9]|2[0-3]) (?<minutes>:[0-5][0-9]) (?<seconds>:[0-5][0-9]|60)(?<fractions>\\.[0-9]+) ?(?<offset>Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?";
-
-        private static readonly Regex DATETIMEREGEX =
-                new("^" + DATEFORMAT + TIMEFORMAT + "$",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
         public FhirDateTime(DateTimeOffset dt) : this(PrimitiveTypeConverter.ConvertTo<string>(dt))
         {
@@ -129,6 +119,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
         /// </summary>
+        /// <returns>The DateTime, or null if the <see cref="Value"/> is null.</returns>
         /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR DateTime.</exception>
         public P.DateTime? ToDateTime() => TryToDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
@@ -150,7 +141,7 @@ namespace Hl7.Fhir.Model
         /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
         public DateTimeOffset ToDateTimeOffset(TimeSpan zone)
         {
-            if (this.Value == null) throw new InvalidOperationException("FhirDateTime's value is null");
+            if (Value == null) throw new InvalidOperationException("FhirDateTime's value is null");
 
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
             // When there's no timezone, the UTC is assumed

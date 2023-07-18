@@ -17,36 +17,25 @@ namespace Hl7.Fhir.ElementModel.Types
 {
     public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
     {
-        private Date(string original, DateTimeOffset parsedValue, DateTimePrecision precision, bool hasOffset)
+        private Date(DateTimeOffset value, DateTimePrecision precision, bool hasOffset)
         {
-            _original = original;
-            _parsedValue = parsedValue;
+            if (precision > DateTimePrecision.Day) throw new ArgumentException($"Invalid precision {precision}, cannot be more than {nameof(DateTimePrecision.Day)}.", nameof(precision));
+
+            _value = value;
             Precision = precision;
             HasOffset = hasOffset;
         }
 
         public static Date Parse(string representation) =>
-            TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid date.");
+            TryParse(representation, out var result) ? result! : throw new FormatException($"String '{representation}' was not recognized as a valid date.");
 
         public static bool TryParse(string representation, out Date value) => tryParse(representation, out value);
 
         public static Date FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Day,
-        bool includeOffset = false)
-        {
-            string formatString = prec switch
-            {
-                DateTimePrecision.Year => "yyyy",
-                DateTimePrecision.Month => "yyyy-MM",
-                _ => "yyyy-MM-dd",
-            };
-            if (includeOffset) formatString += "K";
+                bool includeOffset = false) => new(dto, prec, includeOffset);
 
-            var representation = dto.ToString(formatString);
-            return Parse(representation);
-        }
 
-        public DateTime ToDateTime() => new(_parsedValue, Precision, HasOffset);
-
+        public DateTime ToDateTime() => DateTime.FromDateTimeOffset(_value, Precision, HasOffset);
 
         public static Date Today(bool includeOffset = false) => FromDateTimeOffset(DateTimeOffset.Now, includeOffset: includeOffset);
 
@@ -55,27 +44,32 @@ namespace Hl7.Fhir.ElementModel.Types
         /// </summary>
         public DateTimePrecision Precision { get; private set; }
 
-        public int? Years => Precision >= DateTimePrecision.Year ? _parsedValue.Year : (int?)null;
-        public int? Months => Precision >= DateTimePrecision.Month ? _parsedValue.Month : (int?)null;
-        public int? Days => Precision >= DateTimePrecision.Day ? _parsedValue.Day : (int?)null;
+        public int? Years => Precision >= DateTimePrecision.Year ? _value.Year : (int?)null;
+        public int? Months => Precision >= DateTimePrecision.Month ? _value.Month : (int?)null;
+        public int? Days => Precision >= DateTimePrecision.Day ? _value.Day : (int?)null;
 
         /// <summary>
         /// The span of time ahead/behind UTC
         /// </summary>
-        public TimeSpan? Offset => HasOffset ? _parsedValue.Offset : (TimeSpan?)null;
-
-        private readonly string _original;
-        private readonly DateTimeOffset _parsedValue;
+        public TimeSpan? Offset => HasOffset ? _value.Offset : null;
 
         /// <summary>
         /// Whether the time specifies an offset to UTC
         /// </summary>
         public bool HasOffset { get; private set; }
 
-        private static readonly string DATEFORMAT =
-            $"(?<year>[0-9]{{4}}) ((?<month>-[0-9][0-9]) ((?<day>-[0-9][0-9]) )?)? {Time.OFFSETFORMAT}?";
-        public static readonly Regex PARTIALDATEREGEX = new("^" + DATEFORMAT + "$",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+        /// <summary>
+        /// If this instance was constructed using Parse(), this is the original
+        /// raw input to the parse. Used to guarantee roundtrippability.
+        /// </summary>
+        private string? _originalParsedString { get; init; }
+
+        private readonly DateTimeOffset _value;
+
+        /// <summary>
+        /// Converts the date to a full DateTimeOffset instance.
+        /// </summary>
+        public DateTimeOffset ToDateTimeOffset() => ToDateTimeOffset(0, 0, 0, TimeSpan.Zero);
 
         /// <summary>
         /// Converts the date to a full DateTimeOffset instance.
@@ -98,8 +92,13 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="defaultOffset">Offset used when the datetime does not specify one.</param>
         /// <returns></returns>
         public DateTimeOffset ToDateTimeOffset(int hours, int minutes, int seconds, int milliseconds, TimeSpan defaultOffset) =>
-                new(_parsedValue.Year, _parsedValue.Month, _parsedValue.Day, hours, minutes, seconds, milliseconds,
-                        HasOffset ? _parsedValue.Offset : defaultOffset);
+                new(_value.Year, _value.Month, _value.Day, hours, minutes, seconds, milliseconds,
+                        HasOffset ? _value.Offset : defaultOffset);
+
+        private static readonly string DATEFORMAT =
+                $"(?<year>[0-9]{{4}}) ((?<month>-[0-9][0-9]) ((?<day>-[0-9][0-9]) )?)? {Time.OFFSETFORMAT}?";
+        public static readonly Regex PARTIALDATEREGEX = new("^" + DATEFORMAT + "$",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
         /// <summary>
         /// Converts the date to a full DateTimeOffset instance.
@@ -112,7 +111,7 @@ namespace Hl7.Fhir.ElementModel.Types
             var matches = PARTIALDATEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new Date(representation, default, default, default);
+                value = new Date(default, default, default);
                 return false;
             }
 
@@ -133,7 +132,11 @@ namespace Hl7.Fhir.ElementModel.Types
                 (offset.Success ? offset.Value : "Z");
 
             var success = DateTimeOffset.TryParse(parseableDT, out var parsedValue);
-            value = new Date(representation, parsedValue, prec, offset.Success);
+            value = new Date(parsedValue, prec, offset.Success)
+            {
+                _originalParsedString = representation
+            };
+
             return success;
         }
 
@@ -149,21 +152,21 @@ namespace Hl7.Fhir.ElementModel.Types
             var dto = addValue.Unit switch
             {
                 // we can ignore precision, as the precision will "trim" it anyway, and if we add 13 months, then the year can tick over nicely
-                "years" or "year" => dateValue._parsedValue.AddYears((int)addValue.Value),
+                "years" or "year" => dateValue._value.AddYears((int)addValue.Value),
                 "month" or "months" => dateValue.Precision == DateTimePrecision.Year
-                    ? dateValue._parsedValue.AddYears((int)(addValue.Value / 12))
-                    : dateValue._parsedValue.AddMonths((int)addValue.Value),
+                    ? dateValue._value.AddYears((int)(addValue.Value / 12))
+                    : dateValue._value.AddMonths((int)addValue.Value),
                 "week" or "weeks" or "wk" => dateValue.Precision switch
                 {
-                    DateTimePrecision.Year => dateValue._parsedValue.AddYears((int)(addValue.Value / 52)),
-                    DateTimePrecision.Month => dateValue._parsedValue.AddMonths((int)(addValue.Value * 7 / 30)),
-                    _ => dateValue._parsedValue.AddDays(((int)addValue.Value) * 7)
+                    DateTimePrecision.Year => dateValue._value.AddYears((int)(addValue.Value / 52)),
+                    DateTimePrecision.Month => dateValue._value.AddMonths((int)(addValue.Value * 7 / 30)),
+                    _ => dateValue._value.AddDays(((int)addValue.Value) * 7)
                 },
                 "day" or "days" or "d" => dateValue.Precision switch
                 {
-                    DateTimePrecision.Year => dateValue._parsedValue.AddYears((int)(addValue.Value / 365)),
-                    DateTimePrecision.Month => dateValue._parsedValue.AddMonths((int)(addValue.Value / 30)),
-                    _ => dateValue._parsedValue.AddDays((int)addValue.Value)
+                    DateTimePrecision.Year => dateValue._value.AddYears((int)(addValue.Value / 365)),
+                    DateTimePrecision.Month => dateValue._value.AddMonths((int)(addValue.Value / 30)),
+                    _ => dateValue._value.AddDays((int)addValue.Value)
                 },
                 _ => throw new ArgumentException($"'{addValue.Unit}' is not a valid time-valued unit", nameof(addValue)),
             };
@@ -210,7 +213,7 @@ namespace Hl7.Fhir.ElementModel.Types
             return other switch
             {
                 null => 1,
-                Date p => DateTime.CompareDateTimeParts(_parsedValue, Precision, HasOffset, p._parsedValue, p.Precision, p.HasOffset),
+                Date p => DateTime.CompareDateTimeParts(_value, Precision, HasOffset, p._value, p.Precision, p.HasOffset),
                 _ => throw NotSameTypeComparison(this, other)
             };
         }
@@ -221,8 +224,8 @@ namespace Hl7.Fhir.ElementModel.Types
         public static bool operator >=(Date a, Date b) => a.CompareTo(b) >= 0;
 
 
-        public override int GetHashCode() => _original.GetHashCode();
-        public override string ToString() => _original;
+        public override int GetHashCode() => _value.GetHashCode();
+        public override string ToString() => _originalParsedString is not null ? _originalParsedString : DateTime.ToStringWithPrecision(_value, Precision, HasOffset);
 
         public static implicit operator DateTime(Date pd) => pd.ToDateTime();
         public static explicit operator Date(DateTimeOffset dto) => FromDateTimeOffset(dto);

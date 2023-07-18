@@ -172,8 +172,11 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void CanConvertToString(P.DateTimePrecision p, bool hasOffset, string expected)
         {
             var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
-            var parsed = new P.DateTime(dt, p, hasOffset);
+            var parsed = P.DateTime.FromDateTimeOffset(dt, p, hasOffset);
             parsed.ToString().Should().Be(expected);
+
+            var rounded = P.DateTime.RoundToPrecision(dt, p, hasOffset);
+            P.DateTime.FormatDateTimeOffset(rounded).Should().Be(expected);
         }
     }
 }

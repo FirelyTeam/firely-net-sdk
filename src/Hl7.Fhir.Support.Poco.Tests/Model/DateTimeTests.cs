@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void DateTimeHandling()
         {
-            FhirDateTime dt = new FhirDateTime("2010-01-01");
+            FhirDateTime dt = new FhirDateTime(2010, 1, 1);
             Assert.AreEqual("2010-01-01", dt.Value);
 
             FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
