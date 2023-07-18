@@ -104,21 +104,15 @@ namespace Hl7.Fhir.Support.Tests.Specification
         }
 
         [TestMethod]
-        public async Task EmptyOrderableTerminologyServiceTest()
+        public void EmptyOrderableTerminologyServiceTest()
         {
-            var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/test").Build();
-
-            //run tests
-            var multits = new MultiTerminologyService(Enumerable.Empty<OrderableTerminologyService>());
-            var call = async () => await multits.ValueSetValidateCode(inputParams);
-
-            //check results
-            await call.Should().ThrowAsync<ArgumentNullException>();
+            var call = () => new MultiTerminologyService(Enumerable.Empty<OrderableTerminologyService>());
+            call.Should().Throw<ArgumentNullException>();
         }
 
         private static OrderableTerminologyService createOrderableTerminologyService(ITerminologyService service, int order, string valueSet)
         {
-            var settings = new TerminologyServiceSettings
+            var settings = new TerminologyServiceOrderSettings
             {
                 Order = order,
                 PreferredValueSets = new string[] { valueSet }
