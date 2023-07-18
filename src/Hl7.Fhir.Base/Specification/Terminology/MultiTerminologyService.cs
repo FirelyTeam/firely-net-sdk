@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="services">Orderable terminology services to be used. You can set the order of the services to be used using the settings, the others will be used for fallback based on their order.</param>
         public MultiTerminologyService(IEnumerable<OrderableTerminologyService> services)
         {
-            if (services == null) throw Error.ArgumentNull(nameof(services));
+            if (services == null || !services.Any()) throw Error.ArgumentNull(nameof(services));
             _termServices = services.OrderBy(s => s.Settings.Order).ToList();
         }
 
