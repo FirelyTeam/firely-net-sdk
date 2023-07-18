@@ -86,10 +86,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Catches the unsupported invocations of GetIdentifier.
         /// </summary>
-        public static Identifier? GetIdentifier<X>(this IIdentifiable<X> identifiable, string system)
-        {
-            return null;
-        }
+#pragma warning disable IDE0060 // Remove unused parameter
+        public static Identifier? GetIdentifier<X>(this IIdentifiable<X> identifiable, string system) => null;
+#pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>
         /// Catches the unsupported invocations of TryGetIdentifier.
