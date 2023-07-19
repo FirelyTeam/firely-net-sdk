@@ -43,14 +43,14 @@ namespace Hl7.Fhir.Specification.Terminology
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
         /// </summary>
         /// <param name="services">Terminology services to be used. Note that the first service in the list will be used first, the others will be used for fallback based on their order.</param>
-        public MultiTerminologyService(params ITerminologyService[] services) : this(services.Select(s => new TerminologyServiceRoutingSettings(s))) { }
+        public MultiTerminologyService(params ITerminologyService[] services) : this(services.ToList()) { }
 
 
         /// <summary>
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
         /// </summary>
         /// <param name="services">Orderable terminology services to be used. You can set the order of the services to be used using the settings, the others will be used for fallback based on their order.</param>
-        public MultiTerminologyService(params TerminologyServiceRoutingSettings[] services) : this((IEnumerable<TerminologyServiceRoutingSettings>)services) { }
+        public MultiTerminologyService(params TerminologyServiceRoutingSettings[] services) : this(services.ToList()) { }
 
 
         /// <summary>
@@ -69,8 +69,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="settings"><see cref="TerminologyServiceRoutingSettings"/> to be added.</param>
         public void Add(TerminologyServiceRoutingSettings settings)
         {
-            var highest = _termServices.Keys?.Last();
-            var position = highest is not null ? highest.Value + 1 : 0;
+            var position = _termServices.Keys.Last() + 1;
             _termServices.Add(position, settings);
         }
 
@@ -91,8 +90,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="settings"><see cref="TerminologyServiceRoutingSettings"/> to be added.</param>
         public void AddFirst(TerminologyServiceRoutingSettings settings)
         {
-            var lowest = _termServices.Keys?.First();
-            var position = lowest is not null ? lowest.Value - 1 : 0;
+            var position = _termServices.Keys.First() - 1;
             _termServices.Add(position, settings);
         }
 
