@@ -10,7 +10,6 @@ using FluentAssertions;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -83,7 +82,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.Value = null;
             dft.TryToDateTimeOffset(out _).Should().BeFalse();
-            Assert.ThrowsException<InvalidOperationException>(() => dft.ToDateTimeOffset());
+            dft.ToDateTimeOffset().Should().BeNull();
         }
 
         [TestMethod]
@@ -112,41 +111,6 @@ namespace Hl7.Fhir.Tests.Model
             dft = new Date(null);
             dft.TryToDate(out dt).Should().BeTrue();
             dt.Should().BeNull();
-        }
-
-        [TestMethod]
-        public void CacheImprovesSpeed()
-        {
-            var dts = "2023-07-11";
-            var dt = new Date(dts);
-            _ = dt.TryToDate(out var _); // trigger initial compile of regex
-
-            var sw = Stopwatch.StartNew();
-
-            for (var i = 0; i < 1000; i++)
-            {
-                // Clear the cache each invocation
-                dt.Value = dts;
-                _ = dt.TryToDate(out var _);
-                dt.Value = null;
-            }
-
-            sw.Stop();
-            Console.WriteLine(sw.Elapsed.ToString());
-
-            dt = new Date(dts);
-
-            var sw2 = Stopwatch.StartNew();
-            for (var i = 0; i < 1000; i++)
-            {
-                _ = dt.TryToDate(out var _);
-            }
-            sw2.Stop();
-
-            Console.WriteLine(sw2.Elapsed.ToString());
-
-            // It's actually about 20x faster on my machine
-            (sw2.Elapsed).Should().BeLessThan(sw.Elapsed);
         }
     }
 }

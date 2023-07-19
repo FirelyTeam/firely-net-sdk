@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Types
         }
 
         public static Date Parse(string representation) =>
-            TryParse(representation, out var result) ? result! : throw new FormatException($"String '{representation}' was not recognized as a valid date.");
+            TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid date.");
 
         public static bool TryParse(string representation, out Date value) => tryParse(representation, out value);
 
@@ -69,7 +69,8 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Converts the date to a full DateTimeOffset instance.
         /// </summary>
-        public DateTimeOffset ToDateTimeOffset() => ToDateTimeOffset(0, 0, 0, TimeSpan.Zero);
+        public DateTimeOffset ToDateTimeOffset(TimeSpan defaultOffset) =>
+               HasOffset ? _value : new(_value.Ticks, defaultOffset);
 
         /// <summary>
         /// Converts the date to a full DateTimeOffset instance.

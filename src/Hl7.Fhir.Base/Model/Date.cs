@@ -111,17 +111,16 @@ namespace Hl7.Fhir.Model
         /// Converts this Fhir Fhir Date to a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date.</returns>
-        public DateTimeOffset ToDateTimeOffset()
+        public DateTimeOffset? ToDateTimeOffset()
         {
-            if (Value == null) throw new InvalidOperationException("Date's value is null");
+            if (Value == null) return null;   // Note: this behaviour is inconsistent with ToDateTimeOffset() in FhirDateTime
 
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
-            // When there's no timezone, the UTC is assumed
             if (!TryToDate(out var dt))
                 throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
             // Since Value is not null and the parsed value is valid, dto will not be null
-            return dt!.ToDateTimeOffset();
+            return dt!.ToDateTimeOffset(TimeSpan.Zero);
         }
 
         /// <summary>
@@ -132,7 +131,7 @@ namespace Hl7.Fhir.Model
         {
             if (Value is not null && TryToDate(out var dt))
             {
-                dto = dt!.ToDateTimeOffset();
+                dto = dt!.ToDateTimeOffset(TimeSpan.Zero);
                 return true;
             }
             else

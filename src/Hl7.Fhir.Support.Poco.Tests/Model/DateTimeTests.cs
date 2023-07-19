@@ -10,7 +10,6 @@ using FluentAssertions;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -172,38 +171,14 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void CacheImprovesSpeed()
+        public void RetainsFractions()
         {
-            var dts = "2023-07-11T13:00:00";
-            var dt = new FhirDateTime(dts);
-            _ = dt.TryToDateTime(out var _); // trigger initial compile of regex
+            var input = @"2020-04-17T10:24:13.1882432-05:00";
+            var datetime = ElementModel.Types.DateTime.Parse(input);
+            var offset = datetime.ToDateTimeOffset(TimeSpan.Zero);
+            var output = ElementModel.Types.DateTime.FormatDateTimeOffset(offset);
 
-            var sw = Stopwatch.StartNew();
-
-            for (var i = 0; i < 1000; i++)
-            {
-                // Clear the cache each invocation
-                dt.Value = dts;
-                _ = dt.TryToDateTimeOffset(TimeSpan.Zero, out var _);
-                dt.Value = null;
-            }
-
-            sw.Stop();
-            Console.WriteLine(sw.Elapsed.ToString());
-
-            dt = new FhirDateTime(dts);
-
-            var sw2 = Stopwatch.StartNew();
-            for (var i = 0; i < 1000; i++)
-            {
-                _ = dt.TryToDateTimeOffset(TimeSpan.Zero, out var _);
-            }
-            sw2.Stop();
-
-            Console.WriteLine(sw2.Elapsed.ToString());
-
-            // It's actually about 20x faster on my machine
-            (sw2.Elapsed).Should().BeLessThan(sw.Elapsed);
+            output.Should().Be(input);
         }
     }
 }

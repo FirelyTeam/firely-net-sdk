@@ -185,7 +185,6 @@ namespace Hl7.FhirPath.Tests
         public void TestExpressionTodayFunction()
         {
             // Check that date comes in
-            var s = scalar("today()");
             Assert.AreEqual(P.Date.Today(), scalar("today()"));
 
             // Check greater than
