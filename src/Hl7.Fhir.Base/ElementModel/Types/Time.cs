@@ -17,10 +17,11 @@ namespace Hl7.Fhir.ElementModel.Types
 {
     public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
     {
-        private Time(string original, DateTimeOffset parsedValue, DateTimePrecision precision, bool hasOffset)
+        private Time(DateTimeOffset parsedValue, DateTimePrecision precision, bool hasOffset)
         {
-            _original = original;
-            _parsedValue = parsedValue;
+            if (precision < DateTimePrecision.Hour) throw new ArgumentException($"Invalid precision {precision}, cannot be less than {nameof(DateTimePrecision.Hour)}.", nameof(precision));
+
+            _value = parsedValue;
             Precision = precision;
             HasOffset = hasOffset;
         }
@@ -31,46 +32,51 @@ namespace Hl7.Fhir.ElementModel.Types
         public static bool TryParse(string representation, out Time value) => tryParse(representation, out value);
 
         public static Time FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Fraction,
-        bool includeOffset = false)
-        {
-            string formatString = prec switch
-            {
-                DateTimePrecision.Hour => "HH",
-                DateTimePrecision.Minute => "HH:mm",
-                DateTimePrecision.Second => "HH:mm:ss",
-                _ => "HH:mm:ss.FFFFFFF",
-            };
-
-            if (includeOffset) formatString += "K";
-
-            var representation = dto.ToString(formatString);
-            return Parse(representation);
-        }
+            bool includeOffset = false) => new(dto, prec, includeOffset);
 
         public static Time Now(bool includeOffset = false) => FromDateTimeOffset(DateTimeOffset.Now, includeOffset: includeOffset);
-
-        public int? Hours => Precision >= DateTimePrecision.Hour ? _parsedValue.Hour : (int?)null;
-        public int? Minutes => Precision >= DateTimePrecision.Minute ? _parsedValue.Minute : (int?)null;
-        public int? Seconds => Precision >= DateTimePrecision.Second ? _parsedValue.Second : (int?)null;
-        public int? Millis => Precision >= DateTimePrecision.Fraction ? _parsedValue.Millisecond : (int?)null;
-
-        /// <summary>
-        /// The span of time ahead/behind UTC
-        /// </summary>
-        public TimeSpan? Offset => HasOffset ? _parsedValue.Offset : null;
-
-        private readonly string _original;
-        private readonly DateTimeOffset _parsedValue;
 
         /// <summary>
         /// The precision of the time available. 
         /// </summary>
         public DateTimePrecision Precision { get; private set; }
 
+        public int? Hours => Precision >= DateTimePrecision.Hour ? _value.Hour : (int?)null;
+        public int? Minutes => Precision >= DateTimePrecision.Minute ? _value.Minute : (int?)null;
+        public int? Seconds => Precision >= DateTimePrecision.Second ? _value.Second : (int?)null;
+        public int? Millis => Precision >= DateTimePrecision.Fraction ? _value.Millisecond : (int?)null;
+
+        /// <summary>
+        /// The span of time ahead/behind UTC
+        /// </summary>
+        public TimeSpan? Offset => HasOffset ? _value.Offset : null;
+
         /// <summary>
         /// Whether the time specifies an offset to UTC
         /// </summary>
         public bool HasOffset { get; private set; }
+
+        private string? _originalParsedString;
+        private readonly DateTimeOffset _value;
+
+        /// <summary>
+        /// Converts the time to a full DateTimeOffset instance.
+        /// </summary>
+        /// <param name="year">Year used to turn a time into a date</param>
+        /// <param name="month">Month used to turn a time into a date</param>
+        /// <param name="day">Day used to turn a time into a date</param>
+        /// <param name="defaultOffset">Offset used when the time does not specify one.</param>
+        /// <returns></returns>
+        public DateTimeOffset ToDateTimeOffset(int year, int month, int day, TimeSpan defaultOffset)
+        {
+            var ticks = _value.Ticks % 10000;
+            var result = new DateTimeOffset(year, month, day, _value.Hour,
+                    _value.Minute, _value.Second, _value.Millisecond,
+                    HasOffset ? _value.Offset : defaultOffset).AddTicks(ticks);
+
+            return result;
+        }
+
 
         // Our regex is pretty flexible, it does not bother to capture rules about semantics (12:64 would be legal here).
         // Additional semantic checks will be verified using the built-in DateTimeOffset .NET parser.
@@ -85,20 +91,6 @@ namespace Hl7.Fhir.ElementModel.Types
         private static readonly Regex PARTIALTIMEREGEX =
             new Regex("^" + PARTIALTIMEFORMAT + "$", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        /// <summary>
-        /// Converts the time to a full DateTimeOffset instance.
-        /// </summary>
-        /// <param name="year">Year used to turn a time into a date</param>
-        /// <param name="month">Month used to turn a time into a date</param>
-        /// <param name="day">Day used to turn a time into a date</param>
-        /// <param name="defaultOffset">Offset used when the time does not specify one.</param>
-        /// <returns></returns>
-        public DateTimeOffset ToDateTimeOffset(int year, int month, int day, TimeSpan defaultOffset) =>
-            new DateTimeOffset(year, month, day, _parsedValue.Hour,
-                    _parsedValue.Minute, _parsedValue.Second, _parsedValue.Millisecond,
-                    HasOffset ? _parsedValue.Offset : defaultOffset);
-
-
         private static bool tryParse(string representation, out Time value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
@@ -106,7 +98,7 @@ namespace Hl7.Fhir.ElementModel.Types
             var matches = PARTIALTIMEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new Time(representation, default, default, default);
+                value = new Time(default, DateTimePrecision.Hour, default);
                 return false;
             }
 
@@ -130,7 +122,10 @@ namespace Hl7.Fhir.ElementModel.Types
                     (offset.Success ? offset.Value : "Z");
 
             var success = DateTimeOffset.TryParse(parseableDT, out var parsedValue);
-            value = new Time(representation, parsedValue, prec, offset.Success);
+            value = new Time(parsedValue, prec, offset.Success)
+            {
+                _originalParsedString = representation
+            };
 
             return success;
         }
@@ -174,7 +169,7 @@ namespace Hl7.Fhir.ElementModel.Types
             return other switch
             {
                 null => 1,
-                Time p => DateTime.CompareDateTimeParts(_parsedValue, Precision, HasOffset, p._parsedValue, p.Precision, p.HasOffset),
+                Time p => DateTime.CompareDateTimeParts(_value, Precision, HasOffset, p._value, p.Precision, p.HasOffset),
                 _ => throw NotSameTypeComparison(this, other)
             };
         }
@@ -185,8 +180,23 @@ namespace Hl7.Fhir.ElementModel.Types
         public static bool operator >=(Time a, Time b) => a.CompareTo(b) >= 0;
 
 
-        public override int GetHashCode() => _original.GetHashCode();
-        public override string ToString() => _original;
+        public override int GetHashCode() => _value.GetHashCode();
+        public override string ToString()
+        {
+            if (_originalParsedString is not null) return _originalParsedString;
+
+            string formatString = Precision switch
+            {
+                DateTimePrecision.Hour => "HH",
+                DateTimePrecision.Minute => "HH:mm",
+                DateTimePrecision.Second => "HH:mm:ss",
+                _ => "HH:mm:ss.FFFFFFF",
+            };
+
+            if (HasOffset) formatString += "K";
+
+            return _value.ToString(formatString);
+        }
 
         public static explicit operator Time(DateTimeOffset dto) => FromDateTimeOffset(dto);
         public static explicit operator String(Time dt) => ((ICqlConvertible)dt).TryConvertToString().ValueOrThrow();

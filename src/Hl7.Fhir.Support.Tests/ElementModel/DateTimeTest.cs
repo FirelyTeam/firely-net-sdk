@@ -169,7 +169,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow(P.DateTimePrecision.Second, false, "2001-04-06T13:01:02")]
         [DataRow(P.DateTimePrecision.Second, true, "2001-04-06T13:01:02+01:00")]
         [DataRow(P.DateTimePrecision.Fraction, true, "2001-04-06T13:01:02.89+01:00")]
-        public void CanConvertToString(P.DateTimePrecision p, bool hasOffset, string expected)
+        public void CanConvertFromDTO(P.DateTimePrecision p, bool hasOffset, string expected)
         {
             var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
             var parsed = P.DateTime.FromDateTimeOffset(dt, p, hasOffset);
@@ -192,6 +192,17 @@ namespace Hl7.Fhir.ElementModel.Tests
             var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
             var rounded = P.DateTime.RoundToPrecision(dt, p, hasOffset);
             P.DateTime.FormatDateTimeOffset(rounded).Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void RetainsFractions()
+        {
+            var input = @"2020-04-17T10:24:13.1882432-05:00";
+            var datetime = ElementModel.Types.DateTime.Parse(input);
+            var offset = datetime.ToDateTimeOffset(TimeSpan.Zero);
+            var output = ElementModel.Types.DateTime.FormatDateTimeOffset(offset);
+
+            output.Should().Be(input);
         }
     }
 }
