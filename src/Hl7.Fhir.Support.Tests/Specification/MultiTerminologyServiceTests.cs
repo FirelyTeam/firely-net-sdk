@@ -37,6 +37,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
             var succeedingTs = setupMockTermService(new Parameters(), succeedingParameters);
 
 
+
             //run tests
             var multits = new MultiTerminologyService(firstFailingTS, secondFailingTS);
             var result = await multits.ValueSetValidateCode(new Parameters());
@@ -78,7 +79,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
         [DataRow("http://example.org/fhir/ValueSet/second-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the second ts that fails", DisplayName = "Second is prefered")]
         [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/", "http://example.org/fhir/ValueSet/", "this is the first ts that fails", DisplayName = "Both are prefered")]
         [DataRow("http://fire.ly/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the first ts that fails", DisplayName = "None are prefered")]
-        public async Task OrderableTerminologyServiceTest(string VSInput, string firstPreference, string secondPreference, string resultMessage)
+        public async Task RoutingTerminologyServiceTest(string VSInput, string firstTsPreferenceVs, string secondTsPreferenceVs, string resultMessage)
         {
             //define output parameters
             var firstFailingParameters = new Parameters()
@@ -91,8 +92,8 @@ namespace Hl7.Fhir.Support.Tests.Specification
 
             //setup mock services
             var inputParams = new ValidateCodeParameters().WithValueSet(VSInput).Build();
-            var firstFailingTS = createOrderableTerminologyService(setupMockTermService(inputParams, firstFailingParameters), 0, firstPreference);
-            var secondFailingTS = createOrderableTerminologyService(setupMockTermService(inputParams, secondFailingParameters), 1, secondPreference);
+            var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), firstTsPreferenceVs);
+            var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), secondTsPreferenceVs);
 
             //run tests
             var multits = new MultiTerminologyService(firstFailingTS, secondFailingTS);
@@ -104,20 +105,63 @@ namespace Hl7.Fhir.Support.Tests.Specification
         }
 
         [TestMethod]
-        public void EmptyOrderableTerminologyServiceTest()
+        public async Task AddingTerminologyServiceTests()
         {
-            var call = () => new MultiTerminologyService(Enumerable.Empty<OrderableTerminologyService>());
+            //define output parameters
+            var firstFailingParameters = new Parameters()
+                                  .Add("result", new FhirBoolean(false))
+                                  .Add("message", new FhirString("this is the first ts that fails"));
+
+            var secondFailingParameters = new Parameters()
+                                   .Add("result", new FhirBoolean(false))
+                                   .Add("message", new FhirString("this is the second ts that fails"));
+
+            var thirdFailingParameters = new Parameters()
+                                 .Add("result", new FhirBoolean(false))
+                                 .Add("message", new FhirString("this is the third ts that fails"));
+
+            //setup mock services
+            var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/example-vs").Build();
+
+            var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), "http://example.org/fhir/ValueSet/");
+            var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), "http://example.org/fhir/ValueSet/");
+            var thirdFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, thirdFailingParameters), "http://example.org/fhir/ValueSet/third-preference");
+
+            //create a multitermserver with only the first ts
+            var multits = new MultiTerminologyService(new TerminologyServiceRoutingSettings[] { firstFailingTS });
+            var result = await multits.ValueSetValidateCode(inputParams);
+            //check results
+            result.Parameter.Where(p => p.Name == "result").FirstOrDefault()?.Value.As<FhirBoolean>()?.Value.Should().Be(false);
+            result.Parameter.Where(p => p.Name == "message").FirstOrDefault()?.Value.As<FhirString>()?.Value.Should().Be("this is the first ts that fails");
+
+            //add the second ts in front of the first
+            multits.AddFirst(secondFailingTS);
+            result = await multits.ValueSetValidateCode(inputParams);
+            //check results
+            result.Parameter.Where(p => p.Name == "result").FirstOrDefault()?.Value.As<FhirBoolean>()?.Value.Should().Be(false);
+            result.Parameter.Where(p => p.Name == "message").FirstOrDefault()?.Value.As<FhirString>()?.Value.Should().Be("this is the second ts that fails");
+
+            //add the third ts at the back of the order
+            multits.Add(thirdFailingTS);
+            result = await multits.ValueSetValidateCode(inputParams);
+            //check results, the second should still be the first to return a result
+            result.Parameter.Where(p => p.Name == "result").FirstOrDefault()?.Value.As<FhirBoolean>()?.Value.Should().Be(false);
+            result.Parameter.Where(p => p.Name == "message").FirstOrDefault()?.Value.As<FhirString>()?.Value.Should().Be("this is the second ts that fails");
+        }
+
+        [TestMethod]
+        public void EmptyTerminologyServiceTest()
+        {
+            var call = () => new MultiTerminologyService(Enumerable.Empty<TerminologyServiceRoutingSettings>());
             call.Should().Throw<ArgumentNullException>();
         }
 
-        private static OrderableTerminologyService createOrderableTerminologyService(ITerminologyService service, int order, string valueSet)
+        private static TerminologyServiceRoutingSettings createTerminologyServiceRoutingSettings(ITerminologyService service, string valueSet)
         {
-            var settings = new TerminologyServiceOrderSettings
+            return new TerminologyServiceRoutingSettings(service)
             {
-                Order = order,
                 PreferredValueSets = new string[] { valueSet }
             };
-            return new OrderableTerminologyService(service, settings);
         }
 
         private static ITerminologyService setupMockTermService(Parameters input, Parameters output)
