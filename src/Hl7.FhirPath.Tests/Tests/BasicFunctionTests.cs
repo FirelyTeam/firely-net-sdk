@@ -10,9 +10,8 @@
 //extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using Hl7.FhirPath.Functions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
