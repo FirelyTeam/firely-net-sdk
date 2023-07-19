@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("2010-2-04");
         }
 
-        void accept(string testInput, int? y, int? m, int? d, P.DateTimePrecision? p, TimeSpan? o)
+        private void accept(string testInput, int? y, int? m, int? d, P.DateTimePrecision? p, TimeSpan? o)
         {
             Assert.IsTrue(P.Date.TryParse(testInput, out P.Date parsed), "TryParse");
             Assert.AreEqual(y, parsed.Years, "years");
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(testInput, parsed.ToString(), "ToString");
         }
 
-        void reject(string testValue)
+        private void reject(string testValue)
         {
             Assert.IsFalse(P.Date.TryParse(testValue, out _));
         }
@@ -135,5 +136,27 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(plusOne, partialDate.Offset);
         }
 
+        [TestMethod]
+        [DataRow("2001")]
+        [DataRow("2001-04")]
+        [DataRow("2001-04-06")]
+        [DataRow("2001-04-06+01:30")]
+        public void CanConvertToOriginalString(string format)
+        {
+            var parsed = P.Date.Parse(format);
+            parsed.ToString().Should().Be(format);
+        }
+
+        [TestMethod]
+        [DataRow(P.DateTimePrecision.Year, false, "2001")]
+        [DataRow(P.DateTimePrecision.Month, false, "2001-04")]
+        [DataRow(P.DateTimePrecision.Day, false, "2001-04-06")]
+        [DataRow(P.DateTimePrecision.Day, true, "2001-04-06+01:00")]
+        public void CanConvertToString(P.DateTimePrecision p, bool hasOffset, string expected)
+        {
+            var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+            var parsed = P.Date.FromDateTimeOffset(dt, p, hasOffset);
+            parsed.ToString().Should().Be(expected);
+        }
     }
 }

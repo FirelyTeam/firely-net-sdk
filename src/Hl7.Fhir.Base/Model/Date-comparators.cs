@@ -28,9 +28,6 @@
 
 */
 
-using System;
-using P = Hl7.Fhir.ElementModel.Types;
-
 namespace Hl7.Fhir.Model
 {
 
@@ -44,7 +41,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) > P.DateTime.Parse(b.Value);
+            return a.ToDate() > b.ToDate();
         }
 
         public static bool operator >=(Date a, Date b)
@@ -55,7 +52,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) >= P.DateTime.Parse(b.Value);
+            return a.ToDate() >= b.ToDate();
         }
 
         public static bool operator <(Date a, Date b)
@@ -66,7 +63,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) < P.DateTime.Parse(b.Value);
+            return a.ToDate() < b.ToDate();
         }
 
         public static bool operator <=(Date a, Date b)
@@ -77,7 +74,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) <= P.DateTime.Parse(b.Value);
+            return a.ToDate() <= b.ToDate();
         }
 
         /// <summary>
@@ -105,12 +102,9 @@ namespace Hl7.Fhir.Model
                 if (Value == null) return otherValue == null;
                 if (otherValue == null) return false;
 
-                if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
+                if (Value == otherValue) return true; // Default reference/string comparison works in most cases
 
-                var left = P.DateTime.Parse(Value);
-                var right = P.DateTime.Parse(otherValue);
-
-                return left == right;
+                return ToDate() == other.ToDate();
             }
             else
                 return false;

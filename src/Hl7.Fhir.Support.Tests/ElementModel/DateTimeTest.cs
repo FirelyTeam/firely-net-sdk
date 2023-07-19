@@ -172,8 +172,26 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void CanConvertToString(P.DateTimePrecision p, bool hasOffset, string expected)
         {
             var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
-            var parsed = new P.DateTime(dt, p, hasOffset);
+            var parsed = P.DateTime.FromDateTimeOffset(dt, p, hasOffset);
             parsed.ToString().Should().Be(expected);
+        }
+
+
+        [TestMethod]
+        [DataRow(P.DateTimePrecision.Year, false, "2001-01-01T00:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Month, false, "2001-04-01T00:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Day, false, "2001-04-06T00:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Day, true, "2001-04-06T00:00:00+01:00")]
+        [DataRow(P.DateTimePrecision.Hour, false, "2001-04-06T13:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Minute, false, "2001-04-06T13:01:00+00:00")]
+        [DataRow(P.DateTimePrecision.Second, false, "2001-04-06T13:01:02+00:00")]
+        [DataRow(P.DateTimePrecision.Second, true, "2001-04-06T13:01:02+01:00")]
+        [DataRow(P.DateTimePrecision.Fraction, true, "2001-04-06T13:01:02.89+01:00")]
+        public void CanRound(P.DateTimePrecision p, bool hasOffset, string expected)
+        {
+            var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+            var rounded = P.DateTime.RoundToPrecision(dt, p, hasOffset);
+            P.DateTime.FormatDateTimeOffset(rounded).Should().Be(expected);
         }
     }
 }

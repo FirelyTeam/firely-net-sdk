@@ -215,7 +215,7 @@ namespace Hl7.Fhir.FhirPath
             return
                 (dtPrecision <= P.DateTimePrecision.Day) ?
                     P.Date.FromDateTimeOffset(dto, dtPrecision, dt.HasOffset) :
-                    new P.DateTime(dto, dtPrecision, dt.HasOffset);
+                    P.DateTime.FromDateTimeOffset(dto, dtPrecision, dt.HasOffset);
         }
 
         internal static P.Time BoundaryTime(P.Time time, long? precision, int minutes, int seconds, int milliseconds)
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.FhirPath
         internal static bool? MemberOf(ITypedElement input, string valueset, EvaluationContext ctx)
         {
             var service = (ctx is FhirEvaluationContext fctx ? fctx.TerminologyService : null)
-                ?? throw new ArgumentNullException("The 'memberOf' function cannot be executed because the FhirEvaluationContext does not include a TerminologyService.");
+                ?? throw new ArgumentNullException(nameof(ctx), "The 'memberOf' function cannot be executed because the FhirEvaluationContext does not include a TerminologyService.");
 
             ValidateCodeParameters? inParams = new ValidateCodeParameters()
                         .WithValueSet(valueset);
