@@ -21,7 +21,7 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             if (precision < DateTimePrecision.Hour) throw new ArgumentException($"Invalid precision {precision}, cannot be less than {nameof(DateTimePrecision.Hour)}.", nameof(precision));
 
-            _value = parsedValue;
+            _value = DateTime.RoundToPrecision(parsedValue, precision, hasOffset);
             Precision = precision;
             HasOffset = hasOffset;
         }
@@ -76,6 +76,11 @@ namespace Hl7.Fhir.ElementModel.Types
 
             return result;
         }
+
+        /// <summary>
+        /// Converts the time to a TimeSpan instance, filled out to the whole hour.
+        /// </summary>
+        public TimeSpan ToTimeSpan() => new(_value.Hour, _value.Minute, _value.Second);
 
 
         // Our regex is pretty flexible, it does not bother to capture rules about semantics (12:64 would be legal here).
