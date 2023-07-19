@@ -104,21 +104,14 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Converts this Fhir Fhir Time to a <see cref="TimeSpan"/>.
         /// </summary>
-        public TimeSpan? ToTimeSpan()
-        {
-            if (Value == null) return null;
-
-            if (!TryToTime(out var dt))
-                throw new FormatException($"String '{Value}' was not recognized as a valid time.");
-
-            // Since Value is not null and the parsed value is valid, dt will not be null
-            return dt!.ToTimeSpan();
-        }
+        public TimeSpan? ToTimeSpan() =>
+            TryToTimeSpan(out var dt) ? dt :
+                throw new FormatException($"Time '{Value}' was null or not recognized as a valid time.");
 
         /// <summary>
         /// Convert this FhirDateTime to a <see cref="DateTimeOffset"/>.
         /// </summary>
-        /// <returns>True if the value of the FhirDateTime is not null, can be parsed as a DateTimeOffset and has a specified timezone, false otherwise.</returns>
+        /// <returns>True if the value of the Fhir Time is not null and can be parsed as a Time without an offset, false otherwise.</returns>
         public bool TryToTimeSpan(out TimeSpan dto)
         {
             if (Value is not null && TryToTime(out var dt) && !dt!.HasOffset)

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.Value = null;
             dft.TryToTimeSpan(out _).Should().BeFalse();
-            dft.ToTimeSpan().Should().BeNull();
+            Assert.ThrowsException<FormatException>(() => dft.ToTimeSpan());
         }
 
         [TestMethod]
