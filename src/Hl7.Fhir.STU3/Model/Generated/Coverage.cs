@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage", IsResource=true)]
-  public partial class Coverage : Hl7.Fhir.Model.DomainResource
+  public partial class Coverage : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -674,6 +674,7 @@ namespace Hl7.Fhir.Model
     /// Type of coverage such as medical or accident
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("CoverageType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -763,6 +764,7 @@ namespace Hl7.Fhir.Model
     /// Beneficiary relationship to the Subscriber
     /// </summary>
     [FhirElement("relationship", Order=160)]
+    [Binding("Relationship")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
     {
@@ -953,6 +955,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Contract;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

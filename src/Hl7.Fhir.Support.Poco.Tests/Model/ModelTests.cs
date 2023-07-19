@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using FluentAssertions;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -42,73 +41,6 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(1, oo.Issue[0].Expression.Count());
         }
 
-        [TestMethod]
-        public void DateTimeHandling()
-        {
-            FhirDateTime dt = new FhirDateTime("2010-01-01");
-            Assert.AreEqual("2010-01-01", dt.Value);
-
-            FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
-            Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
-            Assert.AreNotEqual(dt2.Value, "1972-11-30T15:10");
-
-
-            FhirDateTime dtNoMs = new FhirDateTime("2014-12-11T00:00:00+11:00");
-            Assert.AreEqual("2014-12-11T00:00:00+11:00", dtNoMs.Value);
-
-            FhirDateTime dtWithMs = new FhirDateTime("2014-12-11T00:00:00.000+11:00");
-            Assert.AreEqual("2014-12-11T00:00:00.000+11:00", dtWithMs.Value);
-
-            var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
-            dt = new FhirDateTime(stamp);
-            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
-        }
-
-        //Added for issue #1498
-        [TestMethod]
-        public void TestTryToDateTimeOffset()
-        {
-            var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));
-            Assert.AreEqual("2021-03-18T12:22:35.999-04:00", fdt.Value);
-
-            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto1));
-            Assert.AreEqual("2021-03-18T12:22:35.9990000-04:00", dto1.ToString("o"));
-
-            fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(4, 0, 0)));
-            Assert.AreEqual("2021-03-18T12:22:35.999+04:00", fdt.Value);
-
-            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto2));
-            Assert.AreEqual("2021-03-18T12:22:35.9990000+04:00", dto2.ToString("o"));
-
-            fdt = new FhirDateTime("2021-03-18T12:22:35.999Z");
-            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto3));
-            Assert.AreEqual("2021-03-18T12:22:35.9990000+00:00", dto3.ToString("o"));
-
-            fdt = new FhirDateTime("2021-03-18T12:22:35.1234+04:00");
-            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto4));
-            Assert.AreEqual("2021-03-18T12:22:35.1234000+04:00", dto4.ToString("o"));
-
-            fdt = new FhirDateTime("2021-03-18T12:22:35.999");
-            Assert.AreEqual("2021-03-18T12:22:35.999", fdt.Value);
-            Assert.IsFalse(fdt.TryToDateTimeOffset(out var dto5));
-        }
-
-        [TestMethod]
-        public void TodayTests()
-        {
-            var todayLocal = Date.Today();
-            Assert.AreEqual(DateTimeOffset.Now.ToString("yyy-MM-dd"), todayLocal.Value);
-
-            var todayUtc = Date.UtcToday();
-            Assert.AreEqual(DateTimeOffset.UtcNow.ToString("yyy-MM-dd"), todayUtc.Value);
-        }
-
-        [TestMethod]
-        public void TestInstantFromUtc()
-        {
-            Instant ins5 = Instant.FromDateTimeUtc(2011, 3, 4, 16, 45, 33);
-            Assert.AreEqual(new DateTimeOffset(2011, 3, 4, 16, 45, 33, TimeSpan.Zero), ins5.Value);
-        }
 
 
         [TestMethod]
@@ -151,37 +83,37 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void SimpleValueSupport()
         {
-            CapabilityStatement c = new CapabilityStatement();
+            Bundle b = new();
 
-            Assert.IsNull(c.Experimental);
-            c.Experimental = true;
-            Assert.IsTrue(c.Experimental.GetValueOrDefault());
-            Assert.IsNotNull(c.Experimental);
-            Assert.IsTrue(c.ExperimentalElement.Value.GetValueOrDefault());
+            Assert.IsNull(b.Total);
+            b.Total = 10;
+            Assert.AreEqual(10, b.Total.GetValueOrDefault());
+            Assert.IsNotNull(b.Total);
 
-            c.PublisherElement = new FhirString("Furore");
-            Assert.AreEqual("Furore", c.Publisher);
-            c.Publisher = null;
-            Assert.IsNull(c.PublisherElement);
-            c.Publisher = "Furore";
-            Assert.IsNotNull(c.PublisherElement);
+            OperationOutcome.IssueComponent ic = new();
 
-            c.Format = new string[] { "json", "xml" };
-            Assert.IsNotNull(c.FormatElement);
-            Assert.AreEqual(2, c.FormatElement.Count);
-            Assert.AreEqual("json", c.FormatElement.First().Value);
+            ic.DiagnosticsElement = new FhirString("Furore");
+            Assert.AreEqual("Furore", ic.Diagnostics);
+            ic.Diagnostics = null;
+            Assert.IsNull(ic.DiagnosticsElement);
+            ic.Diagnostics = "Furore";
+            Assert.IsNotNull(ic.DiagnosticsElement);
 
-            c.FormatElement = new List<Code>();
-            c.FormatElement.Add(new Code("csv"));
-            Assert.IsNotNull(c.Format);
-            Assert.AreEqual(1, c.Format.Count());
+            ic.Expression = new string[] { "json", "xml" };
+            Assert.IsNotNull(ic.ExpressionElement);
+            Assert.AreEqual(2, ic.ExpressionElement.Count);
+            Assert.AreEqual("json", ic.ExpressionElement.First().Value);
+
+            ic.ExpressionElement = new List<FhirString>();
+            ic.ExpressionElement.Add(new FhirString("csv"));
+            Assert.IsNotNull(ic.Expression);
+            Assert.AreEqual(1, ic.Expression.Count());
         }
-
 
         [TestMethod]
         public void ExtensionManagement()
         {
-            Patient p = new Patient();
+            TestPatient p = new();
             var u1 = "http://fhir.org/ext/ext-test";
             Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
@@ -243,9 +175,9 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void FindContainedResource()
         {
-            var cPat1 = new Patient() { Id = "pat1" };
-            var cPat2 = new Patient() { Id = "pat2" };
-            var pat = new Patient
+            var cPat1 = new TestPatient() { Id = "pat1" };
+            var cPat2 = new TestPatient() { Id = "pat2" };
+            var pat = new TestPatient
             {
                 Contained = new List<Resource> { cPat1, cPat2 }
             };
@@ -260,17 +192,18 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.AreEqual(pat, pat.FindContainedResource("#"));
 
-            var pat2 = new Patient();
+            var pat2 = new TestPatient();
             Assert.IsNull(pat2.FindContainedResource("#pat1"));
         }
+
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void FindContainedResourceExceptionExpected()
         {
-            var cPat1 = new Patient() { Id = "pat1" };
-            var cPat2 = new Patient() { Id = "pat2" };
-            var pat = new Patient
+            var cPat1 = new TestPatient() { Id = "pat1" };
+            var cPat2 = new TestPatient() { Id = "pat2" };
+            var pat = new TestPatient
             {
                 Contained = new List<Resource> { cPat1, cPat2 }
             };
@@ -281,12 +214,12 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestListDeepCopy()
         {
-            var x = new List<Patient>();
-            x.Add(new Patient());
-            x.Add(new Patient());
+            var x = new List<TestPatient>();
+            x.Add(new TestPatient());
+            x.Add(new TestPatient());
 
-            var y = new List<Patient>(x.DeepCopy());
-            Assert.IsTrue(x[0] is Patient);
+            var y = new List<TestPatient>(x.DeepCopy());
+            Assert.IsTrue(x[0] is TestPatient);
             Assert.AreNotEqual(x[0], y[0]);
             Assert.AreNotEqual(x[1], y[1]);
         }
@@ -295,45 +228,10 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestLazyCreatedLists()
         {
-            var p = new Patient();
-            p.Name.Add(new HumanName());
+            var p = new TestPatient();
+            p.Name.Add(new TestHumanName());
         }
 
-
-        [TestMethod]
-        public void TestModelInfoTypeSelectors()
-        {
-            Assert.IsTrue(ModelInfo.IsKnownResource("Patient"));
-            Assert.IsFalse(ModelInfo.IsKnownResource("Identifier"));
-            Assert.IsFalse(ModelInfo.IsKnownResource("code"));
-
-            Assert.IsFalse(ModelInfo.IsDataType("Patient"));
-            Assert.IsTrue(ModelInfo.IsDataType("Identifier"));
-            Assert.IsFalse(ModelInfo.IsDataType("code"));
-
-            Assert.IsFalse(ModelInfo.IsPrimitive("Patient"));
-            Assert.IsFalse(ModelInfo.IsPrimitive("Identifier"));
-            Assert.IsTrue(ModelInfo.IsPrimitive("code"));
-
-            Assert.IsTrue(ModelInfo.IsReference("Reference"));
-            Assert.IsFalse(ModelInfo.IsReference("Patient"));
-        }
-
-        [TestMethod]
-        public void TestFhirTypeToFhirTypeName()
-        {
-            var enumValues = Enum.GetValues(typeof(FHIRAllTypes));
-            for (int i = 0; i < enumValues.Length; i++)
-            {
-                var type = (FHIRAllTypes)i;
-                var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
-                var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
-                Assert.IsTrue(type2.HasValue);
-                Assert.AreEqual(type, type2, String.Format("Failed: '{0}' != '{1}' ?!", type, type2));
-                var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
-                Assert.AreEqual(typeName, typeName2, String.Format("Failed: '{0}' != '{1}' ?!", typeName, typeName2));
-            }
-        }
 
         [TestMethod]
         public void TestStringValueInterface()
@@ -382,47 +280,6 @@ namespace Hl7.Fhir.Tests.Model
 
 
         [TestMethod]
-        public void TestSubclassInfo()
-        {
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Resource, FHIRAllTypes.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.DomainResource, FHIRAllTypes.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Patient, FHIRAllTypes.Patient));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Observation, FHIRAllTypes.Patient));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Resource, FHIRAllTypes.Bundle));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.DomainResource, FHIRAllTypes.Bundle));
-
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.HumanName));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Oid));
-        }
-
-        [TestMethod]
-        public void TestSubclassInfoByType()
-        {
-            testTrue(typeof(Resource), typeof(Patient));
-            testTrue(typeof(DomainResource), typeof(Patient));
-            testTrue(typeof(Patient), typeof(Patient));
-            testFalse(typeof(Observation), typeof(Patient));
-            testFalse(typeof(Element), typeof(Patient));
-            testTrue(typeof(Resource), typeof(Bundle));
-            testFalse(typeof(DomainResource), typeof(Bundle));
-
-            testTrue(typeof(Element), typeof(HumanName));
-            testFalse(typeof(Element), typeof(Patient));
-            testTrue(typeof(Element), typeof(Oid));
-            testFalse(typeof(FhirString), typeof(Markdown));
-            testFalse(typeof(Integer), typeof(UnsignedInt));
-
-            static void testTrue(Type super, Type sub) =>
-                Assert.IsTrue(ModelInfo.IsInstanceTypeFor(super, sub));
-
-            static void testFalse(Type super, Type sub) =>
-                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(super, sub));
-        }
-
-
-        [TestMethod]
         public void TestIntegerValueInterface()
         {
             INullableValue<int> iv = new Integer(null);
@@ -442,38 +299,18 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void TestNamingSystemCanonical()
-        {
-            NamingSystem ns = new NamingSystem();
-
-            Assert.IsNull(ns.Url);
-            Assert.IsNull(ns.UrlElement);
-
-            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://nu.nl" });
-            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://dan.nl", Preferred = true });
-
-            Assert.AreEqual("http://dan.nl", ns.Url);
-            Assert.AreEqual("http://dan.nl", ns.UrlElement.Value);
-
-            ns.UniqueId[1].Preferred = false;
-
-            Assert.AreEqual("http://nu.nl", ns.Url);
-            Assert.AreEqual("http://nu.nl", ns.UrlElement.Value);
-        }
-
-        [TestMethod]
         public void TestChildren_EmptyPatient()
         {
-            var patient = new Patient();
+            var patient = new TestPatient();
             var children = patient.Children.ToArray();
             Base[] expected = { };
             Assert.IsTrue(expected.SequenceEqual(children));
         }
 
         [TestMethod]
-        public void TestChildren_EmptyTiming()
+        public void TestChildren_EmptyHumanName()
         {
-            var timing = new Timing();
+            var timing = new TestHumanName();
             var children = timing.Children.ToArray();
             Base[] expected = { };
             Assert.IsTrue(expected.SequenceEqual(children));
@@ -493,16 +330,16 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestChildren_Patient()
         {
-            var patient = new Patient()
+            var patient = new TestPatient()
             {
                 Name =
                 {
-                    new HumanName()
+                    new TestHumanName()
                     {
                         Given = new string[] { "John" },
                         Family = "Doe"
                     },
-                     new HumanName()
+                     new TestHumanName()
                     {
                         Given = new string[] { "Alias" },
                         Family = "Alternate"
@@ -510,7 +347,7 @@ namespace Hl7.Fhir.Tests.Model
                 },
                 Address =
                 {
-                    new Address()
+                    new TestAddress()
                     {
                         City = "Amsterdam",
                         Line = new string[] { "Rokin" }
@@ -587,56 +424,6 @@ namespace Hl7.Fhir.Tests.Model
                 // address.Period
             };
             Assert.IsTrue(expected.SequenceEqual(children));
-        }
-
-        [TestMethod]
-        public void ParseFhirTypeName()
-        {
-            Assert.AreEqual(FHIRAllTypes.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
-            Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
-            Assert.AreEqual(FHIRAllTypes.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
-        }
-
-        // [WMR 20181025] Issue #746
-        [TestMethod]
-        public void TestIsCoreModelTypeUri()
-        {
-            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/Patient")));
-            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/string")));
-
-            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("http://example.org/fhir/StructureDefinition/Patient")));
-            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("/StructureDefinition/Patient", UriKind.Relative)));
-            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("Patient", UriKind.Relative)));
-        }
-
-        [TestMethod]
-        public void TestCheckMinorVersionCompatibiliy()
-        {
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3"));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCheckMinorVersionCompatibilityWithNull()
-        {
-            ModelInfo.CheckMinorVersionCompatibility(null);
-        }
-
-        [TestMethod]
-        public void TestHumanNameFluentInitializers()
-        {
-            var pat = new Patient();
-            pat.Name.Add(new HumanName().WithPrefix("Mr.").WithGiven("Henry").AndFamily("Levin").WithSuffix("The 7th"));
-
-            pat.Name.FirstOrDefault().Prefix.Should().ContainSingle("Mr.");
-            pat.Name.FirstOrDefault().Given.Should().ContainSingle("Henry");
-            pat.Name.FirstOrDefault().Family.Should().Be("Levin");
-            pat.Name.FirstOrDefault().Suffix.Should().ContainSingle("The 7th");
         }
     }
 }

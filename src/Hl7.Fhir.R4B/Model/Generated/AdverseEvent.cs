@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
-  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
+  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -305,6 +305,7 @@ namespace Hl7.Fhir.Model
       /// Assessment of if the entity caused the event
       /// </summary>
       [FhirElement("assessment", InSummary=true, Order=40)]
+      [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Assessment
       {
@@ -364,6 +365,7 @@ namespace Hl7.Fhir.Model
       /// ProbabilityScale | Bayesian | Checklist
       /// </summary>
       [FhirElement("method", InSummary=true, Order=70)]
+      [Binding("AdverseEventCausalityMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -534,6 +536,7 @@ namespace Hl7.Fhir.Model
     /// product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("AdverseEventCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -548,6 +551,7 @@ namespace Hl7.Fhir.Model
     /// Type of the event itself in relation to the subject
     /// </summary>
     [FhirElement("event", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [Binding("AdverseEventType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Event
     {
@@ -716,6 +720,7 @@ namespace Hl7.Fhir.Model
     /// Seriousness of the event
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=200)]
+    [Binding("AdverseEventSeriousness")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Seriousness
     {
@@ -729,6 +734,7 @@ namespace Hl7.Fhir.Model
     /// mild | moderate | severe
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=210)]
+    [Binding("AdverseEventSeverity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Severity
     {
@@ -742,6 +748,7 @@ namespace Hl7.Fhir.Model
     /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=220)]
+    [Binding("AdverseEventOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -843,6 +850,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Study;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

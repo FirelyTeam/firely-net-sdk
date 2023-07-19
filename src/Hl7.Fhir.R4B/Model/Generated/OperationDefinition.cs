@@ -1423,6 +1423,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for operation definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1599,7 +1600,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> ResourceElement
     {
-      get { if(_ResourceElement==null) _ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _ResourceElement; }
+      get { if(_ResourceElement==null) _ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _ResourceElement; }
       set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
     }
 
@@ -1618,7 +1619,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ResourceElement = null;
         else
-          ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("Resource");
       }
     }

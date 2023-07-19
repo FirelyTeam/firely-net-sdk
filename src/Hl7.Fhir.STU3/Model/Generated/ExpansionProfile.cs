@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ExpansionProfile","http://hl7.org/fhir/StructureDefinition/ExpansionProfile", IsResource=true)]
-  public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
+  public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -758,6 +758,7 @@ namespace Hl7.Fhir.Model
       /// What kind of Designation to include
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1020,6 +1021,7 @@ namespace Hl7.Fhir.Model
       /// What kind of Designation to exclude
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1417,6 +1419,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for expansion profile (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1715,6 +1718,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("LimitedExpansion");
       }
     }
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

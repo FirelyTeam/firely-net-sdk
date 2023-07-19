@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition", IsResource=true)]
-  public partial class Composition : Hl7.Fhir.Model.DomainResource
+  public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -505,6 +505,7 @@ namespace Hl7.Fhir.Model
       /// Code(s) that apply to the event being documented
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("DocumentEventType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -694,6 +695,7 @@ namespace Hl7.Fhir.Model
       /// Classification of section (recommended)
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("CompositionSectionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -784,6 +786,7 @@ namespace Hl7.Fhir.Model
       /// Order of section entries
       /// </summary>
       [FhirElement("orderedBy", Order=100)]
+      [Binding("SectionEntryOrder")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OrderedBy
       {
@@ -813,6 +816,7 @@ namespace Hl7.Fhir.Model
       /// Why the section is empty
       /// </summary>
       [FhirElement("emptyReason", Order=120)]
+      [Binding("SectionEmptyReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept EmptyReason
       {
@@ -1051,6 +1055,7 @@ namespace Hl7.Fhir.Model
     /// Kind of composition (LOINC if possible)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("DocumentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -1065,6 +1070,7 @@ namespace Hl7.Fhir.Model
     /// Categorization of Composition
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("DocumentCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1288,6 +1294,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

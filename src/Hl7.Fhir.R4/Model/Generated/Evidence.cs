@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Evidence","http://hl7.org/fhir/StructureDefinition/Evidence", IsResource=true)]
-  public partial class Evidence : Hl7.Fhir.Model.DomainResource
+  public partial class Evidence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -428,6 +428,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for evidence (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -548,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// The category of the Evidence, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=280)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -675,6 +677,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Outcome;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

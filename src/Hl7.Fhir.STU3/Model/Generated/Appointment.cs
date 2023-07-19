@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Appointment","http://hl7.org/fhir/StructureDefinition/Appointment", IsResource=true)]
-  public partial class Appointment : Hl7.Fhir.Model.DomainResource
+  public partial class Appointment : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
       /// Role of participant in the appointment
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -413,6 +414,7 @@ namespace Hl7.Fhir.Model
     /// A broad categorisation of the service that is to be performed during this appointment
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=110)]
+    [Binding("service-category")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ServiceCategory
     {
@@ -426,6 +428,7 @@ namespace Hl7.Fhir.Model
     /// The specific service that is to be performed during this appointment
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=120)]
+    [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -440,6 +443,7 @@ namespace Hl7.Fhir.Model
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="class")]
+    [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -454,6 +458,7 @@ namespace Hl7.Fhir.Model
     /// The style of appointment or patient that has been booked in the slot (not service type)
     /// </summary>
     [FhirElement("appointmentType", InSummary=true, Order=140)]
+    [Binding("appointment-type")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AppointmentType
     {
@@ -467,6 +472,7 @@ namespace Hl7.Fhir.Model
     /// Reason this appointment is scheduled
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=150)]
+    [Binding("ApptReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -785,6 +791,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

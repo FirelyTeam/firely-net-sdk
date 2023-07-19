@@ -721,6 +721,7 @@ namespace Hl7.Fhir.Model
     /// Event code or link to EventDefinition
     /// </summary>
     [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("MessageEvent")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Canonical))]
     [Cardinality(Min=1,Max=1)]
@@ -810,6 +811,7 @@ namespace Hl7.Fhir.Model
     /// Cause of event
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=150, FiveWs="FiveWs.why[x]")]
+    [Binding("EventReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {

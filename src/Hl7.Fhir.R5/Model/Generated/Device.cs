@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device", IsResource=true)]
-  public partial class Device : Hl7.Fhir.Model.DomainResource
+  public partial class Device : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -697,6 +697,7 @@ namespace Hl7.Fhir.Model
       /// The type of the device version, e.g. manufacturer, approved, internal
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("FHIRDeviceVersionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -910,6 +911,7 @@ namespace Hl7.Fhir.Model
       /// Describes the common type of the standard, specification, or formal guidance.  communication | performance | measurement
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("DeviceSpecificationCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -923,6 +925,7 @@ namespace Hl7.Fhir.Model
       /// Identifies the standard, specification, or formal guidance that the device adheres to
       /// </summary>
       [FhirElement("specification", Order=50)]
+      [Binding("DeviceSpecification-type")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Specification
@@ -1083,6 +1086,7 @@ namespace Hl7.Fhir.Model
       /// Code that specifies the property being represented
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("DevicePropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1310,6 +1314,7 @@ namespace Hl7.Fhir.Model
     /// lost | damaged | destroyed | available
     /// </summary>
     [FhirElement("availabilityStatus", Order=140, FiveWs="FiveWs.status")]
+    [Binding("FHIRDeviceAvailabilityStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AvailabilityStatus
     {
@@ -1567,6 +1572,7 @@ namespace Hl7.Fhir.Model
     /// Indicates a high-level grouping of the device
     /// </summary>
     [FhirElement("category", Order=240)]
+    [Binding("DeviceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1581,6 +1587,7 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=250)]
+    [Binding("DeviceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1637,6 +1644,7 @@ namespace Hl7.Fhir.Model
     /// The designated condition for performing a task
     /// </summary>
     [FhirElement("mode", Order=290)]
+    [Binding("DeviceOperationMode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Mode
     {
@@ -1795,6 +1803,7 @@ namespace Hl7.Fhir.Model
     /// Safety Characteristics of Device
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=390)]
+    [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
@@ -1819,6 +1828,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Parent;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -476,6 +476,7 @@ namespace Hl7.Fhir.Model
     /// List of errors on the subscription
     /// </summary>
     [FhirElement("error", InSummary=true, Order=150)]
+    [Binding("SubscriptionError")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Error

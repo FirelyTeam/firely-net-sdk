@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TestScript","http://hl7.org/fhir/StructureDefinition/TestScript", IsResource=true)]
-  public partial class TestScript : Hl7.Fhir.Model.DomainResource
+  public partial class TestScript : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -569,6 +569,7 @@ namespace Hl7.Fhir.Model
       /// FHIR-Client | FHIR-SDC-FormFiller
       /// </summary>
       [FhirElement("profile", Order=50)]
+      [Binding("TestScriptProfileOriginType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Profile
@@ -761,6 +762,7 @@ namespace Hl7.Fhir.Model
       /// FHIR-Server | FHIR-SDC-FormManager | FHIR-SDC-FormReceiver | FHIR-SDC-FormProcessor
       /// </summary>
       [FhirElement("profile", Order=50)]
+      [Binding("TestScriptProfileDestinationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Profile
@@ -1629,6 +1631,7 @@ namespace Hl7.Fhir.Model
       /// required | optional | strict
       /// </summary>
       [FhirElement("conformance", Order=50)]
+      [Binding("TestScriptScopeConformanceType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Conformance
       {
@@ -1642,6 +1645,7 @@ namespace Hl7.Fhir.Model
       /// unit | integration | production
       /// </summary>
       [FhirElement("phase", Order=60)]
+      [Binding("TestScriptScopePhaseType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Phase
       {
@@ -2616,6 +2620,7 @@ namespace Hl7.Fhir.Model
       /// The operation code type that will be executed
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TestScriptOperationCode")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
       {
@@ -2629,6 +2634,7 @@ namespace Hl7.Fhir.Model
       /// Resource type
       /// </summary>
       [FhirElement("resource", Order=50)]
+      [Binding("FHIRConcreteTypes")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
       {
@@ -4029,6 +4035,7 @@ namespace Hl7.Fhir.Model
       /// Resource type
       /// </summary>
       [FhirElement("resource", Order=200)]
+      [Binding("FHIRConcreteType")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
       {
@@ -5591,6 +5598,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for test script (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -5848,6 +5856,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.TestScript.TeardownComponent _Teardown;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

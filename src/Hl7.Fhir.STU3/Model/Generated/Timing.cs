@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
       {
-        get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
+        get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
         set { _DayOfWeekElement = value; OnPropertyChanged("DayOfWeekElement"); }
       }
 
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             DayOfWeekElement = null;
           else
-            DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+            DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DayOfWeek");
         }
       }
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
       {
-        get { if(_WhenElement==null) _WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
+        get { if(_WhenElement==null) _WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
         set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
       }
 
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             WhenElement = null;
           else
-            WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
+            WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
           OnPropertyChanged("When");
         }
       }
@@ -972,6 +972,7 @@ namespace Hl7.Fhir.Model
     /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
+    [Binding("TimingAbbreviation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

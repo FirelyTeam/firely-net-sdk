@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire", IsResource=true)]
-  public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
+  public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.FhirString>
   {
     /// <summary>
     /// FHIR Type Name
@@ -322,6 +322,7 @@ namespace Hl7.Fhir.Model
       /// Corresponding concept for this item in a terminology
       /// </summary>
       [FhirElement("code", Order=60)]
+      [Binding("QuestionnaireConcept")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
@@ -974,6 +975,7 @@ namespace Hl7.Fhir.Model
       /// Value for question comparison based on operator
       /// </summary>
       [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireQuestionOption3")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1106,6 +1108,7 @@ namespace Hl7.Fhir.Model
       /// Answer value
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireQuestionOption")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1260,6 +1263,7 @@ namespace Hl7.Fhir.Model
       /// Actual value for initializing the question
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireQuestionOption2")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1436,7 +1440,6 @@ namespace Hl7.Fhir.Model
     /// Name for this questionnaire (computer friendly)
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -1602,7 +1605,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
     {
-      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
+      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
       set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
     }
 
@@ -1621,7 +1624,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           SubjectTypeElement = null;
         else
-          SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("SubjectType");
       }
     }
@@ -1751,6 +1754,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for questionnaire (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1902,6 +1906,7 @@ namespace Hl7.Fhir.Model
     /// Concept that represents the overall questionnaire
     /// </summary>
     [FhirElement("code", InSummary=true, Order=290)]
+    [Binding("QuestionnaireConcept")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code
@@ -1925,6 +1930,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Questionnaire.ItemComponent> _Item;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.FhirString ICoded<Hl7.Fhir.Model.FhirString>.Code { get => NameElement; set => NameElement = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => NameElement.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -139,6 +139,7 @@ namespace Hl7.Fhir.Model
     /// Codes may be used to differentiate between kinds of taxes, surcharges, discounts etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=40)]
+    [Binding("PriceComponentCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

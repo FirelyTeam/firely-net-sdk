@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Contract","http://hl7.org/fhir/StructureDefinition/Contract", IsResource=true)]
-  public partial class Contract : Hl7.Fhir.Model.DomainResource
+  public partial class Contract : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -189,6 +189,7 @@ namespace Hl7.Fhir.Model
       /// Role type of the agent
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ContractActorRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -309,6 +310,7 @@ namespace Hl7.Fhir.Model
       /// Contract Signatory Role
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ContractSignerType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
@@ -846,6 +848,7 @@ namespace Hl7.Fhir.Model
       /// Contract Term Type or Form
       /// </summary>
       [FhirElement("type", Order=70)]
+      [Binding("ContractTermType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -859,6 +862,7 @@ namespace Hl7.Fhir.Model
       /// Contract Term Type specific classification
       /// </summary>
       [FhirElement("subType", Order=80)]
+      [Binding("ContractTermSubType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubType
       {
@@ -888,6 +892,7 @@ namespace Hl7.Fhir.Model
       /// Contract Term Activity
       /// </summary>
       [FhirElement("action", Order=100)]
+      [Binding("ContractAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -902,6 +907,7 @@ namespace Hl7.Fhir.Model
       /// Purpose for the Contract Term Action
       /// </summary>
       [FhirElement("actionReason", Order=110)]
+      [Binding("ContractActionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
@@ -916,6 +922,7 @@ namespace Hl7.Fhir.Model
       /// Security Labels that define affected terms
       /// </summary>
       [FhirElement("securityLabel", InSummary=true, Order=120)]
+      [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -1224,6 +1231,7 @@ namespace Hl7.Fhir.Model
       /// Type of the Contract Term Agent
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ContractActorRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -2147,6 +2155,7 @@ namespace Hl7.Fhir.Model
     /// Type or form
     /// </summary>
     [FhirElement("type", InSummary=true, Order=170)]
+    [Binding("ContractType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -2160,6 +2169,7 @@ namespace Hl7.Fhir.Model
     /// Subtype within the context of type
     /// </summary>
     [FhirElement("subType", InSummary=true, Order=180)]
+    [Binding("ContractSubtype")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
@@ -2174,6 +2184,7 @@ namespace Hl7.Fhir.Model
     /// Action stipulated by this Contract
     /// </summary>
     [FhirElement("action", Order=190)]
+    [Binding("ContractAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -2188,6 +2199,7 @@ namespace Hl7.Fhir.Model
     /// Rationale for the stiplulated action
     /// </summary>
     [FhirElement("actionReason", Order=200)]
+    [Binding("ContractActionReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
@@ -2202,6 +2214,7 @@ namespace Hl7.Fhir.Model
     /// Decision by Grantor
     /// </summary>
     [FhirElement("decisionType", Order=210)]
+    [Binding("ContractDecisionType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DecisionType
     {
@@ -2215,6 +2228,7 @@ namespace Hl7.Fhir.Model
     /// Content derived from the basal information
     /// </summary>
     [FhirElement("contentDerivative", Order=220)]
+    [Binding("ContractContentDerivative")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ContentDerivative
     {
@@ -2228,6 +2242,7 @@ namespace Hl7.Fhir.Model
     /// Security Labels that define affected resources
     /// </summary>
     [FhirElement("securityLabel", InSummary=true, Order=230)]
+    [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -2351,6 +2366,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> _Rule;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

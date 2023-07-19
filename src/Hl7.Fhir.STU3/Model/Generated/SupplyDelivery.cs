@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SupplyDelivery","http://hl7.org/fhir/StructureDefinition/SupplyDelivery", IsResource=true)]
-  public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource
+  public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -142,6 +142,7 @@ namespace Hl7.Fhir.Model
       /// Medication, Substance, or Device supplied
       /// </summary>
       [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SupplyDeliveryItem")]
       [CLSCompliant(false)]
       [References("Medication","Substance","Device")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -343,6 +344,7 @@ namespace Hl7.Fhir.Model
     /// Category of dispense event
     /// </summary>
     [FhirElement("type", Order=140)]
+    [Binding("SupplyDeliveryType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -425,6 +427,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

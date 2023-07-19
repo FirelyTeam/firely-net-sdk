@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MolecularSequence","http://hl7.org/fhir/StructureDefinition/MolecularSequence", IsResource=true)]
-  public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource
+  public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -213,6 +213,7 @@ namespace Hl7.Fhir.Model
       /// Chromosome containing genetic finding
       /// </summary>
       [FhirElement("chromosome", InSummary=true, Order=40)]
+      [Binding("chromosome-human")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Chromosome
       {
@@ -290,6 +291,7 @@ namespace Hl7.Fhir.Model
       /// Reference identifier
       /// </summary>
       [FhirElement("referenceSeqId", InSummary=true, Order=70)]
+      [Binding("sequenceReference")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ReferenceSeqId
       {
@@ -959,6 +961,7 @@ namespace Hl7.Fhir.Model
       /// Standard sequence for comparison
       /// </summary>
       [FhirElement("standardSequence", InSummary=true, Order=50)]
+      [Binding("qualityStandardSequence")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept StandardSequence
       {
@@ -1047,6 +1050,7 @@ namespace Hl7.Fhir.Model
       /// Method to get quality
       /// </summary>
       [FhirElement("method", InSummary=true, Order=90)]
+      [Binding("qualityMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -2250,6 +2254,7 @@ namespace Hl7.Fhir.Model
       /// Structural variant change type
       /// </summary>
       [FhirElement("variantType", InSummary=true, Order=40)]
+      [Binding("LOINC LL379-9 answerlist")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VariantType
       {
@@ -3100,6 +3105,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent> _StructureVariant;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

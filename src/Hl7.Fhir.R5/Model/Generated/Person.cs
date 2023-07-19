@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Person","http://hl7.org/fhir/StructureDefinition/Person", IsResource=true)]
-  public partial class Person : Hl7.Fhir.Model.DomainResource
+  public partial class Person : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the person about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -565,6 +566,7 @@ namespace Hl7.Fhir.Model
     /// Marital (civil) status of a person
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
+    [Binding("MaritalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MaritalStatus
     {
@@ -630,6 +632,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Person.LinkComponent> _Link;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

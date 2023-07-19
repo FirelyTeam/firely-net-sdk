@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PractitionerRole","http://hl7.org/fhir/StructureDefinition/PractitionerRole", IsResource=true)]
-  public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource
+  public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
+        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
         set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
       }
 
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             DaysOfWeekElement = null;
           else
-            DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+            DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DaysOfWeek");
         }
       }
@@ -549,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// Roles which this practitioner may perform
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140)]
+    [Binding("PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -563,6 +564,7 @@ namespace Hl7.Fhir.Model
     /// Specific specialty of the practitioner
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=150)]
+    [Binding("PractitionerSpecialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -693,6 +695,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

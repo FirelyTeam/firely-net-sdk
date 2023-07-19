@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest", IsResource=true)]
-  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource
+  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// Item detail
       /// </summary>
       [FhirElement("code", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("ParameterCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -308,6 +309,7 @@ namespace Hl7.Fhir.Model
     /// The kind of supply (central, non-stock, etc.)
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("SupplyRequestKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -369,6 +371,7 @@ namespace Hl7.Fhir.Model
     /// Medication, Substance, or Device requested to be supplied
     /// </summary>
     [FhirElement("item", InSummary=true, Order=150)]
+    [Binding("SupplyRequestItem")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Item
@@ -488,6 +491,7 @@ namespace Hl7.Fhir.Model
     /// The reason why the supply item was requested
     /// </summary>
     [FhirElement("reason", Order=220, FiveWs="FiveWs.why[x]")]
+    [Binding("SupplyRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -527,6 +531,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _DeliverTo;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

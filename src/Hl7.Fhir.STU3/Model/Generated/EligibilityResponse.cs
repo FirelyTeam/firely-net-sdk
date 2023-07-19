@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EligibilityResponse","http://hl7.org/fhir/StructureDefinition/EligibilityResponse", IsResource=true)]
-  public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource
+  public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -232,6 +232,7 @@ namespace Hl7.Fhir.Model
       /// Type of services covered
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("BenefitCategory")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
@@ -246,6 +247,7 @@ namespace Hl7.Fhir.Model
       /// Detailed services covered within the type
       /// </summary>
       [FhirElement("subCategory", Order=50)]
+      [Binding("BenefitSubCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubCategory
       {
@@ -352,6 +354,7 @@ namespace Hl7.Fhir.Model
       /// In or out of network
       /// </summary>
       [FhirElement("network", Order=90)]
+      [Binding("BenefitNetwork")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Network
       {
@@ -365,6 +368,7 @@ namespace Hl7.Fhir.Model
       /// Individual or family
       /// </summary>
       [FhirElement("unit", Order=100)]
+      [Binding("BenefitUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -378,6 +382,7 @@ namespace Hl7.Fhir.Model
       /// Annual or lifetime
       /// </summary>
       [FhirElement("term", Order=110)]
+      [Binding("BenefitTerm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -574,6 +579,7 @@ namespace Hl7.Fhir.Model
       /// Deductable, visits, benefit amount
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("BenefitType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -733,6 +739,7 @@ namespace Hl7.Fhir.Model
       /// Error code detailing processing issues
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("AdjudicationError")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -953,6 +960,7 @@ namespace Hl7.Fhir.Model
     /// complete | error | partial
     /// </summary>
     [FhirElement("outcome", Order=150)]
+    [Binding("RemittanceOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -1057,6 +1065,7 @@ namespace Hl7.Fhir.Model
     /// Printed Form Identifier
     /// </summary>
     [FhirElement("form", Order=200)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {
@@ -1079,6 +1088,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent> _Error;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -45,8 +45,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="inspector"></param>
         /// <param name="settings"></param>
         public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
-            : this(endpoint, inspector, 
-                  settings ?? new(), 
+            : this(endpoint, inspector,
+                  settings ?? new(),
                   new(endpoint, (settings ?? new()).Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null))
         {
             // Nothing
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = typeNameOrDie<TResource>();
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource?> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters, CancellationToken? ct = null) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = typeNameOrDie<TResource>();
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);

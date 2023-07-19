@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest", IsResource=true)]
-  public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
     /// FHIR Type Name
@@ -583,6 +583,7 @@ namespace Hl7.Fhir.Model
       /// Whether substitution is allowed or not
       /// </summary>
       [FhirElement("allowed", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MedicationRequestSubstitution")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -599,6 +600,7 @@ namespace Hl7.Fhir.Model
       /// Why should (not) substitution be made
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -752,6 +754,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=110)]
+    [Binding("MedicationRequestStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -799,6 +802,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", Order=130, FiveWs="FiveWs.class")]
+    [Binding("MedicationRequestCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -893,6 +897,7 @@ namespace Hl7.Fhir.Model
     /// Medication to be taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1018,6 +1023,7 @@ namespace Hl7.Fhir.Model
     /// Desired kind of performer of the medication administration
     /// </summary>
     [FhirElement("performerType", InSummary=true, Order=240)]
+    [Binding("MedicationRequestPerformerType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PerformerType
     {
@@ -1046,6 +1052,7 @@ namespace Hl7.Fhir.Model
     /// Reason or indication for ordering or not ordering the medication
     /// </summary>
     [FhirElement("reasonCode", Order=260, FiveWs="FiveWs.why[x]")]
+    [Binding("MedicationRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -1169,6 +1176,7 @@ namespace Hl7.Fhir.Model
     /// Overall pattern of medication administration
     /// </summary>
     [FhirElement("courseOfTherapyType", Order=320)]
+    [Binding("MedicationRequestCourseOfTherapy")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CourseOfTherapyType
     {
@@ -1294,6 +1302,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.DataType ICoded<Hl7.Fhir.Model.DataType>.Code { get => Medication; set => Medication = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Medication.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

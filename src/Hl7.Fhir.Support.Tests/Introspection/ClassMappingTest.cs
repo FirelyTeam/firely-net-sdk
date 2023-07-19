@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
 
             Assert.IsTrue(mapping.IsPatientClass);
-            Assert.IsTrue(mapping.PrimaryCodePath?.Name == "code");
+            Assert.IsTrue(typeof(Way).IsAssignableTo(typeof(ICoded<string>)));
 
             var inspector = new ModelInspector(Specification.FhirRelease.STU3);
             inspector.ImportType(typeof(Way));
@@ -155,21 +155,20 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType("Way")]
     [Test("One")]
     [Test("Two")]
-    public class Way : Resource, IPatient
+    public class Way : Resource, IPatient, ICoded<string>
     {
         [Test("AttrA")]
         [FhirElement("member")]
-        [CqlElement(IsBirthDate = true)]
         public string Member { get; set; }
 
         [Test("AttrB")]
         [FhirElement("code")]
-        [CqlElement(IsPrimaryCodePath = true)]
         public string Code { get; set; }
 
         public Date BirthDate => new(1972, 11, 30);
 
         public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
+        public IEnumerable<Coding> ToCodings() => new[] { new Coding(null, Code) };
     }
 
     [FhirType("Way2", Since = Specification.FhirRelease.DSTU2)]

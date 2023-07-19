@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EncounterHistory","http://hl7.org/fhir/StructureDefinition/EncounterHistory", IsResource=true)]
-  public partial class EncounterHistory : Hl7.Fhir.Model.DomainResource
+  public partial class EncounterHistory : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
       /// The physical type of the location (usually the level in the location hierarchy - bed, room, ward, virtual etc.)
       /// </summary>
       [FhirElement("form", Order=50)]
+      [Binding("LocationForm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Form
       {
@@ -257,6 +258,7 @@ namespace Hl7.Fhir.Model
     /// Classification of patient encounter
     /// </summary>
     [FhirElement("class", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("EncounterClass")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Class
@@ -271,6 +273,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of encounter
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("EncounterType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -285,6 +288,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of service
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=140)]
+    [Binding("EncounterServiceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
@@ -314,6 +318,7 @@ namespace Hl7.Fhir.Model
     /// The current status of the subject in relation to the Encounter
     /// </summary>
     [FhirElement("subjectStatus", Order=160)]
+    [Binding("SubjectStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SubjectStatus
     {
@@ -424,6 +429,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.EncounterHistory.LocationComponent> _Location;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

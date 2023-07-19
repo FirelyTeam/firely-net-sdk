@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment", IsResource=true)]
-  public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
+  public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Possible outcome for the subject
       /// </summary>
       [FhirElement("outcome", Order=40)]
+      [Binding("RiskAssessmentOutcome")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
@@ -102,6 +103,7 @@ namespace Hl7.Fhir.Model
       /// Likelihood of specified outcome as a qualitative value
       /// </summary>
       [FhirElement("qualitativeRisk", Order=60)]
+      [Binding("RiskAssessmentProbability")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept QualitativeRisk
       {
@@ -397,6 +399,7 @@ namespace Hl7.Fhir.Model
     /// Evaluation mechanism
     /// </summary>
     [FhirElement("method", InSummary=true, Order=130, FiveWs="class")]
+    [Binding("RiskAssessmentMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -601,6 +604,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Comment");
       }
     }
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

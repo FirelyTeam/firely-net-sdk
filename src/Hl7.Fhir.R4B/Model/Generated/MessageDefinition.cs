@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition", IsResource=true)]
-  public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -865,6 +865,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for message definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1004,6 +1005,7 @@ namespace Hl7.Fhir.Model
     /// Event code  or link to the EventDefinition
     /// </summary>
     [FhirElement("event", InSummary=true, Order=270, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("MessageEvent")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
@@ -1141,6 +1143,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Graph");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

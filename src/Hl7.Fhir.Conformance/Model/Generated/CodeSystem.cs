@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CodeSystem","http://hl7.org/fhir/StructureDefinition/CodeSystem", IsResource=true)]
-  public partial class CodeSystem : Hl7.Fhir.Model.DomainResource
+  public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
       {
-        get { if(_OperatorElement==null) _OperatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>>(); return _OperatorElement; }
+        get { if(_OperatorElement==null) _OperatorElement = new List<Code<Hl7.Fhir.Model.FilterOperator>>(); return _OperatorElement; }
         set { _OperatorElement = value; OnPropertyChanged("OperatorElement"); }
       }
 
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             OperatorElement = null;
           else
-            OperatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>(elem)));
+            OperatorElement = new List<Code<Hl7.Fhir.Model.FilterOperator>>(value.Select(elem=>new Code<Hl7.Fhir.Model.FilterOperator>(elem)));
           OnPropertyChanged("Operator");
         }
       }
@@ -974,6 +974,7 @@ namespace Hl7.Fhir.Model
       /// Details how this designation would be used
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -987,6 +988,7 @@ namespace Hl7.Fhir.Model
       /// Additional ways how this designation would be used. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
       [FhirElement("additionalUse", Order=60, Since=FhirRelease.R5)]
+      [Binding("ConceptDesignationUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> AdditionalUse
@@ -1636,6 +1638,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for code system (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1818,6 +1821,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
     [FhirElement("topic", Order=290, Since=FhirRelease.R5)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -2192,6 +2196,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> _Concept;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

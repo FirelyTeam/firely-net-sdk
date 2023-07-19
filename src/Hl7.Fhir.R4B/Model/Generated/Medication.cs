@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Medication","http://hl7.org/fhir/StructureDefinition/Medication", IsResource=true)]
-  public partial class Medication : Hl7.Fhir.Model.DomainResource
+  public partial class Medication : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -445,6 +445,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("MedicationFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -506,6 +507,7 @@ namespace Hl7.Fhir.Model
     /// powder | tablets | capsule +
     /// </summary>
     [FhirElement("form", Order=130)]
+    [Binding("MedicationForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {
@@ -554,6 +556,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Medication.BatchComponent _Batch;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

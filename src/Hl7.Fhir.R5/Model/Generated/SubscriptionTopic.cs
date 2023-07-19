@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic", IsResource=true)]
-  public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource
+  public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -154,6 +154,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -192,7 +193,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
       {
-        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
+        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
         set { _SupportedInteractionElement = value; OnPropertyChanged("SupportedInteractionElement"); }
       }
 
@@ -211,7 +212,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             SupportedInteractionElement = null;
           else
-            SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
+            SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
           OnPropertyChanged("SupportedInteraction");
         }
       }
@@ -720,6 +721,7 @@ namespace Hl7.Fhir.Model
       /// Event which can trigger a notification from the SubscriptionTopic
       /// </summary>
       [FhirElement("event", InSummary=true, Order=50)]
+      [Binding("SubscriptionTopicEventTrigger")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Event
@@ -734,6 +736,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60)]
+      [Binding("FHIRTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -912,6 +915,7 @@ namespace Hl7.Fhir.Model
       /// URL of the triggering Resource that this filter applies to
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRTypes")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
       {
@@ -1012,7 +1016,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
       {
-        get { if(_ComparatorElement==null) _ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
+        get { if(_ComparatorElement==null) _ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
         set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
       }
 
@@ -1031,7 +1035,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ComparatorElement = null;
           else
-            ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>(elem)));
+            ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SearchComparator>(elem)));
           OnPropertyChanged("Comparator");
         }
       }
@@ -1046,7 +1050,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
       {
-        get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
+        get { if(_ModifierElement==null) _ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
         set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
       }
 
@@ -1065,7 +1069,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ModifierElement = null;
           else
-            ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
+            ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
           OnPropertyChanged("Modifier");
         }
       }
@@ -1216,6 +1220,7 @@ namespace Hl7.Fhir.Model
       /// URL of the Resource that is the focus (main) resource in a notification shape
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=40)]
+      [Binding("FHIRTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -1785,6 +1790,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction of the SubscriptionTopic (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2018,6 +2024,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent> _NotificationShape;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

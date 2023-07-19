@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Library","http://hl7.org/fhir/StructureDefinition/Library", IsResource=true)]
-  public partial class Library : Hl7.Fhir.Model.DomainResource
+  public partial class Library : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -293,6 +293,7 @@ namespace Hl7.Fhir.Model
     /// logic-library | model-definition | asset-collection | module-definition
     /// </summary>
     [FhirElement("type", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
+    [Binding("LibraryType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -307,6 +308,7 @@ namespace Hl7.Fhir.Model
     /// Type of individual the library content is focused on
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -444,6 +446,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for library (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -626,6 +629,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=310)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -747,6 +751,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Attachment> _Content;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

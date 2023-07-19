@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CapabilityStatement","http://hl7.org/fhir/StructureDefinition/CapabilityStatement", IsResource=true)]
-  public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource
+  public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1128,6 +1128,7 @@ namespace Hl7.Fhir.Model
       /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates
       /// </summary>
       [FhirElement("service", InSummary=true, Order=50)]
+      [Binding("RestfulSecurityService")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Service
@@ -1689,7 +1690,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>> ReferencePolicyElement
       {
-        get { if(_ReferencePolicyElement==null) _ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(); return _ReferencePolicyElement; }
+        get { if(_ReferencePolicyElement==null) _ReferencePolicyElement = new List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(); return _ReferencePolicyElement; }
         set { _ReferencePolicyElement = value; OnPropertyChanged("ReferencePolicyElement"); }
       }
 
@@ -1708,7 +1709,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ReferencePolicyElement = null;
           else
-            ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>(elem)));
+            ReferencePolicyElement = new List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>(elem)));
           OnPropertyChanged("ReferencePolicy");
         }
       }
@@ -3077,6 +3078,7 @@ namespace Hl7.Fhir.Model
       /// http | ftp | mllp +
       /// </summary>
       [FhirElement("protocol", Order=40)]
+      [Binding("MessageTransport")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Protocol
@@ -3939,6 +3941,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for capability statement (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -4372,6 +4375,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CapabilityStatement.DocumentComponent> _Document;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

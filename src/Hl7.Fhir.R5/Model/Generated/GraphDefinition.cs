@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("GraphDefinition","http://hl7.org/fhir/StructureDefinition/GraphDefinition", IsResource=true)]
-  public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1173,6 +1173,7 @@ namespace Hl7.Fhir.Model
     /// How to compare versions
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("??")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
@@ -1437,6 +1438,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for graph definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1598,6 +1600,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.GraphDefinition.LinkComponent> _Link;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

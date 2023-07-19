@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("QuestionnaireResponse","http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse", IsResource=true)]
-  public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource
+  public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -368,6 +368,7 @@ namespace Hl7.Fhir.Model
       /// Single-valued answer to the question
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireAnswer")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -700,6 +701,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

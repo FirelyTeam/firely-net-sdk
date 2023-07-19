@@ -876,6 +876,7 @@ namespace Hl7.Fhir.Model
       /// Data type or Resource (reference to definition)
       /// </summary>
       [FhirElement("code", InSummary=true, Order=30)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri CodeElement
@@ -976,7 +977,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
       {
-        get { if(_AggregationElement==null) _AggregationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(); return _AggregationElement; }
+        get { if(_AggregationElement==null) _AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(); return _AggregationElement; }
         set { _AggregationElement = value; OnPropertyChanged("AggregationElement"); }
       }
 
@@ -995,7 +996,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             AggregationElement = null;
           else
-            AggregationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>(elem)));
+            AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>(elem)));
           OnPropertyChanged("Aggregation");
         }
       }
@@ -2176,7 +2177,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement
     {
-      get { if(_RepresentationElement==null) _RepresentationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(); return _RepresentationElement; }
+      get { if(_RepresentationElement==null) _RepresentationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(); return _RepresentationElement; }
       set { _RepresentationElement = value; OnPropertyChanged("RepresentationElement"); }
     }
 
@@ -2195,7 +2196,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           RepresentationElement = null;
         else
-          RepresentationElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>(elem)));
+          RepresentationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>(elem)));
         OnPropertyChanged("Representation");
       }
     }
@@ -2266,6 +2267,7 @@ namespace Hl7.Fhir.Model
     /// Corresponding codes in terminologies
     /// </summary>
     [FhirElement("code", InSummary=true, Order=70)]
+    [Binding("ElementDefinitionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code

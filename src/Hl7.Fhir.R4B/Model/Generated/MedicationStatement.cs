@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationStatement","http://hl7.org/fhir/StructureDefinition/MedicationStatement", IsResource=true)]
-  public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -197,6 +197,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=130)]
+    [Binding("MedicationStatementStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -211,6 +212,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", InSummary=true, Order=140, FiveWs="FiveWs.class")]
+    [Binding("MedicationStatementCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -224,6 +226,7 @@ namespace Hl7.Fhir.Model
     /// What medication was taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -349,6 +352,7 @@ namespace Hl7.Fhir.Model
     /// Reason for why the medication is being/was taken
     /// </summary>
     [FhirElement("reasonCode", Order=220, FiveWs="FiveWs.why[x]")]
+    [Binding("MedicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -402,6 +406,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Dosage> _Dosage;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
-  public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient
+  public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The kind of relationship
       /// </summary>
       [FhirElement("relationship", Order=40)]
+      [Binding("ContactRelationship")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -373,6 +374,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the patient about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -781,8 +783,6 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Date _BirthDateElement;
 
-    Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
-
     /// <summary>
     /// The date of birth for the individual
     /// </summary>
@@ -834,6 +834,7 @@ namespace Hl7.Fhir.Model
     /// Marital (civil) status of a patient
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
+    [Binding("MaritalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MaritalStatus
     {
@@ -944,6 +945,10 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -121,7 +121,6 @@ namespace Hl7.Fhir.Model
     /// Symbol in syntax defined by the system
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
-    [CqlElement(IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Immunization","http://hl7.org/fhir/StructureDefinition/Immunization", IsResource=true)]
-  public partial class Immunization : Hl7.Fhir.Model.DomainResource
+  public partial class Immunization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
+      [Binding("ImmunizationRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -230,6 +231,7 @@ namespace Hl7.Fhir.Model
       /// Why immunization occurred
       /// </summary>
       [FhirElement("reason", Order=40)]
+      [Binding("ImmunizationReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -244,6 +246,7 @@ namespace Hl7.Fhir.Model
       /// Why immunization did not occur
       /// </summary>
       [FhirElement("reasonNotGiven", Order=50)]
+      [Binding("NoImmunizationReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
@@ -695,6 +698,7 @@ namespace Hl7.Fhir.Model
       /// Disease immunized against
       /// </summary>
       [FhirElement("targetDisease", Order=90)]
+      [Binding("VaccinationProtocoltargetDisease")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
@@ -709,6 +713,7 @@ namespace Hl7.Fhir.Model
       /// Indicates if dose counts towards immunity
       /// </summary>
       [FhirElement("doseStatus", Order=100)]
+      [Binding("VaccinationProtocolDoseStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DoseStatus
@@ -723,6 +728,7 @@ namespace Hl7.Fhir.Model
       /// Why dose does (not) count
       /// </summary>
       [FhirElement("doseStatusReason", Order=110)]
+      [Binding("VaccinationProtocolDoseStatusReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DoseStatusReason
       {
@@ -962,6 +968,7 @@ namespace Hl7.Fhir.Model
     /// Vaccine product administered
     /// </summary>
     [FhirElement("vaccineCode", Order=120, FiveWs="what")]
+    [Binding("VaccineCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -1070,6 +1077,7 @@ namespace Hl7.Fhir.Model
     /// Indicates the source of a secondarily reported record
     /// </summary>
     [FhirElement("reportOrigin", Order=170, FiveWs="who.source")]
+    [Binding("ImmunizationReportOrigin")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ReportOrigin
     {
@@ -1175,6 +1183,7 @@ namespace Hl7.Fhir.Model
     /// Body site vaccine  was administered
     /// </summary>
     [FhirElement("site", Order=220)]
+    [Binding("ImmunizationSite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Site
     {
@@ -1188,6 +1197,7 @@ namespace Hl7.Fhir.Model
     /// How vaccine entered body
     /// </summary>
     [FhirElement("route", Order=230)]
+    [Binding("ImmunizationRoute")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Route
     {
@@ -1278,6 +1288,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

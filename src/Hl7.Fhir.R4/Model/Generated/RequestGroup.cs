@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RequestGroup","http://hl7.org/fhir/StructureDefinition/RequestGroup", IsResource=true)]
-  public partial class RequestGroup : Hl7.Fhir.Model.DomainResource
+  public partial class RequestGroup : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -317,6 +317,7 @@ namespace Hl7.Fhir.Model
       /// create | update | remove | fire-event
       /// </summary>
       [FhirElement("type", Order=150)]
+      [Binding("ActionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1342,7 +1343,6 @@ namespace Hl7.Fhir.Model
     /// What's being requested/ordered
     /// </summary>
     [FhirElement("code", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1485,6 +1485,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.RequestGroup.ActionComponent> _Action;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

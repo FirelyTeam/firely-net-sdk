@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Transport","http://hl7.org/fhir/StructureDefinition/Transport", IsResource=true)]
-  public partial class Transport : Hl7.Fhir.Model.DomainResource
+  public partial class Transport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -358,6 +358,7 @@ namespace Hl7.Fhir.Model
       /// Label for the input
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TransportInputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -494,6 +495,7 @@ namespace Hl7.Fhir.Model
       /// Label for output
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TransportOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -770,6 +772,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=160)]
+    [Binding("TransportStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -850,6 +853,7 @@ namespace Hl7.Fhir.Model
     /// Transport Type
     /// </summary>
     [FhirElement("code", InSummary=true, Order=190, FiveWs="FiveWs.what[x]")]
+    [Binding("TransportCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1047,6 +1051,7 @@ namespace Hl7.Fhir.Model
     /// Requested performer
     /// </summary>
     [FhirElement("performerType", Order=280, FiveWs="FiveWs.actor")]
+    [Binding("TransportPerformerType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PerformerType
@@ -1210,6 +1215,7 @@ namespace Hl7.Fhir.Model
     /// Why transport is needed
     /// </summary>
     [FhirElement("reason", Order=390, FiveWs="FiveWs.why[x]")]
+    [Binding("TransportReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Reason
     {
@@ -1233,6 +1239,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _History;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

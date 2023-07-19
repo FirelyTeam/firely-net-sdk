@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PaymentReconciliation","http://hl7.org/fhir/StructureDefinition/PaymentReconciliation", IsResource=true)]
-  public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource
+  public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -193,6 +193,7 @@ namespace Hl7.Fhir.Model
       /// Category of payment
       /// </summary>
       [FhirElement("type", Order=100)]
+      [Binding("PaymentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -685,6 +686,7 @@ namespace Hl7.Fhir.Model
     /// Category of payment
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [Binding("PaymentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -733,6 +735,7 @@ namespace Hl7.Fhir.Model
     /// Workflow originating payment
     /// </summary>
     [FhirElement("kind", Order=120)]
+    [Binding("PaymentKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Kind
     {
@@ -806,6 +809,7 @@ namespace Hl7.Fhir.Model
     /// Nature of the source
     /// </summary>
     [FhirElement("issuerType", Order=160)]
+    [Binding("PaymentIssuerType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept IssuerType
     {
@@ -975,6 +979,7 @@ namespace Hl7.Fhir.Model
     /// Payment instrument
     /// </summary>
     [FhirElement("method", Order=240)]
+    [Binding("PaymentMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -1241,6 +1246,7 @@ namespace Hl7.Fhir.Model
     /// Printed form identifier
     /// </summary>
     [FhirElement("formCode", Order=360)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FormCode
     {
@@ -1263,6 +1269,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> _ProcessNote;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

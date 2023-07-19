@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("StructureDefinition","http://hl7.org/fhir/StructureDefinition/StructureDefinition", IsResource=true)]
-  public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -940,6 +940,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for structure definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1016,6 +1017,7 @@ namespace Hl7.Fhir.Model
     /// Assist with indexing and finding
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=240)]
+    [Binding("StructureDefinitionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Keyword
@@ -1356,6 +1358,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.StructureDefinition.DifferentialComponent _Differential;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

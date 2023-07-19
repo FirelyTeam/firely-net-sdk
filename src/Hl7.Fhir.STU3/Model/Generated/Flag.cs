@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Flag","http://hl7.org/fhir/StructureDefinition/Flag", IsResource=true)]
-  public partial class Flag : Hl7.Fhir.Model.DomainResource
+  public partial class Flag : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     /// Clinical, administrative, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("FlagCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -148,6 +149,7 @@ namespace Hl7.Fhir.Model
     /// Coded or textual message to display to user
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
+    [Binding("FlagCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -216,6 +218,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Author;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

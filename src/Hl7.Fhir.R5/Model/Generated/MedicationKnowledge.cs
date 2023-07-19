@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationKnowledge","http://hl7.org/fhir/StructureDefinition/MedicationKnowledge", IsResource=true)]
-  public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -430,6 +430,7 @@ namespace Hl7.Fhir.Model
       /// The price or category of the cost of the medication
       /// </summary>
       [FhirElement("cost", Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MedicationCostCategory")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -2408,6 +2409,7 @@ namespace Hl7.Fhir.Model
       /// powder | tablets | capsule +
       /// </summary>
       [FhirElement("doseForm", Order=50)]
+      [Binding("MedicationForm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DoseForm
       {
@@ -2421,6 +2423,7 @@ namespace Hl7.Fhir.Model
       /// The intended or approved route of administration
       /// </summary>
       [FhirElement("intendedRoute", Order=60)]
+      [Binding("MedicationRoute")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> IntendedRoute
@@ -2610,6 +2613,7 @@ namespace Hl7.Fhir.Model
       /// A code that defines the type of ingredient, active, base, etc
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("MedicationIngredientIsActive")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2623,6 +2627,7 @@ namespace Hl7.Fhir.Model
       /// Quantity of ingredient present
       /// </summary>
       [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MedicationIngredientStrength")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
@@ -2753,6 +2758,7 @@ namespace Hl7.Fhir.Model
       /// Code specifying the type of characteristic of medication
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("MedicationCharacteristic")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2887,6 +2893,7 @@ namespace Hl7.Fhir.Model
     /// Code that identifies this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("MedicationFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -3205,6 +3212,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.MedicationKnowledge.DefinitionalComponent _Definitional;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

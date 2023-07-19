@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("GenomicStudy","http://hl7.org/fhir/StructureDefinition/GenomicStudy", IsResource=true)]
-  public partial class GenomicStudy : Hl7.Fhir.Model.DomainResource
+  public partial class GenomicStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -127,6 +127,7 @@ namespace Hl7.Fhir.Model
       /// Type of the methods used in the analysis (e.g., FISH, Karyotyping, MSI)
       /// </summary>
       [FhirElement("methodType", InSummary=true, Order=50)]
+      [Binding("GenomicStudyMethodType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> MethodType
@@ -141,6 +142,7 @@ namespace Hl7.Fhir.Model
       /// Type of the genomic changes studied in the analysis (e.g., DNA, RNA, or AA change)
       /// </summary>
       [FhirElement("changeType", Order=60)]
+      [Binding("GenomicStudyChangeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ChangeType
@@ -155,6 +157,7 @@ namespace Hl7.Fhir.Model
       /// Genome build that is used in this analysis
       /// </summary>
       [FhirElement("genomeBuild", Order=70)]
+      [Binding("HumanRefSeqNCBIBuildId")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept GenomeBuild
       {
@@ -706,6 +709,7 @@ namespace Hl7.Fhir.Model
       /// Type of input data (e.g., BAM, CRAM, or FASTA)
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("GenomicStudyDataFormat")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -865,6 +869,7 @@ namespace Hl7.Fhir.Model
       /// Type of output data (e.g., VCF, MAF, or BAM)
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("GenomicStudyDataFormat")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1286,6 +1291,7 @@ namespace Hl7.Fhir.Model
     /// The type of the study (e.g., Familial variant segregation, Functional variation detection, or Gene expression profiling)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
+    [Binding("GenomicStudyType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1539,6 +1545,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent> _Analysis;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

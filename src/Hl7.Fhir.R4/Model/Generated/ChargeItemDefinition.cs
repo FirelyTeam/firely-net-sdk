@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ChargeItemDefinition","http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition", IsResource=true)]
-  public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1006,6 +1006,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for charge item definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1126,7 +1127,7 @@ namespace Hl7.Fhir.Model
     /// Billing codes or product types this definition applies to
     /// </summary>
     [FhirElement("code", InSummary=true, Order=280)]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("ChargeItemDefinitionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1179,6 +1180,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent> _PropertyGroup;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

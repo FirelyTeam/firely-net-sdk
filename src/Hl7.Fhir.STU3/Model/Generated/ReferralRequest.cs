@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ReferralRequest","http://hl7.org/fhir/StructureDefinition/ReferralRequest", IsResource=true)]
-  public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource
+  public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -339,6 +339,7 @@ namespace Hl7.Fhir.Model
     /// Referral/Transition of care request type
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="class")]
+    [Binding("ReferralType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -385,6 +386,7 @@ namespace Hl7.Fhir.Model
     /// Actions requested as part of the referral
     /// </summary>
     [FhirElement("serviceRequested", InSummary=true, Order=180, FiveWs="what")]
+    [Binding("RequestedService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
@@ -489,6 +491,7 @@ namespace Hl7.Fhir.Model
     /// The clinical specialty (discipline) that the referral is requested for
     /// </summary>
     [FhirElement("specialty", Order=240)]
+    [Binding("ReferralSpecialty")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Specialty
     {
@@ -518,6 +521,7 @@ namespace Hl7.Fhir.Model
     /// Reason for referral / transfer of care request
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=260, FiveWs="why")]
+    [Binding("ReferralReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -620,6 +624,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

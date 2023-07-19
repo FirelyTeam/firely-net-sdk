@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("List","http://hl7.org/fhir/StructureDefinition/List", IsResource=true)]
-  public partial class List : Hl7.Fhir.Model.DomainResource
+  public partial class List : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Status/Workflow information about this item
       /// </summary>
       [FhirElement("flag", Order=40)]
+      [Binding("ListItemFlag")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Flag
       {
@@ -415,7 +416,7 @@ namespace Hl7.Fhir.Model
     /// What the purpose of this list is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("ListPurpose")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -505,6 +506,7 @@ namespace Hl7.Fhir.Model
     /// What order the list has
     /// </summary>
     [FhirElement("orderedBy", Order=180)]
+    [Binding("ListOrder")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept OrderedBy
     {
@@ -546,6 +548,7 @@ namespace Hl7.Fhir.Model
     /// Why list is empty
     /// </summary>
     [FhirElement("emptyReason", Order=210)]
+    [Binding("ListEmptyReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept EmptyReason
     {
@@ -554,6 +557,11 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

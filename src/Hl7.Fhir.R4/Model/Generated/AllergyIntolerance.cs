@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AllergyIntolerance","http://hl7.org/fhir/StructureDefinition/AllergyIntolerance", IsResource=true)]
-  public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
+  public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
       /// Specific substance or pharmaceutical product considered to be responsible for event
       /// </summary>
       [FhirElement("substance", Order=40)]
+      [Binding("SubstanceCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Substance
       {
@@ -260,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// Clinical symptoms/signs associated with the Event
       /// </summary>
       [FhirElement("manifestation", Order=50)]
+      [Binding("Manifestation")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
@@ -369,6 +371,7 @@ namespace Hl7.Fhir.Model
       /// How the subject was exposed to the substance
       /// </summary>
       [FhirElement("exposureRoute", Order=90)]
+      [Binding("RouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ExposureRoute
       {
@@ -547,6 +550,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | resolved
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [Binding("AllergyIntoleranceClinicalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
     {
@@ -560,6 +564,7 @@ namespace Hl7.Fhir.Model
     /// unconfirmed | confirmed | refuted | entered-in-error
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("AllergyIntoleranceVerificationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VerificationStatus
     {
@@ -612,7 +617,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> CategoryElement
     {
-      get { if(_CategoryElement==null) _CategoryElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(); return _CategoryElement; }
+      get { if(_CategoryElement==null) _CategoryElement = new List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(); return _CategoryElement; }
       set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
     }
 
@@ -631,7 +636,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           CategoryElement = null;
         else
-          CategoryElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>(elem)));
+          CategoryElement = new List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(value.Select(elem=>new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>(elem)));
         OnPropertyChanged("Category");
       }
     }
@@ -673,7 +678,7 @@ namespace Hl7.Fhir.Model
     /// Code that identifies the allergy or intolerance
     /// </summary>
     [FhirElement("code", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("AllergyIntoleranceCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -848,6 +853,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

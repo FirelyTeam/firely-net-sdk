@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ChargeItem","http://hl7.org/fhir/StructureDefinition/ChargeItem", IsResource=true)]
-  public partial class ChargeItem : Hl7.Fhir.Model.DomainResource
+  public partial class ChargeItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("function", Order=40)]
+      [Binding("ChargeItemPerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -374,6 +375,7 @@ namespace Hl7.Fhir.Model
     /// A code that identifies the charge, like a billing code
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("ChargeItemCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -506,6 +508,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodysite", InSummary=true, Order=230)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
@@ -546,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// Reason for overriding the list price/factor
     /// </summary>
     [FhirElement("overrideReason", Order=260)]
+    [Binding("override-reason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept OverrideReason
     {
@@ -605,6 +609,7 @@ namespace Hl7.Fhir.Model
     /// Why was the charged  service rendered?
     /// </summary>
     [FhirElement("reason", Order=290, FiveWs="FiveWs.why[x]")]
+    [Binding("ChargeItemReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -633,6 +638,7 @@ namespace Hl7.Fhir.Model
     /// Product charged
     /// </summary>
     [FhirElement("product", Order=310)]
+    [Binding("ChargeItemProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Product
@@ -688,6 +694,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -163,16 +163,6 @@ namespace Hl7.Fhir.Introspection
         public readonly FhirRelease Release;
 
         /// <summary>
-        /// In Cql, this indicates that this property is the default filter in a retrieve statement.
-        /// </summary>
-        public bool IsPrimaryCodePath;
-
-        /// <summary>
-        /// In Cql, this indicates that this property represents the patient's birthdate.
-        /// </summary>
-        public bool IsPatientBirthDate;
-
-        /// <summary>
         /// For a bound element, this is the name of the binding.
         /// </summary>
         public string? BindingName { get; private set; }
@@ -230,10 +220,6 @@ namespace Hl7.Fhir.Introspection
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
-            var cqlElementAttribute = ClassMapping.GetAttribute<CqlElementAttribute>(prop, release);
-            var isCqlPrimaryCodePath = cqlElementAttribute?.IsPrimaryCodePath == true;
-            var isBirthDate = cqlElementAttribute?.IsBirthDate == true;
-
             result = new PropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping!, fhirTypes, release)
             {
                 InSummary = elementAttr.InSummary,
@@ -247,8 +233,6 @@ namespace Hl7.Fhir.Introspection
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
                 ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
-                IsPrimaryCodePath = isCqlPrimaryCodePath,
-                IsPatientBirthDate = isBirthDate,
                 BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
             };
 

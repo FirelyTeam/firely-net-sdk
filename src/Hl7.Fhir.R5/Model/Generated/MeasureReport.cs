@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport", IsResource=true)]
-  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
+  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -188,6 +188,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the group
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
+      [Binding("MeasureGroupExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -432,6 +433,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -695,6 +697,7 @@ namespace Hl7.Fhir.Model
       /// What stratifier of the group
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasureStratifierExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -837,6 +840,7 @@ namespace Hl7.Fhir.Model
       /// The stratum value, e.g. male
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MeasureReportStratifierValueExample")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -1050,6 +1054,7 @@ namespace Hl7.Fhir.Model
       /// What stratifier component of the group
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasureStratifierExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1064,6 +1069,7 @@ namespace Hl7.Fhir.Model
       /// The stratum component value, e.g. male
       /// </summary>
       [FhirElement("value", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MeasureReportStratifierValueExample")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -1226,6 +1232,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -1710,6 +1717,7 @@ namespace Hl7.Fhir.Model
     /// What scoring method (e.g. proportion, ratio, continuous-variable)
     /// </summary>
     [FhirElement("scoring", InSummary=true, IsModifier=true, Order=210)]
+    [Binding("MeasureScoring")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scoring
     {
@@ -1723,6 +1731,7 @@ namespace Hl7.Fhir.Model
     /// increase | decrease
     /// </summary>
     [FhirElement("improvementNotation", InSummary=true, IsModifier=true, Order=220)]
+    [Binding("MeasureImprovementNotation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
     {
@@ -1777,6 +1786,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

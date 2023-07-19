@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Communication","http://hl7.org/fhir/StructureDefinition/Communication", IsResource=true)]
-  public partial class Communication : Hl7.Fhir.Model.DomainResource
+  public partial class Communication : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -333,6 +333,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=160)]
+    [Binding("CommunicationNotDoneReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -346,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// Message category
     /// </summary>
     [FhirElement("category", Order=170, FiveWs="FiveWs.class")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -394,6 +395,7 @@ namespace Hl7.Fhir.Model
     /// A channel of communication
     /// </summary>
     [FhirElement("medium", Order=190)]
+    [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -423,6 +425,7 @@ namespace Hl7.Fhir.Model
     /// Description of the purpose/content
     /// </summary>
     [FhirElement("topic", Order=210, FiveWs="FiveWs.context")]
+    [Binding("CommunicationTopic")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Topic
     {
@@ -560,6 +563,7 @@ namespace Hl7.Fhir.Model
     /// Indication for message
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=280, FiveWs="FiveWs.why[x]")]
+    [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -613,6 +617,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Category.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

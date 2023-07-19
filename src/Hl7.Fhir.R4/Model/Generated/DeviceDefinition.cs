@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceDefinition","http://hl7.org/fhir/StructureDefinition/DeviceDefinition", IsResource=true)]
-  public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1182,6 +1182,7 @@ namespace Hl7.Fhir.Model
     /// What kind of device or device system this is
     /// </summary>
     [FhirElement("type", Order=140)]
+    [Binding("DeviceKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -1241,6 +1242,7 @@ namespace Hl7.Fhir.Model
     /// Safety characteristics of the device
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=170)]
+    [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
@@ -1466,6 +1468,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent> _Material;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

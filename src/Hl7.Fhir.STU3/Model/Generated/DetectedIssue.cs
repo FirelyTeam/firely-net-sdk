@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue", IsResource=true)]
-  public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
+  public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// What mitigation?
       /// </summary>
       [FhirElement("action", Order=40)]
+      [Binding("DetectedIssueMitigationAction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
@@ -309,6 +310,7 @@ namespace Hl7.Fhir.Model
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("DetectedIssueCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -503,6 +505,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

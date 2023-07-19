@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
-  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// A name/code for the set
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("InvestigationGroupType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -237,6 +238,7 @@ namespace Hl7.Fhir.Model
       /// What was found
       /// </summary>
       [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ConditionKind")]
       [CLSCompliant(false)]
       [References("Condition","Observation")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -425,6 +427,7 @@ namespace Hl7.Fhir.Model
     /// Kind of assessment performed
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
+    [Binding("ClinicalImpressionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -683,6 +686,7 @@ namespace Hl7.Fhir.Model
     /// Estimate of likely outcome
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=240)]
+    [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
@@ -738,6 +742,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

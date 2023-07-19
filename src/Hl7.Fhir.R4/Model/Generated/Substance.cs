@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance", IsResource=true)]
-  public partial class Substance : Hl7.Fhir.Model.DomainResource
+  public partial class Substance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -286,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// A component of the substance
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SubstanceIngredient")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -442,6 +443,7 @@ namespace Hl7.Fhir.Model
     /// What class/type of substance this is
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("SubstanceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -456,7 +458,7 @@ namespace Hl7.Fhir.Model
     /// What substance this is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
-    [CqlElement(IsPrimaryCodePath=true)]
+    [Binding("SubstanceCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -525,6 +527,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Substance.IngredientComponent> _Ingredient;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

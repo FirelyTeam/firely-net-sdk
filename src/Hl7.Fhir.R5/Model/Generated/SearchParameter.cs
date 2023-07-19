@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SearchParameter","http://hl7.org/fhir/StructureDefinition/SearchParameter", IsResource=true)]
-  public partial class SearchParameter : Hl7.Fhir.Model.DomainResource
+  public partial class SearchParameter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -630,6 +630,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for search parameter (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -775,7 +776,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> BaseElement
     {
-      get { if(_BaseElement==null) _BaseElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(); return _BaseElement; }
+      get { if(_BaseElement==null) _BaseElement = new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(); return _BaseElement; }
       set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
     }
 
@@ -794,7 +795,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           BaseElement = null;
         else
-          BaseElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>(elem)));
+          BaseElement = new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(value.Select(elem=>new Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>(elem)));
         OnPropertyChanged("Base");
       }
     }
@@ -938,7 +939,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> TargetElement
     {
-      get { if(_TargetElement==null) _TargetElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(); return _TargetElement; }
+      get { if(_TargetElement==null) _TargetElement = new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(); return _TargetElement; }
       set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
     }
 
@@ -957,7 +958,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           TargetElement = null;
         else
-          TargetElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>(elem)));
+          TargetElement = new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>(value.Select(elem=>new Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>(elem)));
         OnPropertyChanged("Target");
       }
     }
@@ -1034,7 +1035,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
     {
-      get { if(_ComparatorElement==null) _ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
+      get { if(_ComparatorElement==null) _ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
       set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
     }
 
@@ -1053,7 +1054,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ComparatorElement = null;
         else
-          ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>(elem)));
+          ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SearchComparator>(elem)));
         OnPropertyChanged("Comparator");
       }
     }
@@ -1068,7 +1069,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
     {
-      get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
+      get { if(_ModifierElement==null) _ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
       set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
     }
 
@@ -1087,7 +1088,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ModifierElement = null;
         else
-          ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
+          ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
         OnPropertyChanged("Modifier");
       }
     }
@@ -1137,6 +1138,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> _Component;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

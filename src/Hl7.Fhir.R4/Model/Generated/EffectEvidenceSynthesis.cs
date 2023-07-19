@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EffectEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/EffectEvidenceSynthesis", IsResource=true)]
-  public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
+  public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -367,6 +367,7 @@ namespace Hl7.Fhir.Model
       /// Variant exposure states
       /// </summary>
       [FhirElement("variantState", Order=60)]
+      [Binding("EvidenceVariantState")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VariantState
       {
@@ -551,6 +552,7 @@ namespace Hl7.Fhir.Model
       /// Type of efffect estimate
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("EffectEstimateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -564,6 +566,7 @@ namespace Hl7.Fhir.Model
       /// Variant exposure states
       /// </summary>
       [FhirElement("variantState", Order=60)]
+      [Binding("EvidenceVariantState")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VariantState
       {
@@ -608,6 +611,7 @@ namespace Hl7.Fhir.Model
       /// What unit is the outcome described in?
       /// </summary>
       [FhirElement("unitOfMeasure", Order=80)]
+      [Binding("UCUMUnits")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept UnitOfMeasure
       {
@@ -777,6 +781,7 @@ namespace Hl7.Fhir.Model
       /// Type of precision estimate
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PrecisionEstimateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1007,6 +1012,7 @@ namespace Hl7.Fhir.Model
       /// Certainty rating
       /// </summary>
       [FhirElement("rating", Order=40)]
+      [Binding("QualityOfEvidenceRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Rating
@@ -1164,6 +1170,7 @@ namespace Hl7.Fhir.Model
       /// Type of subcomponent of certainty rating
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CertaintySubcomponentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1177,6 +1184,7 @@ namespace Hl7.Fhir.Model
       /// Subcomponent certainty rating
       /// </summary>
       [FhirElement("rating", Order=50)]
+      [Binding("CertaintySubcomponentRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Rating
@@ -1613,6 +1621,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for effect evidence synthesis (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1733,6 +1742,7 @@ namespace Hl7.Fhir.Model
     /// The category of the EffectEvidenceSynthesis, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=260)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1817,6 +1827,7 @@ namespace Hl7.Fhir.Model
     /// Type of synthesis
     /// </summary>
     [FhirElement("synthesisType", Order=320)]
+    [Binding("SynthesisType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SynthesisType
     {
@@ -1830,6 +1841,7 @@ namespace Hl7.Fhir.Model
     /// Type of study
     /// </summary>
     [FhirElement("studyType", Order=330)]
+    [Binding("StudyType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StudyType
     {
@@ -1957,6 +1969,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.EffectEvidenceSynthesis.CertaintyComponent> _Certainty;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

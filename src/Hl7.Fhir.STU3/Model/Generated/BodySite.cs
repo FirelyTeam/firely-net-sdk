@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("BodySite","http://hl7.org/fhir/StructureDefinition/BodySite", IsResource=true)]
-  public partial class BodySite : Hl7.Fhir.Model.DomainResource
+  public partial class BodySite : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
     /// Named anatomical location
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// Modification to location code
     /// </summary>
     [FhirElement("qualifier", Order=120, FiveWs="what")]
+    [Binding("BodySiteQualifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
@@ -187,6 +189,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Patient;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

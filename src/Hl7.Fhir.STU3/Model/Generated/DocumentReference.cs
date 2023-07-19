@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DocumentReference","http://hl7.org/fhir/StructureDefinition/DocumentReference", IsResource=true)]
-  public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
+  public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -243,6 +243,7 @@ namespace Hl7.Fhir.Model
       /// Format/content rules for the document
       /// </summary>
       [FhirElement("format", InSummary=true, Order=50)]
+      [Binding("DocumentFormat")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Format
       {
@@ -377,6 +378,7 @@ namespace Hl7.Fhir.Model
       /// Main clinical acts documented
       /// </summary>
       [FhirElement("event", InSummary=true, Order=50)]
+      [Binding("DocumentEventType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Event
@@ -404,6 +406,7 @@ namespace Hl7.Fhir.Model
       /// Kind of facility where patient was seen
       /// </summary>
       [FhirElement("facilityType", InSummary=true, Order=70)]
+      [Binding("DocumentC80FacilityType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept FacilityType
       {
@@ -417,6 +420,7 @@ namespace Hl7.Fhir.Model
       /// Additional details about where the content was created (e.g. clinical specialty)
       /// </summary>
       [FhirElement("practiceSetting", InSummary=true, Order=80)]
+      [Binding("DocumentC80PracticeSetting")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept PracticeSetting
       {
@@ -824,6 +828,7 @@ namespace Hl7.Fhir.Model
     /// Kind of document (LOINC if possible)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="class")]
+    [Binding("DocumentC80Type")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -838,6 +843,7 @@ namespace Hl7.Fhir.Model
     /// Categorization of document
     /// </summary>
     [FhirElement("class", InSummary=true, Order=140, FiveWs="class")]
+    [Binding("DocumentC80Class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Class
     {
@@ -1020,6 +1026,7 @@ namespace Hl7.Fhir.Model
     /// Document security-tags
     /// </summary>
     [FhirElement("securityLabel", InSummary=true, Order=230)]
+    [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
@@ -1056,6 +1063,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.DocumentReference.ContextComponent _Context;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

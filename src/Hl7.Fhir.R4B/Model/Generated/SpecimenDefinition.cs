@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SpecimenDefinition","http://hl7.org/fhir/StructureDefinition/SpecimenDefinition", IsResource=true)]
-  public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -126,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// Type of intended specimen
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("IntendedSpecimenType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -230,6 +231,7 @@ namespace Hl7.Fhir.Model
       /// Rejection criterion
       /// </summary>
       [FhirElement("rejectionCriterion", Order=100)]
+      [Binding("RejectionCriterion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
@@ -418,6 +420,7 @@ namespace Hl7.Fhir.Model
       /// Container material
       /// </summary>
       [FhirElement("material", Order=40)]
+      [Binding("ContainerMaterial")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Material
       {
@@ -431,6 +434,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container associated with the kind of specimen
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ContainerType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -444,6 +448,7 @@ namespace Hl7.Fhir.Model
       /// Color of container cap
       /// </summary>
       [FhirElement("cap", Order=60)]
+      [Binding("ContainerCap")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Cap
       {
@@ -721,6 +726,7 @@ namespace Hl7.Fhir.Model
       /// Additive associated with container
       /// </summary>
       [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ContainerAdditive")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -835,6 +841,7 @@ namespace Hl7.Fhir.Model
       /// Temperature qualifier
       /// </summary>
       [FhirElement("temperatureQualifier", Order=40)]
+      [Binding("HandlingConditionSet")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept TemperatureQualifier
       {
@@ -1028,6 +1035,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material to collect
     /// </summary>
     [FhirElement("typeCollected", InSummary=true, Order=100)]
+    [Binding("CollectedSpecimenType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TypeCollected
     {
@@ -1041,6 +1049,7 @@ namespace Hl7.Fhir.Model
     /// Patient preparation for collection
     /// </summary>
     [FhirElement("patientPreparation", InSummary=true, Order=110)]
+    [Binding("PreparePatient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
@@ -1086,6 +1095,7 @@ namespace Hl7.Fhir.Model
     /// Specimen collection procedure
     /// </summary>
     [FhirElement("collection", InSummary=true, Order=130)]
+    [Binding("SpecimenCollection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection
@@ -1109,6 +1119,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> _TypeTested;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DiagnosticReport","http://hl7.org/fhir/StructureDefinition/DiagnosticReport", IsResource=true)]
-  public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource
+  public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -143,6 +143,7 @@ namespace Hl7.Fhir.Model
       /// Type of performer
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
+      [Binding("Role")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -481,6 +482,7 @@ namespace Hl7.Fhir.Model
     /// Service category
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("DiagnosticServiceSection")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -494,6 +496,7 @@ namespace Hl7.Fhir.Model
     /// Name/Code for this diagnostic report
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
+    [Binding("DiagnosticReportCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -691,6 +694,7 @@ namespace Hl7.Fhir.Model
     /// Codes for the conclusion
     /// </summary>
     [FhirElement("codedDiagnosis", Order=240)]
+    [Binding("AdjunctDiagnosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis
@@ -714,6 +718,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Attachment> _PresentedForm;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

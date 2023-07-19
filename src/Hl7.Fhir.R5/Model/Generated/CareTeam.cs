@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CareTeam","http://hl7.org/fhir/StructureDefinition/CareTeam", IsResource=true)]
-  public partial class CareTeam : Hl7.Fhir.Model.DomainResource
+  public partial class CareTeam : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// Type of involvement
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
+      [Binding("CareTeamParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -328,6 +329,7 @@ namespace Hl7.Fhir.Model
     /// Type of team
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("CareTeamCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -415,6 +417,7 @@ namespace Hl7.Fhir.Model
     /// Why the care team exists
     /// </summary>
     [FhirElement("reason", Order=160, FiveWs="FiveWs.why[x]")]
+    [Binding("CareTeamReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -468,6 +471,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
