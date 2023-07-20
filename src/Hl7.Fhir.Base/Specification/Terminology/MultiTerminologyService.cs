@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
         /// </summary>
         /// <param name="services">Terminology services to be used. Note that the first service in the list will be used first, the others will be used for fallback based on their order.</param>
-        public MultiTerminologyService(IEnumerable<ITerminologyService> services) : this(services.Select(s => TerminologyServiceRoutingSettings.CreateDefault(s))) { }
+        public MultiTerminologyService(IEnumerable<ITerminologyService> services) : this(services.Select(s => new TerminologyServiceRoutingSettings(s))) { }
 
         /// <summary>
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
@@ -130,7 +130,9 @@ namespace Hl7.Fhir.Specification.Terminology
             List<FhirOperationException> exceptions = new();
 
             // check if any preferedServices
-            var preferred = preferredService(parameters);
+            var inputVsUrl = new ValidateCodeParameters(parameters).Url?.Value;
+            var preferred = (inputVsUrl != null) ? preferredService(inputVsUrl) : Enumerable.Empty<ITerminologyService>();
+
             var services = _termServices.Select(s => s.Service);
             var orderedTermServices = preferred.Any() ?
                                       reorderList(services, preferred)
@@ -164,12 +166,10 @@ namespace Hl7.Fhir.Specification.Terminology
             throw new InvalidOperationException("We should never have come here");
         }
 
-        private IEnumerable<ITerminologyService> preferredService(Parameters parameters)
+        private IEnumerable<ITerminologyService> preferredService(string inputVsUrl)
         {
-            var valueSetUrl = new ValidateCodeParameters(parameters).Url?.Value;
-            return valueSetUrl != null
-                ? _termServices.Where(t => matchSystem(t.PreferredValueSets, valueSetUrl)).Select(t => t.Service)
-                : Enumerable.Empty<ITerminologyService>();
+            return _termServices.Where(t => matchSystem(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
+
 
             static bool matchSystem(IEnumerable<string>? preferredSystems, string valueSetUrl) =>
                 preferredSystems?.Any() == true && preferredSystems.Any(valueSetUrl.StartsWith);
