@@ -174,9 +174,20 @@ namespace Hl7.Fhir.ElementModel.Types
             return other switch
             {
                 null => 1,
-                Time p => DateTime.CompareDateTimeParts(_value, Precision, HasOffset, p._value, p.Precision, p.HasOffset),
+                Time p => compareWith(p),
                 _ => throw NotSameTypeComparison(this, other)
             };
+
+            Result<int> compareWith(Time p)
+            {
+                // Since the day part is not relevant, normalize this to a random date
+                // before comparing (since the CompareDateTimeParts() WILL compare the dates when
+                // we have time precision.
+                var left = ToDateTimeOffset(1972, 11, 30, TimeSpan.Zero);
+                var right = p.ToDateTimeOffset(1972, 11, 30, TimeSpan.Zero);
+
+                return DateTime.CompareDateTimeParts(left, Precision, HasOffset, right, p.Precision, p.HasOffset);
+            }
         }
 
         public static bool operator <(Time a, Time b) => a.CompareTo(b) < 0;
