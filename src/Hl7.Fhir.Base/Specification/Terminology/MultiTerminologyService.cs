@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Terminology
     /// </summary>
     public class MultiTerminologyService : ITerminologyService
     {
-        private readonly SortedList<int, TerminologyServiceRoutingSettings> _termServices = new();
+        private readonly List<TerminologyServiceRoutingSettings> _termServices = new();
 
         /// <summary>
         /// A collection of multiple terminology services to allow for one or multiple fallback services when validating codes for example.
@@ -30,13 +30,7 @@ namespace Hl7.Fhir.Specification.Terminology
         public MultiTerminologyService(IEnumerable<TerminologyServiceRoutingSettings> settings)
         {
             if (settings == null || !settings.Any()) throw Error.ArgumentNull(nameof(settings));
-
-            int count = 0;
-            foreach (var setting in settings)
-            {
-                _termServices.Add(count, setting);
-                count++;
-            }
+            _termServices = settings.ToList();
         }
 
         /// <summary>
@@ -57,24 +51,23 @@ namespace Hl7.Fhir.Specification.Terminology
         /// Add an <see cref="ITerminologyService"/> at the back of the order of terminologyServices to be used.
         /// </summary>
         /// <param name="service"><see cref="ITerminologyService"/> to be added.</param>
-        public void Add(ITerminologyService service)
+        public void AddLast(ITerminologyService service)
         {
             var settings = new TerminologyServiceRoutingSettings(service);
-            Add(settings);
+            AddLast(settings);
         }
 
         /// <summary>
-        /// Add an <see cref="ITerminologyService"/> including their routing settings at the back of the order of terminologyServices to be used.
+        /// Add an <see cref="ITerminologyService"/> including their routing settings at the back of the order of terminology services to be used.
         /// </summary>
         /// <param name="settings"><see cref="TerminologyServiceRoutingSettings"/> to be added.</param>
-        public void Add(TerminologyServiceRoutingSettings settings)
+        public void AddLast(TerminologyServiceRoutingSettings settings)
         {
-            var position = _termServices.Keys.Last() + 1;
-            _termServices.Add(position, settings);
+            _termServices.Add(settings);
         }
 
         /// <summary>
-        /// Add an <see cref="ITerminologyService"/> at the front of the order of terminologyServices to be used.
+        /// Add an <see cref="ITerminologyService"/> at the front of the order of terminology services to be used.
         /// </summary>
         /// <param name="service"><see cref="ITerminologyService"/> to be added.</param>
         public void AddFirst(ITerminologyService service)
@@ -83,17 +76,35 @@ namespace Hl7.Fhir.Specification.Terminology
             AddFirst(settings);
         }
 
-
         /// <summary>
-        /// Add an <see cref="ITerminologyService"/> including their routing settings at the front of the order of terminologyServices to be used.
+        /// Add an <see cref="ITerminologyService"/> including their routing settings at the front of the order of terminology services to be used.
         /// </summary>
         /// <param name="settings"><see cref="TerminologyServiceRoutingSettings"/> to be added.</param>
         public void AddFirst(TerminologyServiceRoutingSettings settings)
         {
-            var position = _termServices.Keys.First() - 1;
-            _termServices.Add(position, settings);
+            _termServices.Insert(0, settings);
         }
 
+        /// <summary>
+        /// Insert an <see cref="ITerminologyService"/> in the list of terminology services to be used at a specific index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="service"><see cref="ITerminologyService"/> to be added.</param>
+        public void Insert(int index, ITerminologyService service)
+        {
+            var settings = new TerminologyServiceRoutingSettings(service);
+            _termServices.Insert(index, settings);
+        }
+
+        /// <summary>
+        /// Insert an <see cref="ITerminologyService"/> including their routing settings in the list of terminology services to be used at a specific index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="settings"><see cref="TerminologyServiceRoutingSettings"/> to be added.</param>
+        public void Insert(int index, TerminologyServiceRoutingSettings settings)
+        {
+            _termServices.Insert(index, settings);
+        }
 
         ///<inheritdoc/>
         public Task<Resource> Closure(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
@@ -120,7 +131,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             // check if any preferedServices
             var preferred = preferredService(parameters);
-            var services = _termServices.Values.Select(s => s.Service);
+            var services = _termServices.Select(s => s.Service);
             var orderedTermServices = preferred.Any() ?
                                       reorderList(services, preferred)
                                       : services;
@@ -157,7 +168,7 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             var valueSetUrl = new ValidateCodeParameters(parameters).Url?.Value;
             return valueSetUrl != null
-                ? _termServices.Values.Where(t => matchSystem(t.PreferredValueSets, valueSetUrl)).Select(t => t.Service)
+                ? _termServices.Where(t => matchSystem(t.PreferredValueSets, valueSetUrl)).Select(t => t.Service)
                 : Enumerable.Empty<ITerminologyService>();
 
             static bool matchSystem(IEnumerable<string>? preferredSystems, string valueSetUrl) =>

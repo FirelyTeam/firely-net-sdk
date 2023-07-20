@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
             result.Parameter.Where(p => p.Name == "message").FirstOrDefault()?.Value.As<FhirString>()?.Value.Should().Be("this is the second ts that fails");
 
             //add the third ts at the back of the order
-            multits.Add(thirdFailingTS);
+            multits.AddLast(thirdFailingTS);
             result = await multits.ValueSetValidateCode(inputParams);
             //check results, the second should still be the first to return a result
             result.Parameter.Where(p => p.Name == "result").FirstOrDefault()?.Value.As<FhirBoolean>()?.Value.Should().Be(false);
