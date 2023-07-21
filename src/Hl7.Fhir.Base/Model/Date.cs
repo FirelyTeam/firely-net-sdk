@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
             if (!TryToDate(out var dt))
-                throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+                throw new FormatException($"Date '{Value}' was not recognized as a valid datetime.");
 
             // Since Value is not null and the parsed value is valid, dto will not be null
             return dt!.ToDateTimeOffset(TimeSpan.Zero);
