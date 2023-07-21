@@ -39,11 +39,6 @@ namespace Hl7.Fhir.Model
 
     public partial class Time
     {
-        /// <summary>
-        /// A <c>string.Format</c> pattern to use when formatting a full datetime with timezone.
-        /// </summary>
-        public const string FMT_FULL = "HH:mm:ss";
-
         public const string FMT_HOURMINSEC = "{0:D2}:{1:D2}:{2:D2}";
 
         public Time(int hour, int minute, int second) : this(string.Format(CultureInfo.InvariantCulture, FMT_HOURMINSEC, hour, minute, second))
@@ -51,7 +46,11 @@ namespace Hl7.Fhir.Model
             // Nothing
         }
 
-        public static Time FromDateTimeOffset(DateTimeOffset dto) => new(dto.ToString(FMT_FULL));
+        /// <summary>
+        /// Takes the hour, minute and second of a given <see cref="DateTimeOffset"/> in the indicated timezone, and uses this
+        /// to construct a new Time.
+        /// </summary>
+        public static Time FromDateTimeOffset(DateTimeOffset dto) => new(dto.Hour, dto.Minute, dto.Second);
 
         public static Time Now() => FromDateTimeOffset(DateTimeOffset.Now);
 

@@ -69,10 +69,13 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <returns></returns>
         public DateTimeOffset ToDateTimeOffset(int year, int month, int day, TimeSpan defaultOffset)
         {
-            var ticks = _value.Ticks % 10000;
+            // Since the DTO constructor only takes milliseconds, we would lose the sub-millisecond
+            // information from time. So, let's get the micro/nanosecond info from the ticks within
+            // the current millisecond, and add that to the newly created DTO.
+            var remainderTicks = _value.Ticks % TimeSpan.TicksPerMillisecond;
             var result = new DateTimeOffset(year, month, day, _value.Hour,
                     _value.Minute, _value.Second, _value.Millisecond,
-                    HasOffset ? _value.Offset : defaultOffset).AddTicks(ticks);
+                    HasOffset ? _value.Offset : defaultOffset).AddTicks(remainderTicks);
 
             return result;
         }
