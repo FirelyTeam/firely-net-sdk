@@ -141,6 +141,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("2001-04")]
         [DataRow("2001-04-06")]
         [DataRow("2001-04-06+01:30")]
+        [DataRow("2001-04-06Z")]
         public void CanConvertToOriginalString(string format)
         {
             var parsed = P.Date.Parse(format);
@@ -152,7 +153,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow(P.DateTimePrecision.Month, false, "2001-04")]
         [DataRow(P.DateTimePrecision.Day, false, "2001-04-06")]
         [DataRow(P.DateTimePrecision.Day, true, "2001-04-06+01:00")]
-        public void CanConvertToString(P.DateTimePrecision p, bool hasOffset, string expected)
+        public void CanConvertFromDTO(P.DateTimePrecision p, bool hasOffset, string expected)
         {
             var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
             var parsed = P.Date.FromDateTimeOffset(dt, p, hasOffset);

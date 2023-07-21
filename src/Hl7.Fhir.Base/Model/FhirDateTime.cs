@@ -141,12 +141,12 @@ namespace Hl7.Fhir.Model
         /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
         public DateTimeOffset ToDateTimeOffset(TimeSpan zone)
         {
-            if (Value == null) throw new InvalidOperationException("FhirDateTime's value is null");
+            if (Value == null) throw new InvalidOperationException("FhirDateTime's value is null.");
 
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
             // When there's no timezone, the UTC is assumed
             if (!TryToDateTime(out var dt))
-                throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+                throw new FormatException($"DateTime '{Value}' was not recognized as a valid datetime.");
 
             // Since Value is not null and the parsed value is valid, dto will not be null
             return dt!.ToDateTimeOffset(TimeSpan.Zero).ToOffset(zone);

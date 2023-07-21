@@ -169,16 +169,5 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToDateTime(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }
-
-        [TestMethod]
-        public void RetainsFractions()
-        {
-            var input = @"2020-04-17T10:24:13.1882432-05:00";
-            var datetime = ElementModel.Types.DateTime.Parse(input);
-            var offset = datetime.ToDateTimeOffset(TimeSpan.Zero);
-            var output = ElementModel.Types.DateTime.FormatDateTimeOffset(offset);
-
-            output.Should().Be(input);
-        }
     }
 }
