@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Converts this Fhir Fhir Time to a <see cref="TimeSpan"/>.
+        /// Converts this Fhir Time to a <see cref="TimeSpan"/>.
         /// </summary>
         public TimeSpan? ToTimeSpan() =>
             TryToTimeSpan(out var dt) ? dt :
