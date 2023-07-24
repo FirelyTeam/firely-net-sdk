@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 PreferredValueSets = new string[]
                 {
-                    "http://hl7.org/fhir/ValueSet/mimetypes"
+                    MimeTypeTerminologyService.MIMETYPE_VALUESET_R4_AND_UP
                 }
             };
 

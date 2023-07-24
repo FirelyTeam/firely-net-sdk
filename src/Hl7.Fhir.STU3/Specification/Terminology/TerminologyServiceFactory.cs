@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 PreferredValueSets = new string[]
                 {
-                    "http://www.rfc-editor.org/bcp/bcp13.txt"
+                    MimeTypeTerminologyService.MIMETYPE_VALUESET_STU3
                 }
             };
 
