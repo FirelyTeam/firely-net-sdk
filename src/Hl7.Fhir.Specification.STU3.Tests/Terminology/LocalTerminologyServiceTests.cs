@@ -52,5 +52,22 @@ namespace Hl7.Fhir.Specification.Tests
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.Should().BeEquivalentTo(new FhirString($"The Coding references a value set, not a code system ('{system}')"));
         }
+
+        [TestMethod]
+        public async Task DefaultCoreServiceTest()
+        {
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+            var service = LocalTerminologyService.CreateDefaultForCore(resolver);
+
+            var parameters = new ValidateCodeParameters()
+                 .WithValueSet("http://www.rfc-editor.org/bcp/bcp13.txt")
+                 .WithCode(code: "application/json", context: "context")
+                 .Build();
+
+            var result = await service.ValueSetValidateCode(parameters);
+
+            result.Parameter.Should().Contain(p => p.Name == "result")
+               .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+        }
     }
 }
