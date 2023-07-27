@@ -168,12 +168,19 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private IEnumerable<ITerminologyService> preferredService(string inputVsUrl)
         {
-            return _termServices.Where(t => matchSystem(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
-
-
-            static bool matchSystem(IEnumerable<string>? preferredSystems, string valueSetUrl) =>
-                preferredSystems?.Any() == true && preferredSystems.Any(valueSetUrl.StartsWith);
+            return _termServices.Where(t => matchVs(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
         }
+
+        private static bool matchVs(IEnumerable<string>? preferredValueSets, string inputVsUrl)
+        {
+#if NETSTANDARD2_0
+            return preferredValueSets?.Any(vs => FileSystemName.MatchesSimpleExpression(vs.AsSpan(), inputVsUrl.AsSpan())) ?? false;
+#else
+            return preferredValueSets?.Any(vs => System.IO.Enumeration.FileSystemName.MatchesSimpleExpression(vs, inputVsUrl)) ?? false;
+#endif
+        }
+
+
 
         private static IEnumerable<T> reorderList<T>(IEnumerable<T> originalList, IEnumerable<T> itemsToMoveToFront)
         {
