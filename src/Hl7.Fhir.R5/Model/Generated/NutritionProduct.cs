@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/nutritionproduct-status)
     /// (system: http://hl7.org/fhir/nutritionproduct-status)
     /// </summary>
-    [FhirEnumeration("NutritionProductStatus")]
+    [FhirEnumeration("NutritionProductStatus", "http://hl7.org/fhir/ValueSet/nutritionproduct-status", "http://hl7.org/fhir/nutritionproduct-status")]
     public enum NutritionProductStatus
     {
       /// <summary>
       /// The product can be used.
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/nutritionproduct-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The product is not expected or allowed to be used.
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/nutritionproduct-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/nutritionproduct-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionProduct#Nutrient", IsNestedType=true)]
+    [BackboneType("NutritionProduct.nutrient")]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// The (relevant) nutrients in the product
       /// </summary>
       [FhirElement("item", Order=40)]
+      [Binding("NutritionProductNutrient")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
       {
@@ -221,6 +223,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionProduct#Ingredient", IsNestedType=true)]
+    [BackboneType("NutritionProduct.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -354,6 +357,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionProduct#Characteristic", IsNestedType=true)]
+    [BackboneType("NutritionProduct.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -365,6 +369,7 @@ namespace Hl7.Fhir.Model
       /// Code specifying the type of characteristic
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PropertyCharacteristic")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -489,6 +494,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionProduct#Instance", IsNestedType=true)]
+    [BackboneType("NutritionProduct.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -801,6 +807,7 @@ namespace Hl7.Fhir.Model
     /// A code that can identify the detailed nutrients and ingredients in a specific food product
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [Binding("NutritionProductCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -815,6 +822,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NutritionProductStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus> StatusElement
@@ -847,6 +855,7 @@ namespace Hl7.Fhir.Model
     /// Broad product groups or categories used to classify the product, such as Legume and Legume Products, Beverages, or Beef Products
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("NutritionProductCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -905,6 +914,7 @@ namespace Hl7.Fhir.Model
     /// Known or suspected allergens that are a part of this product
     /// </summary>
     [FhirElement("knownAllergen", Order=150)]
+    [Binding("AllergenClass")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> KnownAllergen

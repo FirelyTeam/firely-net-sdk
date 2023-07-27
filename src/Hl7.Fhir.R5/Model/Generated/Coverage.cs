@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage", IsResource=true)]
-  public partial class Coverage : Hl7.Fhir.Model.DomainResource
+  public partial class Coverage : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/coverage-kind)
     /// (system: http://hl7.org/fhir/coverage-kind)
     /// </summary>
-    [FhirEnumeration("Kind")]
+    [FhirEnumeration("Kind", "http://hl7.org/fhir/ValueSet/coverage-kind", "http://hl7.org/fhir/coverage-kind")]
     public enum CoverageKindCode
     {
       /// <summary>
       /// The Coverage provides the identifiers and card-level details of an insurance policy.
       /// (system: http://hl7.org/fhir/coverage-kind)
       /// </summary>
-      [EnumLiteral("insurance", "http://hl7.org/fhir/coverage-kind"), Description("Insurance")]
+      [EnumLiteral("insurance"), Description("Insurance")]
       Insurance,
       /// <summary>
       /// One or more persons and/or organizations are paying for the services rendered.
       /// (system: http://hl7.org/fhir/coverage-kind)
       /// </summary>
-      [EnumLiteral("self-pay", "http://hl7.org/fhir/coverage-kind"), Description("Self-pay")]
+      [EnumLiteral("self-pay"), Description("Self-pay")]
       SelfPay,
       /// <summary>
       /// Some other organization is paying for the service.
       /// (system: http://hl7.org/fhir/coverage-kind)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/coverage-kind"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#PaymentBy", IsNestedType=true)]
+    [BackboneType("Coverage.paymentBy")]
     public partial class PaymentByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -241,6 +242,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#Class", IsNestedType=true)]
+    [BackboneType("Coverage.class")]
     public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -252,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// Type of class such as 'group' or 'plan'
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("CoverageClass")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -414,6 +417,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
+    [BackboneType("Coverage.costToBeneficiary")]
     public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -425,6 +429,7 @@ namespace Hl7.Fhir.Model
       /// Cost category
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("CopayTypes")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -438,6 +443,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=50)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -451,6 +457,7 @@ namespace Hl7.Fhir.Model
       /// In or out of network
       /// </summary>
       [FhirElement("network", Order=60)]
+      [Binding("BenefitNetwork")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Network
       {
@@ -464,6 +471,7 @@ namespace Hl7.Fhir.Model
       /// Individual or family
       /// </summary>
       [FhirElement("unit", Order=70)]
+      [Binding("BenefitUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -477,6 +485,7 @@ namespace Hl7.Fhir.Model
       /// Annual or lifetime
       /// </summary>
       [FhirElement("term", Order=80)]
+      [Binding("BenefitTerm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -658,6 +667,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#Exemption", IsNestedType=true)]
+    [BackboneType("Coverage.costToBeneficiary.exception")]
     public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -669,6 +679,7 @@ namespace Hl7.Fhir.Model
       /// Exception category
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("CoverageFinancialException")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -803,6 +814,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CoverageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -836,6 +848,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CoverageKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Coverage.CoverageKindCode> KindElement
@@ -882,6 +895,7 @@ namespace Hl7.Fhir.Model
     /// Coverage category such as medical or accident
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("CoverageType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -986,6 +1000,7 @@ namespace Hl7.Fhir.Model
     /// Beneficiary relationship to the subscriber
     /// </summary>
     [FhirElement("relationship", Order=190)]
+    [Binding("Relationship")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
     {
@@ -1174,6 +1189,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _InsurancePlan;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

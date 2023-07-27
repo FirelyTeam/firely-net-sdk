@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CoverageEligibilityResponse","http://hl7.org/fhir/StructureDefinition/CoverageEligibilityResponse", IsResource=true)]
-  public partial class CoverageEligibilityResponse : Hl7.Fhir.Model.DomainResource
+  public partial class CoverageEligibilityResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose)
     /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
     /// </summary>
-    [FhirEnumeration("EligibilityResponsePurpose")]
+    [FhirEnumeration("EligibilityResponsePurpose", "http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose", "http://hl7.org/fhir/eligibilityresponse-purpose")]
     public enum EligibilityResponsePurpose
     {
       /// <summary>
       /// The prior authorization requirements for the listed, or discovered if specified, converages for the categories of service and/or specifed biling codes are requested.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("auth-requirements", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage auth-requirements")]
+      [EnumLiteral("auth-requirements"), Description("Coverage auth-requirements")]
       AuthRequirements,
       /// <summary>
       /// The plan benefits and optionally benefits consumed  for the listed, or discovered if specified, converages are requested.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("benefits", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage benefits")]
+      [EnumLiteral("benefits"), Description("Coverage benefits")]
       Benefits,
       /// <summary>
       /// The insurer is requested to report on any coverages which they are aware of in addition to any specifed.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("discovery", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage Discovery")]
+      [EnumLiteral("discovery"), Description("Coverage Discovery")]
       Discovery,
       /// <summary>
       /// A check that the specified coverages are in-force is requested.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("validation", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage Validation")]
+      [EnumLiteral("validation"), Description("Coverage Validation")]
       Validation,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Insurance", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Items", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.insurance.item")]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -303,6 +305,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -316,6 +319,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=50)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -329,6 +333,7 @@ namespace Hl7.Fhir.Model
       /// Product or service billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=60)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -451,6 +456,7 @@ namespace Hl7.Fhir.Model
       /// In or out of network
       /// </summary>
       [FhirElement("network", Order=110)]
+      [Binding("BenefitNetwork")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Network
       {
@@ -464,6 +470,7 @@ namespace Hl7.Fhir.Model
       /// Individual or family
       /// </summary>
       [FhirElement("unit", Order=120)]
+      [Binding("BenefitUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -477,6 +484,7 @@ namespace Hl7.Fhir.Model
       /// Annual or lifetime
       /// </summary>
       [FhirElement("term", Order=130)]
+      [Binding("BenefitTerm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -535,6 +543,7 @@ namespace Hl7.Fhir.Model
       /// Type of required supporting materials
       /// </summary>
       [FhirElement("authorizationSupporting", Order=160)]
+      [Binding("AuthSupporting")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AuthorizationSupporting
@@ -782,6 +791,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Benefit", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.insurance.item.benefit")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -793,6 +803,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("BenefitType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -940,6 +951,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Errors", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.error")]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -951,6 +963,7 @@ namespace Hl7.Fhir.Model
       /// Error code detailing processing issues
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("AdjudicationError")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1063,6 +1076,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -1096,11 +1110,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityResponsePurpose")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> PurposeElement
     {
-      get { if(_PurposeElement==null) _PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(); return _PurposeElement; }
+      get { if(_PurposeElement==null) _PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(); return _PurposeElement; }
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
@@ -1119,7 +1134,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           PurposeElement = null;
         else
-          PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>(elem)));
+          PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>(elem)));
         OnPropertyChanged("Purpose");
       }
     }
@@ -1223,6 +1238,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RemittanceOutcome")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
@@ -1347,6 +1363,7 @@ namespace Hl7.Fhir.Model
     /// Printed form identifier
     /// </summary>
     [FhirElement("form", Order=220)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {
@@ -1369,6 +1386,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent> _Error;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

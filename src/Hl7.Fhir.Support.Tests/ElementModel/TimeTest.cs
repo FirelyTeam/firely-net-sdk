@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -41,6 +42,9 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("12:34:44+345:432");
             reject("92:34:44");
             reject("12:34:AM");
+
+            reject("1997");
+            reject("1997-03");
 
             static void accept(string testValue, int? h, int? m, int? s, int? ms, TimeSpan? o)
             {
@@ -91,7 +95,6 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(plusTwo, dto.Offset);
         }
 
-
         [TestMethod]
         public void GetNow()
         {
@@ -132,6 +135,43 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(13, pt.Hours);
             Assert.IsNull(pt.Minutes);
             Assert.AreEqual(P.DateTimePrecision.Hour, pt.Precision);
+        }
+
+        [TestMethod]
+
+        [DataRow("13")]
+        [DataRow("13:01")]
+        [DataRow("13:01:44")]
+        [DataRow("13:01:44Z")]
+        [DataRow("13:01:44+02:00")]
+        public void CanConvertToOriginalString(string format)
+        {
+            var parsed = P.Time.Parse(format);
+            parsed.ToString().Should().Be(format);
+        }
+
+        [TestMethod]
+        [DataRow(P.DateTimePrecision.Hour, false, "13")]
+        [DataRow(P.DateTimePrecision.Minute, false, "13:01")]
+        [DataRow(P.DateTimePrecision.Second, false, "13:01:02")]
+        [DataRow(P.DateTimePrecision.Second, true, "13:01:02+01:00")]
+        [DataRow(P.DateTimePrecision.Fraction, true, "13:01:02.89+01:00")]
+        public void CanConvertFromDTO(P.DateTimePrecision p, bool hasOffset, string expected)
+        {
+            var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+            var parsed = P.Time.FromDateTimeOffset(dt, p, hasOffset);
+            parsed.ToString().Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void RetainsFractions()
+        {
+            var input = @"10:24:13.1882432-05:00";
+            var datetime = P.Time.Parse(input);
+            var offset = datetime.ToDateTimeOffset(1972, 11, 30, TimeSpan.Zero);
+            var output = P.DateTime.FormatDateTimeOffset(offset);
+
+            output.Should().Be("1972-11-30T" + input);
         }
     }
 }

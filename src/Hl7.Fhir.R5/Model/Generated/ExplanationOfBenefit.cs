@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ExplanationOfBenefit","http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit", IsResource=true)]
-  public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource
+  public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/explanationofbenefit-status)
     /// (system: http://hl7.org/fhir/explanationofbenefit-status)
     /// </summary>
-    [FhirEnumeration("ExplanationOfBenefitStatus")]
+    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status", "http://hl7.org/fhir/explanationofbenefit-status")]
     public enum ExplanationOfBenefitStatus
     {
       /// <summary>
       /// The resource instance is currently in-force.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The resource instance is withdrawn, rescinded or reversed.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// A new resource instance the contents of which is not complete.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The resource instance was entered in error.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#RelatedClaim", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.related")]
     public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -121,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// How the reference claim is related
       /// </summary>
       [FhirElement("relationship", Order=50)]
+      [Binding("RelatedClaimRelationship")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Relationship
       {
@@ -250,6 +252,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Event", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.event")]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -261,6 +264,7 @@ namespace Hl7.Fhir.Model
       /// Specific event
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("DatesType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -385,6 +389,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Payee", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.payee")]
     public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -396,6 +401,7 @@ namespace Hl7.Fhir.Model
       /// Category of recipient
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PayeeType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -518,6 +524,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#CareTeam", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.careTeam")]
     public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -608,6 +615,7 @@ namespace Hl7.Fhir.Model
       /// Function within the team
       /// </summary>
       [FhirElement("role", Order=70)]
+      [Binding("CareTeamRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -621,6 +629,7 @@ namespace Hl7.Fhir.Model
       /// Practitioner or provider specialization
       /// </summary>
       [FhirElement("specialty", Order=80)]
+      [Binding("ProviderQualification")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Specialty
       {
@@ -755,6 +764,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SupportingInformation", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.supportingInfo")]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -798,6 +808,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the supplied information
       /// </summary>
       [FhirElement("category", Order=50)]
+      [Binding("InformationCategory")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
@@ -812,6 +823,7 @@ namespace Hl7.Fhir.Model
       /// Type of information
       /// </summary>
       [FhirElement("code", Order=60)]
+      [Binding("InformationCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -856,6 +868,7 @@ namespace Hl7.Fhir.Model
       /// Explanation for the information
       /// </summary>
       [FhirElement("reason", Order=90)]
+      [Binding("MissingReason")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Reason
       {
@@ -999,6 +1012,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Diagnosis", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1042,6 +1056,7 @@ namespace Hl7.Fhir.Model
       /// Nature of illness or problem
       /// </summary>
       [FhirElement("diagnosis", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ICD10")]
       [CLSCompliant(false)]
       [References("Condition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1059,6 +1074,7 @@ namespace Hl7.Fhir.Model
       /// Timing or nature of the diagnosis
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("DiagnosisType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1073,6 +1089,7 @@ namespace Hl7.Fhir.Model
       /// Present on admission
       /// </summary>
       [FhirElement("onAdmission", Order=70)]
+      [Binding("DiagnosisOnAdmission")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OnAdmission
       {
@@ -1198,6 +1215,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Procedure", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1241,6 +1259,7 @@ namespace Hl7.Fhir.Model
       /// Category of Procedure
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ProcedureType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1286,6 +1305,7 @@ namespace Hl7.Fhir.Model
       /// Specific clinical procedure
       /// </summary>
       [FhirElement("procedure", Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ICD10_Procedures")]
       [CLSCompliant(false)]
       [References("Procedure")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1440,6 +1460,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Insurance", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1634,6 +1655,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Accident", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.accident")]
     public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1676,6 +1698,7 @@ namespace Hl7.Fhir.Model
       /// The nature of the accident
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("AccidentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1808,6 +1831,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Item", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1993,6 +2017,7 @@ namespace Hl7.Fhir.Model
       /// Revenue or cost center code
       /// </summary>
       [FhirElement("revenue", Order=100)]
+      [Binding("RevenueCenter")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Revenue
       {
@@ -2006,6 +2031,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=110)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -2019,6 +2045,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=120)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -2032,6 +2059,7 @@ namespace Hl7.Fhir.Model
       /// End of a range of codes
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=130)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrServiceEnd
       {
@@ -2061,6 +2089,7 @@ namespace Hl7.Fhir.Model
       /// Product or service billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=150)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -2075,6 +2104,7 @@ namespace Hl7.Fhir.Model
       /// Program the product or service is provided under
       /// </summary>
       [FhirElement("programCode", Order=160)]
+      [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
@@ -2104,6 +2134,7 @@ namespace Hl7.Fhir.Model
       /// Place of service or where product was supplied
       /// </summary>
       [FhirElement("location", Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
+      [Binding("ServicePlace")]
       [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -2663,6 +2694,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#ItemBodySite", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.bodySite")]
     public partial class ItemBodySiteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2674,6 +2706,7 @@ namespace Hl7.Fhir.Model
       /// Location
       /// </summary>
       [FhirElement("site", Order=40)]
+      [Binding("OralSites")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Site
@@ -2688,6 +2721,7 @@ namespace Hl7.Fhir.Model
       /// Sub-location
       /// </summary>
       [FhirElement("subSite", Order=50)]
+      [Binding("Surface")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SubSite
@@ -2796,6 +2830,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#ReviewOutcome", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.reviewOutcome")]
     public partial class ReviewOutcomeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2807,6 +2842,7 @@ namespace Hl7.Fhir.Model
       /// Result of the adjudication
       /// </summary>
       [FhirElement("decision", Order=40)]
+      [Binding("AdjudicationDecision")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Decision
       {
@@ -2820,6 +2856,7 @@ namespace Hl7.Fhir.Model
       /// Reason for result of the adjudication
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("AdjudicationDecisionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -2990,6 +3027,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Adjudication", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.adjudication")]
     public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3001,6 +3039,7 @@ namespace Hl7.Fhir.Model
       /// Type of adjudication information
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("Adjudication")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
@@ -3015,6 +3054,7 @@ namespace Hl7.Fhir.Model
       /// Explanation of adjudication outcome
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("AdjudicationReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -3166,6 +3206,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Detail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3223,6 +3264,7 @@ namespace Hl7.Fhir.Model
       /// Revenue or cost center code
       /// </summary>
       [FhirElement("revenue", Order=60)]
+      [Binding("RevenueCenter")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Revenue
       {
@@ -3236,6 +3278,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=70)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -3249,6 +3292,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=80)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -3262,6 +3306,7 @@ namespace Hl7.Fhir.Model
       /// End of a range of codes
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=90)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrServiceEnd
       {
@@ -3275,6 +3320,7 @@ namespace Hl7.Fhir.Model
       /// Service/Product billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=100)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -3289,6 +3335,7 @@ namespace Hl7.Fhir.Model
       /// Program the product or service is provided under
       /// </summary>
       [FhirElement("programCode", Order=110)]
+      [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
@@ -3735,6 +3782,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SubDetail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.detail.subDetail")]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3792,6 +3840,7 @@ namespace Hl7.Fhir.Model
       /// Revenue or cost center code
       /// </summary>
       [FhirElement("revenue", Order=60)]
+      [Binding("RevenueCenter")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Revenue
       {
@@ -3805,6 +3854,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=70)]
+      [Binding("BenefitCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -3818,6 +3868,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=80)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -3831,6 +3882,7 @@ namespace Hl7.Fhir.Model
       /// End of a range of codes
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=90)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrServiceEnd
       {
@@ -3844,6 +3896,7 @@ namespace Hl7.Fhir.Model
       /// Service/Product billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=100)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -3858,6 +3911,7 @@ namespace Hl7.Fhir.Model
       /// Program the product or service is provided under
       /// </summary>
       [FhirElement("programCode", Order=110)]
+      [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
@@ -4281,6 +4335,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItem", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.addItem")]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4418,6 +4473,7 @@ namespace Hl7.Fhir.Model
       /// Revenue or cost center code
       /// </summary>
       [FhirElement("revenue", Order=90)]
+      [Binding("RevenueCenter")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Revenue
       {
@@ -4431,6 +4487,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=100)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -4444,6 +4501,7 @@ namespace Hl7.Fhir.Model
       /// End of a range of codes
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=110)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrServiceEnd
       {
@@ -4473,6 +4531,7 @@ namespace Hl7.Fhir.Model
       /// Service/Product billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=130)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -4487,6 +4546,7 @@ namespace Hl7.Fhir.Model
       /// Program the product or service is provided under
       /// </summary>
       [FhirElement("programCode", Order=140)]
+      [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
@@ -4516,6 +4576,7 @@ namespace Hl7.Fhir.Model
       /// Place of service or where product was supplied
       /// </summary>
       [FhirElement("location", Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
+      [Binding("ServicePlace")]
       [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -5007,6 +5068,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemBodySite", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.addItem.bodySite")]
     public partial class AddedItemBodySiteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5018,6 +5080,7 @@ namespace Hl7.Fhir.Model
       /// Location
       /// </summary>
       [FhirElement("site", Order=40)]
+      [Binding("OralSites")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Site
@@ -5032,6 +5095,7 @@ namespace Hl7.Fhir.Model
       /// Sub-location
       /// </summary>
       [FhirElement("subSite", Order=50)]
+      [Binding("Surface")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SubSite
@@ -5140,6 +5204,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemDetail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.addItem.detail")]
     public partial class AddedItemDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5165,6 +5230,7 @@ namespace Hl7.Fhir.Model
       /// Revenue or cost center code
       /// </summary>
       [FhirElement("revenue", Order=50)]
+      [Binding("RevenueCenter")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Revenue
       {
@@ -5178,6 +5244,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=60)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -5191,6 +5258,7 @@ namespace Hl7.Fhir.Model
       /// End of a range of codes
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=70)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrServiceEnd
       {
@@ -5204,6 +5272,7 @@ namespace Hl7.Fhir.Model
       /// Service/Product billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=80)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -5598,6 +5667,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemDetailSubDetail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.addItem.detail.subDetail")]
     public partial class AddedItemDetailSubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5623,6 +5693,7 @@ namespace Hl7.Fhir.Model
       /// Revenue or cost center code
       /// </summary>
       [FhirElement("revenue", Order=50)]
+      [Binding("RevenueCenter")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Revenue
       {
@@ -5636,6 +5707,7 @@ namespace Hl7.Fhir.Model
       /// Billing, service, product, or drug code
       /// </summary>
       [FhirElement("productOrService", Order=60)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -5649,6 +5721,7 @@ namespace Hl7.Fhir.Model
       /// End of a range of codes
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=70)]
+      [Binding("ServiceProduct")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrServiceEnd
       {
@@ -5662,6 +5735,7 @@ namespace Hl7.Fhir.Model
       /// Service/Product billing modifiers
       /// </summary>
       [FhirElement("modifier", Order=80)]
+      [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -6033,6 +6107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Total", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.total")]
     public partial class TotalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -6044,6 +6119,7 @@ namespace Hl7.Fhir.Model
       /// Type of adjudication information
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
+      [Binding("Adjudication")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
@@ -6166,6 +6242,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Payment", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.payment")]
     public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -6177,6 +6254,7 @@ namespace Hl7.Fhir.Model
       /// Partial or complete payment
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PaymentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -6203,6 +6281,7 @@ namespace Hl7.Fhir.Model
       /// Explanation for the variance
       /// </summary>
       [FhirElement("adjustmentReason", Order=60)]
+      [Binding("PaymentAdjustmentReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AdjustmentReason
       {
@@ -6403,6 +6482,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Note", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.processNote")]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -6445,6 +6525,7 @@ namespace Hl7.Fhir.Model
       /// Note purpose
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("NoteType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -6489,6 +6570,7 @@ namespace Hl7.Fhir.Model
       /// Language of the text
       /// </summary>
       [FhirElement("language", Order=70)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -6614,6 +6696,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#BenefitBalance", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.benefitBalance")]
     public partial class BenefitBalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -6625,6 +6708,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("BenefitCategory")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
@@ -6732,6 +6816,7 @@ namespace Hl7.Fhir.Model
       /// In or out of network
       /// </summary>
       [FhirElement("network", Order=80)]
+      [Binding("BenefitNetwork")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Network
       {
@@ -6745,6 +6830,7 @@ namespace Hl7.Fhir.Model
       /// Individual or family
       /// </summary>
       [FhirElement("unit", Order=90)]
+      [Binding("BenefitUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -6758,6 +6844,7 @@ namespace Hl7.Fhir.Model
       /// Annual or lifetime
       /// </summary>
       [FhirElement("term", Order=100)]
+      [Binding("BenefitTerm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -6933,6 +7020,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Benefit", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.benefitBalance.financial")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -6944,6 +7032,7 @@ namespace Hl7.Fhir.Model
       /// Benefit classification
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("BenefitType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -7118,6 +7207,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ExplanationOfBenefitStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus> StatusElement
@@ -7150,6 +7240,7 @@ namespace Hl7.Fhir.Model
     /// Category or discipline
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("ClaimType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -7164,6 +7255,7 @@ namespace Hl7.Fhir.Model
     /// More granular claim type
     /// </summary>
     [FhirElement("subType", Order=130, FiveWs="FiveWs.class")]
+    [Binding("ClaimSubType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SubType
     {
@@ -7178,6 +7270,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("Use")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimUseCode> UseElement
@@ -7316,6 +7409,7 @@ namespace Hl7.Fhir.Model
     /// Desired processing urgency
     /// </summary>
     [FhirElement("priority", Order=210)]
+    [Binding("ProcessPriority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -7329,6 +7423,7 @@ namespace Hl7.Fhir.Model
     /// For whom to reserve funds
     /// </summary>
     [FhirElement("fundsReserveRequested", Order=220)]
+    [Binding("FundsReserve")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FundsReserveRequested
     {
@@ -7342,6 +7437,7 @@ namespace Hl7.Fhir.Model
     /// Funds reserved status
     /// </summary>
     [FhirElement("fundsReserve", Order=230)]
+    [Binding("FundsReserve")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FundsReserve
     {
@@ -7503,6 +7599,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=340)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClaimOutcome")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement
@@ -7535,6 +7632,7 @@ namespace Hl7.Fhir.Model
     /// Result of the adjudication
     /// </summary>
     [FhirElement("decision", InSummary=true, Order=350)]
+    [Binding("AdjudicationDecision")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Decision
     {
@@ -7625,6 +7723,7 @@ namespace Hl7.Fhir.Model
     /// Package billing code
     /// </summary>
     [FhirElement("diagnosisRelatedGroup", Order=390)]
+    [Binding("DiagnosisRelatedGroup")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DiagnosisRelatedGroup
     {
@@ -7834,6 +7933,7 @@ namespace Hl7.Fhir.Model
     /// Printed form identifier
     /// </summary>
     [FhirElement("formCode", Order=530)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FormCode
     {
@@ -7896,6 +7996,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent> _BenefitBalance;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

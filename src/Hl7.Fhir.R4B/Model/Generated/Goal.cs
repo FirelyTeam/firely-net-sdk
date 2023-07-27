@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Goal","http://hl7.org/fhir/StructureDefinition/Goal", IsResource=true)]
-  public partial class Goal : Hl7.Fhir.Model.DomainResource
+  public partial class Goal : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,62 +60,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/goal-status)
     /// (system: http://hl7.org/fhir/goal-status)
     /// </summary>
-    [FhirEnumeration("GoalLifecycleStatus")]
+    [FhirEnumeration("GoalLifecycleStatus", "http://hl7.org/fhir/ValueSet/goal-status", "http://hl7.org/fhir/goal-status")]
     public enum GoalLifecycleStatus
     {
       /// <summary>
       /// A goal is proposed for this patient.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/goal-status"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// A goal is planned for this patient.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/goal-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// A proposed goal was accepted or acknowledged.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/goal-status"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// The goal is being sought actively.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/goal-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/goal-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The goal is no longer being sought.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/goal-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The goal has been abandoned.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/goal-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The goal was entered in error and voided.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/goal-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// A proposed goal was rejected.
       /// (system: http://hl7.org/fhir/goal-status)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/goal-status"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
     }
 
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Goal#Target", IsNestedType=true)]
+    [BackboneType("Goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -136,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// The parameter whose value is being tracked
       /// </summary>
       [FhirElement("measure", InSummary=true, Order=40)]
+      [Binding("GoalTargetMeasure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Measure
       {
@@ -149,6 +151,7 @@ namespace Hl7.Fhir.Model
       /// The target value to be achieved
       /// </summary>
       [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("GoalTargetDetail")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
       [DataMember]
@@ -295,6 +298,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GoalLifecycleStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus> LifecycleStatusElement
@@ -327,6 +331,7 @@ namespace Hl7.Fhir.Model
     /// in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
     /// </summary>
     [FhirElement("achievementStatus", InSummary=true, Order=110)]
+    [Binding("GoalAchievementStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AchievementStatus
     {
@@ -340,6 +345,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("GoalCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -354,6 +360,7 @@ namespace Hl7.Fhir.Model
     /// high-priority | medium-priority | low-priority
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
+    [Binding("GoalPriority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -367,6 +374,7 @@ namespace Hl7.Fhir.Model
     /// Code or text describing goal
     /// </summary>
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Description
@@ -397,6 +405,7 @@ namespace Hl7.Fhir.Model
     /// When goal pursuit begins
     /// </summary>
     [FhirElement("start", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
+    [Binding("GoalStartEvent")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -533,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// What result was achieved regarding the goal?
     /// </summary>
     [FhirElement("outcomeCode", Order=230)]
+    [Binding("GoalOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCode
@@ -558,6 +568,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _OutcomeReference;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

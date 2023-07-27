@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
-  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
+    [BackboneType("ClinicalImpression.finding")]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// What was found
       /// </summary>
       [FhirElement("item", Order=40)]
+      [Binding("ConditionKind")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
       {
@@ -223,6 +225,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClinicalImpressionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement
@@ -255,6 +258,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=110)]
+    [Binding("ClinicalImpressionStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -422,6 +426,7 @@ namespace Hl7.Fhir.Model
     /// Change in the status/pattern of a subject's condition since previously assessed, such as worsening, improving, or no change
     /// </summary>
     [FhirElement("changePattern", Order=200)]
+    [Binding("ClinicalImpressionChangePattern")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ChangePattern
     {
@@ -512,6 +517,7 @@ namespace Hl7.Fhir.Model
     /// Estimate of likely outcome
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=240)]
+    [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
@@ -567,6 +573,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

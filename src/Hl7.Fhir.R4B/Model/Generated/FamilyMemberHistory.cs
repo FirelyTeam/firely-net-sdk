@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("FamilyMemberHistory","http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory", IsResource=true)]
-  public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource
+  public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/history-status)
     /// (system: http://hl7.org/fhir/history-status)
     /// </summary>
-    [FhirEnumeration("FamilyHistoryStatus")]
+    [FhirEnumeration("FamilyHistoryStatus", "http://hl7.org/fhir/ValueSet/history-status", "http://hl7.org/fhir/history-status")]
     public enum FamilyHistoryStatus
     {
       /// <summary>
       /// Some health information is known and captured, but not complete - see notes for details.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
+      [EnumLiteral("partial"), Description("Partial")]
       Partial,
       /// <summary>
       /// All available related health information is captured as of the date (and possibly time) when the family member history was taken.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Health information for this family member is unavailable/unknown.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health Unknown")]
+      [EnumLiteral("health-unknown"), Description("Health Unknown")]
       HealthUnknown,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -106,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// Condition suffered by relation
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("ConditionCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -120,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// deceased | permanent disability | etc.
       /// </summary>
       [FhirElement("outcome", Order=50)]
+      [Binding("ConditionOutcome")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
       {
@@ -391,6 +394,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement
@@ -423,6 +427,7 @@ namespace Hl7.Fhir.Model
     /// subject-unknown | withheld | unable-to-obtain | deferred
     /// </summary>
     [FhirElement("dataAbsentReason", InSummary=true, Order=130)]
+    [Binding("FamilyHistoryAbsentReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
     {
@@ -514,6 +519,7 @@ namespace Hl7.Fhir.Model
     /// Relationship to the subject
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=170)]
+    [Binding("FamilialRelationship")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
@@ -528,6 +534,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown
     /// </summary>
     [FhirElement("sex", InSummary=true, Order=180)]
+    [Binding("Sex")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Sex
     {
@@ -617,6 +624,7 @@ namespace Hl7.Fhir.Model
     /// Why was family member history performed?
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="FiveWs.why[x]")]
+    [Binding("FamilyHistoryReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -670,6 +678,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

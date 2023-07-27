@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AppointmentResponse","http://hl7.org/fhir/StructureDefinition/AppointmentResponse", IsResource=true)]
-  public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource
+  public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentresponse-status)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("AppointmentResponseStatus")]
+    [FhirEnumeration("AppointmentResponseStatus", "http://hl7.org/fhir/ValueSet/appointmentresponse-status", "http://hl7.org/fhir/participationstatus")]
     public enum AppointmentResponseStatus
     {
       /// <summary>
       /// The participant has accepted the appointment.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/participationstatus"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// The participant has declined the appointment and will not participate in the appointment.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("declined", "http://hl7.org/fhir/participationstatus"), Description("Declined")]
+      [EnumLiteral("declined"), Description("Declined")]
       Declined,
       /// <summary>
       /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("tentative", "http://hl7.org/fhir/participationstatus"), Description("Tentative")]
+      [EnumLiteral("tentative"), Description("Tentative")]
       Tentative,
       /// <summary>
       /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
+      [EnumLiteral("needs-action"), Description("Needs Action")]
       NeedsAction,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
@@ -222,6 +222,7 @@ namespace Hl7.Fhir.Model
     /// Role of participant in the appointment
     /// </summary>
     [FhirElement("participantType", InSummary=true, Order=140)]
+    [Binding("ParticipantType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -252,6 +253,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus> ParticipantStatusElement
@@ -403,6 +405,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("RecurrenceId");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

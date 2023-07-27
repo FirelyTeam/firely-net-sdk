@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location", IsResource=true)]
-  public partial class Location : Hl7.Fhir.Model.DomainResource
+  public partial class Location : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/location-status)
     /// (system: http://hl7.org/fhir/location-status)
     /// </summary>
-    [FhirEnumeration("LocationStatus")]
+    [FhirEnumeration("LocationStatus", "http://hl7.org/fhir/ValueSet/location-status", "http://hl7.org/fhir/location-status")]
     public enum LocationStatus
     {
       /// <summary>
       /// The location is operational.
       /// (system: http://hl7.org/fhir/location-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/location-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The location is temporarily closed.
       /// (system: http://hl7.org/fhir/location-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/location-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The location is no longer used.
       /// (system: http://hl7.org/fhir/location-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/location-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/location-mode)
     /// (system: http://hl7.org/fhir/location-mode)
     /// </summary>
-    [FhirEnumeration("LocationMode")]
+    [FhirEnumeration("LocationMode", "http://hl7.org/fhir/ValueSet/location-mode", "http://hl7.org/fhir/location-mode")]
     public enum LocationMode
     {
       /// <summary>
       /// The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A).
       /// (system: http://hl7.org/fhir/location-mode)
       /// </summary>
-      [EnumLiteral("instance", "http://hl7.org/fhir/location-mode"), Description("Instance")]
+      [EnumLiteral("instance"), Description("Instance")]
       Instance,
       /// <summary>
       /// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
       /// (system: http://hl7.org/fhir/location-mode)
       /// </summary>
-      [EnumLiteral("kind", "http://hl7.org/fhir/location-mode"), Description("Kind")]
+      [EnumLiteral("kind"), Description("Kind")]
       Kind,
     }
 
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Location#Position", IsNestedType=true)]
+    [BackboneType("Location.position")]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -320,6 +321,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Location#HoursOfOperation", IsNestedType=true)]
+    [BackboneType("Location.hoursOfOperation")]
     public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -332,11 +334,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
+        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
         set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
       }
 
@@ -355,7 +358,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             DaysOfWeekElement = null;
           else
-            DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+            DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DaysOfWeek");
         }
       }
@@ -582,6 +585,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("LocationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
     {
@@ -613,6 +617,7 @@ namespace Hl7.Fhir.Model
     /// The operational status of the location (typically only for a bed/room)
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("OperationalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -721,6 +726,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("mode", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("LocationMode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
     {
@@ -752,6 +758,7 @@ namespace Hl7.Fhir.Model
     /// Type of function performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [Binding("LocationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -793,6 +800,7 @@ namespace Hl7.Fhir.Model
     /// Physical form of the location
     /// </summary>
     [FhirElement("physicalType", InSummary=true, Order=190, FiveWs="FiveWs.class")]
+    [Binding("PhysicalType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysicalType
     {
@@ -905,6 +913,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

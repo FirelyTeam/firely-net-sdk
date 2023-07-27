@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/price-component-type)
     /// (system: http://hl7.org/fhir/price-component-type)
     /// </summary>
-    [FhirEnumeration("PriceComponentType")]
+    [FhirEnumeration("PriceComponentType", "http://hl7.org/fhir/ValueSet/price-component-type", "http://hl7.org/fhir/price-component-type")]
     public enum PriceComponentType
     {
       /// <summary>
       /// the amount is the base price used for calculating the total price before applying surcharges, discount or taxes.
       /// (system: http://hl7.org/fhir/price-component-type)
       /// </summary>
-      [EnumLiteral("base", "http://hl7.org/fhir/price-component-type"), Description("base price")]
+      [EnumLiteral("base"), Description("base price")]
       Base,
       /// <summary>
       /// the amount is a surcharge applied on the base price.
       /// (system: http://hl7.org/fhir/price-component-type)
       /// </summary>
-      [EnumLiteral("surcharge", "http://hl7.org/fhir/price-component-type"), Description("surcharge")]
+      [EnumLiteral("surcharge"), Description("surcharge")]
       Surcharge,
       /// <summary>
       /// the amount is a deduction applied on the base price.
       /// (system: http://hl7.org/fhir/price-component-type)
       /// </summary>
-      [EnumLiteral("deduction", "http://hl7.org/fhir/price-component-type"), Description("deduction")]
+      [EnumLiteral("deduction"), Description("deduction")]
       Deduction,
       /// <summary>
       /// the amount is a discount applied on the base price.
       /// (system: http://hl7.org/fhir/price-component-type)
       /// </summary>
-      [EnumLiteral("discount", "http://hl7.org/fhir/price-component-type"), Description("discount")]
+      [EnumLiteral("discount"), Description("discount")]
       Discount,
       /// <summary>
       /// the amount is the tax component of the total price.
       /// (system: http://hl7.org/fhir/price-component-type)
       /// </summary>
-      [EnumLiteral("tax", "http://hl7.org/fhir/price-component-type"), Description("tax")]
+      [EnumLiteral("tax"), Description("tax")]
       Tax,
       /// <summary>
       /// the amount is of informational character, it has not been applied in the calculation of the total price.
       /// (system: http://hl7.org/fhir/price-component-type)
       /// </summary>
-      [EnumLiteral("informational", "http://hl7.org/fhir/price-component-type"), Description("informational")]
+      [EnumLiteral("informational"), Description("informational")]
       Informational,
     }
 
@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PriceComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType> TypeElement
@@ -138,6 +139,7 @@ namespace Hl7.Fhir.Model
     /// Codes may be used to differentiate between kinds of taxes, surcharges, discounts etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=40)]
+    [Binding("PriceComponentCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicinalProductPharmaceutical","http://hl7.org/fhir/StructureDefinition/MedicinalProductPharmaceutical", IsResource=true)]
-  public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource
+  public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#Characteristics", IsNestedType=true)]
+    [BackboneType("MedicinalProductPharmaceutical.characteristics")]
     public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#RouteOfAdministration", IsNestedType=true)]
+    [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration")]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -436,6 +438,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#TargetSpecies", IsNestedType=true)]
+    [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies")]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,6 +572,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#WithdrawalPeriod", IsNestedType=true)]
+    [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod")]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -836,6 +840,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent> _RouteOfAdministration;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

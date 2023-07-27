@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
-  public partial class Citation : Hl7.Fhir.Model.DomainResource
+  public partial class Citation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,224 +60,224 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/related-artifact-type-all)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("RelatedArtifactTypeExpanded")]
+    [FhirEnumeration("RelatedArtifactTypeExpanded", "http://hl7.org/fhir/ValueSet/related-artifact-type-all", "http://hl7.org/fhir/related-artifact-type")]
     public enum RelatedArtifactTypeExpanded
     {
       /// <summary>
       /// Additional documentation for the knowledge resource. This would include additional instructions on usage as well as additional information on clinical context or appropriateness.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("documentation", "http://hl7.org/fhir/related-artifact-type"), Description("Documentation")]
+      [EnumLiteral("documentation"), Description("Documentation")]
       Documentation,
       /// <summary>
       /// The target artifact is a summary of the justification for the knowledge resource including supporting evidence, relevant guidelines, or other clinically important information. This information is intended to provide a way to make the justification for the knowledge resource available to the consumer of interventions or results produced by the knowledge resource.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("justification", "http://hl7.org/fhir/related-artifact-type"), Description("Justification")]
+      [EnumLiteral("justification"), Description("Justification")]
       Justification,
       /// <summary>
       /// Bibliographic citation for papers, references, or other relevant material for the knowledge resource. This is intended to allow for citation of related material, but that was not necessarily specifically prepared in connection with this knowledge resource.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("citation", "http://hl7.org/fhir/related-artifact-type"), Description("Citation")]
+      [EnumLiteral("citation"), Description("Citation")]
       Citation,
       /// <summary>
       /// The previous version of the knowledge artifact, used to establish an ordering of versions of an artifact, independent of the status of each version.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("predecessor", "http://hl7.org/fhir/related-artifact-type"), Description("Predecessor")]
+      [EnumLiteral("predecessor"), Description("Predecessor")]
       Predecessor,
       /// <summary>
       /// The subsequent version of the knowledge artfact, used to establish an ordering of versions of an artifact, independent of the status of each version.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("successor", "http://hl7.org/fhir/related-artifact-type"), Description("Successor")]
+      [EnumLiteral("successor"), Description("Successor")]
       Successor,
       /// <summary>
       /// This artifact is derived from the target artifact. This is intended to capture the relationship in which a particular knowledge resource is based on the content of another artifact, but is modified to capture either a different set of overall requirements, or a more specific set of requirements such as those involved in a particular institution or clinical setting. The artifact may be derived from one or more target artifacts.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("derived-from", "http://hl7.org/fhir/related-artifact-type"), Description("Derived From")]
+      [EnumLiteral("derived-from"), Description("Derived From")]
       DerivedFrom,
       /// <summary>
       /// This artifact depends on the target artifact. There is a requirement to use the target artifact in the creation or interpretation of this artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("depends-on", "http://hl7.org/fhir/related-artifact-type"), Description("Depends On")]
+      [EnumLiteral("depends-on"), Description("Depends On")]
       DependsOn,
       /// <summary>
       /// This artifact is composed of the target artifact. This artifact is constructed with the target artifact as a component. The target artifact is a part of this artifact. (A dataset is composed of data.).
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("composed-of", "http://hl7.org/fhir/related-artifact-type"), Description("Composed Of")]
+      [EnumLiteral("composed-of"), Description("Composed Of")]
       ComposedOf,
       /// <summary>
       /// This artifact is a part of the target artifact. The target artifact is composed of this artifact (and possibly other artifacts).
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("part-of", "http://hl7.org/fhir/related-artifact-type"), Description("Part Of")]
+      [EnumLiteral("part-of"), Description("Part Of")]
       PartOf,
       /// <summary>
       /// This artifact amends or changes the target artifact. This artifact adds additional information that is functionally expected to replace information in the target artifact. This artifact replaces a part but not all of the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("amends", "http://hl7.org/fhir/related-artifact-type"), Description("Amends")]
+      [EnumLiteral("amends"), Description("Amends")]
       Amends,
       /// <summary>
       /// This artifact is amended with or changed by the target artifact. There is information in this artifact that should be functionally replaced with information in the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("amended-with", "http://hl7.org/fhir/related-artifact-type"), Description("Amended With")]
+      [EnumLiteral("amended-with"), Description("Amended With")]
       AmendedWith,
       /// <summary>
       /// This artifact adds additional information to the target artifact. The additional information does not replace or change information in the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("appends", "http://hl7.org/fhir/related-artifact-type"), Description("Appends")]
+      [EnumLiteral("appends"), Description("Appends")]
       Appends,
       /// <summary>
       /// This artifact has additional information in the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("appended-with", "http://hl7.org/fhir/related-artifact-type"), Description("Appended With")]
+      [EnumLiteral("appended-with"), Description("Appended With")]
       AppendedWith,
       /// <summary>
       /// This artifact cites the target artifact. This may be a bibliographic citation for papers, references, or other relevant material for the knowledge resource. This is intended to allow for citation of related material, but that was not necessarily specifically prepared in connection with this knowledge resource.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("cites", "http://hl7.org/fhir/related-artifact-type"), Description("Cites")]
+      [EnumLiteral("cites"), Description("Cites")]
       Cites,
       /// <summary>
       /// This artifact is cited by the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("cited-by", "http://hl7.org/fhir/related-artifact-type"), Description("Cited By")]
+      [EnumLiteral("cited-by"), Description("Cited By")]
       CitedBy,
       /// <summary>
       /// This artifact contains comments about the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("comments-on", "http://hl7.org/fhir/related-artifact-type"), Description("Is Comment On")]
+      [EnumLiteral("comments-on"), Description("Is Comment On")]
       CommentsOn,
       /// <summary>
       /// This artifact has comments about it in the target artifact.  The type of comments may be expressed in the targetClassifier element such as reply, review, editorial, feedback, solicited, unsolicited, structured, unstructured.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("comment-in", "http://hl7.org/fhir/related-artifact-type"), Description("Has Comment In")]
+      [EnumLiteral("comment-in"), Description("Has Comment In")]
       CommentIn,
       /// <summary>
       /// This artifact is a container in which the target artifact is contained. A container is a data structure whose instances are collections of other objects. (A database contains the dataset.).
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("contains", "http://hl7.org/fhir/related-artifact-type"), Description("Contains")]
+      [EnumLiteral("contains"), Description("Contains")]
       Contains,
       /// <summary>
       /// This artifact is contained in the target artifact. The target artifact is a data structure whose instances are collections of other objects.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("contained-in", "http://hl7.org/fhir/related-artifact-type"), Description("Contained In")]
+      [EnumLiteral("contained-in"), Description("Contained In")]
       ContainedIn,
       /// <summary>
       /// This artifact identifies errors and replacement content for the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("corrects", "http://hl7.org/fhir/related-artifact-type"), Description("Corrects")]
+      [EnumLiteral("corrects"), Description("Corrects")]
       Corrects,
       /// <summary>
       /// This artifact has corrections to it in the target artifact. The target artifact identifies errors and replacement content for this artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("correction-in", "http://hl7.org/fhir/related-artifact-type"), Description("Correction In")]
+      [EnumLiteral("correction-in"), Description("Correction In")]
       CorrectionIn,
       /// <summary>
       /// This artifact replaces or supersedes the target artifact. The target artifact may be considered deprecated.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("replaces", "http://hl7.org/fhir/related-artifact-type"), Description("Replaces")]
+      [EnumLiteral("replaces"), Description("Replaces")]
       Replaces,
       /// <summary>
       /// This artifact is replaced with or superseded by the target artifact. This artifact may be considered deprecated.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("replaced-with", "http://hl7.org/fhir/related-artifact-type"), Description("Replaced With")]
+      [EnumLiteral("replaced-with"), Description("Replaced With")]
       ReplacedWith,
       /// <summary>
       /// This artifact retracts the target artifact. The content that was published in the target artifact should be considered removed from publication and should no longer be considered part of the public record.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("retracts", "http://hl7.org/fhir/related-artifact-type"), Description("Retracts")]
+      [EnumLiteral("retracts"), Description("Retracts")]
       Retracts,
       /// <summary>
       /// This artifact is retracted by the target artifact. The content that was published in this artifact should be considered removed from publication and should no longer be considered part of the public record.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("retracted-by", "http://hl7.org/fhir/related-artifact-type"), Description("Retracted By")]
+      [EnumLiteral("retracted-by"), Description("Retracted By")]
       RetractedBy,
       /// <summary>
       /// This artifact is a signature of the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("signs", "http://hl7.org/fhir/related-artifact-type"), Description("Signs")]
+      [EnumLiteral("signs"), Description("Signs")]
       Signs,
       /// <summary>
       /// This artifact has characteristics in common with the target artifact. This relationship may be used in systems to “deduplicate” knowledge artifacts from different sources, or in systems to show “similar items”.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("similar-to", "http://hl7.org/fhir/related-artifact-type"), Description("Similar To")]
+      [EnumLiteral("similar-to"), Description("Similar To")]
       SimilarTo,
       /// <summary>
       /// This artifact provides additional support for the target artifact. The type of support  is not documentation as it does not describe, explain, or instruct regarding the target artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("supports", "http://hl7.org/fhir/related-artifact-type"), Description("Supports")]
+      [EnumLiteral("supports"), Description("Supports")]
       Supports,
       /// <summary>
       /// The target artifact contains additional information related to the knowledge artifact but is not documentation as the additional information does not describe, explain, or instruct regarding the knowledge artifact content or application. This could include an associated dataset.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("supported-with", "http://hl7.org/fhir/related-artifact-type"), Description("Supported With")]
+      [EnumLiteral("supported-with"), Description("Supported With")]
       SupportedWith,
       /// <summary>
       /// This artifact was generated by transforming the target artifact (e.g., format or language conversion). This is intended to capture the relationship in which a particular knowledge resource is based on the content of another artifact, but changes are only apparent in form and there is only one target artifact with the “transforms” relationship type.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("transforms", "http://hl7.org/fhir/related-artifact-type"), Description("Transforms")]
+      [EnumLiteral("transforms"), Description("Transforms")]
       Transforms,
       /// <summary>
       /// This artifact was transformed into the target artifact (e.g., by format or language conversion).
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("transformed-into", "http://hl7.org/fhir/related-artifact-type"), Description("Transformed Into")]
+      [EnumLiteral("transformed-into"), Description("Transformed Into")]
       TransformedInto,
       /// <summary>
       /// This artifact was generated by transforming a related artifact (e.g., format or language conversion), noted separately with the “transforms” relationship type. This transformation used the target artifact to inform the transformation. The target artifact may be a conversion script or translation guide.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("transformed-with", "http://hl7.org/fhir/related-artifact-type"), Description("Transformed With")]
+      [EnumLiteral("transformed-with"), Description("Transformed With")]
       TransformedWith,
       /// <summary>
       /// This artifact provides additional documentation for the target artifact. This could include additional instructions on usage as well as additional information on clinical context or appropriateness.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("documents", "http://hl7.org/fhir/related-artifact-type"), Description("Documents")]
+      [EnumLiteral("documents"), Description("Documents")]
       Documents,
       /// <summary>
       /// The target artifact is a precise description of a concept in this artifact. This may be used when the RelatedArtifact datatype is used in elements contained in this artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("specification-of", "http://hl7.org/fhir/related-artifact-type"), Description("Specification Of")]
+      [EnumLiteral("specification-of"), Description("Specification Of")]
       SpecificationOf,
       /// <summary>
       /// This artifact was created with the target artifact. The target artifact is a tool or support material used in the creation of the artifact, and not content that the artifact was derived from.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("created-with", "http://hl7.org/fhir/related-artifact-type"), Description("Created With")]
+      [EnumLiteral("created-with"), Description("Created With")]
       CreatedWith,
       /// <summary>
       /// The related artifact is the citation for this artifact.
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("cite-as", "http://hl7.org/fhir/related-artifact-type"), Description("Cite As")]
+      [EnumLiteral("cite-as"), Description("Cite As")]
       CiteAs,
       /// <summary>
       /// A copy of the artifact in a publication with a different artifact identifier.
@@ -299,6 +299,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#Summary", IsNestedType=true)]
+    [BackboneType("Citation.summary")]
     public partial class SummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -310,6 +311,7 @@ namespace Hl7.Fhir.Model
       /// Format for display of the citation summary
       /// </summary>
       [FhirElement("style", Order=40)]
+      [Binding("CitationSummaryStyle")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Style
       {
@@ -449,6 +451,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#Classification", IsNestedType=true)]
+    [BackboneType("Citation.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -460,6 +463,7 @@ namespace Hl7.Fhir.Model
       /// The kind of classifier (e.g. publication type, keyword)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitationClassificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -473,6 +477,7 @@ namespace Hl7.Fhir.Model
       /// The specific classification value
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -581,6 +586,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#StatusDate", IsNestedType=true)]
+    [BackboneType("Citation.statusDate")]
     public partial class StatusDateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -592,6 +598,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the status
       /// </summary>
       [FhirElement("activity", Order=40)]
+      [Binding("CitationStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Activity
@@ -754,6 +761,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifact", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact")]
     public partial class CitedArtifactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -837,6 +845,7 @@ namespace Hl7.Fhir.Model
       /// The status of the cited artifact
       /// </summary>
       [FhirElement("currentState", Order=80)]
+      [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
@@ -1200,6 +1209,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactVersion", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.version")]
     public partial class CitedArtifactVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1352,6 +1362,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactStatusDate", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.statusDate")]
     public partial class CitedArtifactStatusDateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1363,6 +1374,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the status
       /// </summary>
       [FhirElement("activity", Order=40)]
+      [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Activity
@@ -1525,6 +1537,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactTitle", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.title")]
     public partial class CitedArtifactTitleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1536,6 +1549,7 @@ namespace Hl7.Fhir.Model
       /// The kind of title
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TitleType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1550,6 +1564,7 @@ namespace Hl7.Fhir.Model
       /// Used to express the specific language
       /// </summary>
       [FhirElement("language", Order=50)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -1698,6 +1713,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactAbstract", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.abstract")]
     public partial class CitedArtifactAbstractComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1709,6 +1725,7 @@ namespace Hl7.Fhir.Model
       /// The kind of abstract
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactAbstractType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1722,6 +1739,7 @@ namespace Hl7.Fhir.Model
       /// Used to express the specific language
       /// </summary>
       [FhirElement("language", Order=50)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -1910,6 +1928,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPart", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.part")]
     public partial class CitedArtifactPartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1921,6 +1940,7 @@ namespace Hl7.Fhir.Model
       /// The kind of component
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactPartType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2083,6 +2103,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactRelatesTo", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.relatesTo")]
     public partial class CitedArtifactRelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2095,6 +2116,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RelatedArtifactTypeExpanded")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded> TypeElement
@@ -2127,6 +2149,7 @@ namespace Hl7.Fhir.Model
       /// Additional classifiers
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -2439,6 +2462,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPublicationForm", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.publicationForm")]
     public partial class CitedArtifactPublicationFormComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2463,6 +2487,7 @@ namespace Hl7.Fhir.Model
       /// Internet or Print
       /// </summary>
       [FhirElement("citedMedium", Order=50)]
+      [Binding("CitedMedium")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CitedMedium
       {
@@ -2662,6 +2687,7 @@ namespace Hl7.Fhir.Model
       /// Language(s) in which this form of the article is published
       /// </summary>
       [FhirElement("language", Order=120)]
+      [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
@@ -3073,6 +3099,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPublicationFormPublishedIn", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.publicationForm.publishedIn")]
     public partial class CitedArtifactPublicationFormPublishedInComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3084,6 +3111,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container (e.g. Periodical, database, or book)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PublishedInType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -3309,6 +3337,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactWebLocation", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.webLocation")]
     public partial class CitedArtifactWebLocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3320,6 +3349,7 @@ namespace Hl7.Fhir.Model
       /// Code the reason for different URLs, e.g. abstract and full-text
       /// </summary>
       [FhirElement("classifier", Order=40)]
+      [Binding("ArtifactUrlClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -3459,6 +3489,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactClassification", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.classification")]
     public partial class CitedArtifactClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3470,6 +3501,7 @@ namespace Hl7.Fhir.Model
       /// The kind of classifier (e.g. publication type, keyword)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactClassificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -3483,6 +3515,7 @@ namespace Hl7.Fhir.Model
       /// The specific classification value
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -3616,6 +3649,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorship", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship")]
     public partial class CitedArtifactContributorshipComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3789,6 +3823,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipEntry", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.entry")]
     public partial class CitedArtifactContributorshipEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3863,6 +3898,7 @@ namespace Hl7.Fhir.Model
       /// The specific contribution
       /// </summary>
       [FhirElement("contributionType", Order=70)]
+      [Binding("ArtifactContributionType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ContributionType
@@ -3877,6 +3913,7 @@ namespace Hl7.Fhir.Model
       /// The role of the contributor (e.g. author, editor, reviewer, funder)
       /// </summary>
       [FhirElement("role", Order=80)]
+      [Binding("ContributorRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -4114,6 +4151,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipEntryContributionInstance", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.entry.contributionInstance")]
     public partial class CitedArtifactContributorshipEntryContributionInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4125,6 +4163,7 @@ namespace Hl7.Fhir.Model
       /// The specific contribution
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ArtifactContributionInstanceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -4264,6 +4303,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipSummary", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.summary")]
     public partial class CitedArtifactContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4275,6 +4315,7 @@ namespace Hl7.Fhir.Model
       /// Such as author list, contributorship statement, funding statement, acknowledgements statement, or conflicts of interest statement
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ContributorSummaryType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -4288,6 +4329,7 @@ namespace Hl7.Fhir.Model
       /// The format for the display string
       /// </summary>
       [FhirElement("style", Order=50)]
+      [Binding("ContributorSummaryStyle")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Style
       {
@@ -4301,6 +4343,7 @@ namespace Hl7.Fhir.Model
       /// Used to code the producer or rule for creating the display string
       /// </summary>
       [FhirElement("source", Order=60)]
+      [Binding("ContributorSummarySource")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Source
       {
@@ -4610,6 +4653,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -4794,6 +4838,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for citation record (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -5074,6 +5119,7 @@ namespace Hl7.Fhir.Model
     /// The status of the citation record
     /// </summary>
     [FhirElement("currentState", Order=360)]
+    [Binding("CitationStatusType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
@@ -5124,6 +5170,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Citation.CitedArtifactComponent _CitedArtifact;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

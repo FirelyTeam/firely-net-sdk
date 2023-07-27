@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ResearchStudy","http://hl7.org/fhir/StructureDefinition/ResearchStudy", IsResource=true)]
-  public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource
+  public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-study-status)
     /// (system: http://hl7.org/fhir/research-study-status)
     /// </summary>
-    [FhirEnumeration("ResearchStudyStatus")]
+    [FhirEnumeration("ResearchStudyStatus", "http://hl7.org/fhir/ValueSet/research-study-status", "http://hl7.org/fhir/research-study-status")]
     public enum ResearchStudyStatus
     {
       /// <summary>
       /// The study is undergoing design but the process of selecting study subjects and capturing data has not yet begun.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/research-study-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The study is currently being executed
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/research-study-status"), Description("In-progress")]
+      [EnumLiteral("in-progress"), Description("In-progress")]
       InProgress,
       /// <summary>
       /// Execution of the study has been temporarily paused
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/research-study-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The study was terminated prior to the final determination of results
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/research-study-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The information sought by the study has been gathered and compiled and no further work is being performed
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/research-study-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This study never actually existed.  The record is retained for tracking purposes in the event decisions may have been made based on this erroneous information.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/research-study-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Arm", IsNestedType=true)]
+    [BackboneType("ResearchStudy.arm")]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -373,6 +374,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchStudy.ResearchStudyStatus> StatusElement
@@ -405,6 +407,7 @@ namespace Hl7.Fhir.Model
     /// Classifications for the study
     /// </summary>
     [FhirElement("category", InSummary=true, Order=140)]
+    [Binding("ResearchStudyCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -419,6 +422,7 @@ namespace Hl7.Fhir.Model
     /// Drugs, devices, conditions, etc. under study
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=150, FiveWs="what")]
+    [Binding("ResearchStudyFocus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
@@ -461,6 +465,7 @@ namespace Hl7.Fhir.Model
     /// Used to search for the study
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=180)]
+    [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -475,6 +480,7 @@ namespace Hl7.Fhir.Model
     /// Geographic region(s) for study
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -631,6 +637,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResearchStudy.ArmComponent> _Arm;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

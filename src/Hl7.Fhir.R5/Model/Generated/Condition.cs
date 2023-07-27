@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Condition","http://hl7.org/fhir/StructureDefinition/Condition", IsResource=true)]
-  public partial class Condition : Hl7.Fhir.Model.DomainResource
+  public partial class Condition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ConditionClinicalStatusCodes")]
+    [FhirEnumeration("ConditionClinicalStatusCodes", "http://hl7.org/fhir/ValueSet/condition-clinical", "http://terminology.hl7.org/CodeSystem/condition-clinical")]
     public enum ConditionClinicalStatusCodes
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("active", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("recurrence", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Recurrence")]
+      [EnumLiteral("recurrence"), Description("Recurrence")]
       Recurrence,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("relapse", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Relapse")]
+      [EnumLiteral("relapse"), Description("Relapse")]
       Relapse,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("inactive", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("remission", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Remission")]
+      [EnumLiteral("remission"), Description("Remission")]
       Remission,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("resolved", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-clinical)
       /// </summary>
-      [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/condition-clinical"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -112,44 +112,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ConditionVerificationStatus")]
+    [FhirEnumeration("ConditionVerificationStatus", "http://hl7.org/fhir/ValueSet/condition-ver-status", "http://terminology.hl7.org/CodeSystem/condition-ver-status")]
     public enum ConditionVerificationStatus
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-ver-status)
       /// </summary>
-      [EnumLiteral("unconfirmed", "http://terminology.hl7.org/CodeSystem/condition-ver-status"), Description("Unconfirmed")]
+      [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
       Unconfirmed,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-ver-status)
       /// </summary>
-      [EnumLiteral("provisional", "http://terminology.hl7.org/CodeSystem/condition-ver-status"), Description("Provisional")]
+      [EnumLiteral("provisional"), Description("Provisional")]
       Provisional,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-ver-status)
       /// </summary>
-      [EnumLiteral("differential", "http://terminology.hl7.org/CodeSystem/condition-ver-status"), Description("Differential")]
+      [EnumLiteral("differential"), Description("Differential")]
       Differential,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-ver-status)
       /// </summary>
-      [EnumLiteral("confirmed", "http://terminology.hl7.org/CodeSystem/condition-ver-status"), Description("Confirmed")]
+      [EnumLiteral("confirmed"), Description("Confirmed")]
       Confirmed,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-ver-status)
       /// </summary>
-      [EnumLiteral("refuted", "http://terminology.hl7.org/CodeSystem/condition-ver-status"), Description("Refuted")]
+      [EnumLiteral("refuted"), Description("Refuted")]
       Refuted,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/condition-ver-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/condition-ver-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Participant", IsNestedType=true)]
+    [BackboneType("Condition.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -170,6 +171,7 @@ namespace Hl7.Fhir.Model
       /// Type of involvement
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("ConditionParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -293,6 +295,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Stage", IsNestedType=true)]
+    [BackboneType("Condition.stage")]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,6 +307,7 @@ namespace Hl7.Fhir.Model
       /// Simple summary (disease specific)
       /// </summary>
       [FhirElement("summary", Order=40)]
+      [Binding("ConditionStage")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Summary
       {
@@ -333,6 +337,7 @@ namespace Hl7.Fhir.Model
       /// Kind of staging
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("ConditionStageType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -461,6 +466,7 @@ namespace Hl7.Fhir.Model
     /// active | recurrence | relapse | inactive | remission | resolved | unknown
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [Binding("ConditionClinicalStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
@@ -475,6 +481,7 @@ namespace Hl7.Fhir.Model
     /// unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
+    [Binding("ConditionVerificationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VerificationStatus
     {
@@ -488,6 +495,7 @@ namespace Hl7.Fhir.Model
     /// problem-list-item | encounter-diagnosis
     /// </summary>
     [FhirElement("category", Order=120, FiveWs="FiveWs.class")]
+    [Binding("ConditionCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -502,6 +510,7 @@ namespace Hl7.Fhir.Model
     /// Subjective severity of condition
     /// </summary>
     [FhirElement("severity", Order=130, FiveWs="FiveWs.grade")]
+    [Binding("ConditionSeverity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Severity
     {
@@ -515,6 +524,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the condition, problem or diagnosis
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [Binding("ConditionKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -528,6 +538,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=150)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -662,6 +673,7 @@ namespace Hl7.Fhir.Model
     /// Supporting evidence for the verification status
     /// </summary>
     [FhirElement("evidence", InSummary=true, Order=230)]
+    [Binding("ManifestationOrSymptom")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Evidence
@@ -685,6 +697,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

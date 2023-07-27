@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
-  public partial class Patient : Hl7.Fhir.Model.DomainResource
+  public partial class Patient : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/link-type)
     /// (system: http://hl7.org/fhir/link-type)
     /// </summary>
-    [FhirEnumeration("LinkType")]
+    [FhirEnumeration("LinkType", "http://hl7.org/fhir/ValueSet/link-type", "http://hl7.org/fhir/link-type")]
     public enum LinkType
     {
       /// <summary>
       /// The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains this link.
       /// (system: http://hl7.org/fhir/link-type)
       /// </summary>
-      [EnumLiteral("replaced-by", "http://hl7.org/fhir/link-type"), Description("Replaced-by")]
+      [EnumLiteral("replaced-by"), Description("Replaced-by")]
       ReplacedBy,
       /// <summary>
       /// The patient resource containing this link is the current active patient record. The link points back to an inactive patient resource that has been merged into this resource, and should be consulted to retrieve additional referenced information.
       /// (system: http://hl7.org/fhir/link-type)
       /// </summary>
-      [EnumLiteral("replaces", "http://hl7.org/fhir/link-type"), Description("Replaces")]
+      [EnumLiteral("replaces"), Description("Replaces")]
       Replaces,
       /// <summary>
       /// The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.
       /// (system: http://hl7.org/fhir/link-type)
       /// </summary>
-      [EnumLiteral("refer", "http://hl7.org/fhir/link-type"), Description("Refer")]
+      [EnumLiteral("refer"), Description("Refer")]
       Refer,
       /// <summary>
       /// The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
       /// (system: http://hl7.org/fhir/link-type)
       /// </summary>
-      [EnumLiteral("seealso", "http://hl7.org/fhir/link-type"), Description("See also")]
+      [EnumLiteral("seealso"), Description("See also")]
       Seealso,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Contact", IsNestedType=true)]
+    [BackboneType("Patient.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -106,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The kind of relationship
       /// </summary>
       [FhirElement("relationship", Order=40)]
+      [Binding("ContactRelationship")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -161,6 +163,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gender", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -359,6 +362,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Communication", IsNestedType=true)]
+    [BackboneType("Patient.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -370,6 +374,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the patient about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -509,6 +514,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Link", IsNestedType=true)]
+    [BackboneType("Patient.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -537,6 +543,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("LinkType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -735,6 +742,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
@@ -826,6 +834,7 @@ namespace Hl7.Fhir.Model
     /// Marital (civil) status of a patient
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
+    [Binding("MaritalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MaritalStatus
     {
@@ -936,6 +945,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

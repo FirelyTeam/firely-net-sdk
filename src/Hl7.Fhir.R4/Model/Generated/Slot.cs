@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Slot","http://hl7.org/fhir/StructureDefinition/Slot", IsResource=true)]
-  public partial class Slot : Hl7.Fhir.Model.DomainResource
+  public partial class Slot : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/slotstatus)
     /// (system: http://hl7.org/fhir/slotstatus)
     /// </summary>
-    [FhirEnumeration("SlotStatus")]
+    [FhirEnumeration("SlotStatus", "http://hl7.org/fhir/ValueSet/slotstatus", "http://hl7.org/fhir/slotstatus")]
     public enum SlotStatus
     {
       /// <summary>
       /// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("busy", "http://hl7.org/fhir/slotstatus"), Description("Busy")]
+      [EnumLiteral("busy"), Description("Busy")]
       Busy,
       /// <summary>
       /// Indicates that the time interval is free for scheduling.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("free", "http://hl7.org/fhir/slotstatus"), Description("Free")]
+      [EnumLiteral("free"), Description("Free")]
       Free,
       /// <summary>
       /// Indicates that the time interval is busy and that the interval cannot be scheduled.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("busy-unavailable", "http://hl7.org/fhir/slotstatus"), Description("Busy (Unavailable)")]
+      [EnumLiteral("busy-unavailable"), Description("Busy (Unavailable)")]
       BusyUnavailable,
       /// <summary>
       /// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("busy-tentative", "http://hl7.org/fhir/slotstatus"), Description("Busy (Tentative)")]
+      [EnumLiteral("busy-tentative"), Description("Busy (Tentative)")]
       BusyTentative,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/slotstatus"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     /// A broad categorization of the service that is to be performed during this appointment
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
@@ -127,6 +128,7 @@ namespace Hl7.Fhir.Model
     /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -141,6 +143,7 @@ namespace Hl7.Fhir.Model
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -155,6 +158,7 @@ namespace Hl7.Fhir.Model
     /// The style of appointment or patient that may be booked in the slot (not service type)
     /// </summary>
     [FhirElement("appointmentType", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("appointment-type")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AppointmentType
     {
@@ -185,6 +189,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SlotStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Slot.SlotStatus> StatusElement
@@ -338,6 +343,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Comment");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

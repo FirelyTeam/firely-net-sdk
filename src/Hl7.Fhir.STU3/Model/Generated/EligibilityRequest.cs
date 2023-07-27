@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EligibilityRequest","http://hl7.org/fhir/StructureDefinition/EligibilityRequest", IsResource=true)]
-  public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource
+  public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -74,6 +74,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -105,6 +106,7 @@ namespace Hl7.Fhir.Model
     /// Desired processing priority
     /// </summary>
     [FhirElement("priority", Order=110, FiveWs="class")]
+    [Binding("ProcessPriority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -300,6 +302,7 @@ namespace Hl7.Fhir.Model
     /// Type of services covered
     /// </summary>
     [FhirElement("benefitCategory", Order=220)]
+    [Binding("BenefitCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BenefitCategory
     {
@@ -313,6 +316,7 @@ namespace Hl7.Fhir.Model
     /// Detailed services covered within the type
     /// </summary>
     [FhirElement("benefitSubCategory", Order=230)]
+    [Binding("BenefitSubCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory
     {
@@ -321,6 +325,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _BenefitSubCategory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

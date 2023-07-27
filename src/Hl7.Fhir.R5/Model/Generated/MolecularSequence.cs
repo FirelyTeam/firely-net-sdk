@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MolecularSequence","http://hl7.org/fhir/StructureDefinition/MolecularSequence", IsResource=true)]
-  public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource
+  public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
-    [FhirEnumeration("SequenceType")]
+    [FhirEnumeration("SequenceType", "http://hl7.org/fhir/ValueSet/sequence-type", "http://hl7.org/fhir/sequence-type")]
     public enum SequenceType
     {
       /// <summary>
       /// Amino acid sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("aa", "http://hl7.org/fhir/sequence-type"), Description("AA Sequence")]
+      [EnumLiteral("aa"), Description("AA Sequence")]
       Aa,
       /// <summary>
       /// DNA Sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("dna", "http://hl7.org/fhir/sequence-type"), Description("DNA Sequence")]
+      [EnumLiteral("dna"), Description("DNA Sequence")]
       Dna,
       /// <summary>
       /// RNA Sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("rna", "http://hl7.org/fhir/sequence-type"), Description("RNA Sequence")]
+      [EnumLiteral("rna"), Description("RNA Sequence")]
       Rna,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
-    [FhirEnumeration("OrientationType")]
+    [FhirEnumeration("OrientationType", "http://hl7.org/fhir/ValueSet/orientation-type", "http://hl7.org/fhir/orientation-type")]
     public enum OrientationType
     {
       /// <summary>
       /// Sense orientation of reference sequence.
       /// (system: http://hl7.org/fhir/orientation-type)
       /// </summary>
-      [EnumLiteral("sense", "http://hl7.org/fhir/orientation-type"), Description("Sense orientation of referenceSeq")]
+      [EnumLiteral("sense"), Description("Sense orientation of referenceSeq")]
       Sense,
       /// <summary>
       /// Antisense orientation of reference sequence.
       /// (system: http://hl7.org/fhir/orientation-type)
       /// </summary>
-      [EnumLiteral("antisense", "http://hl7.org/fhir/orientation-type"), Description("Antisense orientation of referenceSeq")]
+      [EnumLiteral("antisense"), Description("Antisense orientation of referenceSeq")]
       Antisense,
     }
 
@@ -110,20 +110,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/strand-type)
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
-    [FhirEnumeration("StrandType")]
+    [FhirEnumeration("StrandType", "http://hl7.org/fhir/ValueSet/strand-type", "http://hl7.org/fhir/strand-type")]
     public enum StrandType
     {
       /// <summary>
       /// Watson strand of starting sequence.
       /// (system: http://hl7.org/fhir/strand-type)
       /// </summary>
-      [EnumLiteral("watson", "http://hl7.org/fhir/strand-type"), Description("Watson strand of starting sequence")]
+      [EnumLiteral("watson"), Description("Watson strand of starting sequence")]
       Watson,
       /// <summary>
       /// Crick strand of starting sequence.
       /// (system: http://hl7.org/fhir/strand-type)
       /// </summary>
-      [EnumLiteral("crick", "http://hl7.org/fhir/strand-type"), Description("Crick strand of starting sequence")]
+      [EnumLiteral("crick"), Description("Crick strand of starting sequence")]
       Crick,
     }
 
@@ -133,6 +133,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Relative", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative")]
     public partial class RelativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
       /// Ways of identifying nucleotides or amino acids within a sequence
       /// </summary>
       [FhirElement("coordinateSystem", InSummary=true, Order=40)]
+      [Binding("LL5323-2")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CoordinateSystem
@@ -350,6 +352,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#StartingSequence", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative.startingSequence")]
     public partial class StartingSequenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -361,6 +364,7 @@ namespace Hl7.Fhir.Model
       /// The genome assembly used for starting sequence, e.g. GRCh38
       /// </summary>
       [FhirElement("genomeAssembly", InSummary=true, Order=40)]
+      [Binding("LL1040-6")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept GenomeAssembly
       {
@@ -374,6 +378,7 @@ namespace Hl7.Fhir.Model
       /// Chromosome Identifier
       /// </summary>
       [FhirElement("chromosome", InSummary=true, Order=50)]
+      [Binding("LL2938-0")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Chromosome
       {
@@ -387,6 +392,7 @@ namespace Hl7.Fhir.Model
       /// The reference sequence that represents the starting sequence
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("Multiple bindings acceptable (NCBI or LRG)")]
       [CLSCompliant(false)]
       [References("MolecularSequence")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -466,6 +472,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("orientationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> OrientationElement
       {
@@ -498,6 +505,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("strandType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.StrandType> StrandElement
       {
@@ -668,6 +676,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Edit", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative.edit")]
     public partial class EditComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -928,6 +937,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("sequenceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> TypeElement
     {
@@ -1089,6 +1099,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent> _Relative;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

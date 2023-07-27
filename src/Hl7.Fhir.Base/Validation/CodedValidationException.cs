@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Validation
         public const string CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE = "PVAL118";
 
         internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string TypeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{TypeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
-        internal static COVE INCORRECT_CARDINALITY_MIN(ValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minium cardinality is {Min}.", OO_Sev.Error, OO_Typ.Required);
+        internal static COVE INCORRECT_CARDINALITY_MIN(ValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minimum cardinality is {Min}.", OO_Sev.Error, OO_Typ.Required);
         internal static COVE INCORRECT_CARDINALITY_MAX(ValidationContext context, int count, int Max) => Initialize(context, INCORRECT_CARDINALITY_MAX_CODE, $"Element has {count} elements, but maximum cardinality is {Max}.", OO_Sev.Error, OO_Typ.BusinessRule);
         internal static COVE REPEATING_ELEMENT_CANNOT_CONTAIN_NULL(ValidationContext context) => Initialize(context, REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, "Repeating elements should not contain a null value.", OO_Sev.Error, OO_Typ.Structure);
         internal static COVE MANDATORY_ELEMENT_CANNOT_BE_NULL(ValidationContext context, string? MemberName, int Min) => Initialize(context, MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, $"Element '{MemberName}' with minimum cardinality {Min} cannot be null.", OO_Sev.Error, OO_Typ.Required);

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RegulatedAuthorization","http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization", IsResource=true)]
-  public partial class RegulatedAuthorization : Hl7.Fhir.Model.DomainResource
+  public partial class RegulatedAuthorization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RegulatedAuthorization#Case", IsNestedType=true)]
+    [BackboneType("RegulatedAuthorization.case")]
     public partial class CaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -85,6 +86,7 @@ namespace Hl7.Fhir.Model
       /// The defining type of case
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("RegulatedAuthorizationCaseType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -98,6 +100,7 @@ namespace Hl7.Fhir.Model
       /// The status associated with the case
       /// </summary>
       [FhirElement("status", InSummary=true, Order=60)]
+      [Binding("PublicationStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
       {
@@ -289,6 +292,7 @@ namespace Hl7.Fhir.Model
     /// Overall type of this authorization, for example drug marketing approval, orphan drug designation
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
+    [Binding("RegulatedAuthorizationType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -333,6 +337,7 @@ namespace Hl7.Fhir.Model
     /// The territory in which the authorization has been granted
     /// </summary>
     [FhirElement("region", InSummary=true, Order=130)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
@@ -347,6 +352,7 @@ namespace Hl7.Fhir.Model
     /// The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
     {
@@ -417,6 +423,7 @@ namespace Hl7.Fhir.Model
     /// The intended use of the product, e.g. prevention, treatment
     /// </summary>
     [FhirElement("intendedUse", InSummary=true, Order=180)]
+    [Binding("ProductIntendedUse")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept IntendedUse
     {
@@ -430,6 +437,7 @@ namespace Hl7.Fhir.Model
     /// The legal/regulatory framework or reasons under which this authorization is granted
     /// </summary>
     [FhirElement("basis", InSummary=true, Order=190)]
+    [Binding("RegulatedAuthorizationBasis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Basis
@@ -482,6 +490,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent _Case;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

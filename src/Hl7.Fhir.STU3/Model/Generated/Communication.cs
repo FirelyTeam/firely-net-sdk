@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Communication","http://hl7.org/fhir/StructureDefinition/Communication", IsResource=true)]
-  public partial class Communication : Hl7.Fhir.Model.DomainResource
+  public partial class Communication : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Communication#Payload", IsNestedType=true)]
+    [BackboneType("Communication.payload")]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +236,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CommunicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement
@@ -298,6 +300,7 @@ namespace Hl7.Fhir.Model
     /// Why communication did not occur
     /// </summary>
     [FhirElement("notDoneReason", InSummary=true, Order=150)]
+    [Binding("CommunicationNotDoneReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept NotDoneReason
     {
@@ -311,6 +314,7 @@ namespace Hl7.Fhir.Model
     /// Message category
     /// </summary>
     [FhirElement("category", Order=160, FiveWs="class")]
+    [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -325,6 +329,7 @@ namespace Hl7.Fhir.Model
     /// A channel of communication
     /// </summary>
     [FhirElement("medium", Order=170)]
+    [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -478,6 +483,7 @@ namespace Hl7.Fhir.Model
     /// Indication for message
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=250, FiveWs="why")]
+    [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -531,6 +537,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

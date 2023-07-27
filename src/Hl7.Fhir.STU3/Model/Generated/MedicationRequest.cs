@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest", IsResource=true)]
-  public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-request-status)
     /// (system: http://hl7.org/fhir/medication-request-status)
     /// </summary>
-    [FhirEnumeration("MedicationRequestStatus")]
+    [FhirEnumeration("MedicationRequestStatus", "http://hl7.org/fhir/ValueSet/medication-request-status", "http://hl7.org/fhir/medication-request-status")]
     public enum MedicationRequestStatus
     {
       /// <summary>
       /// The prescription is 'actionable', but not all actions that are implied by it have occurred yet.
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/medication-request-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// Actions implied by the prescription are to be temporarily halted, but are expected to continue later.  May also be called "suspended".
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-request-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The prescription has been withdrawn.
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/medication-request-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// All actions that are implied by the prescription have occurred.
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-request-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The prescription was entered in error.
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-request-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the prescription are to be permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-request-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The prescription is not yet 'actionable', i.e. it is a work in progress, requires sign-off or verification, and needs to be run through decision support process.
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/medication-request-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The authoring system does not know which of the status values currently applies for this request
       /// (system: http://hl7.org/fhir/medication-request-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/medication-request-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -118,32 +118,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-request-intent)
     /// (system: http://hl7.org/fhir/medication-request-intent)
     /// </summary>
-    [FhirEnumeration("MedicationRequestIntent")]
+    [FhirEnumeration("MedicationRequestIntent", "http://hl7.org/fhir/ValueSet/medication-request-intent", "http://hl7.org/fhir/medication-request-intent")]
     public enum MedicationRequestIntent
     {
       /// <summary>
       /// The request is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act
       /// (system: http://hl7.org/fhir/medication-request-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/medication-request-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The request represents an intension to ensure something occurs without providing an authorization for others to act
       /// (system: http://hl7.org/fhir/medication-request-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/medication-request-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The request represents a request/demand and authorization for action
       /// (system: http://hl7.org/fhir/medication-request-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/medication-request-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The request represents an instance for the particular order, for example a medication administration record.
       /// (system: http://hl7.org/fhir/medication-request-intent)
       /// </summary>
-      [EnumLiteral("instance-order", "http://hl7.org/fhir/medication-request-intent"), Description("Instance Order")]
+      [EnumLiteral("instance-order"), Description("Instance Order")]
       InstanceOrder,
     }
 
@@ -152,32 +152,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-request-priority)
     /// (system: http://hl7.org/fhir/medication-request-priority)
     /// </summary>
-    [FhirEnumeration("MedicationRequestPriority")]
+    [FhirEnumeration("MedicationRequestPriority", "http://hl7.org/fhir/ValueSet/medication-request-priority", "http://hl7.org/fhir/medication-request-priority")]
     public enum MedicationRequestPriority
     {
       /// <summary>
       /// The order has a normal priority .
       /// (system: http://hl7.org/fhir/medication-request-priority)
       /// </summary>
-      [EnumLiteral("routine", "http://hl7.org/fhir/medication-request-priority"), Description("Routine")]
+      [EnumLiteral("routine"), Description("Routine")]
       Routine,
       /// <summary>
       /// The order should be urgently.
       /// (system: http://hl7.org/fhir/medication-request-priority)
       /// </summary>
-      [EnumLiteral("urgent", "http://hl7.org/fhir/medication-request-priority"), Description("Urgent")]
+      [EnumLiteral("urgent"), Description("Urgent")]
       Urgent,
       /// <summary>
       /// The order is time-critical.
       /// (system: http://hl7.org/fhir/medication-request-priority)
       /// </summary>
-      [EnumLiteral("stat", "http://hl7.org/fhir/medication-request-priority"), Description("Stat")]
+      [EnumLiteral("stat"), Description("Stat")]
       Stat,
       /// <summary>
       /// The order should be acted on as soon as possible.
       /// (system: http://hl7.org/fhir/medication-request-priority)
       /// </summary>
-      [EnumLiteral("asap", "http://hl7.org/fhir/medication-request-priority"), Description("ASAP")]
+      [EnumLiteral("asap"), Description("ASAP")]
       Asap,
     }
 
@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#Requester", IsNestedType=true)]
+    [BackboneType("MedicationRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -323,6 +324,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
+    [BackboneType("MedicationRequest.dispenseRequest")]
     public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -540,6 +542,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationRequest.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -583,6 +586,7 @@ namespace Hl7.Fhir.Model
       /// Why should (not) substitution be made
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -748,6 +752,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestStatus> StatusElement
     {
@@ -780,6 +785,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=140, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> IntentElement
@@ -812,6 +818,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", Order=150, FiveWs="class")]
+    [Binding("MedicationRequestCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -826,6 +833,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestPriority> PriorityElement
     {
@@ -857,6 +865,7 @@ namespace Hl7.Fhir.Model
     /// Medication to be taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -980,6 +989,7 @@ namespace Hl7.Fhir.Model
     /// Reason or indication for writing the prescription
     /// </summary>
     [FhirElement("reasonCode", Order=240, FiveWs="why")]
+    [Binding("MedicationRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -1106,6 +1116,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

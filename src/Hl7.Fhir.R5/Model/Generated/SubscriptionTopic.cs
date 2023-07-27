@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic", IsResource=true)]
-  public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource
+  public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/interaction-trigger)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("InteractionTrigger")]
+    [FhirEnumeration("InteractionTrigger", "http://hl7.org/fhir/ValueSet/interaction-trigger", "http://hl7.org/fhir/restful-interaction")]
     public enum InteractionTrigger
     {
       /// <summary>
       /// Create a new resource with a server assigned id.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// Update an existing resource by its id (or create it if it is new).
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
+      [EnumLiteral("update"), Description("update")]
       Update,
       /// <summary>
       /// Delete a resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
+      [EnumLiteral("delete"), Description("delete")]
       Delete,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior)
     /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
     /// </summary>
-    [FhirEnumeration("CriteriaNotExistsBehavior")]
+    [FhirEnumeration("CriteriaNotExistsBehavior", "http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior", "http://hl7.org/fhir/subscriptiontopic-cr-behavior")]
     public enum CriteriaNotExistsBehavior
     {
       /// <summary>
       /// The requested conditional statement will pass if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-passes", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("Test passes")]
+      [EnumLiteral("test-passes"), Description("Test passes")]
       TestPasses,
       /// <summary>
       /// The requested conditional statement will fail if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-fails", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("Test fails")]
+      [EnumLiteral("test-fails"), Description("Test fails")]
       TestFails,
     }
 
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger")]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -186,11 +188,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("supportedInteraction", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("MethodCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
       {
-        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
+        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
         set { _SupportedInteractionElement = value; OnPropertyChanged("SupportedInteractionElement"); }
       }
 
@@ -209,7 +212,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             SupportedInteractionElement = null;
           else
-            SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
+            SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
           OnPropertyChanged("SupportedInteraction");
         }
       }
@@ -383,6 +386,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger.queryCriteria")]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -426,6 +430,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForCreateElement
       {
@@ -489,6 +494,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForDeleteElement
       {
@@ -672,6 +678,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#EventTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.eventTrigger")]
     public partial class EventTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -714,6 +721,7 @@ namespace Hl7.Fhir.Model
       /// Event which can trigger a notification from the SubscriptionTopic
       /// </summary>
       [FhirElement("event", InSummary=true, Order=50)]
+      [Binding("SubscriptionTopicEventTrigger")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Event
@@ -728,6 +736,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60)]
+      [Binding("FHIRTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -863,6 +872,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.canFilterBy")]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -905,6 +915,7 @@ namespace Hl7.Fhir.Model
       /// URL of the triggering Resource that this filter applies to
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRTypes")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
       {
@@ -1000,11 +1011,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchComparator")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
       {
-        get { if(_ComparatorElement==null) _ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
+        get { if(_ComparatorElement==null) _ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
         set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
       }
 
@@ -1023,7 +1035,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ComparatorElement = null;
           else
-            ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>(elem)));
+            ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SearchComparator>(elem)));
           OnPropertyChanged("Comparator");
         }
       }
@@ -1033,11 +1045,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("modifier", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchModifierCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
       {
-        get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
+        get { if(_ModifierElement==null) _ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
         set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
       }
 
@@ -1056,7 +1069,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ModifierElement = null;
           else
-            ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
+            ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
           OnPropertyChanged("Modifier");
         }
       }
@@ -1195,6 +1208,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#NotificationShape", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.notificationShape")]
     public partial class NotificationShapeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1206,6 +1220,7 @@ namespace Hl7.Fhir.Model
       /// URL of the Resource that is the focus (main) resource in a notification shape
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=40)]
+      [Binding("FHIRTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -1590,6 +1605,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1774,6 +1790,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction of the SubscriptionTopic (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2007,6 +2024,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent> _NotificationShape;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

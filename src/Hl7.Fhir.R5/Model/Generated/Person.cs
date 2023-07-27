@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Person","http://hl7.org/fhir/StructureDefinition/Person", IsResource=true)]
-  public partial class Person : Hl7.Fhir.Model.DomainResource
+  public partial class Person : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/identity-assuranceLevel)
     /// (system: http://hl7.org/fhir/identity-assuranceLevel)
     /// </summary>
-    [FhirEnumeration("IdentityAssuranceLevel")]
+    [FhirEnumeration("IdentityAssuranceLevel", "http://hl7.org/fhir/ValueSet/identity-assuranceLevel", "http://hl7.org/fhir/identity-assuranceLevel")]
     public enum IdentityAssuranceLevel
     {
       /// <summary>
       /// Little or no confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level1", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 1")]
+      [EnumLiteral("level1"), Description("Level 1")]
       Level1,
       /// <summary>
       /// Some confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level2", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 2")]
+      [EnumLiteral("level2"), Description("Level 2")]
       Level2,
       /// <summary>
       /// High confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level3", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 3")]
+      [EnumLiteral("level3"), Description("Level 3")]
       Level3,
       /// <summary>
       /// Very high confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level4", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 4")]
+      [EnumLiteral("level4"), Description("Level 4")]
       Level4,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Person#Communication", IsNestedType=true)]
+    [BackboneType("Person.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -106,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The language which can be used to communicate with the person about his or her health
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -245,6 +247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Person#Link", IsNestedType=true)]
+    [BackboneType("Person.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -273,6 +276,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("assurance", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("IdentityAssuranceLevel")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
       {
@@ -470,6 +474,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
@@ -561,6 +566,7 @@ namespace Hl7.Fhir.Model
     /// Marital (civil) status of a person
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
+    [Binding("MaritalStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept MaritalStatus
     {
@@ -626,6 +632,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Person.LinkComponent> _Link;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

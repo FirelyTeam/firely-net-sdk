@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task", IsResource=true)]
-  public partial class Task : Hl7.Fhir.Model.DomainResource
+  public partial class Task : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,80 +60,80 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/task-status)
     /// (system: http://hl7.org/fhir/task-status)
     /// </summary>
-    [FhirEnumeration("TaskStatus")]
+    [FhirEnumeration("TaskStatus", "http://hl7.org/fhir/ValueSet/task-status", "http://hl7.org/fhir/task-status")]
     public enum TaskStatus
     {
       /// <summary>
       /// The task is not yet ready to be acted upon.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/task-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The task is ready to be acted upon and action is sought.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("requested", "http://hl7.org/fhir/task-status"), Description("Requested")]
+      [EnumLiteral("requested"), Description("Requested")]
       Requested,
       /// <summary>
       /// A potential performer has claimed ownership of the task and is evaluating whether to perform it.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("received", "http://hl7.org/fhir/task-status"), Description("Received")]
+      [EnumLiteral("received"), Description("Received")]
       Received,
       /// <summary>
       /// The potential performer has agreed to execute the task but has not yet started work.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/task-status"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// The potential performer who claimed ownership of the task has decided not to execute it prior to performing any action.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/task-status"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
       /// <summary>
       /// The task is ready to be performed, but no action has yet been taken.  Used in place of requested/received/accepted/rejected when request assignment and acceptance is a given.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("ready", "http://hl7.org/fhir/task-status"), Description("Ready")]
+      [EnumLiteral("ready"), Description("Ready")]
       Ready,
       /// <summary>
       /// The task was not completed.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/task-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The task has been started but is not yet complete.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/task-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The task has been started but work has been paused.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/task-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The task was attempted but could not be completed due to some error.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("failed", "http://hl7.org/fhir/task-status"), Description("Failed")]
+      [EnumLiteral("failed"), Description("Failed")]
       Failed,
       /// <summary>
       /// The task has been completed.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/task-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The task should never have existed and is retained only because of the possibility it may have used.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/task-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/task-intent)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("TaskIntent")]
+    [FhirEnumeration("TaskIntent", "http://hl7.org/fhir/ValueSet/task-intent", "http://hl7.org/fhir/request-intent")]
     public enum TaskIntent
     {
       /// <summary>
@@ -155,49 +155,49 @@ namespace Hl7.Fhir.Model
       /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The request represents a request/demand and authorization for action by the requestor.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The request represents an original authorization for action.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("original-order", "http://hl7.org/fhir/request-intent"), Description("Original Order")]
+      [EnumLiteral("original-order"), Description("Original Order")]
       OriginalOrder,
       /// <summary>
       /// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("reflex-order", "http://hl7.org/fhir/request-intent"), Description("Reflex Order")]
+      [EnumLiteral("reflex-order"), Description("Reflex Order")]
       ReflexOrder,
       /// <summary>
       /// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("filler-order", "http://hl7.org/fhir/request-intent"), Description("Filler Order")]
+      [EnumLiteral("filler-order"), Description("Filler Order")]
       FillerOrder,
       /// <summary>
       /// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("instance-order", "http://hl7.org/fhir/request-intent"), Description("Instance Order")]
+      [EnumLiteral("instance-order"), Description("Instance Order")]
       InstanceOrder,
       /// <summary>
       /// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
+      [EnumLiteral("option"), Description("Option")]
       Option,
     }
 
@@ -207,6 +207,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Performer", IsNestedType=true)]
+    [BackboneType("Task.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -218,6 +219,7 @@ namespace Hl7.Fhir.Model
       /// Type of performance
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("TaskPerformerFunctionCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -341,6 +343,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Restriction", IsNestedType=true)]
+    [BackboneType("Task.restriction")]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -515,6 +518,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Input", IsNestedType=true)]
+    [BackboneType("Task.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -526,6 +530,7 @@ namespace Hl7.Fhir.Model
       /// Label for the input
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TaskInputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -650,6 +655,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Output", IsNestedType=true)]
+    [BackboneType("Task.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -661,6 +667,7 @@ namespace Hl7.Fhir.Model
       /// Label for output
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TaskOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -905,6 +912,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskStatus> StatusElement
@@ -937,6 +945,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=160)]
+    [Binding("TaskStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference StatusReason
     {
@@ -950,6 +959,7 @@ namespace Hl7.Fhir.Model
     /// E.g. "Specimen collected", "IV prepped"
     /// </summary>
     [FhirElement("businessStatus", InSummary=true, Order=170)]
+    [Binding("TaskBusinessStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BusinessStatus
     {
@@ -964,6 +974,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=180, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskIntent> IntentElement
@@ -997,6 +1008,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=190, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -1059,6 +1071,7 @@ namespace Hl7.Fhir.Model
     /// Task Type
     /// </summary>
     [FhirElement("code", InSummary=true, Order=210, FiveWs="FiveWs.what[x]")]
+    [Binding("TaskCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1251,6 +1264,7 @@ namespace Hl7.Fhir.Model
     /// Who should perform Task
     /// </summary>
     [FhirElement("requestedPerformer", Order=310, FiveWs="FiveWs.actor")]
+    [Binding("TaskPerformerType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> RequestedPerformer
@@ -1309,6 +1323,7 @@ namespace Hl7.Fhir.Model
     /// Why task is needed
     /// </summary>
     [FhirElement("reason", Order=350, FiveWs="FiveWs.why[x]")]
+    [Binding("TaskReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1405,6 +1420,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Task.OutputComponent> _Output;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

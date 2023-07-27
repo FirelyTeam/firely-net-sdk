@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalUseDefinition","http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition", IsResource=true)]
-  public partial class ClinicalUseDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalUseDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinical-use-definition-type)
     /// (system: http://hl7.org/fhir/clinical-use-definition-type)
     /// </summary>
-    [FhirEnumeration("ClinicalUseDefinitionType")]
+    [FhirEnumeration("ClinicalUseDefinitionType", "http://hl7.org/fhir/ValueSet/clinical-use-definition-type", "http://hl7.org/fhir/clinical-use-definition-type")]
     public enum ClinicalUseDefinitionType
     {
       /// <summary>
       /// A reason for giving the medication.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("indication", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Indication")]
+      [EnumLiteral("indication"), Description("Indication")]
       Indication,
       /// <summary>
       /// A reason for not giving the medication.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("contraindication", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Contraindication")]
+      [EnumLiteral("contraindication"), Description("Contraindication")]
       Contraindication,
       /// <summary>
       /// Interactions between the medication and other substances.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("interaction", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Interaction")]
+      [EnumLiteral("interaction"), Description("Interaction")]
       Interaction,
       /// <summary>
       /// Side effects or adverse effects associated with the medication.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("undesirable-effect", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Undesirable Effect")]
+      [EnumLiteral("undesirable-effect"), Description("Undesirable Effect")]
       UndesirableEffect,
       /// <summary>
       /// A general warning or issue that is not specifically one of the other types.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("warning", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Warning")]
+      [EnumLiteral("warning"), Description("Warning")]
       Warning,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Contraindication", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.contraindication")]
     public partial class ContraindicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -112,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// The situation that is being documented as contraindicating against this item
       /// </summary>
       [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40)]
+      [Binding("DiseaseSymptomProcedure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseSymptomProcedure
       {
@@ -125,6 +127,7 @@ namespace Hl7.Fhir.Model
       /// The status of the disease or symptom for the contraindication
       /// </summary>
       [FhirElement("diseaseStatus", InSummary=true, Order=50)]
+      [Binding("DiseaseStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseStatus
       {
@@ -138,6 +141,7 @@ namespace Hl7.Fhir.Model
       /// A comorbidity (concurrent condition) or coinfection
       /// </summary>
       [FhirElement("comorbidity", InSummary=true, Order=60)]
+      [Binding("DiseaseSymptomProcedure")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
@@ -325,6 +329,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#OtherTherapy", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.contraindication.otherTherapy")]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -336,6 +341,7 @@ namespace Hl7.Fhir.Model
       /// The type of relationship between the product indication/contraindication and another therapy
       /// </summary>
       [FhirElement("relationshipType", InSummary=true, Order=40)]
+      [Binding("TherapyRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RelationshipType
@@ -350,6 +356,7 @@ namespace Hl7.Fhir.Model
       /// Reference to a specific medication, substance etc. as part of an indication or contraindication
       /// </summary>
       [FhirElement("treatment", InSummary=true, Order=50)]
+      [Binding("Therapy")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Treatment
@@ -458,6 +465,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Indication", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.indication")]
     public partial class IndicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -469,6 +477,7 @@ namespace Hl7.Fhir.Model
       /// The situation that is being documented as an indicaton for this item
       /// </summary>
       [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40)]
+      [Binding("DiseaseSymptomProcedure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseSymptomProcedure
       {
@@ -482,6 +491,7 @@ namespace Hl7.Fhir.Model
       /// The status of the disease or symptom for the indication
       /// </summary>
       [FhirElement("diseaseStatus", InSummary=true, Order=50)]
+      [Binding("DiseaseStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseStatus
       {
@@ -495,6 +505,7 @@ namespace Hl7.Fhir.Model
       /// A comorbidity or coinfection as part of the indication
       /// </summary>
       [FhirElement("comorbidity", InSummary=true, Order=60)]
+      [Binding("DiseaseSymptomProcedure")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
@@ -509,6 +520,7 @@ namespace Hl7.Fhir.Model
       /// The intended effect, aim or strategy to be achieved
       /// </summary>
       [FhirElement("intendedEffect", InSummary=true, Order=70)]
+      [Binding("ProductIntendedUse")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference IntendedEffect
       {
@@ -728,6 +740,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Interaction", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.interaction")]
     public partial class InteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -753,6 +766,7 @@ namespace Hl7.Fhir.Model
       /// The type of the interaction e.g. drug-drug interaction, drug-lab test interaction
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("InteractionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -766,6 +780,7 @@ namespace Hl7.Fhir.Model
       /// The effect of the interaction, for example "reduced gastric absorption of primary medication"
       /// </summary>
       [FhirElement("effect", InSummary=true, Order=60)]
+      [Binding("InteractionEffect")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Effect
       {
@@ -779,6 +794,7 @@ namespace Hl7.Fhir.Model
       /// The incidence of the interaction, e.g. theoretical, observed
       /// </summary>
       [FhirElement("incidence", InSummary=true, Order=70)]
+      [Binding("UndesirableEffectSymptom")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Incidence
       {
@@ -792,6 +808,7 @@ namespace Hl7.Fhir.Model
       /// Actions for managing the interaction
       /// </summary>
       [FhirElement("management", InSummary=true, Order=80)]
+      [Binding("InteractionManagement")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Management
@@ -927,6 +944,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Interactant", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.interaction.interactant")]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -938,6 +956,7 @@ namespace Hl7.Fhir.Model
       /// The specific medication, product, food etc. or laboratory test that interacts
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("Interactant")]
       [CLSCompliant(false)]
       [References("MedicinalProductDefinition","Medication","Substance","NutritionProduct","BiologicallyDerivedProduct","ObservationDefinition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -1040,6 +1059,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#UndesirableEffect", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.undesirableEffect")]
     public partial class UndesirableEffectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1051,6 +1071,7 @@ namespace Hl7.Fhir.Model
       /// The situation in which the undesirable effect may manifest
       /// </summary>
       [FhirElement("symptomConditionEffect", InSummary=true, Order=40)]
+      [Binding("UndesirableEffectSymptom")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference SymptomConditionEffect
       {
@@ -1064,6 +1085,7 @@ namespace Hl7.Fhir.Model
       /// High level classification of the effect
       /// </summary>
       [FhirElement("classification", InSummary=true, Order=50)]
+      [Binding("UndesirableEffectClassification")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Classification
       {
@@ -1077,6 +1099,7 @@ namespace Hl7.Fhir.Model
       /// How often the effect is seen
       /// </summary>
       [FhirElement("frequencyOfOccurrence", InSummary=true, Order=60)]
+      [Binding("UndesirablEffectFrequency")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept FrequencyOfOccurrence
       {
@@ -1193,6 +1216,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Warning", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.warning")]
     public partial class WarningComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1235,6 +1259,7 @@ namespace Hl7.Fhir.Model
       /// A coded or unformatted textual definition of this warning
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
+      [Binding("WarningType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -1355,6 +1380,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClinicalUseDefinitionType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType> TypeElement
@@ -1387,6 +1413,7 @@ namespace Hl7.Fhir.Model
     /// A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110)]
+    [Binding("ClinicalUseDefinitionCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1417,6 +1444,7 @@ namespace Hl7.Fhir.Model
     /// Whether this is a current issue or one that has been retired etc
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
     {
@@ -1538,6 +1566,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent _Warning;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

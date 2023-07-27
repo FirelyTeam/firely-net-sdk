@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire", IsResource=true)]
-  public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
+  public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,104 +60,104 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/item-type)
     /// (system: http://hl7.org/fhir/item-type)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemType")]
+    [FhirEnumeration("QuestionnaireItemType", "http://hl7.org/fhir/ValueSet/item-type", "http://hl7.org/fhir/item-type")]
     public enum QuestionnaireItemType
     {
       /// <summary>
       /// An item with no direct answer but should have at least one child item.
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("group", "http://hl7.org/fhir/item-type"), Description("Group")]
+      [EnumLiteral("group"), Description("Group")]
       Group,
       /// <summary>
       /// Text for display that will not capture an answer or have child items.
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("display", "http://hl7.org/fhir/item-type"), Description("Display")]
+      [EnumLiteral("display"), Description("Display")]
       Display,
       /// <summary>
       /// An item that defines a specific answer to be captured, and which may have child items. (the answer provided in the QuestionnaireResponse should be of the defined datatype).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("question", "http://hl7.org/fhir/item-type"), Description("Question")]
+      [EnumLiteral("question"), Description("Question")]
       Question,
       /// <summary>
       /// Question with a yes/no answer (valueBoolean).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("boolean", "http://hl7.org/fhir/item-type"), Description("Boolean")]
+      [EnumLiteral("boolean"), Description("Boolean")]
       Boolean,
       /// <summary>
       /// Question with is a real number answer (valueDecimal).  There is an extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-unit' that can be used to computably convey the unit of measure associated with the answer for use when performing data extraction to an element of type Quantity.
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("decimal", "http://hl7.org/fhir/item-type"), Description("Decimal")]
+      [EnumLiteral("decimal"), Description("Decimal")]
       Decimal,
       /// <summary>
       /// Question with an integer answer (valueInteger).  There is an extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-unit' that can be used to computably convey the unit of measure associated with the answer for use when performing data extraction to an element of type Quantity.
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("integer", "http://hl7.org/fhir/item-type"), Description("Integer")]
+      [EnumLiteral("integer"), Description("Integer")]
       Integer,
       /// <summary>
       /// Question with a date answer (valueDate).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("date", "http://hl7.org/fhir/item-type"), Description("Date")]
+      [EnumLiteral("date"), Description("Date")]
       Date,
       /// <summary>
       /// Question with a date and time answer (valueDateTime).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("dateTime", "http://hl7.org/fhir/item-type"), Description("Date Time")]
+      [EnumLiteral("dateTime"), Description("Date Time")]
       DateTime,
       /// <summary>
       /// Question with a time (hour:minute:second) answer independent of date. (valueTime).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("time", "http://hl7.org/fhir/item-type"), Description("Time")]
+      [EnumLiteral("time"), Description("Time")]
       Time,
       /// <summary>
       /// Question with a short (few words to short sentence) free-text entry answer (valueString).  Strings SHOULD NOT contain carriage return or newline characters.  If multi-line answers are needed, use the 'text' type.
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("string", "http://hl7.org/fhir/item-type"), Description("String")]
+      [EnumLiteral("string"), Description("String")]
       String,
       /// <summary>
       /// Question with a long (potentially multi-paragraph) free-text entry answer (valueString).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("text", "http://hl7.org/fhir/item-type"), Description("Text")]
+      [EnumLiteral("text"), Description("Text")]
       Text,
       /// <summary>
       /// Question with a URL (website, FTP site, etc.) answer (valueUri).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("url", "http://hl7.org/fhir/item-type"), Description("Url")]
+      [EnumLiteral("url"), Description("Url")]
       Url,
       /// <summary>
       /// Question with a Coding - generally drawn from a list of possible answers (valueCoding)
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("coding", "http://hl7.org/fhir/item-type"), Description("Coding")]
+      [EnumLiteral("coding"), Description("Coding")]
       Coding,
       /// <summary>
       /// Question with binary content such as an image, PDF, etc. as an answer (valueAttachment).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("attachment", "http://hl7.org/fhir/item-type"), Description("Attachment")]
+      [EnumLiteral("attachment"), Description("Attachment")]
       Attachment,
       /// <summary>
       /// Question with a reference to another resource (practitioner, organization, etc.) as an answer (valueReference).
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("reference", "http://hl7.org/fhir/item-type"), Description("Reference")]
+      [EnumLiteral("reference"), Description("Reference")]
       Reference,
       /// <summary>
       /// Question with a combination of a numeric value and unit as an answer. (valueSimpleQuantity)  There are two extensions ('http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption' and 'http://hl7.org/fhir/StructureDefinition/questionnaire-unitValueSet')  that can be used to define what unit should be selected for the Quantity.code and Quantity.system.
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
-      [EnumLiteral("quantity", "http://hl7.org/fhir/item-type"), Description("Quantity")]
+      [EnumLiteral("quantity"), Description("Quantity")]
       Quantity,
     }
 
@@ -166,20 +166,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior)
     /// (system: http://hl7.org/fhir/questionnaire-enable-behavior)
     /// </summary>
-    [FhirEnumeration("EnableWhenBehavior")]
+    [FhirEnumeration("EnableWhenBehavior", "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior", "http://hl7.org/fhir/questionnaire-enable-behavior")]
     public enum EnableWhenBehavior
     {
       /// <summary>
       /// Enable the question when all the enableWhen criteria are satisfied.
       /// (system: http://hl7.org/fhir/questionnaire-enable-behavior)
       /// </summary>
-      [EnumLiteral("all", "http://hl7.org/fhir/questionnaire-enable-behavior"), Description("All")]
+      [EnumLiteral("all"), Description("All")]
       All,
       /// <summary>
       /// Enable the question when any of the enableWhen criteria are satisfied.
       /// (system: http://hl7.org/fhir/questionnaire-enable-behavior)
       /// </summary>
-      [EnumLiteral("any", "http://hl7.org/fhir/questionnaire-enable-behavior"), Description("Any")]
+      [EnumLiteral("any"), Description("Any")]
       Any,
     }
 
@@ -188,20 +188,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-disabled-display)
     /// (system: http://hl7.org/fhir/questionnaire-disabled-display)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemDisabledDisplay")]
+    [FhirEnumeration("QuestionnaireItemDisabledDisplay", "http://hl7.org/fhir/ValueSet/questionnaire-disabled-display", "http://hl7.org/fhir/questionnaire-disabled-display")]
     public enum QuestionnaireItemDisabledDisplay
     {
       /// <summary>
       /// The item (and its children) should not be visible to the user at all.
       /// (system: http://hl7.org/fhir/questionnaire-disabled-display)
       /// </summary>
-      [EnumLiteral("hidden", "http://hl7.org/fhir/questionnaire-disabled-display"), Description("Hidden")]
+      [EnumLiteral("hidden"), Description("Hidden")]
       Hidden,
       /// <summary>
       /// The item (and possibly its children) should not be selectable or editable but should still be visible - to allow the user to see what questions *could* have been completed had other answers caused the item to be enabled.
       /// (system: http://hl7.org/fhir/questionnaire-disabled-display)
       /// </summary>
-      [EnumLiteral("protected", "http://hl7.org/fhir/questionnaire-disabled-display"), Description("Protected")]
+      [EnumLiteral("protected"), Description("Protected")]
       Protected,
     }
 
@@ -210,26 +210,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint)
     /// (system: http://hl7.org/fhir/questionnaire-answer-constraint)
     /// </summary>
-    [FhirEnumeration("QuestionnaireAnswerConstraint")]
+    [FhirEnumeration("QuestionnaireAnswerConstraint", "http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint", "http://hl7.org/fhir/questionnaire-answer-constraint")]
     public enum QuestionnaireAnswerConstraint
     {
       /// <summary>
       /// Only values listed as answerOption or in the expansion of the answerValueSet are permitted
       /// (system: http://hl7.org/fhir/questionnaire-answer-constraint)
       /// </summary>
-      [EnumLiteral("optionsOnly", "http://hl7.org/fhir/questionnaire-answer-constraint"), Description("Options only")]
+      [EnumLiteral("optionsOnly"), Description("Options only")]
       OptionsOnly,
       /// <summary>
       /// In addition to the values listed as answerOption or in the expansion of the answerValueSet, any other values that correspond to the specified item.type are permitted
       /// (system: http://hl7.org/fhir/questionnaire-answer-constraint)
       /// </summary>
-      [EnumLiteral("optionsOrType", "http://hl7.org/fhir/questionnaire-answer-constraint"), Description("Options or 'type'")]
+      [EnumLiteral("optionsOrType"), Description("Options or 'type'")]
       OptionsOrType,
       /// <summary>
       /// In addition to the values listed as answerOption or in the expansion of the answerValueSet, free-text strings are permitted.  Answers will have a type of 'string'.
       /// (system: http://hl7.org/fhir/questionnaire-answer-constraint)
       /// </summary>
-      [EnumLiteral("optionsOrString", "http://hl7.org/fhir/questionnaire-answer-constraint"), Description("Options or string")]
+      [EnumLiteral("optionsOrString"), Description("Options or string")]
       OptionsOrString,
     }
 
@@ -238,50 +238,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-enable-operator)
     /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemOperator")]
+    [FhirEnumeration("QuestionnaireItemOperator", "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator", "http://hl7.org/fhir/questionnaire-enable-operator")]
     public enum QuestionnaireItemOperator
     {
       /// <summary>
       /// True if the determination of 'whether an answer exists for the question' is equal to the enableWhen answer (which must be a boolean).
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral("exists", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Exists")]
+      [EnumLiteral("exists"), Description("Exists")]
       Exists,
       /// <summary>
       /// True if at least one answer has a value that is equal to the enableWhen answer.
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral("=", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Equals")]
+      [EnumLiteral("="), Description("Equals")]
       Equal,
       /// <summary>
       /// True if no answer has a value that is equal to the enableWhen answer.
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral("!=", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Not Equals")]
+      [EnumLiteral("!="), Description("Not Equals")]
       NotEqual,
       /// <summary>
       /// True if at least one answer has a value that is greater than the enableWhen answer.
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral(">", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Greater Than")]
+      [EnumLiteral(">"), Description("Greater Than")]
       GreaterThan,
       /// <summary>
       /// True if at least one answer has a value that is less than the enableWhen answer.
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral("<", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Less Than")]
+      [EnumLiteral("<"), Description("Less Than")]
       LessThan,
       /// <summary>
       /// True if at least one answer has a value that is greater or equal to the enableWhen answer.
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral(">=", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Greater or Equals")]
+      [EnumLiteral(">="), Description("Greater or Equals")]
       GreaterOrEqual,
       /// <summary>
       /// True if at least one answer has a value that is less or equal to the enableWhen answer.
       /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
       /// </summary>
-      [EnumLiteral("<=", "http://hl7.org/fhir/questionnaire-enable-operator"), Description("Less or Equals")]
+      [EnumLiteral("<="), Description("Less or Equals")]
       LessOrEqual,
     }
 
@@ -291,6 +291,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#Item", IsNestedType=true)]
+    [BackboneType("Questionnaire.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -365,6 +366,7 @@ namespace Hl7.Fhir.Model
       /// Corresponding concept for this item in a terminology
       /// </summary>
       [FhirElement("code", Order=60)]
+      [Binding("QuestionnaireConcept")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
@@ -442,6 +444,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> TypeElement
@@ -489,6 +492,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("enableBehavior", Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EnableWhenBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.EnableWhenBehavior> EnableBehaviorElement
       {
@@ -521,6 +525,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("disabledDisplay", Order=120)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DisabledDisplay")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemDisabledDisplay> DisabledDisplayElement
       {
@@ -677,6 +682,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("answerConstraint", Order=170)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireAnswerConstraint")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireAnswerConstraint> AnswerConstraintElement
       {
@@ -1019,6 +1025,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.enableWhen")]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1063,6 +1070,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemOperator")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemOperator> OperatorElement
@@ -1095,6 +1103,7 @@ namespace Hl7.Fhir.Model
       /// Value for question comparison based on operator
       /// </summary>
       [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireQuestionOption3")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1215,6 +1224,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#AnswerOption", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.answerOption")]
     public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1226,6 +1236,7 @@ namespace Hl7.Fhir.Model
       /// Answer value
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireQuestionOption")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1368,6 +1379,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#Initial", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.initial")]
     public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1379,6 +1391,7 @@ namespace Hl7.Fhir.Model
       /// Actual value for initializing the question
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("QuestionnaireQuestionOption2")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1665,6 +1678,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1729,11 +1743,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("subjectType", InSummary=true, Order=180, FiveWs="FiveWs.who")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
     {
-      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
+      get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
       set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
     }
 
@@ -1752,7 +1767,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           SubjectTypeElement = null;
         else
-          SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("SubjectType");
       }
     }
@@ -1882,6 +1897,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for questionnaire (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2064,6 +2080,7 @@ namespace Hl7.Fhir.Model
     /// Concept that represents the overall questionnaire
     /// </summary>
     [FhirElement("code", InSummary=true, Order=310)]
+    [Binding("QuestionnaireConcept")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code
@@ -2087,6 +2104,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Questionnaire.ItemComponent> _Item;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

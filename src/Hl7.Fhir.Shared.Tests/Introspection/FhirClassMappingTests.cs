@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using System.Diagnostics;
 using Hl7.Fhir.Specification;
-using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Tests.Introspection
             bool isNested(Type testee)
             {
                 _ = ClassMapping.TryCreate(testee, out var cm);
-                return cm.IsNestedType;
+                return cm.IsBackboneType;
             }
         }
 
@@ -79,6 +79,33 @@ namespace Hl7.Fhir.Tests.Introspection
                 return touchProps ? mapping.PropertyMappings.Count : -1;
             }
         }
+
+        [TestMethod]
+        public void LoadsDependentSatelliteAssemblies()
+        {
+            var satellite = typeof(ModelInfo).Assembly;
+            var inspector = ModelInspector.ForAssembly(satellite);
+
+            inspector.FindClassMapping(typeof(Patient)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(StructureDefinition)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(ValueSet)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(OperationOutcome)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(DomainResource)).Should().NotBeNull();
+        }
+
+
+        [TestMethod]
+        public void LoadsDependentConformanceAssemblies()
+        {
+            var satellite = typeof(StructureDefinition).Assembly;
+            var inspector = ModelInspector.ForAssembly(satellite);
+
+            inspector.FindClassMapping(typeof(StructureDefinition)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(ValueSet)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(OperationOutcome)).Should().NotBeNull();
+            inspector.FindClassMapping(typeof(DomainResource)).Should().NotBeNull();
+        }
+
 
         [TestMethod]
         public void FindsCorrectFhirVersion()

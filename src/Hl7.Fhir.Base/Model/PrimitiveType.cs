@@ -39,7 +39,25 @@ namespace Hl7.Fhir.Model
         /// and may contain illegally formatted values. Additionally, the deserializers will use this property
         /// to store the original serialized string form of the value in the wire format when a parsing error is
         /// encountered.</remarks>
-        public object? ObjectValue { get; set; }
+
+        private object? _objectValue;
+        public object? ObjectValue
+        {
+            get => _objectValue;
+
+            set
+            {
+                if (!ReferenceEquals(value, _objectValue))
+                {
+                    _objectValue = value;
+                    OnObjectValueChanged();
+                }
+            }
+        }
+
+        protected virtual void OnObjectValueChanged()
+        {
+        }
 
         /// <inheritdoc/>
         public override string? ToString()

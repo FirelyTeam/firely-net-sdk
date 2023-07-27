@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ProcessRequest","http://hl7.org/fhir/StructureDefinition/ProcessRequest", IsResource=true)]
-  public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource
+  public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/actionlist)
     /// (system: http://hl7.org/fhir/actionlist)
     /// </summary>
-    [FhirEnumeration("ActionList")]
+    [FhirEnumeration("ActionList", "http://hl7.org/fhir/ValueSet/actionlist", "http://hl7.org/fhir/actionlist")]
     public enum ActionList
     {
       /// <summary>
       /// Cancel, reverse or nullify the target resource.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("cancel", "http://hl7.org/fhir/actionlist"), Description("Cancel, Reverse or Nullify")]
+      [EnumLiteral("cancel"), Description("Cancel, Reverse or Nullify")]
       Cancel,
       /// <summary>
       /// Check for previously un-read/ not-retrieved resources.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("poll", "http://hl7.org/fhir/actionlist"), Description("Poll")]
+      [EnumLiteral("poll"), Description("Poll")]
       Poll,
       /// <summary>
       /// Re-process the target resource.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("reprocess", "http://hl7.org/fhir/actionlist"), Description("Re-Process")]
+      [EnumLiteral("reprocess"), Description("Re-Process")]
       Reprocess,
       /// <summary>
       /// Retrieve the processing status of the target resource.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("status", "http://hl7.org/fhir/actionlist"), Description("Status Check")]
+      [EnumLiteral("status"), Description("Status Check")]
       Status,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcessRequest#Items", IsNestedType=true)]
+    [BackboneType("ProcessRequest.item")]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -236,6 +237,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcessRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -268,6 +270,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActionList")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ProcessRequest.ActionList> ActionElement
     {
@@ -553,6 +556,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Period _Period;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

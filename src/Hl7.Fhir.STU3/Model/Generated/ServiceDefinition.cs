@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ServiceDefinition","http://hl7.org/fhir/StructureDefinition/ServiceDefinition", IsResource=true)]
-  public partial class ServiceDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ServiceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -198,6 +198,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -505,6 +506,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for service definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -519,6 +521,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=260)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -644,6 +647,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _OperationDefinition;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

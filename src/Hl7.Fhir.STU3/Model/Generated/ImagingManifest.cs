@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ImagingManifest","http://hl7.org/fhir/StructureDefinition/ImagingManifest", IsResource=true)]
-  public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource
+  public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Study", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study")]
     public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -261,6 +262,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Series", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study.series")]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -437,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Instance", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study.series.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -719,6 +722,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> _Study;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

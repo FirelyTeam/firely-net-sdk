@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("InventoryItem","http://hl7.org/fhir/StructureDefinition/InventoryItem", IsResource=true)]
-  public partial class InventoryItem : Hl7.Fhir.Model.DomainResource
+  public partial class InventoryItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryitem-status)
     /// (system: http://hl7.org/fhir/inventoryitem-status)
     /// </summary>
-    [FhirEnumeration("InventoryItemStatusCodes")]
+    [FhirEnumeration("InventoryItemStatusCodes", "http://hl7.org/fhir/ValueSet/inventoryitem-status", "http://hl7.org/fhir/inventoryitem-status")]
     public enum InventoryItemStatusCodes
     {
       /// <summary>
       /// The item is active and can be referenced.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/inventoryitem-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The item is presently inactive - there may be references to it but the item is not expected to be used.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/inventoryitem-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The item record was entered in error.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/inventoryitem-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The item status has not been determined.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/inventoryitem-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Name", IsNestedType=true)]
+    [BackboneType("InventoryItem.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -106,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'
       /// </summary>
       [FhirElement("nameType", InSummary=true, Order=40)]
+      [Binding("NameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding NameType
@@ -121,6 +123,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("language", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NameLanguage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CommonLanguages> LanguageElement
@@ -288,6 +291,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#ResponsibleOrganization", IsNestedType=true)]
+    [BackboneType("InventoryItem.responsibleOrganization")]
     public partial class ResponsibleOrganizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -423,6 +427,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Description", IsNestedType=true)]
+    [BackboneType("InventoryItem.description")]
     public partial class DescriptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -435,6 +440,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("language", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ItemDescriptionLanguage")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CommonLanguages> LanguageElement
       {
@@ -591,6 +597,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Association", IsNestedType=true)]
+    [BackboneType("InventoryItem.association")]
     public partial class AssociationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -749,6 +756,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Characteristic", IsNestedType=true)]
+    [BackboneType("InventoryItem.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -884,6 +892,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Instance", IsNestedType=true)]
+    [BackboneType("InventoryItem.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1135,6 +1144,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes> StatusElement
@@ -1327,6 +1337,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _ProductReference;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

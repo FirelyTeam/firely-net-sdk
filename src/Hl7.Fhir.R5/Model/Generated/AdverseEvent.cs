@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
-  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
+  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("AdverseEventStatus")]
+    [FhirEnumeration("AdverseEventStatus", "http://hl7.org/fhir/ValueSet/adverse-event-status", "http://hl7.org/fhir/event-status")]
     public enum AdverseEventStatus
     {
       /// <summary>
       /// The event is currently occurring.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/event-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The event has now concluded.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/event-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
     /// (system: http://hl7.org/fhir/adverse-event-actuality)
     /// </summary>
-    [FhirEnumeration("AdverseEventActuality")]
+    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality", "http://hl7.org/fhir/adverse-event-actuality")]
     public enum AdverseEventActuality
     {
       /// <summary>
       /// The adverse event actually happened regardless of whether anyone was affected or harmed.
       /// (system: http://hl7.org/fhir/adverse-event-actuality)
       /// </summary>
-      [EnumLiteral("actual", "http://hl7.org/fhir/adverse-event-actuality"), Description("Adverse Event")]
+      [EnumLiteral("actual"), Description("Adverse Event")]
       Actual,
       /// <summary>
       /// A potential adverse event.
       /// (system: http://hl7.org/fhir/adverse-event-actuality)
       /// </summary>
-      [EnumLiteral("potential", "http://hl7.org/fhir/adverse-event-actuality"), Description("Potential Adverse Event")]
+      [EnumLiteral("potential"), Description("Potential Adverse Event")]
       Potential,
     }
 
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Participant", IsNestedType=true)]
+    [BackboneType("AdverseEvent.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -128,6 +129,7 @@ namespace Hl7.Fhir.Model
       /// Type of involvement
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("AdverseEventParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -251,6 +253,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +389,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity.causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -397,6 +401,7 @@ namespace Hl7.Fhir.Model
       /// Method of evaluating the relatedness of the suspected entity to the event
       /// </summary>
       [FhirElement("assessmentMethod", InSummary=true, Order=40)]
+      [Binding("AdverseEventCausalityMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AssessmentMethod
       {
@@ -410,6 +415,7 @@ namespace Hl7.Fhir.Model
       /// Result of the assessment regarding the relatedness of the suspected entity to the event
       /// </summary>
       [FhirElement("entityRelatedness", InSummary=true, Order=50)]
+      [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept EntityRelatedness
       {
@@ -541,6 +547,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#ContributingFactor", IsNestedType=true)]
+    [BackboneType("AdverseEvent.contributingFactor")]
     public partial class ContributingFactorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -552,6 +559,7 @@ namespace Hl7.Fhir.Model
       /// Item suspected to have increased the probability or severity of the adverse event
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventContributingFactor")]
       [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Device","DeviceUsage","DocumentReference","MedicationAdministration","MedicationStatement")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -654,6 +662,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#PreventiveAction", IsNestedType=true)]
+    [BackboneType("AdverseEvent.preventiveAction")]
     public partial class PreventiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -665,6 +674,7 @@ namespace Hl7.Fhir.Model
       /// Action that contributed to avoiding the adverse event
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventPreventiveAction")]
       [CLSCompliant(false)]
       [References("Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -767,6 +777,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#MitigatingAction", IsNestedType=true)]
+    [BackboneType("AdverseEvent.mitigatingAction")]
     public partial class MitigatingActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -778,6 +789,7 @@ namespace Hl7.Fhir.Model
       /// Ameliorating action taken after the adverse event occured in order to reduce the extent of harm
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventMitigatingAction")]
       [CLSCompliant(false)]
       [References("Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -880,6 +892,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SupportingInfo", IsNestedType=true)]
+    [BackboneType("AdverseEvent.supportingInfo")]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -891,6 +904,7 @@ namespace Hl7.Fhir.Model
       /// Subject medical history or document relevant to this adverse event
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("AdverseEventSupportingInfo")]
       [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationStatement","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -1006,6 +1020,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> StatusElement
@@ -1039,6 +1054,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
@@ -1071,6 +1087,7 @@ namespace Hl7.Fhir.Model
     /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("AdverseEventCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1085,6 +1102,7 @@ namespace Hl7.Fhir.Model
     /// Event or incident that occurred or was averted
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("AdverseEventType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1237,6 +1255,7 @@ namespace Hl7.Fhir.Model
     /// Seriousness or gravity of the event
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=210)]
+    [Binding("AdverseEventSeriousness")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Seriousness
     {
@@ -1250,6 +1269,7 @@ namespace Hl7.Fhir.Model
     /// Type of outcome from the adverse event
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=220)]
+    [Binding("AdverseEventOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Outcome
@@ -1419,6 +1439,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

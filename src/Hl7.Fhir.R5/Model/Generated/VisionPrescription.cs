@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("VisionPrescription","http://hl7.org/fhir/StructureDefinition/VisionPrescription", IsResource=true)]
-  public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
+  public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
     /// (system: http://hl7.org/fhir/vision-eye-codes)
     /// </summary>
-    [FhirEnumeration("VisionEyes")]
+    [FhirEnumeration("VisionEyes", "http://hl7.org/fhir/ValueSet/vision-eye-codes", "http://hl7.org/fhir/vision-eye-codes")]
     public enum VisionEyes
     {
       /// <summary>
       /// Right Eye.
       /// (system: http://hl7.org/fhir/vision-eye-codes)
       /// </summary>
-      [EnumLiteral("right", "http://hl7.org/fhir/vision-eye-codes"), Description("Right Eye")]
+      [EnumLiteral("right"), Description("Right Eye")]
       Right,
       /// <summary>
       /// Left Eye.
       /// (system: http://hl7.org/fhir/vision-eye-codes)
       /// </summary>
-      [EnumLiteral("left", "http://hl7.org/fhir/vision-eye-codes"), Description("Left Eye")]
+      [EnumLiteral("left"), Description("Left Eye")]
       Left,
     }
 
@@ -82,32 +82,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
     /// (system: http://hl7.org/fhir/vision-base-codes)
     /// </summary>
-    [FhirEnumeration("VisionBase")]
+    [FhirEnumeration("VisionBase", "http://hl7.org/fhir/ValueSet/vision-base-codes", "http://hl7.org/fhir/vision-base-codes")]
     public enum VisionBase
     {
       /// <summary>
       /// top.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("up", "http://hl7.org/fhir/vision-base-codes"), Description("Up")]
+      [EnumLiteral("up"), Description("Up")]
       Up,
       /// <summary>
       /// bottom.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("down", "http://hl7.org/fhir/vision-base-codes"), Description("Down")]
+      [EnumLiteral("down"), Description("Down")]
       Down,
       /// <summary>
       /// inner edge.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("in", "http://hl7.org/fhir/vision-base-codes"), Description("In")]
+      [EnumLiteral("in"), Description("In")]
       In,
       /// <summary>
       /// outer edge.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("out", "http://hl7.org/fhir/vision-base-codes"), Description("Out")]
+      [EnumLiteral("out"), Description("Out")]
       Out,
     }
 
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VisionPrescription#LensSpecification", IsNestedType=true)]
+    [BackboneType("VisionPrescription.lensSpecification")]
     public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -128,6 +129,7 @@ namespace Hl7.Fhir.Model
       /// Product to be supplied
       /// </summary>
       [FhirElement("product", InSummary=true, Order=40)]
+      [Binding("VisionProduct")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Product
@@ -143,6 +145,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("eye", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("VisionEyes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
@@ -697,6 +700,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VisionPrescription#Prism", IsNestedType=true)]
+    [BackboneType("VisionPrescription.lensSpecification.prism")]
     public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -741,6 +745,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("base", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("VisionBase")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
@@ -880,6 +885,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("VisionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -1032,6 +1038,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> _LensSpecification;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

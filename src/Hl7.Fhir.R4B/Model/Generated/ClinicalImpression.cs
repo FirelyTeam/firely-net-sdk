@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
-  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinicalimpression-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("ClinicalImpressionStatus")]
+    [FhirEnumeration("ClinicalImpressionStatus", "http://hl7.org/fhir/ValueSet/clinicalimpression-status", "http://hl7.org/fhir/event-status")]
     public enum ClinicalImpressionStatus
     {
       /// <summary>
       /// The event is currently occurring.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/event-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The event has now concluded.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
+    [BackboneType("ClinicalImpression.investigation")]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// A name/code for the set
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("InvestigationGroupType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -224,6 +226,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
+    [BackboneType("ClinicalImpression.finding")]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +238,7 @@ namespace Hl7.Fhir.Model
       /// What was found
       /// </summary>
       [FhirElement("itemCodeableConcept", Order=40)]
+      [Binding("ConditionKind")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ItemCodeableConcept
       {
@@ -410,6 +414,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClinicalImpressionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionStatus> StatusElement
@@ -442,6 +447,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=110)]
+    [Binding("ClinicalImpressionStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -455,6 +461,7 @@ namespace Hl7.Fhir.Model
     /// Kind of assessment performed
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [Binding("ClinicalImpressionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -713,6 +720,7 @@ namespace Hl7.Fhir.Model
     /// Estimate of likely outcome
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=250)]
+    [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
@@ -768,6 +776,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

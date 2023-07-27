@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
-  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,74 +60,74 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permitted-data-type)
     /// (system: http://hl7.org/fhir/permitted-data-type)
     /// </summary>
-    [FhirEnumeration("ObservationDataType")]
+    [FhirEnumeration("ObservationDataType", "http://hl7.org/fhir/ValueSet/permitted-data-type", "http://hl7.org/fhir/permitted-data-type")]
     public enum ObservationDataType
     {
       /// <summary>
       /// A measured amount.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("Quantity", "http://hl7.org/fhir/permitted-data-type"), Description("Quantity")]
+      [EnumLiteral("Quantity"), Description("Quantity")]
       Quantity,
       /// <summary>
       /// A coded concept from a reference terminology and/or text.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("CodeableConcept", "http://hl7.org/fhir/permitted-data-type"), Description("CodeableConcept")]
+      [EnumLiteral("CodeableConcept"), Description("CodeableConcept")]
       CodeableConcept,
       /// <summary>
       /// A sequence of Unicode characters.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("string", "http://hl7.org/fhir/permitted-data-type"), Description("string")]
+      [EnumLiteral("string"), Description("string")]
       String,
       /// <summary>
       /// true or false.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("boolean", "http://hl7.org/fhir/permitted-data-type"), Description("boolean")]
+      [EnumLiteral("boolean"), Description("boolean")]
       Boolean,
       /// <summary>
       /// A signed integer.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("integer", "http://hl7.org/fhir/permitted-data-type"), Description("integer")]
+      [EnumLiteral("integer"), Description("integer")]
       Integer,
       /// <summary>
       /// A set of values bounded by low and high.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("Range", "http://hl7.org/fhir/permitted-data-type"), Description("Range")]
+      [EnumLiteral("Range"), Description("Range")]
       Range,
       /// <summary>
       /// A ratio of two Quantity values - a numerator and a denominator.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("Ratio", "http://hl7.org/fhir/permitted-data-type"), Description("Ratio")]
+      [EnumLiteral("Ratio"), Description("Ratio")]
       Ratio,
       /// <summary>
       /// A series of measurements taken by a device.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("SampledData", "http://hl7.org/fhir/permitted-data-type"), Description("SampledData")]
+      [EnumLiteral("SampledData"), Description("SampledData")]
       SampledData,
       /// <summary>
       /// A time during the day, in the format hh:mm:ss.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("time", "http://hl7.org/fhir/permitted-data-type"), Description("time")]
+      [EnumLiteral("time"), Description("time")]
       Time,
       /// <summary>
       /// A date, date-time or partial date (e.g. just year or year + month) as used in human communication.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("dateTime", "http://hl7.org/fhir/permitted-data-type"), Description("dateTime")]
+      [EnumLiteral("dateTime"), Description("dateTime")]
       DateTime,
       /// <summary>
       /// A time range defined by start and end date/time.
       /// (system: http://hl7.org/fhir/permitted-data-type)
       /// </summary>
-      [EnumLiteral("Period", "http://hl7.org/fhir/permitted-data-type"), Description("Period")]
+      [EnumLiteral("Period"), Description("Period")]
       Period,
     }
 
@@ -136,26 +136,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-range-category)
     /// (system: http://hl7.org/fhir/observation-range-category)
     /// </summary>
-    [FhirEnumeration("ObservationRangeCategory")]
+    [FhirEnumeration("ObservationRangeCategory", "http://hl7.org/fhir/ValueSet/observation-range-category", "http://hl7.org/fhir/observation-range-category")]
     public enum ObservationRangeCategory
     {
       /// <summary>
       /// Reference (Normal) Range for Ordinal and Continuous Observations.
       /// (system: http://hl7.org/fhir/observation-range-category)
       /// </summary>
-      [EnumLiteral("reference", "http://hl7.org/fhir/observation-range-category"), Description("reference range")]
+      [EnumLiteral("reference"), Description("reference range")]
       Reference,
       /// <summary>
       /// Critical Range for Ordinal and Continuous Observations.
       /// (system: http://hl7.org/fhir/observation-range-category)
       /// </summary>
-      [EnumLiteral("critical", "http://hl7.org/fhir/observation-range-category"), Description("critical range")]
+      [EnumLiteral("critical"), Description("critical range")]
       Critical,
       /// <summary>
       /// Absolute Range for Ordinal and Continuous Observations. Results outside this range are not possible.
       /// (system: http://hl7.org/fhir/observation-range-category)
       /// </summary>
-      [EnumLiteral("absolute", "http://hl7.org/fhir/observation-range-category"), Description("absolute range")]
+      [EnumLiteral("absolute"), Description("absolute range")]
       Absolute,
     }
 
@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#QuantitativeDetails", IsNestedType=true)]
+    [BackboneType("ObservationDefinition.quantitativeDetails")]
     public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -176,6 +177,7 @@ namespace Hl7.Fhir.Model
       /// Customary unit for quantitative results
       /// </summary>
       [FhirElement("customaryUnit", Order=40)]
+      [Binding("ObservationUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CustomaryUnit
       {
@@ -189,6 +191,7 @@ namespace Hl7.Fhir.Model
       /// SI unit for quantitative results
       /// </summary>
       [FhirElement("unit", Order=50)]
+      [Binding("ObservationUnit")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -376,6 +379,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#QualifiedInterval", IsNestedType=true)]
+    [BackboneType("ObservationDefinition.qualifiedInterval")]
     public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -388,6 +392,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("category", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationRangeCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> CategoryElement
       {
@@ -432,6 +437,7 @@ namespace Hl7.Fhir.Model
       /// Range context qualifier
       /// </summary>
       [FhirElement("context", Order=60)]
+      [Binding("ObservationRangeMeaning")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Context
       {
@@ -445,6 +451,7 @@ namespace Hl7.Fhir.Model
       /// Targetted population of the range
       /// </summary>
       [FhirElement("appliesTo", Order=70)]
+      [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
@@ -460,6 +467,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gender", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -694,6 +702,7 @@ namespace Hl7.Fhir.Model
     /// Category of observation
     /// </summary>
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
+    [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -708,6 +717,7 @@ namespace Hl7.Fhir.Model
     /// Type of observation (code / type)
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -737,11 +747,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("permittedDataType", Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
-      get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
+      get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
       set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
     }
 
@@ -760,7 +771,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           PermittedDataTypeElement = null;
         else
-          PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
+          PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
         OnPropertyChanged("PermittedDataType");
       }
     }
@@ -800,6 +811,7 @@ namespace Hl7.Fhir.Model
     /// Method used to produce the observation
     /// </summary>
     [FhirElement("method", Order=140)]
+    [Binding("ObservationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -926,6 +938,11 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _CriticalCodedValueSet;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

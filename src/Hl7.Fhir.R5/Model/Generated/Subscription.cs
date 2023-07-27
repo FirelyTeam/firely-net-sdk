@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
-  public partial class Subscription : Hl7.Fhir.Model.DomainResource
+  public partial class Subscription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-payload-content)
     /// (system: http://hl7.org/fhir/subscription-payload-content)
     /// </summary>
-    [FhirEnumeration("SubscriptionPayloadContent")]
+    [FhirEnumeration("SubscriptionPayloadContent", "http://hl7.org/fhir/ValueSet/subscription-payload-content", "http://hl7.org/fhir/subscription-payload-content")]
     public enum SubscriptionPayloadContent
     {
       /// <summary>
       /// No resource content is transacted in the notification payload.
       /// (system: http://hl7.org/fhir/subscription-payload-content)
       /// </summary>
-      [EnumLiteral("empty", "http://hl7.org/fhir/subscription-payload-content"), Description("Empty")]
+      [EnumLiteral("empty"), Description("Empty")]
       Empty,
       /// <summary>
       /// Only the resource id is transacted in the notification payload.
       /// (system: http://hl7.org/fhir/subscription-payload-content)
       /// </summary>
-      [EnumLiteral("id-only", "http://hl7.org/fhir/subscription-payload-content"), Description("Id-only")]
+      [EnumLiteral("id-only"), Description("Id-only")]
       IdOnly,
       /// <summary>
       /// The entire resource is transacted in the notification payload.
       /// (system: http://hl7.org/fhir/subscription-payload-content)
       /// </summary>
-      [EnumLiteral("full-resource", "http://hl7.org/fhir/subscription-payload-content"), Description("Full-resource")]
+      [EnumLiteral("full-resource"), Description("Full-resource")]
       FullResource,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Subscription#FilterBy", IsNestedType=true)]
+    [BackboneType("Subscription.filterBy")]
     public partial class FilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Allowed Resource (reference to definition) for this Subscription filter
       /// </summary>
       [FhirElement("resourceType", InSummary=true, Order=40)]
+      [Binding("FHIRTypes")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceTypeElement
       {
@@ -164,6 +166,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchComparator> ComparatorElement
       {
@@ -196,6 +199,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("modifier", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchModifierCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchModifierCode> ModifierElement
       {
@@ -380,6 +384,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Subscription#Parameter", IsNestedType=true)]
+    [BackboneType("Subscription.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -593,6 +598,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionStatusCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatusCodes> StatusElement
@@ -762,6 +768,7 @@ namespace Hl7.Fhir.Model
     /// Channel type for notifications
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=180)]
+    [Binding("SubscriptionChannelType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ChannelType
@@ -883,6 +890,7 @@ namespace Hl7.Fhir.Model
     /// MIME type to send, or omit for no payload
     /// </summary>
     [FhirElement("contentType", InSummary=true, Order=230)]
+    [Binding("MimeType")]
     [DataMember]
     public Hl7.Fhir.Model.Code ContentTypeElement
     {
@@ -915,6 +923,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("content", InSummary=true, Order=240)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionPayloadContent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> ContentElement
     {
@@ -972,6 +981,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("MaxCount");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

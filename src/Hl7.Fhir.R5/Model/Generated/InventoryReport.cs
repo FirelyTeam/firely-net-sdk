@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("InventoryReport","http://hl7.org/fhir/StructureDefinition/InventoryReport", IsResource=true)]
-  public partial class InventoryReport : Hl7.Fhir.Model.DomainResource
+  public partial class InventoryReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryreport-status)
     /// (system: http://hl7.org/fhir/inventoryreport-status)
     /// </summary>
-    [FhirEnumeration("InventoryReportStatus")]
+    [FhirEnumeration("InventoryReportStatus", "http://hl7.org/fhir/ValueSet/inventoryreport-status", "http://hl7.org/fhir/inventoryreport-status")]
     public enum InventoryReportStatus
     {
       /// <summary>
       /// The existence of the report is registered, but it is still without content or only some preliminary content.
       /// (system: http://hl7.org/fhir/inventoryreport-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/inventoryreport-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The inventory report has been requested but there is no data available.
       /// (system: http://hl7.org/fhir/inventoryreport-status)
       /// </summary>
-      [EnumLiteral("requested", "http://hl7.org/fhir/inventoryreport-status"), Description("Requested")]
+      [EnumLiteral("requested"), Description("Requested")]
       Requested,
       /// <summary>
       /// This report is submitted as current.
       /// (system: http://hl7.org/fhir/inventoryreport-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/inventoryreport-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The report has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it.
       /// (system: http://hl7.org/fhir/inventoryreport-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/inventoryreport-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryreport-counttype)
     /// (system: http://hl7.org/fhir/inventoryreport-counttype)
     /// </summary>
-    [FhirEnumeration("InventoryCountType")]
+    [FhirEnumeration("InventoryCountType", "http://hl7.org/fhir/ValueSet/inventoryreport-counttype", "http://hl7.org/fhir/inventoryreport-counttype")]
     public enum InventoryCountType
     {
       /// <summary>
       /// The inventory report is a current absolute snapshot, i.e. it represents the quantities at hand.
       /// (system: http://hl7.org/fhir/inventoryreport-counttype)
       /// </summary>
-      [EnumLiteral("snapshot", "http://hl7.org/fhir/inventoryreport-counttype"), Description("Snapshot")]
+      [EnumLiteral("snapshot"), Description("Snapshot")]
       Snapshot,
       /// <summary>
       /// The inventory report is about the difference between a previous count and a current count, i.e. it represents the items that have been added/subtracted from inventory.
       /// (system: http://hl7.org/fhir/inventoryreport-counttype)
       /// </summary>
-      [EnumLiteral("difference", "http://hl7.org/fhir/inventoryreport-counttype"), Description("Difference")]
+      [EnumLiteral("difference"), Description("Difference")]
       Difference,
     }
 
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryReport#InventoryListing", IsNestedType=true)]
+    [BackboneType("InventoryReport.inventoryListing")]
     public partial class InventoryListingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryReport#Item", IsNestedType=true)]
+    [BackboneType("InventoryReport.inventoryListing.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -481,6 +483,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> StatusElement
@@ -514,6 +517,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("countType", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryCountType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> CountTypeElement
@@ -655,6 +659,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("OrganizationAffiliation","http://hl7.org/fhir/StructureDefinition/OrganizationAffiliation", IsResource=true)]
-  public partial class OrganizationAffiliation : Hl7.Fhir.Model.DomainResource
+  public partial class OrganizationAffiliation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
     /// Definition of the role the participatingOrganization plays
     /// </summary>
     [FhirElement("code", InSummary=true, Order=150)]
+    [Binding("OrganizationAffiliation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -177,6 +178,7 @@ namespace Hl7.Fhir.Model
     /// Specific specialty of the participatingOrganization in the context of the role
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=160)]
+    [Binding("OrganizationSpecialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -248,6 +250,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicinalProduct","http://hl7.org/fhir/StructureDefinition/MedicinalProduct", IsResource=true)]
-  public partial class MedicinalProduct : Hl7.Fhir.Model.DomainResource
+  public partial class MedicinalProduct : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#Name", IsNestedType=true)]
+    [BackboneType("MedicinalProduct.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +236,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#NamePart", IsNestedType=true)]
+    [BackboneType("MedicinalProduct.name.namePart")]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#CountryLanguage", IsNestedType=true)]
+    [BackboneType("MedicinalProduct.name.countryLanguage")]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -541,6 +544,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#ManufacturingBusinessOperation", IsNestedType=true)]
+    [BackboneType("MedicinalProduct.manufacturingBusinessOperation")]
     public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -783,6 +787,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#SpecialDesignation", IsNestedType=true)]
+    [BackboneType("MedicinalProduct.specialDesignation")]
     public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1343,6 +1348,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent> _SpecialDesignation;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

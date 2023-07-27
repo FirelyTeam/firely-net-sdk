@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CodeSystem","http://hl7.org/fhir/StructureDefinition/CodeSystem", IsResource=true)]
-  public partial class CodeSystem : Hl7.Fhir.Model.DomainResource
+  public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning)
     /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
     /// </summary>
-    [FhirEnumeration("CodeSystemHierarchyMeaning")]
+    [FhirEnumeration("CodeSystemHierarchyMeaning", "http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning", "http://hl7.org/fhir/codesystem-hierarchy-meaning")]
     public enum CodeSystemHierarchyMeaning
     {
       /// <summary>
       /// No particular relationship between the concepts can be assumed, except what can be determined by inspection of the definitions of the elements (possible reasons to use this: importing from a source where this is not defined, or where various parts of the hierarchy have different meanings)
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("grouped-by", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Grouped By")]
+      [EnumLiteral("grouped-by"), Description("Grouped By")]
       GroupedBy,
       /// <summary>
       /// A hierarchy where the child concepts have an IS-A relationship with the parents - that is, all the properties of the parent are also true for its child concepts
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("is-a", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Is-A")]
+      [EnumLiteral("is-a"), Description("Is-A")]
       IsA,
       /// <summary>
       /// Child elements list the individual parts of a composite whole (e.g. body site)
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("part-of", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Part Of")]
+      [EnumLiteral("part-of"), Description("Part Of")]
       PartOf,
       /// <summary>
       /// Child concepts in the hierarchy may have only one parent, and there is a presumption that the code system is a "closed world" meaning all things must be in the hierarchy. This results in concepts such as "not otherwise classified."
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("classified-with", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Classified With")]
+      [EnumLiteral("classified-with"), Description("Classified With")]
       ClassifiedWith,
     }
 
@@ -94,32 +94,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/codesystem-content-mode)
     /// (system: http://hl7.org/fhir/codesystem-content-mode)
     /// </summary>
-    [FhirEnumeration("CodeSystemContentMode")]
+    [FhirEnumeration("CodeSystemContentMode", "http://hl7.org/fhir/ValueSet/codesystem-content-mode", "http://hl7.org/fhir/codesystem-content-mode")]
     public enum CodeSystemContentMode
     {
       /// <summary>
       /// None of the concepts defined by the code system are included in the code system resource
       /// (system: http://hl7.org/fhir/codesystem-content-mode)
       /// </summary>
-      [EnumLiteral("not-present", "http://hl7.org/fhir/codesystem-content-mode"), Description("Not Present")]
+      [EnumLiteral("not-present"), Description("Not Present")]
       NotPresent,
       /// <summary>
       /// A few representative concepts are included in the code system resource
       /// (system: http://hl7.org/fhir/codesystem-content-mode)
       /// </summary>
-      [EnumLiteral("example", "http://hl7.org/fhir/codesystem-content-mode"), Description("Example")]
+      [EnumLiteral("example"), Description("Example")]
       Example,
       /// <summary>
       /// A subset of the code system concepts are included in the code system resource
       /// (system: http://hl7.org/fhir/codesystem-content-mode)
       /// </summary>
-      [EnumLiteral("fragment", "http://hl7.org/fhir/codesystem-content-mode"), Description("Fragment")]
+      [EnumLiteral("fragment"), Description("Fragment")]
       Fragment,
       /// <summary>
       /// All the concepts defined by the code system are included in the code system resource
       /// (system: http://hl7.org/fhir/codesystem-content-mode)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/codesystem-content-mode"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
     }
 
@@ -128,44 +128,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-property-type)
     /// (system: http://hl7.org/fhir/concept-property-type)
     /// </summary>
-    [FhirEnumeration("PropertyType")]
+    [FhirEnumeration("PropertyType", "http://hl7.org/fhir/ValueSet/concept-property-type", "http://hl7.org/fhir/concept-property-type")]
     public enum PropertyType
     {
       /// <summary>
       /// The property value is a code that identifies a concept defined in the code system
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("code", "http://hl7.org/fhir/concept-property-type"), Description("code (internal reference)")]
+      [EnumLiteral("code"), Description("code (internal reference)")]
       Code,
       /// <summary>
       /// The property  value is a code defined in an external code system. This may be used for translations, but is not the intent
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("Coding", "http://hl7.org/fhir/concept-property-type"), Description("Coding (external reference)")]
+      [EnumLiteral("Coding"), Description("Coding (external reference)")]
       Coding,
       /// <summary>
       /// The property value is a string
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("string", "http://hl7.org/fhir/concept-property-type"), Description("string")]
+      [EnumLiteral("string"), Description("string")]
       String,
       /// <summary>
       /// The property value is a string (often used to assign ranking values to concepts for supporting score assessments)
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("integer", "http://hl7.org/fhir/concept-property-type"), Description("integer")]
+      [EnumLiteral("integer"), Description("integer")]
       Integer,
       /// <summary>
       /// The property value is a boolean true | false
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("boolean", "http://hl7.org/fhir/concept-property-type"), Description("boolean")]
+      [EnumLiteral("boolean"), Description("boolean")]
       Boolean,
       /// <summary>
       /// The property is a date or a date + time
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("dateTime", "http://hl7.org/fhir/concept-property-type"), Description("dateTime")]
+      [EnumLiteral("dateTime"), Description("dateTime")]
       DateTime,
     }
 
@@ -175,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Filter", IsNestedType=true)]
+    [BackboneType("CodeSystem.filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -250,11 +251,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
       {
-        get { if(_OperatorElement==null) _OperatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>>(); return _OperatorElement; }
+        get { if(_OperatorElement==null) _OperatorElement = new List<Code<Hl7.Fhir.Model.FilterOperator>>(); return _OperatorElement; }
         set { _OperatorElement = value; OnPropertyChanged("OperatorElement"); }
       }
 
@@ -273,7 +275,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             OperatorElement = null;
           else
-            OperatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FilterOperator>(elem)));
+            OperatorElement = new List<Code<Hl7.Fhir.Model.FilterOperator>>(value.Select(elem=>new Code<Hl7.Fhir.Model.FilterOperator>(elem)));
           OnPropertyChanged("Operator");
         }
       }
@@ -426,6 +428,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Property", IsNestedType=true)]
+    [BackboneType("CodeSystem.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -532,6 +535,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CodeSystem.PropertyType> TypeElement
@@ -676,6 +680,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
+    [BackboneType("CodeSystem.concept")]
     public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -953,6 +958,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Designation", IsNestedType=true)]
+    [BackboneType("CodeSystem.concept.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -964,6 +970,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -995,6 +1002,7 @@ namespace Hl7.Fhir.Model
       /// Details how this designation would be used
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1143,6 +1151,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
+    [BackboneType("CodeSystem.concept.property")]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1432,6 +1441,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1616,6 +1626,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for code system (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1755,6 +1766,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSystemHierarchyMeaning")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> HierarchyMeaningElement
     {
@@ -1849,6 +1861,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("content", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSystemContentMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode> ContentElement
@@ -1949,6 +1962,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> _Concept;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

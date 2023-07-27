@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Immunization","http://hl7.org/fhir/StructureDefinition/Immunization", IsResource=true)]
-  public partial class Immunization : Hl7.Fhir.Model.DomainResource
+  public partial class Immunization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/immunization-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("ImmunizationStatusCodes")]
+    [FhirEnumeration("ImmunizationStatusCodes", "http://hl7.org/fhir/ValueSet/immunization-status", "http://hl7.org/fhir/event-status")]
     public enum ImmunizationStatusCodes
     {
       /// <summary>
       /// The event has now concluded.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("not-done", "http://hl7.org/fhir/event-status"), Description("Not Done")]
+      [EnumLiteral("not-done"), Description("Not Done")]
       NotDone,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Performer", IsNestedType=true)]
+    [BackboneType("Immunization.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("ImmunizationFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -223,6 +225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#ProgramEligibility", IsNestedType=true)]
+    [BackboneType("Immunization.programEligibility")]
     public partial class ProgramEligibilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -234,6 +237,7 @@ namespace Hl7.Fhir.Model
       /// The program that eligibility is declared for
       /// </summary>
       [FhirElement("program", Order=40)]
+      [Binding("VaccineFundingProgram")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Program
@@ -248,6 +252,7 @@ namespace Hl7.Fhir.Model
       /// The patient's eligibility status for the program
       /// </summary>
       [FhirElement("programStatus", Order=50)]
+      [Binding("ProgramEligibility")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProgramStatus
@@ -356,6 +361,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Reaction", IsNestedType=true)]
+    [BackboneType("Immunization.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -545,6 +551,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#ProtocolApplied", IsNestedType=true)]
+    [BackboneType("Immunization.protocolApplied")]
     public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -602,6 +609,7 @@ namespace Hl7.Fhir.Model
       /// Vaccine preventatable disease being targeted
       /// </summary>
       [FhirElement("targetDisease", Order=60)]
+      [Binding("TargetDisease")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
@@ -829,6 +837,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImmunizationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> StatusElement
@@ -861,6 +870,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=120)]
+    [Binding("ImmunizationStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -874,6 +884,7 @@ namespace Hl7.Fhir.Model
     /// Vaccine administered
     /// </summary>
     [FhirElement("vaccineCode", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("VaccineCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -1070,6 +1081,7 @@ namespace Hl7.Fhir.Model
     /// Indicates the source of a  reported record
     /// </summary>
     [FhirElement("informationSource", Order=230, FiveWs="FiveWs.source")]
+    [Binding("ImmunizationReportOrigin")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference InformationSource
     {
@@ -1098,6 +1110,7 @@ namespace Hl7.Fhir.Model
     /// Body site vaccine  was administered
     /// </summary>
     [FhirElement("site", Order=250)]
+    [Binding("ImmunizationSite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Site
     {
@@ -1111,6 +1124,7 @@ namespace Hl7.Fhir.Model
     /// How vaccine entered body
     /// </summary>
     [FhirElement("route", Order=260)]
+    [Binding("ImmunizationRoute")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Route
     {
@@ -1165,6 +1179,7 @@ namespace Hl7.Fhir.Model
     /// Why immunization occurred
     /// </summary>
     [FhirElement("reason", Order=300)]
+    [Binding("ImmunizationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1210,6 +1225,7 @@ namespace Hl7.Fhir.Model
     /// Reason for being subpotent
     /// </summary>
     [FhirElement("subpotentReason", Order=320)]
+    [Binding("SubpotentReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubpotentReason
@@ -1238,6 +1254,7 @@ namespace Hl7.Fhir.Model
     /// Funding source for the vaccine
     /// </summary>
     [FhirElement("fundingSource", Order=340)]
+    [Binding("FundingSource")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FundingSource
     {
@@ -1274,6 +1291,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent> _ProtocolApplied;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

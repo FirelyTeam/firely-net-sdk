@@ -185,6 +185,7 @@ namespace Hl7.Fhir.Model
     /// Security Labels applied to this resource
     /// </summary>
     [FhirElement("security", InSummary=true, Order=70)]
+    [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Security
@@ -199,6 +200,7 @@ namespace Hl7.Fhir.Model
     /// Tags applied to this resource
     /// </summary>
     [FhirElement("tag", InSummary=true, Order=80)]
+    [Binding("Tags")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Tag

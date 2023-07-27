@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubstancePolymer","http://hl7.org/fhir/StructureDefinition/SubstancePolymer", IsResource=true)]
-  public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource
+  public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#MonomerSet", IsNestedType=true)]
+    [BackboneType("SubstancePolymer.monomerSet")]
     public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#StartingMaterial", IsNestedType=true)]
+    [BackboneType("SubstancePolymer.monomerSet.startingMaterial")]
     public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#Repeat", IsNestedType=true)]
+    [BackboneType("SubstancePolymer.repeat")]
     public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -558,6 +561,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#RepeatUnit", IsNestedType=true)]
+    [BackboneType("SubstancePolymer.repeat.repeatUnit")]
     public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -793,6 +797,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#DegreeOfPolymerisation", IsNestedType=true)]
+    [BackboneType("SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation")]
     public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1022,6 +1027,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#StructuralRepresentation", IsNestedType=true)]
+    [BackboneType("SubstancePolymer.repeat.repeatUnit.structuralRepresentation")]
     public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1320,6 +1326,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> _Repeat;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

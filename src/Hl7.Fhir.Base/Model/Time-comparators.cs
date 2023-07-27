@@ -30,7 +30,6 @@
 
 
 
-using System;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
@@ -47,7 +46,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.Time.Parse(a.Value) > P.Time.Parse(b.Value);
+            return a.ToTime() > b.ToTime();
         }
 
         public static bool operator >=(Time a, Time b)
@@ -58,7 +57,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.Time.Parse(a.Value) >= P.Time.Parse(b.Value);
+            return a.ToTime() >= b.ToTime();
         }
 
         public static bool operator <(Time a, Time b)
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.Time.Parse(a.Value) < P.Time.Parse(b.Value);
+            return a.ToTime() < b.ToTime();
         }
 
         public static bool operator <=(Time a, Time b)
@@ -80,7 +79,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.Time.Parse(a.Value) <= P.Time.Parse(b.Value);
+            return a.ToTime() <= b.ToTime();
         }
 
         /// <summary>

@@ -28,22 +28,23 @@
 
 */
 
+#nullable enable
+
 using Hl7.Fhir.Introspection;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay(null),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{DebuggerDisplay(null),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class CodeableConcept
     {
         internal string DebuggerDisplay(string prefix)
         {
-            if (!String.IsNullOrEmpty(Text))
-                return String.Format("{0}Text=\"{1}\"", prefix, Text);
-            StringBuilder sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(Text))
+                return string.Format("{0}Text=\"{1}\"", prefix, Text);
+            var sb = new StringBuilder();
             if (_Coding != null)
             {
                 foreach (var item in _Coding)
@@ -59,7 +60,7 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public CodeableConcept(string system, string code, string text = null)
+        public CodeableConcept(string system, string code, string? text = null)
         {
             if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code))
             {
@@ -76,6 +77,13 @@ namespace Hl7.Fhir.Model
                     new Coding(system,code, display) };
             }
             this.Text = text;
+        }
+
+        public CodeableConcept Add(string system, string code, string? display = null)
+        {
+            Coding.Add(new Coding(system, code, display));
+
+            return this;
         }
     }
 
@@ -111,7 +119,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 if (!string.IsNullOrEmpty(this.Start))
                     sb.AppendFormat(" Start=\"{0}\"", Start);
                 if (!string.IsNullOrEmpty(this.End))
@@ -152,3 +160,5 @@ namespace Hl7.Fhir.Model
     }
 
 }
+
+#nullable restore

@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/units-of-time)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("UnitsOfTime")]
+    [FhirEnumeration("UnitsOfTime", "http://hl7.org/fhir/ValueSet/units-of-time", "http://unitsofmeasure.org")]
     public enum UnitsOfTime
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("s", "http://unitsofmeasure.org"), Description("second")]
+      [EnumLiteral("s"), Description("second")]
       S,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("min", "http://unitsofmeasure.org"), Description("minute")]
+      [EnumLiteral("min"), Description("minute")]
       Min,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("h", "http://unitsofmeasure.org"), Description("hour")]
+      [EnumLiteral("h"), Description("hour")]
       H,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("d", "http://unitsofmeasure.org"), Description("day")]
+      [EnumLiteral("d"), Description("day")]
       D,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("week")]
+      [EnumLiteral("wk"), Description("week")]
       Wk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("month")]
+      [EnumLiteral("mo"), Description("month")]
       Mo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("a", "http://unitsofmeasure.org"), Description("year")]
+      [EnumLiteral("a"), Description("year")]
       A,
     }
 
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-timing)
     /// (system: http://hl7.org/fhir/event-timing)
     /// </summary>
-    [FhirEnumeration("EventTiming")]
+    [FhirEnumeration("EventTiming", "http://hl7.org/fhir/ValueSet/event-timing", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent")]
     public enum EventTiming
     {
       /// <summary>
@@ -191,85 +191,85 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("HS", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("HS"), Description("")]
       HS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("WAKE", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("WAKE"), Description("")]
       WAKE,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("C", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("C"), Description("")]
       C,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("CM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("CM"), Description("")]
       CM,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("CD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("CD"), Description("")]
       CD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("CV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("CV"), Description("")]
       CV,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("AC", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("AC"), Description("")]
       AC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("ACM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("ACM"), Description("")]
       ACM,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("ACD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("ACD"), Description("")]
       ACD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("ACV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("ACV"), Description("")]
       ACV,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PC", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("PC"), Description("")]
       PC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PCM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("PCM"), Description("")]
       PCM,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PCD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("PCD"), Description("")]
       PCD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PCV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("")]
+      [EnumLiteral("PCV"), Description("")]
       PCV,
     }
 
@@ -279,6 +279,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Timing#Repeat", IsNestedType=true)]
+    [BackboneType("Timing.repeat")]
     public partial class RepeatComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -430,6 +431,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> DurationUnitElement
       {
@@ -586,6 +588,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> PeriodUnitElement
       {
@@ -618,11 +621,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DayOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
       {
-        get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
+        get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
         set { _DayOfWeekElement = value; OnPropertyChanged("DayOfWeekElement"); }
       }
 
@@ -641,7 +645,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             DayOfWeekElement = null;
           else
-            DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+            DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DayOfWeek");
         }
       }
@@ -683,11 +687,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventTiming")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
       {
-        get { if(_WhenElement==null) _WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
+        get { if(_WhenElement==null) _WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
         set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
       }
 
@@ -706,7 +711,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             WhenElement = null;
           else
-            WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
+            WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
           OnPropertyChanged("When");
         }
       }
@@ -1000,6 +1005,7 @@ namespace Hl7.Fhir.Model
     /// BID | TID | QID | AM | PM | QD | QOD | +
     /// </summary>
     [FhirElement("code", InSummary=true, Order=60)]
+    [Binding("TimingAbbreviation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

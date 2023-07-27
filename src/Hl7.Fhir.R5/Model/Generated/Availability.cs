@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Availability#AvailableTime", IsNestedType=true)]
+    [BackboneType("Availability.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -73,11 +74,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
+        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
         set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
       }
 
@@ -96,7 +98,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             DaysOfWeekElement = null;
           else
-            DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+            DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DaysOfWeek");
         }
       }
@@ -310,6 +312,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Availability#NotAvailableTime", IsNestedType=true)]
+    [BackboneType("Availability.notAvailableTime")]
     public partial class NotAvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

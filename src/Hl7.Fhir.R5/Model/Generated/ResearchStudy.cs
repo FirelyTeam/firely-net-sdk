@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ResearchStudy","http://hl7.org/fhir/StructureDefinition/ResearchStudy", IsResource=true)]
-  public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource
+  public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Label", IsNestedType=true)]
+    [BackboneType("ResearchStudy.label")]
     public partial class LabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// primary | official | scientific | plain-language | subtitle | short-title | acronym | earlier-title | language | auto-translated | human-use | machine-use | duplicate-uid
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TitleType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -210,6 +212,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#AssociatedParty", IsNestedType=true)]
+    [BackboneType("ResearchStudy.associatedParty")]
     public partial class AssociatedPartyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -252,6 +255,7 @@ namespace Hl7.Fhir.Model
       /// sponsor | lead-sponsor | sponsor-investigator | primary-investigator | collaborator | funding-source | general-contact | recruitment-contact | sub-investigator | study-director | study-chair
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ResearchStudyPartyRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -280,6 +284,7 @@ namespace Hl7.Fhir.Model
       /// nih | fda | government | nonprofit | academic | industry
       /// </summary>
       [FhirElement("classifier", Order=70)]
+      [Binding("ResearchStudyPartyOrganizationType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -430,6 +435,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#ProgressStatus", IsNestedType=true)]
+    [BackboneType("ResearchStudy.progressStatus")]
     public partial class ProgressStatusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -441,6 +447,7 @@ namespace Hl7.Fhir.Model
       /// Label for status or state (e.g. recruitment status)
       /// </summary>
       [FhirElement("state", Order=40)]
+      [Binding("ResearchStudyStudyStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept State
@@ -602,6 +609,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Recruitment", IsNestedType=true)]
+    [BackboneType("ResearchStudy.recruitment")]
     public partial class RecruitmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -817,6 +825,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#ComparisonGroup", IsNestedType=true)]
+    [BackboneType("ResearchStudy.comparisonGroup")]
     public partial class ComparisonGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -891,6 +900,7 @@ namespace Hl7.Fhir.Model
       /// Categorization of study comparisonGroup
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("ResearchStudyArmType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1096,6 +1106,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Objective", IsNestedType=true)]
+    [BackboneType("ResearchStudy.objective")]
     public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1138,6 +1149,7 @@ namespace Hl7.Fhir.Model
       /// primary | secondary | exploratory
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ResearchStudyObjectiveType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1285,6 +1297,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#OutcomeMeasure", IsNestedType=true)]
+    [BackboneType("ResearchStudy.outcomeMeasure")]
     public partial class OutcomeMeasureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1327,6 +1340,7 @@ namespace Hl7.Fhir.Model
       /// primary | secondary | exploratory
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ResearchStudyObjectiveType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1727,6 +1741,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=190, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1759,6 +1774,7 @@ namespace Hl7.Fhir.Model
     /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
     /// </summary>
     [FhirElement("primaryPurposeType", InSummary=true, Order=200)]
+    [Binding("ResearchStudyPrimaryPurposeType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
     {
@@ -1772,6 +1788,7 @@ namespace Hl7.Fhir.Model
     /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
     /// </summary>
     [FhirElement("phase", InSummary=true, Order=210)]
+    [Binding("ResearchStudyPhase")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Phase
     {
@@ -1785,6 +1802,7 @@ namespace Hl7.Fhir.Model
     /// Classifications of the study design characteristics
     /// </summary>
     [FhirElement("studyDesign", InSummary=true, Order=220)]
+    [Binding("StudyDesign")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StudyDesign
@@ -1799,6 +1817,7 @@ namespace Hl7.Fhir.Model
     /// Drugs, devices, etc. under study
     /// </summary>
     [FhirElement("focus", Order=230)]
+    [Binding("ResearchStudyFocusType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Focus
@@ -1813,6 +1832,7 @@ namespace Hl7.Fhir.Model
     /// Condition being studied
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=240, FiveWs="FiveWs.what[x]")]
+    [Binding("ConditionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
@@ -1827,6 +1847,7 @@ namespace Hl7.Fhir.Model
     /// Used to search for the study
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=250)]
+    [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -1841,6 +1862,7 @@ namespace Hl7.Fhir.Model
     /// Geographic area for the study
     /// </summary>
     [FhirElement("region", InSummary=true, Order=260)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
@@ -1960,6 +1982,7 @@ namespace Hl7.Fhir.Model
     /// Classification for the study
     /// </summary>
     [FhirElement("classifier", Order=320)]
+    [Binding("ResearchStudyClassifiers")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -2002,6 +2025,7 @@ namespace Hl7.Fhir.Model
     /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
     /// </summary>
     [FhirElement("whyStopped", InSummary=true, Order=350, FiveWs="FiveWs.why[x]")]
+    [Binding("ResearchStudyReasonStopped")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept WhyStopped
     {
@@ -2081,6 +2105,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Result;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

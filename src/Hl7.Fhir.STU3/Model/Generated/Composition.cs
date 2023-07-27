@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition", IsResource=true)]
-  public partial class Composition : Hl7.Fhir.Model.DomainResource
+  public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/v3-ConfidentialityClassification)
     /// (system: http://hl7.org/fhir/v3/Confidentiality)
     /// </summary>
-    [FhirEnumeration("ConfidentialityClassification")]
+    [FhirEnumeration("ConfidentialityClassification", "http://hl7.org/fhir/ValueSet/v3-ConfidentialityClassification", "http://hl7.org/fhir/v3/Confidentiality")]
     public enum ConfidentialityClassification
     {
       /// <summary>
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
       ///                            Usage Note: This metadata indicates that the receiver has no obligation to consider additional policies when making access control decisions.   Note that in some jurisdictions, personally identifiable information must be protected as confidential, so it would not be appropriate to assign a confidentiality code of "unrestricted"  to that information even if it is publicly available.
       /// (system: http://hl7.org/fhir/v3/Confidentiality)
       /// </summary>
-      [EnumLiteral("U", "http://hl7.org/fhir/v3/Confidentiality"), Description("unrestricted")]
+      [EnumLiteral("U"), Description("unrestricted")]
       U,
       /// <summary>
       /// Definition: Privacy metadata indicating that the information has been de-identified, and there are mitigating circumstances that prevent re-identification, which minimize risk of harm from unauthorized disclosure.  The information requires protection to maintain low sensitivity.
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
       ///                            Usage Note: This metadata indicates the receiver may have an obligation to comply with a data use agreement.
       /// (system: http://hl7.org/fhir/v3/Confidentiality)
       /// </summary>
-      [EnumLiteral("L", "http://hl7.org/fhir/v3/Confidentiality"), Description("low")]
+      [EnumLiteral("L"), Description("low")]
       L,
       /// <summary>
       /// Definition: Privacy metadata indicating moderately sensitive information, which presents moderate risk of harm if disclosed without authorization.
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
       ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with the receiver's terms of use or privacy policies.
       /// (system: http://hl7.org/fhir/v3/Confidentiality)
       /// </summary>
-      [EnumLiteral("M", "http://hl7.org/fhir/v3/Confidentiality"), Description("moderate")]
+      [EnumLiteral("M"), Description("moderate")]
       M,
       /// <summary>
       /// Definition: Privacy metadata indicating that the information is typical, non-stigmatizing health information, which presents typical risk of harm if disclosed without authorization.
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable jurisdictional privacy law or disclosure authorization.
       /// (system: http://hl7.org/fhir/v3/Confidentiality)
       /// </summary>
-      [EnumLiteral("N", "http://hl7.org/fhir/v3/Confidentiality"), Description("normal")]
+      [EnumLiteral("N"), Description("normal")]
       N,
       /// <summary>
       /// Privacy metadata indicating highly sensitive, potentially stigmatizing information, which presents a high risk to the information subject if disclosed without authorization. May be pre-empted by jurisdictional law, e.g., for public health reporting or emergency treatment.
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable, prevailing (default) jurisdictional privacy law or disclosure authorization..
       /// (system: http://hl7.org/fhir/v3/Confidentiality)
       /// </summary>
-      [EnumLiteral("R", "http://hl7.org/fhir/v3/Confidentiality"), Description("restricted")]
+      [EnumLiteral("R"), Description("restricted")]
       R,
       /// <summary>
       /// . Privacy metadata indicating that the information is extremely sensitive and likely stigmatizing health information that presents a very high risk if disclosed without authorization.  This information must be kept in the highest confidence.  
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       ///                            Usage Note:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
       /// (system: http://hl7.org/fhir/v3/Confidentiality)
       /// </summary>
-      [EnumLiteral("V", "http://hl7.org/fhir/v3/Confidentiality"), Description("very restricted")]
+      [EnumLiteral("V"), Description("very restricted")]
       V,
     }
 
@@ -157,32 +157,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/composition-attestation-mode)
     /// (system: http://hl7.org/fhir/composition-attestation-mode)
     /// </summary>
-    [FhirEnumeration("CompositionAttestationMode")]
+    [FhirEnumeration("CompositionAttestationMode", "http://hl7.org/fhir/ValueSet/composition-attestation-mode", "http://hl7.org/fhir/composition-attestation-mode")]
     public enum CompositionAttestationMode
     {
       /// <summary>
       /// The person authenticated the content in their personal capacity.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("personal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Personal")]
+      [EnumLiteral("personal"), Description("Personal")]
       Personal,
       /// <summary>
       /// The person authenticated the content in their professional capacity.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("professional", "http://hl7.org/fhir/composition-attestation-mode"), Description("Professional")]
+      [EnumLiteral("professional"), Description("Professional")]
       Professional,
       /// <summary>
       /// The person authenticated the content and accepted legal responsibility for its content.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("legal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Legal")]
+      [EnumLiteral("legal"), Description("Legal")]
       Legal,
       /// <summary>
       /// The organization authenticated the content as consistent with their policies and procedures.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("official", "http://hl7.org/fhir/composition-attestation-mode"), Description("Official")]
+      [EnumLiteral("official"), Description("Official")]
       Official,
     }
 
@@ -192,6 +192,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#Attester", IsNestedType=true)]
+    [BackboneType("Composition.attester")]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -204,11 +205,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CompositionAttestationMode")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> ModeElement
       {
-        get { if(_ModeElement==null) _ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
+        get { if(_ModeElement==null) _ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
         set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
       }
 
@@ -227,7 +229,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ModeElement = null;
           else
-            ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
+            ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
           OnPropertyChanged("Mode");
         }
       }
@@ -385,6 +387,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#RelatesTo", IsNestedType=true)]
+    [BackboneType("Composition.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -397,6 +400,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
@@ -540,6 +544,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#Event", IsNestedType=true)]
+    [BackboneType("Composition.event")]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -551,6 +556,7 @@ namespace Hl7.Fhir.Model
       /// Code(s) that apply to the event being documented
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("DocumentEventType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -697,6 +703,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#Section", IsNestedType=true)]
+    [BackboneType("Composition.section")]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -739,6 +746,7 @@ namespace Hl7.Fhir.Model
       /// Classification of section (recommended)
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("CompositionSectionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -766,6 +774,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, IsModifier=true, Order=70, FiveWs="class")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SectionMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
       {
@@ -797,6 +806,7 @@ namespace Hl7.Fhir.Model
       /// Order of section entries
       /// </summary>
       [FhirElement("orderedBy", Order=80)]
+      [Binding("SectionEntryOrder")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OrderedBy
       {
@@ -826,6 +836,7 @@ namespace Hl7.Fhir.Model
       /// Why the section is empty
       /// </summary>
       [FhirElement("emptyReason", Order=100)]
+      [Binding("SectionEmptyReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept EmptyReason
       {
@@ -1013,6 +1024,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CompositionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> StatusElement
@@ -1045,6 +1057,7 @@ namespace Hl7.Fhir.Model
     /// Kind of composition (LOINC if possible)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("DocumentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -1059,6 +1072,7 @@ namespace Hl7.Fhir.Model
     /// Categorization of Composition
     /// </summary>
     [FhirElement("class", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("DocumentClass")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Class
     {
@@ -1184,6 +1198,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("confidentiality", InSummary=true, IsModifier=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DocumentConfidentiality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification> ConfidentialityElement
     {
@@ -1281,6 +1296,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

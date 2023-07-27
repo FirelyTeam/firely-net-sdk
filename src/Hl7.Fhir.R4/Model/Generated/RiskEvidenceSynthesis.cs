@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RiskEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/RiskEvidenceSynthesis", IsResource=true)]
-  public partial class RiskEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
+  public partial class RiskEvidenceSynthesis : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#SampleSize", IsNestedType=true)]
+    [BackboneType("RiskEvidenceSynthesis.sampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#RiskEstimate", IsNestedType=true)]
+    [BackboneType("RiskEvidenceSynthesis.riskEstimate")]
     public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -310,6 +312,7 @@ namespace Hl7.Fhir.Model
       /// Type of risk estimate
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("RiskEstimateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -354,6 +357,7 @@ namespace Hl7.Fhir.Model
       /// What unit is the outcome described in?
       /// </summary>
       [FhirElement("unitOfMeasure", Order=70)]
+      [Binding("UCUMUnits")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept UnitOfMeasure
       {
@@ -582,6 +586,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
+    [BackboneType("RiskEvidenceSynthesis.riskEstimate.precisionEstimate")]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -593,6 +598,7 @@ namespace Hl7.Fhir.Model
       /// Type of precision estimate
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PrecisionEstimateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -811,6 +817,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#Certainty", IsNestedType=true)]
+    [BackboneType("RiskEvidenceSynthesis.certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -822,6 +829,7 @@ namespace Hl7.Fhir.Model
       /// Certainty rating
       /// </summary>
       [FhirElement("rating", Order=40)]
+      [Binding("QualityOfEvidenceRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Rating
@@ -967,6 +975,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
+    [BackboneType("RiskEvidenceSynthesis.certainty.certaintySubcomponent")]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -978,6 +987,7 @@ namespace Hl7.Fhir.Model
       /// Type of subcomponent of certainty rating
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CertaintySubcomponentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -991,6 +1001,7 @@ namespace Hl7.Fhir.Model
       /// Subcomponent certainty rating
       /// </summary>
       [FhirElement("rating", Order=50)]
+      [Binding("CertaintySubcomponentRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Rating
@@ -1259,6 +1270,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1426,6 +1438,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for risk evidence synthesis (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1546,6 +1559,7 @@ namespace Hl7.Fhir.Model
     /// The category of the EffectEvidenceSynthesis, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=260)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1630,6 +1644,7 @@ namespace Hl7.Fhir.Model
     /// Type of synthesis
     /// </summary>
     [FhirElement("synthesisType", Order=320)]
+    [Binding("SynthesisType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SynthesisType
     {
@@ -1643,6 +1658,7 @@ namespace Hl7.Fhir.Model
     /// Type of study
     /// </summary>
     [FhirElement("studyType", Order=330)]
+    [Binding("StudyType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StudyType
     {
@@ -1738,6 +1754,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.RiskEvidenceSynthesis.CertaintyComponent> _Certainty;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

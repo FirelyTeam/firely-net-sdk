@@ -764,20 +764,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
     /// (system: http://hl7.org/fhir/administrative-gender)
     /// </summary>
-    [FhirEnumeration("AdministrativeGender")]
+    [FhirEnumeration("AdministrativeGender", defaultCodeSystem: "http://hl7.org/fhir/administrative-gender")]
     public enum TestAdministrativeGender
     {
         /// <summary>
         /// Male
         /// (system: http://hl7.org/fhir/administrative-gender)
         /// </summary>
-        [EnumLiteral("male", "http://hl7.org/fhir/administrative-gender"), Description("Male")]
+        [EnumLiteral("male"), Description("Male")]
         Male,
         /// <summary>
         /// Female
         /// (system: http://hl7.org/fhir/administrative-gender)
         /// </summary>
-        [EnumLiteral("female", "http://hl7.org/fhir/administrative-gender"), Description("Female")]
+        [EnumLiteral("female"), Description("Female")]
         Female,
         /// <summary>
         /// Other

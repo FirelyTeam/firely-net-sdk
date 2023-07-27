@@ -41,6 +41,18 @@ namespace Hl7.Fhir.Specification.Terminology
             _expander = new ValueSetExpander(settings);
         }
 
+
+        /// <summary>
+        /// Creates a MultiTerminologyService, which combines a LocalTerminologyService to retrieve the core FHIR resources with custom services to validate some implicit core ValueSets.
+        /// </summary>
+        /// <param name="coreResourceResolver">Resource resolves to resolve FHIR core artifacts</param>
+        /// <param name="expanderSettings">ValueSet expansion settings</param>
+        /// <returns>A MultiTerminologyService, which combines a LocalTerminologyService to retrieve the core FHIR resources with custom services to validate some implicit core ValueSets</returns>
+        public static MultiTerminologyService CreateDefaultForCore(IAsyncResourceResolver coreResourceResolver, ValueSetExpanderSettings? expanderSettings = null)
+        {
+            return TerminologyServiceFactory.CreateDefaultForCore(coreResourceResolver, expanderSettings);
+        }
+
         internal async T.Task<ValueSet?> FindValueset(string canonical)
         {
             var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);

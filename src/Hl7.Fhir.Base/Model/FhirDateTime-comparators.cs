@@ -28,12 +28,8 @@
 
 */
 
-using System;
-using P = Hl7.Fhir.ElementModel.Types;
-
 namespace Hl7.Fhir.Model
 {
-
     public partial class FhirDateTime
     {
         public static bool operator >(FhirDateTime a, FhirDateTime b)
@@ -44,7 +40,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) > P.DateTime.Parse(b.Value);
+            return a.ToDateTime() > b.ToDateTime();
         }
 
         public static bool operator >=(FhirDateTime a, FhirDateTime b)
@@ -55,7 +51,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) >= P.DateTime.Parse(b.Value);
+            return a.ToDateTime() >= b.ToDateTime();
         }
 
         public static bool operator <(FhirDateTime a, FhirDateTime b)
@@ -66,7 +62,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) < P.DateTime.Parse(b.Value);
+            return a.ToDateTime() < b.ToDateTime();
         }
 
         public static bool operator <=(FhirDateTime a, FhirDateTime b)
@@ -77,7 +73,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return P.DateTime.Parse(a.Value) <= P.DateTime.Parse(b.Value);
+            return a.ToDateTime() <= b.ToDateTime();
         }
 
         /// <summary>
@@ -105,12 +101,9 @@ namespace Hl7.Fhir.Model
                 if (Value == null) return otherValue == null;
                 if (otherValue == null) return false;
 
-                if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
+                if (Value == otherValue) return true; // Default reference/string comparison works in most cases
 
-                var left = P.DateTime.Parse(Value);
-                var right = P.DateTime.Parse(otherValue);
-
-                return left == right;
+                return ToDateTime() == other.ToDateTime();
             }
             else
                 return false;

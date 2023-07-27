@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ResearchElementDefinition","http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition", IsResource=true)]
-  public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-element-type)
     /// (system: http://hl7.org/fhir/research-element-type)
     /// </summary>
-    [FhirEnumeration("ResearchElementType")]
+    [FhirEnumeration("ResearchElementType", "http://hl7.org/fhir/ValueSet/research-element-type", "http://hl7.org/fhir/research-element-type")]
     public enum ResearchElementType
     {
       /// <summary>
       /// The element defines the population that forms the basis for research.
       /// (system: http://hl7.org/fhir/research-element-type)
       /// </summary>
-      [EnumLiteral("population", "http://hl7.org/fhir/research-element-type"), Description("Population")]
+      [EnumLiteral("population"), Description("Population")]
       Population,
       /// <summary>
       /// The element defines an exposure within the population that is being researched.
       /// (system: http://hl7.org/fhir/research-element-type)
       /// </summary>
-      [EnumLiteral("exposure", "http://hl7.org/fhir/research-element-type"), Description("Exposure")]
+      [EnumLiteral("exposure"), Description("Exposure")]
       Exposure,
       /// <summary>
       /// The element defines an outcome within the population that is being researched.
       /// (system: http://hl7.org/fhir/research-element-type)
       /// </summary>
-      [EnumLiteral("outcome", "http://hl7.org/fhir/research-element-type"), Description("Outcome")]
+      [EnumLiteral("outcome"), Description("Outcome")]
       Outcome,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
+    [BackboneType("ResearchElementDefinition.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -161,6 +162,7 @@ namespace Hl7.Fhir.Model
       /// What unit is the outcome described in?
       /// </summary>
       [FhirElement("unitOfMeasure", Order=70)]
+      [Binding("UCUMUnits")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept UnitOfMeasure
       {
@@ -234,6 +236,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("studyEffectiveGroupMeasure", Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> StudyEffectiveGroupMeasureElement
       {
@@ -325,6 +328,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("participantEffectiveGroupMeasure", Order=150)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> ParticipantEffectiveGroupMeasureElement
       {
@@ -739,6 +743,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -802,6 +807,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -971,6 +977,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for research element definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1153,6 +1160,7 @@ namespace Hl7.Fhir.Model
     /// The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=320)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1270,6 +1278,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=390)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchElementType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType> TypeElement
@@ -1303,6 +1312,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("variableType", Order=400)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("VariableType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.VariableTypeCode> VariableTypeElement
     {
@@ -1343,6 +1353,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent> _Characteristic;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

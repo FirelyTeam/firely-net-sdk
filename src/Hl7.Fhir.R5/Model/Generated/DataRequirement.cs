@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/value-filter-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("ValueFilterComparator")]
+    [FhirEnumeration("ValueFilterComparator", "http://hl7.org/fhir/ValueSet/value-filter-comparator", "http://hl7.org/fhir/search-comparator")]
     public enum ValueFilterComparator
     {
       /// <summary>
       /// the value for the parameter in the resource is equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("eq", "http://hl7.org/fhir/search-comparator"), Description("Equals")]
+      [EnumLiteral("eq"), Description("Equals")]
       Eq,
       /// <summary>
       /// the value for the parameter in the resource is greater than the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("gt", "http://hl7.org/fhir/search-comparator"), Description("Greater Than")]
+      [EnumLiteral("gt"), Description("Greater Than")]
       Gt,
       /// <summary>
       /// the value for the parameter in the resource is less than the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("lt", "http://hl7.org/fhir/search-comparator"), Description("Less Than")]
+      [EnumLiteral("lt"), Description("Less Than")]
       Lt,
       /// <summary>
       /// the value for the parameter in the resource is greater or equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("ge", "http://hl7.org/fhir/search-comparator"), Description("Greater or Equals")]
+      [EnumLiteral("ge"), Description("Greater or Equals")]
       Ge,
       /// <summary>
       /// the value for the parameter in the resource is less or equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("le", "http://hl7.org/fhir/search-comparator"), Description("Less of Equal")]
+      [EnumLiteral("le"), Description("Less of Equal")]
       Le,
       /// <summary>
       /// the value for the parameter in the resource starts after the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("sa", "http://hl7.org/fhir/search-comparator"), Description("Starts After")]
+      [EnumLiteral("sa"), Description("Starts After")]
       Sa,
       /// <summary>
       /// the value for the parameter in the resource ends before the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("eb", "http://hl7.org/fhir/search-comparator"), Description("Ends Before")]
+      [EnumLiteral("eb"), Description("Ends Before")]
       Eb,
     }
 
@@ -112,20 +112,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
     /// (system: http://hl7.org/fhir/sort-direction)
     /// </summary>
-    [FhirEnumeration("SortDirection")]
+    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction", "http://hl7.org/fhir/sort-direction")]
     public enum SortDirection
     {
       /// <summary>
       /// Sort by the value ascending, so that lower values appear first.
       /// (system: http://hl7.org/fhir/sort-direction)
       /// </summary>
-      [EnumLiteral("ascending", "http://hl7.org/fhir/sort-direction"), Description("Ascending")]
+      [EnumLiteral("ascending"), Description("Ascending")]
       Ascending,
       /// <summary>
       /// Sort by the value descending, so that lower values appear last.
       /// (system: http://hl7.org/fhir/sort-direction)
       /// </summary>
-      [EnumLiteral("descending", "http://hl7.org/fhir/sort-direction"), Description("Descending")]
+      [EnumLiteral("descending"), Description("Descending")]
       Descending,
     }
 
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.codeFilter")]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -365,6 +366,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.dateFilter")]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -556,6 +558,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#ValueFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.valueFilter")]
     public partial class ValueFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -630,6 +633,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ValueFilterComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator> ComparatorElement
       {
@@ -788,6 +792,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#Sort", IsNestedType=true)]
+    [BackboneType("DataRequirement.sort")]
     public partial class SortComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -832,6 +837,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
@@ -957,6 +963,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
@@ -1021,6 +1028,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

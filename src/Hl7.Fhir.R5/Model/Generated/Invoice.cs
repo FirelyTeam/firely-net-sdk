@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Invoice","http://hl7.org/fhir/StructureDefinition/Invoice", IsResource=true)]
-  public partial class Invoice : Hl7.Fhir.Model.DomainResource
+  public partial class Invoice : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/invoice-status)
     /// (system: http://hl7.org/fhir/invoice-status)
     /// </summary>
-    [FhirEnumeration("InvoiceStatus")]
+    [FhirEnumeration("InvoiceStatus", "http://hl7.org/fhir/ValueSet/invoice-status", "http://hl7.org/fhir/invoice-status")]
     public enum InvoiceStatus
     {
       /// <summary>
       /// the invoice has been prepared but not yet finalized.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/invoice-status"), Description("draft")]
+      [EnumLiteral("draft"), Description("draft")]
       Draft,
       /// <summary>
       /// the invoice has been finalized and sent to the recipient.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("issued", "http://hl7.org/fhir/invoice-status"), Description("issued")]
+      [EnumLiteral("issued"), Description("issued")]
       Issued,
       /// <summary>
       /// the invoice has been balaced / completely paid.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("balanced", "http://hl7.org/fhir/invoice-status"), Description("balanced")]
+      [EnumLiteral("balanced"), Description("balanced")]
       Balanced,
       /// <summary>
       /// the invoice was cancelled.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/invoice-status"), Description("cancelled")]
+      [EnumLiteral("cancelled"), Description("cancelled")]
       Cancelled,
       /// <summary>
       /// the invoice was determined as entered in error before it was issued.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/invoice-status"), Description("entered in error")]
+      [EnumLiteral("entered-in-error"), Description("entered in error")]
       EnteredInError,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#Participant", IsNestedType=true)]
+    [BackboneType("Invoice.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +236,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#LineItem", IsNestedType=true)]
+    [BackboneType("Invoice.lineItem")]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -448,6 +450,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InvoiceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus> StatusElement
@@ -769,6 +772,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

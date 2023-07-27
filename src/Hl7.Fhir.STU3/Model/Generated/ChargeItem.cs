@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ChargeItem","http://hl7.org/fhir/StructureDefinition/ChargeItem", IsResource=true)]
-  public partial class ChargeItem : Hl7.Fhir.Model.DomainResource
+  public partial class ChargeItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/chargeitem-status)
     /// (system: http://hl7.org/fhir/chargeitem-status)
     /// </summary>
-    [FhirEnumeration("ChargeItemStatus")]
+    [FhirEnumeration("ChargeItemStatus", "http://hl7.org/fhir/ValueSet/chargeitem-status", "http://hl7.org/fhir/chargeitem-status")]
     public enum ChargeItemStatus
     {
       /// <summary>
       /// The charge item has been entered, but the charged service is not  yet complete, so it shall not be billed yet but might be used in the context of pre-authorization
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/chargeitem-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// The charge item is ready for billing
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("billable", "http://hl7.org/fhir/chargeitem-status"), Description("Billable")]
+      [EnumLiteral("billable"), Description("Billable")]
       Billable,
       /// <summary>
       /// The charge item has been determined to be not billable (e.g. due to rules associated with the billing code)
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("not-billable", "http://hl7.org/fhir/chargeitem-status"), Description("Not billable")]
+      [EnumLiteral("not-billable"), Description("Not billable")]
       NotBillable,
       /// <summary>
       /// The processing of the charge was aborted
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("aborted", "http://hl7.org/fhir/chargeitem-status"), Description("Aborted")]
+      [EnumLiteral("aborted"), Description("Aborted")]
       Aborted,
       /// <summary>
       /// The charge item has been billed (e.g. a billing engine has generated financial transactions by applying the associated ruled for the charge item to the context of the Encounter, and placed them into Claims/Invoices
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("billed", "http://hl7.org/fhir/chargeitem-status"), Description("Billed")]
+      [EnumLiteral("billed"), Description("Billed")]
       Billed,
       /// <summary>
       /// The charge item has been entered in error and should not be processed for billing
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/chargeitem-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The authoring system does not know which of the status values currently applies for this charge item  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/chargeitem-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/chargeitem-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItem#Participant", IsNestedType=true)]
+    [BackboneType("ChargeItem.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -124,6 +125,7 @@ namespace Hl7.Fhir.Model
       /// What type of performance was done
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ChargeItemPerformerRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -291,6 +293,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ChargeItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus> StatusElement
@@ -339,6 +342,7 @@ namespace Hl7.Fhir.Model
     /// A code that identifies the charge, like a billing code
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
+    [Binding("ChargeItemCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -456,6 +460,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodysite", InSummary=true, Order=210)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
@@ -591,6 +596,7 @@ namespace Hl7.Fhir.Model
     /// Why was the charged  service rendered?
     /// </summary>
     [FhirElement("reason", Order=270, FiveWs="why")]
+    [Binding("ChargeItemReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -662,6 +668,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

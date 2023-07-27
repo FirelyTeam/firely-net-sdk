@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Model
     /// Type of context being specified
     /// </summary>
     [FhirElement("code", InSummary=true, Order=30)]
+    [Binding("UsageContextType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Code
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
     /// Value that defines the context
     /// </summary>
     [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("UsageContextValue")]
     [CLSCompliant(false)]
     [References("PlanDefinition","ResearchStudy","InsurancePlan","HealthcareService","Group","Location","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]

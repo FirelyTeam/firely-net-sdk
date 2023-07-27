@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Media","http://hl7.org/fhir/StructureDefinition/Media", IsResource=true)]
-  public partial class Media : Hl7.Fhir.Model.DomainResource
+  public partial class Media : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/digital-media-type)
     /// (system: http://hl7.org/fhir/digital-media-type)
     /// </summary>
-    [FhirEnumeration("DigitalMediaType")]
+    [FhirEnumeration("DigitalMediaType", "http://hl7.org/fhir/ValueSet/digital-media-type", "http://hl7.org/fhir/digital-media-type")]
     public enum DigitalMediaType
     {
       /// <summary>
       /// The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents
       /// (system: http://hl7.org/fhir/digital-media-type)
       /// </summary>
-      [EnumLiteral("photo", "http://hl7.org/fhir/digital-media-type"), Description("Photo")]
+      [EnumLiteral("photo"), Description("Photo")]
       Photo,
       /// <summary>
       /// The media consists of a series of frames that capture a moving image
       /// (system: http://hl7.org/fhir/digital-media-type)
       /// </summary>
-      [EnumLiteral("video", "http://hl7.org/fhir/digital-media-type"), Description("Video")]
+      [EnumLiteral("video"), Description("Video")]
       Video,
       /// <summary>
       /// The media consists of a sound recording
       /// (system: http://hl7.org/fhir/digital-media-type)
       /// </summary>
-      [EnumLiteral("audio", "http://hl7.org/fhir/digital-media-type"), Description("Audio")]
+      [EnumLiteral("audio"), Description("Audio")]
       Audio,
     }
 
@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DigitalMediaType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Media.DigitalMediaType> TypeElement
@@ -150,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// The type of acquisition equipment/process
     /// </summary>
     [FhirElement("subtype", InSummary=true, Order=120, FiveWs="class")]
+    [Binding("DigitalMediaSubtype")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Subtype
     {
@@ -163,6 +165,7 @@ namespace Hl7.Fhir.Model
     /// Imaging view, e.g. Lateral or Antero-posterior
     /// </summary>
     [FhirElement("view", InSummary=true, Order=130, FiveWs="class")]
+    [Binding("MediaView")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept View
     {
@@ -236,6 +239,7 @@ namespace Hl7.Fhir.Model
     /// Why was event performed?
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=180, FiveWs="why")]
+    [Binding("MediaReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -250,6 +254,7 @@ namespace Hl7.Fhir.Model
     /// Body part in media
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=190)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -425,6 +430,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

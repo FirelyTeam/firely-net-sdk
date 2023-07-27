@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic", IsResource=true)]
-  public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource
+  public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/interaction-trigger)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("InteractionTrigger")]
+    [FhirEnumeration("InteractionTrigger", "http://hl7.org/fhir/ValueSet/interaction-trigger", "http://hl7.org/fhir/restful-interaction")]
     public enum InteractionTrigger
     {
       /// <summary>
       /// Create a new resource with a server assigned id.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// Update an existing resource by its id (or create it if it is new).
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
+      [EnumLiteral("update"), Description("update")]
       Update,
       /// <summary>
       /// Delete a resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
+      [EnumLiteral("delete"), Description("delete")]
       Delete,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior)
     /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
     /// </summary>
-    [FhirEnumeration("CriteriaNotExistsBehavior")]
+    [FhirEnumeration("CriteriaNotExistsBehavior", "http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior", "http://hl7.org/fhir/subscriptiontopic-cr-behavior")]
     public enum CriteriaNotExistsBehavior
     {
       /// <summary>
       /// The requested conditional statement will pass if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-passes", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("test passes")]
+      [EnumLiteral("test-passes"), Description("test passes")]
       TestPasses,
       /// <summary>
       /// The requested conditional statement will fail if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-fails", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("test fails")]
+      [EnumLiteral("test-fails"), Description("test fails")]
       TestFails,
     }
 
@@ -110,98 +110,98 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-search-modifier)
     /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
     /// </summary>
-    [FhirEnumeration("SubscriptionSearchModifier")]
+    [FhirEnumeration("SubscriptionSearchModifier", "http://hl7.org/fhir/ValueSet/subscription-search-modifier", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier")]
     public enum SubscriptionSearchModifier
     {
       /// <summary>
       /// Used to match a value according to FHIR Search rules (e.g., Patient/123, Encounter/2002).
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("=", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("=")]
+      [EnumLiteral("="), Description("=")]
       Equal,
       /// <summary>
       /// The value for the parameter in the resource is equal to the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("eq", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Equal")]
+      [EnumLiteral("eq"), Description("Equal")]
       Eq,
       /// <summary>
       /// The value for the parameter in the resource is not equal to the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("ne", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Not Equal")]
+      [EnumLiteral("ne"), Description("Not Equal")]
       Ne,
       /// <summary>
       /// The value for the parameter in the resource is greater than the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("gt", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Greater Than")]
+      [EnumLiteral("gt"), Description("Greater Than")]
       Gt,
       /// <summary>
       /// The value for the parameter in the resource is less than the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("lt", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Less Than")]
+      [EnumLiteral("lt"), Description("Less Than")]
       Lt,
       /// <summary>
       /// The value for the parameter in the resource is greater or equal to the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("ge", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Greater Than or Equal")]
+      [EnumLiteral("ge"), Description("Greater Than or Equal")]
       Ge,
       /// <summary>
       /// The value for the parameter in the resource is less or equal to the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("le", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Less Than or Equal")]
+      [EnumLiteral("le"), Description("Less Than or Equal")]
       Le,
       /// <summary>
       /// The value for the parameter in the resource starts after the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("sa", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Starts After")]
+      [EnumLiteral("sa"), Description("Starts After")]
       Sa,
       /// <summary>
       /// The value for the parameter in the resource ends before the provided value.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("eb", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Ends Before")]
+      [EnumLiteral("eb"), Description("Ends Before")]
       Eb,
       /// <summary>
       /// The value for the parameter in the resource is approximately the same to the provided value. Note that the recommended value for the approximation is 10% of the stated value (or for a date, 10% of the gap between now and the date), but systems may choose other values where appropriate.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("ap", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Approximately")]
+      [EnumLiteral("ap"), Description("Approximately")]
       Ap,
       /// <summary>
       /// The search parameter is a concept with the form [system]|[code], and the search parameter tests whether the coding in a resource subsumes the specified search code.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("above", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Above")]
+      [EnumLiteral("above"), Description("Above")]
       Above,
       /// <summary>
       /// The search parameter is a concept with the form [system]|[code], and the search parameter tests whether the coding in a resource is subsumed by the specified search code.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("below", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Below")]
+      [EnumLiteral("below"), Description("Below")]
       Below,
       /// <summary>
       /// The search parameter is a member of a Group or List, or the search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the value is present in the specified Group, List, or Value Set.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("in", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("In")]
+      [EnumLiteral("in"), Description("In")]
       In,
       /// <summary>
       /// The search parameter is a member of a Group or List, or the search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the value is NOT present in the specified Group, List, or Value Set.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("not-in", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Not In")]
+      [EnumLiteral("not-in"), Description("Not In")]
       NotIn,
       /// <summary>
       /// The search parameter has the format system|code|value, where the system and code refer to a Identifier.type.coding.system and .code, and match if any of the type codes match. All 3 parts must be present.
       /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
       /// </summary>
-      [EnumLiteral("of-type", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Of Type")]
+      [EnumLiteral("of-type"), Description("Of Type")]
       OfType,
     }
 
@@ -211,6 +211,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger")]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -286,11 +288,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("supportedInteraction", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("MethodCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
       {
-        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
+        get { if(_SupportedInteractionElement==null) _SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(); return _SupportedInteractionElement; }
         set { _SupportedInteractionElement = value; OnPropertyChanged("SupportedInteractionElement"); }
       }
 
@@ -309,7 +312,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             SupportedInteractionElement = null;
           else
-            SupportedInteractionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
+            SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>(elem)));
           OnPropertyChanged("SupportedInteraction");
         }
       }
@@ -483,6 +486,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger.queryCriteria")]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -526,6 +530,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForCreateElement
       {
@@ -589,6 +594,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForDeleteElement
       {
@@ -772,6 +778,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#EventTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.eventTrigger")]
     public partial class EventTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -814,6 +821,7 @@ namespace Hl7.Fhir.Model
       /// Event which can trigger a notification from the SubscriptionTopic
       /// </summary>
       [FhirElement("event", InSummary=true, Order=50)]
+      [Binding("SubscriptionTopicEventTrigger")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Event
@@ -828,6 +836,7 @@ namespace Hl7.Fhir.Model
       /// Data Type or Resource (reference to definition) for this trigger definition
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -963,6 +972,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.canFilterBy")]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1005,6 +1015,7 @@ namespace Hl7.Fhir.Model
       /// URL of the triggering Resource that this filter applies to
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
+      [Binding("FHIRDefinedTypeExt")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
       {
@@ -1100,11 +1111,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("modifier", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SubscriptionTopicFilterBySearchModifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>> ModifierElement
       {
-        get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(); return _ModifierElement; }
+        get { if(_ModifierElement==null) _ModifierElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(); return _ModifierElement; }
         set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
       }
 
@@ -1123,7 +1135,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ModifierElement = null;
           else
-            ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>(elem)));
+            ModifierElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>(value.Select(elem=>new Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>(elem)));
           OnPropertyChanged("Modifier");
         }
       }
@@ -1253,6 +1265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#NotificationShape", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.notificationShape")]
     public partial class NotificationShapeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1264,6 +1277,7 @@ namespace Hl7.Fhir.Model
       /// URL of the Resource that is the focus (main) resource in a notification shape
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=40)]
+      [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri ResourceElement
@@ -1602,6 +1616,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1786,6 +1801,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction of the SubscriptionTopic (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1988,6 +2004,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent> _NotificationShape;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

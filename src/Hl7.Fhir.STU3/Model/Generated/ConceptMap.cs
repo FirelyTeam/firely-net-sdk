@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ConceptMap","http://hl7.org/fhir/StructureDefinition/ConceptMap", IsResource=true)]
-  public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
+  public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,68 +60,68 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-map-equivalence)
     /// (system: http://hl7.org/fhir/concept-map-equivalence)
     /// </summary>
-    [FhirEnumeration("ConceptMapEquivalence")]
+    [FhirEnumeration("ConceptMapEquivalence", "http://hl7.org/fhir/ValueSet/concept-map-equivalence", "http://hl7.org/fhir/concept-map-equivalence")]
     public enum ConceptMapEquivalence
     {
       /// <summary>
       /// The concepts are related to each other, and have at least some overlap in meaning, but the exact relationship is not known
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("relatedto", "http://hl7.org/fhir/concept-map-equivalence"), Description("Related To")]
+      [EnumLiteral("relatedto"), Description("Related To")]
       Relatedto,
       /// <summary>
       /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equivalent")]
+      [EnumLiteral("equivalent"), Description("Equivalent")]
       Equivalent,
       /// <summary>
       /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identical or irrelevant (i.e. intentionally identical).
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("equal", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equal")]
+      [EnumLiteral("equal"), Description("Equal")]
       Equal,
       /// <summary>
       /// The target mapping is wider in meaning than the source concept.
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("wider", "http://hl7.org/fhir/concept-map-equivalence"), Description("Wider")]
+      [EnumLiteral("wider"), Description("Wider")]
       Wider,
       /// <summary>
       /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target).
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("subsumes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Subsumes")]
+      [EnumLiteral("subsumes"), Description("Subsumes")]
       Subsumes,
       /// <summary>
       /// The target mapping is narrower in meaning than the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-equivalence"), Description("Narrower")]
+      [EnumLiteral("narrower"), Description("Narrower")]
       Narrower,
       /// <summary>
       /// The target mapping specializes the meaning of the source concept (e.g. the target is-a source).
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("specializes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Specializes")]
+      [EnumLiteral("specializes"), Description("Specializes")]
       Specializes,
       /// <summary>
       /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("inexact", "http://hl7.org/fhir/concept-map-equivalence"), Description("Inexact")]
+      [EnumLiteral("inexact"), Description("Inexact")]
       Inexact,
       /// <summary>
       /// There is no match for this concept in the destination concept system.
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("unmatched", "http://hl7.org/fhir/concept-map-equivalence"), Description("Unmatched")]
+      [EnumLiteral("unmatched"), Description("Unmatched")]
       Unmatched,
       /// <summary>
       /// This is an explicit assertion that there is no mapping between the source and target concept.
       /// (system: http://hl7.org/fhir/concept-map-equivalence)
       /// </summary>
-      [EnumLiteral("disjoint", "http://hl7.org/fhir/concept-map-equivalence"), Description("Disjoint")]
+      [EnumLiteral("disjoint"), Description("Disjoint")]
       Disjoint,
     }
 
@@ -130,26 +130,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode", "http://hl7.org/fhir/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>
       /// Use the code as provided in the $translate request
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("provided", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Provided Code")]
+      [EnumLiteral("provided"), Description("Provided Code")]
       Provided,
       /// <summary>
       /// Use the code explicitly provided in the group.unmapped
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("fixed", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Fixed Code")]
+      [EnumLiteral("fixed"), Description("Fixed Code")]
       Fixed,
       /// <summary>
       /// Use the map identified by the canonical URL in URL
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("other-map", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Other Map")]
+      [EnumLiteral("other-map"), Description("Other Map")]
       OtherMap,
     }
 
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Group", IsNestedType=true)]
+    [BackboneType("ConceptMap.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -451,6 +452,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#SourceElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element")]
     public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -641,6 +643,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#TargetElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target")]
     public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -715,6 +718,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("equivalence", IsModifier=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapEquivalence")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
       {
@@ -935,6 +939,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#OtherElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target.dependsOn")]
     public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1184,6 +1189,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Unmapped", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.unmapped")]
     public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1196,6 +1202,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -1569,6 +1576,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1753,6 +1761,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for concept map (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1870,6 +1879,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ConceptMap.GroupComponent> _Group;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

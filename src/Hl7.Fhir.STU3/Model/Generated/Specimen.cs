@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Specimen","http://hl7.org/fhir/StructureDefinition/Specimen", IsResource=true)]
-  public partial class Specimen : Hl7.Fhir.Model.DomainResource
+  public partial class Specimen : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
     /// (system: http://hl7.org/fhir/specimen-status)
     /// </summary>
-    [FhirEnumeration("SpecimenStatus")]
+    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status", "http://hl7.org/fhir/specimen-status")]
     public enum SpecimenStatus
     {
       /// <summary>
       /// The physical specimen is present and in good condition.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/specimen-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// There is no physical specimen because it is either lost, destroyed or consumed.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unavailable", "http://hl7.org/fhir/specimen-status"), Description("Unavailable")]
+      [EnumLiteral("unavailable"), Description("Unavailable")]
       Unavailable,
       /// <summary>
       /// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unsatisfactory", "http://hl7.org/fhir/specimen-status"), Description("Unsatisfactory")]
+      [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
       Unsatisfactory,
       /// <summary>
       /// The specimen was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/specimen-status"), Description("Entered-in-error")]
+      [EnumLiteral("entered-in-error"), Description("Entered-in-error")]
       EnteredInError,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Collection", IsNestedType=true)]
+    [BackboneType("Specimen.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -149,6 +150,7 @@ namespace Hl7.Fhir.Model
       /// Technique used to perform collection
       /// </summary>
       [FhirElement("method", Order=70)]
+      [Binding("SpecimenCollectionMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -162,6 +164,7 @@ namespace Hl7.Fhir.Model
       /// Anatomical collection site
       /// </summary>
       [FhirElement("bodySite", Order=80)]
+      [Binding("BodySite")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept BodySite
       {
@@ -296,6 +299,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Processing", IsNestedType=true)]
+    [BackboneType("Specimen.processing")]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -338,6 +342,7 @@ namespace Hl7.Fhir.Model
       /// Indicates the treatment step  applied to the specimen
       /// </summary>
       [FhirElement("procedure", Order=50)]
+      [Binding("SpecimenProcessingProcedure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Procedure
       {
@@ -494,6 +499,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Container", IsNestedType=true)]
+    [BackboneType("Specimen.container")]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -550,6 +556,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container directly associated with specimen
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("SpecimenContainerType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -589,6 +596,7 @@ namespace Hl7.Fhir.Model
       /// Additive associated with container
       /// </summary>
       [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SpecimenContainerAdditive")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -761,6 +769,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SpecimenStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {
@@ -792,6 +801,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material that forms the specimen
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="what")]
+    [Binding("SpecimenType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -934,6 +944,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

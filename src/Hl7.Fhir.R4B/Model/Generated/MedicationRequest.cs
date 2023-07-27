@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest", IsResource=true)]
-  public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationrequest-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
     /// </summary>
-    [FhirEnumeration("medicationrequestStatus")]
+    [FhirEnumeration("medicationrequestStatus", "http://hl7.org/fhir/ValueSet/medicationrequest-status", "http://hl7.org/fhir/CodeSystem/medicationrequest-status")]
     public enum MedicationrequestStatus
     {
       /// <summary>
       /// The prescription is 'actionable', but not all actions that are implied by it have occurred yet.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// Actions implied by the prescription are to be temporarily halted, but are expected to continue later.  May also be called 'suspended'.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The prescription has been withdrawn before any administrations have occurred
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// All actions that are implied by the prescription have occurred.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// Some of the actions that are implied by the medication request may have occurred.  For example, the medication may have been dispensed and the patient may have taken some of the medication.  Clinical decision support systems should take this status into account
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the prescription are to be permanently halted, before all of the administrations occurred. This should not be used if the original order was entered in error
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The prescription is not yet 'actionable', e.g. it is a work in progress, requires sign-off, verification or needs to be run through decision support process.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -118,56 +118,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
     /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
     /// </summary>
-    [FhirEnumeration("medicationRequestIntent")]
+    [FhirEnumeration("medicationRequestIntent", "http://hl7.org/fhir/ValueSet/medicationrequest-intent", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent")]
     public enum MedicationRequestIntent
     {
       /// <summary>
       /// The request is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The request represents a request/demand and authorization for action
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The request represents the original authorization for the medication request.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("original-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Original Order")]
+      [EnumLiteral("original-order"), Description("Original Order")]
       OriginalOrder,
       /// <summary>
       /// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization..
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("reflex-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Reflex Order")]
+      [EnumLiteral("reflex-order"), Description("Reflex Order")]
       ReflexOrder,
       /// <summary>
       /// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("filler-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Filler Order")]
+      [EnumLiteral("filler-order"), Description("Filler Order")]
       FillerOrder,
       /// <summary>
       /// The request represents an instance for the particular order, for example a medication administration record.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("instance-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Instance Order")]
+      [EnumLiteral("instance-order"), Description("Instance Order")]
       InstanceOrder,
       /// <summary>
       /// The request represents a component or option for a RequestGroup that establishes timing, conditionality and/or  other constraints among a set of requests.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
       /// </summary>
-      [EnumLiteral("option", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Option")]
+      [EnumLiteral("option"), Description("Option")]
       Option,
     }
 
@@ -177,6 +177,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
+    [BackboneType("MedicationRequest.dispenseRequest")]
     public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -438,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#InitialFill", IsNestedType=true)]
+    [BackboneType("MedicationRequest.dispenseRequest.initialFill")]
     public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,6 +571,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationRequest.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -580,6 +583,7 @@ namespace Hl7.Fhir.Model
       /// Whether substitution is allowed or not
       /// </summary>
       [FhirElement("allowed", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MedicationRequestSubstitution")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -596,6 +600,7 @@ namespace Hl7.Fhir.Model
       /// Why should (not) substitution be made
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -716,6 +721,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus> StatusElement
@@ -748,6 +754,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", Order=110)]
+    [Binding("MedicationRequestStatusReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -762,6 +769,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> IntentElement
@@ -794,6 +802,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", Order=130, FiveWs="FiveWs.class")]
+    [Binding("MedicationRequestCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -809,6 +818,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -887,6 +897,7 @@ namespace Hl7.Fhir.Model
     /// Medication to be taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1012,6 +1023,7 @@ namespace Hl7.Fhir.Model
     /// Desired kind of performer of the medication administration
     /// </summary>
     [FhirElement("performerType", InSummary=true, Order=240)]
+    [Binding("MedicationRequestPerformerType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PerformerType
     {
@@ -1040,6 +1052,7 @@ namespace Hl7.Fhir.Model
     /// Reason or indication for ordering or not ordering the medication
     /// </summary>
     [FhirElement("reasonCode", Order=260, FiveWs="FiveWs.why[x]")]
+    [Binding("MedicationRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -1163,6 +1176,7 @@ namespace Hl7.Fhir.Model
     /// Overall pattern of medication administration
     /// </summary>
     [FhirElement("courseOfTherapyType", Order=320)]
+    [Binding("MedicationRequestCourseOfTherapy")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CourseOfTherapyType
     {
@@ -1288,6 +1302,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

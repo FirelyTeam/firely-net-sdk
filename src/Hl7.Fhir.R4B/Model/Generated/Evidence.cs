@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Evidence","http://hl7.org/fhir/StructureDefinition/Evidence", IsResource=true)]
-  public partial class Evidence : Hl7.Fhir.Model.DomainResource
+  public partial class Evidence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#VariableDefinition", IsNestedType=true)]
+    [BackboneType("Evidence.variableDefinition")]
     public partial class VariableDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
       /// population | subpopulation | exposure | referenceExposure | measuredVariable | confounder
       /// </summary>
       [FhirElement("variableRole", InSummary=true, Order=60)]
+      [Binding("EvidenceVariableRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept VariableRole
@@ -161,6 +163,7 @@ namespace Hl7.Fhir.Model
       /// low | moderate | high | exact
       /// </summary>
       [FhirElement("directnessMatch", Order=90)]
+      [Binding("EvidenceDirectness")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DirectnessMatch
       {
@@ -304,6 +307,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#Statistic", IsNestedType=true)]
+    [BackboneType("Evidence.statistic")]
     public partial class StatisticComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -360,6 +364,7 @@ namespace Hl7.Fhir.Model
       /// Type of statistic, eg relative risk
       /// </summary>
       [FhirElement("statisticType", Order=60)]
+      [Binding("StatisticType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept StatisticType
       {
@@ -668,6 +673,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#SampleSize", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.sampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -938,6 +944,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#AttributeEstimate", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.attributeEstimate")]
     public partial class AttributeEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -994,6 +1001,7 @@ namespace Hl7.Fhir.Model
       /// The type of attribute estimate, eg confidence interval or p value
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("AttributeEstimateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1217,6 +1225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#ModelCharacteristic", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.modelCharacteristic")]
     public partial class ModelCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1228,6 +1237,7 @@ namespace Hl7.Fhir.Model
       /// Model specification
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("StatisticModelCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1395,6 +1405,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#Variable", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.modelCharacteristic.variable")]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1423,6 +1434,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("handling", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EvidenceVariableHandling")]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
       {
@@ -1617,6 +1629,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#Certainty", IsNestedType=true)]
+    [BackboneType("Evidence.certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1673,6 +1686,7 @@ namespace Hl7.Fhir.Model
       /// Aspect of certainty being rated
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("EvidenceCertaintyType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1686,6 +1700,7 @@ namespace Hl7.Fhir.Model
       /// Assessment or judgement of the aspect
       /// </summary>
       [FhirElement("rating", Order=70)]
+      [Binding("EvidenceCertaintyRating")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Rating
       {
@@ -1996,6 +2011,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2340,6 +2356,7 @@ namespace Hl7.Fhir.Model
     /// The method to combine studies
     /// </summary>
     [FhirElement("synthesisType", Order=300)]
+    [Binding("SynthesisType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SynthesisType
     {
@@ -2353,6 +2370,7 @@ namespace Hl7.Fhir.Model
     /// The type of study that produced this evidence
     /// </summary>
     [FhirElement("studyType", Order=310)]
+    [Binding("StudyType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StudyType
     {
@@ -2389,6 +2407,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Evidence.CertaintyComponent> _Certainty;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

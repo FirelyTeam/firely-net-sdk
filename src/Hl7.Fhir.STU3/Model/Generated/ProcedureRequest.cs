@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ProcedureRequest","http://hl7.org/fhir/StructureDefinition/ProcedureRequest", IsResource=true)]
-  public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource
+  public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcedureRequest#Requester", IsNestedType=true)]
+    [BackboneType("ProcedureRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -271,6 +272,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcedureRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -304,6 +306,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcedureRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -337,6 +340,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcedureRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -399,6 +403,7 @@ namespace Hl7.Fhir.Model
     /// Classification of procedure
     /// </summary>
     [FhirElement("category", InSummary=true, Order=180, FiveWs="class")]
+    [Binding("ProcedureRequestCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -413,6 +418,7 @@ namespace Hl7.Fhir.Model
     /// What is being requested/ordered
     /// </summary>
     [FhirElement("code", InSummary=true, Order=190, FiveWs="what")]
+    [Binding("ProcedureRequestCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -473,6 +479,7 @@ namespace Hl7.Fhir.Model
     /// Preconditions for procedure or diagnostic
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("ProcedureAsNeededReason")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -532,6 +539,7 @@ namespace Hl7.Fhir.Model
     /// Performer role
     /// </summary>
     [FhirElement("performerType", InSummary=true, Order=260, FiveWs="who.actor")]
+    [Binding("ProcedureRequestParticipantRole")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PerformerType
     {
@@ -560,6 +568,7 @@ namespace Hl7.Fhir.Model
     /// Explanation/Justification for test
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=280, FiveWs="why")]
+    [Binding("ProcedureRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -622,6 +631,7 @@ namespace Hl7.Fhir.Model
     /// Location on Body
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=320)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -661,6 +671,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

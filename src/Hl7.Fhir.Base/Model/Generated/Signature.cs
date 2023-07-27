@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Model
     /// Note: Since R5 the cardinality is expanded to 0..* (previous it was 1..*).
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
+    [Binding("SignatureType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Type
@@ -147,6 +148,7 @@ namespace Hl7.Fhir.Model
     /// The technical format of the signed resources. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("targetFormat", Order=70, Since=FhirRelease.R4)]
+    [Binding("MimeType")]
     [DataMember]
     public Hl7.Fhir.Model.Code TargetFormatElement
     {
@@ -210,6 +212,7 @@ namespace Hl7.Fhir.Model
     /// The technical format of the signature. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("sigFormat", Order=80, Since=FhirRelease.R4)]
+    [Binding("MimeType")]
     [DataMember]
     public Hl7.Fhir.Model.Code SigFormatElement
     {

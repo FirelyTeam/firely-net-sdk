@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ChargeItemDefinition","http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition", IsResource=true)]
-  public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
+    [BackboneType("ChargeItemDefinition.applicability")]
     public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
+    [BackboneType("ChargeItemDefinition.propertyGroup")]
     public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -401,6 +403,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
+    [BackboneType("ChargeItemDefinition.propertyGroup.priceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -413,6 +416,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ChargeItemDefinitionPriceComponentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.InvoicePriceComponentType> TypeElement
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1001,6 +1006,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for charge item definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1121,6 +1127,7 @@ namespace Hl7.Fhir.Model
     /// Billing codes or product types this definition applies to
     /// </summary>
     [FhirElement("code", InSummary=true, Order=280)]
+    [Binding("ChargeItemDefinitionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1173,6 +1180,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent> _PropertyGroup;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

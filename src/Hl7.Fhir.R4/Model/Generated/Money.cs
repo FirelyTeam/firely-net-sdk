@@ -60,1100 +60,1100 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/currencies)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("Currencies")]
+    [FhirEnumeration("Currencies", "http://hl7.org/fhir/ValueSet/currencies", "urn:iso:std:iso:4217")]
     public enum Currencies
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AED", "urn:iso:std:iso:4217"), Description("United Arab Emirates dirham")]
+      [EnumLiteral("AED"), Description("United Arab Emirates dirham")]
       AED,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AFN", "urn:iso:std:iso:4217"), Description("Afghan afghani")]
+      [EnumLiteral("AFN"), Description("Afghan afghani")]
       AFN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ALL", "urn:iso:std:iso:4217"), Description("Albanian lek")]
+      [EnumLiteral("ALL"), Description("Albanian lek")]
       ALL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AMD", "urn:iso:std:iso:4217"), Description("Armenian dram")]
+      [EnumLiteral("AMD"), Description("Armenian dram")]
       AMD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ANG", "urn:iso:std:iso:4217"), Description("Netherlands Antillean guilder")]
+      [EnumLiteral("ANG"), Description("Netherlands Antillean guilder")]
       ANG,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AOA", "urn:iso:std:iso:4217"), Description("Angolan kwanza")]
+      [EnumLiteral("AOA"), Description("Angolan kwanza")]
       AOA,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ARS", "urn:iso:std:iso:4217"), Description("Argentine peso")]
+      [EnumLiteral("ARS"), Description("Argentine peso")]
       ARS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AUD", "urn:iso:std:iso:4217"), Description("Australian dollar")]
+      [EnumLiteral("AUD"), Description("Australian dollar")]
       AUD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AWG", "urn:iso:std:iso:4217"), Description("Aruban florin")]
+      [EnumLiteral("AWG"), Description("Aruban florin")]
       AWG,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("AZN", "urn:iso:std:iso:4217"), Description("Azerbaijani manat")]
+      [EnumLiteral("AZN"), Description("Azerbaijani manat")]
       AZN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BAM", "urn:iso:std:iso:4217"), Description("Bosnia and Herzegovina convertible mark")]
+      [EnumLiteral("BAM"), Description("Bosnia and Herzegovina convertible mark")]
       BAM,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BBD", "urn:iso:std:iso:4217"), Description("Barbados dollar")]
+      [EnumLiteral("BBD"), Description("Barbados dollar")]
       BBD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BDT", "urn:iso:std:iso:4217"), Description("Bangladeshi taka")]
+      [EnumLiteral("BDT"), Description("Bangladeshi taka")]
       BDT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BGN", "urn:iso:std:iso:4217"), Description("Bulgarian lev")]
+      [EnumLiteral("BGN"), Description("Bulgarian lev")]
       BGN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BHD", "urn:iso:std:iso:4217"), Description("Bahraini dinar")]
+      [EnumLiteral("BHD"), Description("Bahraini dinar")]
       BHD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BIF", "urn:iso:std:iso:4217"), Description("Burundian franc")]
+      [EnumLiteral("BIF"), Description("Burundian franc")]
       BIF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BMD", "urn:iso:std:iso:4217"), Description("Bermudian dollar")]
+      [EnumLiteral("BMD"), Description("Bermudian dollar")]
       BMD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BND", "urn:iso:std:iso:4217"), Description("Brunei dollar")]
+      [EnumLiteral("BND"), Description("Brunei dollar")]
       BND,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BOB", "urn:iso:std:iso:4217"), Description("Boliviano")]
+      [EnumLiteral("BOB"), Description("Boliviano")]
       BOB,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BOV", "urn:iso:std:iso:4217"), Description("Bolivian Mvdol (funds code)")]
+      [EnumLiteral("BOV"), Description("Bolivian Mvdol (funds code)")]
       BOV,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BRL", "urn:iso:std:iso:4217"), Description("Brazilian real")]
+      [EnumLiteral("BRL"), Description("Brazilian real")]
       BRL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BSD", "urn:iso:std:iso:4217"), Description("Bahamian dollar")]
+      [EnumLiteral("BSD"), Description("Bahamian dollar")]
       BSD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BTN", "urn:iso:std:iso:4217"), Description("Bhutanese ngultrum")]
+      [EnumLiteral("BTN"), Description("Bhutanese ngultrum")]
       BTN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BWP", "urn:iso:std:iso:4217"), Description("Botswana pula")]
+      [EnumLiteral("BWP"), Description("Botswana pula")]
       BWP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BYN", "urn:iso:std:iso:4217"), Description("Belarusian ruble")]
+      [EnumLiteral("BYN"), Description("Belarusian ruble")]
       BYN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("BZD", "urn:iso:std:iso:4217"), Description("Belize dollar")]
+      [EnumLiteral("BZD"), Description("Belize dollar")]
       BZD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CAD", "urn:iso:std:iso:4217"), Description("Canadian dollar")]
+      [EnumLiteral("CAD"), Description("Canadian dollar")]
       CAD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CDF", "urn:iso:std:iso:4217"), Description("Congolese franc")]
+      [EnumLiteral("CDF"), Description("Congolese franc")]
       CDF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CHE", "urn:iso:std:iso:4217"), Description("WIR Euro (complementary currency)")]
+      [EnumLiteral("CHE"), Description("WIR Euro (complementary currency)")]
       CHE,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CHF", "urn:iso:std:iso:4217"), Description("Swiss franc")]
+      [EnumLiteral("CHF"), Description("Swiss franc")]
       CHF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CHW", "urn:iso:std:iso:4217"), Description("WIR Franc (complementary currency)")]
+      [EnumLiteral("CHW"), Description("WIR Franc (complementary currency)")]
       CHW,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CLF", "urn:iso:std:iso:4217"), Description("Unidad de Fomento (funds code)")]
+      [EnumLiteral("CLF"), Description("Unidad de Fomento (funds code)")]
       CLF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CLP", "urn:iso:std:iso:4217"), Description("Chilean peso")]
+      [EnumLiteral("CLP"), Description("Chilean peso")]
       CLP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CNY", "urn:iso:std:iso:4217"), Description("Renminbi (Chinese) yuan[8]")]
+      [EnumLiteral("CNY"), Description("Renminbi (Chinese) yuan[8]")]
       CNY,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("COP", "urn:iso:std:iso:4217"), Description("Colombian peso")]
+      [EnumLiteral("COP"), Description("Colombian peso")]
       COP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("COU", "urn:iso:std:iso:4217"), Description("Unidad de Valor Real (UVR) (funds code)[9]")]
+      [EnumLiteral("COU"), Description("Unidad de Valor Real (UVR) (funds code)[9]")]
       COU,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CRC", "urn:iso:std:iso:4217"), Description("Costa Rican colon")]
+      [EnumLiteral("CRC"), Description("Costa Rican colon")]
       CRC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CUC", "urn:iso:std:iso:4217"), Description("Cuban convertible peso")]
+      [EnumLiteral("CUC"), Description("Cuban convertible peso")]
       CUC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CUP", "urn:iso:std:iso:4217"), Description("Cuban peso")]
+      [EnumLiteral("CUP"), Description("Cuban peso")]
       CUP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CVE", "urn:iso:std:iso:4217"), Description("Cape Verde escudo")]
+      [EnumLiteral("CVE"), Description("Cape Verde escudo")]
       CVE,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("CZK", "urn:iso:std:iso:4217"), Description("Czech koruna")]
+      [EnumLiteral("CZK"), Description("Czech koruna")]
       CZK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("DJF", "urn:iso:std:iso:4217"), Description("Djiboutian franc")]
+      [EnumLiteral("DJF"), Description("Djiboutian franc")]
       DJF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("DKK", "urn:iso:std:iso:4217"), Description("Danish krone")]
+      [EnumLiteral("DKK"), Description("Danish krone")]
       DKK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("DOP", "urn:iso:std:iso:4217"), Description("Dominican peso")]
+      [EnumLiteral("DOP"), Description("Dominican peso")]
       DOP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("DZD", "urn:iso:std:iso:4217"), Description("Algerian dinar")]
+      [EnumLiteral("DZD"), Description("Algerian dinar")]
       DZD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("EGP", "urn:iso:std:iso:4217"), Description("Egyptian pound")]
+      [EnumLiteral("EGP"), Description("Egyptian pound")]
       EGP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ERN", "urn:iso:std:iso:4217"), Description("Eritrean nakfa")]
+      [EnumLiteral("ERN"), Description("Eritrean nakfa")]
       ERN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ETB", "urn:iso:std:iso:4217"), Description("Ethiopian birr")]
+      [EnumLiteral("ETB"), Description("Ethiopian birr")]
       ETB,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("EUR", "urn:iso:std:iso:4217"), Description("Euro")]
+      [EnumLiteral("EUR"), Description("Euro")]
       EUR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("FJD", "urn:iso:std:iso:4217"), Description("Fiji dollar")]
+      [EnumLiteral("FJD"), Description("Fiji dollar")]
       FJD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("FKP", "urn:iso:std:iso:4217"), Description("Falkland Islands pound")]
+      [EnumLiteral("FKP"), Description("Falkland Islands pound")]
       FKP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GBP", "urn:iso:std:iso:4217"), Description("Pound sterling")]
+      [EnumLiteral("GBP"), Description("Pound sterling")]
       GBP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GEL", "urn:iso:std:iso:4217"), Description("Georgian lari")]
+      [EnumLiteral("GEL"), Description("Georgian lari")]
       GEL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GGP", "urn:iso:std:iso:4217"), Description("Guernsey Pound")]
+      [EnumLiteral("GGP"), Description("Guernsey Pound")]
       GGP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GHS", "urn:iso:std:iso:4217"), Description("Ghanaian cedi")]
+      [EnumLiteral("GHS"), Description("Ghanaian cedi")]
       GHS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GIP", "urn:iso:std:iso:4217"), Description("Gibraltar pound")]
+      [EnumLiteral("GIP"), Description("Gibraltar pound")]
       GIP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GMD", "urn:iso:std:iso:4217"), Description("Gambian dalasi")]
+      [EnumLiteral("GMD"), Description("Gambian dalasi")]
       GMD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GNF", "urn:iso:std:iso:4217"), Description("Guinean franc")]
+      [EnumLiteral("GNF"), Description("Guinean franc")]
       GNF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GTQ", "urn:iso:std:iso:4217"), Description("Guatemalan quetzal")]
+      [EnumLiteral("GTQ"), Description("Guatemalan quetzal")]
       GTQ,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("GYD", "urn:iso:std:iso:4217"), Description("Guyanese dollar")]
+      [EnumLiteral("GYD"), Description("Guyanese dollar")]
       GYD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("HKD", "urn:iso:std:iso:4217"), Description("Hong Kong dollar")]
+      [EnumLiteral("HKD"), Description("Hong Kong dollar")]
       HKD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("HNL", "urn:iso:std:iso:4217"), Description("Honduran lempira")]
+      [EnumLiteral("HNL"), Description("Honduran lempira")]
       HNL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("HRK", "urn:iso:std:iso:4217"), Description("Croatian kuna")]
+      [EnumLiteral("HRK"), Description("Croatian kuna")]
       HRK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("HTG", "urn:iso:std:iso:4217"), Description("Haitian gourde")]
+      [EnumLiteral("HTG"), Description("Haitian gourde")]
       HTG,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("HUF", "urn:iso:std:iso:4217"), Description("Hungarian forint")]
+      [EnumLiteral("HUF"), Description("Hungarian forint")]
       HUF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("IDR", "urn:iso:std:iso:4217"), Description("Indonesian rupiah")]
+      [EnumLiteral("IDR"), Description("Indonesian rupiah")]
       IDR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ILS", "urn:iso:std:iso:4217"), Description("Israeli new shekel")]
+      [EnumLiteral("ILS"), Description("Israeli new shekel")]
       ILS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("IMP", "urn:iso:std:iso:4217"), Description("Isle of Man Pound")]
+      [EnumLiteral("IMP"), Description("Isle of Man Pound")]
       IMP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("INR", "urn:iso:std:iso:4217"), Description("Indian rupee")]
+      [EnumLiteral("INR"), Description("Indian rupee")]
       INR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("IQD", "urn:iso:std:iso:4217"), Description("Iraqi dinar")]
+      [EnumLiteral("IQD"), Description("Iraqi dinar")]
       IQD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("IRR", "urn:iso:std:iso:4217"), Description("Iranian rial")]
+      [EnumLiteral("IRR"), Description("Iranian rial")]
       IRR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ISK", "urn:iso:std:iso:4217"), Description("Icelandic króna")]
+      [EnumLiteral("ISK"), Description("Icelandic króna")]
       ISK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("JEP", "urn:iso:std:iso:4217"), Description("Jersey Pound")]
+      [EnumLiteral("JEP"), Description("Jersey Pound")]
       JEP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("JMD", "urn:iso:std:iso:4217"), Description("Jamaican dollar")]
+      [EnumLiteral("JMD"), Description("Jamaican dollar")]
       JMD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("JOD", "urn:iso:std:iso:4217"), Description("Jordanian dinar")]
+      [EnumLiteral("JOD"), Description("Jordanian dinar")]
       JOD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("JPY", "urn:iso:std:iso:4217"), Description("Japanese yen")]
+      [EnumLiteral("JPY"), Description("Japanese yen")]
       JPY,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KES", "urn:iso:std:iso:4217"), Description("Kenyan shilling")]
+      [EnumLiteral("KES"), Description("Kenyan shilling")]
       KES,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KGS", "urn:iso:std:iso:4217"), Description("Kyrgyzstani som")]
+      [EnumLiteral("KGS"), Description("Kyrgyzstani som")]
       KGS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KHR", "urn:iso:std:iso:4217"), Description("Cambodian riel")]
+      [EnumLiteral("KHR"), Description("Cambodian riel")]
       KHR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KMF", "urn:iso:std:iso:4217"), Description("Comoro franc")]
+      [EnumLiteral("KMF"), Description("Comoro franc")]
       KMF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KPW", "urn:iso:std:iso:4217"), Description("North Korean won")]
+      [EnumLiteral("KPW"), Description("North Korean won")]
       KPW,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KRW", "urn:iso:std:iso:4217"), Description("South Korean won")]
+      [EnumLiteral("KRW"), Description("South Korean won")]
       KRW,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KWD", "urn:iso:std:iso:4217"), Description("Kuwaiti dinar")]
+      [EnumLiteral("KWD"), Description("Kuwaiti dinar")]
       KWD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KYD", "urn:iso:std:iso:4217"), Description("Cayman Islands dollar")]
+      [EnumLiteral("KYD"), Description("Cayman Islands dollar")]
       KYD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("KZT", "urn:iso:std:iso:4217"), Description("Kazakhstani tenge")]
+      [EnumLiteral("KZT"), Description("Kazakhstani tenge")]
       KZT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("LAK", "urn:iso:std:iso:4217"), Description("Lao kip")]
+      [EnumLiteral("LAK"), Description("Lao kip")]
       LAK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("LBP", "urn:iso:std:iso:4217"), Description("Lebanese pound")]
+      [EnumLiteral("LBP"), Description("Lebanese pound")]
       LBP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("LKR", "urn:iso:std:iso:4217"), Description("Sri Lankan rupee")]
+      [EnumLiteral("LKR"), Description("Sri Lankan rupee")]
       LKR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("LRD", "urn:iso:std:iso:4217"), Description("Liberian dollar")]
+      [EnumLiteral("LRD"), Description("Liberian dollar")]
       LRD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("LSL", "urn:iso:std:iso:4217"), Description("Lesotho loti")]
+      [EnumLiteral("LSL"), Description("Lesotho loti")]
       LSL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("LYD", "urn:iso:std:iso:4217"), Description("Libyan dinar")]
+      [EnumLiteral("LYD"), Description("Libyan dinar")]
       LYD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MAD", "urn:iso:std:iso:4217"), Description("Moroccan dirham")]
+      [EnumLiteral("MAD"), Description("Moroccan dirham")]
       MAD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MDL", "urn:iso:std:iso:4217"), Description("Moldovan leu")]
+      [EnumLiteral("MDL"), Description("Moldovan leu")]
       MDL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MGA", "urn:iso:std:iso:4217"), Description("Malagasy ariary")]
+      [EnumLiteral("MGA"), Description("Malagasy ariary")]
       MGA,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MKD", "urn:iso:std:iso:4217"), Description("Macedonian denar")]
+      [EnumLiteral("MKD"), Description("Macedonian denar")]
       MKD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MMK", "urn:iso:std:iso:4217"), Description("Myanmar kyat")]
+      [EnumLiteral("MMK"), Description("Myanmar kyat")]
       MMK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MNT", "urn:iso:std:iso:4217"), Description("Mongolian tögrög")]
+      [EnumLiteral("MNT"), Description("Mongolian tögrög")]
       MNT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MOP", "urn:iso:std:iso:4217"), Description("Macanese pataca")]
+      [EnumLiteral("MOP"), Description("Macanese pataca")]
       MOP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MRU", "urn:iso:std:iso:4217"), Description("Mauritanian ouguiya")]
+      [EnumLiteral("MRU"), Description("Mauritanian ouguiya")]
       MRU,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MUR", "urn:iso:std:iso:4217"), Description("Mauritian rupee")]
+      [EnumLiteral("MUR"), Description("Mauritian rupee")]
       MUR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MVR", "urn:iso:std:iso:4217"), Description("Maldivian rufiyaa")]
+      [EnumLiteral("MVR"), Description("Maldivian rufiyaa")]
       MVR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MWK", "urn:iso:std:iso:4217"), Description("Malawian kwacha")]
+      [EnumLiteral("MWK"), Description("Malawian kwacha")]
       MWK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MXN", "urn:iso:std:iso:4217"), Description("Mexican peso")]
+      [EnumLiteral("MXN"), Description("Mexican peso")]
       MXN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MXV", "urn:iso:std:iso:4217"), Description("Mexican Unidad de Inversion (UDI) (funds code)")]
+      [EnumLiteral("MXV"), Description("Mexican Unidad de Inversion (UDI) (funds code)")]
       MXV,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MYR", "urn:iso:std:iso:4217"), Description("Malaysian ringgit")]
+      [EnumLiteral("MYR"), Description("Malaysian ringgit")]
       MYR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MZN", "urn:iso:std:iso:4217"), Description("Mozambican metical")]
+      [EnumLiteral("MZN"), Description("Mozambican metical")]
       MZN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NAD", "urn:iso:std:iso:4217"), Description("Namibian dollar")]
+      [EnumLiteral("NAD"), Description("Namibian dollar")]
       NAD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NGN", "urn:iso:std:iso:4217"), Description("Nigerian naira")]
+      [EnumLiteral("NGN"), Description("Nigerian naira")]
       NGN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NIO", "urn:iso:std:iso:4217"), Description("Nicaraguan córdoba")]
+      [EnumLiteral("NIO"), Description("Nicaraguan córdoba")]
       NIO,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NOK", "urn:iso:std:iso:4217"), Description("Norwegian krone")]
+      [EnumLiteral("NOK"), Description("Norwegian krone")]
       NOK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NPR", "urn:iso:std:iso:4217"), Description("Nepalese rupee")]
+      [EnumLiteral("NPR"), Description("Nepalese rupee")]
       NPR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NZD", "urn:iso:std:iso:4217"), Description("New Zealand dollar")]
+      [EnumLiteral("NZD"), Description("New Zealand dollar")]
       NZD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("OMR", "urn:iso:std:iso:4217"), Description("Omani rial")]
+      [EnumLiteral("OMR"), Description("Omani rial")]
       OMR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PAB", "urn:iso:std:iso:4217"), Description("Panamanian balboa")]
+      [EnumLiteral("PAB"), Description("Panamanian balboa")]
       PAB,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PEN", "urn:iso:std:iso:4217"), Description("Peruvian Sol")]
+      [EnumLiteral("PEN"), Description("Peruvian Sol")]
       PEN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PGK", "urn:iso:std:iso:4217"), Description("Papua New Guinean kina")]
+      [EnumLiteral("PGK"), Description("Papua New Guinean kina")]
       PGK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PHP", "urn:iso:std:iso:4217"), Description("Philippine piso[13]")]
+      [EnumLiteral("PHP"), Description("Philippine piso[13]")]
       PHP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PKR", "urn:iso:std:iso:4217"), Description("Pakistani rupee")]
+      [EnumLiteral("PKR"), Description("Pakistani rupee")]
       PKR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PLN", "urn:iso:std:iso:4217"), Description("Polish złoty")]
+      [EnumLiteral("PLN"), Description("Polish złoty")]
       PLN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PYG", "urn:iso:std:iso:4217"), Description("Paraguayan guaraní")]
+      [EnumLiteral("PYG"), Description("Paraguayan guaraní")]
       PYG,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("QAR", "urn:iso:std:iso:4217"), Description("Qatari riyal")]
+      [EnumLiteral("QAR"), Description("Qatari riyal")]
       QAR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("RON", "urn:iso:std:iso:4217"), Description("Romanian leu")]
+      [EnumLiteral("RON"), Description("Romanian leu")]
       RON,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("RSD", "urn:iso:std:iso:4217"), Description("Serbian dinar")]
+      [EnumLiteral("RSD"), Description("Serbian dinar")]
       RSD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("RUB", "urn:iso:std:iso:4217"), Description("Russian ruble")]
+      [EnumLiteral("RUB"), Description("Russian ruble")]
       RUB,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("RWF", "urn:iso:std:iso:4217"), Description("Rwandan franc")]
+      [EnumLiteral("RWF"), Description("Rwandan franc")]
       RWF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SAR", "urn:iso:std:iso:4217"), Description("Saudi riyal")]
+      [EnumLiteral("SAR"), Description("Saudi riyal")]
       SAR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SBD", "urn:iso:std:iso:4217"), Description("Solomon Islands dollar")]
+      [EnumLiteral("SBD"), Description("Solomon Islands dollar")]
       SBD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SCR", "urn:iso:std:iso:4217"), Description("Seychelles rupee")]
+      [EnumLiteral("SCR"), Description("Seychelles rupee")]
       SCR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SDG", "urn:iso:std:iso:4217"), Description("Sudanese pound")]
+      [EnumLiteral("SDG"), Description("Sudanese pound")]
       SDG,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SEK", "urn:iso:std:iso:4217"), Description("Swedish krona/kronor")]
+      [EnumLiteral("SEK"), Description("Swedish krona/kronor")]
       SEK,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SGD", "urn:iso:std:iso:4217"), Description("Singapore dollar")]
+      [EnumLiteral("SGD"), Description("Singapore dollar")]
       SGD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SHP", "urn:iso:std:iso:4217"), Description("Saint Helena pound")]
+      [EnumLiteral("SHP"), Description("Saint Helena pound")]
       SHP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SLL", "urn:iso:std:iso:4217"), Description("Sierra Leonean leone")]
+      [EnumLiteral("SLL"), Description("Sierra Leonean leone")]
       SLL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SOS", "urn:iso:std:iso:4217"), Description("Somali shilling")]
+      [EnumLiteral("SOS"), Description("Somali shilling")]
       SOS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SRD", "urn:iso:std:iso:4217"), Description("Surinamese dollar")]
+      [EnumLiteral("SRD"), Description("Surinamese dollar")]
       SRD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SSP", "urn:iso:std:iso:4217"), Description("South Sudanese pound")]
+      [EnumLiteral("SSP"), Description("South Sudanese pound")]
       SSP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("São Tomé and Príncipe dobra")]
+      [EnumLiteral("STN"), Description("São Tomé and Príncipe dobra")]
       STN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SVC", "urn:iso:std:iso:4217"), Description("Salvadoran colón")]
+      [EnumLiteral("SVC"), Description("Salvadoran colón")]
       SVC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SYP", "urn:iso:std:iso:4217"), Description("Syrian pound")]
+      [EnumLiteral("SYP"), Description("Syrian pound")]
       SYP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SZL", "urn:iso:std:iso:4217"), Description("Swazi lilangeni")]
+      [EnumLiteral("SZL"), Description("Swazi lilangeni")]
       SZL,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("THB", "urn:iso:std:iso:4217"), Description("Thai baht")]
+      [EnumLiteral("THB"), Description("Thai baht")]
       THB,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TJS", "urn:iso:std:iso:4217"), Description("Tajikistani somoni")]
+      [EnumLiteral("TJS"), Description("Tajikistani somoni")]
       TJS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TMT", "urn:iso:std:iso:4217"), Description("Turkmenistan manat")]
+      [EnumLiteral("TMT"), Description("Turkmenistan manat")]
       TMT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TND", "urn:iso:std:iso:4217"), Description("Tunisian dinar")]
+      [EnumLiteral("TND"), Description("Tunisian dinar")]
       TND,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TOP", "urn:iso:std:iso:4217"), Description("Tongan paʻanga")]
+      [EnumLiteral("TOP"), Description("Tongan paʻanga")]
       TOP,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TRY", "urn:iso:std:iso:4217"), Description("Turkish lira")]
+      [EnumLiteral("TRY"), Description("Turkish lira")]
       TRY,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TTD", "urn:iso:std:iso:4217"), Description("Trinidad and Tobago dollar")]
+      [EnumLiteral("TTD"), Description("Trinidad and Tobago dollar")]
       TTD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TVD", "urn:iso:std:iso:4217"), Description("Tuvalu Dollar")]
+      [EnumLiteral("TVD"), Description("Tuvalu Dollar")]
       TVD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TWD", "urn:iso:std:iso:4217"), Description("New Taiwan dollar")]
+      [EnumLiteral("TWD"), Description("New Taiwan dollar")]
       TWD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TZS", "urn:iso:std:iso:4217"), Description("Tanzanian shilling")]
+      [EnumLiteral("TZS"), Description("Tanzanian shilling")]
       TZS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("UAH", "urn:iso:std:iso:4217"), Description("Ukrainian hryvnia")]
+      [EnumLiteral("UAH"), Description("Ukrainian hryvnia")]
       UAH,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("UGX", "urn:iso:std:iso:4217"), Description("Ugandan shilling")]
+      [EnumLiteral("UGX"), Description("Ugandan shilling")]
       UGX,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("USD", "urn:iso:std:iso:4217"), Description("United States dollar")]
+      [EnumLiteral("USD"), Description("United States dollar")]
       USD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("USN", "urn:iso:std:iso:4217"), Description("United States dollar (next day) (funds code)")]
+      [EnumLiteral("USN"), Description("United States dollar (next day) (funds code)")]
       USN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("UYI", "urn:iso:std:iso:4217"), Description("Uruguay Peso en Unidades Indexadas (URUIURUI) (funds code)")]
+      [EnumLiteral("UYI"), Description("Uruguay Peso en Unidades Indexadas (URUIURUI) (funds code)")]
       UYI,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("UYU", "urn:iso:std:iso:4217"), Description("Uruguayan peso")]
+      [EnumLiteral("UYU"), Description("Uruguayan peso")]
       UYU,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("UZS", "urn:iso:std:iso:4217"), Description("Uzbekistan som")]
+      [EnumLiteral("UZS"), Description("Uzbekistan som")]
       UZS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("VEF", "urn:iso:std:iso:4217"), Description("Venezuelan bolívar")]
+      [EnumLiteral("VEF"), Description("Venezuelan bolívar")]
       VEF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("VND", "urn:iso:std:iso:4217"), Description("Vietnamese đồng")]
+      [EnumLiteral("VND"), Description("Vietnamese đồng")]
       VND,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("VUV", "urn:iso:std:iso:4217"), Description("Vanuatu vatu")]
+      [EnumLiteral("VUV"), Description("Vanuatu vatu")]
       VUV,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("WST", "urn:iso:std:iso:4217"), Description("Samoan tala")]
+      [EnumLiteral("WST"), Description("Samoan tala")]
       WST,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XAF", "urn:iso:std:iso:4217"), Description("CFA franc BEAC")]
+      [EnumLiteral("XAF"), Description("CFA franc BEAC")]
       XAF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XAG", "urn:iso:std:iso:4217"), Description("Silver (one troy ounce)")]
+      [EnumLiteral("XAG"), Description("Silver (one troy ounce)")]
       XAG,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XAU", "urn:iso:std:iso:4217"), Description("Gold (one troy ounce)")]
+      [EnumLiteral("XAU"), Description("Gold (one troy ounce)")]
       XAU,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XBA", "urn:iso:std:iso:4217"), Description("European Composite Unit (EURCO) (bond market unit)")]
+      [EnumLiteral("XBA"), Description("European Composite Unit (EURCO) (bond market unit)")]
       XBA,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XBB", "urn:iso:std:iso:4217"), Description("European Monetary Unit (E.M.U.-6) (bond market unit)")]
+      [EnumLiteral("XBB"), Description("European Monetary Unit (E.M.U.-6) (bond market unit)")]
       XBB,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XBC", "urn:iso:std:iso:4217"), Description("European Unit of Account 9 (E.U.A.-9) (bond market unit)")]
+      [EnumLiteral("XBC"), Description("European Unit of Account 9 (E.U.A.-9) (bond market unit)")]
       XBC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XBD", "urn:iso:std:iso:4217"), Description("European Unit of Account 17 (E.U.A.-17) (bond market unit)")]
+      [EnumLiteral("XBD"), Description("European Unit of Account 17 (E.U.A.-17) (bond market unit)")]
       XBD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XCD", "urn:iso:std:iso:4217"), Description("East Caribbean dollar")]
+      [EnumLiteral("XCD"), Description("East Caribbean dollar")]
       XCD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XDR", "urn:iso:std:iso:4217"), Description("Special drawing rights")]
+      [EnumLiteral("XDR"), Description("Special drawing rights")]
       XDR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XOF", "urn:iso:std:iso:4217"), Description("CFA franc BCEAO")]
+      [EnumLiteral("XOF"), Description("CFA franc BCEAO")]
       XOF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XPD", "urn:iso:std:iso:4217"), Description("Palladium (one troy ounce)")]
+      [EnumLiteral("XPD"), Description("Palladium (one troy ounce)")]
       XPD,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XPF", "urn:iso:std:iso:4217"), Description("CFP franc (franc Pacifique)")]
+      [EnumLiteral("XPF"), Description("CFP franc (franc Pacifique)")]
       XPF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XPT", "urn:iso:std:iso:4217"), Description("Platinum (one troy ounce)")]
+      [EnumLiteral("XPT"), Description("Platinum (one troy ounce)")]
       XPT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XSU", "urn:iso:std:iso:4217"), Description("SUCRE")]
+      [EnumLiteral("XSU"), Description("SUCRE")]
       XSU,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XTS", "urn:iso:std:iso:4217"), Description("Code reserved for testing purposes")]
+      [EnumLiteral("XTS"), Description("Code reserved for testing purposes")]
       XTS,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XUA", "urn:iso:std:iso:4217"), Description("ADB Unit of Account")]
+      [EnumLiteral("XUA"), Description("ADB Unit of Account")]
       XUA,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("XXX", "urn:iso:std:iso:4217"), Description("No currency")]
+      [EnumLiteral("XXX"), Description("No currency")]
       XXX,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("YER", "urn:iso:std:iso:4217"), Description("Yemeni rial")]
+      [EnumLiteral("YER"), Description("Yemeni rial")]
       YER,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ZAR", "urn:iso:std:iso:4217"), Description("South African rand")]
+      [EnumLiteral("ZAR"), Description("South African rand")]
       ZAR,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ZMW", "urn:iso:std:iso:4217"), Description("Zambian kwacha")]
+      [EnumLiteral("ZMW"), Description("Zambian kwacha")]
       ZMW,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ZWL", "urn:iso:std:iso:4217"), Description("Zimbabwean dollar A/10")]
+      [EnumLiteral("ZWL"), Description("Zimbabwean dollar A/10")]
       ZWL,
     }
 
@@ -1193,6 +1193,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("currency", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CurrencyCode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Money.Currencies> CurrencyElement
     {

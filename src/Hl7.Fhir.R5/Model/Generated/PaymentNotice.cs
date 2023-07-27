@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PaymentNotice","http://hl7.org/fhir/StructureDefinition/PaymentNotice", IsResource=true)]
-  public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource
+  public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -74,6 +74,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentNoticeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -274,6 +275,7 @@ namespace Hl7.Fhir.Model
     /// Issued or cleared Status of the payment
     /// </summary>
     [FhirElement("paymentStatus", Order=200)]
+    [Binding("PaymentStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PaymentStatus
     {
@@ -282,6 +284,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _PaymentStatus;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

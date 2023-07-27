@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device", IsResource=true)]
-  public partial class Device : Hl7.Fhir.Model.DomainResource
+  public partial class Device : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-status)
     /// (system: http://hl7.org/fhir/device-status)
     /// </summary>
-    [FhirEnumeration("FHIRDeviceStatus")]
+    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status", "http://hl7.org/fhir/device-status")]
     public enum FHIRDeviceStatus
     {
       /// <summary>
       /// The device record is current and is appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The device record is not current and is not appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/device-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The device record is not current and is not appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -88,50 +88,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
     /// (system: http://hl7.org/fhir/udi-entry-type)
     /// </summary>
-    [FhirEnumeration("UDIEntryType")]
+    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type", "http://hl7.org/fhir/udi-entry-type")]
     public enum UDIEntryType
     {
       /// <summary>
       /// a barcodescanner captured the data from the device label.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("barcode", "http://hl7.org/fhir/udi-entry-type"), Description("Barcode")]
+      [EnumLiteral("barcode"), Description("Barcode")]
       Barcode,
       /// <summary>
       /// An RFID chip reader captured the data from the device label.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("rfid", "http://hl7.org/fhir/udi-entry-type"), Description("RFID")]
+      [EnumLiteral("rfid"), Description("RFID")]
       Rfid,
       /// <summary>
       /// The data was read from the label by a person and manually entered. (e.g.  via a keyboard).
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("manual", "http://hl7.org/fhir/udi-entry-type"), Description("Manual")]
+      [EnumLiteral("manual"), Description("Manual")]
       Manual,
       /// <summary>
       /// The data originated from a patient's implant card and was read by an operator.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("card", "http://hl7.org/fhir/udi-entry-type"), Description("Card")]
+      [EnumLiteral("card"), Description("Card")]
       Card,
       /// <summary>
       /// The data originated from a patient source and was not directly scanned or read from a label or card.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
+      [EnumLiteral("self-reported"), Description("Self Reported")]
       SelfReported,
       /// <summary>
       /// The UDI information was received electronically from the device through a communication protocol, such as the IEEE 11073 20601 version 4 exchange protocol over Bluetooth or USB.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("electronic-transmission", "http://hl7.org/fhir/udi-entry-type"), Description("Electronic Transmission")]
+      [EnumLiteral("electronic-transmission"), Description("Electronic Transmission")]
       ElectronicTransmission,
       /// <summary>
       /// The method of data capture has not been determined.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/udi-entry-type"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#UdiCarrier", IsNestedType=true)]
+    [BackboneType("Device.udiCarrier")]
     public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -310,6 +311,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("entryType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UDIEntryType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType> EntryTypeElement
       {
@@ -471,6 +473,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Name", IsNestedType=true)]
+    [BackboneType("Device.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -515,6 +518,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -681,6 +685,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Version", IsNestedType=true)]
+    [BackboneType("Device.version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -692,6 +697,7 @@ namespace Hl7.Fhir.Model
       /// The type of the device version, e.g. manufacturer, approved, internal
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("FHIRDeviceVersionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -893,6 +899,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#ConformsTo", IsNestedType=true)]
+    [BackboneType("Device.conformsTo")]
     public partial class ConformsToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -904,6 +911,7 @@ namespace Hl7.Fhir.Model
       /// Describes the common type of the standard, specification, or formal guidance.  communication | performance | measurement
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("DeviceSpecificationCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -917,6 +925,7 @@ namespace Hl7.Fhir.Model
       /// Identifies the standard, specification, or formal guidance that the device adheres to
       /// </summary>
       [FhirElement("specification", Order=50)]
+      [Binding("DeviceSpecification-type")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Specification
@@ -1065,6 +1074,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Property", IsNestedType=true)]
+    [BackboneType("Device.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1076,6 +1086,7 @@ namespace Hl7.Fhir.Model
       /// Code that specifies the property being represented
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("DevicePropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1271,6 +1282,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRDeviceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
     {
@@ -1302,6 +1314,7 @@ namespace Hl7.Fhir.Model
     /// lost | damaged | destroyed | available
     /// </summary>
     [FhirElement("availabilityStatus", Order=140, FiveWs="FiveWs.status")]
+    [Binding("FHIRDeviceAvailabilityStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AvailabilityStatus
     {
@@ -1559,6 +1572,7 @@ namespace Hl7.Fhir.Model
     /// Indicates a high-level grouping of the device
     /// </summary>
     [FhirElement("category", Order=240)]
+    [Binding("DeviceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1573,6 +1587,7 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=250)]
+    [Binding("DeviceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1629,6 +1644,7 @@ namespace Hl7.Fhir.Model
     /// The designated condition for performing a task
     /// </summary>
     [FhirElement("mode", Order=290)]
+    [Binding("DeviceOperationMode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Mode
     {
@@ -1787,6 +1803,7 @@ namespace Hl7.Fhir.Model
     /// Safety Characteristics of Device
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=390)]
+    [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
@@ -1811,6 +1828,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Parent;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

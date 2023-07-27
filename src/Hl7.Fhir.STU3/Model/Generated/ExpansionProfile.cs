@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ExpansionProfile","http://hl7.org/fhir/StructureDefinition/ExpansionProfile", IsResource=true)]
-  public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
+  public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-version-processing-mode)
     /// (system: http://hl7.org/fhir/system-version-processing-mode)
     /// </summary>
-    [FhirEnumeration("SystemVersionProcessingMode")]
+    [FhirEnumeration("SystemVersionProcessingMode", "http://hl7.org/fhir/ValueSet/system-version-processing-mode", "http://hl7.org/fhir/system-version-processing-mode")]
     public enum SystemVersionProcessingMode
     {
       /// <summary>
       /// Use this version of the code system if a value set doesn't specify a version
       /// (system: http://hl7.org/fhir/system-version-processing-mode)
       /// </summary>
-      [EnumLiteral("default", "http://hl7.org/fhir/system-version-processing-mode"), Description("Default Version")]
+      [EnumLiteral("default"), Description("Default Version")]
       Default,
       /// <summary>
       /// Use this version of the code system. If a value set specifies a different version, the expansion operation should fail
       /// (system: http://hl7.org/fhir/system-version-processing-mode)
       /// </summary>
-      [EnumLiteral("check", "http://hl7.org/fhir/system-version-processing-mode"), Description("Check ValueSet Version")]
+      [EnumLiteral("check"), Description("Check ValueSet Version")]
       Check,
       /// <summary>
       /// Use this version of the code system irrespective of which version is specified by a value set. Note that this has obvious safety issues, in that it may result in a value set expansion giving a different list of codes that is both wrong and unsafe, and implementers should only use this capability reluctantly. It primarily exists to deal with situations where specifications have fallen into decay as time passes. If a  version is override, the version used SHALL explicitly be represented in the expansion parameters
       /// (system: http://hl7.org/fhir/system-version-processing-mode)
       /// </summary>
-      [EnumLiteral("override", "http://hl7.org/fhir/system-version-processing-mode"), Description("Override ValueSet Version")]
+      [EnumLiteral("override"), Description("Override ValueSet Version")]
       Override,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.fixedVersion")]
     public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -165,6 +166,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SystemVersionProcessingMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ExpansionProfile.SystemVersionProcessingMode> ModeElement
@@ -300,6 +302,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.excludedSystem")]
     public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -468,6 +471,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -599,6 +603,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.include")]
     public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -709,6 +714,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.include.designation")]
     public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -720,6 +726,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation to be included
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -751,6 +758,7 @@ namespace Hl7.Fhir.Model
       /// What kind of Designation to include
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -858,6 +866,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.exclude")]
     public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -968,6 +977,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.exclude.designation")]
     public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -979,6 +989,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation to be excluded
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1010,6 +1021,7 @@ namespace Hl7.Fhir.Model
       /// What kind of Designation to exclude
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
+      [Binding("ConceptDesignationUse")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1222,6 +1234,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1406,6 +1419,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for expansion profile (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1646,6 +1660,7 @@ namespace Hl7.Fhir.Model
     /// Specify the language for the display element of codes in the value set expansion
     /// </summary>
     [FhirElement("displayLanguage", InSummary=true, Order=300)]
+    [Binding("Language")]
     [DataMember]
     public Hl7.Fhir.Model.Code DisplayLanguageElement
     {
@@ -1703,6 +1718,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("LimitedExpansion");
       }
     }
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

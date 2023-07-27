@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/operation-kind)
     /// (system: http://hl7.org/fhir/operation-kind)
     /// </summary>
-    [FhirEnumeration("OperationKind")]
+    [FhirEnumeration("OperationKind", "http://hl7.org/fhir/ValueSet/operation-kind", "http://hl7.org/fhir/operation-kind")]
     public enum OperationKind
     {
       /// <summary>
       /// This operation is invoked as an operation.
       /// (system: http://hl7.org/fhir/operation-kind)
       /// </summary>
-      [EnumLiteral("operation", "http://hl7.org/fhir/operation-kind"), Description("Operation")]
+      [EnumLiteral("operation"), Description("Operation")]
       Operation,
       /// <summary>
       /// This operation is a named query, invoked using the search mechanism.
       /// (system: http://hl7.org/fhir/operation-kind)
       /// </summary>
-      [EnumLiteral("query", "http://hl7.org/fhir/operation-kind"), Description("Query")]
+      [EnumLiteral("query"), Description("Query")]
       Query,
     }
 
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#Parameter", IsNestedType=true)]
+    [BackboneType("OperationDefinition.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -127,6 +128,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("use", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("OperationParameterUse")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.OperationParameterUse> UseElement
@@ -255,6 +257,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRAllTypes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
       {
@@ -287,6 +290,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("searchType", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchParamType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> SearchTypeElement
       {
@@ -526,6 +530,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#Binding", IsNestedType=true)]
+    [BackboneType("OperationDefinition.parameter.binding")]
     public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -538,6 +543,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strength", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
@@ -681,6 +687,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#Overload", IsNestedType=true)]
+    [BackboneType("OperationDefinition.overload")]
     public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -942,6 +949,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -975,6 +983,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", Order=130, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("OperationKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.OperationDefinition.OperationKind> KindElement
@@ -1159,6 +1168,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for operation definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1314,11 +1324,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> ResourceElement
     {
-      get { if(_ResourceElement==null) _ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _ResourceElement; }
+      get { if(_ResourceElement==null) _ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(); return _ResourceElement; }
       set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
     }
 
@@ -1337,7 +1348,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ResourceElement = null;
         else
-          ResourceElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
+          ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Code<Hl7.Fhir.Model.ResourceType>(elem)));
         OnPropertyChanged("Resource");
       }
     }
