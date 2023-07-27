@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
         [DataTestMethod]
         [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the first ts that fails", DisplayName = "First is prefered")]
         [DataRow("http://example.org/fhir/ValueSet/second-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the second ts that fails", DisplayName = "Second is prefered")]
-        [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/", "http://example.org/fhir/ValueSet/", "this is the first ts that fails", DisplayName = "Both are prefered")]
+        [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/*", "http://example.org/fhir/ValueSet/*", "this is the first ts that fails", DisplayName = "Both are prefered")]
         [DataRow("http://fire.ly/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the first ts that fails", DisplayName = "None are prefered")]
         public async Task RoutingTerminologyServiceTest(string VSInput, string firstTsPreferenceVs, string secondTsPreferenceVs, string resultMessage)
         {
@@ -123,8 +123,8 @@ namespace Hl7.Fhir.Support.Tests.Specification
             //setup mock services
             var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/example-vs").Build();
 
-            var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), "http://example.org/fhir/ValueSet/");
-            var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), "http://example.org/fhir/ValueSet/");
+            var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), "http://example.org/fhir/ValueSet/*");
+            var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), "http://example.org/*/ValueSet/example-vs");
             var thirdFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, thirdFailingParameters), "http://example.org/fhir/ValueSet/third-preference");
 
             //create a multitermserver with only the first ts

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 PreferredValueSets = new string[]
                 {
-                    "http://hl7.org/fhir/ValueSet/"
+                    "http://hl7.org/fhir/ValueSet/*"
                 }
             };
 
