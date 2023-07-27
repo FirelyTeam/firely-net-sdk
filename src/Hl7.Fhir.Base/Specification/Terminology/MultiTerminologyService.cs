@@ -173,30 +173,14 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private static bool matchVs(IEnumerable<string>? preferredValueSets, string inputVsUrl)
         {
-            return preferredValueSets?.Any(vs => isWildcardMatch(vs, inputVsUrl)) ?? false;
+#if NETSTANDARD2_0
+            return preferredValueSets?.Any(vs => FileSystemName.MatchesSimpleExpression(vs.AsSpan(), inputVsUrl.AsSpan())) ?? false;
+#else
+            return preferredValueSets?.Any(vs => System.IO.Enumeration.FileSystemName.MatchesSimpleExpression(vs, inputVsUrl)) ?? false;
+#endif
         }
 
-        private static bool isWildcardMatch(string possibleMatch, string inputUrl)
-        {
-            // Check if the URL contains a wildcard '*'
-            if (possibleMatch.Contains("*"))
-            {
-                int wildcardIndex = possibleMatch.IndexOf("*");
 
-                // Check if the input URL starts with the part before the wildcard
-                if (inputUrl.StartsWith(possibleMatch.Substring(0, wildcardIndex)))
-                {
-                    // Check if the input URL ends with the part after the wildcard
-                    string urlAfterWildcard = possibleMatch.Substring(wildcardIndex + 1);
-                    return inputUrl.EndsWith(urlAfterWildcard);
-                }
-
-                return false;
-            }
-
-            // No wildcard, use regular string comparison
-            return possibleMatch == inputUrl;
-        }
 
         private static IEnumerable<T> reorderList<T>(IEnumerable<T> originalList, IEnumerable<T> itemsToMoveToFront)
         {
