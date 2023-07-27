@@ -168,11 +168,34 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private IEnumerable<ITerminologyService> preferredService(string inputVsUrl)
         {
-            return _termServices.Where(t => matchSystem(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
+            return _termServices.Where(t => matchVs(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
+        }
 
+        private static bool matchVs(IEnumerable<string>? preferredValueSets, string inputVsUrl)
+        {
+            return preferredValueSets?.Any(vs => isWildcardMatch(vs, inputVsUrl)) ?? false;
+        }
 
-            static bool matchSystem(IEnumerable<string>? preferredSystems, string valueSetUrl) =>
-                preferredSystems?.Any() == true && preferredSystems.Any(valueSetUrl.StartsWith);
+        private static bool isWildcardMatch(string possibleMatch, string inputUrl)
+        {
+            // Check if the URL contains a wildcard '*'
+            if (possibleMatch.Contains("*"))
+            {
+                int wildcardIndex = possibleMatch.IndexOf("*");
+
+                // Check if the input URL starts with the part before the wildcard
+                if (inputUrl.StartsWith(possibleMatch.Substring(0, wildcardIndex)))
+                {
+                    // Check if the input URL ends with the part after the wildcard
+                    string urlAfterWildcard = possibleMatch.Substring(wildcardIndex + 1);
+                    return inputUrl.EndsWith(urlAfterWildcard);
+                }
+
+                return false;
+            }
+
+            // No wildcard, use regular string comparison
+            return possibleMatch == inputUrl;
         }
 
         private static IEnumerable<T> reorderList<T>(IEnumerable<T> originalList, IEnumerable<T> itemsToMoveToFront)
