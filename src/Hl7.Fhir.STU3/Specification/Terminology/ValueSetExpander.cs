@@ -224,8 +224,9 @@ namespace Hl7.Fhir.Specification.Terminology
                 throw Error.InvalidOperation($"No terminology service available to resolve references to codesystem '{uri}', " +
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
-            var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false)
-                ?? throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to CodeSystem");
+            var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false);
+            if (importedCs == null) throw new ValueSetUnknownException($"The ValueSet expander cannot find system '{uri}', so the expansion cannot be completed.");
+
             var result = new List<ValueSet.ContainsComponent>();
             result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings)));
 
