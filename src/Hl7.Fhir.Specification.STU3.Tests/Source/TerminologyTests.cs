@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
     {
         private readonly IAsyncResourceResolver _resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
-        private static Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
+        private static readonly Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
 
         // Use here a FhirPackageSource without the expansion package.
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
@@ -60,6 +60,37 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
         }
 
+        [Fact]
+        public async T.Task CatchesCyclicExpansions()
+        {
+            var resolver = new InMemoryResourceResolver();
+
+            var vs1 = new ValueSet()
+            {
+                Url = "http://nu.nl/refers-to-other",
+                Version = "2022-08-01",
+                Status = PublicationStatus.Active,
+                Compose = new()
+                {
+                    Include = new() { new() { ValueSet = new[] { "http://nu.nl/other" } } }
+                }
+            };
+
+            var vs2 = new ValueSet()
+            {
+                Url = "http://nu.nl/other",
+                Version = "2022-08-01",
+                Status = PublicationStatus.Active,
+                Compose = new()
+                {
+                    Include = new() { new() { ValueSet = new[] { vs1.Url } } }
+                }
+            };
+
+            resolver.Add(vs1, vs2);
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = resolver });
+            await Assert.ThrowsAsync<TerminologyServiceException>(() => expander.ExpandAsync(vs1));
+        }
 
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
@@ -923,7 +954,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         #region helper functions
-        private async T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
+        private static async T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
             string system = null, string version = null, string display = null,
             Coding coding = null, CodeableConcept codeableConcept = null)
         {
@@ -964,14 +995,14 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class OnlyCodeSystemResolver : IAsyncResourceResolver, IConformanceSource
         {
-            private CodeSystem _onlyCs;
+            private readonly CodeSystem _onlyCs;
 
             public OnlyCodeSystemResolver(string csUrl)
             {
                 _onlyCs = createCodeSystem(csUrl);
             }
 
-            private CodeSystem createCodeSystem(string csUrl)
+            private static CodeSystem createCodeSystem(string csUrl)
             {
                 return new CodeSystem
                 {
