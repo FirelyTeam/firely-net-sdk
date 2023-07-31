@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestExpandingVsWithUnknownSystem()
         {
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = new InMemoryResourceResolver() });
             var vs = new ValueSet
             {
                 Compose = new()
