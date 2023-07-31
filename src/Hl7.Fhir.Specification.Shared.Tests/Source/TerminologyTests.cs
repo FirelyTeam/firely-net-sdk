@@ -70,6 +70,29 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
         }
 
+        [Fact]
+        public async T.Task TestExpandingVsWithUnknownSystem()
+        {
+
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
+            var vs = new ValueSet
+            {
+                Compose = new()
+                {
+                    Include = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/"
+                        }
+                    }
+                }
+            };
+
+            var job = async () => await expander.ExpandAsync(vs);
+            await job.Should().ThrowAsync<ValueSetUnknownException>().WithMessage("The ValueSet expander cannot find system 'http://www.unknown.org/', so the expansion cannot be completed.");
+        }
+
 
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
