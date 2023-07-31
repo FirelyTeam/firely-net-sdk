@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -16,19 +18,28 @@ using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
+    /// <summary>
+    /// Expands valuesets by processing their <c>include</c> and <c>exclude</c> filters. Will create an in-place expansion.
+    /// </summary>
     public class ValueSetExpander
     {
-
-        //ValueSetExpander keeps throwing TerminologyService Exceptions to not change the public interface.
-#pragma warning disable 0618
-
+        /// <summary>
+        /// Settings to control the behaviour of the expansion.
+        /// </summary>
         public ValueSetExpanderSettings Settings { get; }
 
+        /// <summary>
+        /// Create a new expander with specific settings.
+        /// </summary>
+        /// <param name="settings"></param>
         public ValueSetExpander(ValueSetExpanderSettings settings)
         {
             Settings = settings;
         }
 
+        /// <summary>
+        /// Create a new expander with default settings
+        /// </summary>
         public ValueSetExpander() : this(ValueSetExpanderSettings.CreateDefault())
         {
             // nothing
@@ -37,8 +48,14 @@ namespace Hl7.Fhir.Specification.Terminology
         [Obsolete("ValueSetExpander now works best with asynchronous resolvers. Use ExpandAsync() instead.")]
         public void Expand(ValueSet source) => TaskHelper.Await(() => ExpandAsync(source));
 
+        /// <summary>
+        /// Expand the <c>include</c> and <c>exclude</c> filters. Creates the <c></c>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public T.Task ExpandAsync(ValueSet source) => ExpandAsync(source, new());
 
-        public async T.Task ExpandAsync(ValueSet source)
+        internal async T.Task ExpandAsync(ValueSet source, Stack<string> inclusionChain)
         {
             // Note we are expanding the valueset in-place, so it's up to the caller to decide whether
             // to clone the valueset, depending on store and performance requirements.
@@ -47,7 +64,8 @@ namespace Hl7.Fhir.Specification.Terminology
 
             try
             {
-                await handleCompose(source).ConfigureAwait(false);
+                inclusionChain.Push(source.Url);
+                await handleCompose(source, inclusionChain).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -55,7 +73,10 @@ namespace Hl7.Fhir.Specification.Terminology
                 source.Expansion = null;
                 throw;
             }
-
+            finally
+            {
+                inclusionChain.Pop();
+            }
         }
 
         private void setExpansionParameters(ValueSet vs)
@@ -72,42 +93,36 @@ namespace Hl7.Fhir.Specification.Terminology
             //TODO add more parameters to the valuset here when we implement them.
         }
 
-
-        //private int copyToExpansion(string system, string version, IEnumerable<ValueSet.ConceptDefinitionComponent> source, List<ValueSet.ContainsComponent> dest)
-        //{
-        //    int added = 0;
-
-        //    foreach (var concept in source)
-        //    {
-        //        bool isDeprecated = concept.GetDeprecated() ?? false;
-
-        //        if (!isDeprecated)
-        //        {
-        //            var newContains = addToExpansion(system, version, concept.Code, concept.Display, concept.Abstract, dest);
-        //            added += 1;
-
-        //            if (concept.Concept != null && concept.Concept.Any())
-        //                added += copyToExpansion(system, version, concept.Concept, newContains.Contains);
-        //        }
-        //    }
-
-        //    return added;
-        //}
-
-        private async T.Task handleCompose(ValueSet source)
+        private async T.Task handleCompose(ValueSet source, Stack<string> inclusionChain)
         {
             if (source.Compose == null) return;
 
             // handleImport(source);
-            await handleInclude(source).ConfigureAwait(false);
-            await handleExclude(source).ConfigureAwait(false);
+            await handleInclude(source, inclusionChain).ConfigureAwait(false);
+            await handleExclude(source, inclusionChain).ConfigureAwait(false);
         }
 
 
-        private async T.Task<List<ValueSet.ContainsComponent>> collectConcepts(ValueSet.ConceptSetComponent conceptSet)
+        private class SystemAndCodeComparer : IEqualityComparer<ValueSet.ContainsComponent>
         {
-            List<ValueSet.ContainsComponent> result = new List<ValueSet.ContainsComponent>();
+            public bool Equals(ValueSet.ContainsComponent? x, ValueSet.ContainsComponent? y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (x is null || y is null) return false;
 
+                return x.Code == y.Code && x.System == y.System;
+            }
+
+            public int GetHashCode(ValueSet.ContainsComponent obj) => (obj.Code ?? "").GetHashCode() ^ (obj.System ?? "").GetHashCode();
+        }
+
+        private static readonly IEqualityComparer<ValueSet.ContainsComponent> systemAndCodeComparer = new SystemAndCodeComparer();
+
+        private async T.Task<List<ValueSet.ContainsComponent>> collectConcepts(ValueSet.ConceptSetComponent conceptSet, Stack<string> inclusionChain)
+        {
+            List<ValueSet.ContainsComponent> result = new();
+
+            // vsd-1
             if (!conceptSet.ValueSet.Any() && conceptSet.System == null)
                 throw Error.InvalidOperation($"Encountered a ConceptSet with neither a 'system' nor a 'valueset'");
 
@@ -143,14 +158,14 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (conceptSet.ValueSet.Any())
             {
-                if (conceptSet.ValueSet.Count() > 1)
-                    throw new ValueSetExpansionTooComplexException($"ConceptSets with multiple valuesets are not yet supported.");
-                if (conceptSet.System != null)
-                    throw new ValueSetExpansionTooComplexException($"ConceptSets with combined 'system' and 'valueset'(s) are not yet supported.");
+                var expanded = await T.Task.WhenAll(conceptSet.ValueSet.Select(vs => getExpansionForValueSet(vs, inclusionChain))).ConfigureAwait(false);
+                var concepts = expanded.SelectMany(concept => concept);
 
-                var importedVs = conceptSet.ValueSet.Single();
-                var concepts = await getExpansionForValueSet(importedVs).ConfigureAwait(false);
-                import(result, concepts, importedVs);
+                if (conceptSet.System is not null)
+                    concepts = concepts.Where(c => c.System == conceptSet.System);
+
+                concepts = concepts.Distinct(systemAndCodeComparer);
+                import(result, concepts.ToList(), string.Join(",", conceptSet.ValueSet));
             }
 
             return result;
@@ -164,14 +179,14 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private async T.Task handleInclude(ValueSet source)
+        private async T.Task handleInclude(ValueSet source, Stack<string> inclusionChain)
         {
             if (!source.Compose.Include.Any()) return;
 
             int csIndex = 0;
             foreach (var include in source.Compose.Include)
             {
-                var includedConcepts = await collectConcepts(include).ConfigureAwait(false);
+                var includedConcepts = await collectConcepts(include, inclusionChain).ConfigureAwait(false);
 
                 // Yes, exclusion could make this smaller again, but alas, before we have processed those we might have run out of memory
                 if (source.Expansion.Total + includedConcepts.Count > Settings.MaxExpansionSize)
@@ -186,13 +201,13 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private async T.Task handleExclude(ValueSet source)
+        private async T.Task handleExclude(ValueSet source, Stack<string> inclusionChain)
         {
             if (!source.Compose.Exclude.Any()) return;
 
             foreach (var exclude in source.Compose.Exclude)
             {
-                var excludedConcepts = await collectConcepts(exclude).ConfigureAwait(false);
+                var excludedConcepts = await collectConcepts(exclude, inclusionChain).ConfigureAwait(false);
 
                 source.Expansion.Contains.Remove(excludedConcepts);
 
@@ -201,22 +216,22 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-
-        private async T.Task<List<ValueSet.ContainsComponent>> getExpansionForValueSet(string uri)
+        private async T.Task<List<ValueSet.ContainsComponent>> getExpansionForValueSet(string uri, Stack<string> inclusionChain)
         {
+            if (inclusionChain.Contains(uri))
+                throw new TerminologyServiceException($"ValueSet expansion encountered a cycling dependency from {inclusionChain.Peek()} back to {uri}.");
+
             if (Settings.ValueSetSource == null)
                 throw Error.InvalidOperation($"No valueset resolver available to resolve valueset '{uri}', " +
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
-            var importedVs = await Settings.ValueSetSource.AsAsync().FindValueSetAsync(uri).ConfigureAwait(false);
-            if (importedVs == null) throw new ValueSetUnknownException($"The ValueSet expander cannot find system '{uri}', so the expansion cannot be completed.");
+            var importedVs = await Settings.ValueSetSource.AsAsync().FindValueSetAsync(uri).ConfigureAwait(false)
+                ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find system '{uri}', so the expansion cannot be completed.");
+            if (!importedVs.HasExpansion) await ExpandAsync(importedVs, inclusionChain).ConfigureAwait(false);
 
-            if (!importedVs.HasExpansion) await ExpandAsync(importedVs).ConfigureAwait(false);
-
-            if (importedVs.HasExpansion)
-                return importedVs.Expansion.Contains;
-            else
-                throw new ValueSetUnknownException($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
+            return importedVs.HasExpansion
+                ? importedVs.Expansion.Contains
+                : throw new ValueSetUnknownException($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
         }
 
         private async T.Task<List<ValueSet.ContainsComponent>> getConceptsFromCodeSystem(string uri)
@@ -225,20 +240,17 @@ namespace Hl7.Fhir.Specification.Terminology
                 throw Error.InvalidOperation($"No terminology service available to resolve references to codesystem '{uri}', " +
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
-            var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false);
-            if (importedCs == null) throw new ValueSetUnknownException($"The ValueSet expander cannot find system '{uri}', so the expansion cannot be completed.");
+            var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false)
+                ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find system '{uri}', so the expansion cannot be completed.");
 
-            var result = new List<ValueSet.ContainsComponent>();
-            result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings)));
-
-            return result;
+            return importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings)).ToList();
         }
     }
 
 
     public static class ContainsSetExtensions
     {
-        public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, List<ValueSet.DesignationComponent> designations = null, IEnumerable<ValueSet.ContainsComponent> children = null)
+        public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)
         {
             var newContains = new ValueSet.ContainsComponent
             {
@@ -331,5 +343,6 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
     }
-#pragma warning restore
 }
+
+#nullable restore
