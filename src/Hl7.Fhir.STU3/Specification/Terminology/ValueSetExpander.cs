@@ -12,14 +12,14 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T=System.Threading.Tasks;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public class ValueSetExpander
     {
 
-//ValueSetExpander keeps throwing TerminologyService Exceptions to not change the public interface.
+        //ValueSetExpander keeps throwing TerminologyService Exceptions to not change the public interface.
 #pragma warning disable 0618
 
         public ValueSetExpanderSettings Settings { get; }
@@ -55,19 +55,19 @@ namespace Hl7.Fhir.Specification.Terminology
                 source.Expansion = null;
                 throw;
             }
-            
+
         }
 
         private void setExpansionParameters(ValueSet vs)
         {
             vs.Expansion.Parameter = new List<ValueSet.ParameterComponent>();
-            if(Settings.IncludeDesignations)
+            if (Settings.IncludeDesignations)
             {
                 vs.Expansion.Parameter.Add(new ValueSet.ParameterComponent
                 {
                     Name = "includeDesignations",
                     Value = new FhirBoolean(true)
-                }); 
+                });
             }
             //TODO add more parameters to the valuset here when we implement them.
         }
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Specification.Terminology
                     {
                         // We'd probably really have to look this code up in the original ValueSet (by system) to know something about 'abstract'
                         // and what would we do with a hierarchy if we encountered that in the include?
-                        if(Settings.IncludeDesignations)
+                        if (Settings.IncludeDesignations)
                         {
                             result.Add(conceptSet.System, conceptSet.Version, concept.Code, concept.Display, concept.Designation);
                         }
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         {
                             result.Add(conceptSet.System, conceptSet.Version, concept.Code, concept.Display);
                         }
-                       
+
                     }
                 }
                 else
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 var concepts = await getExpansionForValueSet(importedVs).ConfigureAwait(false);
                 import(result, concepts, importedVs);
             }
-            
+
             return result;
 
             void import(List<ValueSet.ContainsComponent> dest, List<ValueSet.ContainsComponent> source, string importeeUrl)
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
             var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false);
-            if (importedCs == null) throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to CodeSystem");
+            if (importedCs == null) throw new ValueSetUnknownException($"The ValueSet expander cannot find system '{uri}', so the expansion cannot be completed.");
 
             var result = new List<ValueSet.ContainsComponent>();
             result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings)));
@@ -294,9 +294,9 @@ namespace Hl7.Fhir.Specification.Terminology
             newContains.System = system.Url;
             newContains.Version = system.Version;
             newContains.Code = source.Code;
-            newContains.Display = source.Display;            
-            if(settings.IncludeDesignations)            
-                newContains.Designation = source.Designation.ToValueSetDesignations();                    
+            newContains.Display = source.Display;
+            if (settings.IncludeDesignations)
+                newContains.Designation = source.Designation.ToValueSetDesignations();
 
             var abstractProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).SingleOrDefault();
             if (abstractProperty?.Value is FhirBoolean isAbstract)
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private static List<ValueSet.DesignationComponent> ToValueSetDesignations(this List<CodeSystem.DesignationComponent> csDesignations)
         {
             var vsDesignations = new List<ValueSet.DesignationComponent>();
-            csDesignations.ForEach(d => vsDesignations.Add(d.ToValueSetDesignation()));           
+            csDesignations.ForEach(d => vsDesignations.Add(d.ToValueSetDesignation()));
             return vsDesignations;
         }
 
@@ -331,5 +331,5 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
     }
-    #pragma warning restore
+#pragma warning restore
 }
