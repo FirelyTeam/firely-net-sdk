@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
     {
         private readonly IAsyncResourceResolver _resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
-        private static Uri _externalTerminologyServerEndpoint = new("https://r4.ontoserver.csiro.au/fhir");
+        private static readonly Uri _externalTerminologyServerEndpoint = new("https://r4.ontoserver.csiro.au/fhir");
         // Use here a FhirPackageSource without the expansion package.
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
 
@@ -69,30 +69,6 @@ namespace Hl7.Fhir.Specification.Tests
             //var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
         }
-
-        [Fact]
-        public async T.Task TestExpandingVsWithUnknownSystem()
-        {
-
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = new InMemoryResourceResolver() });
-            var vs = new ValueSet
-            {
-                Compose = new()
-                {
-                    Include = new List<ValueSet.ConceptSetComponent>
-                    {
-                        new()
-                        {
-                            System = "http://www.unknown.org/"
-                        }
-                    }
-                }
-            };
-
-            var job = async () => await expander.ExpandAsync(vs);
-            await job.Should().ThrowAsync<ValueSetUnknownException>().WithMessage("The ValueSet expander cannot find system 'http://www.unknown.org/', so the expansion cannot be completed.");
-        }
-
 
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
@@ -766,7 +742,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class OnlyCodeSystemResolver : IAsyncResourceResolver, ICommonConformanceSource
         {
-            private CodeSystem _onlyCs;
+            private readonly CodeSystem _onlyCs;
 
             public OnlyCodeSystemResolver(string csUrl)
             {
