@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var inParams = new ValidateCodeParameters()
                 .WithValueSet(url: url, context: context)
-                .WithCode(code: code, system: system, display: display)
+                .WithCode(code: code, system: system, systemVersion: version, display: display)
                 .WithCoding(coding: coding)
                 .WithCodeableConcept(codeableConcept: codeableConcept);
             return await service.ValueSetValidateCode(inParams);

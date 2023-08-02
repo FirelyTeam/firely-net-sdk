@@ -53,9 +53,9 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public T.Task ExpandAsync(ValueSet source) => ExpandAsync(source, new());
+        public T.Task ExpandAsync(ValueSet source) => expandAsync(source, new());
 
-        internal async T.Task ExpandAsync(ValueSet source, Stack<string> inclusionChain)
+        private async T.Task expandAsync(ValueSet source, Stack<string> inclusionChain)
         {
             // Note we are expanding the valueset in-place, so it's up to the caller to decide whether
             // to clone the valueset, depending on store and performance requirements.
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var importedVs = await Settings.ValueSetSource.AsAsync().FindValueSetAsync(uri).ConfigureAwait(false)
                 ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find valueset '{uri}', so the expansion cannot be completed.");
-            if (!importedVs.HasExpansion) await ExpandAsync(importedVs, inclusionChain).ConfigureAwait(false);
+            if (!importedVs.HasExpansion) await expandAsync(importedVs, inclusionChain).ConfigureAwait(false);
 
             return importedVs.HasExpansion
                 ? importedVs.Expansion.Contains
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Specification.Terminology
             newContains.Code = source.Code;
             newContains.Display = source.Display;
             if (settings.IncludeDesignations)
-                newContains.Designation = source.Designation.ToValueSetDesignations();
+                newContains.Designation = source.Designation.toValueSetDesignations();
 
             var abstractProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).SingleOrDefault();
             if (abstractProperty?.Value is FhirBoolean isAbstract)
@@ -364,14 +364,14 @@ namespace Hl7.Fhir.Specification.Terminology
             return newContains;
         }
 
-        private static List<ValueSet.DesignationComponent> ToValueSetDesignations(this List<CodeSystem.DesignationComponent> csDesignations)
+        private static List<ValueSet.DesignationComponent> toValueSetDesignations(this List<CodeSystem.DesignationComponent> csDesignations)
         {
             var vsDesignations = new List<ValueSet.DesignationComponent>();
-            csDesignations.ForEach(d => vsDesignations.Add(d.ToValueSetDesignation()));
+            csDesignations.ForEach(d => vsDesignations.Add(d.toValueSetDesignation()));
             return vsDesignations;
         }
 
-        private static ValueSet.DesignationComponent ToValueSetDesignation(this CodeSystem.DesignationComponent csDesignation)
+        private static ValueSet.DesignationComponent toValueSetDesignation(this CodeSystem.DesignationComponent csDesignation)
         {
             return new ValueSet.DesignationComponent
             {
