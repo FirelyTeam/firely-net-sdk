@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\firely-net-sdk.props" />
+
+	<Import Project="..\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.projitems" Label="Shared" />
 	<Import Project="..\platforms.props" />
 
 	<PropertyGroup>

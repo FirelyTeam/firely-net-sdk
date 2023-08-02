@@ -62,6 +62,16 @@ namespace Hl7.Fhir.Specification.Terminology
             return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
+#if STU3
+        ///<inheritdoc />
+        public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            else
+                return await Endpoint.InstanceOperationAsync(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+        }
+#else
         ///<inheritdoc />
         public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
@@ -70,6 +80,7 @@ namespace Hl7.Fhir.Specification.Terminology
             else
                 return await Endpoint.InstanceOperationAsync(ResourceIdentity.Build(FhirTypeNames.CONCEPTMAP_NAME, id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
+#endif
 
         ///<inheritdoc />
         public async Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
@@ -105,7 +116,11 @@ namespace Hl7.Fhir.Specification.Terminology
                         coding = new Coding(system, code, display);
 
                     // Serialize the code or coding to json for display purposes in the issue
+#if STU3
+                    var jsonSer = new FhirJsonSerializer();
+#else
                     var jsonSer = new CommonFhirJsonSerializer(ModelInspector.ForAssembly(typeof(Coding).Assembly));
+#endif        
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
                         : jsonSer.SerializeToString(coding);
 

@@ -16,10 +16,16 @@ namespace Hl7.Fhir.Specification.Terminology
         /// A canonical URL for a concept map.
         /// </summary>
         public FhirUri Url { get; private set; }
+
         /// <summary>
         /// The concept map is provided directly as part of the request.
         /// </summary>
+#if STU3
+        public ConceptMap ConceptMap { get; private set; }
+#else
         public Resource ConceptMap { get; private set; }
+#endif
+
         /// <summary>
         /// The identifier that is used to identify a specific version of the concept map to be used for the translation.
         /// </summary>
@@ -66,7 +72,11 @@ namespace Hl7.Fhir.Specification.Terminology
         public FhirBoolean Reverse { get; private set; }
 
         #region Builder methods
+#if STU3
+        public TranslateParameters WithConceptMap(string url = null, ConceptMap conceptMap = null, string conceptMapVersion = null, string source = null)
+#else
         public TranslateParameters WithConceptMap(string url = null, Resource conceptMap = null, string conceptMapVersion = null, string source = null)
+#endif
         {
             if (!string.IsNullOrWhiteSpace(url)) Url = new FhirUri(url);
             ConceptMap = conceptMap;

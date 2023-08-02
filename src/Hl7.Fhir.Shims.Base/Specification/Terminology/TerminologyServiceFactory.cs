@@ -18,7 +18,11 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 PreferredValueSets = new string[]
                 {
+#if STU3
                     MimeTypeTerminologyService.MIMETYPE_VALUESET_STU3
+#else
+                    MimeTypeTerminologyService.MIMETYPE_VALUESET_R4_AND_UP
+#endif        
                 }
             };
 
