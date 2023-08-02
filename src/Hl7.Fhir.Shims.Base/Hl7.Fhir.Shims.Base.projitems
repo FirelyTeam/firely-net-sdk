@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TranslateParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ValueSetConfigurators.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ValueSetExpander.cs" />
   </ItemGroup>
 </Project>

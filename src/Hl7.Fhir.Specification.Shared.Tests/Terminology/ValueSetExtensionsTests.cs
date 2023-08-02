@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-    public class TerminologyTests
+    public class ValueSetExtensionsTests
     {
         [TestMethod]
         public void TestExpansionCheckForCode()
