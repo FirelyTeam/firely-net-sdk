@@ -17,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
@@ -49,7 +50,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return TerminologyServiceFactory.CreateDefaultForCore(coreResourceResolver, expanderSettings);
         }
 
-        internal async T.Task<ValueSet?> FindValueset(string canonical)
+        internal async T.Task<ValueSet?> FindValueSet(string canonical)
         {
             var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
 
@@ -65,6 +66,36 @@ namespace Hl7.Fhir.Specification.Terminology
                     valueset = new ValueSet
                     {
                         Url = canonical,
+                        Status = cs.Status,  // mandatory field
+
+#if !STU3
+                        ApprovalDate = cs.ApprovalDate,
+                        Author = cs.Author,
+                        CopyrightLabel = cs.CopyrightLabel,
+                        Editor = cs.Editor,
+                        EffectivePeriod = cs.EffectivePeriod,
+                        Endorser = cs.Endorser,
+                        LastReviewDate = cs.LastReviewDate,
+                        RelatedArtifact = cs.RelatedArtifact,
+                        Reviewer = cs.Reviewer,
+                        Topic = cs.Topic,
+                        VersionAlgorithm = cs.VersionAlgorithm,
+#endif
+                        Contact = cs.Contact,
+                        Copyright = cs.Copyright,
+                        Date = cs.Date,
+                        Description = cs.Description,
+                        Experimental = cs.Experimental,
+                        Id = cs.Id,
+                        Jurisdiction = cs.Jurisdiction,
+                        Language = cs.Language,
+                        Name = cs.Name,
+                        Publisher = cs.Publisher,
+                        Purpose = cs.Purpose,
+                        Title = cs.Title,
+                        UseContext = cs.UseContext,
+                        Version = cs.Version,
+
                         Compose = new()
                         {
                             Include = new()
@@ -76,96 +107,136 @@ namespace Hl7.Fhir.Specification.Terminology
                             }
                         }
                     };
-                    await _expander.ExpandAsync(valueset);
+
+                    return valueset;
                 }
             }
             return valueset;
         }
 
+        private async Task<ValueSet> getExpandedValueSet(ValueSet vs, string operation)
+        {
+            try
+            {
+                if (!vs.HasExpansion)
+                {
+                    try
+                    {
+                        await _semaphore.WaitAsync().ConfigureAwait(false);
+                        await _expander.ExpandAsync(vs).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        _semaphore.Release();
+                    }
+                }
+            }
+            catch (TerminologyServiceException e)
+#pragma warning restore CS0618
+            {
+                // Unprocessable entity
+                throw new FhirOperationException(
+                    $"Operation {operation} failed: creating the required expansion failed mith message \"{e.Message}\".",
+                    (HttpStatusCode)422);
+            }
+
+            return vs;
+        }
+
+        private async Task<ValueSet> getExpandedValueSet(string canonical, string operation)
+        {
+            var vs = await FindValueSet(canonical).ConfigureAwait(false);
+
+            if (vs is null)
+                throw new FhirOperationException($"Operation {operation} failed: valueset '{canonical}' is unknown.", HttpStatusCode.NotFound);
+            else
+                return await getExpandedValueSet(vs, operation).ConfigureAwait(false);
+        }
 
         ///<inheritdoc />
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
         {
             parameters.CheckForValidityOfValidateCodeParams();
 
-            var validCodeParams = new ValidateCodeParameters(parameters);
-
-            var valueSet = validCodeParams.ValueSet as ValueSet;
-            if (valueSet is null)
-            {
-                if (validCodeParams.Url is null)
-
-                    //422 Unproccesable Entity
-                    throw new FhirOperationException("Have to supply either a canonical url or a valueset.", (HttpStatusCode)422);
-
-                try
-                {
-                    valueSet = await FindValueset(validCodeParams.Url.Value).ConfigureAwait(false);
-                }
-                catch
-                {
-                    // valueSet remains null
-                }
-
-                if (valueSet is null)
-                    // 404 not found
-                    throw new FhirOperationException($"Cannot retrieve valueset '{validCodeParams.Url.Value}'", HttpStatusCode.NotFound);
-            }
+            var validateCodeParams = new ValidateCodeParameters(parameters);
+            var valueSet = validateCodeParams.ValueSet as ValueSet;
+            if (valueSet is null && validateCodeParams.Url is null)
+                throw new FhirOperationException("Have to supply either a canonical url or a valueset.", (HttpStatusCode)422); // Unprocessable entity
 
             try
             {
-                if (validCodeParams.CodeableConcept is { })
-                    return await validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value).ConfigureAwait(false);
-                else if (validCodeParams.Coding is { })
-                    return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+                valueSet = valueSet is null
+                    ? await getExpandedValueSet(validateCodeParams.Url.Value, "validate code").ConfigureAwait(false)
+                    : await getExpandedValueSet(valueSet, "validate code").ConfigureAwait(false);
+
+                if (validateCodeParams.CodeableConcept is { })
+                    return await validateCodeVS(valueSet, validateCodeParams.CodeableConcept, validateCodeParams.Abstract?.Value).ConfigureAwait(false);
+                else if (validateCodeParams.Coding is { })
+                    return await validateCodeVS(valueSet, validateCodeParams.Coding, validateCodeParams.Abstract?.Value).ConfigureAwait(false);
                 else
-                    return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
-            }
-#pragma warning disable CS0618 // Only catched here to not change to public interface of ValueSetExpander
-            catch (TerminologyServiceException e)
-#pragma warning restore CS0618
-            {
-                throw new FhirOperationException(e.Message, (HttpStatusCode)422);
+                    return await validateCodeVS(valueSet, validateCodeParams.Code?.Value, validateCodeParams.System?.Value, validateCodeParams.Display?.Value, validateCodeParams.Abstract?.Value).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 //500 internal server error
                 throw new FhirOperationException(e.Message, (HttpStatusCode)500);
             }
+        }
 
+        ///<inheritdoc />
+        public async T.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
+        {
+            parameters.NoDuplicates();
+
+            var url = parameters.GetSingleValue<FhirUri>("url")?.Value ?? parameters.GetSingleValue<FhirString>("url")?.Value;
+            var valueSet = parameters.GetSingle("valueSet")?.Resource as ValueSet;
+
+            if (valueSet is null && url is null)
+                throw new FhirOperationException("Have to supply either a canonical url or a valueset.", (HttpStatusCode)422); // Unprocessable entity
+
+            try
+            {
+                return valueSet is null
+                    ? await getExpandedValueSet(url!, "expand").ConfigureAwait(false)
+                    : await getExpandedValueSet(valueSet, "expand").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                //500 internal server error
+                throw new FhirOperationException(e.Message, (HttpStatusCode)500);
+            }
         }
 
         #region Not implemented methods
+        ///<inheritdoc />
         public T.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public T.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
-        {
-            // make this method async, when implementing
-            throw new NotImplementedException();
-        }
-
+        ///<inheritdoc />
         public T.Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
+        ///<inheritdoc />
         public T.Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
+        ///<inheritdoc />
         public T.Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
+        ///<inheritdoc />
         public T.Task<Resource> Closure(Parameters parameters, bool useGet = false)
         {
             // make this method async, when implementing
@@ -220,7 +291,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return await validateCodeVS(vs, coding.Code, coding.System, coding.Display, abstractAllowed).ConfigureAwait(false);
         }
 
-        private async T.Task<Parameters> validateCodeVS(ValueSet vs, string? code, string? system, string? display, bool? abstractAllowed)
+        private async Task<Parameters> validateCodeVS(ValueSet vs, string? code, string? system, string? display, bool? abstractAllowed)
         {
             if (code is null)
             {
@@ -230,22 +301,6 @@ namespace Hl7.Fhir.Specification.Terminology
                     { "result", new FhirBoolean(false) }
                 };
                 return resultParam;
-            }
-
-            await _semaphore.WaitAsync().ConfigureAwait(false);
-            try
-            {
-                // We might have a cached or pre-expanded version brought to us by the _source
-                if (!vs.HasExpansion)
-                {
-                    // This will expand te vs - since we do not deepcopy() it, it will change the instance
-                    // as it was passed to us from the source
-                    await _expander.ExpandAsync(vs).ConfigureAwait(false);
-                }
-            }
-            finally
-            {
-                _semaphore.Release();
             }
 
             var component = vs.FindInExpansion(code, system);

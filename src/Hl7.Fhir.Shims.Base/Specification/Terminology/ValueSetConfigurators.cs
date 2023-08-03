@@ -1,4 +1,14 @@
-﻿using Hl7.Fhir.Model;
+﻿#nullable enable
+
+/* 
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +28,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var csc = new ValueSet.ConceptSetComponent();
             a(csc);
-            if (vs.Compose is null) vs.Compose = new();
+            vs.Compose ??= new();
             vs.Compose.Include.Add(csc);
             return vs;
         }
@@ -31,7 +41,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var csc = new ValueSet.ConceptSetComponent();
             a(csc);
-            if (vs.Compose is null) vs.Compose = new();
+            vs.Compose ??= new();
             vs.Compose.Exclude.Add(csc);
             return vs;
         }
@@ -58,7 +68,11 @@ namespace Hl7.Fhir.Specification.Tests
         public static ValueSet.ConceptSetComponent Concepts(this ValueSet.ConceptSetComponent component, params ValueSet.ConceptReferenceComponent[] refcomponents) => component.Concepts(refcomponents.AsEnumerable());
 
         /// <inheritdoc cref="Concepts(ValueSet.ConceptSetComponent, IEnumerable{ValueSet.ConceptReferenceComponent})" />
-        public static ValueSet.ConceptSetComponent Concept(this ValueSet.ConceptSetComponent component, string code) => component.Concepts(new ValueSet.ConceptReferenceComponent() { Code = code });
+        public static ValueSet.ConceptSetComponent Concepts(this ValueSet.ConceptSetComponent component, params string[] code) =>
+            component.Concepts(code.Select(c => new ValueSet.ConceptReferenceComponent() { Code = c }));
+
+        /// <inheritdoc cref="Concepts(ValueSet.ConceptSetComponent, IEnumerable{ValueSet.ConceptReferenceComponent})" />
+        public static ValueSet.ConceptSetComponent Concepts(this ValueSet.ConceptSetComponent component, string code) => component.Concepts(new ValueSet.ConceptReferenceComponent() { Code = code });
 
         /// <summary>
         /// Adds to the valuesets of a <see cref="ValueSet.ConceptSetComponent"/> to enable fluent construction of an include or exclude.
@@ -80,3 +94,4 @@ namespace Hl7.Fhir.Specification.Tests
     }
 }
 
+#nullable restore

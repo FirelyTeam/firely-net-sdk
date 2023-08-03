@@ -12,9 +12,26 @@ namespace Hl7.Fhir.Specification.Tests
     public class SharedExpansionTests
     {
         [Fact]
+        public async T.Task CanCallThroughLocalTerminologyService()
+        {
+            var vs1 = new ValueSet { Url = "http://source", Status = PublicationStatus.Active }
+                .Includes(i => i.System("http://nu.nl").Concepts("1", "2", "3"));
+            var vs2 = new ValueSet() { Url = "http://toexpand", Status = PublicationStatus.Active }
+                .Includes(i => i.ValueSets("http://source"));
+
+            var resolver = new InMemoryResourceResolver(vs1, vs2);
+            var lts = new LocalTerminologyService(resolver);
+
+            var p = new ExpandParameters().WithValueSet(url: vs1.Url);
+
+            var vs = await lts.Expand(p) as ValueSet;
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo("1", "2", "3");
+        }
+
+        [Fact]
         public async T.Task CanCombineValueSets()
         {
-            var vs1 = buildVs("http://valuesetA", "1", "2", "3").Includes(i => i.System("http://systemX").Concept("A"));
+            var vs1 = buildVs("http://valuesetA", "1", "2", "3").Includes(i => i.System("http://systemX").Concepts("A"));
             var vs2 = buildVs("http://valuesetB", "2", "3", "4");
             var vsCombined = new ValueSet() { Url = "http://combined", Status = PublicationStatus.Active }.Includes(i => i.ValueSets("http://valuesetA", "http://valuesetB"));
 
@@ -28,19 +45,18 @@ namespace Hl7.Fhir.Specification.Tests
             var vsFiltered = new ValueSet() { Url = "http://filtered", Status = PublicationStatus.Active }.Includes(i => i.ValueSets("http://valuesetA").System("http://systemX"));
             await expander.ExpandAsync(vsFiltered);
             vsFiltered.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(new[] { "A" }, because: "filtering on systemX only returns codes from systemX");
+        }
 
-            static ValueSet buildVs(string canonical, params string[] codes)
+        private static ValueSet buildVs(string canonical, params string[] codes)
+        {
+            var concepts = codes.Select(c => new ValueSet.ConceptReferenceComponent() { Code = c }).ToList();
+
+            return new ValueSet()
             {
-
-                var concepts = codes.Select(c => new ValueSet.ConceptReferenceComponent() { Code = c }).ToList();
-
-                return new ValueSet()
-                {
-                    Url = canonical,
-                    Version = "2022-08-01",
-                    Status = PublicationStatus.Active,
-                }.Includes(i => i.System("http://system").Concepts(concepts));
-            }
+                Url = canonical,
+                Version = "2022-08-01",
+                Status = PublicationStatus.Active,
+            }.Includes(i => i.System("http://system").Concepts(concepts));
         }
 
         [Fact]

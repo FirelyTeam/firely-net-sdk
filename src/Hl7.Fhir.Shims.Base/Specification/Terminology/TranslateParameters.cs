@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2020, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -15,53 +17,53 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>
         /// A canonical URL for a concept map.
         /// </summary>
-        public FhirUri Url { get; private set; }
+        public FhirUri? Url { get; private set; }
 
         /// <summary>
         /// The concept map is provided directly as part of the request.
         /// </summary>
 #if STU3
-        public ConceptMap ConceptMap { get; private set; }
+        public ConceptMap? ConceptMap { get; private set; }
 #else
-        public Resource ConceptMap { get; private set; }
+        public Resource? ConceptMap { get; private set; }
 #endif
 
         /// <summary>
         /// The identifier that is used to identify a specific version of the concept map to be used for the translation.
         /// </summary>
-        public FhirString ConceptMapVersion { get; private set; }
+        public FhirString? ConceptMapVersion { get; private set; }
         /// <summary>
         /// The code that is to be translated. If a code is provided, a system must be provided.
         /// </summary>
-        public Code Code { get; private set; }
+        public Code? Code { get; private set; }
         /// <summary>
         /// The system for the code that is to be translated
         /// </summary>
-        public FhirUri System { get; private set; }
+        public FhirUri? System { get; private set; }
         /// <summary>
         /// The version of the system, if one was provided in the source data.
         /// </summary>
-        public FhirString Version { get; private set; }
+        public FhirString? Version { get; private set; }
         /// <summary>
         /// Identifies the value set used when the concept (system/code pair) was chosen. May be a logical id, or an absolute or relative location.
         /// </summary>
-        public FhirUri Source { get; private set; }
+        public FhirUri? Source { get; private set; }
         /// <summary>
         /// A coding to translate
         /// </summary>
-        public Coding Coding { get; private set; }
+        public Coding? Coding { get; private set; }
         /// <summary>
         /// A full codeableConcept to validate.
         /// </summary>
-        public CodeableConcept CodeableConcept { get; private set; }
+        public CodeableConcept? CodeableConcept { get; private set; }
         /// <summary>
         /// Identifies the value set in which a translation is sought.
         /// </summary>
-        public FhirUri Target { get; private set; }
+        public FhirUri? Target { get; private set; }
         /// <summary>
         /// identifies a target code system in which a mapping is sought. This parameter is an alternative to the target parameter - only one is required.
         /// </summary>
-        public FhirUri TargetSystem { get; private set; }
+        public FhirUri? TargetSystem { get; private set; }
         ///// <summary>
         ///// Another element that may help produce the correct mapping
         ///// </summary>
@@ -69,13 +71,13 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>
         /// If this is true, then the operation should return all the codes that might be mapped to this code. This parameter reverses the meaning of the source and target parameters
         /// </summary>
-        public FhirBoolean Reverse { get; private set; }
+        public FhirBoolean? Reverse { get; private set; }
 
         #region Builder methods
 #if STU3
-        public TranslateParameters WithConceptMap(string url = null, ConceptMap conceptMap = null, string conceptMapVersion = null, string source = null)
+        public TranslateParameters WithConceptMap(string? url = null, ConceptMap? conceptMap = null, string? conceptMapVersion = null, string? source = null)
 #else
-        public TranslateParameters WithConceptMap(string url = null, Resource conceptMap = null, string conceptMapVersion = null, string source = null)
+        public TranslateParameters WithConceptMap(string? url = null, Resource? conceptMap = null, string? conceptMapVersion = null, string? source = null)
 #endif
         {
             if (!string.IsNullOrWhiteSpace(url)) Url = new FhirUri(url);
@@ -85,7 +87,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return this;
         }
 
-        public TranslateParameters WithCode(string code, string system = null, string version = null)
+        public TranslateParameters WithCode(string? code, string? system = null, string? version = null)
         {
             if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
             if (!string.IsNullOrWhiteSpace(code)) System = new FhirUri(system);
@@ -104,7 +106,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return this;
         }
 
-        public TranslateParameters WithTarget(string target, string targetSystem = null)
+        public TranslateParameters WithTarget(string? target, string? targetSystem = null)
         {
             if (!string.IsNullOrWhiteSpace(target)) Target = new FhirUri(target);
             if (!string.IsNullOrWhiteSpace(targetSystem)) TargetSystem = new FhirUri(targetSystem);
@@ -137,3 +139,5 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 }
+
+#nullable restore
