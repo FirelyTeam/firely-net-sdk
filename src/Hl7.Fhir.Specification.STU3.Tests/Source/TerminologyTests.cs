@@ -12,75 +12,6 @@ using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    /// <summary>
-    /// Extension methods to help constructing a <see cref="ValueSet"/> in code.
-    /// </summary>
-    public static class ValueSetConfigurators
-    {
-        /// <summary>
-        /// Adds a new <see cref="ValueSet.ConceptSetComponent"/> to the includes of a <see cref="ValueSet.Compose"/> and returns
-        /// it to enable fluent construction of valuesets.
-        /// </summary>
-        public static ValueSet Includes(this ValueSet vs, Action<ValueSet.ConceptSetComponent> a)
-        {
-            var csc = new ValueSet.ConceptSetComponent();
-            a(csc);
-            if (vs.Compose is null) vs.Compose = new();
-            vs.Compose.Include.Add(csc);
-            return vs;
-        }
-
-        /// <summary>
-        /// Adds a new <see cref="ValueSet.ConceptSetComponent"/> to the excludes of a <see cref="ValueSet.Compose"/> and returns
-        /// it to enable fluent construction of valuesets.
-        /// </summary>
-        public static ValueSet Excludes(this ValueSet vs, Action<ValueSet.ConceptSetComponent> a)
-        {
-            var csc = new ValueSet.ConceptSetComponent();
-            a(csc);
-            if (vs.Compose is null) vs.Compose = new();
-            vs.Compose.Exclude.Add(csc);
-            return vs;
-        }
-
-        /// <summary>
-        /// Sets the system of a <see cref="ValueSet.ConceptSetComponent"/> to enable fluent construction of an include or exclude.
-        /// </summary>
-        public static ValueSet.ConceptSetComponent System(this ValueSet.ConceptSetComponent component, string system)
-        {
-            component.System = system;
-            return component;
-        }
-
-        /// <summary>
-        /// Adds to the concepts of a <see cref="ValueSet.ConceptSetComponent"/> to enable fluent construction of an include or exclude.
-        /// </summary>
-        public static ValueSet.ConceptSetComponent Concepts(this ValueSet.ConceptSetComponent component, IEnumerable<ValueSet.ConceptReferenceComponent> refcomponents)
-        {
-            component.Concept.AddRange(refcomponents);
-            return component;
-        }
-
-        /// <inheritdoc cref="Concepts(ValueSet.ConceptSetComponent, IEnumerable{ValueSet.ConceptReferenceComponent})"
-        public static ValueSet.ConceptSetComponent Concepts(this ValueSet.ConceptSetComponent component, params ValueSet.ConceptReferenceComponent[] refcomponents) => component.Concepts(refcomponents.AsEnumerable());
-
-        /// <inheritdoc cref="Concepts(ValueSet.ConceptSetComponent, IEnumerable{ValueSet.ConceptReferenceComponent})"
-        public static ValueSet.ConceptSetComponent Concept(this ValueSet.ConceptSetComponent component, string code) => component.Concepts(new ValueSet.ConceptReferenceComponent() { Code = code });
-
-        /// <summary>
-        /// Adds to the valuesets of a <see cref="ValueSet.ConceptSetComponent"/> to enable fluent construction of an include or exclude.
-        /// </summary>
-        public static ValueSet.ConceptSetComponent ValueSets(this ValueSet.ConceptSetComponent component, IEnumerable<string> canonicals)
-        {
-            component.ValueSetElement.AddRange(canonicals.Select(c => new FhirUri(c)));
-            return component;
-        }
-
-        /// <summary>
-        /// Adds to the valuesets of a <see cref="ValueSet.ConceptSetComponent"/> to enable fluent construction of an include or exclude.
-        /// </summary>
-        public static ValueSet.ConceptSetComponent ValueSets(this ValueSet.ConceptSetComponent component, params string[] canonicals) => component.ValueSets(canonicals.AsEnumerable());
-    }
 
     public class TerminologyTests
     {
@@ -90,38 +21,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Use here a FhirPackageSource without the expansion package.
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
-
-        [Fact]
-        public async T.Task CanCombineValueSets()
-        {
-            var vs1 = buildVs("http://valuesetA", "1", "2", "3").Includes(i => i.System("http://systemX").Concept("A"));
-            var vs2 = buildVs("http://valuesetB", "2", "3", "4");
-            var vsCombined = new ValueSet() { Url = "http://combined", Status = PublicationStatus.Active }.Includes(i => i.ValueSets("http://valuesetA", "http://valuesetB"));
-
-            var resolver = new InMemoryResourceResolver(vs1, vs2);
-            var expander = new ValueSetExpander(new() { ValueSetSource = resolver });
-            await expander.ExpandAsync(vsCombined);
-
-            vsCombined.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(new[] { "2", "3" }, because: "specifying multiple valuesets should return an intersection.");
-            vsCombined.Expansion.Contains.Should().AllSatisfy(c => c.System.Should().Be("http://system"));
-
-            var vsFiltered = new ValueSet() { Url = "http://filtered", Status = PublicationStatus.Active }.Includes(i => i.ValueSets("http://valuesetA").System("http://systemX"));
-            await expander.ExpandAsync(vsFiltered);
-            vsFiltered.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(new[] { "A" }, because: "filtering on systemX only returns codes from systemX");
-
-            static ValueSet buildVs(string canonical, params string[] codes)
-            {
-
-                var concepts = codes.Select(c => new ValueSet.ConceptReferenceComponent() { Code = c }).ToList();
-
-                return new ValueSet()
-                {
-                    Url = canonical,
-                    Version = "2022-08-01",
-                    Status = PublicationStatus.Active,
-                }.Includes(i => i.System("http://system").Concepts(concepts));
-            }
-        }
 
         [Fact]
         public async T.Task ExpansionOfWholeSystem()
@@ -160,61 +59,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             //var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
-        }
-
-        [Fact]
-        public async T.Task CatchesCyclicExpansions()
-        {
-            var resolver = new InMemoryResourceResolver();
-
-            var vs1 = new ValueSet()
-            {
-                Url = "http://nu.nl/refers-to-other",
-                Version = "2022-08-01",
-                Status = PublicationStatus.Active,
-                Compose = new()
-                {
-                    Include = new() { new() { ValueSet = new[] { "http://nu.nl/other" } } }
-                }
-            };
-
-            var vs2 = new ValueSet()
-            {
-                Url = "http://nu.nl/other",
-                Version = "2022-08-01",
-                Status = PublicationStatus.Active,
-                Compose = new()
-                {
-                    Include = new() { new() { ValueSet = new[] { vs1.Url } } }
-                }
-            };
-
-            resolver.Add(vs1, vs2);
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = resolver });
-            await Assert.ThrowsAsync<TerminologyServiceException>(() => expander.ExpandAsync(vs1));
-        }
-
-        [Fact]
-        public async T.Task TestExpandingVsWithUnknownSystem()
-        {
-
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = new InMemoryResourceResolver() });
-            var vs = new ValueSet
-            {
-                Compose = new()
-                {
-                    Include = new List<ValueSet.ConceptSetComponent>
-                    {
-                        new()
-                        {
-                            System = "http://www.unknown.org/"
-                        }
-                    }
-                }
-            };
-
-            var job = async () => await expander.ExpandAsync(vs);
-            await job.Should().ThrowAsync<ValueSetUnknownException>().WithMessage("The ValueSet expander cannot find codesystem 'http://www.unknown.org/', so the expansion cannot be completed.");
         }
 
         [Fact]

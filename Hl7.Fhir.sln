@@ -101,6 +101,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Specification.STU3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.STU3.Tests", "src\Hl7.Fhir.STU3.Tests\Hl7.Fhir.STU3.Tests.csproj", "{CFF0DDA5-5155-4144-B426-91C7623D08E7}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shims.Conformance", "src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Conformance.shproj", "{150A59A2-371D-4747-8B08-C8E6340EC962}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -342,6 +344,7 @@ Global
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{0855c969-0349-4843-ac8d-1ac2c4466d42}*SharedItemsImports = 13
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{12e9e825-1085-4c86-ae22-4310a19f137e}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{12e9e825-1085-4c86-ae22-4310a19f137e}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.projitems*{150a59a2-371d-4747-8b08-c8e6340ec962}*SharedItemsImports = 13
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{23ff0f97-3960-4994-8423-db39573652e1}*SharedItemsImports = 13
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{2a8f91bc-6449-4ca5-8145-5213bd18a528}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems*{343dbd3e-7795-4df9-a875-4ad92037b7c6}*SharedItemsImports = 13
@@ -353,6 +356,7 @@ Global
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{52a8cfd0-fc25-42db-b3aa-292f4df8b72f}*SharedItemsImports = 5
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{622469ac-5dd3-413f-bbd1-6a2a81106ebe}*SharedItemsImports = 5
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{72390202-6b95-47a0-905f-e4b6f41c912d}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.projitems*{748bc8f9-2a47-490c-8013-76bd944c1d5f}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems*{79e7d8a8-88b2-4c8e-898a-75f72717f20a}*SharedItemsImports = 5
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{7ce67255-b780-497b-9ffe-c8debc972dfc}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems*{81a8eca2-2c29-4df0-97c1-c7e23705906f}*SharedItemsImports = 5
@@ -365,6 +369,7 @@ Global
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{db787709-8943-4ca7-b5f1-83efcbc205a1}*SharedItemsImports = 5
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{eb078a3d-56e1-4871-81a2-3c9151a21240}*SharedItemsImports = 5
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{f75bd8a0-1741-4756-ba74-920e46a60efa}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.projitems*{fdcba2fe-ed46-4b83-9e5d-a5d48b84b92e}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{fdcba2fe-ed46-4b83-9e5d-a5d48b84b92e}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
