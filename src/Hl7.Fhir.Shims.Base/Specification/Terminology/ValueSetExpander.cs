@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 var expanded = await T.Task.WhenAll(conceptSet.ValueSet.Select(vs => expandValueSetAndFilterOnSystem(vs))).ConfigureAwait(false);
                 var concepts = expanded.Length == 1 ? expanded.Single() : expanded.Aggregate((l, r) => l.Intersect(r, _systemAndCodeComparer));
 
-                addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet)}' would result in an expqansion larger than the maximum expansion size.");
+                addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet)}' would result in an expansion larger than the maximum expansion size.");
 
                 // > valueSet and System: Codes are 'selected' for inclusion if they are selected by the code system selection (after checking for concept and filter) and if they are in all the referenced value sets
                 // If a System was specified, simulate a intersection between the codesystem and the valuesets by filtering on the

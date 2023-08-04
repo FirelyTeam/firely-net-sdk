@@ -36,12 +36,6 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         public bool IncludeDesignations { get; set; }
 
-        //// <summary>
-        //// Controls whether concepts are included that are marked as inactive. This setting overrides
-        //// <c>ValueSet.compose.inactive</c>.
-        //// </summary>
-        //public bool IncludeInactive { get; set; }
-
         /// <summary>Default constructor. Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
         public ValueSetExpanderSettings() { }
 
@@ -63,7 +57,6 @@ namespace Hl7.Fhir.Specification.Terminology
             other.MaxExpansionSize = MaxExpansionSize;
             other.ValueSetSource = ValueSetSource;
             other.IncludeDesignations = IncludeDesignations;
-            // other.IncludeInactive = IncludeInactive;
         }
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> object that is a copy of the current instance.</summary>

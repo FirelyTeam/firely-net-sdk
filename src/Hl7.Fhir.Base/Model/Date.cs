@@ -66,7 +66,10 @@ namespace Hl7.Fhir.Model
         [NonSerialized]  // To prevent binary serialization from serializing this field
         private P.Date? _parsedValue = null;
 
-        private static readonly P.Date INVALID_VALUE = P.Date.Today();
+        // This is a sentintel value that marks that the current string representation is
+        // not parseable, so we don't have to try again. It's value is never used, it's just
+        // checked by reference.
+        private static readonly P.Date INVALID_VALUE = P.Date.FromDateTimeOffset(DateTimeOffset.MinValue);
 
         /// <summary>
         /// Converts a Fhir Date to a <see cref="P.Date"/>.
