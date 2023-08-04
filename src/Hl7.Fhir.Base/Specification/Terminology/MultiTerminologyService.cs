@@ -1,5 +1,14 @@
 ﻿#nullable enable
 
+/* 
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
@@ -106,26 +115,54 @@ namespace Hl7.Fhir.Specification.Terminology
             _termServices.Insert(index, settings);
         }
 
-        ///<inheritdoc/>
-        public Task<Resource> Closure(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.ValueSetValidateCode(p, id, useGet), parameters);
 
-        ///<inheritdoc/>
-        public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.CodeSystemValidateCode(p, id, useGet), parameters);
 
-        ///<inheritdoc/>
-        public Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.Expand(p, id, useGet), parameters);
 
-        ///<inheritdoc/>
-        public Task<Parameters> Lookup(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
+            tryMulti((s, p) => s.Lookup(p, useGet), parameters);
 
-        ///<inheritdoc/>
-        public Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.Translate(p, id, useGet), parameters);
 
-        ///<inheritdoc/>
-        public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.Subsumes(p, id, useGet), parameters);
 
-        ///<inheritdoc/>
-        public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+        /// <inheritdoc/>
+        public Task<Resource> Closure(Parameters parameters, bool useGet = false) =>
+            tryMulti((s, p) => s.Closure(p, useGet), parameters);
+
+        private IEnumerable<ITerminologyService> preferredService(string inputVsUrl)
+        {
+            return _termServices.Where(t => matchVs(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
+        }
+
+        private static bool matchVs(IEnumerable<string>? preferredValueSets, string inputVsUrl)
+        {
+#if NETSTANDARD2_0
+            return preferredValueSets?.Any(vs => FileSystemName.MatchesSimpleExpression(vs.AsSpan(), inputVsUrl.AsSpan())) ?? false;
+#else
+            return preferredValueSets?.Any(vs => System.IO.Enumeration.FileSystemName.MatchesSimpleExpression(vs, inputVsUrl)) ?? false;
+#endif
+        }
+
+        private static IEnumerable<T> reorderList<T>(IEnumerable<T> originalList, IEnumerable<T> itemsToMoveToFront)
+        {
+            return itemsToMoveToFront.Concat(originalList.Except(itemsToMoveToFront));
+        }
+
+        private async Task<T> tryMulti<T>(Func<ITerminologyService, Parameters, Task<T>> operation, Parameters parameters)
         {
             List<FhirOperationException> exceptions = new();
 
@@ -143,7 +180,7 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 try
                 {
-                    return await termService.ValueSetValidateCode(parameters, id, useGet).ConfigureAwait(false);
+                    return await operation(termService, parameters).ConfigureAwait(false);
                 }
                 catch (FhirOperationException ex)
                 {
@@ -164,27 +201,6 @@ namespace Hl7.Fhir.Specification.Terminology
             }
 
             throw new InvalidOperationException("We should never have come here");
-        }
-
-        private IEnumerable<ITerminologyService> preferredService(string inputVsUrl)
-        {
-            return _termServices.Where(t => matchVs(t.PreferredValueSets, inputVsUrl)).Select(t => t.Service);
-        }
-
-        private static bool matchVs(IEnumerable<string>? preferredValueSets, string inputVsUrl)
-        {
-#if NETSTANDARD2_0
-            return preferredValueSets?.Any(vs => FileSystemName.MatchesSimpleExpression(vs.AsSpan(), inputVsUrl.AsSpan())) ?? false;
-#else
-            return preferredValueSets?.Any(vs => System.IO.Enumeration.FileSystemName.MatchesSimpleExpression(vs, inputVsUrl)) ?? false;
-#endif
-        }
-
-
-
-        private static IEnumerable<T> reorderList<T>(IEnumerable<T> originalList, IEnumerable<T> itemsToMoveToFront)
-        {
-            return itemsToMoveToFront.Concat(originalList.Except(itemsToMoveToFront));
         }
     }
 }
