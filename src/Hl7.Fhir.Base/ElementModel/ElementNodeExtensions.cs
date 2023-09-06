@@ -108,5 +108,9 @@ namespace Hl7.Fhir.ElementModel
 
         public static ScopedNode ToScopedNode(this ITypedElement node) =>
             node as ScopedNode ?? new ScopedNode(node);
+
+        public static IScopedNode AsScopedNode(this ITypedElement node) => ToScopedNode(node);
     }
 }
+
+#nullable restore

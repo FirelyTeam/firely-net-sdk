@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : ITypedElement, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IScopedNode, IAnnotated, IExceptionSource
     {
         private class Cache
         {
@@ -45,6 +45,7 @@ namespace Hl7.Fhir.ElementModel
         private ScopedNode(ScopedNode parentNode, ScopedNode? parentResource, ITypedElement wrapped, string? fullUrl)
         {
             Current = wrapped;
+            Parent = parentNode;
             ExceptionHandler = parentNode.ExceptionHandler;
             ParentResource = parentNode.AtResource ? parentNode : parentResource;
 
@@ -229,11 +230,22 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
+        public IScopedNode? Parent { get; private set; }
+
         /// <inheritdoc />
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
 
+
+        private IEnumerable<ScopedNode> childrenInternal(string? name = null) =>
+            Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+
         /// <inheritdoc />
         public IEnumerable<ITypedElement> Children(string? name = null) =>
-            Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+             childrenInternal(name);
+
+        IEnumerable<IScopedNode> IBaseElementNavigator<IScopedNode>.Children(string? name) =>
+             childrenInternal(name);
     }
 }
+
+#nullable restore

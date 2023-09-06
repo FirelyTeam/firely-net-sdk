@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="ignoreOrder">When <c>true</c> the order of the children is discarded. When <c>false</c> the order of children is part
         /// of the equation.</param>
         /// <returns><c>true</c> when the ITypedElements are equal, <c>false</c> otherwise.</returns>
-        public static bool IsExactlyEqualTo(this ITypedElement left, ITypedElement right, bool ignoreOrder = false)
+        public static bool IsExactlyEqualTo<T>(this T left, T right, bool ignoreOrder = false) where T : IBaseElementNavigator<T>
         {
             if (left == null && right == null) return true;
             if (left == null || right == null) return false;
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="value"></param>
         /// <param name="pattern"></param>
         /// <returns><c>true</c> when <paramref name="value"/> matches the <paramref name="pattern"/>, <c>false</c> otherwise.</returns>
-        public static bool Matches(this ITypedElement value, ITypedElement pattern)
+        public static bool Matches<T>(this T value, T pattern) where T : IBaseElementNavigator<T>
         {
             if (value == null && pattern == null) return true;
             if (value == null || pattern == null) return false;

@@ -31,14 +31,14 @@ namespace Hl7.Fhir.ElementModel
         ///   'string' => code
         ///   'uri' => code
         /// </remarks>
-        public static Element ParseBindable(this ITypedElement instance)
+        public static Element ParseBindable<T>(this T instance) where T : IBaseElementNavigator<T>
         {
 
             return instance.InstanceType switch
             {
-                FhirTypeConstants.CODE => instance.ParsePrimitive<Code>(),
-                FhirTypeConstants.STRING => new Code(instance.ParsePrimitive<FhirString>()?.Value),
-                FhirTypeConstants.URI => new Code(instance.ParsePrimitive<FhirUri>()?.Value),
+                FhirTypeConstants.CODE => instance.ParsePrimitive<Code, T>(),
+                FhirTypeConstants.STRING => new Code(instance.ParsePrimitive<FhirString, T>()?.Value),
+                FhirTypeConstants.URI => new Code(instance.ParsePrimitive<FhirUri, T>()?.Value),
                 FhirTypeConstants.CODING => instance.ParseCoding(),
                 FhirTypeConstants.CODEABLE_CONCEPT => instance.ParseCodeableConcept(),
                 FhirTypeConstants.QUANTITY => parseQuantity(),
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        public static Model.Quantity ParseQuantity(this ITypedElement instance)
+        public static Model.Quantity ParseQuantity<T>(this T instance) where T : IBaseElementNavigator<T>
         {
             var newQuantity = new Quantity
             {
@@ -79,11 +79,11 @@ namespace Hl7.Fhir.ElementModel
             return newQuantity;
         }
 
-        public static T ParsePrimitive<T>(this ITypedElement instance) where T : PrimitiveType, new()
+        public static T ParsePrimitive<T, U>(this U instance) where T : PrimitiveType, new() where U : IBaseElementNavigator<U>
                     => new T() { ObjectValue = instance.Value };
 
 
-        public static Coding ParseCoding(this ITypedElement instance)
+        public static Coding ParseCoding<T>(this T instance) where T : IBaseElementNavigator<T>
         {
             return new Coding()
             {
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public static ResourceReference ParseResourceReference(this ITypedElement instance)
+        public static ResourceReference ParseResourceReference<T>(this T instance) where T : IBaseElementNavigator<T>
         {
             return new ResourceReference()
             {
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public static CodeableConcept ParseCodeableConcept(this ITypedElement instance)
+        public static CodeableConcept ParseCodeableConcept<T>(this T instance) where T : IBaseElementNavigator<T>
         {
             return new CodeableConcept()
             {
@@ -114,6 +114,7 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public static string GetString(this IEnumerable<ITypedElement> instance) => instance.SingleOrDefault()?.Value as string;
+        public static string GetString<T>(this IEnumerable<T> instance) where T : IBaseElementNavigator<T>
+            => instance.SingleOrDefault()?.Value as string;
     }
 }
