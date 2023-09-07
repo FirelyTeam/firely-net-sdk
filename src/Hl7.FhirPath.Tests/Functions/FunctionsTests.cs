@@ -546,7 +546,7 @@ namespace HL7.FhirPath.Tests
             });
 
             var expression = new FhirPathCompiler(symbols).Compile("once()");
-            var result = expression.Scalar(null, new EvaluationContext());
+            var result = expression.Scalar((ITypedElement)null, new EvaluationContext());
 
             Assert.AreEqual(result, 1);
         }

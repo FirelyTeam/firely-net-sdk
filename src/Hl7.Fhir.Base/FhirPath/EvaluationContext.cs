@@ -30,6 +30,10 @@ namespace Hl7.FhirPath
             RootResource = rootResource ?? resource;
         }
 
+        public EvaluationContext(IScopedNode resource) : this(resource.AsTypedElement(), resource.GetRootResource().AsTypedElement())
+        {
+        }
+
         /// <summary>
         /// The data represented by <c>%rootResource</c>.
         /// </summary>
