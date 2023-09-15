@@ -232,9 +232,20 @@ namespace Hl7.Fhir.ElementModel
 
         public IScopedNode? Parent { get; private set; }
 
+        public int? ChildIndex
+        {
+            get
+            {
+                if (Definition?.IsCollection == false) return null;
+
+                // TODO: maybe too costly?
+                var index = Parent?.Children(Name).ToList().IndexOf(this);
+                return index == -1 ? null : index;
+            }
+        }
+
         /// <inheritdoc />
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
-
 
         private IEnumerable<ScopedNode> childrenInternal(string? name = null) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));

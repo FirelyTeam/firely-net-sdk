@@ -16,6 +16,9 @@ namespace Hl7.Fhir.ElementModel
     public interface IScopedNode : IBaseElementNavigator<IScopedNode>
     {
         IScopedNode? Parent { get; }
+
+        int? ChildIndex { get; }
+
     }
 }
 

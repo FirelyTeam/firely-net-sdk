@@ -16,15 +16,20 @@ namespace Hl7.Fhir.ElementModel
     public static class IScopedNodeExtensions
     {
         public static string GetLocation(this IScopedNode node) =>
-            node.Parent is null ? node.Name : $"{node.Name}.{node.Parent.GetLocation()}"; // TODO: add unittest and verify this is the definition of Location
+            node.Parent is null ? node.Name : $"{node.Parent.GetLocation()}.{node.Name}{node.index()}"; // TODO: add unittest and verify this is the definition of Location
 
+        private static string? index(this IScopedNode node) =>
+            node.ChildIndex is null ? null : $"[{node.ChildIndex}]";
         public static IEnumerable<IScopedNode> Children(this IEnumerable<IScopedNode> nodes, string? name = null) =>
            nodes.SelectMany(n => n.Children(name));
 
         public static ITypedElement AsTypedElement(this IScopedNode node) =>
             node is ITypedElement ite ? ite : new ScopedNodeToTypedElementAdapter(node);
 
-        public static IScopedNode GetRootResource(this IScopedNode node) => null!;// TODO
+        public static IScopedNode GetRootResource(this IScopedNode node) // TODO
+        {
+            return null!;
+        }
     }
 }
 
