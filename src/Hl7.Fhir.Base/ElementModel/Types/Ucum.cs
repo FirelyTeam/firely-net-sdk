@@ -47,6 +47,13 @@ namespace Hl7.Fhir.ElementModel.Types
             Metric metric = (unit != null) ? SYSTEM.Value.Metric(unit) : new Metric(new List<Metric.Axis>());
             return new M.Quantity(value, metric);
         }
+
+        internal static string PerformMetricOperation(string unit1, string unit2, Func<Metric, Metric, Metric> operation)
+        {
+            var a = SYSTEM.Value.Metric(unit1);
+            var b = SYSTEM.Value.Metric(unit2);
+            return operation(a, b).ToString();
+        }
     }
 }
 

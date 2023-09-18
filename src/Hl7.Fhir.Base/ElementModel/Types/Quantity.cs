@@ -304,11 +304,57 @@ namespace Hl7.Fhir.ElementModel.Types
         /// to specify comparison behaviour for date comparisons.</remarks>
         public Result<int> TryCompareTo(Any other) => TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON);
 
-        public static bool operator +(Quantity a, Quantity b) => throw Error.NotSupported("Adding two quantites is not yet supported");
-        public static bool operator -(Quantity a, Quantity b) => throw Error.NotSupported("Subtracting two quantites is not yet supported");
 
-        public static bool operator *(Quantity a, Quantity b) => throw Error.NotSupported("Multiplying two quantites is not yet supported");
-        public static bool operator /(Quantity a, Quantity b) => throw Error.NotSupported("Dividing two quantites is not yet supported");
+        private static (Quantity, Quantity) alignQuantityUnits(Quantity a, Quantity b)
+        {
+            if (a.System != QuantityUnitSystem.UCUM || b.System != QuantityUnitSystem.UCUM)
+            {
+                Error.NotSupported("Arithmetic operations on quantities using systems other than UCUM are not supported.");
+            }
+
+            Quantity? left = a;
+            Quantity? right = b;
+
+            if (a.Unit != b.Unit)
+            {
+                // align units with each other
+                if (!a.TryCanonicalize(out left)) left = a;
+                if (!b.TryCanonicalize(out right)) right = b;
+            }
+
+            return (left!, right!);
+        }
+
+        public static Quantity operator +(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return (left!.Unit == right!.Unit)
+                ? new(left.Value + right.Value, left.Unit)
+                : throw Error.InvalidOperation($"The addition operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'.");
+        }
+
+        public static Quantity operator -(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+            return (left!.Unit == right!.Unit)
+                ? new(left.Value - right.Value, left.Unit)
+                : throw Error.InvalidOperation($"The substraction operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'.");
+        }
+
+        public static Quantity operator *(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return new(left.Value * right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a * b));
+        }
+
+        public static Quantity operator /(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return new(left.Value / right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a / b));
+        }
 
         public override int GetHashCode() => (Unit, Value).GetHashCode();
 

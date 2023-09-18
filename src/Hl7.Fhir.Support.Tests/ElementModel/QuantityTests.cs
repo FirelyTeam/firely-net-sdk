@@ -7,8 +7,10 @@
  */
 
 using FluentAssertions;
+using Hl7.Fhir.ElementModel.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel.Tests
@@ -145,6 +147,52 @@ namespace Hl7.Fhir.ElementModel.Tests
                     result.Should().BePositive();
                     break;
             }
+        }
+
+        /*     [DataTestMethod]
+         [DataRow("25 'kg'", "5 'kg'", "30 'kg'",  (Quantity a, Quantity b) => a + b ]
+        [DataRow("1 'm'", "2 'm'", Comparison.LessThan)]
+            [DataRow("1 'cm'", "1 'm'", Comparison.LessThan)]
+            [DataRow("30.0 'g'", "0.03 'kg'", Comparison.Equals)]
+            [DataRow("1 '[in_i]'", "2 'cm'", Comparison.GreaterThan)] // 1 inch is greater than 2
+            [DataRow("1 '[stone_av]'", "6350.29318 'g'", Comparison.Equals)]
+            [DataRow("3 'hr'", "3 'h'", Comparison.Equals, true)]
+            [DataRow("3 'a'", "3 year", Comparison.Equals)]
+            [DataRow("3 'a'", "3 years", Comparison.Equals)]
+            [DataRow("3 'mo'", "3 months", Comparison.Equals)]
+            [DataRow("3 'd'", "3 days", Comparison.Equals)]
+            [DataRow("1 'd'", "3 days", Comparison.LessThan)]*/
+
+        public static IEnumerable<object[]> ArithmeticTestdata => new[]
+                {
+                    new object[] { "25 'kg'", "5 'kg'", "30 'kg'", (Quantity a, Quantity b) => a + b },
+                    new object[] { "25 'kg'", "1000 'g'", "26000 'g'", (Quantity a, Quantity b) => a + b },
+                    new object[] { "3 '[in_i]'", "2 '[in_i]'", "5 '[in_i]'", (Quantity a, Quantity b) => a + b },
+                    new object[] { "4.0 'kg.m/s2'", "2000 'g.m.s-2'", "6000 'g.m.s-2'", (Quantity a, Quantity b) => a + b },
+
+                    new object[] { "25 'kg'", "500 'g'", "24500 'g'", (Quantity a, Quantity b) => a - b },
+                    new object[] { "25 'kg'", "25001 'g'", "-1 'g'", (Quantity a, Quantity b) => a - b },
+                    new object[] { "1 '[in_i]'", "2 'cm'", "0.005400 'm'", (Quantity a, Quantity b) => a - b },
+
+                    new object[] { "25 'km'", "20 'cm'", "5000 'm2'", (Quantity a, Quantity b) => a * b },
+                    new object[] { "2.0 'cm'", "2.0 'm'", "0.040 'm2'", (Quantity a, Quantity b) => a * b },
+
+                    new object[] { "14.4 'km'", "2.0 'h'", "2 'm.s-1'", (Quantity a, Quantity b) => a / b },
+                    new object[] { "9 'm2'", "3 'm'", "3 'm'", (Quantity a, Quantity b) => a / b },
+                };
+
+
+        [TestMethod]
+        [DynamicData(nameof(ArithmeticTestdata))]
+        public void ArithmeticOperationsTests(string left, string right, string result, Func<Quantity, Quantity, Quantity> operation)
+        {
+            _ = Quantity.TryParse(left, out var q1);
+            _ = Quantity.TryParse(right, out var q2);
+            _ = Quantity.TryParse(result, out var r);
+
+            var opResult = operation(q1, q2);
+
+            opResult.Should().Be(r);
         }
     }
 }
