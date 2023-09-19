@@ -325,35 +325,50 @@ namespace Hl7.Fhir.ElementModel.Types
             return (left!, right!);
         }
 
-        public static Quantity operator +(Quantity a, Quantity b)
+        public static Quantity? operator +(Quantity a, Quantity b) =>
+            Add(a, b).ValueOrDefault();
+
+        public static Quantity? operator -(Quantity a, Quantity b) =>
+            Substract(a, b).ValueOrDefault();
+
+        public static Quantity operator *(Quantity a, Quantity b) =>
+            Multiply(a, b).ValueOrDefault();
+
+        public static Quantity? operator /(Quantity a, Quantity b) =>
+            Divide(a, b).ValueOrDefault();
+
+        internal static Result<Quantity> Add(Quantity a, Quantity b)
         {
             var (left, right) = alignQuantityUnits(a, b);
 
             return (left!.Unit == right!.Unit)
-                ? new(left.Value + right.Value, left.Unit)
-                : throw Error.InvalidOperation($"The addition operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'.");
+                ? Ok<Quantity>(new(left.Value + right.Value, left.Unit))
+                : Fail<Quantity>(Error.InvalidOperation($"The add operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
         }
 
-        public static Quantity operator -(Quantity a, Quantity b)
+        internal static Result<Quantity> Substract(Quantity a, Quantity b)
         {
             var (left, right) = alignQuantityUnits(a, b);
+
             return (left!.Unit == right!.Unit)
-                ? new(left.Value - right.Value, left.Unit)
-                : throw Error.InvalidOperation($"The substraction operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'.");
+                ? Ok<Quantity>(new(left.Value - right.Value, left.Unit))
+                : Fail<Quantity>(Error.InvalidOperation($"The substract operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
         }
 
-        public static Quantity operator *(Quantity a, Quantity b)
+        internal static Result<Quantity> Multiply(Quantity a, Quantity b)
         {
             var (left, right) = alignQuantityUnits(a, b);
 
-            return new(left.Value * right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a * b));
+            return Ok<Quantity>(new(left.Value * right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a * b)));
         }
 
-        public static Quantity operator /(Quantity a, Quantity b)
+        internal static Result<Quantity> Divide(Quantity a, Quantity b)
         {
+            if (b.Value == 0) return Fail<Quantity>(Error.InvalidOperation("Cannot divide by zero."));
+
             var (left, right) = alignQuantityUnits(a, b);
 
-            return new(left.Value / right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a / b));
+            return Ok<Quantity>(new(left.Value / right.Value, left.Unit == right.Unit ? "1" : Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a / b)));
         }
 
         public override int GetHashCode() => (Unit, Value).GetHashCode();
