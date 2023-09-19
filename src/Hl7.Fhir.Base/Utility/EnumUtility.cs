@@ -84,11 +84,6 @@ namespace Hl7.Fhir.Utility
         private static class EnumMappingCache<TEnum>
             where TEnum : struct, Enum
         {
-            private static readonly Dictionary<string, TEnum> _literalToEnum = new();
-            private static readonly Dictionary<string, TEnum> _caseInsensitiveLiteralToEnum = new(StringComparer.OrdinalIgnoreCase);
-            private static readonly Dictionary<TEnum, string> _enumToLiteral = new();
-            private static readonly Dictionary<TEnum, string> _enumToSystem = new();
-
             static EnumMappingCache()
             {
                 var t = typeof(TEnum);
@@ -115,6 +110,11 @@ namespace Hl7.Fhir.Utility
             public static string Name { get; }
 
             public static string? DefaultCodeSystem { get; }
+
+            private static readonly Dictionary<string, TEnum> _literalToEnum = new();
+            private static readonly Dictionary<string, TEnum> _caseInsensitiveLiteralToEnum = new(StringComparer.OrdinalIgnoreCase);
+            private static readonly Dictionary<TEnum, string> _enumToLiteral = new();
+            private static readonly Dictionary<TEnum, string> _enumToSystem = new();
 
             public static string? GetSystem(TEnum value) =>
                 !_enumToSystem.TryGetValue(value, out string? result)

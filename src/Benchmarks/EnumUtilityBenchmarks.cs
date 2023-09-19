@@ -40,15 +40,15 @@ namespace Firely.Sdk.Benchmarks
             => EnumUtility.ParseLiteral<SearchParamType>("string").Value;
 
         [Benchmark]
+        public Enum EnumUtilityParseLiteralNonGeneric()
+            => EnumUtility.ParseLiteral("string", typeof(SearchParamType));
+
+        [Benchmark]
         public SearchParamType EnumUtilityParseLiteralIgnoreCase()
             => EnumUtility.ParseLiteral<SearchParamType>("string", true).Value;
 
         [Benchmark]
-        public Enum EnumUtilityNonGenericParseLiteral()
-            => EnumUtility.ParseLiteral("string", typeof(SearchParamType));
-
-        [Benchmark]
-        public Enum EnumUtilityNonGenericParseLiteralIgnoreCase()
+        public Enum EnumUtilityParseLiteralIgnoreCaseNonGeneric()
             => EnumUtility.ParseLiteral("string", typeof(SearchParamType), true);
 
         [Benchmark]
@@ -56,7 +56,7 @@ namespace Firely.Sdk.Benchmarks
             => EnumUtility.GetSystem(StringSearchParam);
 
         [Benchmark]
-        public string EnumUtilityNonGenericGetSystem()
+        public string EnumUtilityGetSystemNonGeneric()
             => EnumUtility.GetSystem(StringSearchParamEnum);
     }
 }
