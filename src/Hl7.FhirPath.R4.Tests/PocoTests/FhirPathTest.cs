@@ -383,6 +383,12 @@ namespace Hl7.FhirPath.R4.Tests
                                             }, "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
 
             // memberOf with string objects
+            yield return new object[] { new FhirString("85353-1"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
+            yield return new object[] { new FhirString("male"), "memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
+            yield return new object[] { new FhirString("female"), "memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
+            yield return new object[] { new FhirString("no-idea"), "memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", false };
+
+            // memberOf with inline string objects
             yield return new object[] { new FhirBoolean(), "'85353-1'.memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
             yield return new object[] { new FhirBoolean(), "'male'.memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
             yield return new object[] { new FhirBoolean(), "'female'.memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
