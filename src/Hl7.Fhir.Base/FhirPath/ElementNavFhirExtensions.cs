@@ -283,7 +283,7 @@ namespace Hl7.Fhir.FhirPath
                 "code" when input is ScopedNode sn => inParams.WithCode(code: sn.Value as string, context: sn.LocalLocation),
                 "Coding" => inParams.WithCoding(input.ParseCoding()),
                 "CodeableConcept" => inParams.WithCodeableConcept(input.ParseCodeableConcept()),
-                "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),
+                "string" or "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),
                 _ => null,
             };
 
