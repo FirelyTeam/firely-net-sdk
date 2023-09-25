@@ -54,13 +54,13 @@ stages:
       inputs:
         versionSpec: '6.4.0' 
 
-    - ${{ if eq(variables.USE_GITHUB_PACKAGEFEED, true) }}:
+    - ${{ if eq(variables['UseGitHubPackageFeed'], 'true') }}:
       - template: restore.yml@templates
         parameters:
           nuGetServiceConnections: GitHubPackageGetFeed
           nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
 
-    - ${{ if eq(variables.USE_GITHUB_PACKAGEFEED, false) }}:
+    - ${{ if eq(variables['UseGitHubPackageFeed'], 'false') }}:
       - script: dotnet restore --source https://api.nuget.org/v3/index.json
         
     - task: DotNetCoreCLI@2
