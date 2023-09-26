@@ -59,7 +59,8 @@ stages:
         parameters:
           nuGetServiceConnections: GitHubPackageGetFeed
           nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
-      ${{ else }}:
+          
+    - ${{ if eq(variables.useGitHubPackageFeed, 'no') }}:
       - script: dotnet restore --source https://api.nuget.org/v3/index.json
         displayName: 'Run dotnet restore'
         
