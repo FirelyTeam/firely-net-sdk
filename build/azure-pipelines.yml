@@ -21,7 +21,7 @@ variables:
 - template: build-variables.yml
 - template: pipeline-variables.yml
 - name: foo
-  value: 'true'
+  value: $[variables.UseGitHubPackageFeed]
   
 pool:
   vmImage: windows-latest
