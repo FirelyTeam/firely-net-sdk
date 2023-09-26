@@ -54,7 +54,7 @@ stages:
       inputs:
         versionSpec: '6.4.0' 
 
-    - ${{ if eq($[variables.UseGitHubPackageFeed], 'true') }}:
+    - ${{ if eq(variables.UseGitHubPackageFeed, 'true') }}:
       - template: restore.yml@templates
         parameters:
           nuGetServiceConnections: GitHubPackageGetFeed
