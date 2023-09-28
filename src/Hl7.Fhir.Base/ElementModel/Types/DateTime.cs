@@ -150,12 +150,12 @@ namespace Hl7.Fhir.ElementModel.Types
             return success;
         }
 
-        public static DateTime operator -(DateTime dateTimeValue, Quantity addValue)
+        public static DateTime operator -(DateTime dateTimeValue, Quantity subtractValue)
         {
             if (dateTimeValue is null) throw new ArgumentNullException(nameof(dateTimeValue));
-            if (addValue is null) throw new ArgumentNullException(nameof(addValue));
+            if (subtractValue is null) throw new ArgumentNullException(nameof(subtractValue));
 
-            return Add(dateTimeValue, -addValue.Value, addValue.Unit);
+            return Add(dateTimeValue, -subtractValue.Value, subtractValue.Unit);
         }
 
         public static DateTime operator +(DateTime dateTimeValue, Quantity addValue)

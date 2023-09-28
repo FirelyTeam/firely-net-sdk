@@ -141,12 +141,12 @@ namespace Hl7.Fhir.ElementModel.Types
             return success;
         }
 
-        public static Date operator -(Date dateValue, Quantity addValue)
+        public static Date operator -(Date dateValue, Quantity subtractValue)
         {
             if (dateValue is null) throw new ArgumentNullException(nameof(dateValue));
-            if (addValue is null) throw new ArgumentNullException(nameof(addValue));
+            if (subtractValue is null) throw new ArgumentNullException(nameof(subtractValue));
 
-            return Add(dateValue, -addValue.Value, addValue.Unit);
+            return Add(dateValue, -subtractValue.Value, subtractValue.Unit);
         }
 
         public static Date operator +(Date dateValue, Quantity addValue)
