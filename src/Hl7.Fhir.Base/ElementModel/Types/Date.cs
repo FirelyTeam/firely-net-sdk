@@ -141,35 +141,48 @@ namespace Hl7.Fhir.ElementModel.Types
             return success;
         }
 
+        public static Date operator -(Date dateValue, Quantity addValue)
+        {
+            if (dateValue is null) throw new ArgumentNullException(nameof(dateValue));
+            if (addValue is null) throw new ArgumentNullException(nameof(addValue));
+
+            return Add(dateValue, -addValue.Value, addValue.Unit);
+        }
+
         public static Date operator +(Date dateValue, Quantity addValue)
         {
             if (dateValue is null) throw new ArgumentNullException(nameof(dateValue));
             if (addValue is null) throw new ArgumentNullException(nameof(addValue));
 
+            return Add(dateValue, addValue.Value, addValue.Unit);
+        }
+
+        private static Date Add(Date dateValue, decimal value, string unit)
+        {
             // Based on the discussion on equality/comparisons here:
             // https://chat.fhir.org/#narrow/stream/179266-fhirpath/topic/Date.2FTime.20comparison.20vs.20equality
             // We have also allowed addition to use the definitve UCUM units of 'wk', 'd' as if they are a calendar unit of
             // 'week'/'day' respectively.
-            var dto = addValue.Unit switch
+            var dto = unit switch
             {
                 // we can ignore precision, as the precision will "trim" it anyway, and if we add 13 months, then the year can tick over nicely
-                "years" or "year" => dateValue._value.AddYears((int)addValue.Value),
+                "years" or "year" => dateValue._value.AddYears((int)value),
                 "month" or "months" => dateValue.Precision == DateTimePrecision.Year
-                    ? dateValue._value.AddYears((int)(addValue.Value / 12))
-                    : dateValue._value.AddMonths((int)addValue.Value),
+                    ? dateValue._value.AddYears((int)(value / 12))
+                    : dateValue._value.AddMonths((int)value),
                 "week" or "weeks" or "wk" => dateValue.Precision switch
                 {
-                    DateTimePrecision.Year => dateValue._value.AddYears((int)(addValue.Value / 52)),
-                    DateTimePrecision.Month => dateValue._value.AddMonths((int)(addValue.Value * 7 / 30)),
-                    _ => dateValue._value.AddDays(((int)addValue.Value) * 7)
+                    DateTimePrecision.Year => dateValue._value.AddYears((int)(value / 52)),
+                    DateTimePrecision.Month => dateValue._value.AddMonths((int)(value * 7 / 30)),
+                    _ => dateValue._value.AddDays(((int)value) * 7)
                 },
                 "day" or "days" or "d" => dateValue.Precision switch
                 {
-                    DateTimePrecision.Year => dateValue._value.AddYears((int)(addValue.Value / 365)),
-                    DateTimePrecision.Month => dateValue._value.AddMonths((int)(addValue.Value / 30)),
-                    _ => dateValue._value.AddDays((int)addValue.Value)
+                    DateTimePrecision.Year => dateValue._value.AddYears((int)(value / 365)),
+                    DateTimePrecision.Month => dateValue._value.AddMonths((int)(value / 30)),
+                    _ => dateValue._value.AddDays((int)value)
                 },
-                _ => throw new ArgumentException($"'{addValue.Unit}' is not a valid time-valued unit", nameof(addValue)),
+                _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
             };
             var result = FromDateTimeOffset(dto, dateValue.Precision);
             return result;

@@ -150,50 +150,63 @@ namespace Hl7.Fhir.ElementModel.Types
             return success;
         }
 
+        public static DateTime operator -(DateTime dateTimeValue, Quantity addValue)
+        {
+            if (dateTimeValue is null) throw new ArgumentNullException(nameof(dateTimeValue));
+            if (addValue is null) throw new ArgumentNullException(nameof(addValue));
+
+            return Add(dateTimeValue, -addValue.Value, addValue.Unit);
+        }
+
         public static DateTime operator +(DateTime dateTimeValue, Quantity addValue)
         {
             if (dateTimeValue is null) throw new ArgumentNullException(nameof(dateTimeValue));
             if (addValue is null) throw new ArgumentNullException(nameof(addValue));
 
+            return Add(dateTimeValue, addValue.Value, addValue.Unit);
+        }
+
+        private static DateTime Add(DateTime dateTimeValue, decimal value, string unit)
+        {
             // Based on the discussion on equality/comparisons here:
             // https://chat.fhir.org/#narrow/stream/179266-fhirpath/topic/Date.2FTime.20comparison.20vs.20equality
             // We have also allowed addition to use the definitve UCUM units of 'wk', 'd', 'h', 'min'  as if they are a calendar unit of
             // 'week'/'day'/'hour'/'minute' respectively.
-            var dto = addValue.Unit switch
+            var dto = unit switch
             {
                 // we can ignore precision, as the precision will "trim" it anyway, and if we add 13 months, then the year can tick over nicely
-                "years" or "year" => dateTimeValue._value.AddYears((int)addValue.Value),
+                "years" or "year" => dateTimeValue._value.AddYears((int)value),
                 "month" or "months" => dateTimeValue.Precision == DateTimePrecision.Year
-                    ? dateTimeValue._value.AddYears((int)(addValue.Value / 12))
-                    : dateTimeValue._value.AddMonths((int)addValue.Value),
+                    ? dateTimeValue._value.AddYears((int)(value / 12))
+                    : dateTimeValue._value.AddMonths((int)value),
                 "week" or "weeks" or "wk" => dateTimeValue.Precision switch
                 {
-                    DateTimePrecision.Year => dateTimeValue._value.AddYears((int)(addValue.Value / 52)),
-                    DateTimePrecision.Month => dateTimeValue._value.AddMonths((int)(addValue.Value * 7 / 30)),
-                    _ => dateTimeValue._value.AddDays(((int)addValue.Value) * 7)
+                    DateTimePrecision.Year => dateTimeValue._value.AddYears((int)(value / 52)),
+                    DateTimePrecision.Month => dateTimeValue._value.AddMonths((int)(value * 7 / 30)),
+                    _ => dateTimeValue._value.AddDays(((int)value) * 7)
                 },
                 "day" or "days" or "d" => dateTimeValue.Precision switch
                 {
-                    DateTimePrecision.Year => dateTimeValue._value.AddYears((int)(addValue.Value / 365)),
-                    DateTimePrecision.Month => dateTimeValue._value.AddMonths((int)(addValue.Value / 30)),
-                    _ => dateTimeValue._value.AddDays((int)addValue.Value)
+                    DateTimePrecision.Year => dateTimeValue._value.AddYears((int)(value / 365)),
+                    DateTimePrecision.Month => dateTimeValue._value.AddMonths((int)(value / 30)),
+                    _ => dateTimeValue._value.AddDays((int)value)
                 },
 
                 // NOT ignoring precision on time based stuff if there is no time component
                 // if no time component, don't modify result
                 "hour" or "hours" or "h" => dateTimeValue.Precision > DateTimePrecision.Day
-                                        ? dateTimeValue._value.AddHours((double)addValue.Value)
+                                        ? dateTimeValue._value.AddHours((double)value)
                                         : dateTimeValue._value,
                 "minute" or "minutes" or "min" => dateTimeValue.Precision > DateTimePrecision.Day
-                    ? dateTimeValue._value.AddMinutes((double)addValue.Value)
+                    ? dateTimeValue._value.AddMinutes((double)value)
                     : dateTimeValue._value,
                 "s" or "second" or "seconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                                        ? dateTimeValue._value.AddSeconds((double)addValue.Value)
+                                        ? dateTimeValue._value.AddSeconds((double)value)
                                         : dateTimeValue._value,
                 "ms" or "millisecond" or "milliseconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                                        ? dateTimeValue._value.AddMilliseconds((double)addValue.Value)
+                                        ? dateTimeValue._value.AddMilliseconds((double)value)
                                         : dateTimeValue._value,
-                _ => throw new ArgumentException($"'{addValue.Unit}' is not a valid time-valued unit", nameof(addValue)),
+                _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
             };
 
             var resultRepresentation = dto.ToString(FMT_FULL);
