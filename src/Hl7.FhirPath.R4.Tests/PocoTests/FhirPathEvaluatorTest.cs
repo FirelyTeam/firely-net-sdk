@@ -386,6 +386,15 @@ namespace Hl7.FhirPath.R4.Tests
 
         }
 
+        [TestMethod]
+        public void TestDateTimeArithmetic()
+        {
+            fixture.IsTrue(@"(Patient.birthDate + 100 years) > @2000");
+            fixture.IsTrue(@"(Patient.birthDate - 100 years) < @2000");
+            fixture.IsTrue(@"(now() - 100 seconds) < now()");
+            fixture.IsTrue(@"(now() + 100 seconds) > now()");
+        }
+
         private ConcurrentDictionary<string, CacheItem<CompiledExpression>> getCache()
         {
             var cache = typeof(FhirPathExtensions)
