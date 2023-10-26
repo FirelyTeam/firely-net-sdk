@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
 
@@ -214,7 +215,7 @@ namespace Hl7.Fhir.ElementModel.Types
 
             if (HasOffset) formatString += "K";
 
-            return _value.ToString(formatString);
+            return _value.ToString(formatString, CultureInfo.InvariantCulture);
         }
 
         public static explicit operator Time(DateTimeOffset dto) => FromDateTimeOffset(dto);
