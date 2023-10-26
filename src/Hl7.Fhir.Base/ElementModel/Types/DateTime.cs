@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
 
@@ -209,7 +210,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
             };
 
-            var resultRepresentation = dto.ToString(FMT_FULL);
+            var resultRepresentation = dto.ToString(FMT_FULL, CultureInfo.InvariantCulture);
             var originalRepresentation = dateTimeValue.ToString();
 
             if (resultRepresentation.Length > originalRepresentation.Length)
@@ -349,7 +350,7 @@ namespace Hl7.Fhir.ElementModel.Types
 
             var format = FMT_FULL.Substring(0, length);
             if (includeOffset) format += 'K';
-            return dto.ToString(format);
+            return dto.ToString(format, CultureInfo.InvariantCulture);
         }
 
         public static explicit operator DateTime(DateTimeOffset dto) => FromDateTimeOffset(dto);
@@ -380,6 +381,6 @@ namespace Hl7.Fhir.ElementModel.Types
         Result<Code> ICqlConvertible.TryConvertToCode() => CannotCastTo<Code>(this);
         Result<Concept> ICqlConvertible.TryConvertToConcept() => CannotCastTo<Concept>(this);
 
-        public static string FormatDateTimeOffset(DateTimeOffset dto) => dto.ToString(FMT_FULL);
+        public static string FormatDateTimeOffset(DateTimeOffset dto) => dto.ToString(FMT_FULL, CultureInfo.InvariantCulture);
     }
 }
