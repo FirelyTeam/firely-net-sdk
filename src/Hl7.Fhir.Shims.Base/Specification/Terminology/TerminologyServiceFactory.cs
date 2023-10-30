@@ -1,4 +1,13 @@
-﻿#nullable enable
+﻿/* 
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
+
+#nullable enable
 
 using Hl7.Fhir.Specification.Source;
 
@@ -18,7 +27,11 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 PreferredValueSets = new string[]
                 {
+#if STU3
                     MimeTypeTerminologyService.MIMETYPE_VALUESET_STU3
+#else
+                    MimeTypeTerminologyService.MIMETYPE_VALUESET_R4_AND_UP
+#endif        
                 }
             };
 

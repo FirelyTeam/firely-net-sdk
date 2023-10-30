@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>150a59a2-371d-4747-8b08-c8e6340ec962</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Hl7.Fhir.Shims.Base</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExpandParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExternalTerminologyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\FallbackTerminologyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\LocalTerminologyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TranslateParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ValueSetConfigurators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ValueSetExpander.cs" />
+  </ItemGroup>
+</Project>

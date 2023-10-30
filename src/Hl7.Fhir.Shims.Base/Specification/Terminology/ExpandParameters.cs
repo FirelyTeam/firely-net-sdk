@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2020, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -18,19 +20,19 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>
         /// A canonical reference to a value set.
         /// </summary>
-        public FhirUri Url { get; private set; }
+        public FhirUri? Url { get; private set; }
         /// <summary>
         /// The value set is provided directly as part of the request.
         /// </summary>
-        public ValueSet ValueSet { get; private set; }
+        public ValueSet? ValueSet { get; private set; }
         /// <summary>
         /// The identifier that is used to identify a specific version of the value set to be used when generating the expansion.
         /// </summary>
-        public FhirString ValueSetVersion { get; private set; }
+        public FhirString? ValueSetVersion { get; private set; }
         /// <summary>
         /// The context of the value set, so that the server can resolve this to a value set to expand.
         /// </summary>
-        public FhirUri Context { get; private set; }
+        public FhirUri? Context { get; private set; }
         /// <summary>
         /// If a context is provided, a context direction may also be provided.
         /// </summary>
@@ -38,74 +40,75 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>
         /// A text filter that is applied to restrict the codes that are returned.
         /// </summary>
-        public FhirString Filter { get; private set; }
+        public FhirString? Filter { get; private set; }
         /// <summary>
         /// The date for which the expansion should be generated.
         /// </summary>
-        public FhirDateTime Date { get; private set; }
+        public FhirDateTime? Date { get; private set; }
         /// <summary>
         /// Where to start if a subset is desired (default = 0)
         /// </summary>
-        public Integer Offset { get; private set; }
+        public Integer? Offset { get; private set; }
         /// <summary>
         /// How many codes should be provided in a partial page view
         /// </summary>
-        public Integer Count { get; private set; }
+        public Integer? Count { get; private set; }
         /// <summary>
         /// Controls whether concept designations are to be included or excluded in value set expansions.
         /// </summary>
-        public FhirBoolean IncludeDesignations { get; private set; }
+        public FhirBoolean? IncludeDesignations { get; private set; }
         /// <summary>
         /// A token that specifies a system+code that is either a use or a language.
         /// </summary>
-        public IEnumerable<FhirString> Designation { get; private set; }
+        public IEnumerable<FhirString>? Designation { get; private set; }
         /// <summary>
         /// Controls whether the value set definition is included or excluded in value set expansions.
         /// </summary>
-        public FhirBoolean IncludeDefinition { get; private set; }
+        public FhirBoolean? IncludeDefinition { get; private set; }
         /// <summary>
         /// Controls whether inactive concepts are included or excluded in value set expansions.
         /// </summary>
-        public FhirBoolean ActiveOnly { get; private set; }
+        public FhirBoolean? ActiveOnly { get; private set; }
         /// <summary>
         /// Controls whether or not the value set expansion nests codes or not (i.e. ValueSet.expansion.contains.contains).
         /// </summary>
-        public FhirBoolean ExcludeNested { get; private set; }
+        public FhirBoolean? ExcludeNested { get; private set; }
         /// <summary>
         /// Controls whether or not the value set expansion is assembled for a user interface use or not.
         /// </summary>
-        public FhirBoolean ExcludeNotForUI { get; private set; }
+        public FhirBoolean? ExcludeNotForUI { get; private set; }
         /// <summary>
         /// Controls whether or not the value set expansion includes post coordinated codes.
         /// </summary>
-        public FhirBoolean ExcludePostCoordinated { get; private set; }
+        public FhirBoolean? ExcludePostCoordinated { get; private set; }
         /// <summary>
         /// Specifies the language to be used for description in the expansions i.e. the language to be used for ValueSet.expansion.contains.display
         /// </summary>
-        public Code DisplayLanguage { get; private set; }
+        public Code? DisplayLanguage { get; private set; }
         /// <summary>
         /// Code system, or a particular version of a code system to be excluded from the value set expansion.
         /// </summary>
         /// <remarks> The format is the same as a canonical URL: [system]|[version] - e.g. http://loinc.org|2.56.</remarks>
-        public IEnumerable<Canonical> ExcludeSystem { get; private set; }
+        public IEnumerable<Canonical>? ExcludeSystem { get; private set; }
         /// <summary>
         /// Specifies a version to use for a system, if the value set does not specify which one to use.
         /// </summary>
         /// <remarks>The format is the same as a canonical URL: [system]|[version] - e.g. http://loinc.org|2.56.</remarks>
-        public IEnumerable<Canonical> SystemVersion { get; private set; }
+        public IEnumerable<Canonical>? SystemVersion { get; private set; }
         /// <summary>
         /// Specifies a version to use for a system. If a value set specifies a different version, an error is returned instead of the expansion.
         /// </summary>
         /// <remarks>The format is the same as a canonical URL: [system]|[version] - e.g. http://loinc.org|2.56.</remarks>
-        public IEnumerable<Canonical> CheckSystemVersion { get; private set; }
+        public IEnumerable<Canonical>? CheckSystemVersion { get; private set; }
         /// <summary>
         /// Specifies a version to use for a system. This parameter overrides any specified version in the value set (and any it depends on).
         /// </summary>
         /// <remarks>The format is the same as a canonical URL: [system]|[version] - e.g. http://loinc.org|2.56.</remarks>
-        public IEnumerable<Canonical> ForceSystemVersion { get; private set; }
+        public IEnumerable<Canonical>? ForceSystemVersion { get; private set; }
 
         #region Build methods
-        public ExpandParameters WithValueSet(string url = null, ValueSet valueSet = null, string valueSetVersion = null, string context = null, ContextDirection? contextDirection = null)
+        public ExpandParameters WithValueSet(string? url = null, ValueSet? valueSet = null, string? valueSetVersion = null, string? context = null,
+            ContextDirection? contextDirection = null)
         {
             if (!string.IsNullOrWhiteSpace(url)) Url = new FhirUri(url);
             ValueSet = valueSet;
@@ -127,7 +130,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return this;
         }
 
-        public ExpandParameters WithDesignation(bool? includeDesignation = null, string[] designations = null)
+        public ExpandParameters WithDesignation(bool? includeDesignation = null, string[]? designations = null)
         {
             if (includeDesignation.HasValue) IncludeDesignations = new FhirBoolean(includeDesignation);
             Designation = designations?.Select(d => new FhirString(d));
@@ -183,3 +186,5 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 }
+
+#nullable restore

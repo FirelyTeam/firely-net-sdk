@@ -60,10 +60,10 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> object that is a copy of the current instance.</summary>
-        public ValueSetExpanderSettings Clone() => new ValueSetExpanderSettings(this);
+        public ValueSetExpanderSettings Clone() => new(this);
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
-        public static ValueSetExpanderSettings CreateDefault() => new ValueSetExpanderSettings();
+        public static ValueSetExpanderSettings CreateDefault() => new();
 
     }
 }

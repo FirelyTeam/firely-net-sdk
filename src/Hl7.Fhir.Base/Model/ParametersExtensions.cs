@@ -23,15 +23,22 @@ namespace Hl7.Fhir.Model
             return duplicates?.Any() == true;
         }
 
-        internal static void CheckForValidityOfValidateCodeParams(this Parameters parameters)
+        internal static Parameters NoDuplicates(this Parameters parameters)
         {
-
             //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.TryGetDuplicates(out var duplicates) == true)
             {
                 //422 Unproccesable Entity
                 throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}", (HttpStatusCode)422);
             }
+
+            return parameters;
+        }
+
+        internal static void CheckForValidityOfValidateCodeParams(this Parameters parameters)
+        {
+            parameters.NoDuplicates();
+
             //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.Parameter.Any(p => p.Name == CODEATTRIBUTE) && !(parameters.Parameter.Any(p => p.Name == SYSTEMATTRIBUTE) ||
                                                                                     parameters.Parameter.Any(p => p.Name == CONTEXTATTRIBUTE)))

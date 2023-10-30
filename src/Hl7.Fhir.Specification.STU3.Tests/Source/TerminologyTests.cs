@@ -12,11 +12,12 @@ using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
+
     public class TerminologyTests
     {
         private readonly IAsyncResourceResolver _resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
-        private static Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
+        private static readonly Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
 
         // Use here a FhirPackageSource without the expansion package.
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
@@ -59,7 +60,6 @@ namespace Hl7.Fhir.Specification.Tests
             //var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
         }
-
 
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
@@ -923,13 +923,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         #region helper functions
-        private async T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
+        private static async T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
             string system = null, string version = null, string display = null,
             Coding coding = null, CodeableConcept codeableConcept = null)
         {
             var inParams = new ValidateCodeParameters()
                 .WithValueSet(url: url, context: context)
-                .WithCode(code: code, system: system, display: display)
+                .WithCode(code: code, system: system, systemVersion: version, display: display)
                 .WithCoding(coding: coding)
                 .WithCodeableConcept(codeableConcept: codeableConcept);
             return await service.ValueSetValidateCode(inParams);
@@ -964,14 +964,14 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class OnlyCodeSystemResolver : IAsyncResourceResolver, IConformanceSource
         {
-            private CodeSystem _onlyCs;
+            private readonly CodeSystem _onlyCs;
 
             public OnlyCodeSystemResolver(string csUrl)
             {
                 _onlyCs = createCodeSystem(csUrl);
             }
 
-            private CodeSystem createCodeSystem(string csUrl)
+            private static CodeSystem createCodeSystem(string csUrl)
             {
                 return new CodeSystem
                 {

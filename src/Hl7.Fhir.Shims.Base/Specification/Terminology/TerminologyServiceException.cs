@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -39,3 +41,5 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 }
+
+#nullable restore
