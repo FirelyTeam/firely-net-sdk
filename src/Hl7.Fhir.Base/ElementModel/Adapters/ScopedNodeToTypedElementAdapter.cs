@@ -14,27 +14,33 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
+    /// <summary>
+    /// An adapter from <see cref="IScopedNode"/> to <see cref="ITypedElement"/>.
+    /// </summary>
+    /// <remarks>Be careful, this adapter does not implement the <see cref="ITypedElement.Location"/> and 
+    /// <see cref="ITypedElement.Definition"/> property.
+    /// </remarks>
     internal class ScopedNodeToTypedElementAdapter : ITypedElement
     {
-        private readonly IScopedNode _node;
+        private readonly IScopedNode _adaptee;
 
-        public ScopedNodeToTypedElementAdapter(IScopedNode node)
+        public ScopedNodeToTypedElementAdapter(IScopedNode adaptee)
         {
-            _node = node;
+            _adaptee = adaptee;
         }
 
         public string Location => throw new System.NotImplementedException();
 
         public IElementDefinitionSummary Definition => throw new System.NotImplementedException();
 
-        public string Name => _node.Name;
+        public string Name => _adaptee.Name;
 
-        public string InstanceType => _node.InstanceType;
+        public string InstanceType => _adaptee.InstanceType;
 
-        public object Value => _node.Value;
+        public object Value => _adaptee.Value;
 
         public IEnumerable<ITypedElement> Children(string? name = null) =>
-            _node.Children(name).Select(n => new ScopedNodeToTypedElementAdapter(n));
+            _adaptee.Children(name).Select(n => new ScopedNodeToTypedElementAdapter(n));
     }
 }
 

@@ -218,8 +218,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 // Scan up until the first parent that knowns the instance uri (at the last the
                 // root, if it has been supplied).
-                if (_cache.InstanceUri is null)
-                    _cache.InstanceUri = ParentResources().SkipWhile(p => p.InstanceUri is null).FirstOrDefault()?.InstanceUri;
+                _cache.InstanceUri ??= ParentResources().SkipWhile(p => p.InstanceUri is null).FirstOrDefault()?.InstanceUri;
 
                 return _cache.InstanceUri;
             }
@@ -230,19 +229,8 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
+        /// <inheritdoc />
         public IScopedNode? Parent { get; private set; }
-
-        public int? ChildIndex
-        {
-            get
-            {
-                if (Definition?.IsCollection == false) return null;
-
-                // TODO: maybe too costly?
-                var index = Parent?.Children(Name).ToList().IndexOf(this);
-                return index == -1 ? null : index;
-            }
-        }
 
         /// <inheritdoc />
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);

@@ -8,6 +8,7 @@
 
 #nullable enable
 
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,16 +16,26 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class IScopedNodeExtensions
     {
-        public static IEnumerable<IScopedNode> Children(this IEnumerable<IScopedNode> nodes, string? name = null) =>
-           nodes.SelectMany(n => n.Children(name));
-
+        /// <summary>
+        /// Converts a <see cref="IScopedNode"/> to a <see cref="ITypedElement"/>.
+        /// </summary>
+        /// <param name="node">An <see cref="IScopedNode"/> node</param>
+        /// <returns>An implementation of <see cref="ITypedElement"/></returns>
+        /// <remarks>Be careful when using this method, the returned <see cref="ITypedElement"/> does not implement
+        /// the methods <see cref="ITypedElement.Location"/> and <see cref="ITypedElement.Definition"/>.    
+        /// </remarks>
         public static ITypedElement AsTypedElement(this IScopedNode node) =>
             node is ITypedElement ite ? ite : new ScopedNodeToTypedElementAdapter(node);
 
-        public static IScopedNode GetRootResource(this IScopedNode node) // TODO
-        {
-            return null!;
-        }
+        /// <summary>
+        /// Returns the parent resource of this node, or null if this node is not part of a resource.
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static IEnumerable<IScopedNode> Children(this IEnumerable<IScopedNode> nodes, string? name = null) =>
+           nodes.SelectMany(n => n.Children(name));
+
     }
 }
 

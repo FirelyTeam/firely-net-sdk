@@ -11,7 +11,6 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.FhirPath
 {
@@ -65,9 +64,6 @@ namespace Hl7.FhirPath
             var evaluator = GetCompiledExpression(expression);
             return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
         }
-
-        public IEnumerable<IScopedNode> Select(IScopedNode input, string expression, EvaluationContext? ctx = null) =>
-            Select(input.AsTypedElement(), expression, ctx).Select(t => t.AsScopedNode());
 
         /// <summary>
         /// Evaluates an expression against a given context and returns a single result

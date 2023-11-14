@@ -12,6 +12,10 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.ElementModel
 {
+    /// <summary>
+    /// The base interface for <see cref="ITypedElement"/> and <see cref="IScopedNode"/>."/>
+    /// </summary>
+    /// <typeparam name="TDerived"></typeparam>
     public interface IBaseElementNavigator<TDerived> where TDerived : IBaseElementNavigator<TDerived>
     {
         /// <summary>

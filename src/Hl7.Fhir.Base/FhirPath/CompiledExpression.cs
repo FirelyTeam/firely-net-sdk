@@ -24,9 +24,6 @@ namespace Hl7.FhirPath
             return result.Any() ? result.Single().Value : null;
         }
 
-        public static object? Scalar(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx) =>
-            Scalar(evaluator, input.AsTypedElement(), ctx);
-
         /// <summary>
         /// Evaluates an expression and returns true for expression being evaluated as true or empty, otherwise false.
         /// </summary>
@@ -40,10 +37,6 @@ namespace Hl7.FhirPath
             return result is null || result.Value;
         }
 
-        public static bool Predicate(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx) =>
-            Predicate(evaluator, input.AsTypedElement(), ctx);
-
-
         /// <summary>
         /// Evaluates an expression and returns true for expression being evaluated as true, and false if the expression returns false or empty.
         /// </summary>
@@ -56,8 +49,6 @@ namespace Hl7.FhirPath
             var result = evaluator(input, ctx).BooleanEval();
             return result is not null && result.Value;
         }
-        public static bool IsTrue(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx) =>
-            IsTrue(evaluator, input.AsTypedElement(), ctx);
 
 
         /// <summary>
@@ -73,8 +64,6 @@ namespace Hl7.FhirPath
             var result = evaluator(input, ctx).BooleanEval();
             return result is not null && result.Value == value;
         }
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IScopedNode input, EvaluationContext ctx) =>
-            IsBoolean(evaluator, value, input.AsTypedElement(), ctx);
     }
 }
 
