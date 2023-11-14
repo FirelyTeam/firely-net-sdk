@@ -23,7 +23,7 @@ namespace Hl7.Fhir.ElementModel
             _node = node;
         }
 
-        public string Location => _node.GetLocation();
+        public string Location => throw new System.NotImplementedException();
 
         public IElementDefinitionSummary Definition => throw new System.NotImplementedException();
 
