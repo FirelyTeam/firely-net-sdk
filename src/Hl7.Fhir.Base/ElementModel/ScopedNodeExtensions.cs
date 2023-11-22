@@ -136,7 +136,7 @@ namespace Hl7.Fhir.ElementModel
             string? url = element switch
             {
                 { Value: string s } => s,
-                { InstanceType: FhirTypeConstants.REFERENCE } => element.ParseResourceReference<ITypedElement>()?.Reference,
+                { InstanceType: FhirTypeConstants.REFERENCE } => element.ParseResourceReference()?.Reference,
                 _ => null
             };
 
