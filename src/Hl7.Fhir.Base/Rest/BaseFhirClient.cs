@@ -943,6 +943,7 @@ namespace Hl7.Fhir.Rest
             if (bundle == null) throw new ArgumentNullException(nameof(bundle));
 
             var tx = new TransactionBuilder(Endpoint).ProcessMessage(bundle, async, responseUrl).ToBundle();
+
             return executeAsync<Bundle>(tx, new [] {HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NoContent}, ct);
         }
 

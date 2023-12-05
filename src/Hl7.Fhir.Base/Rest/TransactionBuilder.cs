@@ -500,21 +500,13 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null, string? bundleEntryFullUrl = null)
         {
-            var path = newRestUrl().AddPath(OPERATIONPREFIX + "process-message");
-            if (async)
-            {
-                path.AddParam("async", "true");
-            }
-
-            if (!string.IsNullOrEmpty(responseUrl))
-            {
-                path.AddParam("response-url", responseUrl);
-            }
-
-
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Operation, bundleEntryFullUrl);
+            var path = newRestUrl().AddPath(OPERATIONPREFIX + "process-message");
+            if (async) path.AddParam("async", "true");
+            if (responseUrl != null) path.AddParam("response-url", responseUrl);
             entry.Resource = messageBundle;
             addEntry(entry, path);
+
             return this;
         }
 
