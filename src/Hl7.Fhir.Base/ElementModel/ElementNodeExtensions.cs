@@ -114,7 +114,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="node">An <see cref="ITypedElement"/></param>
         /// <returns></returns>
-        public static IScopedNode AsScopedNode(this ITypedElement node) => ToScopedNode(node);
+        internal static IScopedNode AsScopedNode(this ITypedElement node) => ToScopedNode(node);
     }
 }
 

@@ -50,7 +50,7 @@ namespace Hl7.Fhir.ElementModel
         ///   'string' => code
         ///   'uri' => code
         /// </remarks>
-        public static Element ParseBindable(this IScopedNode instance) => instance.parseBindable();
+        internal static Element ParseBindable(this IScopedNode instance) => instance.parseBindable();
 
 #pragma warning disable CS0618 // Type or member is obsolete
         private static Element parseBindable<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.ElementModel
         #region ParseQuantity
         public static Model.Quantity ParseQuantity(this ITypedElement instance) => parseQuantity(instance);
 
-        public static Model.Quantity ParseQuantity(this IScopedNode instance) => parseQuantity(instance);
+        internal static Model.Quantity ParseQuantity(this IScopedNode instance) => parseQuantity(instance);
 
 #pragma warning disable CS0618 // Type or member is obsolete
         private static Quantity parseQuantity<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.ElementModel
         public static T ParsePrimitive<T>(this ITypedElement instance) where T : PrimitiveType, new()
             => parsePrimitive<T, ITypedElement>(instance);
 
-        public static T ParsePrimitive<T>(this IScopedNode instance) where T : PrimitiveType, new()
+        internal static T ParsePrimitive<T>(this IScopedNode instance) where T : PrimitiveType, new()
             => parsePrimitive<T, IScopedNode>(instance);
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.ElementModel
         #region ParseCoding
         public static Coding ParseCoding(this ITypedElement instance) => parseCoding(instance);
 
-        public static Coding ParseCoding(this IScopedNode instance) => parseCoding(instance);
+        internal static Coding ParseCoding(this IScopedNode instance) => parseCoding(instance);
 
 #pragma warning disable CS0618 // Type or member is obsolete
         private static Coding parseCoding<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.ElementModel
         #region ParseResourceReference
         public static ResourceReference ParseResourceReference(this ITypedElement instance) => instance.parseResourceReference();
 
-        public static ResourceReference ParseResourceReference(this IScopedNode instance) => instance.parseResourceReference();
+        internal static ResourceReference ParseResourceReference(this IScopedNode instance) => instance.parseResourceReference();
 
 #pragma warning disable CS0618 // Type or member is obsolete
         private static ResourceReference parseResourceReference<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.ElementModel
 
         #region ParseCodeableConcept
         public static CodeableConcept ParseCodeableConcept(this ITypedElement instance) => instance.parseCodeableConcept();
-        public static CodeableConcept ParseCodeableConcept(this IScopedNode instance) => instance.parseCodeableConcept();
+        internal static CodeableConcept ParseCodeableConcept(this IScopedNode instance) => instance.parseCodeableConcept();
 #pragma warning disable CS0618 // Type or member is obsolete
         private static CodeableConcept parseCodeableConcept<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
 #pragma warning restore CS0618 // Type or member is obsolete

@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public static class IScopedNodeExtensions
+    internal static class IScopedNodeExtensions
     {
         /// <summary>
         /// Converts a <see cref="IScopedNode"/> to a <see cref="ITypedElement"/>.
@@ -39,7 +39,6 @@ namespace Hl7.Fhir.ElementModel
         /// <returns></returns>
         public static IEnumerable<IScopedNode> Children(this IEnumerable<IScopedNode> nodes, string? name = null) =>
            nodes.SelectMany(n => n.Children(name));
-
     }
 }
 

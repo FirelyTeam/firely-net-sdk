@@ -32,6 +32,7 @@ namespace Hl7.Fhir.ElementModel
         private readonly Cache _cache = new();
 
         public readonly ITypedElement Current;
+        private readonly ScopedNode? _parent;
 
         public ScopedNode(ITypedElement wrapped, string? instanceUri = null)
         {
@@ -45,7 +46,7 @@ namespace Hl7.Fhir.ElementModel
         private ScopedNode(ScopedNode parentNode, ScopedNode? parentResource, ITypedElement wrapped, string? fullUrl)
         {
             Current = wrapped;
-            Parent = parentNode;
+            _parent = parentNode;
             ExceptionHandler = parentNode.ExceptionHandler;
             ParentResource = parentNode.AtResource ? parentNode : parentResource;
 
@@ -230,7 +231,9 @@ namespace Hl7.Fhir.ElementModel
         }
 
         /// <inheritdoc />
-        public IScopedNode? Parent { get; private set; }
+
+
+        IScopedNode? IScopedNode.Parent => _parent;
 
         /// <inheritdoc />
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
