@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using System;
 using System.Collections.Generic;
 
 #nullable enable
@@ -16,6 +17,8 @@ namespace Hl7.Fhir.ElementModel
     /// The base interface for <see cref="ITypedElement"/> and <see cref="IScopedNode"/>."/>
     /// </summary>
     /// <typeparam name="TDerived"></typeparam>
+    [Obsolete("WARNING! Intended for internal API usage exclusively, this interface ideally should be kept internal. " +
+        "However, due to its derivation by the public interface ITypedElement, maintaining its internal status is impossible.")]
     public interface IBaseElementNavigator<TDerived> where TDerived : IBaseElementNavigator<TDerived>
     {
         /// <summary>

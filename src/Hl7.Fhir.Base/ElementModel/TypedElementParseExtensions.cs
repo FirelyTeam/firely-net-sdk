@@ -52,7 +52,9 @@ namespace Hl7.Fhir.ElementModel
         /// </remarks>
         public static Element ParseBindable(this IScopedNode instance) => instance.parseBindable();
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private static Element parseBindable<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             return instance.InstanceType switch
             {
@@ -87,7 +89,9 @@ namespace Hl7.Fhir.ElementModel
 
         public static Model.Quantity ParseQuantity(this IScopedNode instance) => parseQuantity(instance);
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private static Quantity parseQuantity<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             var newQuantity = new Quantity
             {
@@ -112,7 +116,9 @@ namespace Hl7.Fhir.ElementModel
         public static T ParsePrimitive<T>(this IScopedNode instance) where T : PrimitiveType, new()
             => parsePrimitive<T, IScopedNode>(instance);
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private static T parsePrimitive<T, U>(this IBaseElementNavigator<U> instance) where T : PrimitiveType, new() where U : IBaseElementNavigator<U>
+#pragma warning restore CS0618 // Type or member is obsolete
                     => new() { ObjectValue = instance.Value };
 
         #endregion
@@ -122,7 +128,9 @@ namespace Hl7.Fhir.ElementModel
 
         public static Coding ParseCoding(this IScopedNode instance) => parseCoding(instance);
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private static Coding parseCoding<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             return new Coding()
             {
@@ -140,7 +148,9 @@ namespace Hl7.Fhir.ElementModel
 
         public static ResourceReference ParseResourceReference(this IScopedNode instance) => instance.parseResourceReference();
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private static ResourceReference parseResourceReference<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             return new ResourceReference()
             {
@@ -153,7 +163,9 @@ namespace Hl7.Fhir.ElementModel
         #region ParseCodeableConcept
         public static CodeableConcept ParseCodeableConcept(this ITypedElement instance) => instance.parseCodeableConcept();
         public static CodeableConcept ParseCodeableConcept(this IScopedNode instance) => instance.parseCodeableConcept();
+#pragma warning disable CS0618 // Type or member is obsolete
         private static CodeableConcept parseCodeableConcept<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             return new CodeableConcept()
             {
@@ -164,7 +176,9 @@ namespace Hl7.Fhir.ElementModel
         }
         #endregion
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public static string GetString<T>(this IEnumerable<T> instance) where T : IBaseElementNavigator<T>
+#pragma warning restore CS0618 // Type or member is obsolete
             => instance.SingleOrDefault()?.Value as string;
     }
 }

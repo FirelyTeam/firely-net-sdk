@@ -17,7 +17,9 @@ namespace Hl7.Fhir.ElementModel
     /// This interface represents FHIR data as a tree of elements, including type information either present in 
     /// the instance or derived from fully aware of the FHIR definitions and types
     /// </remarks>
+#pragma warning disable CS0618 // Type or member is obsolete
     public interface IScopedNode : IBaseElementNavigator<IScopedNode>
+#pragma warning restore CS0618 // Type or member is obsolete
     {
         /// <summary>
         /// The parent node of this node, or null if this is the root node.
