@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
-  public partial class Consent : Hl7.Fhir.Model.DomainResource
+  public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
     /// (system: http://hl7.org/fhir/consent-state-codes)
     /// </summary>
-    [FhirEnumeration("ConsentState")]
+    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes", "http://hl7.org/fhir/consent-state-codes")]
     public enum ConsentState
     {
       /// <summary>
       /// The consent is in development or awaiting use but is not yet intended to be acted upon.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/consent-state-codes"), Description("Pending")]
+      [EnumLiteral("draft"), Description("Pending")]
       Draft,
       /// <summary>
       /// The consent has been proposed but not yet agreed to by all parties. The negotiation stage.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/consent-state-codes"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// The consent is to be followed and enforced.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The consent has been rejected by one or more of the parties.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/consent-state-codes"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
       /// <summary>
       /// The consent is terminated or replaced.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/consent-state-codes"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The consent was created wrongly (e.g. wrong patient) and should be ignored
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -106,32 +106,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [FhirEnumeration("ConsentDataMeaning")]
+    [FhirEnumeration("ConsentDataMeaning", "http://hl7.org/fhir/ValueSet/consent-data-meaning", "http://hl7.org/fhir/consent-data-meaning")]
     public enum ConsentDataMeaning
     {
       /// <summary>
       /// The consent applies directly to the instance of the resource
       /// (system: http://hl7.org/fhir/consent-data-meaning)
       /// </summary>
-      [EnumLiteral("instance", "http://hl7.org/fhir/consent-data-meaning"), Description("Instance")]
+      [EnumLiteral("instance"), Description("Instance")]
       Instance,
       /// <summary>
       /// The consent applies directly to the instance of the resource and instances it refers to
       /// (system: http://hl7.org/fhir/consent-data-meaning)
       /// </summary>
-      [EnumLiteral("related", "http://hl7.org/fhir/consent-data-meaning"), Description("Related")]
+      [EnumLiteral("related"), Description("Related")]
       Related,
       /// <summary>
       /// The consent applies directly to the instance of the resource and instances that refer to it
       /// (system: http://hl7.org/fhir/consent-data-meaning)
       /// </summary>
-      [EnumLiteral("dependents", "http://hl7.org/fhir/consent-data-meaning"), Description("Dependents")]
+      [EnumLiteral("dependents"), Description("Dependents")]
       Dependents,
       /// <summary>
       /// The consent applies to instances of resources that are authored by
       /// (system: http://hl7.org/fhir/consent-data-meaning)
       /// </summary>
-      [EnumLiteral("authoredby", "http://hl7.org/fhir/consent-data-meaning"), Description("AuthoredBy")]
+      [EnumLiteral("authoredby"), Description("AuthoredBy")]
       Authoredby,
     }
 
@@ -140,20 +140,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-except-type)
     /// (system: http://hl7.org/fhir/consent-except-type)
     /// </summary>
-    [FhirEnumeration("ConsentExceptType")]
+    [FhirEnumeration("ConsentExceptType", "http://hl7.org/fhir/ValueSet/consent-except-type", "http://hl7.org/fhir/consent-except-type")]
     public enum ConsentExceptType
     {
       /// <summary>
       /// Consent is denied for actions meeting these rules
       /// (system: http://hl7.org/fhir/consent-except-type)
       /// </summary>
-      [EnumLiteral("deny", "http://hl7.org/fhir/consent-except-type"), Description("Opt Out")]
+      [EnumLiteral("deny"), Description("Opt Out")]
       Deny,
       /// <summary>
       /// Consent is provided for actions meeting these rules
       /// (system: http://hl7.org/fhir/consent-except-type)
       /// </summary>
-      [EnumLiteral("permit", "http://hl7.org/fhir/consent-except-type"), Description("Opt In")]
+      [EnumLiteral("permit"), Description("Opt In")]
       Permit,
     }
 
@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Actor", IsNestedType=true)]
+    [BackboneType("Consent.actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -174,6 +175,7 @@ namespace Hl7.Fhir.Model
       /// How the actor is involved
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ConsentActorRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -298,6 +300,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Policy", IsNestedType=true)]
+    [BackboneType("Consent.policy")]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -465,6 +468,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Data", IsNestedType=true)]
+    [BackboneType("Consent.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -477,6 +481,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -619,6 +624,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Except", IsNestedType=true)]
+    [BackboneType("Consent.except")]
     public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -631,6 +637,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentExceptType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentExceptType> TypeElement
@@ -690,6 +697,7 @@ namespace Hl7.Fhir.Model
       /// Actions controlled by this exception
       /// </summary>
       [FhirElement("action", InSummary=true, Order=70)]
+      [Binding("ConsentAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -704,6 +712,7 @@ namespace Hl7.Fhir.Model
       /// Security Labels that define affected resources
       /// </summary>
       [FhirElement("securityLabel", InSummary=true, Order=80)]
+      [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -718,6 +727,7 @@ namespace Hl7.Fhir.Model
       /// Context of activities covered by this exception
       /// </summary>
       [FhirElement("purpose", InSummary=true, Order=90)]
+      [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Purpose
@@ -732,6 +742,7 @@ namespace Hl7.Fhir.Model
       /// e.g. Resource Type, Profile, or CDA etc
       /// </summary>
       [FhirElement("class", InSummary=true, Order=100)]
+      [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Class
@@ -746,6 +757,7 @@ namespace Hl7.Fhir.Model
       /// e.g. LOINC or SNOMED CT code, etc in the content
       /// </summary>
       [FhirElement("code", InSummary=true, Order=110)]
+      [Binding("ConsentContentCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
@@ -953,6 +965,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#ExceptActor", IsNestedType=true)]
+    [BackboneType("Consent.except.actor")]
     public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -964,6 +977,7 @@ namespace Hl7.Fhir.Model
       /// How the actor is involved
       /// </summary>
       [FhirElement("role", Order=40)]
+      [Binding("ConsentActorRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -1088,6 +1102,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#ExceptData", IsNestedType=true)]
+    [BackboneType("Consent.except.data")]
     public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1100,6 +1115,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -1239,7 +1255,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for this record (external references)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1252,8 +1268,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | proposed | active | rejected | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement
@@ -1285,7 +1302,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("ConsentCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1299,7 +1317,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the consent applies to
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120)]
+    [FhirElement("patient", InSummary=true, Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1315,7 +1333,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period that this consent applies
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=130)]
+    [FhirElement("period", InSummary=true, Order=130, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1328,7 +1346,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this Consent was created or indexed
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=140)]
+    [FhirElement("dateTime", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
@@ -1359,7 +1377,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is agreeing to the policy and exceptions
     /// </summary>
-    [FhirElement("consentingParty", InSummary=true, Order=150)]
+    [FhirElement("consentingParty", InSummary=true, Order=150, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Organization","Patient","Practitioner","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
@@ -1375,7 +1393,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who|what controlled by this consent (or group, by role)
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=160)]
+    [FhirElement("actor", InSummary=true, Order=160, FiveWs="who.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.ActorComponent> Actor
@@ -1390,6 +1408,7 @@ namespace Hl7.Fhir.Model
     /// Actions controlled by this consent
     /// </summary>
     [FhirElement("action", InSummary=true, Order=170)]
+    [Binding("ConsentAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -1403,7 +1422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Custodian of the consent
     /// </summary>
-    [FhirElement("organization", InSummary=true, Order=180)]
+    [FhirElement("organization", InSummary=true, Order=180, FiveWs="who.witness")]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -1481,6 +1500,7 @@ namespace Hl7.Fhir.Model
     /// Security Labels that define affected resources
     /// </summary>
     [FhirElement("securityLabel", InSummary=true, Order=220)]
+    [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -1495,6 +1515,7 @@ namespace Hl7.Fhir.Model
     /// Context of activities for which the agreement is made
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=230)]
+    [Binding("PurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Purpose
@@ -1545,6 +1566,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Consent.ExceptComponent> _Except;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

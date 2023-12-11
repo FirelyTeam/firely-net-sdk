@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Group","http://hl7.org/fhir/StructureDefinition/Group", IsResource=true)]
-  public partial class Group : Hl7.Fhir.Model.DomainResource
+  public partial class Group : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-type)
     /// (system: http://hl7.org/fhir/group-type)
     /// </summary>
-    [FhirEnumeration("GroupType")]
+    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type", "http://hl7.org/fhir/group-type")]
     public enum GroupType
     {
       /// <summary>
       /// Group contains "person" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
+      [EnumLiteral("person"), Description("Person")]
       Person,
       /// <summary>
       /// Group contains "animal" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
+      [EnumLiteral("animal"), Description("Animal")]
       Animal,
       /// <summary>
       /// Group contains healthcare practitioner resources (Practitioner or PractitionerRole).
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
+      [EnumLiteral("practitioner"), Description("Practitioner")]
       Practitioner,
       /// <summary>
       /// Group contains Device resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
+      [EnumLiteral("device"), Description("Device")]
       Device,
       /// <summary>
       /// Group contains Medication resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("medication", "http://hl7.org/fhir/group-type"), Description("Medication")]
+      [EnumLiteral("medication"), Description("Medication")]
       Medication,
       /// <summary>
       /// Group contains Substance resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("substance", "http://hl7.org/fhir/group-type"), Description("Substance")]
+      [EnumLiteral("substance"), Description("Substance")]
       Substance,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Characteristic", IsNestedType=true)]
+    [BackboneType("Group.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -118,6 +119,7 @@ namespace Hl7.Fhir.Model
       /// Kind of characteristic
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("GroupCharacteristicKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -132,6 +134,7 @@ namespace Hl7.Fhir.Model
       /// Value held by characteristic
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("GroupCharacteristicValue")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -305,6 +308,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Member", IsNestedType=true)]
+    [BackboneType("Group.member")]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -523,6 +527,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
@@ -587,6 +592,7 @@ namespace Hl7.Fhir.Model
     /// Kind of Group members
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("GroupKind")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -700,6 +706,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

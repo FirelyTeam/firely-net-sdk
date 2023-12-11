@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest", IsResource=true)]
-  public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource
+  public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CommunicationRequest#Payload", IsNestedType=true)]
+    [BackboneType("CommunicationRequest.payload")]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -174,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CommunicationRequest#Requester", IsNestedType=true)]
+    [BackboneType("CommunicationRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -184,7 +186,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual making the request
       /// </summary>
-      [FhirElement("agent", InSummary=true, Order=40)]
+      [FhirElement("agent", InSummary=true, Order=40, FiveWs="who.author")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
@@ -307,7 +309,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -366,8 +368,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CommunicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -399,7 +402,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message category
     /// </summary>
-    [FhirElement("category", Order=140)]
+    [FhirElement("category", Order=140, FiveWs="class")]
+    [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -413,8 +417,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message urgency
     /// </summary>
-    [FhirElement("priority", InSummary=true, Order=150)]
+    [FhirElement("priority", InSummary=true, Order=150, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CommunicationPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -446,6 +451,7 @@ namespace Hl7.Fhir.Model
     /// A channel of communication
     /// </summary>
     [FhirElement("medium", Order=160)]
+    [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -459,7 +465,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of message
     /// </summary>
-    [FhirElement("subject", Order=170)]
+    [FhirElement("subject", Order=170, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -474,7 +480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message recipient
     /// </summary>
-    [FhirElement("recipient", Order=180)]
+    [FhirElement("recipient", Order=180, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group","CareTeam")]
     [Cardinality(Min=0,Max=-1)]
@@ -490,7 +496,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focal resources
     /// </summary>
-    [FhirElement("topic", Order=190)]
+    [FhirElement("topic", Order=190, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -506,7 +512,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or episode leading to message
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=200)]
+    [FhirElement("context", InSummary=true, Order=200, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -535,7 +541,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When scheduled
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -550,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When request transitioned to being actionable
     /// </summary>
-    [FhirElement("authoredOn", InSummary=true, Order=230)]
+    [FhirElement("authoredOn", InSummary=true, Order=230, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
     {
@@ -581,7 +587,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message sender
     /// </summary>
-    [FhirElement("sender", Order=240)]
+    [FhirElement("sender", Order=240, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
     [DataMember]
@@ -609,7 +615,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why is communication needed?
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=260)]
+    [FhirElement("reasonCode", InSummary=true, Order=260, FiveWs="why")]
+    [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -623,7 +630,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why is communication needed?
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=270)]
+    [FhirElement("reasonReference", InSummary=true, Order=270, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
@@ -649,6 +656,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

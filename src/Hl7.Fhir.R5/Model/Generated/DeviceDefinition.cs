@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceDefinition","http://hl7.org/fhir/StructureDefinition/DeviceDefinition", IsResource=true)]
-  public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-productidentifierinudi)
     /// (system: http://hl7.org/fhir/device-productidentifierinudi)
     /// </summary>
-    [FhirEnumeration("DeviceProductionIdentifierInUDI")]
+    [FhirEnumeration("DeviceProductionIdentifierInUDI", "http://hl7.org/fhir/ValueSet/device-productidentifierinudi", "http://hl7.org/fhir/device-productidentifierinudi")]
     public enum DeviceProductionIdentifierInUDI
     {
       /// <summary>
       /// The label includes the lot number.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("lot-number", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Lot Number")]
+      [EnumLiteral("lot-number"), Description("Lot Number")]
       LotNumber,
       /// <summary>
       /// The label includes the manufacture date.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("manufactured-date", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Manufactured date")]
+      [EnumLiteral("manufactured-date"), Description("Manufactured date")]
       ManufacturedDate,
       /// <summary>
       /// The label includes the serial number.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("serial-number", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Serial Number")]
+      [EnumLiteral("serial-number"), Description("Serial Number")]
       SerialNumber,
       /// <summary>
       /// The label includes the expiration date.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("expiration-date", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Expiration date")]
+      [EnumLiteral("expiration-date"), Description("Expiration date")]
       ExpirationDate,
       /// <summary>
       /// The label includes the biological source identifier.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("biological-source", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Biological source")]
+      [EnumLiteral("biological-source"), Description("Biological source")]
       BiologicalSource,
       /// <summary>
       /// The label includes the software version.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("software-version", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Software Version")]
+      [EnumLiteral("software-version"), Description("Software Version")]
       SoftwareVersion,
     }
 
@@ -106,26 +106,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type)
     /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
     /// </summary>
-    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType")]
+    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType", "http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type")]
     public enum DeviceDefinitionRegulatoryIdentifierType
     {
       /// <summary>
       /// EUDAMED's basic UDI-DI identifier.
       /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
       /// </summary>
-      [EnumLiteral("basic", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type"), Description("Basic")]
+      [EnumLiteral("basic"), Description("Basic")]
       Basic,
       /// <summary>
       /// EUDAMED's master UDI-DI identifier.
       /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
       /// </summary>
-      [EnumLiteral("master", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type"), Description("Master")]
+      [EnumLiteral("master"), Description("Master")]
       Master,
       /// <summary>
       /// The identifier is a license number.
       /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
       /// </summary>
-      [EnumLiteral("license", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type"), Description("License")]
+      [EnumLiteral("license"), Description("License")]
       License,
     }
 
@@ -134,26 +134,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-correctiveactionscope)
     /// (system: http://hl7.org/fhir/device-correctiveactionscope)
     /// </summary>
-    [FhirEnumeration("DeviceCorrectiveActionScope")]
+    [FhirEnumeration("DeviceCorrectiveActionScope", "http://hl7.org/fhir/ValueSet/device-correctiveactionscope", "http://hl7.org/fhir/device-correctiveactionscope")]
     public enum DeviceCorrectiveActionScope
     {
       /// <summary>
       /// The corrective action was intended for all units of the same model.
       /// (system: http://hl7.org/fhir/device-correctiveactionscope)
       /// </summary>
-      [EnumLiteral("model", "http://hl7.org/fhir/device-correctiveactionscope"), Description("Model")]
+      [EnumLiteral("model"), Description("Model")]
       Model,
       /// <summary>
       /// The corrective action was intended for a specific batch of units identified by a lot number.
       /// (system: http://hl7.org/fhir/device-correctiveactionscope)
       /// </summary>
-      [EnumLiteral("lot-numbers", "http://hl7.org/fhir/device-correctiveactionscope"), Description("Lot Numbers")]
+      [EnumLiteral("lot-numbers"), Description("Lot Numbers")]
       LotNumbers,
       /// <summary>
       /// The corrective action was intended for an individual unit (or a set of units) individually identified by serial number.
       /// (system: http://hl7.org/fhir/device-correctiveactionscope)
       /// </summary>
-      [EnumLiteral("serial-numbers", "http://hl7.org/fhir/device-correctiveactionscope"), Description("Serial Numbers")]
+      [EnumLiteral("serial-numbers"), Description("Serial Numbers")]
       SerialNumbers,
     }
 
@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.udiDeviceIdentifier")]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -396,6 +397,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#UdiDeviceIdentifierMarketDistribution", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.udiDeviceIdentifier.marketDistribution")]
     public partial class UdiDeviceIdentifierMarketDistributionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -547,6 +549,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#RegulatoryIdentifier", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.regulatoryIdentifier")]
     public partial class RegulatoryIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -559,6 +562,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceRegulatoryIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType> TypeElement
@@ -799,6 +803,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.deviceName")]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -843,6 +848,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -969,6 +975,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Classification", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -980,6 +987,7 @@ namespace Hl7.Fhir.Model
       /// A classification or risk class of the device model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("DeviceKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1102,6 +1110,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#ConformsTo", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.conformsTo")]
     public partial class ConformsToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1113,6 +1122,7 @@ namespace Hl7.Fhir.Model
       /// Describes the common type of the standard, specification, or formal guidance
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
+      [Binding("DeviceSpecificationCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -1126,6 +1136,7 @@ namespace Hl7.Fhir.Model
       /// Identifies the standard, specification, or formal guidance that the device adheres to the Device Specification type
       /// </summary>
       [FhirElement("specification", InSummary=true, Order=50)]
+      [Binding("DeviceSpecificationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Specification
@@ -1298,6 +1309,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#HasPart", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.hasPart")]
     public partial class HasPartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1450,6 +1462,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Packaging", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.packaging")]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1690,6 +1703,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#PackagingDistributor", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.packaging.distributor")]
     public partial class PackagingDistributorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1842,6 +1856,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Version", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2014,6 +2029,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Property", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2025,6 +2041,7 @@ namespace Hl7.Fhir.Model
       /// Code that specifies the property being represented
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("DevicePropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -2149,6 +2166,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Link", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2160,6 +2178,7 @@ namespace Hl7.Fhir.Model
       /// The type indicates the relationship of the related device to the device instance
       /// </summary>
       [FhirElement("relation", Order=40)]
+      [Binding("DeviceDefinitionRelationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Relation
@@ -2282,6 +2301,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Material", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.material")]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2472,6 +2492,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Guideline", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.guideline")]
     public partial class GuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2754,6 +2775,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#CorrectiveAction", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.correctiveAction")]
     public partial class CorrectiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2798,6 +2820,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("scope", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceCorrectiveActionScope")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope> ScopeElement
       {
@@ -2946,6 +2969,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#ChargeItem", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.chargeItem")]
     public partial class ChargeItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3356,6 +3380,7 @@ namespace Hl7.Fhir.Model
     /// Safety characteristics of the device
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=220)]
+    [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
@@ -3484,11 +3509,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("productionIdentifierInUDI", Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceProductionIdentifierInUDI")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>> ProductionIdentifierInUDIElement
     {
-      get { if(_ProductionIdentifierInUDIElement==null) _ProductionIdentifierInUDIElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(); return _ProductionIdentifierInUDIElement; }
+      get { if(_ProductionIdentifierInUDIElement==null) _ProductionIdentifierInUDIElement = new List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(); return _ProductionIdentifierInUDIElement; }
       set { _ProductionIdentifierInUDIElement = value; OnPropertyChanged("ProductionIdentifierInUDIElement"); }
     }
 
@@ -3507,7 +3533,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ProductionIdentifierInUDIElement = null;
         else
-          ProductionIdentifierInUDIElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>(elem)));
+          ProductionIdentifierInUDIElement = new List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>(elem)));
         OnPropertyChanged("ProductionIdentifierInUDI");
       }
     }
@@ -3551,6 +3577,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent> _ChargeItem;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

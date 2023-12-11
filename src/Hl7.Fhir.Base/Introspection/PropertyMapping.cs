@@ -163,6 +163,11 @@ namespace Hl7.Fhir.Introspection
         public readonly FhirRelease Release;
 
         /// <summary>
+        /// For a bound element, this is the name of the binding.
+        /// </summary>
+        public string? BindingName { get; private set; }
+
+        /// <summary>
         /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
         /// </summary>
         /// <remarks>There should generally be no reason to call this method, as you can easily get the required PropertyMapping via
@@ -227,7 +232,8 @@ namespace Hl7.Fhir.Introspection
                 IsPrimitive = isPrimitive,
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
                 ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
-                FiveWs = elementAttr.FiveWs
+                FiveWs = elementAttr.FiveWs,
+                BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
             };
 
             return true;
@@ -328,7 +334,7 @@ namespace Hl7.Fhir.Introspection
         {
             var elementTypeMapping = PropertyTypeMapping;
 
-            if (elementTypeMapping!.IsNestedType)
+            if (elementTypeMapping!.IsBackboneType)
             {
                 var info = elementTypeMapping;
                 return new ITypeSerializationInfo[] { info };

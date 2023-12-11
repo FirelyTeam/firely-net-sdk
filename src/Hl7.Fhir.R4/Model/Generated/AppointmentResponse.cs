@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AppointmentResponse","http://hl7.org/fhir/StructureDefinition/AppointmentResponse", IsResource=true)]
-  public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource
+  public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// Role of participant in the appointment
     /// </summary>
     [FhirElement("participantType", InSummary=true, Order=130)]
+    [Binding("ParticipantType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -181,6 +182,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement
@@ -239,6 +241,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Comment");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-action)
     /// (system: http://hl7.org/fhir/audit-event-action)
     /// </summary>
-    [FhirEnumeration("AuditEventAction")]
+    [FhirEnumeration("AuditEventAction", "http://hl7.org/fhir/ValueSet/audit-event-action", "http://hl7.org/fhir/audit-event-action")]
     public enum AuditEventAction
     {
       /// <summary>
       /// Create a new database object, such as placing an order.
       /// (system: http://hl7.org/fhir/audit-event-action)
       /// </summary>
-      [EnumLiteral("C", "http://hl7.org/fhir/audit-event-action"), Description("Create")]
+      [EnumLiteral("C"), Description("Create")]
       C,
       /// <summary>
       /// Read data, such as to print or display to a doctor.
       /// (system: http://hl7.org/fhir/audit-event-action)
       /// </summary>
-      [EnumLiteral("R", "http://hl7.org/fhir/audit-event-action"), Description("Read")]
+      [EnumLiteral("R"), Description("Read")]
       R,
       /// <summary>
       /// Update data, such as revise patient information.
       /// (system: http://hl7.org/fhir/audit-event-action)
       /// </summary>
-      [EnumLiteral("U", "http://hl7.org/fhir/audit-event-action"), Description("Update")]
+      [EnumLiteral("U"), Description("Update")]
       U,
       /// <summary>
       /// Delete items, such as a doctor master file record.
       /// (system: http://hl7.org/fhir/audit-event-action)
       /// </summary>
-      [EnumLiteral("D", "http://hl7.org/fhir/audit-event-action"), Description("Delete")]
+      [EnumLiteral("D"), Description("Delete")]
       D,
       /// <summary>
       /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
       /// (system: http://hl7.org/fhir/audit-event-action)
       /// </summary>
-      [EnumLiteral("E", "http://hl7.org/fhir/audit-event-action"), Description("Execute")]
+      [EnumLiteral("E"), Description("Execute")]
       E,
     }
 
@@ -100,56 +100,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-severity)
     /// (system: http://hl7.org/fhir/audit-event-severity)
     /// </summary>
-    [FhirEnumeration("AuditEventSeverity")]
+    [FhirEnumeration("AuditEventSeverity", "http://hl7.org/fhir/ValueSet/audit-event-severity", "http://hl7.org/fhir/audit-event-severity")]
     public enum AuditEventSeverity
     {
       /// <summary>
       /// System is unusable. e.g., This level should only be reported by infrastructure and should not be used by applications.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("emergency", "http://hl7.org/fhir/audit-event-severity"), Description("Emergency")]
+      [EnumLiteral("emergency"), Description("Emergency")]
       Emergency,
       /// <summary>
       /// Notification should be sent to trigger action be taken. e.g., Loss of the primary network connection needing attention.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("alert", "http://hl7.org/fhir/audit-event-severity"), Description("Alert")]
+      [EnumLiteral("alert"), Description("Alert")]
       Alert,
       /// <summary>
       /// Critical conditions. e.g., A failure in the system's primary application that will reset automatically.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("critical", "http://hl7.org/fhir/audit-event-severity"), Description("Critical")]
+      [EnumLiteral("critical"), Description("Critical")]
       Critical,
       /// <summary>
       /// Error conditions. e.g., An application has exceeded its file storage limit and attempts to write are failing. 
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/audit-event-severity"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// Warning conditions. May indicate that an error will occur if action is not taken. e.g., A non-root file system has only 2GB remaining.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("warning", "http://hl7.org/fhir/audit-event-severity"), Description("Warning")]
+      [EnumLiteral("warning"), Description("Warning")]
       Warning,
       /// <summary>
       /// Notice messages. Normal but significant condition. Events that are unusual, but not error conditions.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("notice", "http://hl7.org/fhir/audit-event-severity"), Description("Notice")]
+      [EnumLiteral("notice"), Description("Notice")]
       Notice,
       /// <summary>
       /// Normal operational messages that require no action. e.g., An application has started, paused, or ended successfully.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("informational", "http://hl7.org/fhir/audit-event-severity"), Description("Informational")]
+      [EnumLiteral("informational"), Description("Informational")]
       Informational,
       /// <summary>
       /// Debug-level messages. Information useful to developers for debugging the application.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
-      [EnumLiteral("debug", "http://hl7.org/fhir/audit-event-severity"), Description("Debug")]
+      [EnumLiteral("debug"), Description("Debug")]
       Debug,
     }
 
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Outcome", IsNestedType=true)]
+    [BackboneType("AuditEvent.outcome")]
     public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -170,6 +171,7 @@ namespace Hl7.Fhir.Model
       /// Whether the event succeeded or failed
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("AuditEventOutcome")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Code
@@ -184,6 +186,7 @@ namespace Hl7.Fhir.Model
       /// Additional outcome detail
       /// </summary>
       [FhirElement("detail", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
+      [Binding("AuditEventOutcomeDetail")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Detail
@@ -292,6 +295,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Agent", IsNestedType=true)]
+    [BackboneType("AuditEvent.agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -303,6 +307,7 @@ namespace Hl7.Fhir.Model
       /// How agent participated
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.who")]
+      [Binding("AuditAgentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -316,6 +321,7 @@ namespace Hl7.Fhir.Model
       /// Agent role in the event
       /// </summary>
       [FhirElement("role", Order=50, FiveWs="FiveWs.who")]
+      [Binding("AuditAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -440,6 +446,7 @@ namespace Hl7.Fhir.Model
       /// Allowable authorization for this agent
       /// </summary>
       [FhirElement("authorization", Order=110, FiveWs="FiveWs.why[x]")]
+      [Binding("AuditPurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Authorization
@@ -602,6 +609,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Source", IsNestedType=true)]
+    [BackboneType("AuditEvent.source")]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -644,6 +652,7 @@ namespace Hl7.Fhir.Model
       /// The type of source where event originated
       /// </summary>
       [FhirElement("type", Order=60, FiveWs="FiveWs.witness")]
+      [Binding("AuditEventSourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -761,6 +770,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Entity", IsNestedType=true)]
+    [BackboneType("AuditEvent.entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -787,6 +797,7 @@ namespace Hl7.Fhir.Model
       /// What role the entity played
       /// </summary>
       [FhirElement("role", Order=50, FiveWs="FiveWs.context")]
+      [Binding("AuditEventEntityRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -800,6 +811,7 @@ namespace Hl7.Fhir.Model
       /// Security labels on the entity
       /// </summary>
       [FhirElement("securityLabel", Order=60, FiveWs="FiveWs.context")]
+      [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
@@ -1003,6 +1015,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Detail", IsNestedType=true)]
+    [BackboneType("AuditEvent.entity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1014,6 +1027,7 @@ namespace Hl7.Fhir.Model
       /// Name of the property
       /// </summary>
       [FhirElement("type", Order=40, FiveWs="FiveWs.context")]
+      [Binding("AuditEventDetailType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1136,6 +1150,7 @@ namespace Hl7.Fhir.Model
     /// Type/identifier of event
     /// </summary>
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.what[x]")]
+    [Binding("AuditEventType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1150,6 +1165,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of event
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [Binding("AuditEventSubType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -1165,6 +1181,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
     {
@@ -1197,6 +1214,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity> SeverityElement
     {
@@ -1288,6 +1306,7 @@ namespace Hl7.Fhir.Model
     /// Authorization related to the event
     /// </summary>
     [FhirElement("authorization", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
+    [Binding("AuditPurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Authorization

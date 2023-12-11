@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("BodyStructure","http://hl7.org/fhir/StructureDefinition/BodyStructure", IsResource=true)]
-  public partial class BodyStructure : Hl7.Fhir.Model.DomainResource
+  public partial class BodyStructure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
     /// Kind of Structure
     /// </summary>
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
+    [Binding("BodyStructureCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Morphology
     {
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// Body site
     /// </summary>
     [FhirElement("location", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Location
     {
@@ -130,6 +132,7 @@ namespace Hl7.Fhir.Model
     /// Body site modifier
     /// </summary>
     [FhirElement("locationQualifier", Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("BodyStructureQualifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> LocationQualifier
@@ -200,6 +203,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Patient;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

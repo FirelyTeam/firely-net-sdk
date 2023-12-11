@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DocumentReference","http://hl7.org/fhir/StructureDefinition/DocumentReference", IsResource=true)]
-  public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
+  public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
     /// (system: http://hl7.org/fhir/document-reference-status)
     /// </summary>
-    [FhirEnumeration("DocumentReferenceStatus")]
+    [FhirEnumeration("DocumentReferenceStatus", "http://hl7.org/fhir/ValueSet/document-reference-status", "http://hl7.org/fhir/document-reference-status")]
     public enum DocumentReferenceStatus
     {
       /// <summary>
       /// This is the current reference for this document.
       /// (system: http://hl7.org/fhir/document-reference-status)
       /// </summary>
-      [EnumLiteral("current", "http://hl7.org/fhir/document-reference-status"), Description("Current")]
+      [EnumLiteral("current"), Description("Current")]
       Current,
       /// <summary>
       /// This reference has been superseded by another reference.
       /// (system: http://hl7.org/fhir/document-reference-status)
       /// </summary>
-      [EnumLiteral("superseded", "http://hl7.org/fhir/document-reference-status"), Description("Superseded")]
+      [EnumLiteral("superseded"), Description("Superseded")]
       Superseded,
       /// <summary>
       /// This reference was created in error.
       /// (system: http://hl7.org/fhir/document-reference-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/document-reference-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Attester", IsNestedType=true)]
+    [BackboneType("DocumentReference.attester")]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// personal | professional | legal | official
       /// </summary>
       [FhirElement("mode", Order=40)]
+      [Binding("DocumentAttestationMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Mode
@@ -263,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#RelatesTo", IsNestedType=true)]
+    [BackboneType("DocumentReference.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -274,6 +277,7 @@ namespace Hl7.Fhir.Model
       /// The relationship type with another document
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -398,6 +402,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Content", IsNestedType=true)]
+    [BackboneType("DocumentReference.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -531,6 +536,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Profile", IsNestedType=true)]
+    [BackboneType("DocumentReference.content.profile")]
     public partial class ProfileComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -542,6 +548,7 @@ namespace Hl7.Fhir.Model
       /// Code|uri|canonical
       /// </summary>
       [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("DocumentFormat")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
       [Cardinality(Min=1,Max=1)]
@@ -703,6 +710,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus> StatusElement
@@ -736,6 +744,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("docStatus", InSummary=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ReferredDocumentStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
     {
@@ -767,6 +776,7 @@ namespace Hl7.Fhir.Model
     /// Imaging modality used
     /// </summary>
     [FhirElement("modality", InSummary=true, Order=140, FiveWs="FiveWs.class")]
+    [Binding("ImagingModality")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Modality
@@ -781,6 +791,7 @@ namespace Hl7.Fhir.Model
     /// Kind of document (LOINC if possible)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
+    [Binding("DocumentType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -794,6 +805,7 @@ namespace Hl7.Fhir.Model
     /// Categorization of document
     /// </summary>
     [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.what[x]")]
+    [Binding("ReferencedItemCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -839,6 +851,7 @@ namespace Hl7.Fhir.Model
     /// Main clinical acts documented
     /// </summary>
     [FhirElement("event", Order=190)]
+    [Binding("DocumentEventType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Event
@@ -853,6 +866,7 @@ namespace Hl7.Fhir.Model
     /// Body part included
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=200)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> BodySite
@@ -867,6 +881,7 @@ namespace Hl7.Fhir.Model
     /// Kind of facility where patient was seen
     /// </summary>
     [FhirElement("facilityType", Order=210)]
+    [Binding("DocumentC80FacilityType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FacilityType
     {
@@ -880,6 +895,7 @@ namespace Hl7.Fhir.Model
     /// Additional details about where the content was created (e.g. clinical specialty)
     /// </summary>
     [FhirElement("practiceSetting", Order=220)]
+    [Binding("DocumentC80PracticeSetting")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PracticeSetting
     {
@@ -1027,6 +1043,7 @@ namespace Hl7.Fhir.Model
     /// Document security-tags
     /// </summary>
     [FhirElement("securityLabel", InSummary=true, Order=300)]
+    [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
@@ -1050,6 +1067,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DocumentReference.ContentComponent> _Content;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

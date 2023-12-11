@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ConditionDefinition","http://hl7.org/fhir/StructureDefinition/ConditionDefinition", IsResource=true)]
-  public partial class ConditionDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ConditionDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-precondition-type)
     /// (system: http://hl7.org/fhir/condition-precondition-type)
     /// </summary>
-    [FhirEnumeration("ConditionPreconditionType")]
+    [FhirEnumeration("ConditionPreconditionType", "http://hl7.org/fhir/ValueSet/condition-precondition-type", "http://hl7.org/fhir/condition-precondition-type")]
     public enum ConditionPreconditionType
     {
       /// <summary>
       /// The observation is very sensitive for the condition, but may also indicate other conditions.
       /// (system: http://hl7.org/fhir/condition-precondition-type)
       /// </summary>
-      [EnumLiteral("sensitive", "http://hl7.org/fhir/condition-precondition-type"), Description("Sensitive")]
+      [EnumLiteral("sensitive"), Description("Sensitive")]
       Sensitive,
       /// <summary>
       /// The observation is very specific for this condition, but not particularly sensitive.
       /// (system: http://hl7.org/fhir/condition-precondition-type)
       /// </summary>
-      [EnumLiteral("specific", "http://hl7.org/fhir/condition-precondition-type"), Description("Specific")]
+      [EnumLiteral("specific"), Description("Specific")]
       Specific,
     }
 
@@ -82,26 +82,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose)
     /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
     /// </summary>
-    [FhirEnumeration("ConditionQuestionnairePurpose")]
+    [FhirEnumeration("ConditionQuestionnairePurpose", "http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose", "http://hl7.org/fhir/condition-questionnaire-purpose")]
     public enum ConditionQuestionnairePurpose
     {
       /// <summary>
       /// A pre-admit questionnaire.
       /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
       /// </summary>
-      [EnumLiteral("preadmit", "http://hl7.org/fhir/condition-questionnaire-purpose"), Description("Pre-admit")]
+      [EnumLiteral("preadmit"), Description("Pre-admit")]
       Preadmit,
       /// <summary>
       /// A questionnaire that helps with diferential diagnosis.
       /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
       /// </summary>
-      [EnumLiteral("diff-diagnosis", "http://hl7.org/fhir/condition-questionnaire-purpose"), Description("Diff Diagnosis")]
+      [EnumLiteral("diff-diagnosis"), Description("Diff Diagnosis")]
       DiffDiagnosis,
       /// <summary>
       /// A questionnaire to check on outcomes for the patient.
       /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
       /// </summary>
-      [EnumLiteral("outcome", "http://hl7.org/fhir/condition-questionnaire-purpose"), Description("Outcome")]
+      [EnumLiteral("outcome"), Description("Outcome")]
       Outcome,
     }
 
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Observation", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.observation")]
     public partial class ObservationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -122,6 +123,7 @@ namespace Hl7.Fhir.Model
       /// Category that is relevant
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("ObservationCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -135,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// Code for relevant Observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("ObservationCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -242,6 +245,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Medication", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.medication")]
     public partial class MedicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +257,7 @@ namespace Hl7.Fhir.Model
       /// Category that is relevant
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("MedicationRequestCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -266,6 +271,7 @@ namespace Hl7.Fhir.Model
       /// Code for relevant Medication
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MedicationCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -373,6 +379,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Precondition", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.precondition")]
     public partial class PreconditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -385,6 +392,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionPreconditionType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionPreconditionType> TypeElement
@@ -417,6 +425,7 @@ namespace Hl7.Fhir.Model
       /// Code for relevant Observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -549,6 +558,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Questionnaire", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.questionnaire")]
     public partial class QuestionnaireComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -561,6 +571,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("purpose", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionQuestionnairePurpose")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionQuestionnairePurpose> PurposeElement
@@ -703,6 +714,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Plan", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.plan")]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1020,6 +1032,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1204,6 +1217,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for condition definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1218,6 +1232,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the condition, problem or diagnosis
     /// </summary>
     [FhirElement("code", InSummary=true, Order=240)]
+    [Binding("ConditionKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -1232,6 +1247,7 @@ namespace Hl7.Fhir.Model
     /// Subjective severity of condition
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=250)]
+    [Binding("ConditionSeverity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Severity
     {
@@ -1245,6 +1261,7 @@ namespace Hl7.Fhir.Model
     /// Anatomical location, if relevant
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=260)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -1258,6 +1275,7 @@ namespace Hl7.Fhir.Model
     /// Stage/grade, usually assessed formally
     /// </summary>
     [FhirElement("stage", InSummary=true, Order=270)]
+    [Binding("ConditionStage")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Stage
     {
@@ -1477,6 +1495,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent> _Plan;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

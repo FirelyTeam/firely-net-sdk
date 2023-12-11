@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Medication","http://hl7.org/fhir/StructureDefinition/Medication", IsResource=true)]
-  public partial class Medication : Hl7.Fhir.Model.DomainResource
+  public partial class Medication : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatusCodes")]
+    [FhirEnumeration("MedicationStatusCodes", "http://hl7.org/fhir/ValueSet/medication-status", "http://hl7.org/fhir/CodeSystem/medication-status")]
     public enum MedicationStatusCodes
     {
       /// <summary>
       /// The medication record is current and is appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medication-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication record is not current and is not is appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/CodeSystem/medication-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The medication record was created erroneously and is not appropriated for reference in new instances.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Ingredient", IsNestedType=true)]
+    [BackboneType("Medication.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// The ingredient (substance or medication) that the ingredient.strength relates to
       /// </summary>
       [FhirElement("item", Order=40)]
+      [Binding("MedicationFormalRepresentation")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
@@ -145,6 +147,7 @@ namespace Hl7.Fhir.Model
       /// Quantity of ingredient present
       /// </summary>
       [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MedicationIngredientStrength")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
@@ -263,6 +266,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Batch", IsNestedType=true)]
+    [BackboneType("Medication.batch")]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -442,6 +446,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [Binding("MedicationFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -456,6 +461,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes> StatusElement
     {
@@ -502,6 +508,7 @@ namespace Hl7.Fhir.Model
     /// powder | tablets | capsule +
     /// </summary>
     [FhirElement("doseForm", Order=130)]
+    [Binding("MedicationForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseForm
     {
@@ -565,6 +572,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Definition;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

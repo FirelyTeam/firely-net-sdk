@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/capability-statement-kind)
     /// (system: http://hl7.org/fhir/capability-statement-kind)
     /// </summary>
-    [FhirEnumeration("CapabilityStatementKind")]
+    [FhirEnumeration("CapabilityStatementKind", "http://hl7.org/fhir/ValueSet/capability-statement-kind", "http://hl7.org/fhir/capability-statement-kind")]
     public enum CapabilityStatementKind
     {
       /// <summary>
       /// The CapabilityStatement instance represents the present capabilities of a specific system instance.  This is the kind returned by OPTIONS for a FHIR server end-point.
       /// (system: http://hl7.org/fhir/capability-statement-kind)
       /// </summary>
-      [EnumLiteral("instance", "http://hl7.org/fhir/capability-statement-kind"), Description("Instance")]
+      [EnumLiteral("instance"), Description("Instance")]
       Instance,
       /// <summary>
       /// The CapabilityStatement instance represents the capabilities of a system or piece of software, independent of a particular installation.
       /// (system: http://hl7.org/fhir/capability-statement-kind)
       /// </summary>
-      [EnumLiteral("capability", "http://hl7.org/fhir/capability-statement-kind"), Description("Capability")]
+      [EnumLiteral("capability"), Description("Capability")]
       Capability,
       /// <summary>
       /// The CapabilityStatement instance represents a set of requirements for other systems to meet; e.g. as part of an implementation guide or 'request for proposal'.
       /// (system: http://hl7.org/fhir/capability-statement-kind)
       /// </summary>
-      [EnumLiteral("requirements", "http://hl7.org/fhir/capability-statement-kind"), Description("Requirements")]
+      [EnumLiteral("requirements"), Description("Requirements")]
       Requirements,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/unknown-content-code)
     /// (system: http://hl7.org/fhir/unknown-content-code)
     /// </summary>
-    [FhirEnumeration("UnknownContentCode")]
+    [FhirEnumeration("UnknownContentCode", "http://hl7.org/fhir/ValueSet/unknown-content-code", "http://hl7.org/fhir/unknown-content-code")]
     public enum UnknownContentCode
     {
       /// <summary>
       /// The application does not accept either unknown elements or extensions.
       /// (system: http://hl7.org/fhir/unknown-content-code)
       /// </summary>
-      [EnumLiteral("no", "http://hl7.org/fhir/unknown-content-code"), Description("Neither Elements or Extensions")]
+      [EnumLiteral("no"), Description("Neither Elements or Extensions")]
       No,
       /// <summary>
       /// The application accepts unknown extensions, but not unknown elements.
       /// (system: http://hl7.org/fhir/unknown-content-code)
       /// </summary>
-      [EnumLiteral("extensions", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Extensions")]
+      [EnumLiteral("extensions"), Description("Unknown Extensions")]
       Extensions,
       /// <summary>
       /// The application accepts unknown elements, but not unknown extensions.
       /// (system: http://hl7.org/fhir/unknown-content-code)
       /// </summary>
-      [EnumLiteral("elements", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Elements")]
+      [EnumLiteral("elements"), Description("Unknown Elements")]
       Elements,
       /// <summary>
       /// The application accepts unknown elements and extensions.
       /// (system: http://hl7.org/fhir/unknown-content-code)
       /// </summary>
-      [EnumLiteral("both", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Elements and Extensions")]
+      [EnumLiteral("both"), Description("Unknown Elements and Extensions")]
       Both,
     }
 
@@ -122,20 +122,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/restful-capability-mode)
     /// (system: http://hl7.org/fhir/restful-capability-mode)
     /// </summary>
-    [FhirEnumeration("RestfulCapabilityMode")]
+    [FhirEnumeration("RestfulCapabilityMode", "http://hl7.org/fhir/ValueSet/restful-capability-mode", "http://hl7.org/fhir/restful-capability-mode")]
     public enum RestfulCapabilityMode
     {
       /// <summary>
       /// The application acts as a client for this resource.
       /// (system: http://hl7.org/fhir/restful-capability-mode)
       /// </summary>
-      [EnumLiteral("client", "http://hl7.org/fhir/restful-capability-mode"), Description("Client")]
+      [EnumLiteral("client"), Description("Client")]
       Client,
       /// <summary>
       /// The application acts as a server for this resource.
       /// (system: http://hl7.org/fhir/restful-capability-mode)
       /// </summary>
-      [EnumLiteral("server", "http://hl7.org/fhir/restful-capability-mode"), Description("Server")]
+      [EnumLiteral("server"), Description("Server")]
       Server,
     }
 
@@ -144,26 +144,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/versioning-policy)
     /// (system: http://hl7.org/fhir/versioning-policy)
     /// </summary>
-    [FhirEnumeration("ResourceVersionPolicy")]
+    [FhirEnumeration("ResourceVersionPolicy", "http://hl7.org/fhir/ValueSet/versioning-policy", "http://hl7.org/fhir/versioning-policy")]
     public enum ResourceVersionPolicy
     {
       /// <summary>
       /// VersionId meta-property is not supported (server) or used (client).
       /// (system: http://hl7.org/fhir/versioning-policy)
       /// </summary>
-      [EnumLiteral("no-version", "http://hl7.org/fhir/versioning-policy"), Description("No VersionId Support")]
+      [EnumLiteral("no-version"), Description("No VersionId Support")]
       NoVersion,
       /// <summary>
       /// VersionId meta-property is supported (server) or used (client).
       /// (system: http://hl7.org/fhir/versioning-policy)
       /// </summary>
-      [EnumLiteral("versioned", "http://hl7.org/fhir/versioning-policy"), Description("Versioned")]
+      [EnumLiteral("versioned"), Description("Versioned")]
       Versioned,
       /// <summary>
       /// VersionId must be correct for updates (server) or will be specified (If-match header) for updates (client).
       /// (system: http://hl7.org/fhir/versioning-policy)
       /// </summary>
-      [EnumLiteral("versioned-update", "http://hl7.org/fhir/versioning-policy"), Description("VersionId tracked fully")]
+      [EnumLiteral("versioned-update"), Description("VersionId tracked fully")]
       VersionedUpdate,
     }
 
@@ -172,32 +172,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-read-status)
     /// (system: http://hl7.org/fhir/conditional-read-status)
     /// </summary>
-    [FhirEnumeration("ConditionalReadStatus")]
+    [FhirEnumeration("ConditionalReadStatus", "http://hl7.org/fhir/ValueSet/conditional-read-status", "http://hl7.org/fhir/conditional-read-status")]
     public enum ConditionalReadStatus
     {
       /// <summary>
       /// No support for conditional deletes.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-read-status"), Description("Not Supported")]
+      [EnumLiteral("not-supported"), Description("Not Supported")]
       NotSupported,
       /// <summary>
       /// Conditional reads are supported, but only with the If-Modified-Since HTTP Header.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("modified-since", "http://hl7.org/fhir/conditional-read-status"), Description("If-Modified-Since")]
+      [EnumLiteral("modified-since"), Description("If-Modified-Since")]
       ModifiedSince,
       /// <summary>
       /// Conditional reads are supported, but only with the If-None-Match HTTP Header.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("not-match", "http://hl7.org/fhir/conditional-read-status"), Description("If-None-Match")]
+      [EnumLiteral("not-match"), Description("If-None-Match")]
       NotMatch,
       /// <summary>
       /// Conditional reads are supported, with both If-Modified-Since and If-None-Match HTTP Headers.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("full-support", "http://hl7.org/fhir/conditional-read-status"), Description("Full Support")]
+      [EnumLiteral("full-support"), Description("Full Support")]
       FullSupport,
     }
 
@@ -206,26 +206,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-delete-status)
     /// (system: http://hl7.org/fhir/conditional-delete-status)
     /// </summary>
-    [FhirEnumeration("ConditionalDeleteStatus")]
+    [FhirEnumeration("ConditionalDeleteStatus", "http://hl7.org/fhir/ValueSet/conditional-delete-status", "http://hl7.org/fhir/conditional-delete-status")]
     public enum ConditionalDeleteStatus
     {
       /// <summary>
       /// No support for conditional deletes.
       /// (system: http://hl7.org/fhir/conditional-delete-status)
       /// </summary>
-      [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-delete-status"), Description("Not Supported")]
+      [EnumLiteral("not-supported"), Description("Not Supported")]
       NotSupported,
       /// <summary>
       /// Conditional deletes are supported, but only single resources at a time.
       /// (system: http://hl7.org/fhir/conditional-delete-status)
       /// </summary>
-      [EnumLiteral("single", "http://hl7.org/fhir/conditional-delete-status"), Description("Single Deletes Supported")]
+      [EnumLiteral("single"), Description("Single Deletes Supported")]
       Single,
       /// <summary>
       /// Conditional deletes are supported, and multiple resources can be deleted in a single interaction.
       /// (system: http://hl7.org/fhir/conditional-delete-status)
       /// </summary>
-      [EnumLiteral("multiple", "http://hl7.org/fhir/conditional-delete-status"), Description("Multiple Deletes Supported")]
+      [EnumLiteral("multiple"), Description("Multiple Deletes Supported")]
       Multiple,
     }
 
@@ -234,38 +234,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-handling-policy)
     /// (system: http://hl7.org/fhir/reference-handling-policy)
     /// </summary>
-    [FhirEnumeration("ReferenceHandlingPolicy")]
+    [FhirEnumeration("ReferenceHandlingPolicy", "http://hl7.org/fhir/ValueSet/reference-handling-policy", "http://hl7.org/fhir/reference-handling-policy")]
     public enum ReferenceHandlingPolicy
     {
       /// <summary>
       /// The server supports and populates Literal references where they are known (this code does not guarantee that all references are literal; see 'enforced')
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("literal", "http://hl7.org/fhir/reference-handling-policy"), Description("Literal References")]
+      [EnumLiteral("literal"), Description("Literal References")]
       Literal,
       /// <summary>
       /// The server allows logical references
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("logical", "http://hl7.org/fhir/reference-handling-policy"), Description("Logical References")]
+      [EnumLiteral("logical"), Description("Logical References")]
       Logical,
       /// <summary>
       /// The server will attempt to resolve logical references to literal references (if resolution fails, the server may still accept resources; see logical)
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("resolves", "http://hl7.org/fhir/reference-handling-policy"), Description("Resolves References")]
+      [EnumLiteral("resolves"), Description("Resolves References")]
       Resolves,
       /// <summary>
       /// The server enforces that references have integrity - e.g. it ensures that references can always be resolved. This is typically the case for clinical record systems, but often not the case for middleware/proxy systems
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("enforced", "http://hl7.org/fhir/reference-handling-policy"), Description("Reference Integrity Enforced")]
+      [EnumLiteral("enforced"), Description("Reference Integrity Enforced")]
       Enforced,
       /// <summary>
       /// The server does not support references that point to other servers
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("local", "http://hl7.org/fhir/reference-handling-policy"), Description("Local References Only")]
+      [EnumLiteral("local"), Description("Local References Only")]
       Local,
     }
 
@@ -274,62 +274,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("TypeRestfulInteraction")]
+    [FhirEnumeration("TypeRestfulInteraction", "http://hl7.org/fhir/ValueSet/type-restful-interaction", "http://hl7.org/fhir/restful-interaction")]
     public enum TypeRestfulInteraction
     {
       /// <summary>
       /// Read the current state of the resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("read", "http://hl7.org/fhir/restful-interaction"), Description("read")]
+      [EnumLiteral("read"), Description("read")]
       Read,
       /// <summary>
       /// Read the state of a specific version of the resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("vread", "http://hl7.org/fhir/restful-interaction"), Description("vread")]
+      [EnumLiteral("vread"), Description("vread")]
       Vread,
       /// <summary>
       /// Update an existing resource by its id (or create it if it is new).
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
+      [EnumLiteral("update"), Description("update")]
       Update,
       /// <summary>
       /// Update an existing resource by posting a set of changes to it.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("patch", "http://hl7.org/fhir/restful-interaction"), Description("patch")]
+      [EnumLiteral("patch"), Description("patch")]
       Patch,
       /// <summary>
       /// Delete a resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
+      [EnumLiteral("delete"), Description("delete")]
       Delete,
       /// <summary>
       /// Retrieve the change history for a particular resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("history-instance", "http://hl7.org/fhir/restful-interaction"), Description("history-instance")]
+      [EnumLiteral("history-instance"), Description("history-instance")]
       HistoryInstance,
       /// <summary>
       /// Retrieve the change history for all resources of a particular type.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("history-type", "http://hl7.org/fhir/restful-interaction"), Description("history-type")]
+      [EnumLiteral("history-type"), Description("history-type")]
       HistoryType,
       /// <summary>
       /// Create a new resource with a server assigned id.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// Search all resources of the specified type based on some filter criteria.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("search-type", "http://hl7.org/fhir/restful-interaction"), Description("search-type")]
+      [EnumLiteral("search-type"), Description("search-type")]
       SearchType,
     }
 
@@ -338,32 +338,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("SystemRestfulInteraction")]
+    [FhirEnumeration("SystemRestfulInteraction", "http://hl7.org/fhir/ValueSet/system-restful-interaction", "http://hl7.org/fhir/restful-interaction")]
     public enum SystemRestfulInteraction
     {
       /// <summary>
       /// Update, create or delete a set of resources as a single transaction.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("transaction", "http://hl7.org/fhir/restful-interaction"), Description("transaction")]
+      [EnumLiteral("transaction"), Description("transaction")]
       Transaction,
       /// <summary>
       /// perform a set of a separate interactions in a single http operation
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("batch", "http://hl7.org/fhir/restful-interaction"), Description("batch")]
+      [EnumLiteral("batch"), Description("batch")]
       Batch,
       /// <summary>
       /// Search all resources based on some filter criteria.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("search-system", "http://hl7.org/fhir/restful-interaction"), Description("search-system")]
+      [EnumLiteral("search-system"), Description("search-system")]
       SearchSystem,
       /// <summary>
       /// Retrieve the change history for all resources on a system.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("history-system", "http://hl7.org/fhir/restful-interaction"), Description("history-system")]
+      [EnumLiteral("history-system"), Description("history-system")]
       HistorySystem,
     }
 
@@ -372,20 +372,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-capability-mode)
     /// (system: http://hl7.org/fhir/event-capability-mode)
     /// </summary>
-    [FhirEnumeration("EventCapabilityMode")]
+    [FhirEnumeration("EventCapabilityMode", "http://hl7.org/fhir/ValueSet/event-capability-mode", "http://hl7.org/fhir/event-capability-mode")]
     public enum EventCapabilityMode
     {
       /// <summary>
       /// The application sends requests and receives responses.
       /// (system: http://hl7.org/fhir/event-capability-mode)
       /// </summary>
-      [EnumLiteral("sender", "http://hl7.org/fhir/event-capability-mode"), Description("Sender")]
+      [EnumLiteral("sender"), Description("Sender")]
       Sender,
       /// <summary>
       /// The application receives requests and sends responses.
       /// (system: http://hl7.org/fhir/event-capability-mode)
       /// </summary>
-      [EnumLiteral("receiver", "http://hl7.org/fhir/event-capability-mode"), Description("Receiver")]
+      [EnumLiteral("receiver"), Description("Receiver")]
       Receiver,
     }
 
@@ -394,20 +394,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-mode)
     /// (system: http://hl7.org/fhir/document-mode)
     /// </summary>
-    [FhirEnumeration("DocumentMode")]
+    [FhirEnumeration("DocumentMode", "http://hl7.org/fhir/ValueSet/document-mode", "http://hl7.org/fhir/document-mode")]
     public enum DocumentMode
     {
       /// <summary>
       /// The application produces documents of the specified type.
       /// (system: http://hl7.org/fhir/document-mode)
       /// </summary>
-      [EnumLiteral("producer", "http://hl7.org/fhir/document-mode"), Description("Producer")]
+      [EnumLiteral("producer"), Description("Producer")]
       Producer,
       /// <summary>
       /// The application consumes documents of the specified type.
       /// (system: http://hl7.org/fhir/document-mode)
       /// </summary>
-      [EnumLiteral("consumer", "http://hl7.org/fhir/document-mode"), Description("Consumer")]
+      [EnumLiteral("consumer"), Description("Consumer")]
       Consumer,
     }
 
@@ -417,6 +417,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Software", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.software")]
     public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -625,6 +626,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Implementation", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.implementation")]
     public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -636,6 +638,8 @@ namespace Hl7.Fhir.Model
       /// Describes this specific instance
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(FhirString))]
+      [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -793,6 +797,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Rest", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest")]
     public partial class RestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -805,6 +810,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RestfulCapabilityMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode> ModeElement
@@ -1117,6 +1123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Security", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.security")]
     public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1159,6 +1166,7 @@ namespace Hl7.Fhir.Model
       /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates
       /// </summary>
       [FhirElement("service", InSummary=true, Order=50)]
+      [Binding("RestfulSecurityService")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Service
@@ -1330,6 +1338,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Certificate", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.security.certificate")]
     public partial class CertificateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1341,6 +1350,7 @@ namespace Hl7.Fhir.Model
       /// Mime type for certificates
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code TypeElement
       {
@@ -1497,6 +1507,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Resource", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1509,6 +1520,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -1602,6 +1614,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("versioning", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceVersionPolicy")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ResourceVersionPolicy> VersioningElement
       {
@@ -1727,6 +1740,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("conditionalRead", Order=120)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionalReadStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ConditionalReadStatus> ConditionalReadElement
       {
@@ -1790,6 +1804,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("conditionalDelete", Order=140)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionalDeleteStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ConditionalDeleteStatus> ConditionalDeleteElement
       {
@@ -1822,11 +1837,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("referencePolicy", Order=150)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ReferenceHandlingPolicy")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>> ReferencePolicyElement
       {
-        get { if(_ReferencePolicyElement==null) _ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(); return _ReferencePolicyElement; }
+        get { if(_ReferencePolicyElement==null) _ReferencePolicyElement = new List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(); return _ReferencePolicyElement; }
         set { _ReferencePolicyElement = value; OnPropertyChanged("ReferencePolicyElement"); }
       }
 
@@ -1845,7 +1861,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ReferencePolicyElement = null;
           else
-            ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>(elem)));
+            ReferencePolicyElement = new List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>(elem)));
           OnPropertyChanged("ReferencePolicy");
         }
       }
@@ -2143,6 +2159,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#ResourceInteraction", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.resource.interaction")]
     public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2155,6 +2172,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TypeRestfulInteraction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction> CodeElement
@@ -2312,6 +2330,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#SearchParam", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.resource.searchParam")]
     public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2387,6 +2406,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchParamType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -2562,6 +2582,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#SystemInteraction", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.interaction")]
     public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2574,6 +2595,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SystemRestfulInteraction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction> CodeElement
@@ -2731,6 +2753,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Operation", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.rest.operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2884,6 +2907,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Messaging", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.messaging")]
     public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3120,6 +3144,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Endpoint", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.messaging.endpoint")]
     public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3131,6 +3156,7 @@ namespace Hl7.Fhir.Model
       /// http | ftp | mllp +
       /// </summary>
       [FhirElement("protocol", Order=40)]
+      [Binding("MessageTransport")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Protocol
@@ -3271,6 +3297,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#SupportedMessage", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.messaging.supportedMessage")]
     public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3283,6 +3310,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventCapabilityMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> ModeElement
@@ -3425,6 +3453,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Event", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.messaging.event")]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3436,6 +3465,7 @@ namespace Hl7.Fhir.Model
       /// Event type
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MessageEvent")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Code
@@ -3451,6 +3481,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("category", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("MessageSignificanceCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
       {
@@ -3483,6 +3514,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventCapabilityMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> ModeElement
@@ -3516,6 +3548,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("focus", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> FocusElement
@@ -3750,6 +3783,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Document", IsNestedType=true)]
+    [BackboneType("CapabilityStatement.document")]
     public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3762,6 +3796,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DocumentMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.DocumentMode> ModeElement
@@ -3941,7 +3976,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this capability statement (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -3972,7 +4007,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the capability statement
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -4065,8 +4100,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -4098,7 +4134,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=140)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=140, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -4129,7 +4165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -4161,7 +4197,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=160)]
+    [FhirElement("publisher", InSummary=true, Order=160, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -4252,6 +4288,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for capability statement (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -4265,7 +4302,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this capability statement is defined
     /// </summary>
-    [FhirElement("purpose", Order=210)]
+    [FhirElement("purpose", Order=210, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown PurposeElement
     {
@@ -4329,6 +4366,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatement.CapabilityStatementKind> KindElement
@@ -4452,6 +4490,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("acceptUnknown", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("UnknownContentCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatement.UnknownContentCode> AcceptUnknownElement
@@ -4484,6 +4523,7 @@ namespace Hl7.Fhir.Model
     /// formats supported (xml | json | ttl | mime type)
     /// </summary>
     [FhirElement("format", InSummary=true, Order=290)]
+    [Binding("MimeType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> FormatElement
@@ -4516,6 +4556,7 @@ namespace Hl7.Fhir.Model
     /// Patch formats supported
     /// </summary>
     [FhirElement("patchFormat", InSummary=true, Order=300)]
+    [Binding("MimeType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PatchFormatElement

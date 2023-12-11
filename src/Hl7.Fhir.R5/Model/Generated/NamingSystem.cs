@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("NamingSystem","http://hl7.org/fhir/StructureDefinition/NamingSystem", IsResource=true)]
-  public partial class NamingSystem : Hl7.Fhir.Model.DomainResource
+  public partial class NamingSystem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-type)
     /// (system: http://hl7.org/fhir/namingsystem-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemType")]
+    [FhirEnumeration("NamingSystemType", "http://hl7.org/fhir/ValueSet/namingsystem-type", "http://hl7.org/fhir/namingsystem-type")]
     public enum NamingSystemType
     {
       /// <summary>
       /// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
       /// (system: http://hl7.org/fhir/namingsystem-type)
       /// </summary>
-      [EnumLiteral("codesystem", "http://hl7.org/fhir/namingsystem-type"), Description("Code System")]
+      [EnumLiteral("codesystem"), Description("Code System")]
       Codesystem,
       /// <summary>
       /// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
       /// (system: http://hl7.org/fhir/namingsystem-type)
       /// </summary>
-      [EnumLiteral("identifier", "http://hl7.org/fhir/namingsystem-type"), Description("Identifier")]
+      [EnumLiteral("identifier"), Description("Identifier")]
       Identifier,
       /// <summary>
       /// The naming system is used as the root for other identifiers and naming systems.
       /// (system: http://hl7.org/fhir/namingsystem-type)
       /// </summary>
-      [EnumLiteral("root", "http://hl7.org/fhir/namingsystem-type"), Description("Root")]
+      [EnumLiteral("root"), Description("Root")]
       Root,
     }
 
@@ -88,44 +88,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-identifier-type)
     /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemIdentifierType")]
+    [FhirEnumeration("NamingSystemIdentifierType", "http://hl7.org/fhir/ValueSet/namingsystem-identifier-type", "http://hl7.org/fhir/namingsystem-identifier-type")]
     public enum NamingSystemIdentifierType
     {
       /// <summary>
       /// An ISO object identifier; e.g. 1.2.3.4.5.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("oid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("OID")]
+      [EnumLiteral("oid"), Description("OID")]
       Oid,
       /// <summary>
       /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("uuid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("UUID")]
+      [EnumLiteral("uuid"), Description("UUID")]
       Uuid,
       /// <summary>
       /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("uri", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("URI")]
+      [EnumLiteral("uri"), Description("URI")]
       Uri,
       /// <summary>
       /// An IRI string that can be prepended to the code to obtain a concept IRI for RDF applications. This should be a valid, absolute IRI as defined in RFC 3987. See rdf.html#iri-stem for details on how this value may be used.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("iri-stem", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("IRI stem")]
+      [EnumLiteral("iri-stem"), Description("IRI stem")]
       IriStem,
       /// <summary>
       /// A short string published by HL7 for use in the V2 family of standsrds to idenfify a code system in the V12 coded data types CWE, CNE, and CF. The code values are also published by HL7 at http://www.hl7.org/Special/committees/vocab/table_0396/index.cfm
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("v2csmnemonic", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("V2CSMNemonic")]
+      [EnumLiteral("v2csmnemonic"), Description("V2CSMNemonic")]
       V2csmnemonic,
       /// <summary>
       /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NamingSystem#UniqueId", IsNestedType=true)]
+    [BackboneType("NamingSystem.uniqueId")]
     public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -147,6 +148,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NamingSystemIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -600,6 +602,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -633,6 +636,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NamingSystemType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement
@@ -804,6 +808,7 @@ namespace Hl7.Fhir.Model
     /// e.g. driver,  provider,  patient, bank etc
     /// </summary>
     [FhirElement("type", Order=220)]
+    [Binding("NamingSystemIdentifierSystemType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -862,6 +867,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for naming system (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1044,6 +1050,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=320)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1168,6 +1175,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

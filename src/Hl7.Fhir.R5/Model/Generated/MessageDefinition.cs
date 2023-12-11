@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition", IsResource=true)]
-  public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
     /// (system: http://hl7.org/fhir/message-significance-category)
     /// </summary>
-    [FhirEnumeration("MessageSignificanceCategory")]
+    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category", "http://hl7.org/fhir/message-significance-category")]
     public enum MessageSignificanceCategory
     {
       /// <summary>
       /// The message represents/requests a change that should not be processed more than once; e.g., making a booking for an appointment.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+      [EnumLiteral("consequence"), Description("Consequence")]
       Consequence,
       /// <summary>
       /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+      [EnumLiteral("currency"), Description("Currency")]
       Currency,
       /// <summary>
       /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+      [EnumLiteral("notification"), Description("Notification")]
       Notification,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
     /// (system: http://hl7.org/fhir/messageheader-response-request)
     /// </summary>
-    [FhirEnumeration("MessageheaderResponseRequest")]
+    [FhirEnumeration("MessageheaderResponseRequest", "http://hl7.org/fhir/ValueSet/messageheader-response-request", "http://hl7.org/fhir/messageheader-response-request")]
     public enum MessageheaderResponseRequest
     {
       /// <summary>
       /// initiator expects a response for this message.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("always", "http://hl7.org/fhir/messageheader-response-request"), Description("Always")]
+      [EnumLiteral("always"), Description("Always")]
       Always,
       /// <summary>
       /// initiator expects a response only if in error.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("on-error", "http://hl7.org/fhir/messageheader-response-request"), Description("Error/reject conditions only")]
+      [EnumLiteral("on-error"), Description("Error/reject conditions only")]
       OnError,
       /// <summary>
       /// initiator does not expect a response.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("never", "http://hl7.org/fhir/messageheader-response-request"), Description("Never")]
+      [EnumLiteral("never"), Description("Never")]
       Never,
       /// <summary>
       /// initiator expects a response only if successful.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("on-success", "http://hl7.org/fhir/messageheader-response-request"), Description("Successful completion only")]
+      [EnumLiteral("on-success"), Description("Successful completion only")]
       OnSuccess,
     }
 
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#Focus", IsNestedType=true)]
+    [BackboneType("MessageDefinition.focus")]
     public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -135,6 +136,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> CodeElement
@@ -373,6 +375,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
+    [BackboneType("MessageDefinition.allowedResponse")]
     public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -725,6 +728,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -910,6 +914,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for message definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1080,6 +1085,7 @@ namespace Hl7.Fhir.Model
     /// Event code  or link to the EventDefinition
     /// </summary>
     [FhirElement("event", InSummary=true, Order=290, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("MessageEvent")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
@@ -1097,6 +1103,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=300)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MessageSignificanceCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory> CategoryElement
     {
@@ -1143,6 +1150,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("responseRequired", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("messageheader-response-request")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest> ResponseRequiredElement
     {
@@ -1214,6 +1222,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Graph");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

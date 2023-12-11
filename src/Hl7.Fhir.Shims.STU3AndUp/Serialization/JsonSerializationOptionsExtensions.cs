@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Initialize the options to serialize using the JsonFhirConverter, producing compact output without whitespace.
         /// </summary>
-        public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options) => options.ForFhir(typeof(ModelInfo).Assembly);
+        public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options) => options.ForFhir(ModelInfo.ModelInspector);
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions)"/>
         public static JsonSerializerOptions ForFhir(

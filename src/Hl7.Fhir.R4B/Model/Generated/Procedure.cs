@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure", IsResource=true)]
-  public partial class Procedure : Hl7.Fhir.Model.DomainResource
+  public partial class Procedure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Procedure#Performer", IsNestedType=true)]
+    [BackboneType("Procedure.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Type of performance
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
+      [Binding("ProcedurePerformerRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -219,6 +221,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Procedure#FocalDevice", IsNestedType=true)]
+    [BackboneType("Procedure.focalDevice")]
     public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -230,6 +233,7 @@ namespace Hl7.Fhir.Model
       /// Kind of change to device
       /// </summary>
       [FhirElement("action", Order=40)]
+      [Binding("DeviceActionKind")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
       {
@@ -462,6 +466,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcedureStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement
@@ -494,6 +499,7 @@ namespace Hl7.Fhir.Model
     /// Reason for current status
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=150)]
+    [Binding("ProcedureNegationReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -507,6 +513,7 @@ namespace Hl7.Fhir.Model
     /// Classification of the procedure
     /// </summary>
     [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [Binding("ProcedureCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -520,6 +527,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the procedure
     /// </summary>
     [FhirElement("code", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
+    [Binding("ProcedureCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -638,6 +646,7 @@ namespace Hl7.Fhir.Model
     /// Coded reason procedure performed
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=250, FiveWs="FiveWs.why[x]")]
+    [Binding("ProcedureReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -668,6 +677,7 @@ namespace Hl7.Fhir.Model
     /// Target body sites
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=270)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -682,6 +692,7 @@ namespace Hl7.Fhir.Model
     /// The result of procedure
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=280)]
+    [Binding("ProcedureOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -711,6 +722,7 @@ namespace Hl7.Fhir.Model
     /// Complication following the procedure
     /// </summary>
     [FhirElement("complication", Order=300)]
+    [Binding("ProcedureComplication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Complication
@@ -741,6 +753,7 @@ namespace Hl7.Fhir.Model
     /// Instructions for follow up
     /// </summary>
     [FhirElement("followUp", Order=320)]
+    [Binding("ProcedureFollowUp")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
@@ -799,6 +812,7 @@ namespace Hl7.Fhir.Model
     /// Coded items used during the procedure
     /// </summary>
     [FhirElement("usedCode", Order=360)]
+    [Binding("ProcedureUsed")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> UsedCode
@@ -808,6 +822,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

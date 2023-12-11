@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue", IsResource=true)]
-  public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
+  public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
     /// (system: http://hl7.org/fhir/detectedissue-severity)
     /// </summary>
-    [FhirEnumeration("DetectedIssueSeverity")]
+    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity", "http://hl7.org/fhir/detectedissue-severity")]
     public enum DetectedIssueSeverity
     {
       /// <summary>
       /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("high", "http://hl7.org/fhir/detectedissue-severity"), Description("High")]
+      [EnumLiteral("high"), Description("High")]
       High,
       /// <summary>
       /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("moderate", "http://hl7.org/fhir/detectedissue-severity"), Description("Moderate")]
+      [EnumLiteral("moderate"), Description("Moderate")]
       Moderate,
       /// <summary>
       /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("low", "http://hl7.org/fhir/detectedissue-severity"), Description("Low")]
+      [EnumLiteral("low"), Description("Low")]
       Low,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
+    [BackboneType("DetectedIssue.mitigation")]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// What mitigation?
       /// </summary>
       [FhirElement("action", Order=40)]
+      [Binding("DetectedIssueMitigationAction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
@@ -260,7 +262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for the detected issue
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -273,8 +275,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DetectedIssueStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -306,7 +309,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("DetectedIssueCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -319,8 +323,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// high | moderate | low
     /// </summary>
-    [FhirElement("severity", InSummary=true, Order=120)]
+    [FhirElement("severity", InSummary=true, Order=120, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DetectedIssueSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
     {
@@ -351,7 +356,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated patient
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=130)]
+    [FhirElement("patient", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -366,7 +371,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When identified
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -397,7 +402,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The provider or device that identified the issue
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=150)]
+    [FhirElement("author", InSummary=true, Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Device")]
     [DataMember]
@@ -500,6 +505,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

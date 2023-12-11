@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationAdministration","http://hl7.org/fhir/StructureDefinition/MedicationAdministration", IsResource=true)]
-  public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-admin-status)
     /// (system: http://hl7.org/fhir/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("MedicationAdministrationStatus")]
+    [FhirEnumeration("MedicationAdministrationStatus", "http://hl7.org/fhir/ValueSet/medication-admin-status", "http://hl7.org/fhir/medication-admin-status")]
     public enum MedicationAdministrationStatus
     {
       /// <summary>
       /// The administration has started but has not yet completed.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-admin-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-admin-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the administration have occurred.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-admin-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The administration was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-admin-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the administration have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-admin-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/medication-admin-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationAdministration#Performer", IsNestedType=true)]
+    [BackboneType("MedicationAdministration.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -243,6 +244,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationAdministration#Dosage", IsNestedType=true)]
+    [BackboneType("MedicationAdministration.dosage")]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -285,6 +287,7 @@ namespace Hl7.Fhir.Model
       /// Body site administered to
       /// </summary>
       [FhirElement("site", Order=50)]
+      [Binding("MedicationAdministrationSite")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Site
       {
@@ -298,6 +301,7 @@ namespace Hl7.Fhir.Model
       /// Path of substance into body
       /// </summary>
       [FhirElement("route", Order=60)]
+      [Binding("RouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Route
       {
@@ -311,6 +315,7 @@ namespace Hl7.Fhir.Model
       /// How drug was administered
       /// </summary>
       [FhirElement("method", Order=70)]
+      [Binding("MedicationAdministrationMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -479,7 +484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -525,8 +530,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | on-hold | completed | entered-in-error | stopped | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationAdministrationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus> StatusElement
@@ -559,6 +565,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication usage
     /// </summary>
     [FhirElement("category", Order=130)]
+    [Binding("MedicationAdministrationCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -571,7 +578,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What was administered
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -588,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who received medication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -604,7 +612,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or Episode of Care administered as part of
     /// </summary>
-    [FhirElement("context", Order=160)]
+    [FhirElement("context", Order=160, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -619,7 +627,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support administration
     /// </summary>
-    [FhirElement("supportingInformation", Order=170)]
+    [FhirElement("supportingInformation", Order=170, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -635,7 +643,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end time of administration
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [Cardinality(Min=1,Max=1)]
@@ -651,7 +659,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who administered substance
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=190)]
+    [FhirElement("performer", InSummary=true, Order=190, FiveWs="who.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.MedicationAdministration.PerformerComponent> Performer
@@ -697,6 +705,7 @@ namespace Hl7.Fhir.Model
     /// Reason administration not performed
     /// </summary>
     [FhirElement("reasonNotGiven", Order=210)]
+    [Binding("MedicationAdministrationNegationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
@@ -711,6 +720,7 @@ namespace Hl7.Fhir.Model
     /// Reason administration performed
     /// </summary>
     [FhirElement("reasonCode", Order=220)]
+    [Binding("MedicationAdministrationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -724,7 +734,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition or Observation that supports why the medication was administered
     /// </summary>
-    [FhirElement("reasonReference", Order=230)]
+    [FhirElement("reasonReference", Order=230, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
@@ -810,6 +820,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

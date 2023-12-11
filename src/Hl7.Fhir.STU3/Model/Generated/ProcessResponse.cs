@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ProcessResponse","http://hl7.org/fhir/StructureDefinition/ProcessResponse", IsResource=true)]
-  public partial class ProcessResponse : Hl7.Fhir.Model.DomainResource
+  public partial class ProcessResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcessResponse#ProcessNote", IsNestedType=true)]
+    [BackboneType("ProcessResponse.processNote")]
     public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// display | print | printoper
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("NoteType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -207,7 +209,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -221,8 +223,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcessResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -253,7 +256,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=110)]
+    [FhirElement("created", Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -284,7 +287,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authoring Organization
     /// </summary>
-    [FhirElement("organization", Order=120)]
+    [FhirElement("organization", Order=120, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -299,7 +302,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request reference
     /// </summary>
-    [FhirElement("request", Order=130)]
+    [FhirElement("request", Order=130, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -315,6 +318,7 @@ namespace Hl7.Fhir.Model
     /// Processing outcome
     /// </summary>
     [FhirElement("outcome", Order=140)]
+    [Binding("ProcessingOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -389,6 +393,7 @@ namespace Hl7.Fhir.Model
     /// Printed Form Identifier
     /// </summary>
     [FhirElement("form", Order=180)]
+    [Binding("Forms")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {
@@ -416,6 +421,7 @@ namespace Hl7.Fhir.Model
     /// Error code
     /// </summary>
     [FhirElement("error", Order=200)]
+    [Binding("AdjudicationError")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Error
@@ -441,6 +447,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _CommunicationRequest;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

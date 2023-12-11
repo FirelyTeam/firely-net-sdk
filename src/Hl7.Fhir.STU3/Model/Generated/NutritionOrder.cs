@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("NutritionOrder","http://hl7.org/fhir/StructureDefinition/NutritionOrder", IsResource=true)]
-  public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource
+  public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,62 +60,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/nutrition-request-status)
     /// (system: http://hl7.org/fhir/nutrition-request-status)
     /// </summary>
-    [FhirEnumeration("NutritionOrderStatus")]
+    [FhirEnumeration("NutritionOrderStatus", "http://hl7.org/fhir/ValueSet/nutrition-request-status", "http://hl7.org/fhir/nutrition-request-status")]
     public enum NutritionOrderStatus
     {
       /// <summary>
       /// The request has been proposed.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/nutrition-request-status"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// The request is in preliminary form prior to being sent.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/nutrition-request-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The request has been planned.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/nutrition-request-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// The request has been placed.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("requested", "http://hl7.org/fhir/nutrition-request-status"), Description("Requested")]
+      [EnumLiteral("requested"), Description("Requested")]
       Requested,
       /// <summary>
       /// The request is 'actionable', but not all actions that are implied by it have occurred yet.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/nutrition-request-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// Actions implied by the request have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/nutrition-request-status"), Description("On-Hold")]
+      [EnumLiteral("on-hold"), Description("On-Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the order have occurred and no continuation is planned (this will rarely be made explicit).
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/nutrition-request-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The request has been withdrawn and is no longer actionable.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/nutrition-request-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The request was entered in error and voided.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/nutrition-request-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#OralDiet", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet")]
     public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -135,7 +136,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40, FiveWs="what")]
+      [Binding("OralDiet")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -192,6 +194,7 @@ namespace Hl7.Fhir.Model
       /// The required consistency of fluids and liquids provided to the patient
       /// </summary>
       [FhirElement("fluidConsistencyType", Order=80)]
+      [Binding("FluidConsistencyType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
@@ -367,6 +370,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Nutrient", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet.nutrient")]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -377,7 +381,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of nutrient that is being modified
       /// </summary>
-      [FhirElement("modifier", Order=40)]
+      [FhirElement("modifier", Order=40, FiveWs="what")]
+      [Binding("NutrientModifier")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modifier
       {
@@ -498,6 +503,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Texture", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet.texture")]
     public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -509,6 +515,7 @@ namespace Hl7.Fhir.Model
       /// Code to indicate how to alter the texture of the foods, e.g. pureed
       /// </summary>
       [FhirElement("modifier", Order=40)]
+      [Binding("TextureModifier")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modifier
       {
@@ -522,6 +529,7 @@ namespace Hl7.Fhir.Model
       /// Concepts that are used to identify an entity that is ingested for nutritional purposes
       /// </summary>
       [FhirElement("foodType", Order=50)]
+      [Binding("TextureModifiedFoodType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept FoodType
       {
@@ -629,6 +637,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Supplement", IsNestedType=true)]
+    [BackboneType("NutritionOrder.supplement")]
     public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -639,7 +648,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of supplement product requested
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40, FiveWs="what")]
+      [Binding("SupplementType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -863,6 +873,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#EnteralFormula", IsNestedType=true)]
+    [BackboneType("NutritionOrder.enteralFormula")]
     public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -873,7 +884,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of enteral or infant formula
       /// </summary>
-      [FhirElement("baseFormulaType", InSummary=true, Order=40)]
+      [FhirElement("baseFormulaType", InSummary=true, Order=40, FiveWs="what")]
+      [Binding("EnteralFormulaType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
       {
@@ -917,7 +929,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of modular component to add to the feeding
       /// </summary>
-      [FhirElement("additiveType", Order=60)]
+      [FhirElement("additiveType", Order=60, FiveWs="what")]
+      [Binding("EnteralFormulaAdditiveType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AdditiveType
       {
@@ -975,6 +988,7 @@ namespace Hl7.Fhir.Model
       /// How the formula should enter the patient's gastrointestinal tract
       /// </summary>
       [FhirElement("routeofAdministration", Order=90)]
+      [Binding("EnteralRouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RouteofAdministration
       {
@@ -1203,6 +1217,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Administration", IsNestedType=true)]
+    [BackboneType("NutritionOrder.enteralFormula.administration")]
     public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1355,7 +1370,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers assigned to this order
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1369,8 +1384,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NutritionOrderStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
     {
@@ -1401,7 +1417,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who requires the diet, formula or nutritional supplement
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=110)]
+    [FhirElement("patient", InSummary=true, Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1417,7 +1433,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The encounter associated with this nutrition order
     /// </summary>
-    [FhirElement("encounter", Order=120)]
+    [FhirElement("encounter", Order=120, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1432,7 +1448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date and time the nutrition order was requested
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=130)]
+    [FhirElement("dateTime", InSummary=true, Order=130, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -1464,7 +1480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who ordered the diet, formula or nutritional supplement
     /// </summary>
-    [FhirElement("orderer", InSummary=true, Order=140)]
+    [FhirElement("orderer", InSummary=true, Order=140, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -1496,6 +1512,7 @@ namespace Hl7.Fhir.Model
     /// Order-specific modifier about the type of food that should be given
     /// </summary>
     [FhirElement("foodPreferenceModifier", Order=160)]
+    [Binding("PatientDiet")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
@@ -1510,6 +1527,7 @@ namespace Hl7.Fhir.Model
     /// Order-specific modifier about the type of food that should not be given
     /// </summary>
     [FhirElement("excludeFoodModifier", Order=170)]
+    [Binding("FoodType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
@@ -1559,6 +1577,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

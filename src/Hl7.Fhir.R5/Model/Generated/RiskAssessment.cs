@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment", IsResource=true)]
-  public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
+  public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskAssessment#Prediction", IsNestedType=true)]
+    [BackboneType("RiskAssessment.prediction")]
     public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Possible outcome for the subject
       /// </summary>
       [FhirElement("outcome", Order=40)]
+      [Binding("RiskAssessmentOutcome")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
       {
@@ -100,6 +102,7 @@ namespace Hl7.Fhir.Model
       /// Likelihood of specified outcome as a qualitative value
       /// </summary>
       [FhirElement("qualitativeRisk", Order=60)]
+      [Binding("RiskAssessmentProbability")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept QualitativeRisk
       {
@@ -363,6 +366,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RiskAssessmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -395,6 +399,7 @@ namespace Hl7.Fhir.Model
     /// Evaluation mechanism
     /// </summary>
     [FhirElement("method", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("RiskAssessmentMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -581,6 +586,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ResearchSubject","http://hl7.org/fhir/StructureDefinition/ResearchSubject", IsResource=true)]
-  public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource
+  public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,86 +60,86 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-subject-state)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ResearchSubjectState")]
+    [FhirEnumeration("ResearchSubjectState", "http://hl7.org/fhir/ValueSet/research-subject-state", "http://terminology.hl7.org/CodeSystem/research-subject-state")]
     public enum ResearchSubjectState
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("candidate", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Candidate")]
+      [EnumLiteral("candidate"), Description("Candidate")]
       Candidate,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("eligible", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Eligible")]
+      [EnumLiteral("eligible"), Description("Eligible")]
       Eligible,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("follow-up", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Follow-up")]
+      [EnumLiteral("follow-up"), Description("Follow-up")]
       FollowUp,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("ineligible", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Ineligible")]
+      [EnumLiteral("ineligible"), Description("Ineligible")]
       Ineligible,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("not-registered", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Not Registered")]
+      [EnumLiteral("not-registered"), Description("Not Registered")]
       NotRegistered,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("off-study", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Off-study")]
+      [EnumLiteral("off-study"), Description("Off-study")]
       OffStudy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("on-study", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("On-study")]
+      [EnumLiteral("on-study"), Description("On-study")]
       OnStudy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("on-study-intervention", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("On-study-intervention")]
+      [EnumLiteral("on-study-intervention"), Description("On-study-intervention")]
       OnStudyIntervention,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("on-study-observation", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("On-study-observation")]
+      [EnumLiteral("on-study-observation"), Description("On-study-observation")]
       OnStudyObservation,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("pending-on-study", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Pending on-study")]
+      [EnumLiteral("pending-on-study"), Description("Pending on-study")]
       PendingOnStudy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("potential-candidate", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Potential Candidate")]
+      [EnumLiteral("potential-candidate"), Description("Potential Candidate")]
       PotentialCandidate,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("screening", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Screening")]
+      [EnumLiteral("screening"), Description("Screening")]
       Screening,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("withdrawn", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Withdrawn")]
+      [EnumLiteral("withdrawn"), Description("Withdrawn")]
       Withdrawn,
     }
 
@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchSubject#Progress", IsNestedType=true)]
+    [BackboneType("ResearchSubject.progress")]
     public partial class ProgressComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -160,6 +161,7 @@ namespace Hl7.Fhir.Model
       /// state | milestone
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ResearchSubjectStateType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -173,6 +175,7 @@ namespace Hl7.Fhir.Model
       /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
       /// </summary>
       [FhirElement("subjectState", Order=50, FiveWs="FiveWs.status")]
+      [Binding("ResearchSubjectProgresss")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubjectState
       {
@@ -186,6 +189,7 @@ namespace Hl7.Fhir.Model
       /// SignedUp | Screened | Randomized
       /// </summary>
       [FhirElement("milestone", Order=60, FiveWs="FiveWs.status")]
+      [Binding("ResearchSubjectMilestone")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Milestone
       {
@@ -199,6 +203,7 @@ namespace Hl7.Fhir.Model
       /// State change reason
       /// </summary>
       [FhirElement("reason", Order=70)]
+      [Binding("StateChangeReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -417,6 +422,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -581,6 +587,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Consent;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

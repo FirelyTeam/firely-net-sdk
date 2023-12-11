@@ -44,12 +44,12 @@ namespace Hl7.Fhir.Introspection
         /// metadata for that release only. If the type is from the base assembly, it will contain
         /// metadata for that type from the most recent release of the base assembly.</remarks>
         public static ClassMapping? GetClassMappingForType(Type t) =>
-            ForAssembly(t.GetTypeInfo().Assembly).FindOrImportClassMapping(t);
+            ForAssembly(t.Assembly).FindOrImportClassMapping(t);
 
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
-        /// FHIR metadata contents of the given assembly. Calling this function repeatedly for
-        /// the same assembly will return the same inspector.
+        /// FHIR metadata contents of the given assembly, plus all the assemblies it depends upon.
+        /// Calling this function repeatedly for the same assembly will return the same inspector.
         /// </summary>
         /// <remarks>If the assembly given is FHIR Release specific, the returned inspector will contain
         /// metadata for that release only. If the assembly is the base assembly, it will contain
@@ -58,6 +58,8 @@ namespace Hl7.Fhir.Introspection
         {
             return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)), _ => configureInspector(a));
 
+            // NB: The concurrent dictionary will make sure only one of these initializers will run at the same time,
+            // so there is no additional locking done in these nested functions.
             static ModelInspector configureInspector(Assembly a)
             {
                 if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not FhirModelAssemblyAttribute modelAssemblyAttr)
@@ -65,14 +67,10 @@ namespace Hl7.Fhir.Introspection
                         $" as it is not marked with a {nameof(FhirModelAssemblyAttribute)} attribute.");
 
                 var newInspector = new ModelInspector(modelAssemblyAttr.Since);
-                newInspector.Import(a);
+                var imported = new List<Assembly>();
+                importRecursively(a);
 
-                // Make sure we always include the types from the base assembly too. 
-                var baseAssembly = typeof(Resource).GetTypeInfo().Assembly;
-                if (a.FullName != baseAssembly.FullName)
-                    newInspector.Import(baseAssembly);
-
-                // And finally, the System/CQL primitive types
+                // Finally, add the System/CQL primitive types
                 foreach (var cqlType in getCqlTypes())
                     newInspector.ImportType(cqlType);
 
@@ -82,6 +80,24 @@ namespace Hl7.Fhir.Introspection
                 {
                     return typeof(ElementModel.Types.Any).GetTypeInfo().Assembly.GetExportedTypes().
                         Where(typ => typeof(ElementModel.Types.Any).IsAssignableFrom(typ));
+                }
+
+                void importRecursively(Assembly a)
+                {
+                    if (imported.Contains(a)) return;
+
+                    newInspector.Import(a);
+                    imported.Add(a);
+
+                    var referencedFhirAssemblies = a.GetReferencedAssemblies()
+                            .Select(an => Assembly.Load(an))
+                            .Where(isFhirModelAssembly);
+
+                    foreach (var ra in referencedFhirAssemblies)
+                        importRecursively(ra);
+
+                    static bool isFhirModelAssembly(Assembly a) =>
+                        a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not null;
                 }
             }
         }
@@ -130,20 +146,14 @@ namespace Hl7.Fhir.Introspection
         /// reflects on a satellite assembly.</remarks>
         public string? FhirVersion { get; private set; }
 
-        // Index for easy lookup of datatypes.
-        private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByName =
-            new(StringComparer.OrdinalIgnoreCase);
-
-        private readonly ConcurrentDictionary<Type, ClassMapping> _classMappingsByType = new();
-
-        private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByCanonical = new();
+        private readonly EnumMappingCollection _enumMappings = new();
 
         private const string MODELINFO_CLASSNAME = "ModelInfo";
         private const string MODELINFO_VERSION_MEMBER = "Version";
 
         /// <summary>
-        /// Locates all types in the assembly representing FHIR metadata and extracts
-        /// the data as <see cref="ClassMapping"/>s.
+        /// Locates all types and enums in the assembly representing FHIR metadata and extracts
+        /// the data into <see cref="ClassMapping"/> and <see cref="EnumMapping"/>
         /// </summary>
         public IReadOnlyList<ClassMapping> Import(Assembly assembly)
         {
@@ -159,32 +169,54 @@ namespace Hl7.Fhir.Introspection
                 FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
             }
 
-            return exportedTypes.Select(t => ImportType(t))
+            // Find and extract all EnumMappings
+            var exportedEnums = exportedTypes.Where(et => et.IsEnum);
+            extractEnums(exportedEnums);
+
+            // Find and extract all ClassMappings
+            var exportedClasses = exportedTypes.Where(et => et.IsClass && !et.IsEnum);
+            return exportedClasses.Select(t => ImportType(t))
                 .Where(cm => cm is not null)
                 .ToList()!;
         }
 
         /// <summary>
-        /// Extracts the FHIR metadata from a <see cref="Type"/> into a <see cref="ClassMapping"/>.
+        /// Extracts the FHIR metadata from a <see cref="Type"/> into a <see cref="ClassMapping"/> and
+        /// possibly multiple <see cref="EnumMappings"/>. 
         /// </summary>
+        /// <returns>The created ClassMapping.</returns>
         public ClassMapping? ImportType(Type type)
         {
-            // When explicitly importing a (newer?) class mapping for the same
-            // model type name, overwrite the old entry.            
             if (!ClassMapping.TryGetMappingForType(type, FhirRelease, out var mapping))
                 return null;
 
-            RegisterTypeMapping(type, mapping!);
+            _classMappings.Add(mapping!);
+
+            var nestedTypes = type.GetNestedTypes(BindingFlags.Public);
+            var nestedEnums = nestedTypes.Where(t => t.IsEnum);
+            extractEnums(nestedEnums);
+
+            var nestedClasses = nestedTypes.Where(t => t.IsClass && !t.IsEnum);
+            extractBackbonesFromClasses(nestedClasses);
+
             return mapping;
         }
 
-        internal void RegisterTypeMapping(Type t, ClassMapping mapping)
+        private void extractEnums(IEnumerable<Type> enumTypes)
         {
-            _classMappingsByName[mapping!.Name] = mapping;
-            _classMappingsByType[t] = mapping;
+            foreach (var enumType in enumTypes)
+            {
+                var success = EnumMapping.TryGetMappingForEnum(enumType, FhirRelease, out var mapping);
+                if (success) _enumMappings.Add(mapping!);
+            }
+        }
 
-            if (mapping.Canonical is not null)
-                _classMappingsByCanonical[mapping.Canonical] = mapping;
+        private void extractBackbonesFromClasses(IEnumerable<Type> classTypes)
+        {
+            foreach (var classType in classTypes)
+            {
+                _ = ImportType(classType);
+            }
         }
 
         /// <summary>
@@ -200,24 +232,54 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>The search for the mapping by namem is case-insensitive.</remarks>
         public ClassMapping? FindClassMapping(string fhirTypeName) =>
-            _classMappingsByName.TryGetValue(fhirTypeName, out var entry) ? entry : null;
+            _classMappings.ByName.TryGetValue(fhirTypeName, out var entry) ? entry : null;
 
         /// <summary>
         /// Retrieves an already imported <see cref="ClassMapping" /> given a Type.
         /// </summary>
         public ClassMapping? FindClassMapping(Type t) =>
-            _classMappingsByType.TryGetValue(t, out var entry) ? entry : null;
+            _classMappings.ByType.TryGetValue(t, out var entry) ? entry : null;
 
         /// <summary>
         /// Retrieves an already imported <see cref="ClassMapping" /> given a canonical.
         /// </summary>
         public ClassMapping? FindClassMappingByCanonical(string canonical) =>
-            _classMappingsByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+            _classMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
 
         /// <summary>
-        /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
+        /// Retrieves an already imported <see cref="EnumMapping"/>, given the name of the valueset.
         /// </summary>
-        public ICollection<ClassMapping> ClassMappings => _classMappingsByName.Values;
+        public EnumMapping? FindEnumMapping(string valuesetName) =>
+            _enumMappings.ByName.TryGetValue(valuesetName, out var entry) ? entry : null;
+
+        /// <summary>
+        /// Retrieves an already imported <see cref="EnumMapping" /> given the enum Type.
+        /// </summary>
+        public EnumMapping? FindEnumMapping(Type t) =>
+            _enumMappings.ByType.TryGetValue(t, out var entry) ? entry : null;
+
+        /// <summary>
+        /// Retrieves an already imported <see cref="EnumMapping" /> given the valueset canonical.
+        /// </summary>
+        public EnumMapping? FindEnumMappingByCanonical(string canonical) =>
+            _enumMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+
+        /// <summary>
+        /// The class mapping representing the Cql Patient type for the inspected model.
+        /// </summary>
+        public ClassMapping? PatientMapping => ClassMappings.FirstOrDefault(cm => cm.IsPatientClass);
+
+        /// <summary>
+        /// List of ClassMappings registered with the inspector.
+        /// </summary>
+        public ICollection<ClassMapping> ClassMappings => _classMappings.ByName.Values.ToList();
+
+        private readonly ClassMappingCollection _classMappings = new();
+
+        /// <summary>
+        /// List of EnumMappings registered with the inspector.
+        /// </summary>
+        public IEnumerable<EnumMapping> EnumMappings => _enumMappings.ByName.Values;
 
         /// <inheritdoc cref="IStructureDefinitionSummaryProvider.Provide(string)"/>
         public IStructureDefinitionSummary? Provide(string canonical) =>

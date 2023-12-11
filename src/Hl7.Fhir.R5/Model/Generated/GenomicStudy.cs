@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("GenomicStudy","http://hl7.org/fhir/StructureDefinition/GenomicStudy", IsResource=true)]
-  public partial class GenomicStudy : Hl7.Fhir.Model.DomainResource
+  public partial class GenomicStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/genomicstudy-status)
     /// (system: http://hl7.org/fhir/genomicstudy-status)
     /// </summary>
-    [FhirEnumeration("GenomicStudyStatus")]
+    [FhirEnumeration("GenomicStudyStatus", "http://hl7.org/fhir/ValueSet/genomicstudy-status", "http://hl7.org/fhir/genomicstudy-status")]
     public enum GenomicStudyStatus
     {
       /// <summary>
       /// The existence of the genomic study is registered, but there is nothing yet available.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("registered", "http://hl7.org/fhir/genomicstudy-status"), Description("Registered")]
+      [EnumLiteral("registered"), Description("Registered")]
       Registered,
       /// <summary>
       /// At least one instance has been associated with this genomic study.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/genomicstudy-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// The genomic study is unavailable because the genomic study was not started or not completed (also sometimes called "aborted").
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/genomicstudy-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The genomic study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/genomicstudy-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/genomicstudy-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Analysis", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis")]
     public partial class AnalysisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -126,6 +127,7 @@ namespace Hl7.Fhir.Model
       /// Type of the methods used in the analysis (e.g., FISH, Karyotyping, MSI)
       /// </summary>
       [FhirElement("methodType", InSummary=true, Order=50)]
+      [Binding("GenomicStudyMethodType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> MethodType
@@ -140,6 +142,7 @@ namespace Hl7.Fhir.Model
       /// Type of the genomic changes studied in the analysis (e.g., DNA, RNA, or AA change)
       /// </summary>
       [FhirElement("changeType", Order=60)]
+      [Binding("GenomicStudyChangeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ChangeType
@@ -154,6 +157,7 @@ namespace Hl7.Fhir.Model
       /// Genome build that is used in this analysis
       /// </summary>
       [FhirElement("genomeBuild", Order=70)]
+      [Binding("HumanRefSeqNCBIBuildId")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept GenomeBuild
       {
@@ -678,6 +682,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Input", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -704,6 +709,7 @@ namespace Hl7.Fhir.Model
       /// Type of input data (e.g., BAM, CRAM, or FASTA)
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("GenomicStudyDataFormat")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -836,6 +842,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Output", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -862,6 +869,7 @@ namespace Hl7.Fhir.Model
       /// Type of output data (e.g., VCF, MAF, or BAM)
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [Binding("GenomicStudyDataFormat")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -969,6 +977,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Performer", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1102,6 +1111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Device", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.device")]
     public partial class DeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1248,6 +1258,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GenomicStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus> StatusElement
@@ -1280,6 +1291,7 @@ namespace Hl7.Fhir.Model
     /// The type of the study (e.g., Familial variant segregation, Functional variation detection, or Gene expression profiling)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
+    [Binding("GenomicStudyType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1533,6 +1545,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent> _Analysis;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

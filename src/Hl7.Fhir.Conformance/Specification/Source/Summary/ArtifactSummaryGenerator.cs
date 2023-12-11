@@ -69,6 +69,8 @@ namespace Hl7.Fhir.Specification.Summary
         private readonly IModelInfo _modelInfo;
 
         /// <summary>Singleton. Returns a global default instance.</summary>
+        [Obsolete("This static property uses an incorrect ModelInspector. Use new ArtifactSummaryGenerator(ModelInspector) instead. " +
+            "Obsolete since 2023-05-03. Will be removed in the next major release.")]
         public static ArtifactSummaryGenerator Default { get; } = new ArtifactSummaryGenerator(ModelInspector.ForAssembly(typeof(IModelInfo).Assembly));
 
         /// <summary>Default constructor. Creates a new instance of the <see cref="ArtifactSummaryGenerator"/>.</summary>

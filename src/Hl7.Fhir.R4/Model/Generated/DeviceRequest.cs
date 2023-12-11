@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceRequest","http://hl7.org/fhir/StructureDefinition/DeviceRequest", IsResource=true)]
-  public partial class DeviceRequest : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceRequest#Parameter", IsNestedType=true)]
+    [BackboneType("DeviceRequest.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Device detail
       /// </summary>
       [FhirElement("code", Order=40, FiveWs="FiveWs.what[x]")]
+      [Binding("ParameterCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -316,6 +318,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
     {
@@ -348,6 +351,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -381,6 +385,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -412,6 +417,7 @@ namespace Hl7.Fhir.Model
     /// Device requested
     /// </summary>
     [FhirElement("code", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("DeviceRequestCode")]
     [CLSCompliant(false)]
     [References("Device")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -535,6 +541,7 @@ namespace Hl7.Fhir.Model
     /// Filler role
     /// </summary>
     [FhirElement("performerType", InSummary=true, Order=250, FiveWs="FiveWs.actor")]
+    [Binding("DeviceRequestParticipantRole")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PerformerType
     {
@@ -563,6 +570,7 @@ namespace Hl7.Fhir.Model
     /// Coded Reason for request
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=270, FiveWs="FiveWs.why[x]")]
+    [Binding("DeviceRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -650,6 +658,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.DataType ICoded<Hl7.Fhir.Model.DataType>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

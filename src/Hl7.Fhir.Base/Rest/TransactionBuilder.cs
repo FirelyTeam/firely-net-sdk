@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -51,11 +53,12 @@ namespace Hl7.Fhir.Rest
         {
         }
 
-        private static Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
+        private static Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType, string? fullUrl = null)
         {
             var newEntry = new Bundle.EntryComponent
             {
-                Request = new Bundle.RequestComponent() { Method = method }
+                Request = new Bundle.RequestComponent() { Method = method },
+                FullUrl = fullUrl
             };
 
             newEntry.AddAnnotation(interactionType);
@@ -66,7 +69,7 @@ namespace Hl7.Fhir.Rest
         private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
         {
             var url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl);
-            newEntry.Request.Url = url.OriginalString;
+            newEntry.Request.Url = url!.OriginalString;
             _result.Entry.Add(newEntry);
         }
 
@@ -84,10 +87,11 @@ namespace Hl7.Fhir.Rest
         /// Add a "GET" entry to the transaction/batch
         /// </summary>
         /// <param name="url">relative or absolute url the transaction is supposed to "get"</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Get(string url)
+        public TransactionBuilder Get(string url, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified, bundleEntryFullUrl);
             var uri = new Uri(url, UriKind.RelativeOrAbsolute);
 
             if (uri.IsAbsoluteUri)
@@ -104,10 +108,11 @@ namespace Hl7.Fhir.Rest
         /// Add a "GET" entry to the transaction/batch
         /// </summary>
         /// <param name="uri">relative or absolute uri of the resource the transaction is supposed to return</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Get(Uri uri)
+        public TransactionBuilder Get(Uri uri, string? bundleEntryFullUrl = null)
         {
-            return Get(uri.OriginalString);
+            return Get(uri.OriginalString, bundleEntryFullUrl);
         }
 
         /// <summary>
@@ -117,10 +122,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="id">id of the resource</param>
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="ifModifiedSince">optional date that specifies the resource is only to be returned if it has been modified after that date</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Read(string resourceType, string id, string versionId = null, DateTimeOffset? ifModifiedSince = null)
+        public TransactionBuilder Read(string resourceType, string id, string? versionId = null, DateTimeOffset? ifModifiedSince = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read, bundleEntryFullUrl);
             entry.Request.IfNoneMatch = createIfMatchETag(versionId);
             entry.Request.IfModifiedSince = ifModifiedSince;
             var path = newRestUrl().AddPath(resourceType, id);
@@ -135,10 +141,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="resourceType">type of the resource</param>
         /// <param name="id">id of the resource</param>
         /// <param name="vid">version id of the resource</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder VRead(string resourceType, string id, string vid)
+        public TransactionBuilder VRead(string resourceType, string id, string vid, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead, bundleEntryFullUrl);
             var path = newRestUrl().AddPath(resourceType, id, HISTORY, vid);
             addEntry(entry, path);
 
@@ -151,10 +158,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="id">id of the resource</param>
         /// <param name="body">The newer version of the resource to be updated</param>
         /// <param name="versionId">optional version id of the resource</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Update(string id, Resource body, string versionId = null)
+        public TransactionBuilder Update(string id, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName, id);
@@ -169,10 +177,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">conditions on which a resource is supposed to be updated or not</param>
         /// <param name="body">the new version of the resource to be updated</param>
         /// <param name="versionId">optional version id of the resource</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Update(SearchParams condition, Resource body, string versionId = null)
+        public TransactionBuilder Update(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
@@ -189,10 +198,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="id">id of the resource to be patched</param>
         /// <param name="body">parameters resource that describes the patch operation</param>
         /// <param name="versionId">optional version id of the resource</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Patch(string resourceType, string id, Parameters body, string versionId = null)
+        public TransactionBuilder Patch(string resourceType, string id, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch);
+            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(resourceType, id);
@@ -208,10 +218,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">conditions on which the a resource is supposed to be patched</param>
         /// <param name="body">parameters resource that describes the patch operation</param>
         /// <param name="versionId">optional version id of the resource</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string versionId = null)
+        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch);
+            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(resourceType);
@@ -221,7 +232,7 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        private static string createIfMatchETag(string versionId)
+        private static string? createIfMatchETag(string? versionId)
         {
             if (versionId == null) return versionId;
 
@@ -235,10 +246,11 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="resourceType">type of the resource to be deleted</param>
         /// <param name="id">id of the resource to be deleted</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Delete(string resourceType, string id)
+        public TransactionBuilder Delete(string resourceType, string id, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete, bundleEntryFullUrl);
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
 
@@ -250,10 +262,11 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="resourceType">type of the resource to be deleted</param>
         /// <param name="condition">conditions on which the resource should be deleted</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Delete(string resourceType, SearchParams condition)
+        public TransactionBuilder Delete(string resourceType, SearchParams condition, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete, bundleEntryFullUrl);
             var path = newRestUrl().AddPath(resourceType);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
@@ -265,10 +278,11 @@ namespace Hl7.Fhir.Rest
         /// Add a "create" entry to the transaction/batch
         /// </summary>
         /// <param name="body">the resource that is to be created</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Create(Resource body)
+        public TransactionBuilder Create(Resource body, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create, bundleEntryFullUrl);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
             addEntry(entry, path);
@@ -282,10 +296,11 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="body">the resource that is to be created</param>
         /// <param name="condition">conditions on which the resource is supposed to be created</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Create(Resource body, SearchParams condition)
+        public TransactionBuilder Create(Resource body, SearchParams condition, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create, bundleEntryFullUrl);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
@@ -299,10 +314,11 @@ namespace Hl7.Fhir.Rest
         /// Add an entry to the transaction/batch that reads the CapabilityStatement of the server 
         /// </summary>
         /// <param name="summary">optional parameter that describes what kind of summary of the capability statement is to be returned</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder CapabilityStatement(SummaryType? summary)
+        public TransactionBuilder CapabilityStatement(SummaryType? summary, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Capabilities);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Capabilities, bundleEntryFullUrl);
             var path = newRestUrl().AddPath(METADATA);
             if (summary.HasValue)
                 path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summary.Value.ToString().ToLower());
@@ -312,9 +328,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
+        private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History, bundleEntryFullUrl);
 
             if (summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
             if (pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
@@ -331,11 +347,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="summaryOnly">whether to return just a summary of all historical entries</param>
         /// <param name="pageSize">page size of the response bundle</param>
         /// <param name="since">date/time of the earliest historical entry</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder ResourceHistory(string resourceType, string id, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
+        public TransactionBuilder ResourceHistory(string resourceType, string id, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null, string? bundleEntryFullUrl = null)
         {
             var path = newRestUrl().AddPath(resourceType, id, HISTORY);
-            addHistoryEntry(path, summaryOnly, pageSize, since);
+            addHistoryEntry(path, summaryOnly, pageSize, since, bundleEntryFullUrl);
 
             return this;
         }
@@ -347,11 +364,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="summaryOnly">whether to return just a summary of all historical entries</param>
         /// <param name="pageSize">page size of the response bundle</param>
         /// <param name="since">date/time of the earliest historical entry</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder CollectionHistory(string resourceType, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
+        public TransactionBuilder CollectionHistory(string resourceType, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null, string? bundleEntryFullUrl = null)
         {
             var path = newRestUrl().AddPath(resourceType, HISTORY);
-            addHistoryEntry(path, summaryOnly, pageSize, since);
+            addHistoryEntry(path, summaryOnly, pageSize, since, bundleEntryFullUrl);
 
             return this;
         }
@@ -363,39 +381,25 @@ namespace Hl7.Fhir.Rest
         /// <param name="summaryOnly">whether to return just a summary of all historical entries</param>
         /// <param name="pageSize">page size of the response bundle</param>
         /// <param name="since">date/time of the earliest historical entry</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder ServerHistory(SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
+        public TransactionBuilder ServerHistory(SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null, string? bundleEntryFullUrl = null)
         {
             var path = newRestUrl().AddPath(HISTORY);
-            addHistoryEntry(path, summaryOnly, pageSize, since);
+            addHistoryEntry(path, summaryOnly, pageSize, since, bundleEntryFullUrl);
 
             return this;
         }
 
-        private static string paramValueToString(Parameters.ParameterComponent parameter)
+        private static string paramValueToString(Parameters.ParameterComponent parameter) => parameter.Value switch
         {
-            if (parameter.Value != null)
-            {
-                switch (parameter.Value)
-                {
-                    case Identifier id:
-                        return id.ToToken();
-                    case Coding coding:
-                        return coding.ToToken();
-                    case ContactPoint contactPoint:
-                        return contactPoint.ToToken();
-                    case CodeableConcept codeableConcept:
-                        return codeableConcept.ToToken();
-                    default:
-                        if (ModelInspector.Base.IsPrimitive(parameter.Value.GetType()))
-                        {
-                            return parameter.Value.ToString();
-                        }
-                        break;
-                }
-            }
-            throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.");
-        }
+            Identifier id => id.ToToken(),
+            Coding coding => coding.ToToken(),
+            ContactPoint contactPoint => contactPoint.ToToken(),
+            CodeableConcept codeableConcept => codeableConcept.ToToken(),
+            not null when ModelInspector.Base.IsPrimitive(parameter.Value.GetType()) => parameter.Value.ToString()!,
+            _ => throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.")
+        };
 
 
         /// <summary>
@@ -404,10 +408,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="endpoint">The endpoint to perform the FHIR operation on</param>
         /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
         /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters? parameters, bool useGet = false, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST, InteractionType.Operation);
+            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST, InteractionType.Operation, bundleEntryFullUrl);
             var path = new RestUrl(endpoint);
 
             if (useGet)
@@ -435,12 +440,13 @@ namespace Hl7.Fhir.Rest
         /// <param name="name">name of the operation to be performed</param>
         /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
         /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters, bool useGet = false)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters? parameters, bool useGet = false, string? bundleEntryFullUrl = null)
         {
             var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
 
-            return EndpointOperation(path, parameters, useGet);
+            return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
         }
 
         /// <summary>
@@ -449,11 +455,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="name">name of the operation to be performed</param>
         /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
         /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder ServerOperation(string name, Parameters parameters, bool useGet = false)
+        public TransactionBuilder ServerOperation(string name, Parameters? parameters, bool useGet = false, string? bundleEntryFullUrl = null)
         {
             var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
-            return EndpointOperation(path, parameters, useGet);
+            return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
         }
 
         /// <summary>
@@ -463,11 +470,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="name">name of the operation to be performed</param>
         /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
         /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters, bool useGet = false)
+        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters? parameters, bool useGet = false, string? bundleEntryFullUrl = null)
         {
             var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
-            return EndpointOperation(path, parameters, useGet);
+            return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
         }
 
         /// <summary>
@@ -479,14 +487,27 @@ namespace Hl7.Fhir.Rest
         /// <param name="name">name of the operation to be performed</param>
         /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
         /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters, bool useGet = false)
+        public TransactionBuilder ResourceOperation(string resourceType, string id, string? vid, string name, Parameters? parameters, bool useGet = false, string? bundleEntryFullUrl = null)
         {
             var path = newRestUrl().AddPath(resourceType, id);
             if (vid != null) path.AddPath(HISTORY, vid);
             path.AddPath(OPERATIONPREFIX + name);
 
-            return EndpointOperation(path, parameters, useGet);
+            return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
+        }
+
+        public TransactionBuilder ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null, string? bundleEntryFullUrl = null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Operation, bundleEntryFullUrl);
+            var path = newRestUrl().AddPath(OPERATIONPREFIX + "process-message");
+            if (async) path.AddParam("async", "true");
+            if (responseUrl != null) path.AddParam("response-url", responseUrl);
+            entry.Resource = messageBundle;
+            addEntry(entry, path);
+
+            return this;
         }
 
         /// <summary>
@@ -494,10 +515,11 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="q">search parameters that describe the query to use</param>
         /// <param name="resourceType">resource type to be searched on</param>       
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Search(SearchParams q = null, string resourceType = null)
+        public TransactionBuilder Search(SearchParams? q = null, string? resourceType = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search, bundleEntryFullUrl);
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
             if (q != null) path.AddParams(q.ToUriParamList());
@@ -511,12 +533,13 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="q">search parameters that describe the query to use</param>
         /// <param name="resourceType">resource type to be searched on</param>       
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder SearchUsingPost(SearchParams q, string resourceType = null)
+        public TransactionBuilder SearchUsingPost(SearchParams q, string? resourceType = null, string? bundleEntryFullUrl = null)
         {
             if (q == null) throw new ArgumentNullException(nameof(q));
 
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Search);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Search, bundleEntryFullUrl);
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
             path.AddPath("_search");
@@ -530,10 +553,11 @@ namespace Hl7.Fhir.Rest
         /// Add a sub-transaction to the transaction/batch
         /// </summary>
         /// <param name="transaction">Bundle that describes the sub-transaction</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Transaction(Bundle transaction)
+        public TransactionBuilder Transaction(Bundle transaction, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction, bundleEntryFullUrl);
             entry.Resource = transaction;
             var url = _baseUrl.ToString();
             if (url.EndsWith("/"))  // in case of a transaction the url cannot end with a forward slash. Remove it here.
@@ -544,3 +568,4 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+#nullable restore

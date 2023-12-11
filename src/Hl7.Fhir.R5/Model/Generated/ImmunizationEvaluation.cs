@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ImmunizationEvaluation","http://hl7.org/fhir/StructureDefinition/ImmunizationEvaluation", IsResource=true)]
-  public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource
+  public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/immunization-evaluation-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("ImmunizationEvaluationStatusCodes")]
+    [FhirEnumeration("ImmunizationEvaluationStatusCodes", "http://hl7.org/fhir/ValueSet/immunization-evaluation-status", "http://hl7.org/fhir/CodeSystem/medication-admin-status")]
     public enum ImmunizationEvaluationStatusCodes
     {
       /// <summary>
       /// All actions that are implied by the administration have occurred.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medication-admin-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The administration was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-admin-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -96,6 +96,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImmunizationEvaluationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes> StatusElement
@@ -190,6 +191,7 @@ namespace Hl7.Fhir.Model
     /// The vaccine preventable disease schedule being evaluated
     /// </summary>
     [FhirElement("targetDisease", InSummary=true, Order=140)]
+    [Binding("EvaluationTargetDisease")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TargetDisease
@@ -220,6 +222,7 @@ namespace Hl7.Fhir.Model
     /// Status of the dose relative to published recommendations
     /// </summary>
     [FhirElement("doseStatus", InSummary=true, Order=160)]
+    [Binding("EvaluationDoseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseStatus
@@ -234,6 +237,7 @@ namespace Hl7.Fhir.Model
     /// Reason why the doese is considered valid, invalid or some other status
     /// </summary>
     [FhirElement("doseStatusReason", Order=170)]
+    [Binding("EvaluationDoseStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> DoseStatusReason
@@ -367,6 +371,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("SeriesDoses");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

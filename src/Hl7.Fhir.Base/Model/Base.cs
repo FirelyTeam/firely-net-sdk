@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(String property) =>
+        protected virtual void OnPropertyChanged(String property) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion

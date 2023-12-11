@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = typeNameOrDie<TResource>();
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource?> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters, CancellationToken? ct = null) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = typeNameOrDie<TResource>();
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
@@ -936,6 +936,21 @@ namespace Hl7.Fhir.Rest
         public virtual Resource? Operation(Uri operation, Parameters? parameters = null, bool useGet = false)
         {
             return OperationAsync(operation, parameters, useGet).WaitResult();
+        }
+
+        public virtual Task<Bundle?> ProcessMessageAsync(Bundle bundle, bool async = false, string? responseUrl = null, CancellationToken? ct = null)
+        {
+            if (bundle == null) throw new ArgumentNullException(nameof(bundle));
+
+            var tx = new TransactionBuilder(Endpoint).ProcessMessage(bundle, async, responseUrl).ToBundle();
+
+            return executeAsync<Bundle>(tx, new [] {HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NoContent}, ct);
+        }
+
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
+        public virtual Resource? ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null)
+        {
+            return ProcessMessageAsync(messageBundle, async, responseUrl).WaitResult();
         }
 
         private Task<Resource?> internalOperationAsync(string operationName, string? type = null, string? id = null, string? vid = null,

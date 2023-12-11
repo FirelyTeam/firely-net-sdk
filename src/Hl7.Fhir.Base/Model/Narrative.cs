@@ -70,32 +70,32 @@ namespace Hl7.Fhir.Model
         /// (url: http://hl7.org/fhir/ValueSet/narrative-status)
         /// (system: http://hl7.org/fhir/narrative-status)
         /// </summary>
-        [FhirEnumeration("NarrativeStatus")]
+        [FhirEnumeration("NarrativeStatus", "http://hl7.org/fhir/ValueSet/narrative-status", "http://hl7.org/fhir/narrative-status")]
         public enum NarrativeStatus
         {
             /// <summary>
             /// The contents of the narrative are entirely generated from the core elements in the content.
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("generated", "http://hl7.org/fhir/narrative-status"), Description("Generated")]
+            [EnumLiteral("generated"), Description("Generated")]
             Generated,
             /// <summary>
             /// The contents of the narrative are entirely generated from the core elements in the content and some of the content is generated from extensions. The narrative SHALL reflect the impact of all modifier extensions.
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("extensions", "http://hl7.org/fhir/narrative-status"), Description("Extensions")]
+            [EnumLiteral("extensions"), Description("Extensions")]
             Extensions,
             /// <summary>
             /// The contents of the narrative may contain additional information not found in the structured data. Note that there is no computable way to determine what the extra information is, other than by human inspection.
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("additional", "http://hl7.org/fhir/narrative-status"), Description("Additional")]
+            [EnumLiteral("additional"), Description("Additional")]
             Additional,
             /// <summary>
             /// The contents of the narrative are some equivalent of "No human-readable text provided in this case".
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("empty", "http://hl7.org/fhir/narrative-status"), Description("Empty")]
+            [EnumLiteral("empty"), Description("Empty")]
             Empty,
         }
 
@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
         [Cardinality(Min = 1, Max = 1)]
         [DeclaredType(Type = typeof(Code))]
         [DataMember]
+        [Binding("NarrativeStatus")]
         public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
         {
             get { return _StatusElement; }

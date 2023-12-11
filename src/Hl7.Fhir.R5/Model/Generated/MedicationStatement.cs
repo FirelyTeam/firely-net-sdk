@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationStatement","http://hl7.org/fhir/StructureDefinition/MedicationStatement", IsResource=true)]
-  public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatementStatusCodes")]
+    [FhirEnumeration("MedicationStatementStatusCodes", "http://hl7.org/fhir/ValueSet/medication-statement-status", "http://hl7.org/fhir/CodeSystem/medication-statement-status")]
     public enum MedicationStatementStatusCodes
     {
       /// <summary>
       /// The action of recording the medication statement is finished.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("recorded", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Recorded")]
+      [EnumLiteral("recorded"), Description("Recorded")]
       Recorded,
       /// <summary>
       /// Some of the actions that are implied by the medication usage may have occurred.  For example, the patient may have taken some of the medication.  Clinical decision support systems should take this status into account.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication usage is draft or preliminary.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationStatement#Adherence", IsNestedType=true)]
+    [BackboneType("MedicationStatement.adherence")]
     public partial class AdherenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// Type of adherence
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("MedicationStatementAdherence")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -114,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// Details of the reason for the current use of the medication
       /// </summary>
       [FhirElement("reason", Order=50)]
+      [Binding("MedicationStatementStatusReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -250,6 +253,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatusCodes> StatusElement
@@ -282,6 +286,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication statement
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [Binding("MedicationStatementAdministrationLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -296,6 +301,7 @@ namespace Hl7.Fhir.Model
     /// What medication was taken
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Medication
@@ -419,6 +425,7 @@ namespace Hl7.Fhir.Model
     /// Reason for why the medication is being/was taken
     /// </summary>
     [FhirElement("reason", Order=200, FiveWs="FiveWs.why[x]")]
+    [Binding("MedicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -516,6 +523,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.MedicationStatement.AdherenceComponent _Adherence;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

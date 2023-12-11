@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Practitioner","http://hl7.org/fhir/StructureDefinition/Practitioner", IsResource=true)]
-  public partial class Practitioner : Hl7.Fhir.Model.DomainResource
+  public partial class Practitioner : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Practitioner#Qualification", IsNestedType=true)]
+    [BackboneType("Practitioner.qualification")]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -86,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// Coded representation of the qualification
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -237,7 +239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A identifier for the person as this agent
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -251,7 +253,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this practitioner's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -326,6 +328,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
@@ -416,6 +419,7 @@ namespace Hl7.Fhir.Model
     /// A language the practitioner is able to use in patient communication
     /// </summary>
     [FhirElement("communication", Order=180)]
+    [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -425,6 +429,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

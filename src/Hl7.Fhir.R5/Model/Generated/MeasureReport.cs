@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport", IsResource=true)]
-  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
+  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
     /// (system: http://hl7.org/fhir/measure-report-status)
     /// </summary>
-    [FhirEnumeration("MeasureReportStatus")]
+    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status", "http://hl7.org/fhir/measure-report-status")]
     public enum MeasureReportStatus
     {
       /// <summary>
       /// The report is complete and ready for use.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/measure-report-status"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
       /// <summary>
       /// The report is currently being generated.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/measure-report-status"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
       /// <summary>
       /// An error occurred attempting to generate the report.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/measure-report-status"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
     /// (system: http://hl7.org/fhir/measure-report-type)
     /// </summary>
-    [FhirEnumeration("MeasureReportType")]
+    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type", "http://hl7.org/fhir/measure-report-type")]
     public enum MeasureReportType
     {
       /// <summary>
       /// An individual report that provides information on the performance for a given measure with respect to a single subject.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("individual", "http://hl7.org/fhir/measure-report-type"), Description("Individual")]
+      [EnumLiteral("individual"), Description("Individual")]
       Individual,
       /// <summary>
       /// A subject list report that includes a listing of subjects that satisfied each population criteria in the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("subject-list", "http://hl7.org/fhir/measure-report-type"), Description("Subject List")]
+      [EnumLiteral("subject-list"), Description("Subject List")]
       SubjectList,
       /// <summary>
       /// A summary report that returns the number of members in each population criteria for the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("summary", "http://hl7.org/fhir/measure-report-type"), Description("Summary")]
+      [EnumLiteral("summary"), Description("Summary")]
       Summary,
       /// <summary>
       /// A data exchange report that contains data-of-interest for the measure (i.e. data that is needed to calculate the measure)
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("data-exchange", "http://hl7.org/fhir/measure-report-type"), Description("Data Exchange")]
+      [EnumLiteral("data-exchange"), Description("Data Exchange")]
       DataExchange,
     }
 
@@ -122,20 +122,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/submit-data-update-type)
     /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
     /// </summary>
-    [FhirEnumeration("SubmitDataUpdateType")]
+    [FhirEnumeration("SubmitDataUpdateType", "http://hl7.org/fhir/ValueSet/submit-data-update-type", "http://hl7.org/fhir/CodeSystem/submit-data-update-type")]
     public enum SubmitDataUpdateType
     {
       /// <summary>
       /// In contrast to the Snapshot Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains only the new and updated DEQM and QI Core Profiles since the last transaction. If the Consumer supports incremental updates, the contents of the updated payload updates the previous payload data.
       /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
       /// </summary>
-      [EnumLiteral("incremental", "http://hl7.org/fhir/CodeSystem/submit-data-update-type"), Description("Incremental")]
+      [EnumLiteral("incremental"), Description("Incremental")]
       Incremental,
       /// <summary>
       /// In contrast to the Incremental Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains all the DEQM and QI Core Profiles for each transaction.  If the Consumer supports snapshot updates, the contents of the updated payload entirely replaces the previous payload
       /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
       /// </summary>
-      [EnumLiteral("snapshot", "http://hl7.org/fhir/CodeSystem/submit-data-update-type"), Description("Snapshot")]
+      [EnumLiteral("snapshot"), Description("Snapshot")]
       Snapshot,
     }
 
@@ -145,6 +145,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Group", IsNestedType=true)]
+    [BackboneType("MeasureReport.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -187,6 +188,7 @@ namespace Hl7.Fhir.Model
       /// Meaning of the group
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
+      [Binding("MeasureGroupExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -388,6 +390,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Population", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.population")]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -430,6 +433,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -650,6 +654,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Stratifier", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier")]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -692,6 +697,7 @@ namespace Hl7.Fhir.Model
       /// What stratifier of the group
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasureStratifierExample")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -822,6 +828,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroup", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier.stratum")]
     public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -833,6 +840,7 @@ namespace Hl7.Fhir.Model
       /// The stratum value, e.g. male
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MeasureReportStratifierValueExample")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -1003,6 +1011,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Component", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier.stratum.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1045,6 +1054,7 @@ namespace Hl7.Fhir.Model
       /// What stratifier component of the group
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasureStratifierExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1059,6 +1069,7 @@ namespace Hl7.Fhir.Model
       /// The stratum component value, e.g. male
       /// </summary>
       [FhirElement("value", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("MeasureReportStratifierValueExample")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -1178,6 +1189,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroupPopulation", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier.stratum.population")]
     public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1220,6 +1232,7 @@ namespace Hl7.Fhir.Model
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
       [FhirElement("code", Order=50)]
+      [Binding("MeasurePopulation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -1453,6 +1466,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
@@ -1486,6 +1500,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement
@@ -1519,6 +1534,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("dataUpdateType", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubmitDataUpdateType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType> DataUpdateTypeElement
     {
@@ -1701,6 +1717,7 @@ namespace Hl7.Fhir.Model
     /// What scoring method (e.g. proportion, ratio, continuous-variable)
     /// </summary>
     [FhirElement("scoring", InSummary=true, IsModifier=true, Order=210)]
+    [Binding("MeasureScoring")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scoring
     {
@@ -1714,6 +1731,7 @@ namespace Hl7.Fhir.Model
     /// increase | decrease
     /// </summary>
     [FhirElement("improvementNotation", InSummary=true, IsModifier=true, Order=220)]
+    [Binding("MeasureImprovementNotation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
     {
@@ -1768,6 +1786,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

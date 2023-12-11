@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SpecimenDefinition","http://hl7.org/fhir/StructureDefinition/SpecimenDefinition", IsResource=true)]
-  public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-contained-preference)
     /// (system: http://hl7.org/fhir/specimen-contained-preference)
     /// </summary>
-    [FhirEnumeration("SpecimenContainedPreference")]
+    [FhirEnumeration("SpecimenContainedPreference", "http://hl7.org/fhir/ValueSet/specimen-contained-preference", "http://hl7.org/fhir/specimen-contained-preference")]
     public enum SpecimenContainedPreference
     {
       /// <summary>
       /// This type of contained specimen is preferred to collect this kind of specimen.
       /// (system: http://hl7.org/fhir/specimen-contained-preference)
       /// </summary>
-      [EnumLiteral("preferred", "http://hl7.org/fhir/specimen-contained-preference"), Description("Preferred")]
+      [EnumLiteral("preferred"), Description("Preferred")]
       Preferred,
       /// <summary>
       /// This type of conditioned specimen is an alternate.
       /// (system: http://hl7.org/fhir/specimen-contained-preference)
       /// </summary>
-      [EnumLiteral("alternate", "http://hl7.org/fhir/specimen-contained-preference"), Description("Alternate")]
+      [EnumLiteral("alternate"), Description("Alternate")]
       Alternate,
     }
 
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SpecimenDefinition#TypeTested", IsNestedType=true)]
+    [BackboneType("SpecimenDefinition.typeTested")]
     public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -125,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// Type of intended specimen
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("IntendedSpecimenType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -139,6 +141,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("preference", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SpecimenContainedPreference")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference> PreferenceElement
@@ -228,6 +231,7 @@ namespace Hl7.Fhir.Model
       /// Rejection criterion
       /// </summary>
       [FhirElement("rejectionCriterion", Order=100)]
+      [Binding("RejectionCriterion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
@@ -404,6 +408,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SpecimenDefinition#Container", IsNestedType=true)]
+    [BackboneType("SpecimenDefinition.typeTested.container")]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -415,6 +420,7 @@ namespace Hl7.Fhir.Model
       /// Container material
       /// </summary>
       [FhirElement("material", Order=40)]
+      [Binding("ContainerMaterial")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Material
       {
@@ -428,6 +434,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container associated with the kind of specimen
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ContainerType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -441,6 +448,7 @@ namespace Hl7.Fhir.Model
       /// Color of container cap
       /// </summary>
       [FhirElement("cap", Order=60)]
+      [Binding("ContainerCap")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Cap
       {
@@ -706,6 +714,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SpecimenDefinition#Additive", IsNestedType=true)]
+    [BackboneType("SpecimenDefinition.typeTested.container.additive")]
     public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -717,6 +726,7 @@ namespace Hl7.Fhir.Model
       /// Additive associated with container
       /// </summary>
       [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ContainerAdditive")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -819,6 +829,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SpecimenDefinition#Handling", IsNestedType=true)]
+    [BackboneType("SpecimenDefinition.typeTested.handling")]
     public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -830,6 +841,7 @@ namespace Hl7.Fhir.Model
       /// Temperature qualifier
       /// </summary>
       [FhirElement("temperatureQualifier", Order=40)]
+      [Binding("HandlingConditionSet")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept TemperatureQualifier
       {
@@ -1023,6 +1035,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material to collect
     /// </summary>
     [FhirElement("typeCollected", InSummary=true, Order=100)]
+    [Binding("CollectedSpecimenType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TypeCollected
     {
@@ -1036,6 +1049,7 @@ namespace Hl7.Fhir.Model
     /// Patient preparation for collection
     /// </summary>
     [FhirElement("patientPreparation", InSummary=true, Order=110)]
+    [Binding("PreparePatient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
@@ -1081,6 +1095,7 @@ namespace Hl7.Fhir.Model
     /// Specimen collection procedure
     /// </summary>
     [FhirElement("collection", InSummary=true, Order=130)]
+    [Binding("SpecimenCollection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection
@@ -1104,6 +1119,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> _TypeTested;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition", IsResource=true)]
-  public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#Property", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// A code expressing the type of characteristic
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -101,6 +103,7 @@ namespace Hl7.Fhir.Model
       /// The status of characteristic e.g. assigned or pending
       /// </summary>
       [FhirElement("status", InSummary=true, Order=60)]
+      [Binding("PublicationStatus")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
       {
@@ -217,6 +220,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#RouteOfAdministration", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.routeOfAdministration")]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -228,6 +232,7 @@ namespace Hl7.Fhir.Model
       /// Coded expression for the route
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("SNOMEDCTRouteCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -460,6 +465,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#TargetSpecies", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies")]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -471,6 +477,7 @@ namespace Hl7.Fhir.Model
       /// Coded expression for the species
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [Binding("TargetSpecies")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -593,6 +600,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#WithdrawalPeriod", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod")]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -604,6 +612,7 @@ namespace Hl7.Fhir.Model
       /// The type of tissue for which the withdrawal period applies, e.g. meat, milk
       /// </summary>
       [FhirElement("tissue", InSummary=true, Order=40)]
+      [Binding("AnimalTissueType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Tissue
@@ -779,6 +788,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -827,6 +837,7 @@ namespace Hl7.Fhir.Model
     /// The dose form of the final product after necessary reconstitution or processing
     /// </summary>
     [FhirElement("administrableDoseForm", InSummary=true, Order=120)]
+    [Binding("AdministrableDoseForm")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AdministrableDoseForm
     {
@@ -840,6 +851,7 @@ namespace Hl7.Fhir.Model
     /// The presentation type in which this item is given to a patient. e.g. for a spray - 'puff'
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=130)]
+    [Binding("UnitOfPresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
     {
@@ -869,6 +881,7 @@ namespace Hl7.Fhir.Model
     /// The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton, or using by incoming references from the Ingredient resource
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=150)]
+    [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
@@ -921,6 +934,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent> _RouteOfAdministration;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

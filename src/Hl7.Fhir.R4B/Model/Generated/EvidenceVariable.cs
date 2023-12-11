@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EvidenceVariable","http://hl7.org/fhir/StructureDefinition/EvidenceVariable", IsResource=true)]
-  public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource
+  public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/characteristic-combination)
     /// (system: http://hl7.org/fhir/characteristic-combination)
     /// </summary>
-    [FhirEnumeration("CharacteristicCombination")]
+    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination", "http://hl7.org/fhir/characteristic-combination")]
     public enum CharacteristicCombinationCode
     {
       /// <summary>
       /// Combine characteristics with AND.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("intersection", "http://hl7.org/fhir/characteristic-combination"), Description("intersection")]
+      [EnumLiteral("intersection"), Description("intersection")]
       Intersection,
       /// <summary>
       /// Combine characteristics with OR.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("union", "http://hl7.org/fhir/characteristic-combination"), Description("union")]
+      [EnumLiteral("union"), Description("union")]
       Union,
     }
 
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -142,6 +143,7 @@ namespace Hl7.Fhir.Model
       /// Method used for describing characteristic
       /// </summary>
       [FhirElement("method", Order=60)]
+      [Binding("CharacteristicMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Method
       {
@@ -215,6 +217,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> GroupMeasureElement
       {
@@ -385,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#TimeFromStart", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.timeFromStart")]
     public partial class TimeFromStartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -579,6 +583,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Category", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.category")]
     public partial class CategoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -929,6 +934,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1198,6 +1204,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("characteristicCombination", Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CharacteristicCombination")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode> CharacteristicCombinationElement
     {
@@ -1244,6 +1251,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("handling", InSummary=true, Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EvidenceVariableHandling")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
     {
@@ -1284,6 +1292,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.EvidenceVariable.CategoryComponent> _Category;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

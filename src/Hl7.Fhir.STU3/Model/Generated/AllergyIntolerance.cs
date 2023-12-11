@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AllergyIntolerance","http://hl7.org/fhir/StructureDefinition/AllergyIntolerance", IsResource=true)]
-  public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
+  public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-clinical-status)
     /// (system: http://hl7.org/fhir/allergy-clinical-status)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceClinicalStatus")]
+    [FhirEnumeration("AllergyIntoleranceClinicalStatus", "http://hl7.org/fhir/ValueSet/allergy-clinical-status", "http://hl7.org/fhir/allergy-clinical-status")]
     public enum AllergyIntoleranceClinicalStatus
     {
       /// <summary>
       /// An active record of a risk of a reaction to the identified substance.
       /// (system: http://hl7.org/fhir/allergy-clinical-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/allergy-clinical-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// An inactivated record of a risk of a reaction to the identified substance.
       /// (system: http://hl7.org/fhir/allergy-clinical-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/allergy-clinical-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// A reaction to the identified substance has been clinically reassessed by testing or re-exposure and considered to be resolved.
       /// (system: http://hl7.org/fhir/allergy-clinical-status)
       /// </summary>
-      [EnumLiteral("resolved", "http://hl7.org/fhir/allergy-clinical-status"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-verification-status)
     /// (system: http://hl7.org/fhir/allergy-verification-status)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceVerificationStatus")]
+    [FhirEnumeration("AllergyIntoleranceVerificationStatus", "http://hl7.org/fhir/ValueSet/allergy-verification-status", "http://hl7.org/fhir/allergy-verification-status")]
     public enum AllergyIntoleranceVerificationStatus
     {
       /// <summary>
       /// A low level of certainty about the propensity for a reaction to the identified substance.
       /// (system: http://hl7.org/fhir/allergy-verification-status)
       /// </summary>
-      [EnumLiteral("unconfirmed", "http://hl7.org/fhir/allergy-verification-status"), Description("Unconfirmed")]
+      [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
       Unconfirmed,
       /// <summary>
       /// A high level of certainty about the propensity for a reaction to the identified substance, which may include clinical evidence by testing or rechallenge.
       /// (system: http://hl7.org/fhir/allergy-verification-status)
       /// </summary>
-      [EnumLiteral("confirmed", "http://hl7.org/fhir/allergy-verification-status"), Description("Confirmed")]
+      [EnumLiteral("confirmed"), Description("Confirmed")]
       Confirmed,
       /// <summary>
       /// A propensity for a reaction to the identified substance has been disproven with a high level of clinical certainty, which may include testing or rechallenge, and is refuted.
       /// (system: http://hl7.org/fhir/allergy-verification-status)
       /// </summary>
-      [EnumLiteral("refuted", "http://hl7.org/fhir/allergy-verification-status"), Description("Refuted")]
+      [EnumLiteral("refuted"), Description("Refuted")]
       Refuted,
       /// <summary>
       /// The statement was entered in error and is not valid.
       /// (system: http://hl7.org/fhir/allergy-verification-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/allergy-verification-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -122,20 +122,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-type)
     /// (system: http://hl7.org/fhir/allergy-intolerance-type)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceType")]
+    [FhirEnumeration("AllergyIntoleranceType", "http://hl7.org/fhir/ValueSet/allergy-intolerance-type", "http://hl7.org/fhir/allergy-intolerance-type")]
     public enum AllergyIntoleranceType
     {
       /// <summary>
       /// A propensity for hypersensitivity reaction(s) to a substance.  These reactions are most typically type I hypersensitivity, plus other "allergy-like" reactions, including pseudoallergy.
       /// (system: http://hl7.org/fhir/allergy-intolerance-type)
       /// </summary>
-      [EnumLiteral("allergy", "http://hl7.org/fhir/allergy-intolerance-type"), Description("Allergy")]
+      [EnumLiteral("allergy"), Description("Allergy")]
       Allergy,
       /// <summary>
       /// A propensity for adverse reactions to a substance that is not judged to be allergic or "allergy-like".  These reactions are typically (but not necessarily) non-immune.  They are to some degree idiosyncratic and/or individually specific (i.e. are not a reaction that is expected to occur with most or all patients given similar circumstances).
       /// (system: http://hl7.org/fhir/allergy-intolerance-type)
       /// </summary>
-      [EnumLiteral("intolerance", "http://hl7.org/fhir/allergy-intolerance-type"), Description("Intolerance")]
+      [EnumLiteral("intolerance"), Description("Intolerance")]
       Intolerance,
     }
 
@@ -144,32 +144,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-category)
     /// (system: http://hl7.org/fhir/allergy-intolerance-category)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceCategory")]
+    [FhirEnumeration("AllergyIntoleranceCategory", "http://hl7.org/fhir/ValueSet/allergy-intolerance-category", "http://hl7.org/fhir/allergy-intolerance-category")]
     public enum AllergyIntoleranceCategory
     {
       /// <summary>
       /// Any substance consumed to provide nutritional support for the body.
       /// (system: http://hl7.org/fhir/allergy-intolerance-category)
       /// </summary>
-      [EnumLiteral("food", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Food")]
+      [EnumLiteral("food"), Description("Food")]
       Food,
       /// <summary>
       /// Substances administered to achieve a physiological effect.
       /// (system: http://hl7.org/fhir/allergy-intolerance-category)
       /// </summary>
-      [EnumLiteral("medication", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Medication")]
+      [EnumLiteral("medication"), Description("Medication")]
       Medication,
       /// <summary>
       /// Any substances that are encountered in the environment, including any substance not already classified as food, medication, or biologic.
       /// (system: http://hl7.org/fhir/allergy-intolerance-category)
       /// </summary>
-      [EnumLiteral("environment", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Environment")]
+      [EnumLiteral("environment"), Description("Environment")]
       Environment,
       /// <summary>
       /// A preparation that is synthesized from living organisms or their products, especially a human or animal protein, such as a hormone or antitoxin, that is used as a diagnostic, preventive, or therapeutic agent. Examples of biologic medications include: vaccines; allergenic extracts, which are used for both diagnosis and treatment (for example, allergy shots); gene therapies; cellular therapies.  There are other biologic products, such as tissues, that are not typically associated with allergies.
       /// (system: http://hl7.org/fhir/allergy-intolerance-category)
       /// </summary>
-      [EnumLiteral("biologic", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Biologic")]
+      [EnumLiteral("biologic"), Description("Biologic")]
       Biologic,
     }
 
@@ -178,26 +178,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
     /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceCriticality")]
+    [FhirEnumeration("AllergyIntoleranceCriticality", "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality", "http://hl7.org/fhir/allergy-intolerance-criticality")]
     public enum AllergyIntoleranceCriticality
     {
       /// <summary>
       /// Worst case result of a future exposure is not assessed to be life-threatening or having high potential for organ system failure.
       /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
       /// </summary>
-      [EnumLiteral("low", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("Low Risk")]
+      [EnumLiteral("low"), Description("Low Risk")]
       Low,
       /// <summary>
       /// Worst case result of a future exposure is assessed to be life-threatening or having high potential for organ system failure.
       /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
       /// </summary>
-      [EnumLiteral("high", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("High Risk")]
+      [EnumLiteral("high"), Description("High Risk")]
       High,
       /// <summary>
       /// Unable to assess the worst case result of a future exposure.
       /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
       /// </summary>
-      [EnumLiteral("unable-to-assess", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("Unable to Assess Risk")]
+      [EnumLiteral("unable-to-assess"), Description("Unable to Assess Risk")]
       UnableToAssess,
     }
 
@@ -206,26 +206,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reaction-event-severity)
     /// (system: http://hl7.org/fhir/reaction-event-severity)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceSeverity")]
+    [FhirEnumeration("AllergyIntoleranceSeverity", "http://hl7.org/fhir/ValueSet/reaction-event-severity", "http://hl7.org/fhir/reaction-event-severity")]
     public enum AllergyIntoleranceSeverity
     {
       /// <summary>
       /// Causes mild physiological effects.
       /// (system: http://hl7.org/fhir/reaction-event-severity)
       /// </summary>
-      [EnumLiteral("mild", "http://hl7.org/fhir/reaction-event-severity"), Description("Mild")]
+      [EnumLiteral("mild"), Description("Mild")]
       Mild,
       /// <summary>
       /// Causes moderate physiological effects.
       /// (system: http://hl7.org/fhir/reaction-event-severity)
       /// </summary>
-      [EnumLiteral("moderate", "http://hl7.org/fhir/reaction-event-severity"), Description("Moderate")]
+      [EnumLiteral("moderate"), Description("Moderate")]
       Moderate,
       /// <summary>
       /// Causes severe physiological effects.
       /// (system: http://hl7.org/fhir/reaction-event-severity)
       /// </summary>
-      [EnumLiteral("severe", "http://hl7.org/fhir/reaction-event-severity"), Description("Severe")]
+      [EnumLiteral("severe"), Description("Severe")]
       Severe,
     }
 
@@ -235,6 +235,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
+    [BackboneType("AllergyIntolerance.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -246,6 +247,7 @@ namespace Hl7.Fhir.Model
       /// Specific substance or pharmaceutical product considered to be responsible for event
       /// </summary>
       [FhirElement("substance", Order=40)]
+      [Binding("SubstanceCode")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Substance
       {
@@ -259,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// Clinical symptoms/signs associated with the Event
       /// </summary>
       [FhirElement("manifestation", Order=50)]
+      [Binding("Manifestation")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
@@ -336,6 +339,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AllergyIntoleranceSeverity")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> SeverityElement
       {
@@ -367,6 +371,7 @@ namespace Hl7.Fhir.Model
       /// How the subject was exposed to the substance
       /// </summary>
       [FhirElement("exposureRoute", Order=90)]
+      [Binding("RouteOfAdministration")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ExposureRoute
       {
@@ -530,7 +535,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -544,8 +549,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | resolved
     /// </summary>
-    [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceClinicalStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus> ClinicalStatusElement
     {
@@ -576,8 +582,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unconfirmed | confirmed | refuted | entered-in-error
     /// </summary>
-    [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceVerificationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus> VerificationStatusElement
@@ -609,8 +616,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// allergy | intolerance - Underlying mechanism (if known)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120)]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> TypeElement
     {
@@ -641,13 +649,14 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// food | medication | environment | biologic
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=130)]
+    [FhirElement("category", InSummary=true, Order=130, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> CategoryElement
     {
-      get { if(_CategoryElement==null) _CategoryElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(); return _CategoryElement; }
+      get { if(_CategoryElement==null) _CategoryElement = new List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(); return _CategoryElement; }
       set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
     }
 
@@ -666,7 +675,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           CategoryElement = null;
         else
-          CategoryElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>(elem)));
+          CategoryElement = new List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(value.Select(elem=>new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>(elem)));
         OnPropertyChanged("Category");
       }
     }
@@ -674,8 +683,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// low | high | unable-to-assess
     /// </summary>
-    [FhirElement("criticality", InSummary=true, Order=140)]
+    [FhirElement("criticality", InSummary=true, Order=140, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceCriticality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> CriticalityElement
     {
@@ -706,7 +716,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code that identifies the allergy or intolerance
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=150)]
+    [FhirElement("code", InSummary=true, Order=150, FiveWs="what")]
+    [Binding("AllergyIntoleranceCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -719,7 +730,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the sensitivity is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=160)]
+    [FhirElement("patient", InSummary=true, Order=160, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -735,7 +746,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When allergy or intolerance was identified
     /// </summary>
-    [FhirElement("onset", Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("onset", Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="when.init")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -750,7 +761,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date record was believed accurate
     /// </summary>
-    [FhirElement("assertedDate", Order=180)]
+    [FhirElement("assertedDate", Order=180, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AssertedDateElement
     {
@@ -781,7 +792,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the sensitivity
     /// </summary>
-    [FhirElement("recorder", Order=190)]
+    [FhirElement("recorder", Order=190, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Patient")]
     [DataMember]
@@ -796,7 +807,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Source of the information about the allergy
     /// </summary>
-    [FhirElement("asserter", InSummary=true, Order=200)]
+    [FhirElement("asserter", InSummary=true, Order=200, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner")]
     [DataMember]
@@ -866,6 +877,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("HealthcareService","http://hl7.org/fhir/StructureDefinition/HealthcareService", IsResource=true)]
-  public partial class HealthcareService : Hl7.Fhir.Model.DomainResource
+  public partial class HealthcareService : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("HealthcareService#Eligibility", IsNestedType=true)]
+    [BackboneType("HealthcareService.eligibility")]
     public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Coded value for the eligibility
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("ServiceEligibility")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -284,6 +286,7 @@ namespace Hl7.Fhir.Model
     /// Broad category of service being performed or delivered
     /// </summary>
     [FhirElement("category", InSummary=true, Order=130, FiveWs="FiveWs.class")]
+    [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -298,6 +301,7 @@ namespace Hl7.Fhir.Model
     /// Type of service that may be delivered or performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=140)]
+    [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -312,6 +316,7 @@ namespace Hl7.Fhir.Model
     /// Specialties handled by the HealthcareService
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=150)]
+    [Binding("service-specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -478,6 +483,7 @@ namespace Hl7.Fhir.Model
     /// Conditions under which service is available/offered
     /// </summary>
     [FhirElement("serviceProvisionCode", Order=230)]
+    [Binding("ServiceProvisionConditions")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
@@ -506,6 +512,7 @@ namespace Hl7.Fhir.Model
     /// Programs that this service is applicable to
     /// </summary>
     [FhirElement("program", Order=250)]
+    [Binding("Program")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Program
@@ -520,6 +527,7 @@ namespace Hl7.Fhir.Model
     /// Collection of characteristics (attributes)
     /// </summary>
     [FhirElement("characteristic", Order=260)]
+    [Binding("ServiceCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
@@ -534,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// The language that this service is offered in
     /// </summary>
     [FhirElement("communication", Order=270)]
+    [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -548,6 +557,7 @@ namespace Hl7.Fhir.Model
     /// Ways that the service accepts referrals
     /// </summary>
     [FhirElement("referralMethod", Order=280)]
+    [Binding("ReferralMethod")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
@@ -618,6 +628,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

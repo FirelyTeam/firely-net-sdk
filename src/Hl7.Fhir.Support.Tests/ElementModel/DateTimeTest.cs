@@ -6,8 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel.Tests
@@ -136,6 +138,85 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(2018, pdt.Years);
             Assert.AreEqual(4, pdt.Months);
             Assert.AreEqual("2018-04", pdt.ToString());
+        }
+
+        [TestMethod]
+        [DataRow("2001")]
+        [DataRow("2001-04")]
+        [DataRow("2001-04-06")]
+        [DataRow("2001-04-06+01:30")]
+        [DataRow("2001-04-06T13")]
+        [DataRow("2001-04-06T13:01")]
+        [DataRow("2001-04-06T13:01+02:00")]
+        [DataRow("2001-04-06T13:01:02")]
+        [DataRow("2001-04-06T13:01:02-04:00")]
+        [DataRow("2001-04-06T13:01:02.1234-04:00")]
+        [DataRow("2001-04-06T13:01:02.890-04:00")]
+        [DataRow("2001-04-06T13:01:02+00:00")]
+        [DataRow("2001-04-06T13:01:02Z")]
+        public void CanConvertToOriginalString(string format)
+        {
+            var parsed = P.DateTime.Parse(format);
+            parsed.ToString().Should().Be(format);
+        }
+
+        [TestMethod]
+        [DataRow(P.DateTimePrecision.Year, false, "2001")]
+        [DataRow(P.DateTimePrecision.Month, false, "2001-04")]
+        [DataRow(P.DateTimePrecision.Day, false, "2001-04-06")]
+        [DataRow(P.DateTimePrecision.Day, true, "2001-04-06+01:00")]
+        [DataRow(P.DateTimePrecision.Hour, false, "2001-04-06T13")]
+        [DataRow(P.DateTimePrecision.Minute, false, "2001-04-06T13:01")]
+        [DataRow(P.DateTimePrecision.Second, false, "2001-04-06T13:01:02")]
+        [DataRow(P.DateTimePrecision.Second, true, "2001-04-06T13:01:02+01:00")]
+        [DataRow(P.DateTimePrecision.Fraction, true, "2001-04-06T13:01:02.89+01:00")]
+        public void CanConvertFromDTO(P.DateTimePrecision p, bool hasOffset, string expected)
+        {
+            CultureInfo current = CultureInfo.CurrentCulture;
+
+            try
+            {
+                // Use Danish locale, since they use '.' as a time separator
+                CultureInfo.CurrentCulture = new CultureInfo("da");
+
+                var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+                var parsed = P.DateTime.FromDateTimeOffset(dt, p, hasOffset);
+                parsed.ToString().Should().Be(expected);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = current;
+            }
+
+        }
+
+
+        [TestMethod]
+        [DataRow(P.DateTimePrecision.Year, false, "2001-01-01T00:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Month, false, "2001-04-01T00:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Day, false, "2001-04-06T00:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Day, true, "2001-04-06T00:00:00+01:00")]
+        [DataRow(P.DateTimePrecision.Hour, false, "2001-04-06T13:00:00+00:00")]
+        [DataRow(P.DateTimePrecision.Minute, false, "2001-04-06T13:01:00+00:00")]
+        [DataRow(P.DateTimePrecision.Second, false, "2001-04-06T13:01:02+00:00")]
+        [DataRow(P.DateTimePrecision.Second, true, "2001-04-06T13:01:02+01:00")]
+        [DataRow(P.DateTimePrecision.Fraction, true, "2001-04-06T13:01:02.89+01:00")]
+        public void CanRound(P.DateTimePrecision p, bool hasOffset, string expected)
+        {
+            var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+            var rounded = P.DateTime.RoundToPrecision(dt, p, hasOffset);
+            P.DateTime.FormatDateTimeOffset(rounded).Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void RetainsFractions()
+        {
+            var input = @"2020-04-17T10:24:13.1882432-05:00";
+            var datetime = ElementModel.Types.DateTime.Parse(input);
+            var offset = datetime.ToDateTimeOffset(TimeSpan.Zero);
+            var output = ElementModel.Types.DateTime.FormatDateTimeOffset(offset);
+
+            output.Should().Be(input);
         }
     }
 }

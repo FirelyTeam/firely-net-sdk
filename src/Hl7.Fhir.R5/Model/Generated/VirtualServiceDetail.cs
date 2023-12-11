@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Model
     /// Channel Type
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=30)]
+    [Binding("VirtualServiceType")]
     [DataMember]
     public Hl7.Fhir.Model.Coding ChannelType
     {

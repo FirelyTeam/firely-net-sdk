@@ -14,13 +14,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\AnnotationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BundleExtensionsTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\CodeEnumTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\DateTimeOperatorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCompareTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCopyTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepMatchTest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\ModelTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\ModelInfoTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\NullExtensionsTest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\TerminologyTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClientTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\OperationsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\ReadAsyncTests.cs" />

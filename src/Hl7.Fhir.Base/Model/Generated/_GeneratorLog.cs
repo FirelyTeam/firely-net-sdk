@@ -75,6 +75,9 @@
   // Used in model class (resource): Composition.status
   // Used in model class (resource): DocumentReference.docStatus
 
+// Deferred generation of Shared Enumeration (will be generated in another subset): ConstraintSeverity (http://hl7.org/fhir/ValueSet/constraint-severity)
+  // Used in model class (type): ElementDefinition.constraint.severity
+
 // Deferred generation of Shared Enumeration (will be generated in another subset): CountryValueSet (http://hl7.org/fhir/ValueSet/country)
   // Used in model class (resource): Ingredient.substance.strength.country
   // Used in model class (resource): Ingredient.substance.strength.referenceStrength.country

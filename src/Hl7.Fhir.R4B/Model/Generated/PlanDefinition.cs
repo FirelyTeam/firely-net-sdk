@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition", IsResource=true)]
-  public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Goal", IsNestedType=true)]
+    [BackboneType("PlanDefinition.goal")]
     public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Treatment, dietary, behavioral
       /// </summary>
       [FhirElement("category", Order=40)]
+      [Binding("GoalCategory")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -85,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// Code or text describing the goal
       /// </summary>
       [FhirElement("description", Order=50)]
+      [Binding("GoalDescription")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Description
@@ -99,6 +102,7 @@ namespace Hl7.Fhir.Model
       /// high-priority | medium-priority | low-priority
       /// </summary>
       [FhirElement("priority", Order=60)]
+      [Binding("GoalPriority")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Priority
       {
@@ -112,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// When goal pursuit begins
       /// </summary>
       [FhirElement("start", Order=70)]
+      [Binding("GoalStartEvent")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Start
       {
@@ -125,6 +130,7 @@ namespace Hl7.Fhir.Model
       /// What does the goal address
       /// </summary>
       [FhirElement("addresses", Order=80)]
+      [Binding("GoalAddresses")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Addresses
@@ -306,6 +312,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Target", IsNestedType=true)]
+    [BackboneType("PlanDefinition.goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -317,6 +324,7 @@ namespace Hl7.Fhir.Model
       /// The parameter whose value is to be tracked
       /// </summary>
       [FhirElement("measure", Order=40)]
+      [Binding("GoalTargetMeasure")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Measure
       {
@@ -461,6 +469,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Action", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -597,6 +606,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("priority", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RequestPriority")]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
       {
@@ -628,6 +638,7 @@ namespace Hl7.Fhir.Model
       /// Code representing the meaning of the action or sub-actions
       /// </summary>
       [FhirElement("code", Order=90)]
+      [Binding("ActionCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -642,6 +653,7 @@ namespace Hl7.Fhir.Model
       /// Why the action should be performed
       /// </summary>
       [FhirElement("reason", Order=100)]
+      [Binding("ActionReasonCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -702,6 +714,7 @@ namespace Hl7.Fhir.Model
       /// Type of individual the action is focused on
       /// </summary>
       [FhirElement("subject", Order=130, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SubjectType")]
       [CLSCompliant(false)]
       [References("Group")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical))]
@@ -817,6 +830,7 @@ namespace Hl7.Fhir.Model
       /// create | update | remove | fire-event
       /// </summary>
       [FhirElement("type", Order=210)]
+      [Binding("ActionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -831,6 +845,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupingBehavior", Order=220)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionGroupingBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
       {
@@ -863,6 +878,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("selectionBehavior", Order=230)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionSelectionBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
       {
@@ -895,6 +911,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requiredBehavior", Order=240)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRequiredBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
       {
@@ -927,6 +944,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("precheckBehavior", Order=250)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionPrecheckBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
       {
@@ -959,6 +977,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=260)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionCardinalityBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
       {
@@ -1383,6 +1402,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Condition", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1395,6 +1415,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionConditionKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
@@ -1534,6 +1555,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#RelatedAction", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1578,6 +1600,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
@@ -1728,6 +1751,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Participant", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1740,6 +1764,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
@@ -1772,6 +1797,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Nurse, Surgeon, Parent
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ActionParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -1879,6 +1905,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#DynamicValue", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2195,6 +2222,7 @@ namespace Hl7.Fhir.Model
     /// order-set | clinical-protocol | eca-rule | workflow-definition
     /// </summary>
     [FhirElement("type", InSummary=true, Order=150)]
+    [Binding("PlanDefinitionType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -2209,6 +2237,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2272,6 +2301,7 @@ namespace Hl7.Fhir.Model
     /// Type of individual the plan definition is focused on
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical))]
@@ -2409,6 +2439,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for plan definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2591,6 +2622,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment
     /// </summary>
     [FhirElement("topic", Order=310)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -2730,6 +2762,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> _Action;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

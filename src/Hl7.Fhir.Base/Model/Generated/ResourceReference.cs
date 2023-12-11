@@ -90,6 +90,7 @@ namespace Hl7.Fhir.Model
     /// Type the reference refers to (e.g. "Patient") - must be a resource in resources. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40, Since=FhirRelease.R4)]
+    [Binding("FHIRResourceTypeExt")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri TypeElement
     {

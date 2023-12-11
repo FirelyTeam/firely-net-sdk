@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ActivityDefinition","http://hl7.org/fhir/StructureDefinition/ActivityDefinition", IsResource=true)]
-  public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,110 +60,110 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/request-resource-types)
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [FhirEnumeration("RequestResourceTypes")]
+    [FhirEnumeration("RequestResourceTypes", "http://hl7.org/fhir/ValueSet/request-resource-types", "http://hl7.org/fhir/fhir-types")]
     public enum RequestResourceTypes
     {
       /// <summary>
       /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("Appointment", "http://hl7.org/fhir/fhir-types"), Description("Appointment")]
+      [EnumLiteral("Appointment"), Description("Appointment")]
       Appointment,
       /// <summary>
       /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/fhir-types"), Description("AppointmentResponse")]
+      [EnumLiteral("AppointmentResponse"), Description("AppointmentResponse")]
       AppointmentResponse,
       /// <summary>
       /// Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("CarePlan", "http://hl7.org/fhir/fhir-types"), Description("CarePlan")]
+      [EnumLiteral("CarePlan"), Description("CarePlan")]
       CarePlan,
       /// <summary>
       /// A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("Claim", "http://hl7.org/fhir/fhir-types"), Description("Claim")]
+      [EnumLiteral("Claim"), Description("Claim")]
       Claim,
       /// <summary>
       /// A request to convey information; e.g. the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/fhir-types"), Description("CommunicationRequest")]
+      [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
       CommunicationRequest,
       /// <summary>
       /// The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("CoverageEligibilityRequest", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityRequest")]
+      [EnumLiteral("CoverageEligibilityRequest"), Description("CoverageEligibilityRequest")]
       CoverageEligibilityRequest,
       /// <summary>
       /// Represents a request a device to be provided to a specific patient. The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/fhir-types"), Description("DeviceRequest")]
+      [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
       DeviceRequest,
       /// <summary>
       /// This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentRequest")]
+      [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
       EnrollmentRequest,
       /// <summary>
       /// A patient's point-in-time set of recommendations (i.e. forecasting) according to a published schedule with optional supporting justification.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationRecommendation")]
+      [EnumLiteral("ImmunizationRecommendation"), Description("ImmunizationRecommendation")]
       ImmunizationRecommendation,
       /// <summary>
       /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/fhir-types"), Description("MedicationRequest")]
+      [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
       MedicationRequest,
       /// <summary>
       /// A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/fhir-types"), Description("NutritionOrder")]
+      [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
       NutritionOrder,
       /// <summary>
       /// A set of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("RequestOrchestration", "http://hl7.org/fhir/fhir-types"), Description("RequestOrchestration")]
+      [EnumLiteral("RequestOrchestration"), Description("RequestOrchestration")]
       RequestOrchestration,
       /// <summary>
       /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/fhir-types"), Description("ServiceRequest")]
+      [EnumLiteral("ServiceRequest"), Description("ServiceRequest")]
       ServiceRequest,
       /// <summary>
       /// A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/fhir-types"), Description("SupplyRequest")]
+      [EnumLiteral("SupplyRequest"), Description("SupplyRequest")]
       SupplyRequest,
       /// <summary>
       /// A task to be performed.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("Task", "http://hl7.org/fhir/fhir-types"), Description("Task")]
+      [EnumLiteral("Task"), Description("Task")]
       Task,
       /// <summary>
       /// Record of transport.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("Transport", "http://hl7.org/fhir/fhir-types"), Description("Transport")]
+      [EnumLiteral("Transport"), Description("Transport")]
       Transport,
       /// <summary>
       /// An authorization for the provision of glasses and/or contact lenses to a patient.
       /// (system: http://hl7.org/fhir/fhir-types)
       /// </summary>
-      [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/fhir-types"), Description("VisionPrescription")]
+      [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
       VisionPrescription,
     }
 
@@ -173,6 +173,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
+    [BackboneType("ActivityDefinition.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -185,6 +186,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
       {
@@ -262,6 +264,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Nurse, Surgeon, Parent, etc
       /// </summary>
       [FhirElement("role", Order=70)]
+      [Binding("ActivityParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -275,6 +278,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Author, Reviewer, Witness, etc
       /// </summary>
       [FhirElement("function", Order=80)]
+      [Binding("ActionParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -409,6 +413,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
+    [BackboneType("ActivityDefinition.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -743,6 +748,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -806,6 +812,7 @@ namespace Hl7.Fhir.Model
     /// Type of individual the activity definition is intended for
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group","MedicinalProductDefinition","SubstanceDefinition","AdministrableProductDefinition","ManufacturedItemDefinition","PackagedProductDefinition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical))]
@@ -943,6 +950,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for activity definition (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1156,6 +1164,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc
     /// </summary>
     [FhirElement("topic", Order=320)]
+    [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1273,6 +1282,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=390)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActivityDefinitionKind")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ActivityDefinition.RequestResourceTypes> KindElement
     {
@@ -1335,6 +1345,7 @@ namespace Hl7.Fhir.Model
     /// Detail type of activity
     /// </summary>
     [FhirElement("code", InSummary=true, Order=410)]
+    [Binding("ActivityDefinitionType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1349,6 +1360,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", Order=420)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestIntent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
     {
@@ -1381,6 +1393,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=430)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -1458,6 +1471,7 @@ namespace Hl7.Fhir.Model
     /// Preconditions for service
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=460, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("ProcedureAsNeededReason")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -1500,6 +1514,7 @@ namespace Hl7.Fhir.Model
     /// What's administered/supplied
     /// </summary>
     [FhirElement("product", Order=490, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("ActivityProduct")]
     [CLSCompliant(false)]
     [References("Medication","Ingredient","Substance","SubstanceDefinition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -1543,6 +1558,7 @@ namespace Hl7.Fhir.Model
     /// What part of body to perform on
     /// </summary>
     [FhirElement("bodySite", Order=520)]
+    [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -1693,6 +1709,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent> _DynamicValue;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("FormularyItem","http://hl7.org/fhir/StructureDefinition/FormularyItem", IsResource=true)]
-  public partial class FormularyItem : Hl7.Fhir.Model.DomainResource
+  public partial class FormularyItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/formularyitem-status)
     /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
     /// </summary>
-    [FhirEnumeration("FormularyItemStatusCodes")]
+    [FhirEnumeration("FormularyItemStatusCodes", "http://hl7.org/fhir/ValueSet/formularyitem-status", "http://hl7.org/fhir/CodeSystem/formularyitem-status")]
     public enum FormularyItemStatusCodes
     {
       /// <summary>
       /// The service or product referred to by this FormularyItem is in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/formularyitem-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The service or product referred to by this FormularyItem was entered in error within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/formularyitem-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The service or product referred to by this FormularyItem is not in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/CodeSystem/formularyitem-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     /// Codes that identify this formulary item
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100)]
+    [Binding("FormularyItemFormalRepresentation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -115,6 +116,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FormularyItemStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FormularyItem.FormularyItemStatusCodes> StatusElement
     {
@@ -141,6 +143,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("Status");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

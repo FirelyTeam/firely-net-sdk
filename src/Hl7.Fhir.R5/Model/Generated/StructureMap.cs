@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("StructureMap","http://hl7.org/fhir/StructureDefinition/StructureMap", IsResource=true)]
-  public partial class StructureMap : Hl7.Fhir.Model.DomainResource
+  public partial class StructureMap : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-model-mode)
     /// (system: http://hl7.org/fhir/map-model-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapModelMode")]
+    [FhirEnumeration("StructureMapModelMode", "http://hl7.org/fhir/ValueSet/map-model-mode", "http://hl7.org/fhir/map-model-mode")]
     public enum StructureMapModelMode
     {
       /// <summary>
       /// This structure describes an instance passed to the mapping engine that is used a source of data.
       /// (system: http://hl7.org/fhir/map-model-mode)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/map-model-mode"), Description("Source Structure Definition")]
+      [EnumLiteral("source"), Description("Source Structure Definition")]
       Source,
       /// <summary>
       /// This structure describes an instance that the mapping engine may ask for that is used a source of data.
       /// (system: http://hl7.org/fhir/map-model-mode)
       /// </summary>
-      [EnumLiteral("queried", "http://hl7.org/fhir/map-model-mode"), Description("Queried Structure Definition")]
+      [EnumLiteral("queried"), Description("Queried Structure Definition")]
       Queried,
       /// <summary>
       /// This structure describes an instance passed to the mapping engine that is used a target of data.
       /// (system: http://hl7.org/fhir/map-model-mode)
       /// </summary>
-      [EnumLiteral("target", "http://hl7.org/fhir/map-model-mode"), Description("Target Structure Definition")]
+      [EnumLiteral("target"), Description("Target Structure Definition")]
       Target,
       /// <summary>
       /// This structure describes an instance that the mapping engine may ask to create that is used a target of data.
       /// (system: http://hl7.org/fhir/map-model-mode)
       /// </summary>
-      [EnumLiteral("produced", "http://hl7.org/fhir/map-model-mode"), Description("Produced Structure Definition")]
+      [EnumLiteral("produced"), Description("Produced Structure Definition")]
       Produced,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
     /// (system: http://hl7.org/fhir/map-group-type-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapGroupTypeMode")]
+    [FhirEnumeration("StructureMapGroupTypeMode", "http://hl7.org/fhir/ValueSet/map-group-type-mode", "http://hl7.org/fhir/map-group-type-mode")]
     public enum StructureMapGroupTypeMode
     {
       /// <summary>
       /// This group is a default mapping group for the specified types and for the primary source type.
       /// (system: http://hl7.org/fhir/map-group-type-mode)
       /// </summary>
-      [EnumLiteral("types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for Type Combination")]
+      [EnumLiteral("types"), Description("Default for Type Combination")]
       Types,
       /// <summary>
       /// This group is a default mapping group for the specified types.
       /// (system: http://hl7.org/fhir/map-group-type-mode)
       /// </summary>
-      [EnumLiteral("type-and-types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for type + combination")]
+      [EnumLiteral("type-and-types"), Description("Default for type + combination")]
       TypeAndTypes,
     }
 
@@ -116,20 +116,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-input-mode)
     /// (system: http://hl7.org/fhir/map-input-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapInputMode")]
+    [FhirEnumeration("StructureMapInputMode", "http://hl7.org/fhir/ValueSet/map-input-mode", "http://hl7.org/fhir/map-input-mode")]
     public enum StructureMapInputMode
     {
       /// <summary>
       /// Names an input instance used a source for mapping.
       /// (system: http://hl7.org/fhir/map-input-mode)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/map-input-mode"), Description("Source Instance")]
+      [EnumLiteral("source"), Description("Source Instance")]
       Source,
       /// <summary>
       /// Names an instance that is being populated.
       /// (system: http://hl7.org/fhir/map-input-mode)
       /// </summary>
-      [EnumLiteral("target", "http://hl7.org/fhir/map-input-mode"), Description("Target Instance")]
+      [EnumLiteral("target"), Description("Target Instance")]
       Target,
     }
 
@@ -138,38 +138,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-source-list-mode)
     /// (system: http://hl7.org/fhir/map-source-list-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapSourceListMode")]
+    [FhirEnumeration("StructureMapSourceListMode", "http://hl7.org/fhir/ValueSet/map-source-list-mode", "http://hl7.org/fhir/map-source-list-mode")]
     public enum StructureMapSourceListMode
     {
       /// <summary>
       /// Only process this rule for the first in the list.
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
-      [EnumLiteral("first", "http://hl7.org/fhir/map-source-list-mode"), Description("First")]
+      [EnumLiteral("first"), Description("First")]
       First,
       /// <summary>
       /// Process this rule for all but the first.
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
-      [EnumLiteral("not_first", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the first")]
+      [EnumLiteral("not_first"), Description("All but the first")]
       Not_first,
       /// <summary>
       /// Only process this rule for the last in the list.
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
-      [EnumLiteral("last", "http://hl7.org/fhir/map-source-list-mode"), Description("Last")]
+      [EnumLiteral("last"), Description("Last")]
       Last,
       /// <summary>
       /// Process this rule for all but the last.
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
-      [EnumLiteral("not_last", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the last")]
+      [EnumLiteral("not_last"), Description("All but the last")]
       Not_last,
       /// <summary>
       /// Only process this rule is there is only item.
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
-      [EnumLiteral("only_one", "http://hl7.org/fhir/map-source-list-mode"), Description("Enforce only one")]
+      [EnumLiteral("only_one"), Description("Enforce only one")]
       Only_one,
     }
 
@@ -178,32 +178,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-target-list-mode)
     /// (system: http://hl7.org/fhir/map-target-list-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapTargetListMode")]
+    [FhirEnumeration("StructureMapTargetListMode", "http://hl7.org/fhir/ValueSet/map-target-list-mode", "http://hl7.org/fhir/map-target-list-mode")]
     public enum StructureMapTargetListMode
     {
       /// <summary>
       /// when the target list is being assembled, the items for this rule go first. If more than one rule defines a first item (for a given instance of mapping) then this is an error.
       /// (system: http://hl7.org/fhir/map-target-list-mode)
       /// </summary>
-      [EnumLiteral("first", "http://hl7.org/fhir/map-target-list-mode"), Description("First")]
+      [EnumLiteral("first"), Description("First")]
       First,
       /// <summary>
       /// the target instance is shared with the target instances generated by another rule (up to the first common n items, then create new ones).
       /// (system: http://hl7.org/fhir/map-target-list-mode)
       /// </summary>
-      [EnumLiteral("share", "http://hl7.org/fhir/map-target-list-mode"), Description("Share")]
+      [EnumLiteral("share"), Description("Share")]
       Share,
       /// <summary>
       /// when the target list is being assembled, the items for this rule go last. If more than one rule defines a last item (for a given instance of mapping) then this is an error.
       /// (system: http://hl7.org/fhir/map-target-list-mode)
       /// </summary>
-      [EnumLiteral("last", "http://hl7.org/fhir/map-target-list-mode"), Description("Last")]
+      [EnumLiteral("last"), Description("Last")]
       Last,
       /// <summary>
       /// the target instance is shared with a number of target instances generated by another rule (up to the first common n items, then create new ones).
       /// (system: http://hl7.org/fhir/map-target-list-mode)
       /// </summary>
-      [EnumLiteral("single", "http://hl7.org/fhir/map-target-list-mode"), Description("single")]
+      [EnumLiteral("single"), Description("single")]
       Single,
     }
 
@@ -212,110 +212,110 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-transform)
     /// (system: http://hl7.org/fhir/map-transform)
     /// </summary>
-    [FhirEnumeration("StructureMapTransform")]
+    [FhirEnumeration("StructureMapTransform", "http://hl7.org/fhir/ValueSet/map-transform", "http://hl7.org/fhir/map-transform")]
     public enum StructureMapTransform
     {
       /// <summary>
       /// create(type : string) - type is passed through to the application on the standard API, and must be known by it.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/map-transform"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// copy(source).
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("copy", "http://hl7.org/fhir/map-transform"), Description("copy")]
+      [EnumLiteral("copy"), Description("copy")]
       Copy,
       /// <summary>
       /// truncate(source, length) - source must be stringy type.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("truncate", "http://hl7.org/fhir/map-transform"), Description("truncate")]
+      [EnumLiteral("truncate"), Description("truncate")]
       Truncate,
       /// <summary>
       /// escape(source, fmt1, fmt2) - change source from one kind of escaping to another (plain, java, xml, json). note that this is for when the string itself is escaped.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("escape", "http://hl7.org/fhir/map-transform"), Description("escape")]
+      [EnumLiteral("escape"), Description("escape")]
       Escape,
       /// <summary>
       /// cast(source, type?) - cast (convert) source from one type to another. Target type can be left as implicit if there is one and only one target type known. The default namespace for the type is 'FHIR' (see [FHIRPath type specifiers](http://hl7.org/fhirpath/N1/#is-type-specifier))
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("cast", "http://hl7.org/fhir/map-transform"), Description("cast")]
+      [EnumLiteral("cast"), Description("cast")]
       Cast,
       /// <summary>
       /// append(source...) - source is element or string.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("append", "http://hl7.org/fhir/map-transform"), Description("append")]
+      [EnumLiteral("append"), Description("append")]
       Append,
       /// <summary>
       /// translate(source, uri_of_map) - use the translate operation.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("translate", "http://hl7.org/fhir/map-transform"), Description("translate")]
+      [EnumLiteral("translate"), Description("translate")]
       Translate,
       /// <summary>
       /// reference(source : object) - return a string that references the provided tree properly.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("reference", "http://hl7.org/fhir/map-transform"), Description("reference")]
+      [EnumLiteral("reference"), Description("reference")]
       Reference,
       /// <summary>
       /// Perform a date operation. *Parameters to be documented*.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("dateOp", "http://hl7.org/fhir/map-transform"), Description("dateOp")]
+      [EnumLiteral("dateOp"), Description("dateOp")]
       DateOp,
       /// <summary>
       /// Generate a random UUID (in lowercase). No Parameters.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("uuid", "http://hl7.org/fhir/map-transform"), Description("uuid")]
+      [EnumLiteral("uuid"), Description("uuid")]
       Uuid,
       /// <summary>
       /// Return the appropriate string to put in a reference that refers to the resource provided as a parameter.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("pointer", "http://hl7.org/fhir/map-transform"), Description("pointer")]
+      [EnumLiteral("pointer"), Description("pointer")]
       Pointer,
       /// <summary>
       /// Execute the supplied FHIRPath expression and use the value returned by that.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("evaluate", "http://hl7.org/fhir/map-transform"), Description("evaluate")]
+      [EnumLiteral("evaluate"), Description("evaluate")]
       Evaluate,
       /// <summary>
       /// Create a CodeableConcept. Parameters = (text) or (system. Code[, display]).
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("cc", "http://hl7.org/fhir/map-transform"), Description("cc")]
+      [EnumLiteral("cc"), Description("cc")]
       Cc,
       /// <summary>
       /// Create a Coding. Parameters = (system. Code[, display]).
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("c", "http://hl7.org/fhir/map-transform"), Description("c")]
+      [EnumLiteral("c"), Description("c")]
       C,
       /// <summary>
       /// Create a quantity. Parameters = (text) or (value, unit, [system, code]) where text is the natural representation e.g. [comparator]value[space]unit.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("qty", "http://hl7.org/fhir/map-transform"), Description("qty")]
+      [EnumLiteral("qty"), Description("qty")]
       Qty,
       /// <summary>
       /// Create an identifier. Parameters = (system, value[, type]) where type is a code from the identifier type value set.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("id", "http://hl7.org/fhir/map-transform"), Description("id")]
+      [EnumLiteral("id"), Description("id")]
       Id,
       /// <summary>
       /// Create a contact details. Parameters = (value) or (system, value). If no system is provided, the system should be inferred from the content of the value.
       /// (system: http://hl7.org/fhir/map-transform)
       /// </summary>
-      [EnumLiteral("cp", "http://hl7.org/fhir/map-transform"), Description("cp")]
+      [EnumLiteral("cp"), Description("cp")]
       Cp,
     }
 
@@ -325,6 +325,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Structure", IsNestedType=true)]
+    [BackboneType("StructureMap.structure")]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -369,6 +370,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("StructureMapModelMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapModelMode> ModeElement
@@ -575,6 +577,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Const", IsNestedType=true)]
+    [BackboneType("StructureMap.const")]
     public partial class ConstComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -742,6 +745,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Group", IsNestedType=true)]
+    [BackboneType("StructureMap.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("typeMode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("StructureMapGroupTypeMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode> TypeModeElement
       {
@@ -1037,6 +1042,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Input", IsNestedType=true)]
+    [BackboneType("StructureMap.group.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1112,6 +1118,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("StructureMapInputMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapInputMode> ModeElement
@@ -1287,6 +1294,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Rule", IsNestedType=true)]
+    [BackboneType("StructureMap.group.rule")]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1546,6 +1554,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Source", IsNestedType=true)]
+    [BackboneType("StructureMap.group.rule.source")]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1745,6 +1754,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("listMode", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("StructureMapSourceListMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode> ListModeElement
       {
@@ -2075,6 +2085,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Target", IsNestedType=true)]
+    [BackboneType("StructureMap.group.rule.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2180,11 +2191,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("listMode", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("StructureMapTargetListMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> ListModeElement
       {
-        get { if(_ListModeElement==null) _ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
+        get { if(_ListModeElement==null) _ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
         set { _ListModeElement = value; OnPropertyChanged("ListModeElement"); }
       }
 
@@ -2203,7 +2215,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ListModeElement = null;
           else
-            ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
+            ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
           OnPropertyChanged("ListMode");
         }
       }
@@ -2244,6 +2256,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("transform", InSummary=true, Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("StructureMapTransform")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapTransform> TransformElement
       {
@@ -2428,6 +2441,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Parameter", IsNestedType=true)]
+    [BackboneType("StructureMap.group.rule.target.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2540,6 +2554,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Dependent", IsNestedType=true)]
+    [BackboneType("StructureMap.group.rule.dependent")]
     public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2845,6 +2860,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -3029,6 +3045,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for structure map (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -3205,6 +3222,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.StructureMap.GroupComponent> _Group;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

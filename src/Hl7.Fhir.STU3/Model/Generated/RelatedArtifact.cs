@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/related-artifact-type)
     /// (system: http://hl7.org/fhir/related-artifact-type)
     /// </summary>
-    [FhirEnumeration("RelatedArtifactType")]
+    [FhirEnumeration("RelatedArtifactType", "http://hl7.org/fhir/ValueSet/related-artifact-type", "http://hl7.org/fhir/related-artifact-type")]
     public enum RelatedArtifactType
     {
       /// <summary>
       /// Additional documentation for the knowledge resource. This would include additional instructions on usage as well as additional information on clinical context or appropriateness
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("documentation", "http://hl7.org/fhir/related-artifact-type"), Description("Documentation")]
+      [EnumLiteral("documentation"), Description("Documentation")]
       Documentation,
       /// <summary>
       /// A summary of the justification for the knowledge resource including supporting evidence, relevant guidelines, or other clinically important information. This information is intended to provide a way to make the justification for the knowledge resource available to the consumer of interventions or results produced by the knowledge resource
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("justification", "http://hl7.org/fhir/related-artifact-type"), Description("Justification")]
+      [EnumLiteral("justification"), Description("Justification")]
       Justification,
       /// <summary>
       /// Bibliographic citation for papers, references, or other relevant material for the knowledge resource. This is intended to allow for citation of related material, but that was not necessarily specifically prepared in connection with this knowledge resource
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("citation", "http://hl7.org/fhir/related-artifact-type"), Description("Citation")]
+      [EnumLiteral("citation"), Description("Citation")]
       Citation,
       /// <summary>
       /// The previous version of the knowledge resource
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("predecessor", "http://hl7.org/fhir/related-artifact-type"), Description("Predecessor")]
+      [EnumLiteral("predecessor"), Description("Predecessor")]
       Predecessor,
       /// <summary>
       /// The next version of the knowledge resource
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("successor", "http://hl7.org/fhir/related-artifact-type"), Description("Successor")]
+      [EnumLiteral("successor"), Description("Successor")]
       Successor,
       /// <summary>
       /// The knowledge resource is derived from the related artifact. This is intended to capture the relationship in which a particular knowledge resource is based on the content of another artifact, but is modified to capture either a different set of overall requirements, or a more specific set of requirements such as those involved in a particular institution or clinical setting
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("derived-from", "http://hl7.org/fhir/related-artifact-type"), Description("Derived From")]
+      [EnumLiteral("derived-from"), Description("Derived From")]
       DerivedFrom,
       /// <summary>
       /// The knowledge resource depends on the given related artifact
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("depends-on", "http://hl7.org/fhir/related-artifact-type"), Description("Depends On")]
+      [EnumLiteral("depends-on"), Description("Depends On")]
       DependsOn,
       /// <summary>
       /// The knowledge resource is composed of the given related artifact
       /// (system: http://hl7.org/fhir/related-artifact-type)
       /// </summary>
-      [EnumLiteral("composed-of", "http://hl7.org/fhir/related-artifact-type"), Description("Composed Of")]
+      [EnumLiteral("composed-of"), Description("Composed Of")]
       ComposedOf,
     }
 
@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> TypeElement

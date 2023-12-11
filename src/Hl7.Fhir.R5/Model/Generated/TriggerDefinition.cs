@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/trigger-type)
     /// (system: http://hl7.org/fhir/trigger-type)
     /// </summary>
-    [FhirEnumeration("TriggerType")]
+    [FhirEnumeration("TriggerType", "http://hl7.org/fhir/ValueSet/trigger-type", "http://hl7.org/fhir/trigger-type")]
     public enum TriggerType
     {
       /// <summary>
       /// The trigger occurs in response to a specific named event, and no other information about the trigger is specified. Named events are completely pre-coordinated, and the formal semantics of the trigger are not provided.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("named-event", "http://hl7.org/fhir/trigger-type"), Description("Named Event")]
+      [EnumLiteral("named-event"), Description("Named Event")]
       NamedEvent,
       /// <summary>
       /// The trigger occurs at a specific time or periodically as described by a timing or schedule. A periodic event cannot have any data elements, but may have a name assigned as a shorthand for the event.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("periodic", "http://hl7.org/fhir/trigger-type"), Description("Periodic")]
+      [EnumLiteral("periodic"), Description("Periodic")]
       Periodic,
       /// <summary>
       /// The trigger occurs whenever data of a particular type is changed in any way, either added, modified, or removed.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("data-changed", "http://hl7.org/fhir/trigger-type"), Description("Data Changed")]
+      [EnumLiteral("data-changed"), Description("Data Changed")]
       DataChanged,
       /// <summary>
       /// The trigger occurs whenever data of a particular type is added.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("data-added", "http://hl7.org/fhir/trigger-type"), Description("Data Added")]
+      [EnumLiteral("data-added"), Description("Data Added")]
       DataAdded,
       /// <summary>
       /// The trigger occurs whenever data of a particular type is modified.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("data-modified", "http://hl7.org/fhir/trigger-type"), Description("Data Updated")]
+      [EnumLiteral("data-modified"), Description("Data Updated")]
       DataModified,
       /// <summary>
       /// The trigger occurs whenever data of a particular type is removed.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("data-removed", "http://hl7.org/fhir/trigger-type"), Description("Data Removed")]
+      [EnumLiteral("data-removed"), Description("Data Removed")]
       DataRemoved,
       /// <summary>
       /// The trigger occurs whenever data of a particular type is accessed.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("data-accessed", "http://hl7.org/fhir/trigger-type"), Description("Data Accessed")]
+      [EnumLiteral("data-accessed"), Description("Data Accessed")]
       DataAccessed,
       /// <summary>
       /// The trigger occurs whenever access to data of a particular type is completed.
       /// (system: http://hl7.org/fhir/trigger-type)
       /// </summary>
-      [EnumLiteral("data-access-ended", "http://hl7.org/fhir/trigger-type"), Description("Data Access Ended")]
+      [EnumLiteral("data-access-ended"), Description("Data Access Ended")]
       DataAccessEnded,
     }
 
@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement

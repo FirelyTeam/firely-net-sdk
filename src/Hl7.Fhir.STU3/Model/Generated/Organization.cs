@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Organization","http://hl7.org/fhir/StructureDefinition/Organization", IsResource=true)]
-  public partial class Organization : Hl7.Fhir.Model.DomainResource
+  public partial class Organization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Organization#Contact", IsNestedType=true)]
+    [BackboneType("Organization.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// The type of contact
       /// </summary>
       [FhirElement("purpose", Order=40)]
+      [Binding("ContactPartyType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Purpose
       {
@@ -234,7 +236,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies this organization  across multiple systems
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -248,7 +250,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the organization's record is still in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -279,7 +281,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of organization
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("OrganizationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -425,6 +428,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient", IsResource=true)]
-  public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource
+  public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance")]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -239,6 +240,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength")]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -501,6 +503,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength")]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -718,6 +721,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.substance")]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -945,6 +949,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent _Substance;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

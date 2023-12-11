@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
-  public partial class Citation : Hl7.Fhir.Model.DomainResource
+  public partial class Citation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#Summary", IsNestedType=true)]
+    [BackboneType("Citation.summary")]
     public partial class SummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// Format for display of the citation
       /// </summary>
       [FhirElement("style", Order=40)]
+      [Binding("CitationSummaryStyle")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Style
       {
@@ -211,6 +213,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#Classification", IsNestedType=true)]
+    [BackboneType("Citation.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -222,6 +225,7 @@ namespace Hl7.Fhir.Model
       /// The kind of classifier (e.g. publication type, keyword)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitationClassificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -235,6 +239,7 @@ namespace Hl7.Fhir.Model
       /// The specific classification value
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -343,6 +348,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#StatusDate", IsNestedType=true)]
+    [BackboneType("Citation.statusDate")]
     public partial class StatusDateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -354,6 +360,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the status
       /// </summary>
       [FhirElement("activity", Order=40)]
+      [Binding("CitationStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Activity
@@ -516,6 +523,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#RelatesTo", IsNestedType=true)]
+    [BackboneType("Citation.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -527,6 +535,7 @@ namespace Hl7.Fhir.Model
       /// How the Citation resource relates to the target artifact
       /// </summary>
       [FhirElement("relationshipType", Order=40)]
+      [Binding("ArtifactRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RelationshipType
@@ -541,6 +550,7 @@ namespace Hl7.Fhir.Model
       /// The clasification of the related artifact
       /// </summary>
       [FhirElement("targetClassifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetClassifier
@@ -675,6 +685,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifact", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact")]
     public partial class CitedArtifactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -758,6 +769,7 @@ namespace Hl7.Fhir.Model
       /// The status of the cited artifact
       /// </summary>
       [FhirElement("currentState", Order=80)]
+      [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
@@ -1121,6 +1133,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactVersion", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.version")]
     public partial class CitedArtifactVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1273,6 +1286,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactStatusDate", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.statusDate")]
     public partial class CitedArtifactStatusDateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1284,6 +1298,7 @@ namespace Hl7.Fhir.Model
       /// Classification of the status
       /// </summary>
       [FhirElement("activity", Order=40)]
+      [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Activity
@@ -1446,6 +1461,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactTitle", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.title")]
     public partial class CitedArtifactTitleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1457,6 +1473,7 @@ namespace Hl7.Fhir.Model
       /// The kind of title
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("TitleType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1471,6 +1488,7 @@ namespace Hl7.Fhir.Model
       /// Used to express the specific language
       /// </summary>
       [FhirElement("language", Order=50)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -1619,6 +1637,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactAbstract", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.abstract")]
     public partial class CitedArtifactAbstractComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1630,6 +1649,7 @@ namespace Hl7.Fhir.Model
       /// The kind of abstract
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactAbstractType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1643,6 +1663,7 @@ namespace Hl7.Fhir.Model
       /// Used to express the specific language
       /// </summary>
       [FhirElement("language", Order=50)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
       {
@@ -1831,6 +1852,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPart", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.part")]
     public partial class CitedArtifactPartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1842,6 +1864,7 @@ namespace Hl7.Fhir.Model
       /// The kind of component
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactPartType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2004,6 +2027,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactRelatesTo", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.relatesTo")]
     public partial class CitedArtifactRelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2015,6 +2039,7 @@ namespace Hl7.Fhir.Model
       /// How the cited artifact relates to the target artifact
       /// </summary>
       [FhirElement("relationshipType", Order=40)]
+      [Binding("ArtifactRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RelationshipType
@@ -2029,6 +2054,7 @@ namespace Hl7.Fhir.Model
       /// The clasification of the related artifact
       /// </summary>
       [FhirElement("targetClassifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetClassifier
@@ -2163,6 +2189,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPublicationForm", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.publicationForm")]
     public partial class CitedArtifactPublicationFormComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2262,6 +2289,7 @@ namespace Hl7.Fhir.Model
       /// Language in which this form of the article is published
       /// </summary>
       [FhirElement("language", Order=80)]
+      [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
@@ -2637,6 +2665,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPublicationFormPublishedIn", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.publicationForm.publishedIn")]
     public partial class CitedArtifactPublicationFormPublishedInComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2648,6 +2677,7 @@ namespace Hl7.Fhir.Model
       /// Kind of container (e.g. Periodical, database, or book)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("PublishedInType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -2873,6 +2903,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPublicationFormPeriodicRelease", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.publicationForm.periodicRelease")]
     public partial class CitedArtifactPublicationFormPeriodicReleaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2884,6 +2915,7 @@ namespace Hl7.Fhir.Model
       /// Internet or Print
       /// </summary>
       [FhirElement("citedMedium", Order=40)]
+      [Binding("CitedMedium")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CitedMedium
       {
@@ -3084,6 +3116,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactPublicationFormPeriodicReleaseDateOfPublication", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.publicationForm.periodicRelease.dateOfPublication")]
     public partial class CitedArtifactPublicationFormPeriodicReleaseDateOfPublicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3411,6 +3444,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactWebLocation", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.webLocation")]
     public partial class CitedArtifactWebLocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3422,6 +3456,7 @@ namespace Hl7.Fhir.Model
       /// Code the reason for different URLs, e.g. abstract and full-text
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ArticleUrlType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -3560,6 +3595,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactClassification", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.classification")]
     public partial class CitedArtifactClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3571,6 +3607,7 @@ namespace Hl7.Fhir.Model
       /// The kind of classifier (e.g. publication type, keyword)
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("CitedArtifactClassificationType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -3584,6 +3621,7 @@ namespace Hl7.Fhir.Model
       /// The specific classification value
       /// </summary>
       [FhirElement("classifier", Order=50)]
+      [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -3714,6 +3752,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactClassificationWhoClassified", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.classification.whoClassified")]
     public partial class CitedArtifactClassificationWhoClassifiedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3953,6 +3992,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorship", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship")]
     public partial class CitedArtifactContributorshipComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4126,6 +4166,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipEntry", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.entry")]
     public partial class CitedArtifactContributorshipEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4268,6 +4309,7 @@ namespace Hl7.Fhir.Model
       /// The specific contribution
       /// </summary>
       [FhirElement("contributionType", Order=110)]
+      [Binding("ArtifactContributionType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ContributionType
@@ -4282,6 +4324,7 @@ namespace Hl7.Fhir.Model
       /// The role of the contributor (e.g. author, editor, reviewer)
       /// </summary>
       [FhirElement("role", Order=120)]
+      [Binding("ContributorRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -4555,6 +4598,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipEntryAffiliationInfo", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.entry.affiliationInfo")]
     public partial class CitedArtifactContributorshipEntryAffiliationInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4745,6 +4789,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipEntryContributionInstance", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.entry.contributionInstance")]
     public partial class CitedArtifactContributorshipEntryContributionInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4756,6 +4801,7 @@ namespace Hl7.Fhir.Model
       /// The specific contribution
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ArtifactContributionInstanceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -4895,6 +4941,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation#CitedArtifactContributorshipSummary", IsNestedType=true)]
+    [BackboneType("Citation.citedArtifact.contributorship.summary")]
     public partial class CitedArtifactContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4906,6 +4953,7 @@ namespace Hl7.Fhir.Model
       /// Either authorList or contributorshipStatement
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("ContributorSummaryType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -4919,6 +4967,7 @@ namespace Hl7.Fhir.Model
       /// The format for the display string
       /// </summary>
       [FhirElement("style", Order=50)]
+      [Binding("ContributorSummaryStyle")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Style
       {
@@ -4932,6 +4981,7 @@ namespace Hl7.Fhir.Model
       /// Used to code the producer or rule for creating the display string
       /// </summary>
       [FhirElement("source", Order=60)]
+      [Binding("ContributorSummarySource")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Source
       {
@@ -5226,6 +5276,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -5410,6 +5461,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for citation (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -5659,6 +5711,7 @@ namespace Hl7.Fhir.Model
     /// The status of the citation
     /// </summary>
     [FhirElement("currentState", Order=340)]
+    [Binding("CitationStatusType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
@@ -5709,6 +5762,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Citation.CitedArtifactComponent _CitedArtifact;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

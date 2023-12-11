@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/provenance-entity-role)
     /// (system: http://hl7.org/fhir/provenance-entity-role)
     /// </summary>
-    [FhirEnumeration("ProvenanceEntityRole")]
+    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role", "http://hl7.org/fhir/provenance-entity-role")]
     public enum ProvenanceEntityRole
     {
       /// <summary>
       /// An entity that is used by the activity to produce a new version of that entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("revision", "http://hl7.org/fhir/provenance-entity-role"), Description("Revision")]
+      [EnumLiteral("revision"), Description("Revision")]
       Revision,
       /// <summary>
       /// An entity that is copied in full or part by an agent that is not the author of the entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("quotation", "http://hl7.org/fhir/provenance-entity-role"), Description("Quotation")]
+      [EnumLiteral("quotation"), Description("Quotation")]
       Quotation,
       /// <summary>
       /// An entity that is used as input to the activity that produced the target.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/provenance-entity-role"), Description("Source")]
+      [EnumLiteral("source"), Description("Source")]
       Source,
       /// <summary>
       /// The record resulting from this event adheres to the protocol, guideline, order set or other definition represented by this entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("instantiates", "http://hl7.org/fhir/provenance-entity-role"), Description("Instantiates")]
+      [EnumLiteral("instantiates"), Description("Instantiates")]
       Instantiates,
       /// <summary>
       /// An entity that is removed from accessibility, usually through the DELETE operator.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("removal", "http://hl7.org/fhir/provenance-entity-role"), Description("Removal")]
+      [EnumLiteral("removal"), Description("Removal")]
       Removal,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Provenance#Agent", IsNestedType=true)]
+    [BackboneType("Provenance.agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -112,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// How the agent participated
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("ProvenanceAgentType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -125,6 +127,7 @@ namespace Hl7.Fhir.Model
       /// What the agents role was
       /// </summary>
       [FhirElement("role", Order=50)]
+      [Binding("ProvenanceAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -282,6 +285,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Provenance#Entity", IsNestedType=true)]
+    [BackboneType("Provenance.entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -294,6 +298,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ProvenanceEntityRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement
@@ -566,6 +571,7 @@ namespace Hl7.Fhir.Model
     /// Authorization (purposeOfUse) related to the event
     /// </summary>
     [FhirElement("authorization", Order=140, FiveWs="FiveWs.why[x]")]
+    [Binding("ProvenanceReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Authorization
@@ -580,6 +586,7 @@ namespace Hl7.Fhir.Model
     /// Activity that occurred
     /// </summary>
     [FhirElement("activity", Order=150, FiveWs="FiveWs.why[x]")]
+    [Binding("ProvenanceActivity")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Activity
     {

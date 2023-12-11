@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter", IsResource=true)]
-  public partial class Encounter : Hl7.Fhir.Model.DomainResource
+  public partial class Encounter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,34 +60,34 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/encounter-location-status)
     /// (system: http://hl7.org/fhir/encounter-location-status)
     /// </summary>
-    [FhirEnumeration("EncounterLocationStatus")]
+    [FhirEnumeration("EncounterLocationStatus", "http://hl7.org/fhir/ValueSet/encounter-location-status", "http://hl7.org/fhir/encounter-location-status")]
     public enum EncounterLocationStatus
     {
       /// <summary>
       /// The patient is planned to be moved to this location at some point in the future.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/encounter-location-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// The patient is currently at this location, or was between the period specified.
       /// A system may update these records when the patient leaves the location to either reserved, or completed.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/encounter-location-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This location is held empty for this patient.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("reserved", "http://hl7.org/fhir/encounter-location-status"), Description("Reserved")]
+      [EnumLiteral("reserved"), Description("Reserved")]
       Reserved,
       /// <summary>
       /// The patient was at this location during the period specified.
       /// Not to be used when the patient is currently at the location.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/encounter-location-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
     }
 
@@ -97,6 +97,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Participant", IsNestedType=true)]
+    [BackboneType("Encounter.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -108,6 +109,7 @@ namespace Hl7.Fhir.Model
       /// Role of participant in encounter
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -253,6 +255,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Reason", IsNestedType=true)]
+    [BackboneType("Encounter.reason")]
     public partial class ReasonComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -264,6 +267,7 @@ namespace Hl7.Fhir.Model
       /// What the reason value should be used for/as
       /// </summary>
       [FhirElement("use", InSummary=true, Order=40)]
+      [Binding("reason-use")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Use
@@ -278,6 +282,7 @@ namespace Hl7.Fhir.Model
       /// Reason the encounter takes place (core or reference)
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.why[x]")]
+      [Binding("EncounterReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Value
@@ -386,6 +391,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Diagnosis", IsNestedType=true)]
+    [BackboneType("Encounter.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -397,6 +403,7 @@ namespace Hl7.Fhir.Model
       /// The diagnosis relevant to the encounter
       /// </summary>
       [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.why[x]")]
+      [Binding("condition-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Condition
@@ -411,6 +418,7 @@ namespace Hl7.Fhir.Model
       /// Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)
       /// </summary>
       [FhirElement("use", Order=50)]
+      [Binding("DiagnosisUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Use
@@ -519,6 +527,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Admission", IsNestedType=true)]
+    [BackboneType("Encounter.admission")]
     public partial class AdmissionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -558,6 +567,7 @@ namespace Hl7.Fhir.Model
       /// From where patient was admitted (physician referral, transfer)
       /// </summary>
       [FhirElement("admitSource", Order=60)]
+      [Binding("AdmitSource")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AdmitSource
       {
@@ -571,6 +581,7 @@ namespace Hl7.Fhir.Model
       /// Indicates that the patient is being re-admitted
       /// </summary>
       [FhirElement("reAdmission", Order=70)]
+      [Binding("ReAdmissionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ReAdmission
       {
@@ -599,6 +610,7 @@ namespace Hl7.Fhir.Model
       /// Category or kind of location after discharge
       /// </summary>
       [FhirElement("dischargeDisposition", Order=90)]
+      [Binding("DischargeDisp")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
       {
@@ -742,6 +754,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Location", IsNestedType=true)]
+    [BackboneType("Encounter.location")]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -770,6 +783,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EncounterLocationStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
       {
@@ -801,6 +815,7 @@ namespace Hl7.Fhir.Model
       /// The physical type of the location (usually the level in the location hierarchy - bed, room, ward, virtual etc.)
       /// </summary>
       [FhirElement("form", Order=60)]
+      [Binding("LocationForm")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Form
       {
@@ -952,6 +967,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EncounterStatus> StatusElement
@@ -984,6 +1000,7 @@ namespace Hl7.Fhir.Model
     /// Classification of patient encounter context - e.g. Inpatient, outpatient
     /// </summary>
     [FhirElement("class", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("EncounterClass")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Class
@@ -998,6 +1015,7 @@ namespace Hl7.Fhir.Model
     /// Indicates the urgency of the encounter
     /// </summary>
     [FhirElement("priority", Order=120, FiveWs="FiveWs.grade")]
+    [Binding("Priority")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -1011,6 +1029,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of encounter (e.g. e-mail consultation, surgical day-care, ...)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [Binding("EncounterType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1025,6 +1044,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of service
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=140)]
+    [Binding("EncounterServiceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
@@ -1054,6 +1074,7 @@ namespace Hl7.Fhir.Model
     /// The current status of the subject in relation to the Encounter
     /// </summary>
     [FhirElement("subjectStatus", Order=160)]
+    [Binding("SubjectStatus")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SubjectStatus
     {
@@ -1321,6 +1342,7 @@ namespace Hl7.Fhir.Model
     /// Diet preferences reported by the patient
     /// </summary>
     [FhirElement("dietPreference", Order=320)]
+    [Binding("PatientDiet")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
@@ -1335,6 +1357,7 @@ namespace Hl7.Fhir.Model
     /// Wheelchair, translator, stretcher, etc
     /// </summary>
     [FhirElement("specialArrangement", Order=330)]
+    [Binding("Arrangements")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
@@ -1349,6 +1372,7 @@ namespace Hl7.Fhir.Model
     /// Special courtesies (VIP, board member)
     /// </summary>
     [FhirElement("specialCourtesy", Order=340)]
+    [Binding("Courtesies")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
@@ -1385,6 +1409,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Encounter.LocationComponent> _Location;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

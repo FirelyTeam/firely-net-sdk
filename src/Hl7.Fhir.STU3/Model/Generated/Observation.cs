@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Observation","http://hl7.org/fhir/StructureDefinition/Observation", IsResource=true)]
-  public partial class Observation : Hl7.Fhir.Model.DomainResource
+  public partial class Observation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
     /// (system: http://hl7.org/fhir/observation-relationshiptypes)
     /// </summary>
-    [FhirEnumeration("ObservationRelationshipType")]
+    [FhirEnumeration("ObservationRelationshipType", "http://hl7.org/fhir/ValueSet/observation-relationshiptypes", "http://hl7.org/fhir/observation-relationshiptypes")]
     public enum ObservationRelationshipType
     {
       /// <summary>
       /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("has-member", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Has Member")]
+      [EnumLiteral("has-member"), Description("Has Member")]
       HasMember,
       /// <summary>
       /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is the only logical choice when referencing QuestionnaireResponse.
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("derived-from", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Derived From")]
+      [EnumLiteral("derived-from"), Description("Derived From")]
       DerivedFrom,
       /// <summary>
       /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("sequel-to", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Sequel To")]
+      [EnumLiteral("sequel-to"), Description("Sequel To")]
       SequelTo,
       /// <summary>
       /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("replaces", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Replaces")]
+      [EnumLiteral("replaces"), Description("Replaces")]
       Replaces,
       /// <summary>
       /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("qualified-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Qualified By")]
+      [EnumLiteral("qualified-by"), Description("Qualified By")]
       QualifiedBy,
       /// <summary>
       /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure, which has no value).
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("interfered-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Interfered By")]
+      [EnumLiteral("interfered-by"), Description("Interfered By")]
       InterferedBy,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#ReferenceRange", IsNestedType=true)]
+    [BackboneType("Observation.referenceRange")]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
       /// Reference range qualifier
       /// </summary>
       [FhirElement("type", Order=60)]
+      [Binding("ObservationRangeMeaning")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -157,6 +159,7 @@ namespace Hl7.Fhir.Model
       /// Reference range population
       /// </summary>
       [FhirElement("appliesTo", Order=70)]
+      [Binding("ObservationRangeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
@@ -345,6 +348,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#Related", IsNestedType=true)]
+    [BackboneType("Observation.related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -357,6 +361,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
       {
@@ -498,6 +503,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#Component", IsNestedType=true)]
+    [BackboneType("Observation.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -508,7 +514,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of component observation (code / type)
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40, FiveWs="what")]
+      [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -538,6 +545,7 @@ namespace Hl7.Fhir.Model
       /// Why the component result is missing
       /// </summary>
       [FhirElement("dataAbsentReason", Order=60)]
+      [Binding("ObservationValueAbsentReason")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
       {
@@ -551,6 +559,7 @@ namespace Hl7.Fhir.Model
       /// High, low, normal, etc.
       /// </summary>
       [FhirElement("interpretation", Order=70)]
+      [Binding("ObservationInterpretation")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Interpretation
       {
@@ -696,7 +705,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for observation
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -726,8 +735,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -759,7 +769,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of  type of observation
     /// </summary>
-    [FhirElement("category", Order=120)]
+    [FhirElement("category", Order=120, FiveWs="class")]
+    [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -773,7 +784,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type)
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
+    [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -787,7 +799,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what this is about
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
@@ -802,7 +814,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this observation is made
     /// </summary>
-    [FhirElement("context", Order=150)]
+    [FhirElement("context", Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -817,7 +829,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinically relevant time/time-period for observation
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -832,7 +844,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this was made available
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=170)]
+    [FhirElement("issued", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -863,7 +875,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for the observation
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=180)]
+    [FhirElement("performer", InSummary=true, Order=180, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
@@ -895,6 +907,7 @@ namespace Hl7.Fhir.Model
     /// Why the result is missing
     /// </summary>
     [FhirElement("dataAbsentReason", Order=200)]
+    [Binding("ObservationValueAbsentReason")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
     {
@@ -908,6 +921,7 @@ namespace Hl7.Fhir.Model
     /// High, low, normal, etc.
     /// </summary>
     [FhirElement("interpretation", Order=210)]
+    [Binding("ObservationInterpretation")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Interpretation
     {
@@ -952,6 +966,7 @@ namespace Hl7.Fhir.Model
     /// Observed body part
     /// </summary>
     [FhirElement("bodySite", Order=230)]
+    [Binding("BodySite")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -965,6 +980,7 @@ namespace Hl7.Fhir.Model
     /// How it was done
     /// </summary>
     [FhirElement("method", Order=240)]
+    [Binding("ObservationMethod")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -1045,6 +1061,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Observation.ComponentComponent> _Component;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense", IsResource=true)]
-  public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource
+  public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,62 +60,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationdispense-status)
     /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
     /// </summary>
-    [FhirEnumeration("MedicationDispenseStatusCodes")]
+    [FhirEnumeration("MedicationDispenseStatusCodes", "http://hl7.org/fhir/ValueSet/medicationdispense-status", "http://terminology.hl7.org/CodeSystem/medicationdispense-status")]
     public enum MedicationDispenseStatusCodes
     {
       /// <summary>
       /// The core event has not started yet, but some staging activities have begun (e.g. initial compounding or packaging of medication). Preparation stages may be tracked for billing purposes.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("preparation", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Preparation")]
+      [EnumLiteral("preparation"), Description("Preparation")]
       Preparation,
       /// <summary>
       /// The dispensed product is ready for pickup.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The dispensed product was not and will never be picked up by the patient.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The dispense process is paused while waiting for an external event to reactivate the dispense.  For example, new stock has arrived or the prescriber has called.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The dispensed product has been picked up.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("completed", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The dispense was entered in error and therefore nullified.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the dispense have been permanently halted, before all of them occurred.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The dispense was declined and not performed.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("declined", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Declined")]
+      [EnumLiteral("declined"), Description("Declined")]
       Declined,
       /// <summary>
       /// The authoring system does not know which of the status values applies for this medication dispense.  Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just now known which one.
       /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [BackboneType("MedicationDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -136,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// Who performed the dispense and what they did
       /// </summary>
       [FhirElement("function", Order=40)]
+      [Binding("MedicationDispensePerformerFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -259,6 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationDispense.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -302,6 +305,7 @@ namespace Hl7.Fhir.Model
       /// Code signifying whether a different drug was dispensed from what was prescribed
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("MedicationIntendedSubstitutionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -315,6 +319,7 @@ namespace Hl7.Fhir.Model
       /// Why was substitution made
       /// </summary>
       [FhirElement("reason", Order=60)]
+      [Binding("MedicationIntendedSubstitutionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -486,6 +491,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes> StatusElement
@@ -518,6 +524,7 @@ namespace Hl7.Fhir.Model
     /// Why a dispense was not performed
     /// </summary>
     [FhirElement("statusReason", Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [Binding("MedicationDispenseStatusReason")]
     [CLSCompliant(false)]
     [References("DetectedIssue")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -534,6 +541,7 @@ namespace Hl7.Fhir.Model
     /// Type of medication dispense
     /// </summary>
     [FhirElement("category", Order=130)]
+    [Binding("MedicationDispenseCategory")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -547,6 +555,7 @@ namespace Hl7.Fhir.Model
     /// What medication was supplied
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [Binding("MedicationCode")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -655,6 +664,7 @@ namespace Hl7.Fhir.Model
     /// Trial fill, partial fill, emergency fill, etc.
     /// </summary>
     [FhirElement("type", Order=210)]
+    [Binding("MedicationDispenseType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -855,6 +865,11 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.DataType ICoded<Hl7.Fhir.Model.DataType>.Code { get => Medication; set => Medication = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Medication.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

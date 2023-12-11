@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
-  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinical-impression-status)
     /// (system: http://hl7.org/fhir/clinical-impression-status)
     /// </summary>
-    [FhirEnumeration("ClinicalImpressionStatus")]
+    [FhirEnumeration("ClinicalImpressionStatus", "http://hl7.org/fhir/ValueSet/clinical-impression-status", "http://hl7.org/fhir/clinical-impression-status")]
     public enum ClinicalImpressionStatus
     {
       /// <summary>
       /// The assessment is still on-going and results are not yet final.
       /// (system: http://hl7.org/fhir/clinical-impression-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/clinical-impression-status"), Description("In progress")]
+      [EnumLiteral("draft"), Description("In progress")]
       Draft,
       /// <summary>
       /// The assessment is done and the results are final.
       /// (system: http://hl7.org/fhir/clinical-impression-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/clinical-impression-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
       /// (system: http://hl7.org/fhir/clinical-impression-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/clinical-impression-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
+    [BackboneType("ClinicalImpression.investigation")]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// A name/code for the set
       /// </summary>
       [FhirElement("code", Order=40)]
+      [Binding("InvestigationGroupType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -224,6 +226,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
+    [BackboneType("ClinicalImpression.finding")]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +238,7 @@ namespace Hl7.Fhir.Model
       /// What was found
       /// </summary>
       [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("ConditionKind")]
       [CLSCompliant(false)]
       [References("Condition","Observation")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -374,7 +378,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -388,8 +392,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClinicalImpressionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionStatus> StatusElement
@@ -421,7 +426,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of assessment performed
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=110)]
+    [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
+    [Binding("ClinicalImpressionCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -465,7 +471,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient or group assessed
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -481,7 +487,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or Episode created from
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=140)]
+    [FhirElement("context", InSummary=true, Order=140, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -496,7 +502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time of assessment
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -511,7 +517,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the assessment was documented
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -542,7 +548,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The clinician performing the assessment
     /// </summary>
-    [FhirElement("assessor", InSummary=true, Order=170)]
+    [FhirElement("assessor", InSummary=true, Order=170, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -572,7 +578,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relevant impressions of patient state
     /// </summary>
-    [FhirElement("problem", InSummary=true, Order=190)]
+    [FhirElement("problem", InSummary=true, Order=190, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","AllergyIntolerance")]
     [Cardinality(Min=0,Max=-1)]
@@ -680,6 +686,7 @@ namespace Hl7.Fhir.Model
     /// Estimate of likely outcome
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=240)]
+    [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
@@ -735,6 +742,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ResearchStudy","http://hl7.org/fhir/StructureDefinition/ResearchStudy", IsResource=true)]
-  public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource
+  public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,75 +60,75 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-study-status)
     /// (system: http://hl7.org/fhir/research-study-status)
     /// </summary>
-    [FhirEnumeration("ResearchStudyStatus")]
+    [FhirEnumeration("ResearchStudyStatus", "http://hl7.org/fhir/ValueSet/research-study-status", "http://hl7.org/fhir/research-study-status")]
     public enum ResearchStudyStatus
     {
       /// <summary>
       /// Study is opened for accrual.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/research-study-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// Study is completed prematurely and will not resume; patients are no longer examined nor treated.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("administratively-completed", "http://hl7.org/fhir/research-study-status"), Description("Administratively Completed")]
+      [EnumLiteral("administratively-completed"), Description("Administratively Completed")]
       AdministrativelyCompleted,
       /// <summary>
       /// Protocol is approved by the review board.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("approved", "http://hl7.org/fhir/research-study-status"), Description("Approved")]
+      [EnumLiteral("approved"), Description("Approved")]
       Approved,
       /// <summary>
       /// Study is closed for accrual; patients can be examined and treated.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("closed-to-accrual", "http://hl7.org/fhir/research-study-status"), Description("Closed to Accrual")]
+      [EnumLiteral("closed-to-accrual"), Description("Closed to Accrual")]
       ClosedToAccrual,
       /// <summary>
       /// Study is closed to accrual and intervention, i.e. the study is closed to enrollment, all study subjects have completed treatment or intervention but are still being followed according to the primary objective of the study.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("closed-to-accrual-and-intervention", "http://hl7.org/fhir/research-study-status"), Description("Closed to Accrual and Intervention")]
+      [EnumLiteral("closed-to-accrual-and-intervention"), Description("Closed to Accrual and Intervention")]
       ClosedToAccrualAndIntervention,
       /// <summary>
       /// Study is closed to accrual and intervention, i.e. the study is closed to enrollment, all study subjects have completed treatment
       /// or intervention but are still being followed according to the primary objective of the study.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/research-study-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// Protocol was disapproved by the review board.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("disapproved", "http://hl7.org/fhir/research-study-status"), Description("Disapproved")]
+      [EnumLiteral("disapproved"), Description("Disapproved")]
       Disapproved,
       /// <summary>
       /// Protocol is submitted to the review board for approval.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("in-review", "http://hl7.org/fhir/research-study-status"), Description("In Review")]
+      [EnumLiteral("in-review"), Description("In Review")]
       InReview,
       /// <summary>
       /// Study is temporarily closed for accrual; can be potentially resumed in the future; patients can be examined and treated.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("temporarily-closed-to-accrual", "http://hl7.org/fhir/research-study-status"), Description("Temporarily Closed to Accrual")]
+      [EnumLiteral("temporarily-closed-to-accrual"), Description("Temporarily Closed to Accrual")]
       TemporarilyClosedToAccrual,
       /// <summary>
       /// Study is temporarily closed for accrual and intervention and potentially can be resumed in the future.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("temporarily-closed-to-accrual-and-intervention", "http://hl7.org/fhir/research-study-status"), Description("Temporarily Closed to Accrual and Intervention")]
+      [EnumLiteral("temporarily-closed-to-accrual-and-intervention"), Description("Temporarily Closed to Accrual and Intervention")]
       TemporarilyClosedToAccrualAndIntervention,
       /// <summary>
       /// Protocol was withdrawn by the lead organization.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("withdrawn", "http://hl7.org/fhir/research-study-status"), Description("Withdrawn")]
+      [EnumLiteral("withdrawn"), Description("Withdrawn")]
       Withdrawn,
     }
 
@@ -138,6 +138,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Arm", IsNestedType=true)]
+    [BackboneType("ResearchStudy.arm")]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -328,6 +329,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Objective", IsNestedType=true)]
+    [BackboneType("ResearchStudy.objective")]
     public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -370,6 +372,7 @@ namespace Hl7.Fhir.Model
       /// primary | secondary | exploratory
       /// </summary>
       [FhirElement("type", Order=50)]
+      [Binding("ResearchStudyObjectiveType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -553,6 +556,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchStudy.ResearchStudyStatus> StatusElement
@@ -585,6 +589,7 @@ namespace Hl7.Fhir.Model
     /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
     /// </summary>
     [FhirElement("primaryPurposeType", InSummary=true, Order=140)]
+    [Binding("ResearchStudyPrimaryPurposeType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
     {
@@ -598,6 +603,7 @@ namespace Hl7.Fhir.Model
     /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
     /// </summary>
     [FhirElement("phase", InSummary=true, Order=150)]
+    [Binding("ResearchStudyPhase")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Phase
     {
@@ -611,6 +617,7 @@ namespace Hl7.Fhir.Model
     /// Classifications for the study
     /// </summary>
     [FhirElement("category", InSummary=true, Order=160)]
+    [Binding("ResearchStudyCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -625,6 +632,7 @@ namespace Hl7.Fhir.Model
     /// Drugs, devices, etc. under study
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
+    [Binding("ResearchStudyFocus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
@@ -639,6 +647,7 @@ namespace Hl7.Fhir.Model
     /// Condition being studied
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
+    [Binding("ConditionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
@@ -681,6 +690,7 @@ namespace Hl7.Fhir.Model
     /// Used to search for the study
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=210)]
+    [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -695,6 +705,7 @@ namespace Hl7.Fhir.Model
     /// Geographic region(s) for study
     /// </summary>
     [FhirElement("location", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Location
@@ -815,6 +826,7 @@ namespace Hl7.Fhir.Model
     /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
     /// </summary>
     [FhirElement("reasonStopped", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
+    [Binding("ResearchStudyReasonStopped")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ReasonStopped
     {
@@ -865,6 +877,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> _Objective;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

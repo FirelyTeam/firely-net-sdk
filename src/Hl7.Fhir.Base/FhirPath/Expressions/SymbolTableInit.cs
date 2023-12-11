@@ -98,6 +98,8 @@ namespace Hl7.FhirPath.Expressions
             t.Add("binary.-", (object f, int a, int b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, long a, long b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, decimal a, decimal b) => a - b, doNullProp: true);
+            t.Add("binary.-", (object f, P.DateTime a, P.Quantity b) => a - b, doNullProp: true);
+            t.Add("binary.-", (object f, P.Date a, P.Quantity b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, P.Quantity a, P.Quantity b) => a - b, doNullProp: true);
 
             t.Add("binary.div", (object f, int a, int b) => b != 0 ? a / b : (int?)null, doNullProp: true);
@@ -163,6 +165,7 @@ namespace Hl7.FhirPath.Expressions
             t.Add("length", (string f) => f.Length, doNullProp: true);
             t.Add("split", (string f, string seperator) => f.FpSplit(seperator), doNullProp: true);
             t.Add("join", (IEnumerable<ITypedElement> f, string separator) => f.FpJoin(separator), doNullProp: true);
+            t.Add("join", (IEnumerable<ITypedElement> f) => f.FpJoin(), doNullProp: true);
 
             // Math functions
             t.Add("abs", (decimal f) => Math.Abs(f), doNullProp: true);

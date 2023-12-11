@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Model\ElementDefinitionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Ratio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\DirectorySource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\IConformanceSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\ResourceResolverExtensions.cs" />

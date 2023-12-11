@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/linkage-type)
     /// (system: http://hl7.org/fhir/linkage-type)
     /// </summary>
-    [FhirEnumeration("LinkageType")]
+    [FhirEnumeration("LinkageType", "http://hl7.org/fhir/ValueSet/linkage-type", "http://hl7.org/fhir/linkage-type")]
     public enum LinkageType
     {
       /// <summary>
       /// The resource represents the "source of truth" (from the perspective of this Linkage resource) for the underlying event/condition/etc.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of Truth")]
+      [EnumLiteral("source"), Description("Source of Truth")]
       Source,
       /// <summary>
       /// The resource represents an alternative view of the underlying event/condition/etc.  The resource may still be actively maintained, even though it is not considered to be the source of truth.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
-      [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate Record")]
+      [EnumLiteral("alternate"), Description("Alternate Record")]
       Alternate,
       /// <summary>
       /// The resource represents an obsolete record of the underlying event/condition/etc.  It is not expected to be actively maintained.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
-      [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/Obsolete Record")]
+      [EnumLiteral("historical"), Description("Historical/Obsolete Record")]
       Historical,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Linkage#Item", IsNestedType=true)]
+    [BackboneType("Linkage.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -101,6 +102,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("LinkageType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Linkage.LinkageType> TypeElement

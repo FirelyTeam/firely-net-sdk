@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Model
     /// The type of contact
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=30)]
+    [Binding("Purpose")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Purpose
     {

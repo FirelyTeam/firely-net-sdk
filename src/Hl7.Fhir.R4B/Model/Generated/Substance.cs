@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance", IsResource=true)]
-  public partial class Substance : Hl7.Fhir.Model.DomainResource
+  public partial class Substance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/substance-status)
     /// (system: http://hl7.org/fhir/substance-status)
     /// </summary>
-    [FhirEnumeration("FHIRSubstanceStatus")]
+    [FhirEnumeration("FHIRSubstanceStatus", "http://hl7.org/fhir/ValueSet/substance-status", "http://hl7.org/fhir/substance-status")]
     public enum FHIRSubstanceStatus
     {
       /// <summary>
       /// The substance is considered for use or reference.
       /// (system: http://hl7.org/fhir/substance-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/substance-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The substance is considered for reference, but not for use.
       /// (system: http://hl7.org/fhir/substance-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/substance-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The substance was entered in error.
       /// (system: http://hl7.org/fhir/substance-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/substance-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Instance", IsNestedType=true)]
+    [BackboneType("Substance.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -260,6 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Ingredient", IsNestedType=true)]
+    [BackboneType("Substance.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -284,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// A component of the substance
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [Binding("SubstanceIngredient")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -408,6 +411,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRSubstanceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> StatusElement
     {
@@ -439,6 +443,7 @@ namespace Hl7.Fhir.Model
     /// What class/type of substance this is
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [Binding("SubstanceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -453,6 +458,7 @@ namespace Hl7.Fhir.Model
     /// What substance this is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [Binding("SubstanceCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -521,6 +527,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Substance.IngredientComponent> _Ingredient;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

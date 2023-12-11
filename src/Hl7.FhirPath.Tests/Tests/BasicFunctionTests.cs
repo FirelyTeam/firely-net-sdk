@@ -10,9 +10,8 @@
 //extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using Hl7.FhirPath.Functions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -248,7 +247,7 @@ namespace Hl7.FhirPath.Tests
             dummy = ElementNode.ForPrimitive("a,,b,c,d"); // Empty element should be removed
             result = dummy.Select("split(',')");
             Assert.IsNotNull(result);
-            CollectionAssert.AreEqual(new[] { "a", "b", "c", "d" }, result.Select(r => r.Value.ToString()).ToArray());
+            CollectionAssert.AreEqual(new[] { "a", "", "b", "c", "d" }, result.Select(r => r.Value.ToString()).ToArray());
 
             dummy = ElementNode.ForPrimitive("");
             result = dummy.Select("split(',')");
@@ -257,7 +256,7 @@ namespace Hl7.FhirPath.Tests
             dummy = ElementNode.ForPrimitive("[stop]ONE[stop][stop]TWO[stop][stop][stop]THREE[stop][stop]");
             result = dummy.Select("split('[stop]')");
             Assert.IsNotNull(result);
-            CollectionAssert.AreEqual(new[] { "ONE", "TWO", "THREE" }, result.Select(r => r.Value.ToString()).ToArray());
+            CollectionAssert.AreEqual(new[] { "", "ONE", "", "TWO", "", "", "THREE", "", "" }, result.Select(r => r.Value.ToString()).ToArray());
         }
 
         [TestMethod]
@@ -278,6 +277,11 @@ namespace Hl7.FhirPath.Tests
             var result = dummy.FpJoin(string.Empty);
             Assert.IsNotNull(result);
             Assert.AreEqual("This is one sentence.", result);
+
+            dummy = ElementNode.CreateList("a", "b", "c");
+            result = dummy.FpJoin();
+            Assert.IsNotNull(result);
+            Assert.AreEqual("abc", result);
 
             dummy = ElementNode.CreateList();
             result = dummy.FpJoin(string.Empty);

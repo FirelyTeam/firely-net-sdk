@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RequestOrchestration","http://hl7.org/fhir/StructureDefinition/RequestOrchestration", IsResource=true)]
-  public partial class RequestOrchestration : Hl7.Fhir.Model.DomainResource
+  public partial class RequestOrchestration : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Action", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -228,6 +229,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("priority", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RequestPriority")]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
       {
@@ -259,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// Code representing the meaning of the action or sub-actions
       /// </summary>
       [FhirElement("code", Order=100)]
+      [Binding("ActionCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -401,6 +404,7 @@ namespace Hl7.Fhir.Model
       /// create | update | remove | fire-event
       /// </summary>
       [FhirElement("type", Order=200)]
+      [Binding("ActionType")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -415,6 +419,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupingBehavior", Order=210)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionGroupingBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
       {
@@ -447,6 +452,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("selectionBehavior", Order=220)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionSelectionBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
       {
@@ -479,6 +485,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requiredBehavior", Order=230)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRequiredBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
       {
@@ -511,6 +518,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("precheckBehavior", Order=240)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionPrecheckBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
       {
@@ -543,6 +551,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=250)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionCardinalityBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
       {
@@ -982,6 +991,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Condition", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -994,6 +1004,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionConditionKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
@@ -1133,6 +1144,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Input", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1322,6 +1334,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Output", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1511,6 +1524,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#RelatedAction", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1555,6 +1569,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
@@ -1588,6 +1603,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("endRelationship", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> EndRelationshipElement
       {
@@ -1746,6 +1762,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Participant", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1758,6 +1775,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
       {
@@ -1835,6 +1853,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Nurse, Surgeon, Parent, etc
       /// </summary>
       [FhirElement("role", Order=70)]
+      [Binding("ActivityParticipantRole")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -1848,6 +1867,7 @@ namespace Hl7.Fhir.Model
       /// E.g. Author, Reviewer, Witness, etc
       /// </summary>
       [FhirElement("function", Order=80)]
+      [Binding("ActionParticipantFunction")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -2007,6 +2027,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#DynamicValue", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2278,6 +2299,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -2311,6 +2333,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -2344,6 +2367,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -2375,6 +2399,7 @@ namespace Hl7.Fhir.Model
     /// What's being requested/ordered
     /// </summary>
     [FhirElement("code", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
+    [Binding("RequestCode")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -2464,6 +2489,7 @@ namespace Hl7.Fhir.Model
     /// Why the request orchestration is needed
     /// </summary>
     [FhirElement("reason", Order=230, FiveWs="FiveWs.why[x]")]
+    [Binding("ActionReasonCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -2517,6 +2543,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.RequestOrchestration.ActionComponent> _Action;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

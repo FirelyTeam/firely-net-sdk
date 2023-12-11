@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
-  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
+  public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-category)
     /// (system: http://hl7.org/fhir/adverse-event-category)
     /// </summary>
-    [FhirEnumeration("AdverseEventCategory")]
+    [FhirEnumeration("AdverseEventCategory", "http://hl7.org/fhir/ValueSet/adverse-event-category", "http://hl7.org/fhir/adverse-event-category")]
     public enum AdverseEventCategory
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-category)
       /// </summary>
-      [EnumLiteral("AE", "http://hl7.org/fhir/adverse-event-category"), Description("Adverse Event")]
+      [EnumLiteral("AE"), Description("Adverse Event")]
       AE,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-category)
       /// </summary>
-      [EnumLiteral("PAE", "http://hl7.org/fhir/adverse-event-category"), Description("Potential Adverse Event")]
+      [EnumLiteral("PAE"), Description("Potential Adverse Event")]
       PAE,
     }
 
@@ -82,44 +82,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-outcome)
     /// (system: http://hl7.org/fhir/adverse-event-outcome)
     /// </summary>
-    [FhirEnumeration("AdverseEventOutcome")]
+    [FhirEnumeration("AdverseEventOutcome", "http://hl7.org/fhir/ValueSet/adverse-event-outcome", "http://hl7.org/fhir/adverse-event-outcome")]
     public enum AdverseEventOutcome
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("resolved", "http://hl7.org/fhir/adverse-event-outcome"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("recovering", "http://hl7.org/fhir/adverse-event-outcome"), Description("Recovering")]
+      [EnumLiteral("recovering"), Description("Recovering")]
       Recovering,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("ongoing", "http://hl7.org/fhir/adverse-event-outcome"), Description("Ongoing")]
+      [EnumLiteral("ongoing"), Description("Ongoing")]
       Ongoing,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("resolvedWithSequelae", "http://hl7.org/fhir/adverse-event-outcome"), Description("Resolved with Sequelae")]
+      [EnumLiteral("resolvedWithSequelae"), Description("Resolved with Sequelae")]
       ResolvedWithSequelae,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("fatal", "http://hl7.org/fhir/adverse-event-outcome"), Description("Fatal")]
+      [EnumLiteral("fatal"), Description("Fatal")]
       Fatal,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/adverse-event-outcome"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -128,20 +128,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-causality)
     /// (system: http://hl7.org/fhir/adverse-event-causality)
     /// </summary>
-    [FhirEnumeration("AdverseEventCausality")]
+    [FhirEnumeration("AdverseEventCausality", "http://hl7.org/fhir/ValueSet/adverse-event-causality", "http://hl7.org/fhir/adverse-event-causality")]
     public enum AdverseEventCausality
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-causality)
       /// </summary>
-      [EnumLiteral("causality1", "http://hl7.org/fhir/adverse-event-causality"), Description("causality1 placeholder")]
+      [EnumLiteral("causality1"), Description("causality1 placeholder")]
       Causality1,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-causality)
       /// </summary>
-      [EnumLiteral("causality2", "http://hl7.org/fhir/adverse-event-causality"), Description("causality2 placeholder")]
+      [EnumLiteral("causality2"), Description("causality2 placeholder")]
       Causality2,
     }
 
@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -179,6 +180,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdverseEventCausality")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality> CausalityElement
       {
@@ -210,6 +212,7 @@ namespace Hl7.Fhir.Model
       /// assess1 | assess2
       /// </summary>
       [FhirElement("causalityAssessment", InSummary=true, Order=60)]
+      [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CausalityAssessment
       {
@@ -254,6 +257,7 @@ namespace Hl7.Fhir.Model
       /// method1 | method2
       /// </summary>
       [FhirElement("causalityMethod", InSummary=true, Order=80)]
+      [Binding("AdverseEventCausalityMethod")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CausalityMethod
       {
@@ -282,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// result1 | result2
       /// </summary>
       [FhirElement("causalityResult", InSummary=true, Order=100)]
+      [Binding("AdverseEventCausalityResult")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept CausalityResult
       {
@@ -445,8 +450,9 @@ namespace Hl7.Fhir.Model
     /// AE | PAE 
     /// An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=100)]
+    [FhirElement("category", InSummary=true, Order=100, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory> CategoryElement
     {
@@ -478,7 +484,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// actual | potential
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="what")]
+    [Binding("AdverseEventType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -491,7 +498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject or group impacted by event
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
+    [FhirElement("subject", InSummary=true, Order=120, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Patient","ResearchSubject","Medication","Device")]
     [DataMember]
@@ -506,7 +513,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurred
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=130)]
+    [FhirElement("date", InSummary=true, Order=130, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -569,6 +576,7 @@ namespace Hl7.Fhir.Model
     /// Mild | Moderate | Severe
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=160)]
+    [Binding("AdverseEventSeriousness")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Seriousness
     {
@@ -582,6 +590,7 @@ namespace Hl7.Fhir.Model
     /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=170)]
+    [Binding("AdverseEventOutcome")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -594,7 +603,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the adverse event
     /// </summary>
-    [FhirElement("recorder", InSummary=true, Order=180)]
+    [FhirElement("recorder", InSummary=true, Order=180, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson")]
     [DataMember]
@@ -713,6 +722,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Study;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

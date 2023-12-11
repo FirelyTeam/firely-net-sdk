@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account", IsResource=true)]
-  public partial class Account : Hl7.Fhir.Model.DomainResource
+  public partial class Account : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/account-status)
     /// (system: http://hl7.org/fhir/account-status)
     /// </summary>
-    [FhirEnumeration("AccountStatus")]
+    [FhirEnumeration("AccountStatus", "http://hl7.org/fhir/ValueSet/account-status", "http://hl7.org/fhir/account-status")]
     public enum AccountStatus
     {
       /// <summary>
       /// This account is active and may be used.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/account-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This account is inactive and should not be used to track financial information.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/account-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/account-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Coverage", IsNestedType=true)]
+    [BackboneType("Account.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -241,6 +242,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Guarantor", IsNestedType=true)]
+    [BackboneType("Account.guarantor")]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -412,7 +414,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Account number
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -426,8 +428,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AccountStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
     {
@@ -458,7 +461,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. patient, expense, depreciation
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
+    [Binding("AccountType")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -471,7 +475,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable label
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120)]
+    [FhirElement("name", InSummary=true, Order=120, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -502,7 +506,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What is account tied to?
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
     [DataMember]
@@ -517,7 +521,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transaction window
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=140)]
+    [FhirElement("period", InSummary=true, Order=140, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -530,7 +534,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time window that transactions may be posted to this account
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=150)]
+    [FhirElement("active", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Period Active
     {
@@ -626,6 +630,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Account.GuarantorComponent> _Guarantor;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

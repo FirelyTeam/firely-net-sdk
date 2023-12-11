@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Basic","http://hl7.org/fhir/StructureDefinition/Basic", IsResource=true)]
-  public partial class Basic : Hl7.Fhir.Model.DomainResource
+  public partial class Basic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
     /// FHIR Type Name
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
     /// Kind of Resource
     /// </summary>
     [FhirElement("code", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [Binding("BasicResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -143,6 +144,11 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _Author;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+
+    Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
+    IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

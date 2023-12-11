@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TerminologyCapabilities","http://hl7.org/fhir/StructureDefinition/TerminologyCapabilities", IsResource=true)]
-  public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource
+  public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/code-search-support)
     /// (system: http://hl7.org/fhir/code-search-support)
     /// </summary>
-    [FhirEnumeration("CodeSearchSupport")]
+    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support", "http://hl7.org/fhir/code-search-support")]
     public enum CodeSearchSupport
     {
       /// <summary>
       /// The search for code on ValueSet returns ValueSet resources where the code is included in the extensional definition of the ValueSet.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("in-compose", "http://hl7.org/fhir/code-search-support"), Description("In Compose")]
+      [EnumLiteral("in-compose"), Description("In Compose")]
       InCompose,
       /// <summary>
       /// The search for code on ValueSet returns ValueSet resources where the code is contained in the  ValueSet expansion.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("in-expansion", "http://hl7.org/fhir/code-search-support"), Description("In Expansion")]
+      [EnumLiteral("in-expansion"), Description("In Expansion")]
       InExpansion,
       /// <summary>
       /// The search for code on ValueSet returns ValueSet resources where the code is included in the extensional definition or contained in the ValueSet expansion.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("in-compose-or-expansion", "http://hl7.org/fhir/code-search-support"), Description("In Compose Or Expansion")]
+      [EnumLiteral("in-compose-or-expansion"), Description("In Compose Or Expansion")]
       InComposeOrExpansion,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Software", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.software")]
     public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -257,6 +258,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Implementation", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.implementation")]
     public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -425,6 +427,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#CodeSystem", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.codeSystem")]
     public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -482,6 +485,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("content", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CodeSystemContentMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CodeSystemContentMode> ContentElement
@@ -657,6 +661,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Version", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.codeSystem.version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -762,11 +767,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("language", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CommonLanguages>> LanguageElement
       {
-        get { if(_LanguageElement==null) _LanguageElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>>(); return _LanguageElement; }
+        get { if(_LanguageElement==null) _LanguageElement = new List<Code<Hl7.Fhir.Model.CommonLanguages>>(); return _LanguageElement; }
         set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
       }
 
@@ -785,7 +791,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             LanguageElement = null;
           else
-            LanguageElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CommonLanguages>(elem)));
+            LanguageElement = new List<Code<Hl7.Fhir.Model.CommonLanguages>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CommonLanguages>(elem)));
           OnPropertyChanged("Language");
         }
       }
@@ -970,6 +976,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Filter", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.codeSystem.version.filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1139,6 +1146,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Expansion", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.expansion")]
     public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1409,6 +1417,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Parameter", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.expansion.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1577,6 +1586,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#ValidateCode", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.validateCode")]
     public partial class ValidateCodeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1705,6 +1715,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Translation", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.translation")]
     public partial class TranslationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1833,6 +1844,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TerminologyCapabilities#Closure", IsNestedType=true)]
+    [BackboneType("TerminologyCapabilities.closure")]
     public partial class ClosureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2112,6 +2124,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2297,6 +2310,7 @@ namespace Hl7.Fhir.Model
     /// Intended jurisdiction for terminology capabilities (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
+    [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2405,6 +2419,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
@@ -2522,6 +2537,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("codeSearch", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSearchSupport")]
     [DataMember]
     public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport> CodeSearchElement
     {
@@ -2587,6 +2603,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.TerminologyCapabilities.ClosureComponent _Closure;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
