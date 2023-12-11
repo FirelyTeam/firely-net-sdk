@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : ITypedElement, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IScopedNode, IAnnotated, IExceptionSource
     {
         private class Cache
         {
@@ -32,6 +32,7 @@ namespace Hl7.Fhir.ElementModel
         private readonly Cache _cache = new();
 
         public readonly ITypedElement Current;
+        private readonly ScopedNode? _parent;
 
         public ScopedNode(ITypedElement wrapped, string? instanceUri = null)
         {
@@ -45,6 +46,7 @@ namespace Hl7.Fhir.ElementModel
         private ScopedNode(ScopedNode parentNode, ScopedNode? parentResource, ITypedElement wrapped, string? fullUrl)
         {
             Current = wrapped;
+            _parent = parentNode;
             ExceptionHandler = parentNode.ExceptionHandler;
             ParentResource = parentNode.AtResource ? parentNode : parentResource;
 
@@ -217,8 +219,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 // Scan up until the first parent that knowns the instance uri (at the last the
                 // root, if it has been supplied).
-                if (_cache.InstanceUri is null)
-                    _cache.InstanceUri = ParentResources().SkipWhile(p => p.InstanceUri is null).FirstOrDefault()?.InstanceUri;
+                _cache.InstanceUri ??= ParentResources().SkipWhile(p => p.InstanceUri is null).FirstOrDefault()?.InstanceUri;
 
                 return _cache.InstanceUri;
             }
@@ -230,10 +231,23 @@ namespace Hl7.Fhir.ElementModel
         }
 
         /// <inheritdoc />
+
+
+        IScopedNode? IScopedNode.Parent => _parent;
+
+        /// <inheritdoc />
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
+
+        private IEnumerable<ScopedNode> childrenInternal(string? name = null) =>
+            Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
 
         /// <inheritdoc />
         public IEnumerable<ITypedElement> Children(string? name = null) =>
-            Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+             childrenInternal(name);
+
+        IEnumerable<IScopedNode> IBaseElementNavigator<IScopedNode>.Children(string? name) =>
+             childrenInternal(name);
     }
 }
+
+#nullable restore

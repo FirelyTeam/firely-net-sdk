@@ -108,5 +108,14 @@ namespace Hl7.Fhir.ElementModel
 
         public static ScopedNode ToScopedNode(this ITypedElement node) =>
             node as ScopedNode ?? new ScopedNode(node);
+
+        /// <summary>
+        /// Convert a <see cref="ITypedElement"/> to a <see cref="IScopedNode"/>.
+        /// </summary>
+        /// <param name="node">An <see cref="ITypedElement"/></param>
+        /// <returns></returns>
+        internal static IScopedNode AsScopedNode(this ITypedElement node) => ToScopedNode(node);
     }
 }
+
+#nullable restore
