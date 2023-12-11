@@ -249,6 +249,48 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
+        public async T.Task TestProcessMessage()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Bundle"" }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/$process-message")
+            };
+
+            using var client = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/$process-message"))
+                .AsClient();
+
+            var message = new TransactionBuilder("http://example.com/", Bundle.BundleType.Message).ToBundle();
+
+            var bundle = await client.ProcessMessageAsync(message);
+
+            bundle.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public async T.Task TestProcessMessageParameters()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Bundle"" }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/$process-message")
+            };
+
+            using var client = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/$process-message?async=true&response-url=http%3A%2F%2Fresponseurl.com"))
+                .AsClient();
+
+            var message = new TransactionBuilder("http://example.com/", Bundle.BundleType.Message).ToBundle();
+
+            var bundle = await client.ProcessMessageAsync(message, true, "http://responseurl.com");
+
+            bundle.Should().NotBeNull();
+        }
+
+        [TestMethod]
         public async Task WillFetchFullRepresentation()
         {
             var mock = new Mock<HttpMessageHandler>();
