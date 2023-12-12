@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
-    /// The base interface for <see cref="ITypedElement"/> and <see cref="IScopedNode"/>."/>
+    /// The base interface for <see cref="ITypedElement"/>."/>
     /// </summary>
     /// <typeparam name="TDerived"></typeparam>
     [Obsolete("WARNING! Intended for internal API usage exclusively, this interface ideally should be kept internal. " +
