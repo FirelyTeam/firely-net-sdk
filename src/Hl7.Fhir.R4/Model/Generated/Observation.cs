@@ -255,6 +255,21 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override IEnumerable<ElementValue> ChildrenByName(string name = null)
+      {
+          return name switch
+          {
+              "low" => ReturnElement(name, Low),
+              "high" => ReturnElement(name, High),
+              "type" => ReturnElement(name, Type),
+              "appliesTo" => ReturnElement(name, AppliesTo),
+              "age" => ReturnElement(name, Age),
+              "text" => ReturnElement(name, TextElement),
+              _ => base.ChildrenByName(name)
+          };
+      }
+
+      
       protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -464,6 +479,20 @@ namespace Hl7.Fhir.Model
           foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", elem); }
         }
       }
+
+      public override IEnumerable<ElementValue> ChildrenByName(string name = null)
+      {
+          return name switch
+          {
+              "code" => ReturnElement(name, Code),
+              "value" => ReturnElement(name, Value),
+              "dataAbsentReason" => ReturnElement(name, DataAbsentReason),
+              "interpretation" => ReturnElement(name, Interpretation),
+              "referenceRange" => ReturnElement(name, ReferenceRange),
+              _ => base.ChildrenByName(name)
+          };
+      }
+
 
       protected override bool TryGetValue(string key, out object value)
       {
@@ -1077,6 +1106,39 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
       }
     }
+
+    public override IEnumerable<ElementValue> ChildrenByName(string name = null)
+    {
+        return name switch
+        {
+            "identifier" => ReturnElement(name, Identifier),
+            "basedOn" => ReturnElement(name, BasedOn),
+            "partOf" => ReturnElement(name, PartOf),
+            "status" => ReturnElement(name, StatusElement),
+            "category" => ReturnElement(name, Category),
+            "code" => ReturnElement(name, Code),
+            "subject" => ReturnElement(name, Subject),
+            "focus" => ReturnElement(name, Focus),
+            "encounter" => ReturnElement(name, Encounter),
+            "effective" => ReturnElement(name, Effective),
+            "issued" => ReturnElement(name, IssuedElement),
+            "performer" => ReturnElement(name, Performer),
+            "value" => ReturnElement(name, Value),
+            "dataAbsentReason" => ReturnElement(name, DataAbsentReason),
+            "interpretation" => ReturnElement(name, Interpretation),
+            "note" => ReturnElement(name, Note),
+            "bodySite" => ReturnElement(name, BodySite),
+            "method" => ReturnElement(name, Method),
+            "specimen" => ReturnElement(name, Specimen),
+            "device" => ReturnElement(name, Device),
+            "referenceRange" => ReturnElement(name, ReferenceRange),
+            "hasMember" => ReturnElement(name, HasMember),
+            "derivedFrom" => ReturnElement(name, DerivedFrom),
+            "component" => ReturnElement(name, Component),
+            _ => base.ChildrenByName(name)
+        };
+    }
+
 
     protected override bool TryGetValue(string key, out object value)
     {

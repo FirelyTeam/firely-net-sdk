@@ -233,6 +233,18 @@ namespace Hl7.Fhir.Model
         if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
       }
     }
+    
+    public override IEnumerable<ElementValue> ChildrenByName(string name = null)
+    {
+        return name switch
+        {
+            "id" => ReturnElement(name, IdElement),
+            "meta" => ReturnElement(name, Meta),
+            "implicitRules" => ReturnElement(name, ImplicitRulesElement),
+            "language" => ReturnElement(name, LanguageElement),
+            _ => base.ChildrenByName(name)
+        };
+    }
 
     protected override bool TryGetValue(string key, out object value)
     {

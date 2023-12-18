@@ -239,6 +239,19 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override IEnumerable<ElementValue> ChildrenByName(string name = null)
+    {
+        return name switch
+        {
+            "reference" => ReturnElement(name, ReferenceElement),
+            "type" => ReturnElement(name, TypeElement),
+            "identifier" => ReturnElement(name, Identifier),
+            "display" => ReturnElement(name, DisplayElement),
+            _ => base.ChildrenByName(name)
+        };
+    }
+
+
     protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

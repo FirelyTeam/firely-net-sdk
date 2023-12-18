@@ -167,6 +167,15 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override IEnumerable<ElementValue> ChildrenByName(string name = null)
+    {
+        return name switch
+        {
+            "coding" => ReturnElement(name, Coding),
+            "text" => ReturnElement(name, TextElement),
+            _ => base.ChildrenByName(name)
+        };
+    }
     protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

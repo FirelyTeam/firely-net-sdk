@@ -116,6 +116,24 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
 
+        protected IEnumerable<ElementValue> ReturnElement(string name, Base element)
+        {
+            if (element != null) yield return new ElementValue(null, element);
+        }
+        protected IEnumerable<ElementValue> ReturnElement(string name, IEnumerable<Base> elements)
+        {
+            if (elements != null) return elements.Select(e => new ElementValue(name, e));
+            return Enumerable.Empty<ElementValue>();
+        }
+
+        public virtual IEnumerable<ElementValue> ChildrenByName(string name = null)
+        {
+            var result = NamedChildren;
+            return name is null
+            ? result
+            : result.Where(c => c.ElementName == name);
+        } 
+
         public IReadOnlyDictionary<string, object> AsReadOnlyDictionary() => this;
 
         #region IReadOnlyDictionary
