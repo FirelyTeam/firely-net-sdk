@@ -243,8 +243,10 @@ namespace Hl7.FhirPath.Expressions
                 var initialValueExpr = arguments.Skip(2).First();
                 initialValue = initialValueExpr(ctx, InvokeeFactory.EmptyArgs);
             }
+
             var totalContext = ctx.Nest();
             totalContext.SetTotal(initialValue);
+
             foreach (ITypedElement element in focus)
             {
                 var newFocus = ElementNode.CreateList(element);
@@ -254,7 +256,8 @@ namespace Hl7.FhirPath.Expressions
                 var newTotalResult = incrExpre(newContext, InvokeeFactory.EmptyArgs);
                 totalContext.SetTotal(newTotalResult);
             }
-            return ElementNode.CreateList(totalContext.GetTotal());
+
+            return totalContext.GetTotal();
         }
 
         private static IEnumerable<ITypedElement> Trace(Closure ctx, IEnumerable<Invokee> arguments)
@@ -262,8 +265,7 @@ namespace Hl7.FhirPath.Expressions
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
 
-            List<Invokee> selectArgs = new() { arguments.First() };
-            selectArgs.AddRange(arguments.Skip(2));
+            List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
             var selectResults = runSelect(ctx, selectArgs);
             ctx?.EvaluationContext?.Tracer?.Invoke(name, selectResults);
 
@@ -274,7 +276,6 @@ namespace Hl7.FhirPath.Expressions
         {
             // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
             // note: short-circuit behavior is expected in this function
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
 
             var expression = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
             var trueResult = arguments.Skip(2).First();
@@ -292,18 +293,24 @@ namespace Hl7.FhirPath.Expressions
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
-            var index = 0;
 
-            foreach (ITypedElement element in focus)
+            return CachedEnumerable.Create(runForeach());
+
+            IEnumerable<ITypedElement> runForeach()
             {
-                var newFocus = ElementNode.CreateList(element);
-                var newContext = ctx.Nest(newFocus);
-                newContext.SetThis(newFocus);
-                newContext.SetIndex(ElementNode.CreateList(index));
-                index++;
+                var index = 0;
 
-                if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
-                    yield return element;
+                foreach (ITypedElement element in focus)
+                {
+                    var newFocus = ElementNode.CreateList(element);
+                    var newContext = ctx.Nest(newFocus);
+                    newContext.SetThis(newFocus);
+                    newContext.SetIndex(ElementNode.CreateList(index));
+                    index++;
+
+                    if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
+                        yield return element;
+                }
             }
         }
 
@@ -311,35 +318,40 @@ namespace Hl7.FhirPath.Expressions
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
-            var index = 0;
 
-            foreach (ITypedElement element in focus)
+            return CachedEnumerable.Create(runForeach());
+
+            IEnumerable<ITypedElement> runForeach()
             {
-                var newFocus = ElementNode.CreateList(element);
-                var newContext = ctx.Nest(newFocus);
-                newContext.SetThis(newFocus);
-                newContext.SetIndex(ElementNode.CreateList(index));
-                index++;
+                var index = 0;
 
-                var result = lambda(newContext, InvokeeFactory.EmptyArgs);
-                foreach (var resultElement in result)       // implement SelectMany()
-                    yield return resultElement;
+                foreach (ITypedElement element in focus)
+                {
+                    var newFocus = ElementNode.CreateList(element);
+                    var newContext = ctx.Nest(newFocus);
+                    newContext.SetThis(newFocus);
+                    newContext.SetIndex(ElementNode.CreateList(index));
+                    index++;
+
+                    var result = lambda(newContext, InvokeeFactory.EmptyArgs);
+                    foreach (var resultElement in result)       // implement SelectMany()
+                        yield return resultElement;
+                }
             }
         }
 
         private static IEnumerable<ITypedElement> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
         {
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
             var lambda = arguments.Skip(1).First();
 
             var fullResult = new List<ITypedElement>();
-            List<ITypedElement> newNodes = new(focus);
 
             while (newNodes.Any())
             {
                 var index = 0;
                 var current = newNodes;
-                newNodes = new List<ITypedElement>();
+                newNodes = [];
 
                 foreach (ITypedElement element in current)
                 {
@@ -357,6 +369,7 @@ namespace Hl7.FhirPath.Expressions
 
                 fullResult.AddRange(newNodes);
             }
+
             return fullResult;
         }
 
@@ -397,9 +410,6 @@ namespace Hl7.FhirPath.Expressions
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-
-                //if (result == null) return ElementNode.EmptyList; -> otherwise this would not be where().exists()
-                //Patient.identifier.any(use = 'official') would return {} if ANY identifier has no 'use' element. Unexpected behaviour, I think
                 if (result == true) return ElementNode.CreateList(true);
             }
 

@@ -5,12 +5,12 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -36,7 +36,7 @@ namespace Hl7.FhirPath.Expressions
             var newCtx = context.Nest(focus);
 
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa=>!aa.Any())) return ElementNode.EmptyList;
+            if (actualArgs.Any(aa => !aa.Any())) return ElementNode.EmptyList;
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 
@@ -47,7 +47,7 @@ namespace Hl7.FhirPath.Expressions
                     // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
                     // Need to clean up this duplicate logic later
 
-                    var argFuncs = actualArgs.Select(arg => InvokeeFactory.Return(arg));
+                    var argFuncs = actualArgs.Select(InvokeeFactory.Return);
                     return entry(context, argFuncs);
                 }
                 catch (TargetInvocationException tie)
