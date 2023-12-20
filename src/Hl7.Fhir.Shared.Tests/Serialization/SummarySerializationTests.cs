@@ -180,17 +180,31 @@ namespace Hl7.Fhir.Tests.Serialization
             var p = new Patient
             {
                 BirthDate = "1972-11-30",
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } },
+                Deceased = new FhirDateTime(1972)
             };
-            var elements = new[] { "photo" };
+            var elements = new[] { "photo", "deceased" };
 
-            var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.False, elements: elements);
+            var json = p.ToJson();
+
+            var sourceNode = FhirJsonNode.Parse(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true });
+            var typedNode = sourceNode.ToTypedElement(ModelInfo.ModelInspector);
+
+
+            var pe = p.ToTypedElement();
+
+            var l = pe.Children("deceased").Single().Location; // Patient.deceased[0]
+            var l2 = typedNode.Children("deceased").Single().Location; // Patient.deceasedDateTime[0]
+
+            var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));
+            Assert.IsTrue(summaryElements.Contains("<deceased"));
 
             var noSummarySpecified = await FhirXmlSerializer.SerializeToStringAsync(p, elements: elements);
             Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
             Assert.IsTrue(noSummarySpecified.Contains("<photo"));
+            Assert.IsTrue(summaryElements.Contains("<deceased"));
 
             await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.True, elements: elements));
             await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Count, elements: elements));

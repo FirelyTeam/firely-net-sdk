@@ -59,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static Invokee Wrap<R>(Func<R> func)
         {
-            return (ctx, args) =>
+            return (_, args) =>
             {
                 return Typecasts.CastTo<IEnumerable<ITypedElement>>(func());
             };
@@ -122,15 +122,15 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                var focus = args.First()((Closure)ctx, InvokeeFactory.EmptyArgs);
+                var focus = args.First()(ctx, EmptyArgs);
                 if (propNull && !focus.Any()) return ElementNode.EmptyList;
 
-                var argA = args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
+                var argA = args.Skip(1).First()(ctx, EmptyArgs);
                 if (propNull && !argA.Any()) return ElementNode.EmptyList;
 
                 if (typeof(C) != typeof(EvaluationContext))
                 {
-                    var argB = args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs);
+                    var argB = args.Skip(2).First()(ctx, EmptyArgs);
                     if (propNull && !argB.Any()) return ElementNode.EmptyList;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
