@@ -146,7 +146,7 @@ namespace Hl7.FhirPath.Expressions
                 var iks = invokees.ToArray();
                 var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
                 var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
-                var result= focus.Navigate(name).ToList();
+                var result= focus.Navigate(name);
 
                 return result;
             });
