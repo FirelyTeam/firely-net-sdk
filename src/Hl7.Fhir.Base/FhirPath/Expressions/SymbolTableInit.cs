@@ -61,6 +61,7 @@ namespace Hl7.FhirPath.Expressions
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             t.Add("not", (IEnumerable<ITypedElement> f) => f.Not(), doNullProp: true);
             t.Add("builtin.children", (IEnumerable<ITypedElement> f, string a) => f.Navigate(a), doNullProp: true);
+            // t.AddBuildinChildren();
 
             t.Add("children", (IEnumerable<ITypedElement> f) => f.Children(), doNullProp: true);
             t.Add("descendants", (IEnumerable<ITypedElement> f) => f.Descendants(), doNullProp: true);

@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
 
         protected IEnumerable<ElementValue> ReturnElement(string name, Base element)
         {
-            if (element != null) yield return new ElementValue(null, element);
+            if (element != null) yield return new ElementValue(name, element);
         }
         protected IEnumerable<ElementValue> ReturnElement(string name, IEnumerable<Base> elements)
         {

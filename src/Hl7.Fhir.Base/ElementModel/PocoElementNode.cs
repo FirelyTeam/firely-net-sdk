@@ -79,7 +79,8 @@ namespace Hl7.Fhir.ElementModel
         {
             if (!(Current is Base parentBase)) yield break;
 
-            var children = parentBase.ChildrenByName(name);
+            var children = parentBase.NamedChildren;
+            // var children = parentBase.ChildrenByName(name);
             string oldElementName = null;
             int arrayIndex = 0;
 

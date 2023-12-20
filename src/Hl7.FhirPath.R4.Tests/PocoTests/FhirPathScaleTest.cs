@@ -274,23 +274,44 @@ namespace Hl7.Fhir
             var pocos = lines.Select(parser.Parse<Resource>).ToArray();
             var compiler = new FhirPathCompilerCache(FhirPathTestExtensions.GetCompiler());
             var spTypes = new[] { "Resource", "DomainResource", "Observation" };
-            var selectors = ModelInfo.SearchParameters.Where(sp =>
-                    spTypes.Contains(sp.Resource) && sp.Expression is not null)
-                .Select(sp => compiler.GetCompiledExpression(sp.Expression)).ToArray();
-    
+            var searchParams = ModelInfo.SearchParameters.Where(sp =>
+                spTypes.Contains(sp.Resource) && sp.Expression is not null).ToArray();
+            var selectors = searchParams
+                .Select(sp => (sp.Code, compiler.GetCompiledExpression(sp.Expression!))).ToArray();
+
+            foreach (var sp in searchParams)
+            {
+                Console.WriteLine($"{sp.Code}: {sp.Expression}");
+            }
+
             MeasureProfiler.StartCollectingData();
             var actual = Execute(pocos, selectors);
             MeasureProfiler.StopCollectingData();
             MeasureProfiler.SaveData();
-            actual.Should().BePositive();
+            actual.Should().HaveCountGreaterThan(0);
+            actual.First(i => i.Item1 == "code").Item2.Should().HaveCount(1);
+
+            Console.WriteLine($"Nr. of evaluations = {pocos.Length} x {selectors.Length} = {actual.Length}");
         }
-        
-        private int Execute(Base[] pocos, CompiledExpression[] selectors)
+
+        private (string, IEnumerable<ITypedElement>)[] Execute(Base[] pocos, (string code, CompiledExpression selector)[] selectors)
         {
             return (from p in pocos.Select(p => p.ToTypedElement())
                     from s in selectors
-                    select s.Invoke(p, new EvaluationContext(p)))
-                .ToArray().Length;
+                    select (s.code, s.selector.Invoke(p, new FhirEvaluationContext(p) { ElementResolver = Resolve })))
+                .ToArray();
+        }
+
+        public ITypedElement Resolve(string reference)
+        {
+            string? type = null;
+            if (Uri.TryCreate(reference, UriKind.RelativeOrAbsolute, out var refUri))
+            {
+                var identity = new ResourceIdentity(refUri);
+                type = identity?.ResourceType;
+            }
+
+            return (type is null) ? null : new ResourceProxyElement(type);
         }
     }
 
@@ -302,28 +323,28 @@ namespace Hl7.Fhir
 
         private static SymbolTable InitializeFhirPathSymbolTable()
         {
-            var fhirPathSymbols = new SymbolTable(FhirPathCompiler.DefaultSymbolTable);
-            fhirPathSymbols.Add("resolve",
-                (ITypedElement f) =>
-                {
-                    string? type = null;
-                    if (f.InstanceType == "Reference")
-                    {
-                        var refString = f.ChildString("reference");
-                        if (Uri.TryCreate(refString, UriKind.RelativeOrAbsolute, out var refUri))
-                        {
-                            var identity = new ResourceIdentity(refUri);
-                            if (identity
-                                .IsLocal) //Apparently there is only an id, no type. Can we get the type from the the .type element?
-                                type = f.ChildString("type");
-                            else
-                                type = identity.ResourceType;
-                        }
-                    }
-
-                    return (type is null) ? null : new ResourceProxyElement(type);
-                },
-                true);
+            var fhirPathSymbols = new SymbolTable(FhirPathCompiler.DefaultSymbolTable).AddFhirExtensions();
+            // fhirPathSymbols.Add("resolve",
+            //     (ITypedElement f) =>
+            //     {
+            //         string? type = null;
+            //         if (f.InstanceType == "Reference")
+            //         {
+            //             var refString = f.ChildString("reference");
+            //             if (Uri.TryCreate(refString, UriKind.RelativeOrAbsolute, out var refUri))
+            //             {
+            //                 var identity = new ResourceIdentity(refUri);
+            //                 if (identity
+            //                     .IsLocal) //Apparently there is only an id, no type. Can we get the type from the the .type element?
+            //                     type = f.ChildString("type");
+            //                 else
+            //                     type = identity.ResourceType;
+            //             }
+            //         }
+            //
+            //         return (type is null) ? null : new ResourceProxyElement(type);
+            //     },
+            //     true);
 
             fhirPathSymbols.Add("hasExtension",
                 (ITypedElement f, string system) =>
@@ -368,111 +389,111 @@ namespace Hl7.Fhir
             // TODO: Perform the checking, when they fixed that in the SDK
             return true;
         }
-
-        private class ResourceProxyElement : ITypedElement
-        {
-            public ResourceProxyElement(string resourceType)
-            {
-                InstanceType = resourceType;
-            }
-
-            public string Name => "Sentinel";
-
-            public string InstanceType { get; private set; }
-
-            public object? Value => null;
-
-            public string Location => "sentinel";
-
-            public IElementDefinitionSummary? Definition => null;
-
-            public IEnumerable<ITypedElement> Children(string? name = null) => Enumerable.Empty<ITypedElement>();
-        }
     }
 
-    internal static class ElementModelExtensions
+    internal class ResourceProxyElement : ITypedElement
     {
-        /// <summary>
-        /// Returns n-th child with the specified <paramref name="name"/>, if any.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="name"></param>
-        /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
-        /// <returns></returns>
-        public static ScopedNode? Child(this ScopedNode? element, string name, int arrayIndex = 0)
+        public ResourceProxyElement(string resourceType)
         {
-            return element?.Children(name).Skip(arrayIndex).FirstOrDefault() as ScopedNode;
+            InstanceType = resourceType;
         }
 
-        /// <summary>
-        /// Returns the value of the n-th child with the specified <paramref name="name"/> as string, if any.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="name"></param>
-        /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
-        /// <returns></returns>
-        public static string? ChildString(this ScopedNode? element, string name, int arrayIndex = 0)
-        {
-            return element?.Child(name, arrayIndex)?.Value?.ToString();
-        }
+        public string Name => "Sentinel";
 
-        /// <summary>
-        /// Returns n-th child with the specified <paramref name="name"/>, if any.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="name"></param>
-        /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
-        /// <returns></returns>
-        public static ITypedElement? Child(this ITypedElement? element, string name, int arrayIndex = 0)
-        {
-            return element?.Children(name).Skip(arrayIndex).FirstOrDefault();
-        }
+        public string InstanceType { get; private set; }
 
-        /// <summary>
-        /// Returns the value of the n-th child with the specified <paramref name="name"/> as string, if any.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="name"></param>
-        /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
-        /// <returns></returns>
-        public static string? ChildString(this ITypedElement? element, string name, int arrayIndex = 0)
-        {
-            return element?.Child(name, arrayIndex)?.Value?.ToString();
-        }
+        public object? Value => null;
 
-        /// <summary>
-        /// Returns n-th child with the specified <paramref name="name"/>, if any.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="name"></param>
-        /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
-        /// <returns></returns>
-        public static ISourceNode? Child(this ISourceNode? node, string name, int arrayIndex = 0)
-        {
-            return node?.Children(name).Skip(arrayIndex).FirstOrDefault();
-        }
+        public string Location => "sentinel";
 
-        /// <summary>
-        /// Returns the value of the n-th child with the specified <paramref name="name"/> as string, if any.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="name"></param>
-        /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
-        /// <returns></returns>
-        public static string? ChildString(this ISourceNode? node, string name, int arrayIndex = 0)
-        {
-            return node?.Child(name, arrayIndex)?.Text;
-        }
+        public IElementDefinitionSummary? Definition => null;
 
-        /// <summary>
-        /// Get an extension with the given <paramref name="system"/> canonical
-        /// </summary>
-        /// <param name="element">Element in which the extension is looked for</param>
-        /// <param name="system">Canonical of the extension to look for</param>
-        /// <returns>The first extension with the given canonical. Null if none exists.</returns>
-        public static ITypedElement? GetExtension(this ITypedElement? element, string system)
-        {
-            return element?.Children("extension")?.FirstOrDefault(c => c.ChildString("system") == system);
-        }
+        public IEnumerable<ITypedElement> Children(string? name = null) => Enumerable.Empty<ITypedElement>();
+    }
+}
+
+internal static class ElementModelExtensions
+{
+    /// <summary>
+    /// Returns n-th child with the specified <paramref name="name"/>, if any.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="name"></param>
+    /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
+    /// <returns></returns>
+    public static ScopedNode? Child(this ScopedNode? element, string name, int arrayIndex = 0)
+    {
+        return element?.Children(name).Skip(arrayIndex).FirstOrDefault() as ScopedNode;
+    }
+
+    /// <summary>
+    /// Returns the value of the n-th child with the specified <paramref name="name"/> as string, if any.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="name"></param>
+    /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
+    /// <returns></returns>
+    public static string? ChildString(this ScopedNode? element, string name, int arrayIndex = 0)
+    {
+        return element?.Child(name, arrayIndex)?.Value?.ToString();
+    }
+
+    /// <summary>
+    /// Returns n-th child with the specified <paramref name="name"/>, if any.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="name"></param>
+    /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
+    /// <returns></returns>
+    public static ITypedElement? Child(this ITypedElement? element, string name, int arrayIndex = 0)
+    {
+        return element?.Children(name).Skip(arrayIndex).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Returns the value of the n-th child with the specified <paramref name="name"/> as string, if any.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="name"></param>
+    /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
+    /// <returns></returns>
+    public static string? ChildString(this ITypedElement? element, string name, int arrayIndex = 0)
+    {
+        return element?.Child(name, arrayIndex)?.Value?.ToString();
+    }
+
+    /// <summary>
+    /// Returns n-th child with the specified <paramref name="name"/>, if any.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="name"></param>
+    /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
+    /// <returns></returns>
+    public static ISourceNode? Child(this ISourceNode? node, string name, int arrayIndex = 0)
+    {
+        return node?.Children(name).Skip(arrayIndex).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Returns the value of the n-th child with the specified <paramref name="name"/> as string, if any.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="name"></param>
+    /// <param name="arrayIndex">Return the value of the n-th child. If omitted, the first child is returned.</param>
+    /// <returns></returns>
+    public static string? ChildString(this ISourceNode? node, string name, int arrayIndex = 0)
+    {
+        return node?.Child(name, arrayIndex)?.Text;
+    }
+
+    /// <summary>
+    /// Get an extension with the given <paramref name="system"/> canonical
+    /// </summary>
+    /// <param name="element">Element in which the extension is looked for</param>
+    /// <param name="system">Canonical of the extension to look for</param>
+    /// <returns>The first extension with the given canonical. Null if none exists.</returns>
+    public static ITypedElement? GetExtension(this ITypedElement? element, string system)
+    {
+        return element?.Children("extension")?.FirstOrDefault(c => c.ChildString("system") == system);
     }
 }
