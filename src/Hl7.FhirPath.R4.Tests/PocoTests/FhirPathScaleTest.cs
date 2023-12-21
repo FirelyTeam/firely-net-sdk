@@ -271,6 +271,7 @@ namespace Hl7.Fhir
         [TestMethod]
         public void IndexObservation()
         {
+            MeasureProfiler.StopCollectingData();
             const string baseDir = @"C:\data\fhir\synthea\R4_500\fhir";
             const string observationFile = @"Observation.ndjson";
             var pathObservation = Path.Combine(baseDir, observationFile);
@@ -307,6 +308,8 @@ namespace Hl7.Fhir
                 actual.First(i => i.Item1 == "code").Item2.Should().HaveCount(1);
                 actual.Should().HaveCountGreaterThan(0);
                 Console.WriteLine($"Nr. of evaluations = {pocos.Length} x {selectors.Length} = {actual.Length}");
+                var nrOfElements = actual.Sum(i => i.Item2.Length);
+                Console.WriteLine($"Nr. of indexed elements: {nrOfElements}");
             }
             finally
             {
