@@ -260,6 +260,15 @@ namespace Hl7.Fhir
         }
 
         [TestMethod]
+        public void AdjustExpressionTree()
+        {
+            var expression = "AllergyIntolerance.code | Observation.code | Condition.code";
+            var compiler = FhirPathTestExtensions.GetCompiler();
+            var parsed = compiler.Parse(expression);
+            Console.WriteLine(parsed.Dump());
+        }
+
+        [TestMethod]
         public void IndexObservation()
         {
             const string baseDir = @"C:\data\fhir\synthea\R4_500\fhir";
@@ -276,29 +285,41 @@ namespace Hl7.Fhir
             var spTypes = new[] { "Resource", "DomainResource", "Observation" };
             var searchParams = ModelInfo.SearchParameters.Where(sp =>
                 spTypes.Contains(sp.Resource) && sp.Expression is not null).ToArray();
-            var selectors = searchParams
-                .Select(sp => (sp.Code, compiler.GetCompiledExpression(sp.Expression!))).ToArray();
 
-            foreach (var sp in searchParams)
+            string getExpression(ModelInfo.SearchParamDefinition sp)
             {
-                Console.WriteLine($"{sp.Code}: {sp.Expression}");
+                var targetedExpressions = sp.Expression!
+                    .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Where(s
+                        => s.StartsWith("Observation") || s.StartsWith("DomainResource") || s.StartsWith("Resource")
+                           || s.StartsWith("(Observation"));
+                var targetedExpr = string.Join(" | ", targetedExpressions);
+                Console.WriteLine($"{sp.Code}: {targetedExpr} ({sp.Expression})");
+                return targetedExpr;
             }
+            var selectors = searchParams
+                .Select(sp => (sp.Code, compiler.GetCompiledExpression(getExpression(sp)))).ToArray();
 
             MeasureProfiler.StartCollectingData();
-            var actual = Execute(pocos, selectors);
-            MeasureProfiler.StopCollectingData();
-            MeasureProfiler.SaveData();
-            actual.Should().HaveCountGreaterThan(0);
-            actual.First(i => i.Item1 == "code").Item2.Should().HaveCount(1);
-
-            Console.WriteLine($"Nr. of evaluations = {pocos.Length} x {selectors.Length} = {actual.Length}");
+            try
+            {
+                var actual = Execute(pocos, selectors);
+                actual.First(i => i.Item1 == "code").Item2.Should().HaveCount(1);
+                actual.Should().HaveCountGreaterThan(0);
+                Console.WriteLine($"Nr. of evaluations = {pocos.Length} x {selectors.Length} = {actual.Length}");
+            }
+            finally
+            {
+                MeasureProfiler.StopCollectingData();
+                MeasureProfiler.SaveData();
+            }
         }
 
-        private (string, IEnumerable<ITypedElement>)[] Execute(Base[] pocos, (string code, CompiledExpression selector)[] selectors)
+        private (string, ITypedElement[])[] Execute(Base[] pocos, (string code, CompiledExpression selector)[] selectors)
         {
             return (from p in pocos.Select(p => p.ToTypedElement())
                     from s in selectors
-                    select (s.code, s.selector.Invoke(p, new FhirEvaluationContext(p) { ElementResolver = Resolve })))
+                    select (s.code, s.selector.Invoke(p, new FhirEvaluationContext(p) { ElementResolver = Resolve }).ToArray()))
                 .ToArray();
         }
 
