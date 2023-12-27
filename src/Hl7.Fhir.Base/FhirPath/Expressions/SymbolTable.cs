@@ -135,7 +135,7 @@ namespace Hl7.FhirPath.Expressions
                 table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
-        internal static void AddBuildinChildren(this SymbolTable table)
+        internal static void AddBuiltinChildren(this SymbolTable table)
         {
             table.Add(new CallSignature("builtin.children",
                 typeof(IEnumerable<ITypedElement>),
