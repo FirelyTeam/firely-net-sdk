@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
+﻿#nullable enable
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using JetBrains.Profiler.Api;
@@ -15,6 +15,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Specification;
 using System.Collections.Generic;
 using Hl7.Fhir.Rest;
+using Expression = Hl7.FhirPath.Expressions.Expression;
 
 namespace Hl7.Fhir
 {
@@ -64,9 +65,9 @@ namespace Hl7.Fhir
             //TODO: We need to add that CommonPath stuff back - but it is soo specific, this should be done
             //by writing a custom ITypedNode implementation on top of this. Left as an exercise for Brian ;-)
             //Assert.AreEqual("QuestionnaireResponse.item.where(linkId='Section-A').item.where(linkId='WorkerGivenNames').answer[0].value", v5.CommonPath);
-            var spGenerator = v5.Annotation<IShortPathGenerator>();
-            Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value", spGenerator.ShortPath);
-            Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value[0]", v5.Location);
+            var spGenerator = v5!.Annotation<IShortPathGenerator>();
+            Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value", spGenerator!.ShortPath);
+            Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value[0]", v5!.Location);
 
             // Now perform some FHIRpath operations on it
             string bigValidationExpression =
@@ -262,10 +263,91 @@ namespace Hl7.Fhir
         [TestMethod]
         public void AdjustExpressionTree()
         {
-            var expression = "AllergyIntolerance.code | Observation.code | Condition.code";
+            var expression = "Condition.Code | Observation.code | Patient.telecom.where(system='phone') | (AllergyIntolerance.code as CodeableConcept) | Encounter.subject.where(resolve() is Patient)";
             var compiler = FhirPathTestExtensions.GetCompiler();
             var parsed = compiler.Parse(expression);
             Console.WriteLine(parsed.Dump());
+            var actual = reduceExpression(parsed, "Observation");
+            const string expected = """
+
+                                    func builtin.children (ChildExpression)
+                                        func builtin.children (ChildExpression)
+                                            var builtin.that (AxisExpression)
+                                            const Observation : System.String
+                                        const code : System.String
+                                    """;
+            actual.Dump().Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void DumpAllExpression()
+        {
+            Console.WriteLine(string.Join(Environment.NewLine,
+                ModelInfo.SearchParameters
+                    .Where(sp => sp.Expression is not null)
+                    .Select(sp => $"{sp.Expression} ({string.Join(',', sp.Resource)}.{sp.Code})")));
+        }
+
+        private Expression? reduceExpression(Expression original, string resourceType)
+        {
+            if (isOnOtherResourceType())
+                return null;
+            
+            switch (original)
+            {
+                case BinaryExpression
+                {
+                    FunctionName: "binary.|"
+                } b:
+                    {
+                        var args = b.Arguments.ToArray();
+                        var left = reduceExpression(args[0], resourceType);
+                        var right = reduceExpression(args[1], resourceType);
+                        return (left, right) switch {
+                            (null, null) => null,
+                            (null, not null) => right,
+                            (not null, null) => left,
+                            _ => original
+                        };
+                    }
+                case BinaryExpression
+                {
+                    FunctionName: "binary.as"
+                } a:
+                    {
+                        var args = a.Arguments.ToArray();
+                        var left = reduceExpression(args[0], resourceType);
+                        return left is null ? null : original;
+                    }
+                case ChildExpression
+                {
+                    FunctionName: "builtin.children"
+                } c:
+                    {
+                        var focus = reduceExpression(c.Focus, resourceType);
+                        return focus is null ? null : c;
+                    }
+                case FunctionCallExpression{FunctionName: "where"} w:
+                    {
+                        var focus = reduceExpression(w.Focus, resourceType);
+                        return focus is null ? null : original;
+                    }
+            }
+
+            return original;
+
+            bool isOnOtherResourceType() =>
+                original is ChildExpression
+                {
+                    FunctionName: "builtin.children",
+                    Focus: VariableRefExpression
+                    {
+                        Name: "builtin.that"
+                    },
+                    ChildName:
+                    {
+                    } s
+                } && Char.IsUpper(s[0]) && !s.Equals(resourceType);
         }
 
         [TestMethod]
@@ -278,14 +360,16 @@ namespace Hl7.Fhir
             var lines = File.ReadLines(pathObservation).Take(1000);
             var parserSettings = new ParserSettings()
             {
-                PermissiveParsing = true, AcceptUnknownMembers = true, AllowUnrecognizedEnums = true,
+                PermissiveParsing = true,
+                AcceptUnknownMembers = true,
+                AllowUnrecognizedEnums = true,
             };
             var parser = new FhirJsonParser(parserSettings);
             var pocos = lines.Select(parser.Parse<Resource>).ToArray();
             var compiler = new FhirPathCompilerCache(FhirPathTestExtensions.GetCompiler());
             var spTypes = new[] { "Resource", "DomainResource", "Observation" };
             var searchParams = ModelInfo.SearchParameters.Where(sp =>
-                spTypes.Contains(sp.Resource) && sp.Expression is not null).ToArray();
+                spTypes.Contains(sp.Resource) && sp.Code is not null && sp.Expression is not null).ToArray();
 
             string getExpression(ModelInfo.SearchParamDefinition sp)
             {
@@ -298,8 +382,9 @@ namespace Hl7.Fhir
                 Console.WriteLine($"{sp.Code}: {targetedExpr} ({sp.Expression})");
                 return targetedExpr;
             }
+
             var selectors = searchParams
-                .Select(sp => (sp.Code, compiler.GetCompiledExpression(getExpression(sp)))).ToArray();
+                .Select(sp => (sp.Code!, compiler.GetCompiledExpression(getExpression(sp)))).ToArray();
 
             MeasureProfiler.StartCollectingData();
             try
@@ -318,21 +403,23 @@ namespace Hl7.Fhir
             }
         }
 
-        private (string, ITypedElement[])[] Execute(Base[] pocos, (string code, CompiledExpression selector)[] selectors)
+        private (string, ITypedElement[])[] Execute(Resource[] pocos,
+            (string code, CompiledExpression selector)[] selectors)
         {
-            return (from p in pocos.Select(p => p.ToTypedElement())
+            return (from p in pocos.Select(p => p.ToTypedElement()) 
                     from s in selectors
-                    select (s.code, s.selector.Invoke(p, new FhirEvaluationContext(p) { ElementResolver = Resolve }).ToArray()))
+                    select (s.code,
+                        s.selector.Invoke(p, new FhirEvaluationContext(p) { ElementResolver = Resolve }).ToArray()))
                 .ToArray();
         }
 
-        public ITypedElement Resolve(string reference)
+        public ITypedElement? Resolve(string reference)
         {
             string? type = null;
             if (Uri.TryCreate(reference, UriKind.RelativeOrAbsolute, out var refUri))
             {
                 var identity = new ResourceIdentity(refUri);
-                type = identity?.ResourceType;
+                type = identity.ResourceType;
             }
 
             return (type is null) ? null : new ResourceProxyElement(type);
@@ -371,15 +458,12 @@ namespace Hl7.Fhir
             //     true);
 
             fhirPathSymbols.Add("hasExtension",
-                (ITypedElement f, string system) =>
-                {
-                    return f?.GetExtension(system) is object;
-                },
+                (ITypedElement f, string system) => f.GetExtension(system) != null,
                 true);
 
             //CK: The last 3 below are copied from Hl7.Fhir.Core - Hl7.Fhir.FhirPath.ElementNavFhirExtensions
             // because there it is defined in R3, R4 and R5 separately and I want to avoid FHIR-version specific dependencies.
-            fhirPathSymbols.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
+            fhirPathSymbols.Add("hasValue", (ITypedElement f) => f.hasValue(), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
@@ -394,7 +478,7 @@ namespace Hl7.Fhir
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        private static bool HasValue(this ITypedElement? focus)
+        private static bool hasValue(this ITypedElement? focus)
         {
             return focus?.Value != null;
         }
@@ -426,7 +510,7 @@ namespace Hl7.Fhir
 
         public string InstanceType { get; private set; }
 
-        public object? Value => null;
+        public object Value => new object();
 
         public string Location => "sentinel";
 
@@ -459,7 +543,7 @@ internal static class ElementModelExtensions
     /// <returns></returns>
     public static string? ChildString(this ScopedNode? element, string name, int arrayIndex = 0)
     {
-        return element?.Child(name, arrayIndex)?.Value?.ToString();
+        return element?.Child(name, arrayIndex)?.Value.ToString();
     }
 
     /// <summary>
@@ -483,7 +567,7 @@ internal static class ElementModelExtensions
     /// <returns></returns>
     public static string? ChildString(this ITypedElement? element, string name, int arrayIndex = 0)
     {
-        return element?.Child(name, arrayIndex)?.Value?.ToString();
+        return element?.Child(name, arrayIndex)?.Value.ToString();
     }
 
     /// <summary>
@@ -518,6 +602,6 @@ internal static class ElementModelExtensions
     /// <returns>The first extension with the given canonical. Null if none exists.</returns>
     public static ITypedElement? GetExtension(this ITypedElement? element, string system)
     {
-        return element?.Children("extension")?.FirstOrDefault(c => c.ChildString("system") == system);
+        return element?.Children("extension").FirstOrDefault(c => c.ChildString("system") == system);
     }
 }
