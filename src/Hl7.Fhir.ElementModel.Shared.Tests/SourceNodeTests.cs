@@ -252,7 +252,7 @@ namespace Hl7.FhirPath.Tests
 
             result = child1.IsEqualTo(child2);
             result.Success.Should().BeFalse();
-            result.Details.Should().Be("Path: was 'Patient.name[1]', expected 'Patient.name[0]");
+            result.Details.Should().Be("Path: was 'Patient.name[1]', expected 'Patient.name[0]'");
 
         }
 
