@@ -231,6 +231,29 @@ namespace Hl7.FhirPath.Tests
             result.Success.Should().BeFalse();
             result.Details.Should().Be("number of children was different");
 
+
+            //change node location
+            node2 = SourceNode.Node("Patient",
+                        SourceNode.Node("name",
+                            SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel")),
+                            SourceNode.Node("given", SourceNode.Valued("given", "Pieter"))
+                        ),
+                         SourceNode.Node("name")
+                        );
+
+            var enumerator1 = node1.Children().GetEnumerator();
+            var enumerator2 = node2.Children().GetEnumerator();
+
+            enumerator1.MoveNext();
+            var child1 = enumerator1.Current;
+            enumerator2.MoveNext();
+            enumerator2.MoveNext();
+            var child2 = enumerator2.Current;
+
+            result = child1.IsEqualTo(child2);
+            result.Success.Should().BeFalse();
+            result.Details.Should().Be("Path: was 'Patient.name[1]', expected 'Patient.name[0]");
+
         }
 
     }
