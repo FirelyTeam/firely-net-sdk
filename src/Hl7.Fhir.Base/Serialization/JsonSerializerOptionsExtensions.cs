@@ -79,13 +79,11 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, FhirJsonConverterFactory converter)
         {
-            var result = new JsonSerializerOptions(options)
-            {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            };
 
-            result.Converters.Add(converter);
-            return result;
+            options.Converters.Add(converter);
+            options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
+            return options;
         }
 
         /// <summary>
