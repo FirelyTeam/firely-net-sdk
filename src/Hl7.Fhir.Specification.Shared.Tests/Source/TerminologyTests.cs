@@ -312,8 +312,8 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-
+            var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
         }
 
         [Fact]
@@ -332,8 +332,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-
+            var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
         }
 
 
@@ -363,7 +363,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
         }
 
         [Fact]
