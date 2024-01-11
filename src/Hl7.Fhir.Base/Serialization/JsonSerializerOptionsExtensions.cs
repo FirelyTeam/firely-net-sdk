@@ -79,13 +79,11 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, FhirJsonConverterFactory converter)
         {
-            var result = new JsonSerializerOptions(options)
-            {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            };
 
-            result.Converters.Add(converter);
-            return result;
+            options.Converters.Add(converter);
+            options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
+            return options;
         }
 
         /// <summary>
@@ -93,13 +91,10 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public static JsonSerializerOptions ForFhir<F>(this JsonSerializerOptions options, FhirJsonConverter<F> converter) where F : Base
         {
-            var result = new JsonSerializerOptions(options)
-            {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            };
+            options.Converters.Add(converter);
+            options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            result.Converters.Add(converter);
-            return result;
+            return options;
         }
 
         /// <summary>
@@ -107,10 +102,8 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public static JsonSerializerOptions Compact(this JsonSerializerOptions options)
         {
-            return new JsonSerializerOptions(options)
-            {
-                WriteIndented = false
-            };
+            options.WriteIndented = false;
+            return options;
         }
 
         /// <summary>
@@ -118,10 +111,8 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public static JsonSerializerOptions Pretty(this JsonSerializerOptions options)
         {
-            return new JsonSerializerOptions(options)
-            {
-                WriteIndented = true
-            };
+            options.WriteIndented = true;
+            return options;
         }
     }
 }

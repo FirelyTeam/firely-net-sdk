@@ -41,7 +41,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var (poco, expected) = getEdgecases();
 
-            var options = BaseOptions.Pretty();
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).Pretty();
+
             string actual = JsonSerializer.Serialize(poco, options);
 
             var errors = new List<string>();

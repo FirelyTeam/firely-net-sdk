@@ -498,6 +498,18 @@ namespace Hl7.Fhir.Rest
             return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
         }
 
+        public TransactionBuilder ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null, string? bundleEntryFullUrl = null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Operation, bundleEntryFullUrl);
+            var path = newRestUrl().AddPath(OPERATIONPREFIX + "process-message");
+            if (async) path.AddParam("async", "true");
+            if (responseUrl != null) path.AddParam("response-url", responseUrl);
+            entry.Resource = messageBundle;
+            addEntry(entry, path);
+
+            return this;
+        }
+
         /// <summary>
         /// Add a "search" entry to the transaction/batch
         /// </summary>

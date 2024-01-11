@@ -50,6 +50,7 @@ namespace Hl7.FhirPath
             return result is not null && result.Value;
         }
 
+
         /// <summary>
         /// Evaluates if the result of an expression is equal to a given boolean.
         /// </summary>

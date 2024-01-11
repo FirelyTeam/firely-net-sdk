@@ -3,6 +3,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 
+#nullable enable
+
 namespace Firely.Sdk.Benchmarks
 {
     [MemoryDiagnoser]
@@ -16,7 +18,7 @@ namespace Firely.Sdk.Benchmarks
             => SearchParamType.String.ToString();
 
         [Benchmark]
-        public string EnumGetName()
+        public string? EnumGetName()
             => Enum.GetName(StringSearchParam);
 
         [Benchmark]
@@ -37,18 +39,18 @@ namespace Firely.Sdk.Benchmarks
 
         [Benchmark]
         public SearchParamType EnumUtilityParseLiteral()
-            => EnumUtility.ParseLiteral<SearchParamType>("string").Value;
+            => EnumUtility.ParseLiteral<SearchParamType>("string")!.Value;
 
         [Benchmark]
-        public Enum EnumUtilityParseLiteralNonGeneric()
+        public Enum? EnumUtilityParseLiteralNonGeneric()
             => EnumUtility.ParseLiteral("string", typeof(SearchParamType));
 
         [Benchmark]
         public SearchParamType EnumUtilityParseLiteralIgnoreCase()
-            => EnumUtility.ParseLiteral<SearchParamType>("string", true).Value;
+            => EnumUtility.ParseLiteral<SearchParamType>("string", true)!.Value;
 
         [Benchmark]
-        public Enum EnumUtilityParseLiteralIgnoreCaseNonGeneric()
+        public Enum? EnumUtilityParseLiteralIgnoreCaseNonGeneric()
             => EnumUtility.ParseLiteral("string", typeof(SearchParamType), true);
 
         [Benchmark]
@@ -56,7 +58,8 @@ namespace Firely.Sdk.Benchmarks
             => EnumUtility.GetSystem(StringSearchParam);
 
         [Benchmark]
-        public string EnumUtilityGetSystemNonGeneric()
+        public string? EnumUtilityGetSystemNonGeneric()
             => EnumUtility.GetSystem(StringSearchParamEnum);
     }
 }
+#nullable restore

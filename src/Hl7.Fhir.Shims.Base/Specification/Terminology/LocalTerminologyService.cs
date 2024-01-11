@@ -132,7 +132,6 @@ namespace Hl7.Fhir.Specification.Terminology
                 }
             }
             catch (TerminologyServiceException e)
-#pragma warning restore CS0618
             {
                 // Unprocessable entity
                 throw new FhirOperationException(
@@ -176,7 +175,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 else
                     return await validateCodeVS(valueSet, validateCodeParams.Code?.Value, validateCodeParams.System?.Value, validateCodeParams.Display?.Value, validateCodeParams.Abstract?.Value).ConfigureAwait(false);
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not FhirOperationException)
             {
                 //500 internal server error
                 throw new FhirOperationException(e.Message, (HttpStatusCode)500);

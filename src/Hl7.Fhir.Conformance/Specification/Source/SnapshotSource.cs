@@ -3,7 +3,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics;
-using T=System.Threading.Tasks;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -34,7 +34,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified internal resolver.</summary>
         /// <param name="source">An internal <see cref="IResourceResolver"/> instance. The implementation should be idempotent (i.e. cached), so the generated snapshots are persisted in memory.</param>
         /// <param name="settings">Configuration settings for the snapshot generator.</param>
-        public SnapshotSource(IResourceResolver source, SnapshotGeneratorSettings settings)
+#pragma warning disable CS0618 // Type or member is obsolete
+        public SnapshotSource(ISyncOrAsyncResourceResolver source, SnapshotGeneratorSettings settings)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             // SnapshotGenerator ctor will throw if source or settings are null
             Generator = new SnapshotGenerator(source, settings);
@@ -43,11 +45,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified internal resolver.</summary>
         /// <param name="source">An internal <see cref="IResourceResolver"/> instance. The implementation should be idempotent (i.e. cached), so the generated snapshots are persisted in memory.</param>
         /// <param name="regenerate">Determines if the source should always discard any existing snapshot components provided by the internal source and force re-generation.</param>
-        public SnapshotSource(IResourceResolver source, bool regenerate)
+#pragma warning disable CS0618 // Type or member is obsolete
+        public SnapshotSource(ISyncOrAsyncResourceResolver source, bool regenerate)
+#pragma warning restore CS0618 // Type or member is obsolete
             : this(source, createSettings(regenerate)) { }
 
         // Create default SnapshotGeneratorSettings, apply the specified regenerate flag
-        static SnapshotGeneratorSettings createSettings(bool regenerate)
+        private static SnapshotGeneratorSettings createSettings(bool regenerate)
         {
             var settings = SnapshotGeneratorSettings.CreateDefault();
             settings.ForceRegenerateSnapshots = regenerate;
@@ -56,7 +60,9 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified internal resolver.</summary>
         /// <param name="source">An internal <see cref="IResourceResolver"/> instance. The implementation should be idempotent (i.e. cached), so the generated snapshots are persisted in memory.</param>
-        public SnapshotSource(IResourceResolver source) 
+#pragma warning disable CS0618 // Type or member is obsolete
+        public SnapshotSource(ISyncOrAsyncResourceResolver source)
+#pragma warning restore CS0618 // Type or member is obsolete
             : this(source, SnapshotGeneratorSettings.CreateDefault()) { }
 
         /// <summary>Returns the internal <see cref="SnapshotGenerator"/> instance used by the source.</summary>
