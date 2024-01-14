@@ -92,7 +92,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "@2013-12T", new ConstantExpression(P.DateTime.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
-            AssertParser.SucceedsMatch(parser, "(3)", new ConstantExpression(3));
+            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new ConstantExpression(3)));
             AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(P.DateTime.Parse("2014-12-13T12:00:00+02:00")));
             AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
@@ -219,6 +219,14 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.FailsMatch(parser, "4 is 5");
             // AssertParser.FailsMatch(parser, "5div6");    oops
+        }
+
+        [TestMethod]
+        public void FhirPath_Gramm_Bracket()
+        {
+            var parser = Grammar.TypeExpression.End();
+
+            AssertParser.SucceedsMatch(parser, "(8.as(notoddbuteven))", new BracketExpression(new FunctionCallExpression(new ConstantExpression(8), "as", TypeSpecifier.Any, new IdentifierExpression("notoddbuteven"))));
         }
 
         private Expression constOp(string op, object left, object right)

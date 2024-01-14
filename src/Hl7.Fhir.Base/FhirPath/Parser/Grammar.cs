@@ -67,7 +67,7 @@ namespace Hl7.FhirPath.Parser
             (from lparen in Parse.Char('(')
              from expr in Parse.Ref(() => Expression)
              from rparen in Parse.Char(')')
-             select expr)
+             select new BracketExpression(expr))
             .Named("BracketExpr");
 
         public static readonly Parser<Expression> EmptyList =

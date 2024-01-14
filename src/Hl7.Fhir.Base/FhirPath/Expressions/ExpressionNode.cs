@@ -69,6 +69,23 @@ namespace Hl7.FhirPath.Expressions
         public abstract Expression Reduce();
     }
 
+    // Discuss: Reduce function? - Skip this in the compile stage? - Update the visitor to skip the bracket too
+    public class BracketExpression : CustomExpression
+    {
+        public BracketExpression(Expression operand) : base(operand.ExpressionType)
+        {
+            Operand = operand;
+        }
+
+        public Expression Operand { get; private set; }
+
+        public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitCustomExpression(this);
+        public override Expression Reduce()
+        {
+            return Operand;
+        }
+    }
+
     public class ConstantExpression : Expression
     {
         public ConstantExpression(object value, TypeSpecifier type, ISourcePositionInfo location = null) : base(type, location)
