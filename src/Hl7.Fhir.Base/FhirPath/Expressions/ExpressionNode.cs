@@ -46,6 +46,15 @@ namespace Hl7.FhirPath.Expressions
     }
 
 
+    public abstract class CustomExpression : Expression
+    {
+        protected CustomExpression(TypeSpecifier type) : base(type)
+        {
+        }
+
+        public abstract Expression Reduce();
+    }
+
     public class ConstantExpression : Expression
     {
         public ConstantExpression(object value, TypeSpecifier type, ISourcePositionInfo location = null) : base(type, location)

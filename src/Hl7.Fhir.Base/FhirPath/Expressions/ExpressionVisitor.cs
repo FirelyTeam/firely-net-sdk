@@ -19,5 +19,10 @@ namespace Hl7.FhirPath.Expressions
         public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
 
         public abstract T VisitVariableRef(VariableRefExpression expression);
+
+        public virtual T VisitCustomExpression(CustomExpression expression)
+        {
+            return expression.Reduce().Accept<T>(this);
+        }
     }
 }
