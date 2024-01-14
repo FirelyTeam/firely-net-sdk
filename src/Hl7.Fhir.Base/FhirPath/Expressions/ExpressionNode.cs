@@ -12,7 +12,9 @@ using Hl7.Fhir.Language.Debugging;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.Expressions
@@ -100,6 +102,7 @@ namespace Hl7.FhirPath.Expressions
         }
     }
 
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class FunctionCallExpression : Expression
     {
         public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>)arguments)
@@ -136,6 +139,20 @@ namespace Hl7.FhirPath.Expressions
         public override int GetHashCode()
         {
             return base.GetHashCode() ^ FunctionName.GetHashCode() ^ Arguments.GetHashCode();
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public string DebuggerDisplay
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"{FunctionName}(");
+                for (int n = 0; n < this.Arguments.Count(); n++)
+                    sb.Append(",");
+                sb.Append(")");
+                return sb.ToString();
+            }
         }
     }
 
