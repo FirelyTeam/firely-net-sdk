@@ -11,6 +11,7 @@ using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Parser;
 using Hl7.FhirPath.Sprache;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.Tests
@@ -57,6 +58,18 @@ namespace Hl7.FhirPath.Tests
                         new FunctionCallExpression(AxisExpression.That, "somethingElse", TypeSpecifier.Any, new ConstantExpression(true))));
 
             AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.That, "as", TypeSpecifier.Any, new ConstantExpression("Patient")));
+
+            var fexRaw = parser.Parse("as(Patient)");
+            if (fexRaw is FunctionCallExpression fex)
+            {
+                Assert.AreEqual("as", fex.FunctionName);
+                var arg = fex.Arguments.FirstOrDefault();
+                Assert.AreEqual("IdentifierExpression", arg?.GetType().Name);
+                if (arg is IdentifierExpression id)
+                {
+                    Assert.AreEqual("Patient", id.Value);
+                }
+            }
 
             AssertParser.FailsMatch(parser, "$that");
             //     AssertParser.FailsMatch(parser, "as(Patient.identifier)");

@@ -47,6 +47,18 @@ namespace Hl7.FhirPath.Expressions
         public static bool operator !=(Expression left, Expression right) => !(left == right);
     }
 
+    public class IdentifierExpression : ConstantExpression
+    {
+        public IdentifierExpression(object value, TypeSpecifier type)
+            : base(value, type)
+        {
+        }
+
+        public IdentifierExpression(object value)
+            : base(value)
+        {
+        }
+    }
 
     public abstract class CustomExpression : Expression
     {

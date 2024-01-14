@@ -87,7 +87,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> FunctionParameter(string name) =>
             // Make exception for is() and as() FUNCTIONS (operators are handled elsewhere), since they don't
             // take a normal parameter, but an identifier (which is not normally a FhirPath type)
-            name != "is" && name != "as" && name != "ofType" ? Grammar.Expression : TypeSpec.Select(s => new ConstantExpression(s));
+            name != "is" && name != "as" && name != "ofType" ? Grammar.Expression : TypeSpec.Select(s => new IdentifierExpression(s));
 
 
         public static Parser<Expression> FunctionInvocation(Expression focus)
@@ -205,8 +205,8 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<Expression> TypeExpression =
             InEqExpression.Then(
                     ineq => (from isas in Lexer.TypeOperator
-                             from tp in TypeSpec
-                             select new BinaryExpression(isas, ineq, new ConstantExpression(tp)))
+                             from tp in TypeSpec.Select(v => new IdentifierExpression(v))
+                             select new BinaryExpression(isas, ineq, tp))
                     .Or(Parse.Return(ineq)));
 
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
