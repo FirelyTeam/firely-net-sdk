@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Specification.Tests
             var valuesets = new string[] {
                 "http://hl7.org/fhir/ValueSet/request-status",
                 "http://hl7.org/fhir/ValueSet/care-plan-intent",
-                "http://hl7.org/fhir/ValueSet/care-plan-activity-kind",
+                "http://hl7.org/fhir/ValueSet/administrative-gender",
                };
 
             void expandAction(string url)
