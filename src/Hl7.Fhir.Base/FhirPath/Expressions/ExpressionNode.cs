@@ -10,6 +10,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Language;
 using Hl7.Fhir.Language.Debugging;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,12 +30,7 @@ namespace Hl7.FhirPath.Expressions
             ExpressionType = type;
         }
 
-        protected Expression(TypeSpecifier type, ISourcePositionInfo location) : this(type)
-        {
-            Location = location;
-        }
-
-        public ISourcePositionInfo Location { get; }
+        public ISourcePositionInfo Location { get; private set; }
 
         public TypeSpecifier ExpressionType { get; protected set; }
 
@@ -45,9 +41,37 @@ namespace Hl7.FhirPath.Expressions
         public override int GetHashCode() => -28965461 + EqualityComparer<TypeSpecifier>.Default.GetHashCode(ExpressionType);
         public static bool operator ==(Expression left, Expression right) => EqualityComparer<Expression>.Default.Equals(left, right);
         public static bool operator !=(Expression left, Expression right) => !(left == right);
+
+        protected internal T SetPos<T>(Position startPos, int length)
+            where T : Expression
+        {
+            Location = new FhirPathExpressionLocationInfo() { LinePosition = startPos.Column, LineNumber = startPos.Line, RawPosition = startPos.Pos, Length = length };
+            return this as T;
+        }
     }
 
-    public class IdentifierExpression : ConstantExpression
+    public class SubTokenExpression : IPositionAware<SubTokenExpression>
+    {
+        public SubTokenExpression(string value)
+        {
+            Value = value;
+        }
+        public SubTokenExpression(char value)
+        {
+            Value = $"{value}";
+        }
+
+        public string Value { get; private set; }
+        public ISourcePositionInfo Location { get; private set; }
+
+        SubTokenExpression IPositionAware<SubTokenExpression>.SetPos(Position startPos, int length)
+        {
+            Location = new FhirPathExpressionLocationInfo() { LinePosition = startPos.Column, LineNumber = startPos.Line, RawPosition = startPos.Pos, Length = length };
+            return this;
+        }
+    }
+
+    public class IdentifierExpression : ConstantExpression, IPositionAware<IdentifierExpression>
     {
         public IdentifierExpression(object value, TypeSpecifier type)
             : base(value, type)
@@ -58,6 +82,10 @@ namespace Hl7.FhirPath.Expressions
             : base(value)
         {
         }
+
+        public new string Value { get => base.Value as string; }
+
+        IdentifierExpression IPositionAware<IdentifierExpression>.SetPos(Position startPos, int length) => SetPos<IdentifierExpression>(startPos, length);
     }
 
     public abstract class CustomExpression : Expression
@@ -70,7 +98,7 @@ namespace Hl7.FhirPath.Expressions
     }
 
     // Discuss: Reduce function? - Skip this in the compile stage? - Update the visitor to skip the bracket too
-    public class BracketExpression : CustomExpression
+    public class BracketExpression : CustomExpression, IPositionAware<BracketExpression>
     {
         public BracketExpression(Expression operand) : base(operand.ExpressionType)
         {
@@ -84,11 +112,12 @@ namespace Hl7.FhirPath.Expressions
         {
             return Operand;
         }
+        BracketExpression IPositionAware<BracketExpression>.SetPos(Position startPos, int length) => SetPos<BracketExpression>(startPos, length);
     }
 
-    public class ConstantExpression : Expression
+    public class ConstantExpression : Expression, IPositionAware<ConstantExpression>
     {
-        public ConstantExpression(object value, TypeSpecifier type, ISourcePositionInfo location = null) : base(type, location)
+        public ConstantExpression(object value, TypeSpecifier type) : base(type)
         {
             if (value == null) Error.ArgumentNull("value");
             if (value is P.Any && (value is P.Boolean || value is P.Decimal || value is P.Integer || value is P.Long || value is P.String))
@@ -97,7 +126,7 @@ namespace Hl7.FhirPath.Expressions
             Value = value;
         }
 
-        public ConstantExpression(object value, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)
+        public ConstantExpression(object value) : base(TypeSpecifier.Any)
         {
             if (value == null) Error.ArgumentNull("value");
 
@@ -129,16 +158,17 @@ namespace Hl7.FhirPath.Expressions
         {
             return base.GetHashCode() ^ Value.GetHashCode();
         }
+        ConstantExpression IPositionAware<ConstantExpression>.SetPos(Position startPos, int length) => SetPos<ConstantExpression>(startPos, length);
     }
 
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class FunctionCallExpression : Expression
+    public class FunctionCallExpression : Expression, IPositionAware<FunctionCallExpression>
     {
         public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>)arguments)
         {
         }
 
-        public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, IEnumerable<Expression> arguments, ISourcePositionInfo location = null) : base(type, location)
+        public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, IEnumerable<Expression> arguments) : base(type)
         {
             if (string.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
             Focus = focus;
@@ -183,10 +213,12 @@ namespace Hl7.FhirPath.Expressions
                 return sb.ToString();
             }
         }
+
+        FunctionCallExpression IPositionAware<FunctionCallExpression>.SetPos(Position startPos, int length) => SetPos<FunctionCallExpression>(startPos, length);
     }
 
 
-    public class ChildExpression : FunctionCallExpression
+    public class ChildExpression : FunctionCallExpression, IPositionAware<ChildExpression>
     {
         public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
                 new ConstantExpression(name, TypeSpecifier.String))
@@ -205,10 +237,10 @@ namespace Hl7.FhirPath.Expressions
                 return arg1Value;
             }
         }
+        ChildExpression IPositionAware<ChildExpression>.SetPos(Position startPos, int length) => SetPos<ChildExpression>(startPos, length);
     }
 
-
-    public class IndexerExpression : FunctionCallExpression
+    public class IndexerExpression : FunctionCallExpression, IPositionAware<IndexerExpression>
     {
         public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX + "item", TypeSpecifier.Any, index)
         {
@@ -221,9 +253,10 @@ namespace Hl7.FhirPath.Expressions
                 return Arguments.First();
             }
         }
+        IndexerExpression IPositionAware<IndexerExpression>.SetPos(Position startPos, int length) => SetPos<IndexerExpression>(startPos, length);
     }
 
-    public class BinaryExpression : FunctionCallExpression
+    public class BinaryExpression : FunctionCallExpression, IPositionAware<BinaryExpression>
     {
         internal const string BIN_PREFIX = "binary.";
         internal static readonly int BIN_PREFIX_LEN = BIN_PREFIX.Length;
@@ -259,10 +292,12 @@ namespace Hl7.FhirPath.Expressions
                 return Arguments.First();
             }
         }
+
+        BinaryExpression IPositionAware<BinaryExpression>.SetPos(Position startPos, int length) => SetPos<BinaryExpression>(startPos, length);
     }
 
 
-    public class UnaryExpression : FunctionCallExpression
+    public class UnaryExpression : FunctionCallExpression, IPositionAware<UnaryExpression>
     {
         internal const string URY_PREFIX = "unary.";
         internal static readonly int URY_PREFIX_LEN = URY_PREFIX.Length;
@@ -289,6 +324,8 @@ namespace Hl7.FhirPath.Expressions
                 return Focus;
             }
         }
+
+        UnaryExpression IPositionAware<UnaryExpression>.SetPos(Position startPos, int length) => SetPos<UnaryExpression>(startPos, length);
     }
 
     //public class LambdaExpression : Expression
@@ -324,7 +361,7 @@ namespace Hl7.FhirPath.Expressions
 
     //}
 
-    public class NewNodeListInitExpression : Expression
+    public class NewNodeListInitExpression : Expression, IPositionAware<NewNodeListInitExpression>
     {
         public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(TypeSpecifier.Any)
         {
@@ -352,11 +389,13 @@ namespace Hl7.FhirPath.Expressions
         }
 
         public static readonly NewNodeListInitExpression Empty = new NewNodeListInitExpression(Enumerable.Empty<Expression>());
+
+        NewNodeListInitExpression IPositionAware<NewNodeListInitExpression>.SetPos(Position startPos, int length) => SetPos<NewNodeListInitExpression>(startPos, length);
     }
 
-    public class VariableRefExpression : Expression
+    public class VariableRefExpression : Expression, IPositionAware<VariableRefExpression>
     {
-        public VariableRefExpression(string name, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)
+        public VariableRefExpression(string name) : base(TypeSpecifier.Any)
         {
             Name = name ?? throw Error.ArgumentNull("name");
         }
@@ -383,9 +422,11 @@ namespace Hl7.FhirPath.Expressions
         {
             return base.GetHashCode() ^ Name.GetHashCode();
         }
+
+        VariableRefExpression IPositionAware<VariableRefExpression>.SetPos(Position startPos, int length) => SetPos<VariableRefExpression>(startPos, length);
     }
 
-    public class AxisExpression : VariableRefExpression
+    public class AxisExpression : VariableRefExpression, IPositionAware<AxisExpression>
     {
         public AxisExpression(string axisName) : base(OP_PREFIX + axisName)
         {
@@ -403,5 +444,7 @@ namespace Hl7.FhirPath.Expressions
         public static readonly AxisExpression Index = new AxisExpression("index");
         public static readonly AxisExpression This = new AxisExpression("this");
         public static readonly AxisExpression That = new AxisExpression("that");
+
+        AxisExpression IPositionAware<AxisExpression>.SetPos(Position startPos, int length) => SetPos<AxisExpression>(startPos, length);
     }
 }
