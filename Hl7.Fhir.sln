@@ -101,7 +101,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Specification.STU3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.STU3.Tests", "src\Hl7.Fhir.STU3.Tests\Hl7.Fhir.STU3.Tests.csproj", "{CFF0DDA5-5155-4144-B426-91C7623D08E7}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shims.Conformance", "src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Conformance.shproj", "{150A59A2-371D-4747-8B08-C8E6340EC962}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shims.Base", "src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.shproj", "{150A59A2-371D-4747-8B08-C8E6340EC962}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
