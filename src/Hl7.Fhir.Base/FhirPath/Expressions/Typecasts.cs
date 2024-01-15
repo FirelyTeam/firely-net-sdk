@@ -1,3 +1,5 @@
+#nullable enable
+
 /* 
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
@@ -16,35 +18,30 @@ namespace Hl7.FhirPath.Expressions
 {
     internal static class Typecasts
     {
-        public delegate object Cast(object source);
+        public delegate object? Cast(object? source);
 
-        private static object id(object source) => source;
+        private static object? id(object? source) => source;
 
         private static Cast makeNativeCast(Type to) =>
             source => Convert.ChangeType(source, to);
 
-        private static ITypedElement any2primitiveTypedElement(object source) => ElementNode.ForPrimitive(source);
+        private static ITypedElement? any2primitiveTypedElement(object? source) => ElementNode.ForPrimitive(source);
 
-        private static IEnumerable<ITypedElement> any2List(object source) => ElementNode.CreateList(source);
+        private static IEnumerable<ITypedElement>? any2List(object? source) => ElementNode.CreateList(source);
 
-        private static P.Quantity tryQuantity(object source)
+        private static P.Quantity? tryQuantity(object? source)
         {
-            if (source is ITypedElement element)
+            return source switch
             {
-                if (element.InstanceType == "Quantity")
-                {
-                    // Need to downcast from a FHIR Quantity to a System.Quantity
-                    return ParseQuantity(element);
-                }
-                else
-                    throw new InvalidCastException($"Cannot convert from '{element.InstanceType}' to Quantity");
-            }
-
-            throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity");
+                null => null,
+                // Need to downcast from a FHIR Quantity to a System.Quantity
+                ITypedElement { InstanceType: "Quantity" } element => ParseQuantity(element),
+                _ => throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity")
+            };
         }
 
 
-        internal static P.Quantity ParseQuantity(ITypedElement qe)
+        internal static P.Quantity? ParseQuantity(ITypedElement qe)
         {
             var value = qe.Children("value").SingleOrDefault()?.Value as decimal?;
             if (value == null) return null;
@@ -53,7 +50,7 @@ namespace Hl7.FhirPath.Expressions
             return new P.Quantity(value.Value, unit);
         }
 
-        private static Cast getImplicitCast(object f, Type to)
+        private static Cast? getImplicitCast(object f, Type to)
         {
             var from = f.GetType();
 
@@ -84,16 +81,6 @@ namespace Hl7.FhirPath.Expressions
             return null;
         }
 
-        //private static Cast getFromAnyToDotNetCast(Type anyType, Type toType)
-        //{
-        //    var casts = anyType.GetMember("op_Implicit", BindingFlags.Static | BindingFlags.Public).OfType<MethodInfo>();
-        //    var mycast = casts.SingleOrDefault(c => c.ReturnType == toType);
-
-        //    if (mycast is null) return null;
-        //    return o => mycast.Invoke(null, new object[] { o });
-        //}
-
-
         /// <summary>
         /// This will unpack the instance 
         /// </summary>
@@ -104,7 +91,7 @@ namespace Hl7.FhirPath.Expressions
         /// being an <see cref="IEnumerable{ITypedElement}"/> followed by 
         /// <see cref="ITypedElement"/> followed by a primitive runtime type.
         /// </remarks>
-        internal static object UnboxTo(object instance, Type to)
+        internal static object? UnboxTo(object? instance, Type to)
         {
             if (instance == null) return null;
 
@@ -164,9 +151,9 @@ namespace Hl7.FhirPath.Expressions
 
         //public static bool CanCastTo(Type from, Type to) => getImplicitCast(from, to) != null;
 
-        public static T CastTo<T>(object source) => (T)CastTo(source, typeof(T));
+        internal static T CastTo<T>(object source) => (T)CastTo(source, typeof(T));
 
-        public static object CastTo(object source, Type to)
+        internal static object CastTo(object source, Type to)
         {
             if (source != null)
             {
@@ -198,16 +185,7 @@ namespace Hl7.FhirPath.Expressions
                 throw new InvalidCastException("Cannot cast a null value to non-nullable type '{0}'".FormatWith(to.Name));
         }
 
-        public static bool IsNullable(this Type t)
-        {
-            if (!t.IsAValueType()) return true; // ref-type
-            if (Nullable.GetUnderlyingType(t) != null) return true; // Nullable<T>
-            return false; // value-type
-        }
-
-
-
-        public static string ReadableFhirPathName(object value)
+        internal static string ReadableFhirPathName(object value)
         {
             if (value is IEnumerable<ITypedElement> ete)
             {
@@ -222,7 +200,7 @@ namespace Hl7.FhirPath.Expressions
                 return value.GetType().Name;
         }
 
-        public static string ReadableTypeName(Type t)
+        internal static string ReadableTypeName(Type t)
         {
             if (t.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))
                 return "collection";
@@ -236,3 +214,5 @@ namespace Hl7.FhirPath.Expressions
     }
 
 }
+
+#nullable restore
