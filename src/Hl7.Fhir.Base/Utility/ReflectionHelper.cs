@@ -17,9 +17,14 @@ namespace Hl7.Fhir.Utility
 
     public static class ReflectionHelper
     {
-        public static bool IsAValueType(this Type t)
+        [Obsolete("This function is not used anymore by the SDK and will be removed in a future release")]
+        public static bool IsAValueType(this Type t) => t.GetTypeInfo().IsValueType;
+
+        internal static bool IsNullable(this Type t)
         {
-            return t.GetTypeInfo().IsValueType;
+            if (!t.IsValueType) return true; // ref-type
+            if (Nullable.GetUnderlyingType(t) != null) return true; // Nullable<T>
+            return false; // value-type
         }
 
         public static bool CanBeTreatedAsType(this Type currentType, Type typeToCompareWith)
