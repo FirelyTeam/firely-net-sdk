@@ -118,17 +118,21 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             try
             {
-                if (!vs.HasExpansion)
+                await _semaphore.WaitAsync().ConfigureAwait(false);
+
+                try
                 {
-                    try
+                    // We might have a cached or pre-expanded version brought to us by the _source
+                    if (!vs.HasExpansion)
                     {
-                        await _semaphore.WaitAsync().ConfigureAwait(false);
+                        // This will expand te vs - since we do not deepcopy() it, it will change the instance
+                        // as it was passed to us from the source
                         await _expander.ExpandAsync(vs).ConfigureAwait(false);
                     }
-                    finally
-                    {
-                        _semaphore.Release();
-                    }
+                }
+                finally
+                {
+                    _semaphore.Release();
                 }
             }
             catch (TerminologyServiceException e)
