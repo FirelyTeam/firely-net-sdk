@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
         if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
       }
     }
-
+    
     protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

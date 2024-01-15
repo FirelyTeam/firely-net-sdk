@@ -114,13 +114,13 @@ namespace Hl7.FhirPath.Functions
             static P.Any upcastOne(P.Any value, P.Any other) =>
                 value switch
                 {
-                    P.Integer _ when other is P.Long => (P.Long)(P.Integer)value,
-                    P.Integer _ when other is P.Decimal => (P.Decimal)(P.Integer)value,
-                    P.Integer _ when other is P.Quantity => (P.Quantity)(P.Integer)value,
-                    P.Long _ when other is P.Decimal => (P.Decimal)(P.Long)value,
-                    P.Long _ when other is P.Quantity => (P.Quantity)(P.Long)value,
-                    P.Decimal _ when other is P.Quantity => (P.Quantity)(P.Decimal)value,
-                    P.Date _ when other is P.DateTime => (P.DateTime)(P.Date)value,
+                    P.Integer integer when other is P.Long => (P.Long)integer,
+                    P.Integer integer when other is P.Decimal => (P.Decimal)integer,
+                    P.Integer integer when other is P.Quantity => (P.Quantity)integer,
+                    P.Long l when other is P.Decimal => (P.Decimal)l,
+                    P.Long l when other is P.Quantity => (P.Quantity)l,
+                    P.Decimal @decimal when other is P.Quantity => (P.Quantity)@decimal,
+                    P.Date date when other is P.DateTime => (P.DateTime)date,
                     _ => value
                 };
         }

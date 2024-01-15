@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
@@ -75,41 +76,80 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
+        private static (ElementValue val, int ix)[] returnElements(string name, object element)
+        {
+            return element switch
+            {
+                Base @base => new[] { (new ElementValue(name, @base), 0) },
+                IEnumerable<Base> bases => bases.Select((e, i) => (new ElementValue(name, e), i)).ToArray(),
+                _ => Array.Empty<(ElementValue, int)>(),
+                // _ => throw new ArgumentException($"element '{location}.{name}' is of type '{element.GetType().FullName}' not a Base or IEnumerable<Base>", nameof(element))
+            };
+        }
         public IEnumerable<ITypedElement> Children(string name)
         {
-            if (!(Current is Base parentBase)) yield break;
+            if (Current is null) return Enumerable.Empty<PocoElementNode>();
 
-            var children = parentBase.NamedChildren;
-            string oldElementName = null;
-            int arrayIndex = 0;
-
-            foreach (var child in children)
+            IEnumerable<PocoElementNode> getChildrenInternal(string childName, object value)
             {
-                if (name == null || child.ElementName == name)
+                var elts = returnElements(childName, value);
+                var elementDef = _myClassMapping.FindMappedElementByName(childName);
+                //In the switch below I assume that Location and ShortPath are either both null or both not null - CK
+                var input = (elementDef?.IsCollection ?? true, Location == null) switch
                 {
-                    // Poll the actual implementation, which results in a more efficient loopkup when the underlying
-                    // implementation of _mySD is ClassMapping.
-                    var childElementDef = _myClassMapping.FindMappedElementByName(child.ElementName);
+                    (false, true) =>
+                        elts.Select(c => new PocoElementNode(
+                            location : $"{childName}[{c.ix}]",
+                            shortPath : $"{childName}",
+                            instance : c.val.Value,
+                            definition : elementDef,
+                            inspector: _inspector,
+                            parent : this
+                        )),
+                    (false, false) =>
+                        elts.Select(c => new PocoElementNode(
+                            location : $"{Location}.{childName}[{c.ix}]",
+                            shortPath : $"{ShortPath}.{childName}",
+                            instance : c.val.Value,
+                            definition : elementDef,
+                            inspector: _inspector,
+                            parent : this
+                        )),
+                    (true, true) =>
+                        elts.Select(c => new PocoElementNode(
+                            location : $"{childName}[{c.ix}]",
+                            shortPath : $"{childName}[{c.ix}]",
+                            instance : c.val.Value,
+                            definition : elementDef,
+                            inspector: _inspector,
+                            parent : this
+                        )),
+                    (true, false) =>
+                        elts.Select(c => new PocoElementNode(
+                            location : $"{Location}.{childName}[{c.ix}]",
+                            shortPath : $"{ShortPath}.{childName}[{c.ix}]",
+                            instance : c.val.Value,
+                            definition : elementDef,
+                            inspector: _inspector,
+                            parent : this
+                        )),
+                };
+                return input;
+            }
 
-                    if (oldElementName != child.ElementName)
-                        arrayIndex = 0;
-                    else
-                        arrayIndex += 1;
+            var rod = Current.AsReadOnlyDictionary();
 
-                    var location = Location == null
-                        ? child.ElementName
-                        : $"{Location}.{child.ElementName}[{arrayIndex}]";
-                    var shortPath = ShortPath == null
-                        ? child.ElementName
-                        : (childElementDef.IsCollection ?
-                            $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
-                            $"{ShortPath}.{child.ElementName}");
 
-                    yield return new PocoElementNode(_inspector, child.Value, this, childElementDef,
-                        location, shortPath);
-                }
-
-                oldElementName = child.ElementName;
+            if (name is not null)
+            {
+                rod.TryGetValue(name, out var value);
+                return getChildrenInternal(name, value);
+            }
+            else
+            {
+                return rod.SelectMany(kvp 
+                => getChildrenInternal(kvp.Key,  kvp.Value));    
+                
             }
         }
 

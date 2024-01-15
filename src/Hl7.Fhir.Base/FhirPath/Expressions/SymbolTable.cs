@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -132,6 +133,23 @@ namespace Hl7.FhirPath.Expressions
                 table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
             else
                 table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
+        }
+
+        internal static void AddBuiltinChildren(this SymbolTable table)
+        {
+            table.Add(new CallSignature("builtin.children",
+                typeof(IEnumerable<ITypedElement>),
+                typeof(IEnumerable<ITypedElement>),
+                typeof(string)), (
+                ctx, invokees) =>
+            {
+                var iks = invokees.ToArray();
+                var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
+                var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
+                var result= focus.Navigate(name);
+
+                return result;
+            });
         }
 
         public static void Add<A, B, C, R>(this SymbolTable table, string name, Func<A, B, C, R> func, bool doNullProp = false)

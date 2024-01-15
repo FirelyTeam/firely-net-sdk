@@ -5,6 +5,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>Benchmarks</AssemblyName>
 		<RootNamespace>Firely.Sdk.Benchmarks</RootNamespace>
+		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
