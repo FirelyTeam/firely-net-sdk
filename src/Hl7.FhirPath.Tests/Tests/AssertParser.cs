@@ -81,6 +81,15 @@ namespace Hl7.FhirPath.Tests
             SucceedsWith<T>(parser, input, result => Assert.AreEqual(match, result));
         }
 
+        public static void SucceedsRoundTrip<T>(Parser<T> parser, string input, string canonicalInput = null)
+            where T : Expression
+        {
+            SucceedsWith<T>(parser, input, result => {
+                var rt = result.RoundTrip();
+                Assert.AreEqual(canonicalInput ?? input, rt);
+            });
+        }
+
         public static void FailsMatch<T>(Parser<T> parser, string input)
         {
             FailsWith<T>(parser, input, result => { });

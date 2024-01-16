@@ -64,10 +64,10 @@ namespace Hl7.FhirPath.Parser
         //  | '{' '}'                                               #nullLiteral
         //  ;
         public static readonly Parser<Expression> BracketExpr =
-            (from lparen in Parse.Char('(')
+            (from lparen in Parse.Char('(').Token().Select(v => new SubTokenExpression(v)).Positioned()
              from expr in Parse.Ref(() => Expression)
-             from rparen in Parse.Char(')')
-             select new BracketExpression(expr))
+             from rparen in Parse.Char(')').Token().Select(v => new SubTokenExpression(v)).Positioned()
+             select new BracketExpression(lparen, rparen, expr))
             .Positioned()
             .Named("BracketExpr");
 
@@ -75,14 +75,14 @@ namespace Hl7.FhirPath.Parser
             Parse.Char('{').TokenIgnoreComments().Then(c => Parse.Char('}').Token())
                     .Select(v => NewNodeListInitExpression.Empty).Positioned();
 
-        public static Parser<Expression> Function(Expression context)
+        public static Parser<FunctionCallExpression> Function(Expression context)
         {
             return
                 from n in Lexer.Identifier.Select(name => new IdentifierExpression(name)).Positioned()
                 from lparen in Parse.Char('(').Token().Select(v => new SubTokenExpression(v)).Positioned()
                 from paramList in Parse.Ref(() => FunctionParameter(n.Value).Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
                 from rparen in Parse.Char(')').Token().Select(v => new SubTokenExpression(v)).Positioned()
-                select new FunctionCallExpression(context, n.Value, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()))
+                select new FunctionCallExpression(context, n.Value, lparen, rparen, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()))
                 .UsePositionFrom(n.Location);
         }
 
@@ -95,7 +95,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
-                .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)).Positioned())
+                .Or(Lexer.Identifier.Select(i => new ConstantExpression(i)).Positioned().Select(i => new ChildExpression(focus, i)).Positioned())
                 //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 .Token();
         }
@@ -103,7 +103,7 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<Expression> Term =
             Literal
             .Or(FunctionInvocation(AxisExpression.That))
-            .XOr(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+            .XOr(Lexer.ExternalConstant.Select(n => new SubTokenExpression(n)).Positioned().Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
             .XOr(Lexer.Axis.Select(a => new AxisExpression(a)).Positioned())
@@ -111,16 +111,16 @@ namespace Hl7.FhirPath.Parser
             .Named("Term");
 
 
-        public static Expression BuildVariableRefExpression(string name)
+        public static Expression BuildVariableRefExpression(SubTokenExpression name)
         {
-            if (name.StartsWith("ext-"))
-                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeSpecifier.String, new ConstantExpression(name.Substring(4)));
+            if (name.Value.StartsWith("ext-"))
+                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(4)).UsePositionFrom(name.Location));
 #pragma warning disable IDE0046 // Convert to conditional expression
-            else if (name.StartsWith("vs-"))
+            else if (name.Value.StartsWith("vs-"))
 #pragma warning restore IDE0046 // Convert to conditional expression
-                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeSpecifier.String, new ConstantExpression(name.Substring(3)));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(3)).UsePositionFrom(name.Location));
             else
-                return new VariableRefExpression(name);
+                return new VariableRefExpression(name.Value).UsePositionFrom(name.Location);
         }
 
         public static readonly Parser<string> TypeSpec =
@@ -164,7 +164,7 @@ namespace Hl7.FhirPath.Parser
         // '.' invocation
         public static Parser<Expression> DotInvocation(Expression focus)
         {
-            return Parse.Char('.').Then(op => FunctionInvocation(focus));
+            return Parse.Char('.').Select(v => new SubTokenExpression(v)).Positioned().Then(op => FunctionInvocation(focus).Select(t => { t.SetPositionFrom(op.Location); return t; }));
         }
 
         // '[' expression ']'                             #indexerExpression

@@ -44,5 +44,20 @@ namespace Hl7.FhirPath.Sprache
             }
             return me;
         }
+
+        /// <summary>
+        /// Only use in Function Invocation
+        /// </summary>
+        /// <param name="me"></param>
+        /// <param name="positionInfo"></param>
+        /// <returns></returns>
+        public static void SetPositionFrom(this Hl7.FhirPath.Expressions.Expression me, ISourcePositionInfo positionInfo)
+        {
+            if (positionInfo is Expressions.FhirPathExpressionLocationInfo li)
+            {
+                Position startPos = new Position(li.RawPosition, li.LineNumber, li.LinePosition);
+                me.SetPos<Expressions.Expression>(startPos, li.Length);
+            }
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Hl7.FhirPath.Expressions
         public static bool operator ==(Expression left, Expression right) => EqualityComparer<Expression>.Default.Equals(left, right);
         public static bool operator !=(Expression left, Expression right) => !(left == right);
 
-        protected internal T SetPos<T>(Position startPos, int length)
+        internal T SetPos<T>(Position startPos, int length)
             where T : Expression
         {
             Location = new FhirPathExpressionLocationInfo() { LinePosition = startPos.Column, LineNumber = startPos.Line, RawPosition = startPos.Pos, Length = length };
@@ -100,12 +100,16 @@ namespace Hl7.FhirPath.Expressions
     // Discuss: Reduce function? - Skip this in the compile stage? - Update the visitor to skip the bracket too
     public class BracketExpression : CustomExpression, IPositionAware<BracketExpression>
     {
-        public BracketExpression(Expression operand) : base(operand.ExpressionType)
+        public BracketExpression(SubTokenExpression leftBrace, SubTokenExpression rightBrace, Expression operand) : base(operand.ExpressionType)
         {
             Operand = operand;
+            LeftBrace = leftBrace;
+            RightBrace = rightBrace;
         }
 
         public Expression Operand { get; private set; }
+        public SubTokenExpression LeftBrace { get; private set; }
+        public SubTokenExpression RightBrace { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitCustomExpression(this);
         public override Expression Reduce()
@@ -164,20 +168,28 @@ namespace Hl7.FhirPath.Expressions
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class FunctionCallExpression : Expression, IPositionAware<FunctionCallExpression>
     {
-        public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>)arguments)
+        public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, params Expression[] arguments) : this(focus, name, null, null, type, (IEnumerable<Expression>)arguments)
         {
         }
 
-        public FunctionCallExpression(Expression focus, string name, TypeSpecifier type, IEnumerable<Expression> arguments) : base(type)
+        public FunctionCallExpression(Expression focus, string name, SubTokenExpression leftBrace, SubTokenExpression rightBrace, TypeSpecifier type, params Expression[] arguments) : this(focus, name, leftBrace, rightBrace, type, (IEnumerable<Expression>)arguments)
+        {
+        }
+
+        public FunctionCallExpression(Expression focus, string name, SubTokenExpression leftBrace, SubTokenExpression rightBrace, TypeSpecifier type, IEnumerable<Expression> arguments) : base(type)
         {
             if (string.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
             Focus = focus;
             FunctionName = name;
             Arguments = arguments != null ? arguments.ToArray() : throw Error.ArgumentNull("arguments");
+            LeftBrace = leftBrace;
+            RightBrace = rightBrace;
         }
 
         public Expression Focus { get; private set; }
         public string FunctionName { get; private set; }
+        public SubTokenExpression LeftBrace { get; private set; }
+        public SubTokenExpression RightBrace { get; private set; }
 
         public IEnumerable<Expression> Arguments { get; private set; }
 
@@ -220,8 +232,13 @@ namespace Hl7.FhirPath.Expressions
 
     public class ChildExpression : FunctionCallExpression, IPositionAware<ChildExpression>
     {
-        public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
+        public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX + "children", null, null, TypeSpecifier.Any,
                 new ConstantExpression(name, TypeSpecifier.String))
+        {
+        }
+
+        public ChildExpression(Expression focus, ConstantExpression name) : base(focus, OP_PREFIX + "children", null, null, TypeSpecifier.Any,
+                name)
         {
         }
 
@@ -237,12 +254,17 @@ namespace Hl7.FhirPath.Expressions
                 return arg1Value;
             }
         }
-        ChildExpression IPositionAware<ChildExpression>.SetPos(Position startPos, int length) => SetPos<ChildExpression>(startPos, length);
+        ChildExpression IPositionAware<ChildExpression>.SetPos(Position startPos, int length)
+        {
+            SetPos<ChildExpression>(startPos, length);
+            // Arguments.OfType<ConstantExpression>().FirstOrDefault().UsePositionFrom(Location);
+            return this;
+        }
     }
 
     public class IndexerExpression : FunctionCallExpression, IPositionAware<IndexerExpression>
     {
-        public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX + "item", TypeSpecifier.Any, index)
+        public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX + "item", null, null, TypeSpecifier.Any, index)
         {
         }
 
@@ -266,7 +288,7 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.That, BIN_PREFIX + op, TypeSpecifier.Any, left, right)
+        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.That, BIN_PREFIX + op, null, null, TypeSpecifier.Any, left, right)
         {
         }
         public string Op
@@ -306,7 +328,7 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public UnaryExpression(string op, Expression operand) : base(AxisExpression.That, URY_PREFIX + op, TypeSpecifier.Any, operand)
+        public UnaryExpression(string op, Expression operand) : base(AxisExpression.That, URY_PREFIX + op, null, null, TypeSpecifier.Any, operand)
         {
         }
         public string Op

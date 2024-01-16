@@ -44,6 +44,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
+            AssertParser.SucceedsMatch(parser, "`child-name`", new ChildExpression(AxisExpression.That, "childname"));
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.That, "childname"));
             // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
 
@@ -92,7 +93,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "@2013-12T", new ConstantExpression(P.DateTime.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
-            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new ConstantExpression(3)));
+            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new SubTokenExpression("("), new SubTokenExpression(")"), new ConstantExpression(3)));
             AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(P.DateTime.Parse("2014-12-13T12:00:00+02:00")));
             AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
@@ -154,7 +155,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "Patient.name", PATIENTNAME);
+            AssertParser.SucceedsMatch(parser, "Patient . name", PATIENTNAME);
             AssertParser.SucceedsMatch(parser, "Patient.name [4 ]",
                     new IndexerExpression(PATIENTNAME, new ConstantExpression(4)));
             AssertParser.SucceedsMatch(parser, "$this[4].name",
@@ -226,7 +227,11 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.TypeExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "(8.as(notoddbuteven))", new BracketExpression(new FunctionCallExpression(new ConstantExpression(8), "as", TypeSpecifier.Any, new IdentifierExpression("notoddbuteven"))));
+            AssertParser.SucceedsMatch(parser, "(8.as(notoddbuteven))", 
+                new BracketExpression(
+                    new SubTokenExpression('('),
+                    new SubTokenExpression(')'),
+                    new FunctionCallExpression(new ConstantExpression(8), "as", TypeSpecifier.Any, new IdentifierExpression("notoddbuteven"))));
         }
 
         private Expression constOp(string op, object left, object right)
