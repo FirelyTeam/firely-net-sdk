@@ -2,6 +2,7 @@ using FluentAssertions;
 using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using EM= Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -152,6 +153,20 @@ namespace Hl7.Fhir.ElementModel
             yield return new object[] { 3, 2, false };
             yield return new object[] { 3, 'a', false };
             yield return new object[] { 3, 3.0f, false };
+            yield return new object[] { EM.Date.Parse("2019-01-01"), EM.Date.Parse("2019-01-01"), true }; 
+            yield return new object[] { EM.Date.Parse("2019-01-01"), EM.Date.Parse("2019-01-02"), false };
+            yield return new object[] { EM.Date.Parse("2019-01-01"), EM.Date.Parse("2019-01"), false };
+            yield return new object[] { EM.Time.Parse("13:00:00"), EM.Time.Parse("13:00:00"), true }; 
+            yield return new object[] { EM.Time.Parse("13:00:00"), EM.Time.Parse("13:00:01"), false };
+            yield return new object[] { EM.Time.Parse("13:00:00"), EM.Time.Parse("13:00"), false };
+            yield return new object[] { EM.DateTime.Parse("1972-11-30T15:15:00"), EM.DateTime.Parse("1972-11-30T15:15:00"), true }; 
+            yield return new object[] { EM.DateTime.Parse("1972-11-30T15:15:00Z"), EM.DateTime.Parse("1972-11-30T15:15:00+00:00"), true };
+            yield return new object[] { EM.DateTime.Parse("1972-11-30T15:15:00"), EM.DateTime.Parse("1972-11-29T15:15:00"), false };
+            yield return new object[] { EM.DateTime.Parse("1972-11-30T15:15:00"), EM.DateTime.Parse("1972-11-30T15:15"), false };
+            yield return new object[] { EM.DateTime.Parse("1972-11-30T15:15:00+01:00"), EM.DateTime.Parse("1972-11-30T15:15+00:00"), false };
+            
+            yield return new object[] { EM.Time.Parse("13:00:00"), EM.Date.Parse("2019-01-01"), false };
+            yield return new object[] { EM.Time.Parse("13:00:00"), null, false };
         }
 
 
