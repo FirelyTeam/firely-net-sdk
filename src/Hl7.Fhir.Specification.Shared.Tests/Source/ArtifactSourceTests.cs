@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using ssac = System.Security.AccessControl;
+using Ssac = System.Security.AccessControl;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Revoke folder read permissions for the current user
                 string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-                var rule = new ssac.FileSystemAccessRule(userName, ssac.FileSystemRights.Read, ssac.AccessControlType.Deny);
+                var rule = new Ssac.FileSystemAccessRule(userName, Ssac.FileSystemRights.Read, Ssac.AccessControlType.Deny);
                 ds.AddAccessRule(rule);
                 Debug.Print($"Removing read permissions from folder: '{subPath2}' ...");
 
