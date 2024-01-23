@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Serialization
 
                 // If this is a FhirPrimitive, make sure we delay validation until we had the
                 // chance to encounter both the `name` and `_name` property.
-                if (delayedValidations is not null && propertyValueMapping.IsFhirPrimitive)
+                if (propertyValueMapping.IsFhirPrimitive)
                 {
                     delayedValidations.ScheduleDelayedValidation(
                         propertyMapping.Name + PROPERTY_VALIDATION_KEY_SUFFIX,
@@ -467,8 +467,8 @@ namespace Hl7.Fhir.Serialization
 
             public int GetPropertyIndex(string memberName)
             {
-                if (_parsedPropValue.ContainsKey(memberName))
-                    return _parsedPropValue[memberName];
+                if (_parsedPropValue.TryGetValue(memberName, out int index))
+                    return index;
                 _parsedPropValue.Add(memberName, 0);
                 return 0;
             }
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Serialization
             (ClassMapping? propertyValueMapping, FhirJsonException? error) = propertyMapping.Choice switch
             {
                 ChoiceType.None or ChoiceType.ResourceChoice =>
-                    inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) is ClassMapping m
+                    inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) is { } m
                         ? (m, null)
                         : throw new InvalidOperationException($"Encountered property type {propertyMapping.ImplementingType} for which no mapping was found in the model assemblies. " + reader.GenerateLocationMessage()),
                 ChoiceType.DatatypeChoice => getChoiceClassMapping(ref reader),
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Serialization
 
                 return string.IsNullOrEmpty(typeSuffix)
                     ? (null, ERR.CHOICE_ELEMENT_HAS_NO_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name))
-                    : inspector.FindClassMapping(typeSuffix) is ClassMapping cm
+                    : inspector.FindClassMapping(typeSuffix) is { } cm
                         ? (cm, null)
                         : (default, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
             }
