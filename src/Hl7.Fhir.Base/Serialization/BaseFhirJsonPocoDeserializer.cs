@@ -251,12 +251,10 @@ namespace Hl7.Fhir.Serialization
             var oldErrorCount = state.Errors.Count;
             var (line, pos) = reader.GetLocation();
 
-            HashSet<string> encounteredKeys = new HashSet<string>();
-
             while (reader.TokenType != JsonTokenType.EndObject)
             {
                 var currentPropertyName = reader.GetString()!;
-                if (!encounteredKeys.Add(currentPropertyName))
+                if (!objectParsingState.TryAddToEncounteredKeys(currentPropertyName))
                 {
                     state.Errors.Add(ERR.DUPLICATE_KEY(ref reader, state.Path.GetInstancePath(), currentPropertyName));
                 }
@@ -464,6 +462,7 @@ namespace Hl7.Fhir.Serialization
         {
             private readonly Dictionary<string, Action> _validations = new();
             private readonly Dictionary<string, int> _parsedPropValue = new();
+            private readonly HashSet<string> _encounteredIDs = new();
 
             public int GetPropertyIndex(string memberName)
             {
@@ -476,6 +475,11 @@ namespace Hl7.Fhir.Serialization
             public void SetPropertyIndex(string memberName, int count)
             {
                 _parsedPropValue[memberName] = count;
+            }
+
+            public bool TryAddToEncounteredKeys(string key)
+            {
+                return _encounteredIDs.Add(key);
             }
 
             public void ScheduleDelayedValidation(string key, Action validation)
