@@ -251,9 +251,15 @@ namespace Hl7.Fhir.Serialization
             var oldErrorCount = state.Errors.Count;
             var (line, pos) = reader.GetLocation();
 
+            HashSet<string> encounteredKeys = new HashSet<string>();
+
             while (reader.TokenType != JsonTokenType.EndObject)
             {
                 var currentPropertyName = reader.GetString()!;
+                if (!encounteredKeys.Add(currentPropertyName))
+                {
+                    state.Errors.Add(ERR.DUPLICATE_KEY(ref reader, state.Path.GetInstancePath(), currentPropertyName));
+                }
 
                 // The resourceType property on the level of a resource is used to determine
                 // the type and should otherwise be skipped when processing a resource.

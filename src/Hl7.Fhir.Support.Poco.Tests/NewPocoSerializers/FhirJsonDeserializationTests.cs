@@ -565,6 +565,37 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 // ok!
             }
         }
+        
+        [TestMethod]
+        public void TestDuplicateIDs()
+        {
+            var jsonInput = 
+                "{\n" +
+                    "\"resourceType\" : \"Patient\",\n" +
+                    "\"active\" : true,\n" +
+                    "\"active\" : false\n" +
+                "}";
+
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+
+            try
+            {
+                var actual = JsonSerializer.Deserialize<TestPatient>(jsonInput, options);
+                Assert.Fail("Should have encountered errors.");
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                Console.WriteLine(dfe.Message);
+                var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
+                Console.WriteLine(recoveredActual);
+
+                assertErrors(dfe.Exceptions, new string[]
+                {
+                    ERR.DUPLICATE_KEYS_CODE,
+                });
+            }
+
+        }
 
         [TestMethod]
         public void TestRecovery()
