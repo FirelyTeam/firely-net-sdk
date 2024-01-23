@@ -569,18 +569,17 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void TestDuplicateIDs()
         {
-            var jsonInput = 
-                "{\n" +
-                    "\"resourceType\" : \"Patient\",\n" +
-                    "\"active\" : true,\n" +
-                    "\"active\" : false\n" +
-                "}";
+            string jsonErrInput = "{\n" +
+                                  "\"resourceType\" : \"Patient\",\n" +
+                                  "\"active\" : true,\n" +
+                                  "\"active\" : false\n" +
+                                  "}";
 
             var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
 
             try
             {
-                var actual = JsonSerializer.Deserialize<TestPatient>(jsonInput, options);
+                var actual = JsonSerializer.Deserialize<TestPatient>(jsonErrInput, options);
                 Assert.Fail("Should have encountered errors.");
             }
             catch (DeserializationFailedException dfe)
