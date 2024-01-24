@@ -5,7 +5,6 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
@@ -147,7 +146,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
             };
 
             using var client = new MoqBuilder()
-                .Send(response, 
+                .Send(response,
                     h => h.RequestUri == new Uri("http://example.com/Patient?name=henry") &&
                         findInAcceptHeader(h.Headers.Accept, "fhirVersion", useFhirVersionHeader))
                 .AsClient(s => { s.VerifyFhirVersion = false; s.UseFhirVersionInAcceptHeader = useFhirVersionHeader; });
@@ -345,6 +344,40 @@ namespace Hl7.Fhir.Core.Tests.Rest
             oo.Should().BeNull();
             client.LastBodyAsResource.Should().BeOfType<OperationOutcome>().Which.Id.Should().Be("example");
             client.LastResult!.Outcome.Should().BeOfType<OperationOutcome>().Which.Id.Should().Be("example");
+        }
+
+
+        [TestMethod]
+        public async T.Task TestOperationResponseCodes()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Accepted,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+            using var client = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
+                .AsClient();
+
+            var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
+            client.LastResult?.Status.Should().Be("202");
+
+            response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+            using var client2 = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
+                .AsClient();
+
+            var function = () => client2.OperationAsync(new Uri("http://example.com/fhir/$ping"));
+            await function.Should().ThrowAsync<FhirOperationException>().WithMessage("Operation was unsuccessful because of a client error (NotFound). Body contains a Parameters.");
+
         }
 
         private static BaseFhirClient sendBack(string resourceType)
