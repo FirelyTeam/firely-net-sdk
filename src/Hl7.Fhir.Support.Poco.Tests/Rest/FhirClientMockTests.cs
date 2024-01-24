@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         {
             var response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Accepted,
+                StatusCode = HttpStatusCode.Created,
                 Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
             };
@@ -362,11 +362,11 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 .AsClient();
 
             var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
-            client.LastResult?.Status.Should().Be("202");
+            client.LastResult?.Status.Should().Be("201");
 
             response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.NotFound,
+                StatusCode = HttpStatusCode.Accepted,
                 Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
             };
@@ -375,7 +375,22 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
                 .AsClient();
 
-            var function = () => client2.OperationAsync(new Uri("http://example.com/fhir/$ping"));
+            parameters = await client2.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
+            client2.LastResult?.Status.Should().Be("202");
+
+
+            response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+            using var client3 = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
+                .AsClient();
+
+            var function = () => client3.OperationAsync(new Uri("http://example.com/fhir/$ping"));
             await function.Should().ThrowAsync<FhirOperationException>().WithMessage("Operation was unsuccessful because of a client error (NotFound). Body contains a Parameters.");
 
         }
