@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Rest
             else if (name == SEARCH_PARAM_CONTENT) Content = nonEmptySingleValue(name, Content, value);
             else if (name == SEARCH_PARAM_COUNT)
             {
-                if (!Int32.TryParse(value, out int count) || count < 0) throw Error.Format("Invalid {0}: '{1}' is not an integer".FormatWith(name, value));
+                if (!Int32.TryParse(value, out int count) || count < 0) throw Error.Format("Invalid {0}: '{1}' is not a non-negative integer".FormatWith(name, value));
                 Count = count;
             }
             else if (name.StartsWith(SEARCH_PARAM_INCLUDE + SEARCH_MODIFIERSEPARATOR))
