@@ -1,3 +1,5 @@
+#nullable  enable
+
 /*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
@@ -28,8 +30,6 @@
 
 */
 
-
-
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
@@ -44,15 +44,17 @@ namespace Hl7.Fhir.Rest
     /// </summary>
     public class SearchParams
     {
+        /// <summary>
+        /// Construct an empty instance.
+        /// </summary>
         public SearchParams()
         {
-            Include = new List<(string, IncludeModifier)>();
-            RevInclude = new List<(string, IncludeModifier)>();
-            Sort = new List<(string, SortOrder)>();
-            Parameters = new List<Tuple<string, string>>();
-            Elements = new List<string>();
+            // Nothing
         }
 
+        /// <summary>
+        /// Construct a new instance initialized with a single name/value.
+        /// </summary>
         public SearchParams(string name, string value) : this() => Add(name, value);
 
         /// <summary>
@@ -76,8 +78,7 @@ namespace Hl7.Fhir.Rest
             SEARCH_PARAM_CONTAINEDTYPE,
             SEARCH_PARAM_ELEMENTS
             };
-
-
+        
         public const string SEARCH_MODIF_ASCENDING = "asc";
         public const string SEARCH_MODIF_DESCENDING = "desc";
 
@@ -91,6 +92,9 @@ namespace Hl7.Fhir.Rest
         public const string SEARCH_CONTAINED_TYPE_CONTAINER = "container";
         public const string SEARCH_CONTAINED_TYPE_CONTAINED = "contained";
 
+        /// <summary>
+        /// Initializes the <see cref="Elements"/> parameter with the given list of elements.
+        /// </summary>
         public SearchParams Select(params string[] elements)
         {
             Elements.AddRange(elements);
@@ -113,8 +117,7 @@ namespace Hl7.Fhir.Rest
             else if (name == SEARCH_PARAM_CONTENT) Content = nonEmptySingleValue(name, Content, value);
             else if (name == SEARCH_PARAM_COUNT)
             {
-                int count;
-                if (!Int32.TryParse(value, out count) || count <= 0) throw Error.Format("Invalid {0}: '{1}' is not a positive integer".FormatWith(name, value));
+                if (!Int32.TryParse(value, out int count) || count < 0) throw Error.Format("Invalid {0}: '{1}' is not an integer".FormatWith(name, value));
                 Count = count;
             }
             else if (name.StartsWith(SEARCH_PARAM_INCLUDE + SEARCH_MODIFIERSEPARATOR))
@@ -140,7 +143,7 @@ namespace Hl7.Fhir.Rest
                 if (String.IsNullOrEmpty(value))
                     throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: value cannot be empty");
                 var elements = value.Split(',');
-                if (elements.Any(f => String.IsNullOrEmpty(f)))
+                if (elements.Any(String.IsNullOrEmpty))
                     throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of non-empty element names");
                 if (elements.Any(f => f == "-"))
                     throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: one of the values is just a single '-', an element name must be provided");
@@ -151,8 +154,7 @@ namespace Hl7.Fhir.Rest
             }
             else if (name == SEARCH_PARAM_SUMMARY)
             {
-                SummaryType st = SummaryType.False;
-                if (Enum.TryParse(value, ignoreCase: true, result: out st))
+                if (Enum.TryParse(value, ignoreCase: true, result: out SummaryType st))
                     Summary = st;
                 else
                     throw Error.Format("Invalid {0}: '{1}' is not a recognized summary value".FormatWith(name, value));
@@ -182,7 +184,7 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        private static string nonEmptySingleValue(string paramName, string currentValue, string newValue)
+        private static string nonEmptySingleValue(string paramName, string? currentValue, string newValue)
         {
             if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
             if (!String.IsNullOrEmpty(currentValue)) throw Error.Format("{0} cannot be specified more than once".FormatWith(paramName));
@@ -208,8 +210,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// The 'regular' parameters. The parameters that have no special meaning.
         /// </summary>
-        public IList<Tuple<string, string>> Parameters { get; private set; }
-
+        public IList<Tuple<string, string>> Parameters { get; } = [];
 
         public const string SEARCH_PARAM_QUERY = "_query";
 
@@ -218,8 +219,8 @@ namespace Hl7.Fhir.Rest
         /// specific named query instead of the standard FHIR search.
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Query { get; set; }
+        [IgnoreDataMember]
+        public string? Query { get; set; }
 
         public const string SEARCH_PARAM_TEXT = "_text";
 
@@ -227,8 +228,8 @@ namespace Hl7.Fhir.Rest
         /// Gets or sets the special _text search parameter which which search on the narrative of the resource. 
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Text { get; set; }
+        [IgnoreDataMember]
+        public string? Text { get; set; }
 
 
         public const string SEARCH_PARAM_CONTENT = "_content";
@@ -237,8 +238,8 @@ namespace Hl7.Fhir.Rest
         /// Gets or sets the special _text search parameter which which search on the entire content of the resource.
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Content { get; set; }
+        [IgnoreDataMember]
+        public string? Content { get; set; }
 
 
         public const string SEARCH_PARAM_COUNT = "_count";
@@ -251,7 +252,7 @@ namespace Hl7.Fhir.Rest
         /// parameter, since additional _included resources for the matches are returned
         /// as well</remark>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
+        [IgnoreDataMember]
         public int? Count { get; set; }
 
         public const string SEARCH_PARAM_SUMMARY = "_summary";
@@ -262,10 +263,8 @@ namespace Hl7.Fhir.Rest
         /// the most important ones.
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
+        [IgnoreDataMember]
         public SummaryType? Summary { get; set; }
-
-
 
         public const string SEARCH_PARAM_FILTER = "_filter";
 
@@ -273,23 +272,21 @@ namespace Hl7.Fhir.Rest
         /// Gets or sets the special _filter search parameter to supply an advanced query expression
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Filter { get; set; }
-
-
+        [IgnoreDataMember]
+        public string? Filter { get; set; }
+        
         /// <summary>
         /// "_sort"
         /// </summary>
         public const string SEARCH_PARAM_SORT = "_sort";
-
-
+        
         /// <summary>
         /// Gets or sets the _sort parameter, to modify the sort order of the search result.
         /// Uses a tuple (name, sortorder).
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IList<(string, SortOrder)> Sort { get; private set; }
+        [IgnoreDataMember]
+        public IList<(string, SortOrder)> Sort { get; } = [];
 
 
         public const string SEARCH_PARAM_INCLUDE = "_include";
@@ -299,37 +296,37 @@ namespace Hl7.Fhir.Rest
         /// resources in the search result that the matched resources refer to.
         /// </summary>
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IList<(string, IncludeModifier)> Include { get; private set; }
-
+        [IgnoreDataMember]
+        public IList<(string, IncludeModifier)> Include { get; } = [];
 
         public const string SEARCH_PARAM_REVINCLUDE = "_revinclude";
 
         [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IList<(string, IncludeModifier)> RevInclude { get; private set; }
+        [IgnoreDataMember]
+        public IList<(string, IncludeModifier)> RevInclude { get; } = [];
 
 
         public const string SEARCH_PARAM_CONTAINED = "_contained";
 
         [NotMapped]
-        [IgnoreDataMemberAttribute]
+        [IgnoreDataMember]
         public ContainedSearch? Contained { get; private set; }
 
 
         public const string SEARCH_PARAM_CONTAINEDTYPE = "_containedType";
 
         [NotMapped]
-        [IgnoreDataMemberAttribute]
+        [IgnoreDataMember]
         public ContainedResult? ContainedType { get; private set; }
 
 
         public const string SEARCH_PARAM_ELEMENTS = "_elements";
 
-        public List<string> Elements { get; private set; }
+        public List<string> Elements { get; } = [];
 
-
-
+        /// <summary>
+        /// Take a list of key/value pairs and turn them into a new <see cref="SearchParams"/> instance.
+        /// </summary>
         public static SearchParams FromUriParamList(IEnumerable<Tuple<string, string>> parameters)
         {
             var result = new SearchParams();
@@ -340,7 +337,9 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-
+        /// <summary>
+        /// Convert this instance into a <see cref="UriParamList"/>. 
+        /// </summary>
         public UriParamList ToUriParamList()
         {
             var result = new UriParamList();
@@ -380,12 +379,18 @@ namespace Hl7.Fhir.Rest
         }
     }
 
+    /// <summary>
+    /// Possible values for the "_sort" parameter
+    /// </summary>
     public enum SortOrder
     {
         Ascending,
         Descending
     }
 
+    /// <summary>
+    /// Possible values for the "_contained" parameter
+    /// </summary>
     public enum ContainedSearch
     {
         True,
@@ -393,6 +398,9 @@ namespace Hl7.Fhir.Rest
         Both
     }
 
+    /// <summary>
+    /// Possible "_include" modifiers
+    /// </summary>
     public enum IncludeModifier
     {
         /// <summary>
@@ -411,7 +419,9 @@ namespace Hl7.Fhir.Rest
         Recurse
     }
 
-
+    /// <summary>
+    /// Possible "_summary" values
+    /// </summary>
     public enum SummaryType
     {
         /// <summary>
@@ -446,9 +456,15 @@ namespace Hl7.Fhir.Rest
     }
 
 
+    /// <summary>
+    /// Values for the "_containedType" parameter.
+    /// </summary>
     public enum ContainedResult
     {
         Container,
         Contained
     }
 }
+
+#nullable restore
+
