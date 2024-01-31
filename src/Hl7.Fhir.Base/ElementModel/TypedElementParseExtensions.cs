@@ -42,7 +42,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        internal static Element? ParseBindableInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static Element? ParseBindableInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
         {
             return instance.InstanceType switch
             {
