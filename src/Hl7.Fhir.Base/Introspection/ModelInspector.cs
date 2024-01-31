@@ -295,7 +295,8 @@ namespace Hl7.Fhir.Introspection
 
         public Type? GetTypeForFhirType(string name) => FindClassMapping(name) is { } mapping ? mapping.NativeType : null;
 
-        public bool IsBindable(string type) => FindClassMapping(type) is { } mapping && mapping.IsBindable;
+        public bool IsBindable(string type) => FindClassMapping(type) is { } mapping && mapping.IsBindable || 
+                                               type == "CodeableReference";
 
         public bool IsConformanceResource(string name) => GetTypeForFhirType(name) is { } type && IsConformanceResource(type);
 
