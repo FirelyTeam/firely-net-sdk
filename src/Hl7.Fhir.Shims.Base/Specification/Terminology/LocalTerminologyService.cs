@@ -118,21 +118,24 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             try
             {
-                if (!vs.HasExpansion)
+                await _semaphore.WaitAsync().ConfigureAwait(false);
+
+                try
                 {
-                    try
+                    // We might have a cached or pre-expanded version brought to us by the _source
+                    if (!vs.HasExpansion)
                     {
-                        await _semaphore.WaitAsync().ConfigureAwait(false);
+                        // This will expand te vs - since we do not deepcopy() it, it will change the instance
+                        // as it was passed to us from the source
                         await _expander.ExpandAsync(vs).ConfigureAwait(false);
                     }
-                    finally
-                    {
-                        _semaphore.Release();
-                    }
+                }
+                finally
+                {
+                    _semaphore.Release();
                 }
             }
             catch (TerminologyServiceException e)
-#pragma warning restore CS0618
             {
                 // Unprocessable entity
                 throw new FhirOperationException(
@@ -176,7 +179,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 else
                     return await validateCodeVS(valueSet, validateCodeParams.Code?.Value, validateCodeParams.System?.Value, validateCodeParams.Display?.Value, validateCodeParams.Abstract?.Value).ConfigureAwait(false);
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not FhirOperationException)
             {
                 //500 internal server error
                 throw new FhirOperationException(e.Message, (HttpStatusCode)500);

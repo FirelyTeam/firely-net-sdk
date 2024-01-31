@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Hl7.Fhir.Validation
 {
-    public class ParseExtensionsTests
+    public partial class ParseExtensionsTests
     {
         [Fact]
         public void TestParseQuantity()

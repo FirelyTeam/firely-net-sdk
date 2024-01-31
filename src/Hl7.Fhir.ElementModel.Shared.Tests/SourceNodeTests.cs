@@ -175,5 +175,86 @@ namespace Hl7.FhirPath.Tests
                 if (fieldInfo.GetValue(node) is not null) nrOfCreatedObjects++;
             }
         }
+
+
+        [TestMethod]
+        public void CompareNodesTest()
+        {
+
+            var node1 = SourceNode.Node("Patient",
+                        SourceNode.Node("name",
+                            SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel")),
+                            SourceNode.Node("given", SourceNode.Valued("given", "Pieter"))
+                        ));
+
+            //remove the given name
+            var node2 = SourceNode.Node("Patient",
+                       SourceNode.Node("name",
+                           SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel"))
+                       ));
+
+            var result = node1.IsEqualTo(node2);
+            result.Success.Should().BeFalse();
+            result.Details.Should().Be("number of children was different");
+
+            //change given name
+            node2 = SourceNode.Node("Patient",
+                       SourceNode.Node("name",
+                           SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel")),
+                           SourceNode.Node("given", SourceNode.Valued("given", "Peter"))
+                       ));
+
+            result = node1.IsEqualTo(node2);
+            result.Success.Should().BeFalse();
+            result.Details.Should().Be("value: was 'Peter', expected 'Pieter'");
+
+            //change node name
+            node2 = SourceNode.Node("Patient",
+                      SourceNode.Node("name",
+                          SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel")),
+                          SourceNode.Node("prefix", SourceNode.Valued("prefix", "Pieter"))
+                      ));
+
+            result = node1.IsEqualTo(node2);
+            result.Success.Should().BeFalse();
+            result.Details.Should().Be("name: was 'prefix', expected 'given'");
+
+            //add node
+            node2 = SourceNode.Node("Patient",
+                      SourceNode.Node("name",
+                          SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel")),
+                          SourceNode.Node("given", SourceNode.Valued("given", "Pieter")),
+                          SourceNode.Node("prefix", SourceNode.Valued("prefix", "Mr."))
+                      ));
+
+            result = node1.IsEqualTo(node2);
+            result.Success.Should().BeFalse();
+            result.Details.Should().Be("number of children was different");
+
+
+            //change node location
+            node2 = SourceNode.Node("Patient",
+                        SourceNode.Node("name",
+                            SourceNode.Node("family", SourceNode.Valued("family", "van de Heuvel")),
+                            SourceNode.Node("given", SourceNode.Valued("given", "Pieter"))
+                        ),
+                         SourceNode.Node("name")
+                        );
+
+            var enumerator1 = node1.Children().GetEnumerator();
+            var enumerator2 = node2.Children().GetEnumerator();
+
+            enumerator1.MoveNext();
+            var child1 = enumerator1.Current;
+            enumerator2.MoveNext();
+            enumerator2.MoveNext();
+            var child2 = enumerator2.Current;
+
+            result = child1.IsEqualTo(child2);
+            result.Success.Should().BeFalse();
+            result.Details.Should().Be("Path: was 'Patient.name[1]', expected 'Patient.name[0]'");
+
+        }
+
     }
 }

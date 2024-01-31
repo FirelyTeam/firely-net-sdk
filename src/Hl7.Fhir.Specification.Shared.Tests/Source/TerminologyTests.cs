@@ -4,9 +4,11 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using Xunit;
 using T = System.Threading.Tasks;
 
@@ -312,8 +314,8 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-
+            var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
         }
 
         [Fact]
@@ -332,8 +334,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-
+            var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
         }
 
 
@@ -363,7 +365,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
         }
 
         [Fact]
@@ -698,6 +701,62 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await validateCodedValue(fallback, "http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
             isSuccess(result).Should().BeTrue();
         }
+
+
+
+        /// <summary>
+        /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
+        /// </summary>
+        [Fact, Trait("Category", "LongRunner")]
+        public async T.Task RunValueSetExpanderMultiThreaded()
+        {
+            var nrOfParrallelTasks = 50;
+            var results = new ConcurrentBag<(string uri, int total)>();
+            var valuesetSource = new CachedResolver(ZipSource.CreateValidationSource());
+
+            var valuesets = new string[] {
+                "http://hl7.org/fhir/ValueSet/request-status",
+                "http://hl7.org/fhir/ValueSet/care-plan-intent",
+                "http://hl7.org/fhir/ValueSet/administrative-gender",
+               };
+
+            void expandAction(string url)
+            {
+                var ts = new LocalTerminologyService(valuesetSource);
+                var parameters = new ExpandParameters().WithValueSet(url);
+
+#pragma warning disable xUnit1031 // Do not use blocking task operations in test method
+                var expansion = (ValueSet)ts.Expand(parameters).Result;
+#pragma warning restore xUnit1031 // Do not use blocking task operations in test method
+                results.Add((url, expansion.Expansion.Total ?? 0));
+            }
+
+            var processor = new ActionBlock<string>(expandAction, new ExecutionDataflowBlockOptions
+            {
+                MaxDegreeOfParallelism = 100
+            });
+
+            var buffer = new BufferBlock<string>();
+            buffer.LinkTo(processor, new DataflowLinkOptions { PropagateCompletion = true });
+
+            for (int i = 0; i < nrOfParrallelTasks; i++)
+            {
+                buffer.Post(valuesets[i % valuesets.Length]);
+            }
+
+            buffer.Complete();
+            await processor.Completion;
+
+            var groupsPerUri = results.GroupBy(results => results.uri);
+
+            // Verify that within each group, the number of items in the expansion is the same.
+            // Race conditions will cause these nubmers to differ per group.
+            foreach (var group in groupsPerUri)
+            {
+                group.Aggregate(group.First().total, (total, next) => { Assert.Equal(total, next.total); return total; });
+            }
+        }
+
 
         #region helper functions
         private static T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,

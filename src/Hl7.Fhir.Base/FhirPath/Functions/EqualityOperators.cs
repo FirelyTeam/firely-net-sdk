@@ -46,6 +46,10 @@ namespace Hl7.FhirPath.Functions
         // Note that the Equals as defined by FhirPath/CQL only returns empty when one or both of the arguments
         // are empty. Otherwise, it will return either false or true. Uncomparable values (i.e. datetimes
         // with incompatible precisions) are mapped to false, as are arguments of different types.
+        // This function is different from the one in the TypedElementExtensions, as that one does a structural
+        // comparison of the elements, while this one does a comparison on equivalence rules from the FhirPath spec,
+        // which differ considerably (e.g. names are not compared, FHIR Quantity is compared to System.Quantity,
+        // there are specified coercions, etc.)
         public static bool? IsEqualTo(this ITypedElement left, ITypedElement right, bool compareNames = false)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
