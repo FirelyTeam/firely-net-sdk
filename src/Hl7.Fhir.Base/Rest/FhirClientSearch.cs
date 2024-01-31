@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
 
 namespace Hl7.Fhir.Rest
 {

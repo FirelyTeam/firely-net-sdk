@@ -43,6 +43,7 @@ namespace Hl7.Fhir.Support.Poco
         // Special Purpose Data types
         public const string EXTENSION = "Extension";
         public const string REFERENCE = "Reference";
+        public const string CODEABLEREFERENCE = "CodeableReference";
         public const string XHTML = "xhtml";
 
         // Resource type
