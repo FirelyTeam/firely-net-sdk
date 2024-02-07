@@ -351,7 +351,10 @@ namespace Hl7.Fhir.Serialization
 
             if (propertyValueMapping.IsFhirPrimitive)
             {
-                var fhirType = propertyMapping.FhirType.FirstOrDefault();
+                // fix for https://github.com/FirelyTeam/firely-net-sdk/issues/2701 - use the known native type if it is in the list
+                Type? fhirType = propertyMapping.FhirType.Contains(propertyValueMapping.NativeType)
+                    ? propertyValueMapping.NativeType
+                    : propertyMapping.FhirType.FirstOrDefault();
 
                 // Note that the POCO model will always allocate a new list if the property had not been set before,
                 // so there is always an existingValue for IList
