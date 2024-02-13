@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Serialization
                 } 
                 else 
                 {
-                    // if the property already has a mapping, its key must have been encountered before
+                    // if the property already has a value, its key must have been encountered before
                     if (existingValue is not null)
                     {
                         state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
