@@ -881,95 +881,113 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private static IEnumerable<object[]> getDuplicatePropertyTests()
         {
-            string[] duplicatePropertiesJson =
+            (string, string[])[] duplicatePropertiesJson =
             [
-                """
-                {
-                 "resourceType" : "Patient",
-                 "active" : true,
-                 "active" : false
-                }
-                """,
-                """
-                {
-                    "resourceType" : "Patient",
-                    "active" : true,
-                    "_active" : { "id" : "1234" },
-                    "_active" : { "id" : "5678" }
-                }
-                """,
-                """
-                {
-                   "resourceType" : "Patient",
-                   "_active" : { "id" : "1234" },
-                   "_active" : { "id" : "5678" }
-                }
-                """,
-                """
-                {
-                  "resourceType" : "OperationOutcome",
-                  "issue" : [{
-                    "severity" : "error",
-                    "code" : "code-invalid",
-                    "expression" : ["Patient.gender"],
-                    "_expression" : [{ "id" : "1234" }],
-                    "_expression" : [{ "id" : "3456" }]
+                ("""
+                 {
+                  "resourceType" : "Patient",
+                  "extension" : [{
+                  "url" : "http://nu.nl",
+                  "url" : "http://nu.nl"
                   }]
-                }
-                """,
-                """
-                {
-                  "resourceType" : "OperationOutcome",
-                  "issue" : [{
-                    "severity" : "error",
-                    "code" : "code-invalid",
-                    "expression" : ["Patient.gender"],
-                    "expression" : ["Patient.administrativeGender"],
-                    "_expression" : [{ "id" : "3456" }]
-                  }]
-                }
-                """,
-                """
-                {
-                    "resourceType" : "Patient",
-                    "identifier" : 
-                    [{
-                        "use" : "usual",
-                        "system" : "urn:oid:2.16.840.1.113883.2.4.6.3",
-                        "value" : "738472983"
-                    }],
-                    "identifier" : 
-                    [{
-                        "use" : "usual",
-                        "system" : "urn:oid:2.16.840.1.113883.2.4.6.3",
-                        "value" : "738472983"
-                    }]
-                }
-                """,
-                """
-                {
-                    "resourceType" : "Patient",
-                    "managingOrganization" : 
+                  }
+                 """, [ERR.DUPLICATE_PROPERTY_CODE]),
+                ("""
+                 {
+                  "resourceType" : "Patient",
+                  "active" : true,
+                  "active" : false
+                 }
+                 """, [ERR.DUPLICATE_PROPERTY_CODE]),
+                ("""
+                 {
+                     "resourceType" : "Patient",
+                     "active" : true,
+                     "_active" : { "id" : "1234" },
+                     "_active" : { "id" : "5678" }
+                 }
+                 """, [ERR.DUPLICATE_PROPERTY_CODE, ERR.DUPLICATE_PROPERTY_CODE]),
+                (
+                    """
                     {
-                        "reference" : "Organization/f001",
-                        "display" : "Burgers University Medical Centre"
-                    },
-                    "managingOrganization" : 
-                    {
-                        "reference" : "Organization/f002",
-                        "display" : "Burgers Zoo"
+                       "resourceType" : "Patient",
+                       "_active" : { "id" : "1234" },
+                       "_active" : { "id" : "5678" }
                     }
-                }
-                """
+                    """, [ERR.DUPLICATE_PROPERTY_CODE, ERR.DUPLICATE_PROPERTY_CODE]),
+                (
+                    """
+                    {
+                       "resourceType" : "Patient",
+                       "_active" : { "id" : "1234" },
+                       "_active" : { "extension" : [{ "url" : "http://nu.nl" }] }
+                    }
+                    """, [ERR.DUPLICATE_PROPERTY_CODE]),
+                ("""
+                 {
+                   "resourceType" : "OperationOutcome",
+                   "issue" : [{
+                     "severity" : "error",
+                     "code" : "code-invalid",
+                     "expression" : ["Patient.gender"],
+                     "_expression" : [{ "id" : "1234" }],
+                     "_expression" : [{ "id" : "3456" }]
+                   }]
+                 }
+                 """, [ERR.DUPLICATE_ARRAY_CODE]),
+                ("""
+                 {
+                   "resourceType" : "OperationOutcome",
+                   "issue" : [{
+                     "severity" : "error",
+                     "code" : "code-invalid",
+                     "expression" : ["Patient.gender"],
+                     "expression" : ["Patient.administrativeGender"],
+                     "_expression" : [{ "id" : "3456" }]
+                   }]
+                 }
+                 """, [ERR.DUPLICATE_ARRAY_CODE]),
+                ("""
+                 {
+                     "resourceType" : "Patient",
+                     "identifier" :
+                     [{
+                         "use" : "usual",
+                         "system" : "urn:oid:2.16.840.1.113883.2.4.6.3",
+                         "value" : "738472983"
+                     }],
+                     "identifier" :
+                     [{
+                         "use" : "usual",
+                         "system" : "urn:oid:2.16.840.1.113883.2.4.6.3",
+                         "value" : "738472983"
+                     }]
+                 }
+                 """, [ERR.DUPLICATE_ARRAY_CODE]),
+                ("""
+                 {
+                     "resourceType" : "Patient",
+                     "managingOrganization" :
+                     {
+                         "reference" : "Organization/f001",
+                         "display" : "Burgers University Medical Centre"
+                     },
+                     "managingOrganization" :
+                     {
+                         "reference" : "Organization/f002",
+                         "display" : "Burgers Zoo"
+                     }
+                 }
+                 """, [ERR.DUPLICATE_PROPERTY_CODE])
             ];
 
-            return duplicatePropertiesJson.Select(json => new[] { json });
+            return duplicatePropertiesJson.Select(testCase => (object[])( [testCase.Item1, testCase.Item2]));
         }
 
 
         [DataTestMethod]
         [DynamicData(nameof(getDuplicatePropertyTests), DynamicDataSourceType.Method)]
-        public void TestDuplicateProperties(string testJson)
+        public void TestDuplicateProperties(string testJson, string[] expectedErrs)
         {
             var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
 
@@ -980,7 +998,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
             catch (DeserializationFailedException dfe)
             {
-                assertErrors(dfe.Exceptions, [ERR.DUPLICATE_PROPERTY_CODE]);
+                assertErrors(dfe.Exceptions, expectedErrs);
             }
         }
     }
