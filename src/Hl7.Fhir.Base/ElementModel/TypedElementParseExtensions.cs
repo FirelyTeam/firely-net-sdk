@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -33,26 +35,33 @@ namespace Hl7.Fhir.ElementModel
         ///   'string' => code
         ///   'uri' => code
         /// </remarks>
-        public static Element ParseBindable(this ITypedElement instance)
+        public static Element? ParseBindable(this ITypedElement instance)
 #pragma warning disable CS0618 // Type or member is obsolete
             => instance.ParseBindableInternal();
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static Element ParseBindableInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static Element? ParseBindableInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
         {
             return instance.InstanceType switch
             {
                 FhirTypeConstants.CODE => instance.ParsePrimitiveInternal<Code, T>(),
-                FhirTypeConstants.STRING => new Code(instance.ParsePrimitiveInternal<FhirString, T>()?.Value),
-                FhirTypeConstants.URI => new Code(instance.ParsePrimitiveInternal<FhirUri, T>()?.Value),
+                FhirTypeConstants.STRING => new Code(instance.ParsePrimitiveInternal<FhirString, T>().Value),
+                FhirTypeConstants.URI => new Code(instance.ParsePrimitiveInternal<FhirUri, T>().Value),
                 FhirTypeConstants.CODING => instance.ParseCodingInternal(),
                 FhirTypeConstants.CODEABLE_CONCEPT => instance.ParseCodeableConceptInternal(),
                 FhirTypeConstants.QUANTITY => parseQuantity(),
                 FhirTypeConstants.EXTENSION => parseExtension(),
+                FhirTypeConstants.CODEABLEREFERENCE => parseCodeableReference(), 
                 _ => null,
             };
+
+            CodeableConcept? parseCodeableReference()
+            {
+                var valueChild = instance.Children("concept").FirstOrDefault();
+                return valueChild?.ParseCodeableConceptInternal();
+            }
 
             Coding parseQuantity()
             {
@@ -62,7 +71,8 @@ namespace Hl7.Fhir.ElementModel
                 newCoding.System = q.System ?? "http://unitsofmeasure.org";
                 return newCoding;
             }
-            Element parseExtension()
+            
+            Element? parseExtension()
             {
                 var valueChild = instance.Children("value").FirstOrDefault();
                 return valueChild?.ParseBindableInternal();
@@ -71,7 +81,7 @@ namespace Hl7.Fhir.ElementModel
         #endregion
 
         #region ParseQuantity
-        public static Model.Quantity ParseQuantity(this ITypedElement instance)
+        public static Quantity ParseQuantity(this ITypedElement instance)
 #pragma warning disable CS0618 // Type or member is obsolete
             => ParseQuantityInternal(instance);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -169,8 +179,10 @@ namespace Hl7.Fhir.ElementModel
         #endregion
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static string GetString<T>(this IEnumerable<T> instance) where T : IBaseElementNavigator<T>
+        public static string? GetString<T>(this IEnumerable<T> instance) where T : IBaseElementNavigator<T>
 #pragma warning restore CS0618 // Type or member is obsolete
             => instance.SingleOrDefault()?.Value as string;
     }
 }
+
+#nullable restore
