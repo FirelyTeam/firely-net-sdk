@@ -1,16 +1,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0</TargetFrameworks>
-		<LangVersion>11.0</LangVersion>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<LangVersion>12.0</LangVersion>
+		<EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<ContainsTests>true</ContainsTests>
-	</PropertyGroup>
-
-	<!-- General compiler settings -->
-	<PropertyGroup>
-		<LangVersion>11.0</LangVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
@@ -26,8 +22,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
-		<PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
-		<PackageReference Include="xunit" Version="2.6.5" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.2.0" />
+		<PackageReference Include="xunit" Version="2.6.6" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

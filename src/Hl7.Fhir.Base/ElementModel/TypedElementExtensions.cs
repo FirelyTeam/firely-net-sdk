@@ -9,6 +9,7 @@
 #nullable enable
 
 
+using EM=Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.ElementModel
         /// of the equation.</param>
         /// <returns><c>true</c> when the ITypedElements are equal, <c>false</c> otherwise.</returns>
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static bool IsExactlyEqualTo<T>(this T left, T right, bool ignoreOrder = false) where T : IBaseElementNavigator<T>
+        public static bool IsExactlyEqualTo<T>(this T? left, T? right, bool ignoreOrder = false) where T : IBaseElementNavigator<T>
 #pragma warning restore CS0618 // Type or member is obsolete
         {
             if (left == null && right == null) return true;
@@ -71,19 +72,22 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="val1"></param>
         /// <param name="val2"></param>
         /// <returns></returns>
-        public static bool ValueEquality<T1, T2>(T1 val1, T2 val2)
+        public static bool ValueEquality<T1, T2>(T1? val1, T2? val2)
         {
             // Compare the value
-            if (val1 == null && val2 == null) return true;
-            if (val1 == null || val2 == null) return false;
+            if (val1 is null && val2 is null) return true;
+            if (val1 is null || val2 is null) return false;
 
             try
             {
-                // convert val2 to type of val1.
-                T1 boxed2 = (T1)Convert.ChangeType(val2, typeof(T1));
-
-                // compare now that same type.
-                return val1.Equals(boxed2);
+                if (EM.Any.TryConvert(val1, out var lAny) && EM.Any.TryConvert(val2, out var rAny))
+                {
+                    return lAny is EM.ICqlEquatable cqle && cqle.IsEqualTo(rAny!) == true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {

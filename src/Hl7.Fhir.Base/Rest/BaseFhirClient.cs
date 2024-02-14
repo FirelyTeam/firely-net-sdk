@@ -29,6 +29,7 @@ namespace Hl7.Fhir.Rest
     {
         internal readonly ModelInspector Inspector;
         private readonly IFhirSerializationEngine _serializationEngine;
+        private readonly Lazy<List<HttpStatusCode>> _200responses = new(() => Enum.GetValues(typeof(HttpStatusCode)).Cast<HttpStatusCode>().Where(n => (int)n > 199 && (int)n < 300).ToList());
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -914,7 +915,8 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK, ct);
+            //operation responses are expected to return 2xx codes.
+            return executeAsync<Resource>(tx, _200responses.Value, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
@@ -929,7 +931,8 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK, ct);
+            //operation responses are expected to return 2xx codes.
+            return executeAsync<Resource>(tx, _200responses.Value, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
@@ -944,7 +947,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).ProcessMessage(bundle, async, responseUrl).ToBundle();
 
-            return executeAsync<Bundle>(tx, new [] {HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NoContent}, ct);
+            return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NoContent }, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
@@ -973,7 +976,8 @@ namespace Hl7.Fhir.Rest
             else
                 tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted }, ct);
+            //operation responses are expected to return 2xx codes.
+            return executeAsync<Resource>(tx, _200responses.Value, ct);
         }
 
         private Resource? internalOperation(string operationName, string? type = null, string? id = null,

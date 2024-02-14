@@ -1,3 +1,6 @@
 ## Intro:
-Hotfix release.
-This release solves a race condition that occurred when expanding ValueSets using the LocalTerminologyService.
+
+Highlights of this new release:
+- Added support for .NET 8.0
+- Moved CodeableReference to Hl7.Fhir.Base
+- Thanks @GinoCanessa for your PR on the type mapping fix in the JSON Deserializer.
