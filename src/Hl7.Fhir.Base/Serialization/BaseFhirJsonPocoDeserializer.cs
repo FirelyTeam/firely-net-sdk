@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Serialization
                 // Note that repeating simple elements (like Extension.url) do not currently exist in the FHIR serialization
                 if (propertyMapping.IsCollection)
                 {
-                    var l = (IList)existingValue;
+                    var l = (IList)existingValue!;
                     // if the list is already populated, a property with an identical key was encountered earlier
                     if (l.Count > 0)
                     {
