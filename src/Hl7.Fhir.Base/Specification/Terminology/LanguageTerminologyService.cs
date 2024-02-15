@@ -5,13 +5,12 @@ using System.Text.RegularExpressions;
 namespace Hl7.Fhir.Specification.Terminology
 {
     /// <summary>
-    /// Checks if codes are valid currency types 
+    /// Checks if codes are valid language types
     /// </summary>
-    public sealed class LanguageTerminologyService : CodeSystemTerminologyService
+    public class LanguageTerminologyService : CodeSystemTerminologyService
     {
         private const string LANGUAGE_SYSTEM = "urn:ietf:bcp:47";
         public const string LANGUAGE_VALUESET = "http://hl7.org/fhir/ValueSet/all-languages";
-
 
         public LanguageTerminologyService() : base("language", LANGUAGE_SYSTEM, [LANGUAGE_VALUESET])
         {

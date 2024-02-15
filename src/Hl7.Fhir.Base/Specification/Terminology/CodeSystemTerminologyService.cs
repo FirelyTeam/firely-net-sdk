@@ -15,12 +15,18 @@ namespace Hl7.Fhir.Specification.Terminology
     /// <summary>
     /// Base class for checking Code terminology
     /// </summary>
-    abstract public class CodeSystemTerminologyService : ITerminologyService
+    public abstract class CodeSystemTerminologyService : ITerminologyService
     {
         private readonly string _terminologyType;
         private readonly string _codeSystem;
         private readonly string[] _codeValueSets;
 
+        /// <summary>
+        /// Base class for checking Code terminology.
+        /// </summary>
+        /// <param name="terminologyType">String representation of the code type which is being checked. Exclusively used for error messages</param>
+        /// <param name="codeSystem">Name of the specification defining the members of the value set</param>
+        /// <param name="codeValueSets">uri's of the definitions of the code system. This can be multiple, if a FHIR version has changed this at some point.</param>
         protected CodeSystemTerminologyService(string terminologyType, string codeSystem, string[] codeValueSets)
         {
             _terminologyType = terminologyType;
