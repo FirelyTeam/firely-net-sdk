@@ -11,3 +11,13 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "Moq"
+      - dependency-name: "xunit"
+        update-types: ["version-update:semver-patch"]
+      - dependency-name: "xunit.runner.visualstudio"
+        update-types: ["version-update:semver-patch"]
+      - dependency-name: Microsoft.NET.Test.Sdk
+        update-types: ["version-update:semver-patch"]
+      - dependency-name: MSTest.TestAdapter
+        update-types: ["version-update:semver-patch"]
+      - dependency-name: MSTest.TestFramework
+        update-types: ["version-update:semver-patch"]
