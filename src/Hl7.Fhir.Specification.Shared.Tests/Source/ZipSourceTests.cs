@@ -1,9 +1,13 @@
 ﻿using FluentAssertions;
+using FluentAssertions.Extensions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Specification.Tests.Source
 {
@@ -30,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
         {
             var zip = unpackTestData(new DirectorySourceSettings { IncludeSubDirectories = false });
             var summaries = zip.ListSummaries();
-            summaries.First().Origin.StartsWith(zip.ExtractPath);
+            summaries.First().Origin.StartsWith(zip.ExtractPath).Should().BeTrue();
 
             Assert.IsNotNull(summaries, "Collection of summaries should not be null");
             Assert.AreEqual(1, summaries.Count(), "In the zipfile there is 1 resource in the root folder.");
@@ -51,6 +55,35 @@ namespace Hl7.Fhir.Specification.Tests.Source
             var zip = new ZipSource(zipfile, extractDir, new DirectorySourceSettings { IncludeSubDirectories = false });
             var summaries = zip.ListSummaries();
             summaries.First().Origin.Should().StartWith(extractDir);
+        }
+
+        [TestMethod]
+        public void TestConcurrentUnpackAttempts()
+        {
+            var zipFile = Path.Combine("TestData", "ResourcesInSubfolder.zip");
+            var extractDir  = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            var startingSecond = (System.DateTime.UtcNow.Second) % 60;
+            Console.Error.WriteLine(extractDir);
+            
+            var tasks = Enumerable.Range(0, 10).Select(i => new Task(() => _doUnpackAttempt(startingSecond, zipFile, extractDir)));
+            
+            Assert.IsTrue(Task.WaitAll(tasks.ToArray(), 5000)); 
+        }
+
+        private static bool _canStart(int seconds)
+        {
+            return System.DateTime.UtcNow.Second >= seconds;
+        }
+
+        private static void _doUnpackAttempt(int seconds, string zipFile, string extractDir)
+        {
+            var zip = new ZipSource(zipFile, extractDir,
+                            new DirectorySourceSettings() { IncludeSubDirectories = false });
+            
+            while (!_canStart(seconds)) {}
+
+            var summaries = zip.ListSummaries();
+            Console.Error.WriteLine(summaries);
         }
     }
 }

@@ -8,6 +8,7 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -70,7 +71,8 @@ namespace Hl7.Fhir.Specification.Source
             // Sometimes unzipping fails after creating the directory, try to fix that by
             // checking if there are any files at all.
             var dirIsEmpty = !dir.EnumerateFileSystemInfos().Any();
-            if (dirIsEmpty) return false;
+            var dirContents = dir.EnumerateFileSystemInfos();
+            Console.Error.WriteLine(dirIsEmpty);
 
             var currentZipFileTime = File.GetLastWriteTimeUtc(ZipPath);
 
