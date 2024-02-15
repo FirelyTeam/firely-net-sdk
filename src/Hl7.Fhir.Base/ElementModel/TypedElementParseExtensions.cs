@@ -34,12 +34,14 @@ namespace Hl7.Fhir.ElementModel
         ///   'Extension' => depends on value[x]
         ///   'string' => code
         ///   'uri' => code
+        ///   'CodeableReference' => CodeableConcept if 'concept' is present, otherwise null
         /// </remarks>
         public static Element? ParseBindable(this ITypedElement instance)
 #pragma warning disable CS0618 // Type or member is obsolete
             => instance.ParseBindableInternal();
 #pragma warning restore CS0618 // Type or member is obsolete
 
+        /// <inheritdoc cref="ParseBindable"/>
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
         public static Element? ParseBindableInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
