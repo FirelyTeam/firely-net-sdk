@@ -156,10 +156,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true;
             if (file.Contains("valuesets"))
                 return true;
+            // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.20
             if (file.Contains("xver-paths-4.6") || file.Contains("hl7.fhir.r5.corexml.manifest") ||
                 file.Contains("hl7.fhir.r5.expansions.manifest") || file.Contains("hl7.fhir.r5.core.manifest") ||
                 file.Contains("uml"))
                 return true; // non-fhir-files in the R5 examples.zip
+#if R4
+            if (file.Contains("v2-tables"))
+                return true; // this file is known to have a single dud valueset - have reported on Zulip
+#endif
 #if R5
             // These examples contain resourceType which cannot be handled by our serializers
             if (file.Contains("subscription-example")) return true;
