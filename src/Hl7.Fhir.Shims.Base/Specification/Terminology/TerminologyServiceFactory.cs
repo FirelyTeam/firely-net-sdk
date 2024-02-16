@@ -31,8 +31,13 @@ namespace Hl7.Fhir.Specification.Terminology
                     MimeTypeTerminologyService.MIMETYPE_VALUESET_STU3
 #else
                     MimeTypeTerminologyService.MIMETYPE_VALUESET_R4_AND_UP
-#endif        
+#endif       
                 }
+            };
+
+            var languageRoutingSettings = new TerminologyServiceRoutingSettings(new LanguageTerminologyService())
+            {
+                PreferredValueSets = [LanguageTerminologyService.LANGUAGE_VALUESET]
             };
 
             var localTermRoutingSettings = new TerminologyServiceRoutingSettings(new LocalTerminologyService(coreResourceResolver, expanderSettings))
