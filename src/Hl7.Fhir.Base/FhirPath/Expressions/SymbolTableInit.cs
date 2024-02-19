@@ -60,7 +60,8 @@ namespace Hl7.FhirPath.Expressions
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             t.Add("not", (IEnumerable<ITypedElement> f) => f.Not(), doNullProp: true);
-            t.Add("builtin.children", (IEnumerable<ITypedElement> f, string a) => f.Navigate(a), doNullProp: true);
+            // t.Add("builtin.children", (IEnumerable<ITypedElement> f, string a) => f.Navigate(a), doNullProp: true);
+            t.AddBuiltinChildren();
 
             t.Add("children", (IEnumerable<ITypedElement> f) => f.Children(), doNullProp: true);
             t.Add("descendants", (IEnumerable<ITypedElement> f) => f.Descendants(), doNullProp: true);
@@ -222,6 +223,23 @@ namespace Hl7.FhirPath.Expressions
             return t;
         }
 
+
+        internal static void AddBuiltinChildren(this SymbolTable table)
+        {
+            table.Add(new CallSignature("builtin.children",
+                typeof(IEnumerable<ITypedElement>),
+                typeof(IEnumerable<ITypedElement>),
+                typeof(string)), (
+                ctx, invokees) =>
+            {
+                var iks = invokees.ToArray();
+                var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
+                var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
+                var result= focus.Navigate(name).ToList();
+
+                return result;
+            });
+        }
 
         private static string getCoreExtensionUrl(string id)
         {
