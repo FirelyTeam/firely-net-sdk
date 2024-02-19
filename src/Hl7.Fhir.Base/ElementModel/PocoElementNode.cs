@@ -80,14 +80,15 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
-        private static (ElementValue val, int ix)[] returnElements(string name, object element)
+        private (ElementValue val, int ix)[] returnElements(string name, object element)
         {
-            return element switch
+            return (element, Current, name) switch
             {
-                Base @base => new[] { (new ElementValue(name, @base), 0) },
-                IEnumerable<Base> bases => bases.Select((e, i) => (new ElementValue(name, e), i)).ToArray(),
+                (Base @base, _, _)  => new[] { (new ElementValue(name, @base), 0) },
+                (IEnumerable<Base> bases, _, _)  => bases.Select((e, i) => (new ElementValue(name, e), i)).ToArray(),
+                (string s, Extension, "url")  => new[]{(new ElementValue(name, new FhirUri(s)), 0)},
+                (string s, Element, "id")  => new[]{(new ElementValue(name, new FhirString(s)), 0)},
                 _ => Array.Empty<(ElementValue, int)>(),
-                // _ => throw new ArgumentException($"element '{location}.{name}' is of type '{element.GetType().FullName}' not a Base or IEnumerable<Base>", nameof(element))
             };
         }
 

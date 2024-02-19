@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
             switch (key)
             {
                 case "id":
-                    value = ElementId is not null ? new FhirString(ElementId) : null;
+                    value = ElementId;
                     return ElementId is not null;
                 case "extension":
                     value = Extension;
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
         protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
         {
             foreach (var kvp in base.GetElementPairs()) yield return kvp;
-            if (ElementId is not null) yield return new KeyValuePair<string, object>("id", new FhirString(ElementId));
+            if (ElementId is not null) yield return new KeyValuePair<string, object>("id", ElementId);
             if (Extension?.Any() == true) yield return new KeyValuePair<string, object>("extension", Extension);
         }
     }

@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
             switch (key)
             {
                 case "url":
-                    value = Url is not null ? new FhirUri(Url) : null;
+                    value = Url;
                     return Url is not null;
                 case "value":
                     value = Value;
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
 
         protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
         {
-            if (Url is not null) yield return new KeyValuePair<string, object>("url", new FhirUri(Url));
+            if (Url is not null) yield return new KeyValuePair<string, object>("url", Url);
             if (Value is not null) yield return new KeyValuePair<string, object>("value", Value);
             foreach (var kvp in base.GetElementPairs()) yield return kvp;
         }
