@@ -423,16 +423,21 @@ namespace Hl7.Fhir.Core.Tests.Rest
             var fhirClient1 = new BaseFhirClient(
                 new Uri("http://example.org"), TESTINSPECTOR, new FhirClientSettings { SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR) }
             );
+            
+            MethodInfo? serializationEngineField = fhirClient1.GetType().GetMethod("getSerializationEngine", BindingFlags.NonPublic | BindingFlags.Instance);
+            serializationEngineField.Should().NotBeNull();
 
-            (fhirClient1.Settings.SerializationEngine is PocoSerializationEngine).Should().BeTrue();
+            (serializationEngineField!.Invoke(fhirClient1, []) is PocoSerializationEngine).Should().BeTrue();
 
             var fhirClient2 = new BaseFhirClient(
                 new Uri("http://example.org"), TESTINSPECTOR)
             ;
+            
+            (serializationEngineField!.Invoke(fhirClient2, []) is ElementModelSerializationEngine).Should().BeTrue();
+            
             fhirClient2.Settings.SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
-
-            // Fail, serialization engine is ElementModelSerializationEngine here
-            (fhirClient2.Settings.SerializationEngine is PocoSerializationEngine).Should().BeTrue();
+            
+            (serializationEngineField!.Invoke(fhirClient2, []) is PocoSerializationEngine).Should().BeTrue();
         }
 
 
