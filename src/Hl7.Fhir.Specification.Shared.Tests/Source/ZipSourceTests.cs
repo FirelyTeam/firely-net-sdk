@@ -58,32 +58,14 @@ namespace Hl7.Fhir.Specification.Tests.Source
         }
 
         [TestMethod]
-        public void TestConcurrentUnpackAttempts()
+        // If this test fails, the specification might have changed. This filename is hardcoded into the validation of a successful ZIP unpack
+        // (firely-net-sdk/src/Hl7.Fhir.Base/Specification/Source/ZipCacher.cs:74)
+        public void TestFilePrescence()
         {
-            var zipFile = Path.Combine("TestData", "ResourcesInSubfolder.zip");
-            var extractDir  = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            var startingSecond = (System.DateTime.UtcNow.Second) % 60;
-            Console.Error.WriteLine(extractDir);
-            
-            var tasks = Enumerable.Range(0, 10).Select(i => new Task(() => _doUnpackAttempt(startingSecond, zipFile, extractDir)));
-            
-            Assert.IsTrue(Task.WaitAll(tasks.ToArray(), 5000)); 
-        }
-
-        private static bool _canStart(int seconds)
-        {
-            return System.DateTime.UtcNow.Second >= seconds;
-        }
-
-        private static void _doUnpackAttempt(int seconds, string zipFile, string extractDir)
-        {
-            var zip = new ZipSource(zipFile, extractDir,
-                            new DirectorySourceSettings() { IncludeSubDirectories = false });
-            
-            while (!_canStart(seconds)) {}
-
-            var summaries = zip.ListSummaries();
-            Console.Error.WriteLine(summaries);
+            var zip = ZipSource.CreateValidationSource();
+            zip.ListSummaries(); // make sure it is unpacked, don't need the return value
+            // if extractpath is null, something went seriously wrong
+            File.Exists(Path.Combine(zip.ExtractPath!, "profiles-types.xml")).Should().BeTrue();
         }
     }
 }
