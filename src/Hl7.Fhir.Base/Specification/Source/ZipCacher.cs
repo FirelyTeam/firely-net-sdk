@@ -68,11 +68,9 @@ namespace Hl7.Fhir.Specification.Source
 
             if (!dir.Exists) return false;
 
-            // zip unpacking fails sometimes
-            // if this cache is supposed to contain the specification, it should have at least a bunch of files in there
-            // (notably, we test for profiles-types.xml)
+            // zip unpacking fails sometimes (issue #2164). if this cache is supposed to contain the specification, it should have at least a bunch of files in there (notably, we test for profiles-types.xml)
             var isSpecificationZip = ZipPath.EndsWith(Path.Combine("specification.zip"));
-            var doesNotHaveCriticalFiles = !File.Exists(Path.Combine(CachePath, "profiles-types.xml"));
+            var doesNotHaveCriticalFiles = !File.Exists(Path.Combine(CachePath, "specification", "profiles-types.xml"));
             if (isSpecificationZip && doesNotHaveCriticalFiles) return false;
             
             var currentZipFileTime = File.GetLastWriteTimeUtc(ZipPath);

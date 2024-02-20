@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
         public void TestFilePrescence()
         {
             var zip = ZipSource.CreateValidationSource();
-            zip.ListSummaries(); // make sure it is unpacked, don't need the return value
+            zip.ListSummaries(); // make sure the zip is unpacked, we don't need the return value
             // if extractpath is null, something went seriously wrong
             File.Exists(Path.Combine(zip.ExtractPath!, "profiles-types.xml")).Should().BeTrue();
         }
