@@ -1001,6 +1001,34 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 assertErrors(dfe.Exceptions, expectedErrs);
             }
         }
+
+        [TestMethod]
+        public void TestDuplicateChoiceTypeEntries()
+        {
+            var scenario = """
+                           {
+                             "resourceType": "Patient",
+                             "deceasedBoolean": true,
+                             "deceasedDateTime": "2022"
+                           }
+                           """;
+            
+            string expected = ERR.DUPLICATE_PROPERTY_CODE;
+
+            var jsonSerializerOptions = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+
+            try
+            {
+                _ = JsonSerializer.Deserialize<TestPatient>(scenario, jsonSerializerOptions);
+                Assert.Fail("Should have encountered errors.");
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                assertErrors(dfe.Exceptions, [expected]);
+            }
+            
+            
+        }
     }
 }
 #nullable restore
