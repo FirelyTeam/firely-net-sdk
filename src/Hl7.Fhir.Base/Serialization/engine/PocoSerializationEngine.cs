@@ -12,8 +12,11 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -21,9 +24,9 @@ namespace Hl7.Fhir.Serialization
     /// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
     /// new Poco-based parser and serializer, initialized with the default settings.
     /// </summary>
-    internal class PocoSerializationEngine : IFhirSerializationEngine
+    internal class PocoSerializationEngine : IFhirSerializationEngine, IFhirStreamingSerializationEngine
     {
-        private delegate bool TryDeserializer(string data, out Resource? instance, out IEnumerable<CodedException> issues);
+        private delegate (Resource?, IEnumerable<CodedException>) TryDeserializer();
 
         private readonly ModelInspector _inspector;
         private readonly Predicate<CodedException> _ignoreFilter;
@@ -53,19 +56,54 @@ namespace Hl7.Fhir.Serialization
         public Resource DeserializeFromXml(string data)
         {
             var deserializer = new BaseFhirXmlPocoDeserializer(_inspector);
-            return deserializeAndIgnoreErrors(deserializer.TryDeserializeResource, data);
+            return deserializeAndIgnoreErrors(() =>
+            { 
+                _ = deserializer.TryDeserializeResource(data, out var instance, out var issues);
+                return (instance, issues);
+            });
+        }
+
+        /// <inheritdoc />
+        public Resource DeserializeFromXml(XmlReader reader)
+        {
+            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector);
+            return deserializeAndIgnoreErrors(() =>
+            { 
+                _ = deserializer.TryDeserializeResource(reader, out var instance, out var issues);
+                return (instance, issues);
+            });
         }
 
         /// <inheritdoc />
         public Resource DeserializeFromJson(string data)
         {
+            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector);
+            return deserializeAndIgnoreErrors(() =>
+            { 
+                _ = deserializer.TryDeserializeResource(data, out var instance, out var issues);
+                return (instance, issues);
+            });
+        }
+        
+        /// <inheritdoc />
+        public Resource DeserializeFromJson(Utf8JsonReader reader)
+        {
             var deserializer = new BaseFhirJsonPocoDeserializer(_inspector);
-            return deserializeAndIgnoreErrors(deserializer.TryDeserializeResource, data);
+            return deserializeAndIgnoreErrors(deserializer, reader);
         }
 
-        private Resource deserializeAndIgnoreErrors(TryDeserializer deserializer, string data)
+        private Resource deserializeAndIgnoreErrors(TryDeserializer deserializer)
         {
-            bool success = deserializer(data, out var instance, out var issues);
+            var (instance, issues) = deserializer();
+            var relevantIssues = issues.Where(i => !_ignoreFilter(i)).ToList();
+
+            return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
+        }
+        
+        // overload necessary since ref structs cannot be captured in the delegate
+        private Resource deserializeAndIgnoreErrors(BaseFhirJsonPocoDeserializer deserializer, Utf8JsonReader reader)
+        {
+            _ = deserializer.TryDeserializeResource(reader, out var instance, out var issues);
             var relevantIssues = issues.Where(i => !_ignoreFilter(i)).ToList();
 
             return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
