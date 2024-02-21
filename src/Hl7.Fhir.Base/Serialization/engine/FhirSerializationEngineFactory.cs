@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Serialization
         /// and just continue parsing. Note that this may mean data loss.
         /// </summary>
         public static IFhirSerializationEngine Ostrich(ModelInspector inspector) =>
-            new PocoSerializationEngine(inspector, _ => true);
+            new PocoSerializationEngine(inspector, _ => true, new FhirJsonPocoDeserializerSettings(){Validator = null}, new FhirXmlPocoDeserializerSettings(){Validator = null});
 
 
         private static bool isRecoverableIssue(CodedException ce) =>
