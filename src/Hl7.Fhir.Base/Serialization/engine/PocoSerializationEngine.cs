@@ -30,32 +30,46 @@ namespace Hl7.Fhir.Serialization
 
         private readonly ModelInspector _inspector;
         private readonly Predicate<CodedException> _ignoreFilter;
-      
+        private readonly FhirJsonPocoDeserializerSettings _jsonDeserialzerSettings;
+        private readonly FhirJsonPocoSerializerSettings _jsonSerializerSettings;
+        private readonly FhirXmlPocoDeserializerSettings _xmlSettings;
+        
         /// <summary>
         /// Creates an implementation of <see cref="IFhirSerializationEngine"/> that uses the newer POCO (de)serializers.
         /// </summary>
         /// <param name="inspector">Reflection data of the POCO model to use.</param>
         /// <param name="ignoreFilter">A predicate that returns true for issues that should not be reported.</param>
-        public PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException> ignoreFilter)
+        public PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException> ignoreFilter) : this(inspector, ignoreFilter, null)
+        {
+            //TODO maybe we can remove this?
+        }
+
+        public PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null,
+            FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null,
+            FhirJsonPocoSerializerSettings? jsonSerializerSettings = null,
+            FhirXmlPocoDeserializerSettings? xmlSettings = null)
         {
             _inspector = inspector;
-            _ignoreFilter = ignoreFilter;
+            _ignoreFilter = ignoreFilter ?? (_ => false);
+            _jsonDeserialzerSettings = jsonDeserializerSettings ?? new();
+            _jsonSerializerSettings = jsonSerializerSettings ?? new();
+            _xmlSettings = xmlSettings ?? new();
         }
+
 
         /// <summary>
         /// Creates an implementation of <see cref="IFhirSerializationEngine"/> that uses the newer POCO (de)serializers.
         /// </summary>
         /// <param name="inspector">Reflection data of the POCO model to use.</param>
-        public PocoSerializationEngine(ModelInspector inspector)
+        public PocoSerializationEngine(ModelInspector inspector) : this(inspector, null, null)
         {
-            _inspector = inspector;
-            _ignoreFilter = _ => false;
+            // TODO maybe we can remove this?
         }
 
         /// <inheritdoc />
         public Resource DeserializeFromXml(string data)
         {
-            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector);
+            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector, _xmlSettings);
             return deserializeAndIgnoreErrors(() =>
             { 
                 _ = deserializer.TryDeserializeResource(data, out var instance, out var issues);
@@ -66,7 +80,7 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc />
         public Resource DeserializeFromXml(XmlReader reader)
         {
-            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector);
+            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector, _xmlSettings);
             return deserializeAndIgnoreErrors(() =>
             { 
                 _ = deserializer.TryDeserializeResource(reader, out var instance, out var issues);
@@ -77,7 +91,7 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc />
         public Resource DeserializeFromJson(string data)
         {
-            var deserializer = new BaseFhirXmlPocoDeserializer(_inspector);
+            var deserializer = new BaseFhirJsonPocoDeserializer(_inspector, _jsonDeserialzerSettings);
             return deserializeAndIgnoreErrors(() =>
             { 
                 _ = deserializer.TryDeserializeResource(data, out var instance, out var issues);
@@ -88,7 +102,7 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc />
         public Resource DeserializeFromJson(Utf8JsonReader reader)
         {
-            var deserializer = new BaseFhirJsonPocoDeserializer(_inspector);
+            var deserializer = new BaseFhirJsonPocoDeserializer(_inspector, _jsonDeserialzerSettings);
             return deserializeAndIgnoreErrors(deserializer, reader);
         }
 
@@ -111,7 +125,7 @@ namespace Hl7.Fhir.Serialization
 
         public string SerializeToXml(Resource instance) => new BaseFhirXmlPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
 
-        public string SerializeToJson(Resource instance) => new BaseFhirJsonPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
+        public string SerializeToJson(Resource instance) => new BaseFhirJsonPocoSerializer(_inspector.FhirRelease, _jsonSerializerSettings).SerializeToString(instance);
     }
 }
 

@@ -12,6 +12,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
+using System;
 using System.Linq;
 
 namespace Hl7.Fhir.Serialization
@@ -144,8 +145,13 @@ namespace Hl7.Fhir.Serialization
         public static IFhirSerializationEngine Ostrich(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, _ => true);
 
-        public static IFhirSerializationEngine Custom(ModelInspector inspector, string[] ignoreList) =>
-            new PocoSerializationEngine(inspector, (ce => isInIgnoreList(ce, ignoreList)));
+        public static IFhirSerializationEngine Custom(ModelInspector inspector, string[]? ignoreList = null,
+            FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null,
+            FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSerializerSettings = null)
+        {
+            Predicate<CodedException>? pred = (ignoreList is not null) ? (ce => isInIgnoreList(ce, ignoreList)) : null;
+            return new PocoSerializationEngine(inspector, pred, jsonDeserializerSettings, jsonSerializerSettings, xmlSerializerSettings);
+        }
 
         private static bool isInIgnoreList(CodedException ce, string[] ignoreList) =>
             ignoreList.Contains(ce.ErrorCode);
