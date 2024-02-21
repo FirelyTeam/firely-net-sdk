@@ -1001,6 +1001,30 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 assertErrors(dfe.Exceptions, expectedErrs);
             }
         }
+
+        [TestMethod]
+        public void TestIgnoreErrors()
+        {
+            var json = """
+                       {
+                        "resourceType" : "Patient",
+                        "extension" : [{
+                        "url" : "http://nu.nl",
+                        "url" : "http://nu.nl"
+                        }]
+                        }
+                       """;
+
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            try
+            {
+                _ = JsonSerializer.Deserialize<TestPatient>(json, options);
+            }
+            catch (DeserializationFailedException)
+            {
+                Assert.Fail("This error should be ignored but was not");
+            }
+        }
     }
 }
 #nullable restore

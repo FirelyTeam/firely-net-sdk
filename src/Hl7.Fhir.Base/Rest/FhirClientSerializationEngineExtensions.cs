@@ -94,6 +94,12 @@ namespace Hl7.Fhir.Rest
             return client;
         }
 
+        public static BaseFhirClient WithCustomIgnoreListSerializer(this BaseFhirClient client, string[] ignoreList)
+        {
+            client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, ignoreList);
+            return client;
+        }
+
         /// <summary>
         /// Configures the FhirClient to use the legacy serializer, configured to ignore all errors.
         /// NB: This may cause data loss.
