@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="assembly">The assembly containing classes to be used for deserialization.</param>
         /// <param name="serializerSettings">The optional features used during serialization.</param>
         /// <param name="deserializerSettings">The optional features used during deserialization.</param>
-        [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngine to create (de)serializers")]
+        [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngineFactory to create (de)serializers")]
         public FhirJsonConverter(
             Assembly assembly,
             FhirJsonPocoSerializerSettings serializerSettings,
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="inspector">The <see cref="ModelInspector" /> containing classes to be used for deserialization.</param>
         /// <param name="serializerSettings">The optional features used during serialization.</param>
         /// <param name="deserializerSettings">The optional features used during deserialization.</param>
-        [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngine to create (de)serializers")]
+        [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngineFactory to create (de)serializers")]
         public FhirJsonConverter(
             ModelInspector inspector,
             FhirJsonPocoSerializerSettings serializerSettings,
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Since the standard serializer/deserializer will allow you to override its behaviour to produce
         /// custom behaviour, this constructor will allow the developer to use such custom serializers/deserializers instead
         /// of the defaults.</remarks>
-        [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngine to create (de)serializers")]
+        [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngineFactory to create (de)serializers")]
         public FhirJsonConverter(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonPocoSerializer serializer)
         {
             _deserializer = deserializer;
