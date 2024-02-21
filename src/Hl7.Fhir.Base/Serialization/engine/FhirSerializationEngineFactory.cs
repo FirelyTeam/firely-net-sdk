@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="inspector"></param>
         /// <returns></returns>
-        public static IFhirSerializationEngine Strict(ModelInspector inspector) => new PocoSerializationEngine(inspector);
+        public static IFhirStreamingSerializationEngine Strict(ModelInspector inspector) => new PocoSerializationEngine(inspector);
 
         /// <summary>
         /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to ignore recoverable errors, 
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="inspector"></param>
         /// <returns></returns>
-        public static IFhirSerializationEngine Recoverable(ModelInspector inspector) =>
+        public static IFhirStreamingSerializationEngine Recoverable(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, isRecoverableIssue);
 
         /// <summary>
@@ -135,17 +135,17 @@ namespace Hl7.Fhir.Serialization
         /// Note that this parser may drop data that cannot be captured in the POCO model, such as new elements in future
         /// FHIR releases.
         /// </summary>
-        public static IFhirSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
+        public static IFhirStreamingSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, isAllowedForBackwardsCompatibility);
 
         /// <summary>
         /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors
         /// and just continue parsing. Note that this may mean data loss.
         /// </summary>
-        public static IFhirSerializationEngine Ostrich(ModelInspector inspector) =>
+        public static IFhirStreamingSerializationEngine Ostrich(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, _ => true);
 
-        public static IFhirSerializationEngine Custom(ModelInspector inspector, string[]? ignoreList = null,
+        public static IFhirStreamingSerializationEngine Custom(ModelInspector inspector, string[]? ignoreList = null,
             FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null,
             FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSerializerSettings = null)
         {

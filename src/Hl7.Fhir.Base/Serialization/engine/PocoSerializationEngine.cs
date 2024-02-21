@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
     /// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
     /// new Poco-based parser and serializer, initialized with the default settings.
     /// </summary>
-    internal class PocoSerializationEngine : IFhirSerializationEngine, IFhirStreamingSerializationEngine
+    internal class PocoSerializationEngine : IFhirStreamingSerializationEngine
     {
         private delegate (Resource?, IEnumerable<CodedException>) TryDeserializer();
 
@@ -77,6 +77,8 @@ namespace Hl7.Fhir.Serialization
             });
         }
 
+        public Base DeserializeObjectFromJson(Type targetType, Utf8JsonReader reader) => throw new NotImplementedException();
+
         /// <inheritdoc />
         public Resource DeserializeFromXml(XmlReader reader)
         {
@@ -87,6 +89,8 @@ namespace Hl7.Fhir.Serialization
                 return (instance, issues);
             });
         }
+
+        public Base DeserializeElementFromXml(XmlReader reader) => throw new NotImplementedException();
 
         /// <inheritdoc />
         public Resource DeserializeFromJson(string data)

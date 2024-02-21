@@ -76,9 +76,7 @@ namespace Hl7.Fhir.Serialization
             FhirJsonPocoDeserializerSettings deserializerSettings)
         {
             var inspector = ModelInspector.ForAssembly(assembly);
-
-            _deserializer = new BaseFhirJsonPocoDeserializer(assembly, deserializerSettings);
-            _serializer = new BaseFhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
+            _engine = FhirSerializationEngineFactory.Custom(inspector, null, deserializerSettings, serializerSettings);
         }
 
         /// <summary>
@@ -94,8 +92,7 @@ namespace Hl7.Fhir.Serialization
             FhirJsonPocoSerializerSettings serializerSettings,
             FhirJsonPocoDeserializerSettings deserializerSettings)
         {
-            _deserializer = new BaseFhirJsonPocoDeserializer(inspector, deserializerSettings);
-            _serializer = new BaseFhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
+            _engine = FhirSerializationEngineFactory.Custom(inspector, null, deserializerSettings, serializerSettings);
         }
 
         /// <summary>
@@ -110,17 +107,15 @@ namespace Hl7.Fhir.Serialization
         [Obsolete("Deprecated in favor of Constructors which use the FhirSerializationEngineFactory to create (de)serializers")]
         public FhirJsonConverter(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonPocoSerializer serializer)
         {
-            _deserializer = deserializer;
-            _serializer = serializer;
+            throw new Exception("something actually calls this code?");
         }
 
         /// <summary>
         /// Determines whether the specified type can be converted.
         /// </summary>
         public override bool CanConvert(Type objectType) => typeof(F) == objectType;
-
-        private readonly BaseFhirJsonPocoDeserializer _deserializer;
-        private readonly BaseFhirJsonPocoSerializer _serializer;
+        
+        private readonly IFhirStreamingSerializationEngine _engine;
 
         /// <summary>
         /// The filter used to serialize a summary of the resource.
@@ -132,7 +127,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public override void Write(Utf8JsonWriter writer, F poco, JsonSerializerOptions options)
         {
-            _serializer.Serialize(poco, writer);
+            _engine.SerializeToJson((Resource)(Base)poco);
         }
 
         /// <summary>
@@ -141,8 +136,8 @@ namespace Hl7.Fhir.Serialization
         public override F Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             return typeof(Resource).IsAssignableFrom(typeToConvert)
-                ? (F)(Base)_deserializer.DeserializeResource(ref reader)
-                : (F)_deserializer.DeserializeObject(typeToConvert, ref reader);
+                ? (F)(Base)_engine.DeserializeFromJson(reader)
+                : (F)_engine.Deser(typeToConvert, reader);
         }
     }
 }
