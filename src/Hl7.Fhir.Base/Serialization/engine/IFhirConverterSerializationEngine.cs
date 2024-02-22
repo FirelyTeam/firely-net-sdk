@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.Serialization;
 
-public interface IFhirStreamingSerializationEngine : IFhirSerializationEngine
+public interface IFhirConverterSerializationEngine : IFhirSerializationEngine
 {
     /// <summary>
     /// Deserializes a resource from a JSON reader
@@ -14,7 +14,7 @@ public interface IFhirStreamingSerializationEngine : IFhirSerializationEngine
     /// <returns>The parsed resource</returns>
     public Resource DeserializeFromJson(Utf8JsonReader reader);
 
-    public Base DeserializeObjectFromJson(Type targetType, Utf8JsonReader reader);
+    public Base DeserializeObjectFromJson(Type targetType, ref Utf8JsonReader reader);
     
     /// <summary>
     /// Deserializes a resource from an XML reader
@@ -23,5 +23,5 @@ public interface IFhirStreamingSerializationEngine : IFhirSerializationEngine
     /// <returns>The parsed resource</returns>
     public Resource DeserializeFromXml(XmlReader reader);
 
-    public Base DeserializeElementFromXml(XmlReader reader);
+    public Base DeserializeElementFromXml(Type targetType, XmlReader reader);
 }

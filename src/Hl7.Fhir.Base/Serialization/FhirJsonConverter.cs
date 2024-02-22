@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public override bool CanConvert(Type objectType) => typeof(F) == objectType;
         
-        private readonly IFhirStreamingSerializationEngine _engine;
+        private readonly IFhirConverterSerializationEngine _engine;
 
         /// <summary>
         /// The filter used to serialize a summary of the resource.
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Serialization
         {
             return typeof(Resource).IsAssignableFrom(typeToConvert)
                 ? (F)(Base)_engine.DeserializeFromJson(reader)
-                : (F)_engine.Deser(typeToConvert, reader);
+                : (F)_engine.DeserializeObjectFromJson(typeToConvert, ref reader);
         }
     }
 }
