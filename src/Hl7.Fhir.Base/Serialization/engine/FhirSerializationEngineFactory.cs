@@ -113,44 +113,68 @@ namespace Hl7.Fhir.Serialization
 
 
         /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to flag all parsing errors, 
+        /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> configured to flag all parsing errors, 
         /// which uses the new Poco-based parser and serializer.
         /// </summary>
         /// <param name="inspector"></param>
         /// <returns></returns>
-        public static IFhirConverterSerializationEngine Strict(ModelInspector inspector) => new PocoSerializationEngine(inspector);
+        public static IFhirExtendedSerializationEngine Strict(ModelInspector inspector) => new PocoSerializationEngine(inspector);
 
         /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to ignore recoverable errors, 
+        /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> configured to ignore recoverable errors, 
         /// which uses the new Poco-based parser and serializer.
         /// </summary>
         /// <param name="inspector"></param>
         /// <returns></returns>
-        public static IFhirConverterSerializationEngine Recoverable(ModelInspector inspector) =>
+        public static IFhirExtendedSerializationEngine Recoverable(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, isRecoverableIssue);
 
         /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the new Poco-based parser and 
+        /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> which uses the new Poco-based parser and 
         /// serializers and is configured to allow errors that could occur when reading data from newer releases of FHIR.
         /// Note that this parser may drop data that cannot be captured in the POCO model, such as new elements in future
         /// FHIR releases.
         /// </summary>
-        public static IFhirConverterSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
+        public static IFhirExtendedSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, isAllowedForBackwardsCompatibility);
 
         /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors
+        /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> configured to allow errors
         /// and just continue parsing. Note that this may mean data loss.
         /// </summary>
-        public static IFhirConverterSerializationEngine Ostrich(ModelInspector inspector) =>
+        public static IFhirExtendedSerializationEngine Ostrich(ModelInspector inspector) =>
             new PocoSerializationEngine(inspector, _ => true);
 
-        public static IFhirConverterSerializationEngine Custom(ModelInspector inspector, string[]? ignoreList = null,
+        /// <summary>
+        /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> which allows for manual configuration
+        /// of most behaviour. See parameters for more information.
+        /// </summary>
+        /// <param name="inspector"></param>
+        /// <param name="ignoreList">The list of errors to ignore.</param>
+        /// <param name="jsonDeserializerSettings">The settings to be used by the engine to deserialize JSON sources</param>
+        /// <param name="jsonSerializerSettings">The settings to be used by the engine to serialize resources to JSON</param>
+        /// <param name="xmlSerializerSettings">The settings to be used by the engine to deserialize XML sources</param>
+        /// <returns></returns>
+        public static IFhirExtendedSerializationEngine Custom(ModelInspector inspector, string[]? ignoreList = null,
             FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null,
             FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSerializerSettings = null)
         {
             Predicate<CodedException>? pred = (ignoreList is not null) ? (ce => isInIgnoreList(ce, ignoreList)) : null;
             return new PocoSerializationEngine(inspector, pred, jsonDeserializerSettings, jsonSerializerSettings, xmlSerializerSettings);
+        }
+
+        /// <summary>
+        /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> which allows for manual specification of the json serializer and deserializer.
+        /// The Xml parser in this serialization engine is completely default.
+        /// </summary>
+        /// <param name="jsonDeserializer">A preconfigured json deserializer</param>
+        /// <param name="jsonSerializer">A preconfigured json serializer</param>
+        /// <returns></returns>
+        [Obsolete("Please use FhirSerializationEngineFactory.Custom instead")]
+        public static IFhirExtendedSerializationEngine WithCustomJsonSerializer(BaseFhirJsonPocoDeserializer jsonDeserializer,
+            BaseFhirJsonPocoSerializer jsonSerializer)
+        {
+            return new PocoSerializationEngine(jsonDeserializer, jsonSerializer);
         }
 
         private static bool isInIgnoreList(CodedException ce, string[] ignoreList) =>

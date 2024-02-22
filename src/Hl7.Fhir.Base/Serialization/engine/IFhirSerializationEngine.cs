@@ -9,9 +9,7 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -22,6 +20,17 @@ namespace Hl7.Fhir.Serialization
     public interface IFhirSerializationEngine
     {
         /// <summary>
+        /// Serialize a FHIR Resource POCO into a string of Json.
+        /// </summary>
+        public string SerializeToJson(Resource instance);
+    
+        /// <summary>
+        /// Deserialize a Json string to a FHIR Resource POCO.
+        /// </summary>
+        /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Json format.</exception>
+        public Resource DeserializeFromJson(string data);
+        
+        /// <summary>
         /// Deserialize an XML string to a FHIR Resource POCO.
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Xml format.</exception>
@@ -29,20 +38,9 @@ namespace Hl7.Fhir.Serialization
         public Resource DeserializeFromXml(string data);
 
         /// <summary>
-        /// Deserialize a Json string to a FHIR Resource POCO.
-        /// </summary>
-        /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Json format.</exception>
-        public Resource DeserializeFromJson(string data);
-
-        /// <summary>
         /// Serialize a FHIR Resource POCO into a string of Xml.
         /// </summary>
         public string SerializeToXml(Resource instance);
-
-        /// <summary>
-        /// Serialize a FHIR Resource POCO into a string of Json.
-        /// </summary>
-        public string SerializeToJson(Resource instance);
     }
 }
 

@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
-        public void TestIgnoreErrors()
+        public void TestIgnoreCustomErrors()
         {
             var json = """
                        {
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                         }
                        """;
 
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).UsingMode(JsonSerializerOptionsExtensions.SerializerModes.Custom).Ignoring(["JSON129"]);
             try
             {
                 _ = JsonSerializer.Deserialize<TestPatient>(json, options);
