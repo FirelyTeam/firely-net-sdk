@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Serialization
         /// of most behaviour. See parameters for more information.
         /// </summary>
         /// <param name="inspector"></param>
-        /// <param name="ignoreFilter">TODO</param>
+        /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
         /// <param name="jsonDeserializerSettings">The settings to be used by the engine to deserialize JSON sources</param>
         /// <param name="jsonSerializerSettings">The settings to be used by the engine to serialize resources to JSON</param>
         /// <param name="xmlSerializerSettings">The settings to be used by the engine to deserialize XML sources</param>

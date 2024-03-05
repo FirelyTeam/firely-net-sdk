@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="assembly">The assembly containing classes to be used for deserialization.</param>
         /// <param name="serializerSettings">The settings to be used during serialization.</param>
         /// <param name="deserializerSettings">The settings to be used during deserialization.</param>
-        /// <param name="ignoreFilter">TODO</param>
+        /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
         public FhirJsonConverter(
             Assembly assembly,
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="serializerSettings">The optional features used during serialization.</param>
         /// <param name="deserializerSettings">The optional features used during deserialization.</param>
         /// <param name="mode">The optional mode the (de)serializer should employ</param>
-        /// <param name="ignoreFilter">TODO</param>
+        /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
         public FhirJsonConverter(
             ModelInspector inspector,
