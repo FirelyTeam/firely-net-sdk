@@ -82,7 +82,6 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, FhirJsonConverterFactory converter)
         {
-
             options.Converters.Add(converter);
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
@@ -107,10 +106,17 @@ namespace Hl7.Fhir.Serialization
             return options;
         }
 
+        public static JsonSerializerOptions Enforcing(this JsonSerializerOptions options, IEnumerable<string> toEnforce)
+        {
+            var factory = getCustomFactoryFromList(options.Converters);
+            factory.IgnoreFilter = factory.IgnoreFilter.And(toEnforce.ToPredicate().Negate());
+            return options;
+        }
+
         public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
         {
             var factory = getCustomFactoryFromList(options.Converters);
-            factory.IgnoreFilter = PredicateExtensions.Or(factory.IgnoreFilter, FilterPredicateExtensions.FromList(toIgnore));
+            factory.IgnoreFilter = factory.IgnoreFilter.Or(toIgnore.ToPredicate());
             return options;
         }
 
