@@ -12,8 +12,10 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -26,15 +28,6 @@ namespace Hl7.Fhir.Serialization
     /// </summary>
     public static class JsonSerializerOptionsExtensions
     {
-        public enum SerializerModes
-        {
-            Strict,
-            Recoverable,
-            BackwardsCompatible,
-            Ostrich,
-            Custom
-        }
-        
         /// <summary>
         /// Initialize the options to serialize using the JsonFhirConverter, producing compact output without whitespace.
         /// </summary>
@@ -70,7 +63,7 @@ namespace Hl7.Fhir.Serialization
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoDeserializerSettings deserializerSettings) =>
-        options.ForFhir(inspector, new(), deserializerSettings);
+            options.ForFhir(inspector, new(), deserializerSettings);
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(
@@ -107,17 +100,17 @@ namespace Hl7.Fhir.Serialization
             return options;
         }
 
-        public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, SerializerModes mode)
+        public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializerModes mode)
         {
             var factory = getCustomFactoryFromList(options.Converters);
-            factory.mode = mode;
+            factory.Mode = mode;
             return options;
         }
 
-        public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, string[] toIgnore)
+        public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
         {
             var factory = getCustomFactoryFromList(options.Converters);
-            factory._ignoreList = toIgnore;
+            factory.IgnoreFilter = PredicateExtensions.Or(factory.IgnoreFilter, FilterPredicateExtensions.FromList(toIgnore));
             return options;
         }
 
@@ -139,29 +132,30 @@ namespace Hl7.Fhir.Serialization
             return options;
         }
 
-        private static JsonConverter? findCustomConverter(IList<JsonConverter> converters)
+        private static JsonConverter? findCustomConverter(IEnumerable<JsonConverter> converters)
         {
-            foreach (JsonConverter jsonConverter in converters)
-            {
-                if (jsonConverter.CanConvert(typeof(Resource)))
-                {
-                    return jsonConverter;
-                }
-            }
-
-            return null;
+            return converters.FirstOrDefault(jsonConverter => jsonConverter.CanConvert(typeof(Resource)));
         }
 
-        private static FhirJsonConverterFactory getCustomFactoryFromList(IList<JsonConverter> converters)
+        private static FhirJsonConverterFactory getCustomFactoryFromList(IEnumerable<JsonConverter> converters)
         {
             var converter = findCustomConverter(converters);
             return converter switch
             {
                 FhirJsonConverterFactory factory => factory,
-                _ => throw new NotImplementedException(
+                _ => throw new NotSupportedException(
                     "Defining constraints for a FHIR serializer can only be done after it was created. Try calling .ForFhir first")
             };
         }
+    }
+
+    public enum DeserializerModes
+    {
+        Custom,
+        Strict,
+        Recoverable,
+        BackwardsCompatible,
+        Ostrich,
     }
 }
 

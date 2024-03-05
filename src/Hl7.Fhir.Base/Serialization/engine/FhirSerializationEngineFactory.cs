@@ -13,6 +13,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Serialization
@@ -127,7 +128,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="inspector"></param>
         /// <returns></returns>
         public static IFhirExtendedSerializationEngine Recoverable(ModelInspector inspector) =>
-            new PocoSerializationEngine(inspector, isRecoverableIssue);
+            new PocoSerializationEngine(inspector, FilterPredicateExtensions.IsRecoverableIssue);
 
         /// <summary>
         /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> which uses the new Poco-based parser and 
@@ -136,7 +137,7 @@ namespace Hl7.Fhir.Serialization
         /// FHIR releases.
         /// </summary>
         public static IFhirExtendedSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
-            new PocoSerializationEngine(inspector, isAllowedForBackwardsCompatibility);
+            new PocoSerializationEngine(inspector, FilterPredicateExtensions.IsBackwardsCompatibilityIssue);
 
         /// <summary>
         /// Create an implementation of <see cref="IFhirExtendedSerializationEngine"/> configured to allow errors
@@ -150,17 +151,16 @@ namespace Hl7.Fhir.Serialization
         /// of most behaviour. See parameters for more information.
         /// </summary>
         /// <param name="inspector"></param>
-        /// <param name="ignoreList">The list of errors to ignore.</param>
+        /// <param name="ignoreFilter">TODO</param>
         /// <param name="jsonDeserializerSettings">The settings to be used by the engine to deserialize JSON sources</param>
         /// <param name="jsonSerializerSettings">The settings to be used by the engine to serialize resources to JSON</param>
         /// <param name="xmlSerializerSettings">The settings to be used by the engine to deserialize XML sources</param>
         /// <returns></returns>
-        public static IFhirExtendedSerializationEngine Custom(ModelInspector inspector, string[]? ignoreList = null,
+        public static IFhirExtendedSerializationEngine Custom(ModelInspector inspector, Predicate<CodedException> ignoreFilter,
             FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null,
             FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSerializerSettings = null)
         {
-            Predicate<CodedException>? pred = (ignoreList is not null) ? (ce => isInIgnoreList(ce, ignoreList)) : null;
-            return new PocoSerializationEngine(inspector, pred, jsonDeserializerSettings, jsonSerializerSettings, xmlSerializerSettings);
+            return new PocoSerializationEngine(inspector, ignoreFilter, jsonDeserializerSettings, jsonSerializerSettings, xmlSerializerSettings);
         }
 
         /// <summary>
@@ -170,27 +170,11 @@ namespace Hl7.Fhir.Serialization
         /// <param name="jsonDeserializer">A preconfigured json deserializer</param>
         /// <param name="jsonSerializer">A preconfigured json serializer</param>
         /// <returns></returns>
-        [Obsolete("Please use FhirSerializationEngineFactory.Custom instead")]
-        public static IFhirExtendedSerializationEngine WithCustomJsonSerializer(BaseFhirJsonPocoDeserializer jsonDeserializer,
+        internal static IFhirExtendedSerializationEngine WithCustomJsonSerializers(BaseFhirJsonPocoDeserializer jsonDeserializer,
             BaseFhirJsonPocoSerializer jsonSerializer)
         {
             return new PocoSerializationEngine(jsonDeserializer, jsonSerializer);
         }
-
-        private static bool isInIgnoreList(CodedException ce, string[] ignoreList) =>
-            ignoreList.Contains(ce.ErrorCode);
-
-        private static bool isRecoverableIssue(CodedException ce) =>
-          ce switch
-          {
-              FhirXmlException xmle => FhirXmlException.IsRecoverableIssue(xmle),
-              FhirJsonException jsone => FhirJsonException.IsRecoverableIssue(jsone),
-              _ => false
-          };
-
-        private static bool isAllowedForBackwardsCompatibility(CodedException ce) =>
-           FhirXmlException.AllowedForBackwardsCompatibility(ce) || FhirJsonException.AllowedForBackwardsCompatibility(ce);
-
     }
 }
 
