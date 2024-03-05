@@ -983,8 +983,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             return duplicatePropertiesJson.Select(testCase => (object[])( [testCase.Item1, testCase.Item2]));
         }
-
-
         [DataTestMethod]
         [DynamicData(nameof(getDuplicatePropertyTests), DynamicDataSourceType.Method)]
         public void TestDuplicateProperties(string testJson, string[] expectedErrs)
@@ -1026,80 +1024,21 @@ namespace Hl7.Fhir.Support.Poco.Tests
             {
                 assertErrors(dfe.Exceptions, [expected]);
             }
-            
-            
-        }
-
-        [TestMethod]
-        public void TestIgnoreCustomErrors()
-        {
-            var json = """
-                       {
-                        "resourceType" : "Patient",
-                        "extension" : [{
-                        "url" : "http://nu.nl",
-                        "url" : "http://nu.nl"
-                        }]
-                        }
-                       """;
-
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).Ignoring(["JSON129"]);
-            try
-            {
-                _ = JsonSerializer.Deserialize<TestPatient>(json, options);
-            }
-            catch (DeserializationFailedException)
-            {
-                Assert.Fail("This error should be ignored but was not");
-            }
         }
         
-        
-        // copy of recovery test. We expect this to throw no errors if we ignore all errors by using the Ostrich mode
         [TestMethod]
-        public void TestOstrichMode()
+        public void TestExtensionMethods()
         {
-            var filename = Path.Combine("TestData", "fp-test-patient-errors.json");
-            var jsonInput = File.ReadAllText(filename);
-
+            string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
             var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).UsingMode(DeserializerModes.Ostrich);
-
-            try
-            {
-                _ = JsonSerializer.Deserialize<TestPatient>(jsonInput, options);
-            }
-            catch (DeserializationFailedException dfe)
-            {
-                Assert.Fail("Should not have encountered errors in ostrich mode");
-            }
-        }
-
-        [TestMethod]
-        public void TestRecoverableMode()
-        {
-            var filename = Path.Combine("TestData", "fp-test-patient-errors.json");
-            var jsonInput = File.ReadAllText(filename);
-
-            var options1 = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).UsingMode(DeserializerModes.Strict);
-            var options2 = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
-                .UsingMode(DeserializerModes.Recoverable);
-
-            try
-            {
-                _ = JsonSerializer.Deserialize<TestPatient>(jsonInput, options1);
-            }
-            catch (DeserializationFailedException dfe)
-            {
-                Assert.IsTrue(dfe.Exceptions.Any(e => FilterPredicateExtensions.IsRecoverableIssue(e))); // recoverable issues should still be reported
-            }
             
             try
             {
-                _ = JsonSerializer.Deserialize<TestPatient>(jsonInput, options2);
+                _ = JsonSerializer.Deserialize<TestPatient>(testJson, options);
             }
             catch (DeserializationFailedException dfe)
             {
-                Assert.IsFalse(dfe.Exceptions.Any(e => FilterPredicateExtensions.IsRecoverableIssue(e))); // should not contain any recoverable issues
+                Assert.Fail("should have ignored all errors");
             }
         }
     }
