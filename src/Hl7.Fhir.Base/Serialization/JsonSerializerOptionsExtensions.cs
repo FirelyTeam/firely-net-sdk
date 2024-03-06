@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Serialization
             {
                 FhirJsonConverterFactory factory => factory,
                 _ => throw new NotSupportedException(
-                    "Defining constraints for a FHIR serializer can only be done after it was created. Try calling .ForFhir first")
+                    "Customizing a FHIR serializer can only be done after it was created. Try calling .ForFhir first")
             };
         }
     }
