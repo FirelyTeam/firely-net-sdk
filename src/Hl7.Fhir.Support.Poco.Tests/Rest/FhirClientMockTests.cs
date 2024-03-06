@@ -5,6 +5,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
@@ -414,6 +415,29 @@ namespace Hl7.Fhir.Core.Tests.Rest
             var mock = new Mock<BaseFhirClient>(new object[] { new Uri("http://example.org"), TESTINSPECTOR, FhirClientSettings.CreateDefault() });
             var _ = await mock.Object.ReadAsync<TestPatient>("http://example.org/fhir");
             mock.Verify(c => c.ReadAsync<TestPatient>(It.IsAny<string>(), null, null, null), Times.Once);
+        }
+
+        [TestMethod]
+        public void TestFhirClientSettings()
+        {
+            var fhirClient1 = new BaseFhirClient(
+                new Uri("http://example.org"), TESTINSPECTOR, new FhirClientSettings { SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR) }
+            );
+            
+            MethodInfo? serializationEngineField = fhirClient1.GetType().GetMethod("getSerializationEngine", BindingFlags.NonPublic | BindingFlags.Instance);
+            serializationEngineField.Should().NotBeNull();
+
+            (serializationEngineField!.Invoke(fhirClient1, []) is PocoSerializationEngine).Should().BeTrue();
+
+            var fhirClient2 = new BaseFhirClient(
+                new Uri("http://example.org"), TESTINSPECTOR)
+            ;
+            
+            (serializationEngineField!.Invoke(fhirClient2, []) is ElementModelSerializationEngine).Should().BeTrue();
+            
+            fhirClient2.Settings.SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
+            
+            (serializationEngineField!.Invoke(fhirClient2, []) is PocoSerializationEngine).Should().BeTrue();
         }
 
 
