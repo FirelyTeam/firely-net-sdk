@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Specification.Terminology
     /// <summary>
     /// Checks if codes are valid Mime-Types (urn:ietf:bcp:13)
     /// </summary>
-    public sealed class MimeTypeTerminologyService : CodeSystemTerminologyService
+    public sealed class MimeTypeTerminologyService : CustomValueSetTerminologyService
     {
         private const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
         public const string MIMETYPE_VALUESET_R4_AND_UP = "http://hl7.org/fhir/ValueSet/mimetypes";
