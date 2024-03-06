@@ -32,7 +32,6 @@ namespace Hl7.Fhir.Serialization
         internal Predicate<CodedException> IgnoreFilter;
         private readonly FhirJsonPocoSerializerSettings? _serializerSettings;
         private readonly FhirJsonPocoDeserializerSettings? _deserializerSettings;
-        internal DeserializerModes Mode = DeserializerModes.Custom; // has to be custom by default, since that is how the public interface used to work
 
         public FhirJsonConverterFactory(
             Assembly assembly,
@@ -61,7 +60,7 @@ namespace Hl7.Fhir.Serialization
         {
             return (JsonConverter?)Activator.CreateInstance(
                 typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert),
-                [ _inspector, _serializerSettings, _deserializerSettings, Mode, IgnoreFilter ]);
+                [ _inspector, _serializerSettings, _deserializerSettings, IgnoreFilter ]);
         }
     }
 
@@ -97,25 +96,15 @@ namespace Hl7.Fhir.Serialization
         /// <param name="inspector">The <see cref="ModelInspector" /> containing classes to be used for deserialization.</param>
         /// <param name="serializerSettings">The optional features used during serialization.</param>
         /// <param name="deserializerSettings">The optional features used during deserialization.</param>
-        /// <param name="mode">The optional mode the (de)serializer should employ</param>
         /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
         public FhirJsonConverter(
             ModelInspector inspector,
             FhirJsonPocoSerializerSettings? serializerSettings,
             FhirJsonPocoDeserializerSettings? deserializerSettings,
-            DeserializerModes? mode = DeserializerModes.Custom,
             Predicate<CodedException>? ignoreFilter = null)
         {
-            ignoreFilter = mode switch
-            {
-                DeserializerModes.Recoverable => FilterPredicateExtensions.IsRecoverableIssue.Or(ignoreFilter),
-                DeserializerModes.BackwardsCompatible => FilterPredicateExtensions.IsBackwardsCompatibilityIssue.Or(ignoreFilter),
-                DeserializerModes.Ostrich => _ => true,
-                _ => ignoreFilter ?? (_ => false)
-            };
-
-            _engine = FhirSerializationEngineFactory.Custom(inspector, ignoreFilter, deserializerSettings,
+            _engine = FhirSerializationEngineFactory.Custom(inspector, ignoreFilter ?? (_ => false), deserializerSettings,
                 serializerSettings);
         }
 

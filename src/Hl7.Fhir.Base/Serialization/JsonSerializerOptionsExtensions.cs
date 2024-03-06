@@ -98,14 +98,34 @@ namespace Hl7.Fhir.Serialization
 
             return options;
         }
-
+        
+        /// <summary>
+        /// Modify the options to use a preset list of errors to ignore by specifying a mode. This can be any member of <see cref="DeserializerModes"/>
+        /// </summary>
+        /// <remarks>
+        /// Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
+        /// </remarks>
         public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializerModes mode)
         {
             var factory = getCustomFactoryFromList(options.Converters);
-            factory.Mode = mode;
+            
+            factory.IgnoreFilter = mode switch
+            {
+                DeserializerModes.Recoverable => FilterPredicateExtensions.IsRecoverableIssue,
+                DeserializerModes.BackwardsCompatible => FilterPredicateExtensions.IsBackwardsCompatibilityIssue,
+                DeserializerModes.Ostrich => _ => true,
+                _ => (_ => false)
+            };
             return options;
         }
 
+        /// <summary>
+        /// Modify the options to use a custom list of errors to enforce. 
+        /// </summary>
+        /// <remarks>
+        /// - Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
+        /// - This also means that enforcing, then ignoring an error has the opposite behaviour as ignoring it, then enforcing it.
+        /// </remarks>
         public static JsonSerializerOptions Enforcing(this JsonSerializerOptions options, IEnumerable<string> toEnforce)
         {
             var factory = getCustomFactoryFromList(options.Converters);
@@ -113,6 +133,13 @@ namespace Hl7.Fhir.Serialization
             return options;
         }
 
+        /// <summary>
+        /// Modify the options to use a custom list of errors to ignore. 
+        /// </summary>
+        /// <remarks>
+        /// - Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
+        /// - This also means that enforcing, then ignoring an error has the opposite behaviour as ignoring it, then enforcing it.
+        /// </remarks>
         public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
         {
             var factory = getCustomFactoryFromList(options.Converters);
@@ -157,7 +184,6 @@ namespace Hl7.Fhir.Serialization
 
     public enum DeserializerModes
     {
-        Custom,
         Strict,
         Recoverable,
         BackwardsCompatible,

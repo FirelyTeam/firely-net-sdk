@@ -1058,7 +1058,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
             [
                 new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).UsingMode(DeserializerModes.Ostrich)
                     .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.LONG_CANNOT_BE_PARSED_CODE]),
-                new Predicate<IEnumerable<CodedException>>(errs => errs.All(e => e.ErrorCode is ERR.ARRAYS_CANNOT_BE_EMPTY_CODE or ERR.LONG_CANNOT_BE_PARSED_CODE))
+                new Predicate<IEnumerable<CodedException>>(errs =>
+                {
+                    IEnumerable<CodedException> codedExceptions = errs as CodedException[] ?? errs.ToArray();
+                    return codedExceptions.Any() && codedExceptions.All(e =>
+                        e.ErrorCode is ERR.ARRAYS_CANNOT_BE_EMPTY_CODE or ERR.LONG_CANNOT_BE_PARSED_CODE);
+                })
             ];
         }
         
@@ -1071,6 +1076,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             try
             {
                 _ = JsonSerializer.Deserialize<TestPatient>(testJson, options);
+                throw new DeserializationFailedException(null, []);
             }
             catch (DeserializationFailedException dfe)
             {
