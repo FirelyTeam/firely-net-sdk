@@ -18,19 +18,19 @@ namespace Hl7.Fhir.Specification.Terminology
     public abstract class CustomValueSetTerminologyService : ITerminologyService
     {
         private readonly string _terminologyType;
-        private readonly string _valueSetName;
+        private readonly string _codeSystem;
         private readonly string[] _codeValueSets;
 
         /// <summary>
         /// Base class for checking terminology of codes that are part of a value set.
         /// </summary>
         /// <param name="terminologyType">String representation of the code type which is being checked. Exclusively used for error messages</param>
-        /// <param name="valueSetName">Name of the specification defining the members of the value set</param>
+        /// <param name="codeSystem">Name of the specification defining the members of the value set</param>
         /// <param name="codeValueSets">uri's of the definitions of the code system. This can be multiple, if a FHIR version has changed this at some point.</param>
-        protected CustomValueSetTerminologyService(string terminologyType, string valueSetName, string[] codeValueSets)
+        protected CustomValueSetTerminologyService(string terminologyType, string codeSystem, string[] codeValueSets)
         {
             _terminologyType = terminologyType;
-            _valueSetName = valueSetName;
+            _codeSystem = codeSystem;
             _codeValueSets = codeValueSets;
         }
         
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Specification.Terminology
             var systemUri = system != null ? new Canonical(system).Uri : null;
 
 
-            if (systemUri == _valueSetName || systemUri == null)
+            if (systemUri == _codeSystem || systemUri == null)
             {
                 if (code is null)
                 {
