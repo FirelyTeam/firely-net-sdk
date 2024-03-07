@@ -275,6 +275,26 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
+        /// Add a "conditional delete" entry to the transaction/batch
+        /// </summary>
+        /// <param name="condition">conditions on which the a resource should be deleted</param>
+        /// <param name="body">parameters resource that describes the delete operation</param>
+        /// <param name="versionId">optional version id of the resource</param>
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+        /// <returns></returns>
+        public TransactionBuilder Delete(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete, bundleEntryFullUrl);
+            entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
+            var path = newRestUrl().AddPath(body.TypeName);
+            path.AddParams(condition.ToUriParamList());
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        /// <summary>
         /// Add a "create" entry to the transaction/batch
         /// </summary>
         /// <param name="body">the resource that is to be created</param>

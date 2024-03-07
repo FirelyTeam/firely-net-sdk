@@ -139,5 +139,16 @@ namespace Hl7.Fhir.Test
             bundle.Entry.Skip(1).Should().ContainSingle().Which.FullUrl.Should().BeNull();
 
         }
+
+        [TestMethod]
+        public void TestConditionalDelete()
+        {
+            var p = new TestPatient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                .Delete(new SearchParams().Where("name=foobar"), p, versionId: "314");
+            var b = tx.ToBundle();
+
+            Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
+        }
     }
 }

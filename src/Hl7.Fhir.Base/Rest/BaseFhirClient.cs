@@ -397,14 +397,14 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public virtual async System.Threading.Tasks.Task DeleteAsync(Uri location, CancellationToken? ct = null)
+        public virtual async Task DeleteAsync(Uri location, CancellationToken? ct = null)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
 
-            await executeAsync<Model.Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
+            await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -452,12 +452,20 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="resource">The resource to delete</param>
         /// <param name="ct"></param>
-        public virtual async Task DeleteAsync(Resource resource, CancellationToken? ct = null)
+        /// <param name="versionAware"></param>
+        public virtual async Task DeleteAsync(Resource resource, CancellationToken? ct = null, bool versionAware = false)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Entry must have an id");
 
-            await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion(), ct).ConfigureAwait(false);
+            var del = new TransactionBuilder(Endpoint);
+                
+            if (versionAware && resource.HasVersionId)
+                del.Update(resource.Id, resource, versionId: resource.VersionId);
+            else
+                del.Update(resource.Id, resource);
+
+            await internalDeleteAsync(resource, del.ToBundle(), ct);
         }
 
         /// <summary>
@@ -494,6 +502,13 @@ namespace Hl7.Fhir.Rest
         public virtual void Delete(string resourceType, SearchParams condition)
         {
             DeleteAsync(resourceType, condition).WaitNoResult();
+        }
+        
+        private Task<TResource?> internalDeleteAsync<TResource>(TResource resource, Bundle tx, CancellationToken? ct) where TResource : Resource
+        {
+            resource.ResourceBase = Endpoint;
+            
+            return executeAsync<TResource>(tx, new[] { HttpStatusCode.OK }, ct);
         }
 
         #endregion
