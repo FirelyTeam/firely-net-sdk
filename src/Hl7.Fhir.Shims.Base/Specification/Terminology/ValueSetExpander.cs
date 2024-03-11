@@ -99,6 +99,9 @@ namespace Hl7.Fhir.Specification.Terminology
 
             await handleInclude(source, inclusionChain).ConfigureAwait(false);
             await handleExclude(source, inclusionChain).ConfigureAwait(false);
+
+            //This is expensive, but we should not have any duplicates
+            //TODO something like: source.Expansion.Contains = source.Expansion.Contains.Distinct
         }
 
 
@@ -191,7 +194,11 @@ namespace Hl7.Fhir.Specification.Terminology
                 // and what would we do with a hierarchy if we encountered that in the include?
                 // Filter and Concept are mutually exclusive (vsd-3)
                 if (conceptSet.Filter.Any())
-                    throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter are not yet supported.");
+                {
+                    var filteredConcepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem(conceptSet.System, conceptSet.Filter, Settings);
+                    addCapped(result, filteredConcepts, $"Adding the filtered concepts to the expansion would result in a valueset larger than the maximum expansion size.");
+                }
+
                 else if (conceptSet.Concept.Any())
                 {
                     var convertedConcepts = conceptSet.Concept.Select(c =>
@@ -380,6 +387,8 @@ namespace Hl7.Fhir.Specification.Terminology
                 Value = csDesignation.Value
             };
         }
+
+
 
     }
 }

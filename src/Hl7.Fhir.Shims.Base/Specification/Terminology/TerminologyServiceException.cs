@@ -40,6 +40,13 @@ namespace Hl7.Fhir.Specification.Terminology
         {
         }
     }
+
+    public class CodeSystemUnknownException : TerminologyServiceException
+    {
+        public CodeSystemUnknownException(string message) : base(message)
+        {
+        }
+    }
 }
 
 #nullable restore
