@@ -13,67 +13,39 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
     public class CodeSystemFilteringTests
     {
         [TestMethod]
-        public async T.Task ExpandFilterIsAWithHierarchicalCodeSystem()
+        public async T.Task TestHierarchicalIsAFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
             var codeSystem = TestTerminologyCreator.GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
-                                        .WithConcept("A",
-                                                    children: new() { TestTerminologyCreator.CreateConcept("AA", children: new(){TestTerminologyCreator.CreateConcept("AAA") })
+                                       .WithConcept("A",
+                                                   children: new() { TestTerminologyCreator.CreateConcept("AA", children: new(){TestTerminologyCreator.CreateConcept("AAA") })
                                                                     , TestTerminologyCreator.CreateConcept("AB")})
-                                        .WithConcept("B",
-                                                    children: new() { TestTerminologyCreator.CreateConcept("BA", children: new(){TestTerminologyCreator.CreateConcept("BAA") })
+                                       .WithConcept("B",
+                                                   children: new() { TestTerminologyCreator.CreateConcept("BA", children: new(){TestTerminologyCreator.CreateConcept("BAA") })
                                                                     , TestTerminologyCreator.CreateConcept("BB")})
-                                        .WithConcept("C",
-                                                    children: new() { TestTerminologyCreator.CreateConcept("CA", children: new(){TestTerminologyCreator.CreateConcept("CAA") })
+                                       .WithConcept("C",
+                                                   children: new() { TestTerminologyCreator.CreateConcept("CA", children: new(){TestTerminologyCreator.CreateConcept("CAA") })
                                                                     , TestTerminologyCreator.CreateConcept("CB")});
-
             resolver.Add(codeSystem);
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = resolver });
+
 
             //VS has a single include, with a single filter
-            var testVs = TestTerminologyCreator.GetValueSet("http://foo.bar/fhir/ValueSet/example")
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "A") });
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsA, "A") }).ToList();
 
-            await expander.ExpandAsync(testVs);
 
-            testVs.Expansion.Contains.Should()
-                .Contain(c => c.Code == "A")
-                .Which.Contains.Should().Contain(c => c.Code == "AA")
-                .Which.Contains.Should().Contain(c => c.Code == "AAA");
+            var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
 
-            testVs.Expansion.Contains.Should().NotContain(c => c.Code == "C");
+
+            concepts.Should().NotContain(c => c.Code == "C");
 
             //VS has a single include, with a two filter, both filters should be true;
-            testVs = TestTerminologyCreator.GetValueSet("http://foo.bar/fhir/ValueSet/example")
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "A"), (FilterOperator.IsA, "B") });
+            filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsA, "A"), (FilterOperator.IsA, "B") }).ToList();
 
-            await expander.ExpandAsync(testVs);
+            concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
 
             //No code, which are both A & B;
-            testVs.Expansion.Contains.Should().BeEmpty();
-
-            //VS has two includes, both with a filter;
-            testVs = TestTerminologyCreator.GetValueSet("http://foo.bar/fhir/ValueSet/example")
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "A") })
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "B") });
-
-
-            await expander.ExpandAsync(testVs);
-
-            testVs.Expansion.Contains.Should()
-               .Contain(c => c.Code == "A")
-               .Which.Contains.Should().Contain(c => c.Code == "AA")
-               .Which.Contains.Should().Contain(c => c.Code == "AAA");
-
-            testVs.Expansion.Contains.Should()
-              .Contain(c => c.Code == "B")
-              .Which.Contains.Should().Contain(c => c.Code == "BA")
-              .Which.Contains.Should().Contain(c => c.Code == "BAA");
-
-            testVs.Expansion.Contains.Should().NotContain(c => c.Code == "C");
-
-            resolver.Clear();
+            concepts.Should().BeEmpty();
         }
 
         [TestMethod]
@@ -92,15 +64,12 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
                                         .WithConcept("C");
 
             resolver.Add(codeSystem);
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = resolver });
 
             //VS has a single include, with a single filter
-            var testVs = TestTerminologyCreator.GetValueSet("http://foo.bar/fhir/ValueSet/example")
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "A") });
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsA, "A") }).ToList();
+            var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
 
-            await expander.ExpandAsync(testVs);
-
-            testVs.Expansion.Contains.Should().Contain(c => c.Code == "A")
+            concepts.Should().Contain(c => c.Code == "A")
                                               .And.Contain(c => c.Code == "AA")
                                               .And.Contain(c => c.Code == "AAA")
                                               .And.Contain(c => c.Code == "AB")
@@ -108,30 +77,11 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
 
             ///VS has a single include, with a two filter, both filters should be true;
-            testVs = TestTerminologyCreator.GetValueSet("http://foo.bar/fhir/ValueSet/example")
-                                               .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "A"), (FilterOperator.IsA, "B") });
+            filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsA, "A"), (FilterOperator.IsA, "B") }).ToList();
+            concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
 
-            await expander.ExpandAsync(testVs);
-
-            testVs.Expansion.Contains.Should().OnlyContain(c => c.Code == "AB");
-
-            //VS has two includes, both with a filter;
-            testVs = TestTerminologyCreator.GetValueSet("http://foo.bar/fhir/ValueSet/example")
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "A") })
-                                      .WithInclude("http://foo.bar/fhir/CodeSystem/example", filters: new() { (FilterOperator.IsA, "B") });
-
-
-            await expander.ExpandAsync(testVs);
-
-            testVs.Expansion.Contains.Should().Contain(c => c.Code == "A")
-                                              .And.Contain(c => c.Code == "AA")
-                                              .And.Contain(c => c.Code == "AAA")
-                                              .And.Contain(c => c.Code == "AB")
-                                              .And.Contain(c => c.Code == "B")
-                                              .And.Contain(c => c.Code == "BB")
-                                              .And.NotContain(c => c.Code == "C");
+            concepts.Should().OnlyContain(c => c.Code == "AB");
         }
-
     }
 
 
@@ -141,30 +91,6 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
     internal static class TestTerminologyCreator
     {
-        internal static ValueSet GetValueSet(string url)
-        {
-            return new ValueSet
-            {
-                Url = url,
-            };
-        }
-
-        internal static ValueSet WithInclude(this ValueSet vs, string codeSystemUrl, List<(FilterOperator op, string value)> filters)
-        {
-            if (vs.Compose is null)
-            {
-                vs.Compose = new();
-            }
-
-            vs.Compose.Include.Add(
-                new()
-                {
-                    System = codeSystemUrl,
-                    Filter = CreateFilters(filters).ToList()
-                }
-                );
-            return vs;
-        }
 
         internal static IEnumerable<ValueSet.FilterComponent> CreateFilters(List<(FilterOperator op, string value)> filters)
         {
@@ -185,8 +111,14 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
         internal static CodeSystem WithConcept(this CodeSystem cs, string name, List<CodeSystem.ConceptDefinitionComponent> children = null, List<(string code, string value)> properties = null)
         {
-            cs.Concept.Add(CreateConcept(name, children, properties));
+            cs.Concept = cs.Concept.WithConcept(name, children, properties);
             return cs;
+        }
+
+        internal static List<CodeSystem.ConceptDefinitionComponent> WithConcept(this List<CodeSystem.ConceptDefinitionComponent> concepts, string name, List<CodeSystem.ConceptDefinitionComponent> children = null, List<(string code, string value)> properties = null)
+        {
+            concepts.Add(CreateConcept(name, children, properties));
+            return concepts;
         }
 
         internal static CodeSystem.ConceptDefinitionComponent CreateConcept(string name, List<CodeSystem.ConceptDefinitionComponent> children = null, List<(string code, string value)> properties = null)
