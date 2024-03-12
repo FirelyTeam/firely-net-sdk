@@ -67,33 +67,6 @@ namespace Hl7.Fhir.Model
             else
                 return null;
         }
-
-
-        internal static List<CodeSystem.ConceptDefinitionComponent> FilterCodesByProperty(this IEnumerable<CodeSystem.ConceptDefinitionComponent> concepts, string property, DataType value)
-        {
-            Func<CodeSystem.ConceptDefinitionComponent, bool> predicate = concept => concept.Property.Any(p => p.Code == property && p.Value.Matches(value));
-            return concepts.filterCodesByPredicate(predicate);
-        }
-
-
-        private static List<CodeSystem.ConceptDefinitionComponent> filterCodesByPredicate(this IEnumerable<CodeSystem.ConceptDefinitionComponent> concepts, Func<CodeSystem.ConceptDefinitionComponent, bool> predicate)
-        {
-            var result = new List<CodeSystem.ConceptDefinitionComponent>();
-
-            foreach (var concept in concepts)
-            {
-                if (predicate(concept))
-                {
-                    result.Add(concept);
-                }
-
-                if (concept.Concept != null && concept.Concept.Any())
-                {
-                    result.AddRange(concept.Concept.filterCodesByPredicate(predicate));
-                }
-            }
-            return result;
-        }
     }
 }
 
