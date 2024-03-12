@@ -29,6 +29,10 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <exception cref="CodeSystemUnknownException">Thrown when the requested CodeSystem can not be found by the resource resolver in ValueSetExpanderSettings</exception>
         internal async static T.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, List<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
         {
+            if (codeSystemUri == "http://snomed.info/sct" || codeSystemUri == "http://loinc.org")
+            {
+                throw new ValueSetExpansionTooComplexException($"Locally filter codes from Codesystem {codeSystemUri} is not supported");
+            }
 
             if (filters.Any(f => !SUPPORTEDFILTERS.Contains(f.Op)))
             {
