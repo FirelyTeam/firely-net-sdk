@@ -80,34 +80,60 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
-        private (ElementValue val, int ix)[] returnElements(string name, object element)
+        /// <summary>
+        /// Elements from the IReadOnlyDictionary can be of type <see cref="Base"/>, IEnumerable&lt;Base&gt; or string.
+        /// This method uniformly returns a list of (Base, int) tuples, where the int is the index of the element in the IEnumerable.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private IEnumerable<(Base val, int ix)> returnElements(string name, object element)
         {
             return (element, Current, name) switch
             {
-                (Base @base, _, _)  => new[] { (new ElementValue(name, @base), 0) },
-                (IEnumerable<Base> bases, _, _)  => bases.Select((e, i) => (new ElementValue(name, e), i)).ToArray(),
-                (string s, Extension, "url")  => new[]{(new ElementValue(name, new FhirUri(s)), 0)},
-                (string s, Element, "id")  => new[]{(new ElementValue(name, new FhirString(s)), 0)},
-                _ => Array.Empty<(ElementValue, int)>(),
+                (Base @base, _, _)  => new[] { (@base, 0) },
+                (IEnumerable<Base> bases, _, _)  => bases.Select((e, i) => (e, i)),
+                (string s, Extension, "url")  => new[]{ ( (Base)new FhirUri(s), 0)},
+                (string s, Element, "id")  => new[]{ ((Base)new FhirString(s), 0)},
+                _ => Enumerable.Empty<(Base, int)>(),
             };
         }
 
+        /// <summary>
+        /// Get the children from the IReadOnlyDictionary, and turn them into PocoElementNodes.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public IEnumerable<ITypedElement> Children(string name)
         {
             if (Current is null) return Enumerable.Empty<PocoElementNode>();
 
-            IEnumerable<PocoElementNode> getChildrenInternal(string childName, object value)
+            var rod = Current.AsReadOnlyDictionary();
+
+            if (name is null)
+            {
+                return rod.SelectMany(kvp
+                    => createChildNodes(kvp.Key, kvp.Value));
+            }
+
+            rod.TryGetValue(name, out var dictValue);
+            return createChildNodes(name, dictValue);
+
+            IEnumerable<PocoElementNode> createChildNodes(string childName, object value)
             {
                 var elts = returnElements(childName, value);
                 var elementDef = _myClassMapping.FindMappedElementByName(childName);
-                //In the switch below I assume that Location and ShortPath are either both null or both not null - CK
+                //Create the list of child nodes differently based on:
+                //- whether multiple children are allowed or not
+                //- whether a parent location is known or not (i.e: root nodes have an empty location) 
+                //I assume that Location and ShortPath are either both null or both not null - CK
                 var input = (elementDef?.IsCollection ?? true, Location == null) switch
                 {
                     (false, true) =>
                         elts.Select(c => new PocoElementNode(
                             location: $"{childName}[{c.ix}]",
                             shortPath: $"{childName}",
-                            instance: c.val.Value,
+                            instance: c.val,
                             definition: elementDef,
                             inspector: _inspector,
                             parent: this
@@ -116,7 +142,7 @@ namespace Hl7.Fhir.ElementModel
                         elts.Select(c => new PocoElementNode(
                             location: $"{Location}.{childName}[{c.ix}]",
                             shortPath: $"{ShortPath}.{childName}",
-                            instance: c.val.Value,
+                            instance: c.val,
                             definition: elementDef,
                             inspector: _inspector,
                             parent: this
@@ -125,7 +151,7 @@ namespace Hl7.Fhir.ElementModel
                         elts.Select(c => new PocoElementNode(
                             location: $"{childName}[{c.ix}]",
                             shortPath: $"{childName}[{c.ix}]",
-                            instance: c.val.Value,
+                            instance: c.val,
                             definition: elementDef,
                             inspector: _inspector,
                             parent: this
@@ -134,7 +160,7 @@ namespace Hl7.Fhir.ElementModel
                         elts.Select(c => new PocoElementNode(
                             location: $"{Location}.{childName}[{c.ix}]",
                             shortPath: $"{ShortPath}.{childName}[{c.ix}]",
-                            instance: c.val.Value,
+                            instance: c.val,
                             definition: elementDef,
                             inspector: _inspector,
                             parent: this
@@ -142,18 +168,6 @@ namespace Hl7.Fhir.ElementModel
                 };
                 return input;
             }
-
-            var rod = Current.AsReadOnlyDictionary();
-
-
-            if (name is null)
-            {
-                return rod.SelectMany(kvp
-                    => getChildrenInternal(kvp.Key, kvp.Value));
-            }
-
-            rod.TryGetValue(name, out var value);
-            return getChildrenInternal(name, value);
         }
 
         /// <summary>
