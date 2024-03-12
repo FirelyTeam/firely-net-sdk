@@ -10,10 +10,6 @@ namespace Hl7.FhirPath.Functions
     {
         public static IEnumerable<ITypedElement> Extension(this IEnumerable<ITypedElement> focus, string url)
         {
-            var exts = focus.Navigate("extension").ToArray();
-            var hasUrl = exts.Where(es => es.Children("url").Any()).ToArray();
-            var urls = exts.Select(es => es.Children("url").FirstOrDefault()).ToArray();
-            var matches = exts.Where(es => es.Children("url").SingleOrDefault().Value as string == url); 
             return focus.Navigate("extension")
                 .Where(es => es.Children("url").SingleOrDefault().Value as string == url);
         }
