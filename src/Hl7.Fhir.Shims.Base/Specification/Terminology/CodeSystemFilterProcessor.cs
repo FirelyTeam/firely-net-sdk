@@ -14,8 +14,19 @@ namespace Hl7.Fhir.Specification.Terminology
 
     internal static class CodeSystemFilterProcessor
     {
-        private static readonly ReadOnlyCollection<FilterOperator?> SUPPORTEDFILTERS = new(new List<FilterOperator?> { FilterOperator.IsA, FilterOperator.IsNotA });
+        private static readonly ReadOnlyCollection<FilterOperator?> SUPPORTEDFILTERS = new(new List<FilterOperator?> { FilterOperator.IsA });
+        private const string SUBSUMEDBYCODE = "subsumedBy";
 
+        /// <summary>
+        /// Retrieve codes from a CodeSystem resource bases on one or multiple filters.
+        /// </summary>
+        /// <param name="codeSystemUri">Uri of the CodeSystem</param>
+        /// <param name="filters">Filters to be applied</param>
+        /// <param name="settings">ValueSetExpanderSettings </param>
+        /// <returns></returns>
+        /// <exception cref="ValueSetExpansionTooComplexException">Thrown when a filter is applied that is not supported (yet)</exception>
+        /// <exception cref="CodeSystemUnknownException">Thrown when no resource resolver was set in ValueSetExpanderSettings.ValueSetSource</exception>
+        /// <exception cref="CodeSystemUnknownException">Thrown when the requested CodeSystem can not be found by the resource resolver in ValueSetExpanderSettings</exception>
         internal async static T.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, List<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
         {
 
@@ -61,34 +72,32 @@ namespace Hl7.Fhir.Specification.Terminology
             return filter.Op switch
             {
                 FilterOperator.IsA => applyIsAFilter(concepts, properties, filter),
-                FilterOperator.IsNotA => applyIsNotAFilter(concepts, properties, filter),
                 _ => throw new InvalidOperationException("no filter was selected")
             };
         }
-
-        private static IEnumerable<CodeSystem.ConceptDefinitionComponent> applyIsNotAFilter(List<CodeSystem.ConceptDefinitionComponent> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
-        {
-            throw new NotImplementedException();
-        }
-
 
         private static IEnumerable<CodeSystem.ConceptDefinitionComponent> applyIsAFilter(List<CodeSystem.ConceptDefinitionComponent> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
         {
             var result = new List<CodeSystem.ConceptDefinitionComponent>();
 
-            if (properties.Any(p => p.Code == "subsumedBy"))
+            //find descendants based on subsumedBy
+            if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
             {
-                //first find the parent itslef (if it's in the CodeSystem)
+                //first find the parent itself (if it's in the CodeSystem)
                 if (concepts.FindCode(filter.Value) is { } concept)
                     result.Add(concept);
 
+                //Create a dictionary which lists children by parent.
                 var dict = new Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>>();
                 addConceptsToSubsumedByDict(concepts, dict);
-                result.AddRange(applySubsumedBy(dict, filter));
+
+                //find descendants based on that dictionary
+                var descendants = applySubsumedBy(dict, filter);
+                result.AddRange(descendants);
             }
             else
             {
-                //SubsumedBy is not used, we should only check for a nested hierarchie, and include the code and it's descendants
+                //SubsumedBy is not used, we should only check for a nested hierarchy, and include the code and it's descendants
                 if (concepts.FindCode(filter.Value) is { } concept)
                     result.Add(concept);
             }
@@ -97,13 +106,14 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private static void addConceptsToSubsumedByDict(List<CodeSystem.ConceptDefinitionComponent> concepts, Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>> dict)
         {
-
             foreach (var concept in concepts)
             {
+                //find all properties that are parents.
                 var parents = concept.Property
-                                       .Where(p => p.Code == "subsumedBy" && p.Value is Code && ((Code)p.Value).Value is not null)
+                                       .Where(p => p.Code == SUBSUMEDBYCODE && p.Value is Code && ((Code)p.Value).Value is not null)
                                        .Select(p => ((Code)p.Value).Value);
 
+                //Find all their children
                 foreach (var parent in parents)
                 {
                     if (dict.ContainsKey(parent))
@@ -134,6 +144,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
+        //recursively loop through all the children to eventually find all descendants.
         private static void addDescendants(Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>> dict, string parent, List<CodeSystem.ConceptDefinitionComponent> result)
         {
             if (dict.TryGetValue(parent, out var descendants))
