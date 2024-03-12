@@ -223,7 +223,12 @@ namespace Hl7.FhirPath.Expressions
             return t;
         }
 
-
+        /// <summary>
+        /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;ITypedElement&gt;.
+        /// For 'builtin.children' we know that the focus and the result are already of the correct type,
+        /// so we created an optimized implementation avoiding the Wrap.
+        /// </summary>
+        /// <param name="table"></param>
         internal static void AddBuiltinChildren(this SymbolTable table)
         {
             table.Add(new CallSignature("builtin.children",
