@@ -7,6 +7,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -1000,6 +1001,53 @@ namespace Hl7.Fhir.Support.Poco.Tests
             {
                 assertErrors(dfe.Exceptions, expectedErrs);
             }
+        }
+
+        [TestMethod]
+        public void TestDuplicateChoiceTypeEntries()
+        {
+            var scenario = """
+                           {
+                             "resourceType": "Patient",
+                             "deceasedBoolean": true,
+                             "deceasedDateTime": "2022"
+                           }
+                           """;
+            
+            string expected = ERR.DUPLICATE_PROPERTY_CODE;
+
+            var jsonSerializerOptions = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+
+            try
+            {
+                _ = JsonSerializer.Deserialize<TestPatient>(scenario, jsonSerializerOptions);
+                Assert.Fail("Should have encountered errors.");
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                assertErrors(dfe.Exceptions, [expected]);
+            }
+        }
+        
+        [TestMethod]
+        public void TestBackboneElementEmptyStack()
+        {
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+
+            var bundleEntryComponent = new Parameters.ParameterComponent()
+            {
+                Name = "name",
+                Resource = new TestPatient{Gender = TestAdministrativeGender.Female}
+            };
+
+            var jsonString = JsonSerializer.Serialize(bundleEntryComponent, options);
+
+            var seq = new ReadOnlySequence<byte>(Encoding.UTF8.GetBytes(jsonString));
+
+            var newJsonReader = new Utf8JsonReader(seq, true, default);
+
+            // System.InvalidOperationException: 'Stack empty.' thrown when attempting to deserialize
+            var result = JsonSerializer.Deserialize<Parameters.ParameterComponent>(ref newJsonReader, options);
         }
     }
 }
