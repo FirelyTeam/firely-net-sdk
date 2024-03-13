@@ -162,6 +162,7 @@ src/Hl7.Fhir.Model/EwoutFhirNetApi.snk
 sonar-project.properties
 src/.vs/
 .vs/
+.idea/
 build/runbuild.txt
 
 dist/
