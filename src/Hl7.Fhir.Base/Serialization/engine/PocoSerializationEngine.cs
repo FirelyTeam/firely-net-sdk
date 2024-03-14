@@ -31,12 +31,12 @@ namespace Hl7.Fhir.Serialization
         private delegate (Base?, IEnumerable<CodedException>) TryDeserializer();
 
         private readonly ModelInspector _inspector;
-        private readonly Predicate<CodedException> _ignoreFilter;
+        internal Predicate<CodedException> IgnoreFilter { get; set; }
         
         internal PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null, FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null, FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSettings = null)
         {
             _inspector = inspector;
-            _ignoreFilter = ignoreFilter ?? (_ => false);
+            IgnoreFilter = ignoreFilter ?? (_ => false);
             _jsonDeserializerSettings = jsonDeserializerSettings ?? new FhirJsonPocoDeserializerSettings();
             _jsonSerializerSettings = jsonSerializerSettings ?? new FhirJsonPocoSerializerSettings();
             _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
@@ -51,14 +51,14 @@ namespace Hl7.Fhir.Serialization
             var inspectorfield =
                 typeof(BaseFhirJsonPocoDeserializer).GetField("_inspector", BindingFlags.NonPublic | BindingFlags.Instance); 
             _inspector = (inspectorfield!.GetValue(_jsonDeserializer) as ModelInspector)!;
-            _ignoreFilter = _ => false;
+            IgnoreFilter = _ => false;
             _xmlSettings = new FhirXmlPocoDeserializerSettings();
         }
         
         private Base deserializeAndFilterErrors(TryDeserializer deserializer)
         {
-            (Base? instance, IEnumerable<CodedException> issues) = deserializer();
-            var relevantIssues = issues.Where(i => !_ignoreFilter(i)).ToList();
+            var (instance, issues) = deserializer();
+            var relevantIssues = issues.Where(i => !IgnoreFilter(i)).ToList();
 
             return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
         }

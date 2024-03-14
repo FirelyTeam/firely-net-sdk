@@ -15,52 +15,56 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Hl7.Fhir.Serialization
 {
     /// <summary>
     /// A converter factory to construct FhirJsonConverters for subclasses of <see cref="Base"/>.
     /// </summary>
-    public class FhirJsonConverterFactory : JsonConverterFactory
+    public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonPocoSerializerSettings serializerSettings, FhirJsonPocoDeserializerSettings deserializerSettings) : JsonConverterFactory
     {
-        private readonly ModelInspector _inspector;
-        internal Predicate<CodedException> IgnoreFilter;
-        private readonly FhirJsonPocoSerializerSettings? _serializerSettings;
-        private readonly FhirJsonPocoDeserializerSettings? _deserializerSettings;
+        internal PocoSerializationEngine? Engine { get; set; }
 
         public FhirJsonConverterFactory(
-            Assembly assembly,
-            FhirJsonPocoSerializerSettings? serializerSettings = null,
-            FhirJsonPocoDeserializerSettings? deserializerSettings = null,
-            Predicate<CodedException>? ignoreFilter = null) : this(ModelInspector.ForAssembly(assembly), serializerSettings, deserializerSettings, ignoreFilter)
+            Assembly assembly, FhirJsonPocoSerializerSettings serializerSettings, FhirJsonPocoDeserializerSettings deserializerSettings) : this(ModelInspector.ForAssembly(assembly), serializerSettings, deserializerSettings)
         {
             // Nothing
         }
 
-        public FhirJsonConverterFactory(
-            ModelInspector inspector,
-            FhirJsonPocoSerializerSettings? serializerSettings = null,
-            FhirJsonPocoDeserializerSettings? deserializerSettings = null,
-            Predicate<CodedException>? ignoreFilter = null)
+        internal void SetEnforcedErrors(IEnumerable<string> toEnforce)
         {
-            _inspector = inspector;
-            _serializerSettings = serializerSettings;
-            _deserializerSettings = deserializerSettings;
-            IgnoreFilter = ignoreFilter ?? (_ => false);
+            Engine ??= (FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings) as PocoSerializationEngine)!;
+            Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());            
+        }
+
+        internal void SetIgnoredErrors(IEnumerable<string> toIgnore)
+        {
+            Engine ??= (FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings) as PocoSerializationEngine)!;
+            Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate()); 
+        }
+
+        internal void SetMode(DeserializerModes mode)
+        {
+            Engine = mode switch
+            {
+                DeserializerModes.Recoverable => (PocoSerializationEngine)FhirSerializationEngineFactory.Recoverable(inspector, serializerSettings, deserializerSettings),
+                DeserializerModes.BackwardsCompatible => (PocoSerializationEngine)FhirSerializationEngineFactory.BackwardsCompatible(inspector, serializerSettings, deserializerSettings),
+                DeserializerModes.Ostrich => (PocoSerializationEngine)FhirSerializationEngineFactory.Ostrich(inspector, serializerSettings, deserializerSettings),
+                _ => (PocoSerializationEngine)FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings)
+            };
         }
 
         public override bool CanConvert(Type typeToConvert) => typeof(Base).IsAssignableFrom(typeToConvert);
 
         public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
+            Engine ??= (PocoSerializationEngine)FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings);
             return (JsonConverter?)Activator.CreateInstance(
-                typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert),
-                [ _inspector, _serializerSettings, _deserializerSettings, IgnoreFilter ]);
+                typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert), BindingFlags.NonPublic | BindingFlags.Instance, null,
+                [ Engine ], null, null);
         }
     }
 
@@ -68,25 +72,27 @@ namespace Hl7.Fhir.Serialization
     /// <summary>
     /// FHIR Resource and datatype converter for FHIR deserialization.
     /// </summary>
-    public class FhirJsonConverter<F> : JsonConverter<F> where F : Base
+    public class FhirJsonConverter<F> : JsonConverter<F>
+        where F : Base
     {
+        // internal for testing purposes
+        private readonly PocoSerializationEngine _engine;
+
+        private FhirJsonConverter(IFhirSerializationEngine engine)
+        {
+            this._engine = (PocoSerializationEngine)engine;
+        }
+        
         /// <summary>
         /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
         /// POCOs in a given assembly.
         /// </summary>
         /// <param name="assembly">The assembly containing classes to be used for deserialization.</param>
-        /// <param name="serializerSettings">The settings to be used during serialization.</param>
-        /// <param name="deserializerSettings">The settings to be used during deserialization.</param>
-        /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
         public FhirJsonConverter(
-            Assembly assembly,
-            FhirJsonPocoSerializerSettings? serializerSettings,
-            FhirJsonPocoDeserializerSettings? deserializerSettings,
-            Predicate<CodedException>? ignoreFilter = null)
+            Assembly assembly): this(ModelInspector.ForAssembly(assembly))
         {
-            var inspector = ModelInspector.ForAssembly(assembly);
-            _engine = FhirSerializationEngineFactory.Custom(inspector, ignoreFilter ?? (_ => false), deserializerSettings, serializerSettings);
+            // nothing
         }
 
         /// <summary>
@@ -94,18 +100,10 @@ namespace Hl7.Fhir.Serialization
         /// POCOs in a given assembly.
         /// </summary>
         /// <param name="inspector">The <see cref="ModelInspector" /> containing classes to be used for deserialization.</param>
-        /// <param name="serializerSettings">The optional features used during serialization.</param>
-        /// <param name="deserializerSettings">The optional features used during deserialization.</param>
-        /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
         public FhirJsonConverter(
-            ModelInspector inspector,
-            FhirJsonPocoSerializerSettings? serializerSettings,
-            FhirJsonPocoDeserializerSettings? deserializerSettings,
-            Predicate<CodedException>? ignoreFilter = null)
+            ModelInspector inspector) : this(FhirSerializationEngineFactory.Strict(inspector))
         {
-            _engine = FhirSerializationEngineFactory.Custom(inspector, ignoreFilter ?? (_ => false), deserializerSettings,
-                serializerSettings);
         }
 
         /// <summary>
@@ -118,17 +116,14 @@ namespace Hl7.Fhir.Serialization
         /// custom behaviour, this constructor will allow the developer to use such custom serializers/deserializers instead
         /// of the defaults.</remarks>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
-        public FhirJsonConverter(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonPocoSerializer serializer)
+        public FhirJsonConverter(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonPocoSerializer serializer) : this(FhirSerializationEngineFactory.WithCustomJsonSerializers(deserializer, serializer))
         {
-            _engine = FhirSerializationEngineFactory.WithCustomJsonSerializers(deserializer, serializer);
         }
 
         /// <summary>
         /// Determines whether the specified type can be converted.
         /// </summary>
         public override bool CanConvert(Type objectType) => typeof(F) == objectType;
-        
-        private readonly IFhirExtendedSerializationEngine _engine;
 
         /// <summary>
         /// The filter used to serialize a summary of the resource.

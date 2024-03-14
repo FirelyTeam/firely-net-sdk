@@ -4,6 +4,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -82,6 +83,21 @@ namespace Hl7.Fhir.Support.Poco.Tests
             contactArray.GetArrayLength().Should().Be(1);
             contactArray[0].EnumerateObject().Should().BeEmpty();
         }
+        
+        [TestMethod]
+        public void TestDateTimeStuff()
+        {
+            var testPatient = new TestPatient { Deceased = new FhirDateTime(DateTimeOffset.Parse("2024-03-07T15:55:11.0100000+01:00")) };
+
+            var dateTime = DateTimeOffset.Parse("2024-03-07T15:55:11.0100000+01:00");
+
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+
+            var str = JsonSerializer.Serialize(dateTime, options);
+            
+            return;
+        }
     }
 
+    
 }

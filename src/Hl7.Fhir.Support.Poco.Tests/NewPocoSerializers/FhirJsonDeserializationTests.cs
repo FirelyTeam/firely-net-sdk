@@ -18,6 +18,7 @@ using System.Text;
 using System.Text.Json;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
+using FhirJsonConverterFactory = Hl7.Fhir.Serialization.FhirJsonConverterFactory;
 
 #nullable enable
 
@@ -1103,16 +1104,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
             catch (DeserializationFailedException dfe)
             {
-                Assert.IsTrue(shouldHold(dfe.Exceptions));
+                shouldHold(dfe.Exceptions).Should().BeTrue();
             }
         }
 
         private static Predicate<CodedException> getPredicateFromOptions(JsonSerializerOptions options)
         {
-            var getFactoryMethod = typeof(JsonSerializerOptionsExtensions).GetMethod("getCustomFactoryFromList", BindingFlags.NonPublic | BindingFlags.Static);
-            FhirJsonConverterFactory factory = getFactoryMethod!.Invoke(null, [options.Converters]) as FhirJsonConverterFactory ?? throw new InvalidOperationException();
-
-            return factory.IgnoreFilter;
+            var factory = JsonSerializerOptionsExtensions.FindCustomConverter(options.Converters) as FhirJsonConverterFactory ?? throw new InvalidOperationException();
+            return factory.Engine!.IgnoreFilter;
         }
 
         private static IEnumerable<object[]> getIgnoreEnforceTests()
@@ -1172,21 +1171,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var errors = getErrorsList();
 
-            Assert.IsTrue(errors.All(err => actual(err) == expected(err))); // test if predicates are equivalent
+            foreach (var err in errors) (actual(err) == expected(err)).Should().BeTrue(); // test if predicates are equivalent
         }
         
         
         [TestMethod]
         public void TestInvalidCustomization()
         {
-            try
-            {
-                _ = new JsonSerializerOptions().UsingMode(DeserializerModes.Ostrich);
-                Assert.Fail("should have encountered errors");
-            }
-            catch (NotSupportedException)
-            {
-            }
+            var shouldThrow = () => (_ = new JsonSerializerOptions().UsingMode(DeserializerModes.Ostrich));
+            shouldThrow.Should().Throw<NotSupportedException>("Expected error trying to set the mode of a non-existent converter");
         }
     }
 }

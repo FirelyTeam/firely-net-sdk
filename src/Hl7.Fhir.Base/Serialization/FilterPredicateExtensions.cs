@@ -11,10 +11,10 @@ namespace Hl7.Fhir.Serialization;
 internal static class FilterPredicateExtensions
 {
     internal static Predicate<CodedException> IsRecoverableIssue => 
-        FhirXmlException.RecoverableIssues.Union(FhirJsonException.RecoverableIssues).ToPredicate();
+        FhirXmlException.RecoverableIssues.Concat(FhirJsonException.RecoverableIssues).ToPredicate();
 
     internal static Predicate<CodedException> IsBackwardsCompatibilityIssue =>
-        FhirXmlException.BackwardsCompatibilityAllowedIssues.Union(FhirJsonException.BackwardsCompatibilityAllowedIssues).ToPredicate();
+        FhirXmlException.BackwardsCompatibilityAllowedIssues.Concat(FhirJsonException.BackwardsCompatibilityAllowedIssues).ToPredicate();
     
     internal static Predicate<CodedException> ToPredicate(this IEnumerable<string> ignoreList) => 
         ce => ignoreList.Contains(ce.ErrorCode);

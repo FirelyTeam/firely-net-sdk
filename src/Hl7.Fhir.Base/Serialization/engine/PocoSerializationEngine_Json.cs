@@ -44,7 +44,7 @@ internal partial class PocoSerializationEngine
     private Resource deserializeAndFilterErrors(BaseFhirJsonPocoDeserializer deserializer, ref Utf8JsonReader reader)
     {
         _ = deserializer.TryDeserializeResource(ref reader, out var instance, out var issues);
-        var relevantIssues = issues.Where(i => !_ignoreFilter(i)).ToList();
+        var relevantIssues = issues.Where(i => !IgnoreFilter(i)).ToList();
 
         return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
     }
@@ -53,7 +53,7 @@ internal partial class PocoSerializationEngine
     private Base deserializeObjectAndFilterErrors(Type targetType, BaseFhirJsonPocoDeserializer deserializer, ref Utf8JsonReader reader)
     {
         _ = deserializer.TryDeserializeObject(targetType, ref reader, out var instance, out var issues);
-        var relevantIssues = issues.Where(i => !_ignoreFilter(i)).ToList();
+        var relevantIssues = issues.Where(i => !IgnoreFilter(i)).ToList();
 
         return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
     }

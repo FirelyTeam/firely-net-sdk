@@ -107,15 +107,7 @@ namespace Hl7.Fhir.Serialization
         /// </remarks>
         public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializerModes mode)
         {
-            var factory = getCustomFactoryFromList(options.Converters);
-            
-            factory.IgnoreFilter = mode switch
-            {
-                DeserializerModes.Recoverable => FilterPredicateExtensions.IsRecoverableIssue,
-                DeserializerModes.BackwardsCompatible => FilterPredicateExtensions.IsBackwardsCompatibilityIssue,
-                DeserializerModes.Ostrich => _ => true,
-                _ => (_ => false)
-            };
+            getCustomFactoryFromList(options.Converters).SetMode(mode);
             return options;
         }
 
@@ -128,8 +120,7 @@ namespace Hl7.Fhir.Serialization
         /// </remarks>
         public static JsonSerializerOptions Enforcing(this JsonSerializerOptions options, IEnumerable<string> toEnforce)
         {
-            var factory = getCustomFactoryFromList(options.Converters);
-            factory.IgnoreFilter = factory.IgnoreFilter.And(toEnforce.ToPredicate().Negate());
+            getCustomFactoryFromList(options.Converters).SetEnforcedErrors(toEnforce);
             return options;
         }
 
@@ -142,8 +133,7 @@ namespace Hl7.Fhir.Serialization
         /// </remarks>
         public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
         {
-            var factory = getCustomFactoryFromList(options.Converters);
-            factory.IgnoreFilter = factory.IgnoreFilter.Or(toIgnore.ToPredicate());
+            getCustomFactoryFromList(options.Converters).SetIgnoredErrors(toIgnore);
             return options;
         }
 
@@ -165,28 +155,42 @@ namespace Hl7.Fhir.Serialization
             return options;
         }
 
-        private static JsonConverter? findCustomConverter(IEnumerable<JsonConverter> converters)
+        // internal for testing purposes
+        internal static JsonConverter? FindCustomConverter(IEnumerable<JsonConverter> converters)
         {
             return converters.FirstOrDefault(jsonConverter => jsonConverter.CanConvert(typeof(Resource)));
         }
 
         private static FhirJsonConverterFactory getCustomFactoryFromList(IEnumerable<JsonConverter> converters)
         {
-            var converter = findCustomConverter(converters);
-            return converter switch
-            {
-                FhirJsonConverterFactory factory => factory,
-                _ => throw new NotSupportedException(
-                    "Customizing a FHIR serializer can only be done after it was created. Try calling .ForFhir first")
-            };
+            return FindCustomConverter(converters) as FhirJsonConverterFactory ?? throw new NotSupportedException(
+                "Customizing a FHIR serializer can only be done after it was created. Try calling .ForFhir first");
         }
     }
 
+    /// <summary>
+    /// Enumerates the modes with which a deserializer can be configured
+    /// </summary>
     public enum DeserializerModes
     {
+        /// <summary>
+        /// Do not ignore any errors (default behaviour for most implementations)
+        /// </summary>
         Strict,
+        /// <summary>
+        /// An issue is recoverable if all data present in the parsed data could be retrieved and
+        /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
+        /// </summary>
         Recoverable,
+        /// <summary>
+        /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
+        /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
+        /// these newer elements and data, so this means data loss may occur.
+        /// </summary>
         BackwardsCompatible,
+        /// <summary>
+        /// Ignore all errors. Useful for debugging and/or when you know the data to be parsed is a correct instance.
+        /// </summary>
         Ostrich,
     }
 }

@@ -3,16 +3,18 @@ using System;
 using System.Text.Json;
 using System.Xml;
 
+#nullable enable
+
 namespace Hl7.Fhir.Serialization;
 
-public interface IFhirExtendedSerializationEngine : IFhirSerializationEngine
+internal interface IFhirExtendedSerializationEngine : IFhirSerializationEngine
 {
     /// <summary>
     /// Deserializes a resource from a JSON reader
     /// </summary>
     /// <param name="reader">The JSON reader</param>
     /// <returns>The parsed resource</returns>
-    public Resource DeserializeFromJson(ref Utf8JsonReader reader);
+    public Resource? DeserializeFromJson(ref Utf8JsonReader reader);
 
     /// <summary>
     /// Deserializes an object from a JSON reader
@@ -20,7 +22,7 @@ public interface IFhirExtendedSerializationEngine : IFhirSerializationEngine
     /// <param name="targetType">The target type of the object</param>
     /// <param name="reader">The JSON reader</param>
     /// <returns>The parsed object</returns>
-    public Base DeserializeObjectFromJson(Type targetType, ref Utf8JsonReader reader);
+    public Base? DeserializeObjectFromJson(Type targetType, ref Utf8JsonReader reader);
     
     /// <summary>
     /// Serializes an instance of any child of base to the supplied writer
@@ -34,7 +36,7 @@ public interface IFhirExtendedSerializationEngine : IFhirSerializationEngine
     /// </summary>
     /// <param name="reader">The XML reader</param>
     /// <returns>The parsed resource</returns>
-    public Resource DeserializeFromXml(XmlReader reader);
+    public Resource? DeserializeFromXml(XmlReader reader);
     
     /// <summary>
     /// Deserializes an element from an XML reader
@@ -42,5 +44,7 @@ public interface IFhirExtendedSerializationEngine : IFhirSerializationEngine
     /// <param name="targetType">The target type of the object</param>
     /// <param name="reader">The XML reader</param>
     /// <returns>A POCO representation of the input read by the reader</returns>
-    public Base DeserializeElementFromXml(Type targetType, XmlReader reader);
+    public Base? DeserializeElementFromXml(Type targetType, XmlReader reader);
 }
+
+#nullable restore
