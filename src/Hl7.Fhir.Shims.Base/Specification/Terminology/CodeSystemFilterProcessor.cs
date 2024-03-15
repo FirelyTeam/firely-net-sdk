@@ -3,7 +3,6 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using T = System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
     internal static class CodeSystemFilterProcessor
     {
-        private static readonly ReadOnlyCollection<FilterOperator?> SUPPORTEDFILTERS = new(new List<FilterOperator?> { FilterOperator.IsA });
+        private static readonly FilterOperator?[] SUPPORTEDFILTERS = [FilterOperator.IsA];
         private const string SUBSUMEDBYCODE = "subsumedBy";
 
         /// <summary>
@@ -31,13 +30,13 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             if (codeSystemUri == "http://snomed.info/sct" || codeSystemUri == "http://loinc.org")
             {
-                throw new ValueSetExpansionTooComplexException($"Locally filter codes from Codesystem {codeSystemUri} is not supported");
+                throw new ValueSetExpansionTooComplexException($"Filtering codes from complex CodeSystem {codeSystemUri} is not supported");
             }
 
             if (filters.Any(f => !SUPPORTEDFILTERS.Contains(f.Op)))
             {
                 string supportedFiltersString = string.Join(", ", SUPPORTEDFILTERS.Select(f => $"'{f.GetLiteral()}'"));
-                throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter other than {SUPPORTEDFILTERS} are not yet supported.");
+                throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter other than {supportedFiltersString} are not yet supported.");
             }
 
             if (settings.ValueSetSource == null)
@@ -53,19 +52,12 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private static List<CodeSystem.ConceptDefinitionComponent> applyFilters(List<ValueSet.FilterComponent> filters, CodeSystem codeSystem)
         {
-            var result = new List<CodeSystem.ConceptDefinitionComponent>();
+            var result = codeSystem.Concept;
             var properties = codeSystem.Property;
-            bool first = true;
 
             foreach (var filter in filters)
             {
-                //If multiple filters are specified within the include, they SHALL all be true. So the second filter, can just filter the result of the first etc.
-                var newResult = first
-                                    ? applyFilter(codeSystem.Concept, properties, filter)
-                                    : applyFilter(result, properties, filter);
-
-                if (first) first = false;
-                result = newResult.ToList();
+                result = applyFilter(result, properties, filter).ToList();
             }
 
             return result;
@@ -112,7 +104,7 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             foreach (var concept in concepts)
             {
-                //find all properties that are parents.
+                //Find all properties that are parents.
                 var parents = concept.Property
                                        .Where(p => p.Code == SUBSUMEDBYCODE && p.Value is Code && ((Code)p.Value).Value is not null)
                                        .Select(p => ((Code)p.Value).Value);
