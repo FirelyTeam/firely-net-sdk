@@ -36,7 +36,9 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
             var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
 
-
+            concepts.Should().Contain(c => c.Code == "A")
+                                              .Which.Contains.Should().Contain(c => c.Code == "AA")
+                                              .Which.Contains.Should().Contain(c => c.Code == "AAA");
             concepts.Should().NotContain(c => c.Code == "C");
 
             //VS has a single include, with a two filter, both filters should be true;
