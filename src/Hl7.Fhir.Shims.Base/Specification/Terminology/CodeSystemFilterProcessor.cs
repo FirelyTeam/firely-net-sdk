@@ -84,11 +84,12 @@ namespace Hl7.Fhir.Specification.Terminology
                     result.Add(concept);
 
                 //Create a dictionary which lists children by parent.
-                var dict = new Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>>();
-                addConceptsToSubsumedByDict(concepts, dict);
+                var flattened = concepts.Flatten();
+                var childrenLookup = CreateSubsumedByLookup(flattened);
+
 
                 //find descendants based on that dictionary
-                var descendants = applySubsumedBy(dict, filter);
+                var descendants = applySubsumedBy(childrenLookup, filter);
                 result.AddRange(descendants);
             }
             else
@@ -100,59 +101,40 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private static void addConceptsToSubsumedByDict(List<CodeSystem.ConceptDefinitionComponent> concepts, Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>> dict)
+        private static ILookup<string, CodeSystem.ConceptDefinitionComponent> CreateSubsumedByLookup(List<CodeSystem.ConceptDefinitionComponent> flattenedConcepts)
         {
-            foreach (var concept in concepts)
-            {
-                //Find all properties that are parents.
-                var parents = concept.Property
-                                       .Where(p => p.Code == SUBSUMEDBYCODE && p.Value is Code && ((Code)p.Value).Value is not null)
-                                       .Select(p => ((Code)p.Value).Value);
-
-                //Find all their children
-                foreach (var parent in parents)
-                {
-                    if (dict.ContainsKey(parent))
-                    {
-                        dict[parent].Add(concept);
-                    }
-                    else
-                    {
-                        dict.Add(parent, new List<CodeSystem.ConceptDefinitionComponent> { concept });
-                    }
-                }
-
-                if (concept.Concept is not null && concept.Concept.Any())
-                {
-                    addConceptsToSubsumedByDict(concept.Concept, dict);
-                }
-            }
+            return flattenedConcepts
+                .SelectMany(concept => concept.Property
+                    .Where(p => p.Code == SUBSUMEDBYCODE && p.Value is Code && ((Code)p.Value).Value is not null)
+                    .Select(p => new { SubsumedByValue = ((Code)p.Value).Value, Concept = concept }))
+                .ToLookup(x => x.SubsumedByValue, x => x.Concept);
         }
 
-        private static List<CodeSystem.ConceptDefinitionComponent> applySubsumedBy(Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>> dict, ValueSet.FilterComponent filter)
+        private static List<CodeSystem.ConceptDefinitionComponent> applySubsumedBy(ILookup<string, CodeSystem.ConceptDefinitionComponent> lookup, ValueSet.FilterComponent filter)
         {
             var result = new List<CodeSystem.ConceptDefinitionComponent>();
             var root = filter.Value;
             if (root != null)
             {
-                addDescendants(dict, root, result);
+                addDescendants(lookup, root, result);
             }
             return result;
         }
 
         //recursively loop through all the children to eventually find all descendants.
-        private static void addDescendants(Dictionary<string, List<CodeSystem.ConceptDefinitionComponent>> dict, string parent, List<CodeSystem.ConceptDefinitionComponent> result)
+        private static void addDescendants(ILookup<string, CodeSystem.ConceptDefinitionComponent> lookup, string parent, List<CodeSystem.ConceptDefinitionComponent> result)
         {
-            if (dict.TryGetValue(parent, out var descendants))
+            if (lookup[parent] is { } children)
             {
-                foreach (var descendant in descendants)
+                foreach (var child in children)
                 {
-                    result.Add(descendant);
-                    parent = descendant.Code;
-                    addDescendants(dict, parent, result);
+                    result.Add(child);
+                    parent = child.Code;
+                    addDescendants(lookup, parent, result);
                 }
             }
         }
+
     }
 }
 

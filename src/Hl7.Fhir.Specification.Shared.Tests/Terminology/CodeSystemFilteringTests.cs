@@ -84,6 +84,40 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
             concepts.Should().OnlyContain(c => c.Code == "AB");
         }
+
+        [TestMethod]
+        public void FlattenConceptTest()
+        {
+            var codeSystem = TestTerminologyCreator.GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
+                                       .WithConcept("A",
+                                                   children: new() { TestTerminologyCreator.CreateConcept("AA", children: new(){TestTerminologyCreator.CreateConcept("AAA") })
+                                                                    , TestTerminologyCreator.CreateConcept("AB")})
+                                       .WithConcept("B",
+                                                   children: new() { TestTerminologyCreator.CreateConcept("BA", children: new(){TestTerminologyCreator.CreateConcept("BAA") })
+                                                                    , TestTerminologyCreator.CreateConcept("BB")})
+                                       .WithConcept("C",
+                                                   children: new() { TestTerminologyCreator.CreateConcept("CA", children: new(){TestTerminologyCreator.CreateConcept("CAA") })
+                                                                    , TestTerminologyCreator.CreateConcept("CB")});
+
+            var flattened = codeSystem.Concept.Flatten();
+
+            flattened.Should().Contain(c => c.Code == "A")
+                          .And.Contain(c => c.Code == "AA")
+                          .And.Contain(c => c.Code == "AAA")
+                          .And.Contain(c => c.Code == "AB")
+                          .And.Contain(c => c.Code == "B")
+                          .And.Contain(c => c.Code == "BA")
+                          .And.Contain(c => c.Code == "BAA")
+                          .And.Contain(c => c.Code == "BB")
+                          .And.Contain(c => c.Code == "C")
+                          .And.Contain(c => c.Code == "CA")
+                          .And.Contain(c => c.Code == "CAA")
+                          .And.Contain(c => c.Code == "CB");
+
+
+            flattened.Should().NotContain(c => c.Concept.Any());
+        }
+
     }
 
 

@@ -59,5 +59,26 @@ namespace Hl7.Fhir.Model
             else
                 return null;
         }
+
+        /// <summary>
+        /// Loops through all concepts and descendants and returns a flat list of concepts, without a nested hierarchy
+        /// </summary>
+        /// <param name="concepts">List of code system concepts</param>
+        /// <returns></returns>
+        internal static List<CSDC> Flatten(this IEnumerable<CSDC> concepts)
+        {
+            var flatList = new List<CSDC>();
+
+            foreach (var concept in concepts)
+            {
+                if (concept.Concept?.Any() == true)
+                {
+                    flatList.AddRange(concept.Concept.Flatten());
+                    concept.Concept.Clear();
+                }
+                flatList.Add(concept);
+            }
+            return flatList;
+        }
     }
 }
