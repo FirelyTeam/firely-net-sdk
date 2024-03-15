@@ -1,7 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using T = System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace Hl7.Fhir.Specification.Terminology
 
     internal static class CodeSystemFilterProcessor
     {
-        private static readonly FilterOperator?[] SUPPORTEDFILTERS = [FilterOperator.IsA];
         private const string SUBSUMEDBYCODE = "subsumedBy";
 
         /// <summary>
@@ -31,12 +29,6 @@ namespace Hl7.Fhir.Specification.Terminology
             if (codeSystemUri == "http://snomed.info/sct" || codeSystemUri == "http://loinc.org")
             {
                 throw new ValueSetExpansionTooComplexException($"Filtering codes from complex CodeSystem {codeSystemUri} is not supported");
-            }
-
-            if (filters.Any(f => !SUPPORTEDFILTERS.Contains(f.Op)))
-            {
-                string supportedFiltersString = string.Join(", ", SUPPORTEDFILTERS.Select(f => $"'{f.GetLiteral()}'"));
-                throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter other than {supportedFiltersString} are not yet supported.");
             }
 
             if (settings.ValueSetSource == null)
@@ -68,7 +60,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return filter.Op switch
             {
                 FilterOperator.IsA => applyIsAFilter(concepts, properties, filter),
-                _ => throw new InvalidOperationException("no filter was selected")
+                _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter {filter.Op} are not yet supported.")
             };
         }
 
@@ -83,12 +75,11 @@ namespace Hl7.Fhir.Specification.Terminology
                 if (concepts.FindCode(filter.Value) is { } concept)
                     result.Add(concept);
 
-                //Create a dictionary which lists children by parent.
+                //Create a lookup which lists children by parent.
                 var flattened = concepts.Flatten();
                 var childrenLookup = CreateSubsumedByLookup(flattened);
 
-
-                //find descendants based on that dictionary
+                //find descendants based on that lookup
                 var descendants = applySubsumedBy(childrenLookup, filter);
                 result.AddRange(descendants);
             }
