@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System;
@@ -23,7 +25,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// to another valueset is encountered.
         /// </summary>
 #pragma warning disable CS0618 // Type or member is obsolete
-        public ISyncOrAsyncResourceResolver ValueSetSource { get; set; }
+        public ISyncOrAsyncResourceResolver? ValueSetSource { get; set; }
 #pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
@@ -35,6 +37,11 @@ namespace Hl7.Fhir.Specification.Terminology
         /// Controls whether concept designations are to be included or excluded in value set expansions
         /// </summary>
         public bool IncludeDesignations { get; set; }
+
+        /// <summary>
+        /// Marks which CodeSystem are too complex for filtering.
+        /// </summary>
+        public string[] CodeSystemsTooComplexToFilter { get; set; } = ["http://snomed.info/sct", "http://loinc.org"];
 
         /// <summary>Default constructor. Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
         public ValueSetExpanderSettings() { }
@@ -57,6 +64,7 @@ namespace Hl7.Fhir.Specification.Terminology
             other.MaxExpansionSize = MaxExpansionSize;
             other.ValueSetSource = ValueSetSource;
             other.IncludeDesignations = IncludeDesignations;
+            other.CodeSystemsTooComplexToFilter = CodeSystemsTooComplexToFilter;
         }
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> object that is a copy of the current instance.</summary>
@@ -67,3 +75,5 @@ namespace Hl7.Fhir.Specification.Terminology
 
     }
 }
+
+#nullable restore
