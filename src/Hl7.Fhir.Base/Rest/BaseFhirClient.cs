@@ -28,7 +28,6 @@ namespace Hl7.Fhir.Rest
     public partial class BaseFhirClient : IDisposable
     {
         internal readonly ModelInspector Inspector;
-        private readonly IFhirSerializationEngine _serializationEngine;
         private readonly Lazy<List<HttpStatusCode>> _200responses = new(() => Enum.GetValues(typeof(HttpStatusCode)).Cast<HttpStatusCode>().Where(n => (int)n > 199 && (int)n < 300).ToList());
 
         /// <summary>
@@ -78,8 +77,6 @@ namespace Hl7.Fhir.Rest
             Inspector = inspector;
             Settings = settings;
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings.SerializationEngine ??
-                FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, settings.ParserSettings ?? new());
 
             Requester = requester;
 
@@ -1069,7 +1066,7 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             var requestMessage = request.ToHttpRequestMessage(
                     Requester.BaseUrl,
-                    _serializationEngine,
+                    getSerializationEngine(),
                     Settings.UseFhirVersionInAcceptHeader ? fhirVersion : null,
                     Settings);
 
@@ -1079,7 +1076,7 @@ namespace Hl7.Fhir.Rest
             // of the server, add a suggestion about this in the (legacy) parsing exception.
             var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
             (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
-                await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError)
+                await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError)
                 .ConfigureAwait(false);
 
             // If an error occurred while trying to interpret and validate the response, we will bail out now.
@@ -1171,6 +1168,11 @@ namespace Hl7.Fhir.Rest
             interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
 
         private bool _versionChecked = false;
+
+        private IFhirSerializationEngine getSerializationEngine()
+        {
+            return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new());
+        }
 
         private async Task verifyServerVersion(CancellationToken ct)
         {

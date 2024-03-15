@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Serialization
         public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
 
         public const string DUPLICATE_ARRAY_CODE = "JSON128";
+        public const string DUPLICATE_PROPERTY_CODE = "JSON129";
 
         // ==========================================
         // Unrecoverable Errors
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
         internal static FhirJsonException UNKNOWN_PROPERTY_FOUND(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, UNKNOWN_PROPERTY_FOUND_CODE, $"Encountered unrecognized element '{propName}'.", OO_Sev.Error, OO_Typ.Structure); // this could be ignored, so isn't fatal?
         internal static FhirJsonException INCOMPATIBLE_SIMPLE_VALUE(ref Utf8JsonReader reader, string instancePath, string value, FhirJsonException? err) => Initialize(ref reader, instancePath, INCOMPATIBLE_SIMPLE_VALUE_CODE, $"Json primitive value does not match the expected type of the primitive property. Details: ({value})", OO_Sev.Fatal, OO_Typ.Value, err);
+        internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", OO_Sev.Fatal, OO_Typ.Structure);
 
         // ==========================================
         // Recoverable Errors
