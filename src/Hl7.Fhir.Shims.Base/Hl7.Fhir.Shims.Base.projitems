@@ -9,6 +9,7 @@
     <Import_RootNamespace>Hl7.Fhir.Shims.Base</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\SnapshotSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\CodeSystemFilterProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExpandParameters.cs" />

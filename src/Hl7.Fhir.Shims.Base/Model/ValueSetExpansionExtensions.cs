@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSDC = Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent;
 
 #nullable enable
 
@@ -8,7 +9,6 @@ namespace Hl7.Fhir.Model
 {
     public static class ValueSetExpansionExtensions
     {
-
         public static ValueSet.ContainsComponent? FindCode(this IEnumerable<ValueSet.ContainsComponent> cnt, string code, string? system = null)
         {
             foreach (var contains in cnt)
@@ -19,8 +19,6 @@ namespace Hl7.Fhir.Model
 
             return null;
         }
-
-
         public static ValueSet.ContainsComponent? FindCode(this ValueSet.ContainsComponent contains, string code, string? system = null)
         {
             // Direct hit
@@ -28,24 +26,18 @@ namespace Hl7.Fhir.Model
                 return contains;
 
             // Not in this node, but this node may have child nodes to check
-            if (contains.Contains != null && contains.Contains.Any())
+            if (contains.Contains?.Any() == true)
                 return contains.Contains.FindCode(code, system);
             else
                 return null;
         }
 
-        internal static CodeSystem.ConceptDefinitionComponent? FindCode(this IEnumerable<CodeSystem.ConceptDefinitionComponent> concepts, string code)
+        internal static CSDC? FindCode(this IEnumerable<CSDC> concepts, string code)
         {
-            foreach (var concept in concepts)
-            {
-                var predicate = () => concept.Code == code;
-                var result = concept.findCodeByPredicate(predicate);
-                if (result != null) return result;
-            }
-            return null;
+            return concepts.findCodeByPredicate(c => c.Code == code);
         }
 
-        private static CodeSystem.ConceptDefinitionComponent? findCodeByPredicate(this IEnumerable<CodeSystem.ConceptDefinitionComponent> concepts, Func<bool> predicate)
+        private static CSDC? findCodeByPredicate(this IEnumerable<CSDC> concepts, Predicate<CSDC> predicate)
         {
             foreach (var concept in concepts)
             {
@@ -55,19 +47,17 @@ namespace Hl7.Fhir.Model
             return null;
         }
 
-        private static CodeSystem.ConceptDefinitionComponent? findCodeByPredicate(this CodeSystem.ConceptDefinitionComponent concept, Func<bool> predicate)
+        private static CSDC? findCodeByPredicate(this CSDC concept, Predicate<CSDC> predicate)
         {
             // Direct hit
-            if (predicate.Invoke())
+            if (predicate(concept))
                 return concept;
 
             // Not in this node, but this node may have child nodes to check
-            if (concept.Concept != null && concept.Concept.Any())
+            if (concept.Concept?.Any() == true)
                 return concept.Concept.findCodeByPredicate(predicate);
             else
                 return null;
         }
     }
 }
-
-#nullable restore
