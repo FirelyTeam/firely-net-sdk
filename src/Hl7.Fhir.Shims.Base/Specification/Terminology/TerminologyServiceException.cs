@@ -47,6 +47,14 @@ namespace Hl7.Fhir.Specification.Terminology
         {
         }
     }
+
+    public class CodeSystemIncompleteException : TerminologyServiceException
+    {
+        public CodeSystemIncompleteException(string message) : base(message)
+        {
+        }
+    }
+
 }
 
 #nullable restore

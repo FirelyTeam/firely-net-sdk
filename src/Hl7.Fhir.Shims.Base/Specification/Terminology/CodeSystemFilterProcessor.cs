@@ -37,6 +37,10 @@ namespace Hl7.Fhir.Specification.Terminology
             var codeSystem = await settings.ValueSetSource.AsAsync().FindCodeSystemAsync(codeSystemUri).ConfigureAwait(false)
                   ?? throw new CodeSystemUnknownException($"Cannot find codesystem '{codeSystemUri}', so the defined filter(s) cannot be applied.");
 
+            if (codeSystem.Content.GetLiteral() != "complete")
+                throw new CodeSystemIncompleteException($"CodeSystem {codeSystemUri} is marked incomplete, so the defines filter(s) cannot be applied.");
+
+
             var result = applyFilters(filters, codeSystem);
 
             return result.Select(c => c.ToContainsComponent(codeSystem, settings));
