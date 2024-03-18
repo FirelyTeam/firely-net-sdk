@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
         internal static CodeSystem GetCodeSystem(string url)
         {
-            return new CodeSystem { Url = url };
+            return new CodeSystem { Url = url, Content = CodeSystemContentMode.Complete };
 
         }
 
