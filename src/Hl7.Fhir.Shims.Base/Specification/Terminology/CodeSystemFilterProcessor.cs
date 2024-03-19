@@ -26,11 +26,6 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <exception cref="CodeSystemUnknownException">Thrown when the requested CodeSystem can not be found by the resource resolver in ValueSetExpanderSettings</exception>
         internal async static T.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, List<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
         {
-            if (settings.CodeSystemsTooComplexToFilter.Contains(codeSystemUri))
-            {
-                throw new ValueSetExpansionTooComplexException($"Filtering codes from complex CodeSystem {codeSystemUri} is not supported");
-            }
-
             if (settings.ValueSetSource == null)
                 throw Error.InvalidOperation($"No valueset resolver available to resolve codesystem '{codeSystemUri}', so the expansion cannot be completed.");
 

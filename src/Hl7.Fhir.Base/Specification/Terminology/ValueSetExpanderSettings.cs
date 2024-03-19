@@ -38,11 +38,6 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         public bool IncludeDesignations { get; set; }
 
-        /// <summary>
-        /// Marks which CodeSystem are too complex for filtering.
-        /// </summary>
-        public string[] CodeSystemsTooComplexToFilter { get; set; } = ["http://snomed.info/sct", "http://loinc.org"];
-
         /// <summary>Default constructor. Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
         public ValueSetExpanderSettings() { }
 
@@ -64,7 +59,6 @@ namespace Hl7.Fhir.Specification.Terminology
             other.MaxExpansionSize = MaxExpansionSize;
             other.ValueSetSource = ValueSetSource;
             other.IncludeDesignations = IncludeDesignations;
-            other.CodeSystemsTooComplexToFilter = CodeSystemsTooComplexToFilter;
         }
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> object that is a copy of the current instance.</summary>
