@@ -32,8 +32,15 @@ internal partial class PocoSerializationEngine
             return (instance, issues);
         });
     }
-
+    
     /// <inheritdoc />
+    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
+
+    /// <summary>
+    /// Deserializes a resource from an XML reader
+    /// </summary>
+    /// <param name="reader">The XML reader</param>
+    /// <returns>The parsed resource</returns>
     public Resource DeserializeFromXml(XmlReader reader)
     {
         return (Resource)deserializeAndFilterErrors(() =>
@@ -43,7 +50,12 @@ internal partial class PocoSerializationEngine
         });
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Deserializes an element from an XML reader
+    /// </summary>
+    /// <param name="targetType">The target type of the object</param>
+    /// <param name="reader">The XML reader</param>
+    /// <returns>A POCO representation of the input read by the reader</returns>
     public Base DeserializeElementFromXml(Type targetType, XmlReader reader)
     {
         return deserializeAndFilterErrors(() =>
@@ -52,8 +64,4 @@ internal partial class PocoSerializationEngine
             return (instance, issues);
         });
     }
-    
-    
-    /// <inheritdoc />
-    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
 }

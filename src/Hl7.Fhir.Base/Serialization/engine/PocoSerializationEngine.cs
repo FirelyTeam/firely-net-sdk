@@ -23,10 +23,10 @@ using System.Xml;
 namespace Hl7.Fhir.Serialization
 {
     /// <summary>
-    /// This is an implementation of <see cref="IFhirExtendedSerializationEngine"/> which uses the
+    /// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
     /// new Poco-based parser and serializer, initialized with the default settings.
     /// </summary>
-    internal partial class PocoSerializationEngine : IFhirExtendedSerializationEngine
+    internal partial class PocoSerializationEngine : IFhirSerializationEngine
     {
         private delegate (Base?, IEnumerable<CodedException>) TryDeserializer();
 

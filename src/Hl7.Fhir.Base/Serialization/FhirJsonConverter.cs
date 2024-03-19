@@ -28,6 +28,11 @@ namespace Hl7.Fhir.Serialization
     {
         internal PocoSerializationEngine? Engine { get; set; }
 
+        private PocoSerializationEngine createDefaultEngine()
+        {
+            return (PocoSerializationEngine)FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings);
+        }
+
         public FhirJsonConverterFactory(
             Assembly assembly, FhirJsonPocoSerializerSettings serializerSettings, FhirJsonPocoDeserializerSettings deserializerSettings) : this(ModelInspector.ForAssembly(assembly), serializerSettings, deserializerSettings)
         {
@@ -36,13 +41,13 @@ namespace Hl7.Fhir.Serialization
 
         internal void SetEnforcedErrors(IEnumerable<string> toEnforce)
         {
-            Engine ??= (FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings) as PocoSerializationEngine)!;
+            Engine ??= createDefaultEngine();
             Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());            
         }
 
         internal void SetIgnoredErrors(IEnumerable<string> toIgnore)
         {
-            Engine ??= (FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings) as PocoSerializationEngine)!;
+            Engine ??= createDefaultEngine();
             Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate()); 
         }
 
@@ -53,7 +58,7 @@ namespace Hl7.Fhir.Serialization
                 DeserializerModes.Recoverable => (PocoSerializationEngine)FhirSerializationEngineFactory.Recoverable(inspector, serializerSettings, deserializerSettings),
                 DeserializerModes.BackwardsCompatible => (PocoSerializationEngine)FhirSerializationEngineFactory.BackwardsCompatible(inspector, serializerSettings, deserializerSettings),
                 DeserializerModes.Ostrich => (PocoSerializationEngine)FhirSerializationEngineFactory.Ostrich(inspector, serializerSettings, deserializerSettings),
-                _ => (PocoSerializationEngine)FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings)
+                _ => createDefaultEngine()
             };
         }
 
@@ -61,7 +66,7 @@ namespace Hl7.Fhir.Serialization
 
         public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
-            Engine ??= (PocoSerializationEngine)FhirSerializationEngineFactory.Strict(inspector, serializerSettings, deserializerSettings);
+            Engine ??= createDefaultEngine();
             return (JsonConverter?)Activator.CreateInstance(
                 typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert), BindingFlags.NonPublic | BindingFlags.Instance, null,
                 [ Engine ], null, null);
