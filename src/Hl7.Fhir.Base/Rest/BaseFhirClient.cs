@@ -456,7 +456,6 @@ namespace Hl7.Fhir.Rest
         /// <param name="resourceType">The type of resource to delete (optional)</param>
         /// <param name="versionId">The versionId to be used for the if-match header</param>
         /// <param name="ct"></param>
-
         public virtual async Task ConditionalDeleteSingle(SearchParams condition, string? resourceType = null, string? versionId = null, CancellationToken? ct = null)
         {
             var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType, versionId).ToBundle();
