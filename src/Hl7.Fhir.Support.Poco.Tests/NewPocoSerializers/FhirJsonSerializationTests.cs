@@ -83,20 +83,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
             contactArray.GetArrayLength().Should().Be(1);
             contactArray[0].EnumerateObject().Should().BeEmpty();
         }
-        
-        [TestMethod]
-        public void TestDateTimeStuff()
-        {
-            var testPatient = new TestPatient { Deceased = new FhirDateTime(DateTimeOffset.Parse("2024-03-07T15:55:11.0100000+01:00")) };
-
-            var dateTime = DateTimeOffset.Parse("2024-03-07T15:55:11.0100000+01:00");
-
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
-
-            var str = JsonSerializer.Serialize(dateTime, options);
-            
-            return;
-        }
     }
 
     
