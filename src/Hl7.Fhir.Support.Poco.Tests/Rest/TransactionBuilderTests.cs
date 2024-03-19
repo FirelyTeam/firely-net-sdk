@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Test
         {
             var p = new TestPatient();
             var tx = new TransactionBuilder("http://myserver.org/fhir")
-                .Delete(new SearchParams().Where("name=foobar"), p, versionId: "314");
+                .ConditionalDeleteSingle(new SearchParams().Where("name=foobar"), p.TypeName, versionId: "314");
             var b = tx.ToBundle();
 
             Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);

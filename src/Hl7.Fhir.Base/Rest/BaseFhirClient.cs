@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Rest
     public partial class BaseFhirClient : IDisposable
     {
         internal readonly ModelInspector Inspector;
-        private readonly Lazy<List<HttpStatusCode>> _200responses = new(() => Enum.GetValues(typeof(HttpStatusCode)).Cast<HttpStatusCode>().Where(n => (int)n > 199 && (int)n < 300).ToList());
+        private readonly Lazy<List<HttpStatusCode>> _200Responses = new(() => Enum.GetValues(typeof(HttpStatusCode)).Cast<HttpStatusCode>().Where(n => (int)n > 199 && (int)n < 300).ToList());
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -411,19 +411,6 @@ namespace Hl7.Fhir.Rest
         /// Delete a resource at the given endpoint.
         /// </summary>
         /// <param name="location">endpoint of the resource to delete</param>
-        /// <returns>Throws an exception when the delete failed, though this might
-        /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
-        /// already deleted).</returns>
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public virtual void Delete(Uri location)
-        {
-            DeleteAsync(location).WaitNoResult();
-        }
-
-        /// <summary>
-        /// Delete a resource at the given endpoint.
-        /// </summary>
-        /// <param name="location">endpoint of the resource to delete</param>
         /// <param name="ct"></param>
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
@@ -434,48 +421,16 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Delete a resource at the given endpoint.
-        /// </summary>
-        /// <param name="location">endpoint of the resource to delete</param>
-        /// <returns>Throws an exception when the delete failed, though this might
-        /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
-        /// already deleted).</returns>
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public virtual void Delete(string location)
-        {
-            DeleteAsync(location).WaitNoResult();
-        }
-
-
-        /// <summary>
         /// Delete a resource
         /// </summary>
         /// <param name="resource">The resource to delete</param>
         /// <param name="ct"></param>
-        /// <param name="versionAware"></param>
-        public virtual async Task DeleteAsync(Resource resource, CancellationToken? ct = null, bool versionAware = false)
+        public virtual async Task DeleteAsync(Resource resource, CancellationToken? ct = null)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Entry must have an id");
 
-            var del = new TransactionBuilder(Endpoint);
-                
-            if (versionAware && resource.HasVersionId)
-                del.Update(resource.Id, resource, versionId: resource.VersionId);
-            else
-                del.Update(resource.Id, resource);
-
-            await internalDeleteAsync(resource, del.ToBundle(), ct);
-        }
-
-        /// <summary>
-        /// Delete a resource
-        /// </summary>
-        /// <param name="resource">The resource to delete</param>
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public virtual void Delete(Resource resource)
-        {
-            DeleteAsync(resource).WaitNoResult();
+            await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion(), ct).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -484,12 +439,25 @@ namespace Hl7.Fhir.Rest
         /// <param name="resourceType">The type of resource to delete</param>
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
         /// <param name="ct"></param>
+        [Obsolete("As of R6, conditional deletes will be considered separate operations. Use ConditionalDeleteSingle or ConditionalDeleteMultiple instead.")]
         public virtual async Task DeleteAsync(string resourceType, SearchParams condition, CancellationToken? ct = null)
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
-            var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType).ToBundle();
+            await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
+        }
+
+        public virtual async Task ConditionalDeleteSingle(SearchParams condition, string? resourceType = null, string? versionId = null, CancellationToken? ct = null)
+        {
+            var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType, versionId).ToBundle();
+            await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
+        }
+
+        public virtual async Task ConditionalDeleteMultiple(SearchParams condition, string? resourceType = null, CancellationToken? ct = null)
+        {
+            var tx = new TransactionBuilder(Endpoint).ConditionalDeleteMultiple(condition, resourceType).ToBundle();
             await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
         }
 
@@ -504,11 +472,40 @@ namespace Hl7.Fhir.Rest
             DeleteAsync(resourceType, condition).WaitNoResult();
         }
         
-        private Task<TResource?> internalDeleteAsync<TResource>(TResource resource, Bundle tx, CancellationToken? ct) where TResource : Resource
+        /// <summary>
+        /// Delete a resource at the given endpoint.
+        /// </summary>
+        /// <param name="location">endpoint of the resource to delete</param>
+        /// <returns>Throws an exception when the delete failed, though this might
+        /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
+        /// already deleted).</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
+        public virtual void Delete(Uri location)
         {
-            resource.ResourceBase = Endpoint;
-            
-            return executeAsync<TResource>(tx, new[] { HttpStatusCode.OK }, ct);
+            DeleteAsync(location).WaitNoResult();
+        }
+        
+        /// <summary>
+        /// Delete a resource
+        /// </summary>
+        /// <param name="resource">The resource to delete</param>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
+        public virtual void Delete(Resource resource)
+        {
+            DeleteAsync(resource).WaitNoResult();
+        }
+        
+        /// <summary>
+        /// Delete a resource at the given endpoint.
+        /// </summary>
+        /// <param name="location">endpoint of the resource to delete</param>
+        /// <returns>Throws an exception when the delete failed, though this might
+        /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
+        /// already deleted).</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
+        public virtual void Delete(string location)
+        {
+            DeleteAsync(location).WaitNoResult();
         }
 
         #endregion
@@ -928,7 +925,7 @@ namespace Hl7.Fhir.Rest
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
             //operation responses are expected to return 2xx codes.
-            return executeAsync<Resource>(tx, _200responses.Value, ct);
+            return executeAsync<Resource>(tx, _200Responses.Value, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
@@ -944,7 +941,7 @@ namespace Hl7.Fhir.Rest
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
             //operation responses are expected to return 2xx codes.
-            return executeAsync<Resource>(tx, _200responses.Value, ct);
+            return executeAsync<Resource>(tx, _200Responses.Value, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
@@ -989,7 +986,7 @@ namespace Hl7.Fhir.Rest
                 tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
             //operation responses are expected to return 2xx codes.
-            return executeAsync<Resource>(tx, _200responses.Value, ct);
+            return executeAsync<Resource>(tx, _200Responses.Value, ct);
         }
 
         private Resource? internalOperation(string operationName, string? type = null, string? id = null,
