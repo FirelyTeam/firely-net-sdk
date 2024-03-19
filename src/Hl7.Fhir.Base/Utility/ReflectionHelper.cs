@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Utility
                 return false;
 
             // Return the result of the assignability test
-            return typeToCompareWith.GetTypeInfo().IsAssignableFrom(currentType.GetTypeInfo());
+            return typeToCompareWith.IsAssignableFrom(currentType);
         }
 
 
