@@ -7,6 +7,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Xml;
+using Date = Hl7.Fhir.ElementModel.Types.Date;
+using DateTime = Hl7.Fhir.ElementModel.Types.DateTime;
 using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 
 namespace Hl7.Fhir.Support.Poco.Tests
@@ -552,6 +554,19 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private static BaseFhirXmlPocoDeserializer getTestDeserializer(FhirXmlPocoDeserializerSettings settings) =>
                 new(typeof(TestPatient).Assembly, settings);
+        
+        [TestMethod]
+        public void TestDateTimeStuff()
+        {
+            var xml = """
+                      <Patient xmlns="http://hl7.org/fhir">
+                      <deceasedDateTime value="1310-10-13T10:23:13.00000011Z" />
+                      </Patient>
+                      """;
+            var reader = constructReader(xml);
+            var parsed = getTestDeserializer(new()).TryDeserializeResource(reader, out var instance, out var issues);
 
+            return;
+        }
     }
 }

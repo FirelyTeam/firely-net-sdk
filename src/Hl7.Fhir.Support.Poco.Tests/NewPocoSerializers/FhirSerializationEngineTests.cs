@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             test(data, FhirSerializationEngineFactory.Strict(TESTINSPECTOR), strict);
             test(data, FhirSerializationEngineFactory.BackwardsCompatible(TESTINSPECTOR), bw);
             test(data, FhirSerializationEngineFactory.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
+            // TODO add custom test
         }
 
         private static void test(string data, IFhirSerializationEngine engine, string? error, [CallerArgumentExpression(nameof(engine))] string? engineName = default)
