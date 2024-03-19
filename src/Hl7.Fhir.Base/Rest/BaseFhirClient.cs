@@ -448,13 +448,27 @@ namespace Hl7.Fhir.Rest
             var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType).ToBundle();
             await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
         }
+        
+        /// <summary>
+        /// Conditionally delete a single resource
+        /// </summary>
+        /// <param name="condition">Criteria to use to match the resource to delete</param>
+        /// <param name="resourceType">The type of resource to delete (optional)</param>
+        /// <param name="versionId">The versionId to be used for the if-match header</param>
+        /// <param name="ct"></param>
 
         public virtual async Task ConditionalDeleteSingle(SearchParams condition, string? resourceType = null, string? versionId = null, CancellationToken? ct = null)
         {
             var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType, versionId).ToBundle();
             await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
         }
-
+        
+        /// <summary>
+        /// Conditionally deletes multiple resources
+        /// </summary>
+        /// <param name="condition">The search criteria to match the resources to be deleted.</param>
+        /// <param name="resourceType">The type of resource to delete (optional)</param>
+        /// <param name="ct"></param>
         public virtual async Task ConditionalDeleteMultiple(SearchParams condition, string? resourceType = null, CancellationToken? ct = null)
         {
             var tx = new TransactionBuilder(Endpoint).ConditionalDeleteMultiple(condition, resourceType).ToBundle();
