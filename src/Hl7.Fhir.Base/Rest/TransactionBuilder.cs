@@ -13,6 +13,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.IO;
 
 namespace Hl7.Fhir.Rest
 {
@@ -160,16 +161,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Update(string id, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update, bundleEntryFullUrl);
-            entry.Resource = body;
-            entry.Request.IfMatch = createIfMatchETag(versionId);
-            var path = newRestUrl().AddPath(body.TypeName, id);
-            addEntry(entry, path);
-
-            return this;
-        }
+        public TransactionBuilder Update(string id, Resource body, string? versionId = null, string? bundleEntryFullUrl = null) =>
+            getUpdateEntryInternal(id, body, versionId, bundleEntryFullUrl);
 
         /// <summary>
         /// Add a "conditional update" entry to the transaction/batch
@@ -179,13 +172,16 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Update(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
+        public TransactionBuilder Update(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null) =>
+            getUpdateEntryInternal(condition, body, versionId, bundleEntryFullUrl);
+
+        private TransactionBuilder getUpdateEntryInternal(object idOrCondition, Resource body, string? versionId, string? bundleEntryFullUrl)
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
-            path.AddParams(condition.ToUriParamList());
+            addIdOrCondition(path, idOrCondition);
             addEntry(entry, path);
 
             return this;
@@ -200,16 +196,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Patch(string resourceType, string id, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch, bundleEntryFullUrl);
-            entry.Resource = body;
-            entry.Request.IfMatch = createIfMatchETag(versionId);
-            var path = newRestUrl().AddPath(resourceType, id);
-            addEntry(entry, path);
-
-            return this;
-        }
+        public TransactionBuilder Patch(string resourceType, string id, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null) => 
+            getPatchEntryInternal(resourceType, id, body, versionId, bundleEntryFullUrl);
 
         /// <summary>
         /// Add a "patch" entry to the transaction/batch
@@ -220,13 +208,16 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null)
+        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null) => 
+            getPatchEntryInternal(resourceType, condition, body, versionId, bundleEntryFullUrl);
+
+        private TransactionBuilder getPatchEntryInternal(string resourceType, object idOrCondition, Parameters body, string? versionId, string? bundleEntryFullUrl)
         {
             var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(resourceType);
-            path.AddParams(condition.ToUriParamList());
+            addIdOrCondition(path, idOrCondition);
             addEntry(entry, path);
 
             return this;
@@ -248,14 +239,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="id">id of the resource to be deleted</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Delete(string resourceType, string id, string? bundleEntryFullUrl = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete, bundleEntryFullUrl);
-            var path = newRestUrl().AddPath(resourceType, id);
-            addEntry(entry, path);
-
-            return this;
-        }
+        public TransactionBuilder Delete(string resourceType, string id, string? bundleEntryFullUrl = null) => 
+            getDeleteEntryInternal(resourceType, bundleEntryFullUrl, id);
 
         /// <summary>
         /// Add a "conditional delete" entry to the transaction/batch
@@ -264,15 +249,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">conditions on which the resource should be deleted</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Delete(string resourceType, SearchParams condition, string? bundleEntryFullUrl = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete, bundleEntryFullUrl);
-            var path = newRestUrl().AddPath(resourceType);
-            path.AddParams(condition.ToUriParamList());
-            addEntry(entry, path);
-
-            return this;
-        }
+        public TransactionBuilder Delete(string resourceType, SearchParams condition, string? bundleEntryFullUrl = null) => 
+            getDeleteEntryInternal(resourceType, bundleEntryFullUrl, condition);
 
         /// <summary>
         /// Add a "conditional delete" entry to the transaction/batch
@@ -282,13 +260,21 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Delete(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
+        public TransactionBuilder Delete(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null) =>
+            getDeleteEntryInternal(body.TypeName, bundleEntryFullUrl, condition, versionId, body);
+        
+        private TransactionBuilder getDeleteEntryInternal(string resourceType, string? bundleEntryFullUrl, object idOrCondition, string? versionId = null, Resource? body = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete, bundleEntryFullUrl);
-            entry.Resource = body;
+            var path = newRestUrl().AddPath(resourceType);
+            
+            if (body is not null)
+            {
+                entry.Resource = body;
+            }
+            
             entry.Request.IfMatch = createIfMatchETag(versionId);
-            var path = newRestUrl().AddPath(body.TypeName);
-            path.AddParams(condition.ToUriParamList());
+            addIdOrCondition(path, idOrCondition); // must have a condition if no id is specified
             addEntry(entry, path);
 
             return this;
@@ -302,10 +288,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder Create(Resource body, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create, bundleEntryFullUrl);
-            entry.Resource = body;
-            var path = newRestUrl().AddPath(body.TypeName);
-            addEntry(entry, path);
+            addCreateEntryInternal(body, bundleEntryFullUrl: bundleEntryFullUrl);
 
             return this;
         }
@@ -320,14 +303,23 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder Create(Resource body, SearchParams condition, string? bundleEntryFullUrl = null)
         {
+            addCreateEntryInternal(body, condition, bundleEntryFullUrl);
+
+            return this;
+        }
+
+        private void addCreateEntryInternal(Resource body, SearchParams? condition = null, string? bundleEntryFullUrl = null)
+        {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create, bundleEntryFullUrl);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
-            entry.Request.IfNoneExist = condition.ToUriParamList().ToQueryString();
+            if (condition is not null)
+            {
+                entry.Request.IfNoneExist = condition.ToUriParamList().ToQueryString();
+            }
+            
             addEntry(entry, path);
-
-            return this;
         }
 
         /// <summary>
@@ -585,6 +577,16 @@ namespace Hl7.Fhir.Rest
             addEntry(entry, new RestUrl(url));
 
             return this;
+        }
+
+        private void addIdOrCondition(RestUrl path, object idOrSearchParams)
+        {
+            _ = idOrSearchParams switch
+            {
+                string id => path.AddPath(id),
+                SearchParams sp => path.AddParams(sp.ToUriParamList()),
+                _ => throw new NotSupportedException("This should be unreachable")
+            };
         }
     }
 }
