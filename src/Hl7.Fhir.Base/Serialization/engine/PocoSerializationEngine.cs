@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Hl7.Fhir.Serialization

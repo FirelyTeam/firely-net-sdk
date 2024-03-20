@@ -8,9 +8,12 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+
+#nullable enable
 
 namespace Hl7.Fhir.Serialization
 {
@@ -19,7 +22,7 @@ namespace Hl7.Fhir.Serialization
         public static bool IsResourceName(this XName elementName, bool ignoreNameSpace = false) =>
             Char.IsUpper(elementName.LocalName, 0) && (ignoreNameSpace || elementName.Namespace == XmlNs.XFHIR);
 
-        public static bool TryGetContainedResource(this XElement xe, out XElement contained, bool ignoreNameSpace = false)
+        public static bool TryGetContainedResource(this XElement xe, [NotNullWhen(true)] out XElement? contained, bool ignoreNameSpace = false)
         {
             contained = null;
 
@@ -38,20 +41,20 @@ namespace Hl7.Fhir.Serialization
             return false;
         }
 
-        public static XObject NextElementOrAttribute(this XObject current)
+        public static XObject? NextElementOrAttribute(this XObject current)
         {
             var scan = current.NextSibling();
             return scanToNextRelevantNode(scan);
         }
 
-        public static XObject FirstChildElementOrAttribute(this XObject current)
+        public static XObject? FirstChildElementOrAttribute(this XObject current)
         {
             var scan = current.FirstChild();
             return scanToNextRelevantNode(scan);
         }
 
 
-        private static XObject scanToNextRelevantNode(this XObject scan)
+        private static XObject? scanToNextRelevantNode(this XObject? scan)
         {
             while (scan != null)
             {
@@ -75,7 +78,7 @@ namespace Hl7.Fhir.Serialization
         public static bool HasRelevantAttributes(this XElement scan) =>
             scan.Attributes().Any(a => isRelevantAttribute(a));
 
-        public static string GetValue(this XObject current)
+        public static string? GetValue(this XObject current)
         {
             if (current.AtXhtmlDiv())
                 return ((XElement)current).ToString(SaveOptions.DisableFormatting);

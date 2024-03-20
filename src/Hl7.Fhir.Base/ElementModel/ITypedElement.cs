@@ -8,6 +8,8 @@
 
 using Hl7.Fhir.Specification;
 
+#nullable enable
+
 namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
@@ -32,6 +34,6 @@ namespace Hl7.Fhir.ElementModel
         /// the user in locating issues in the data.</remarks>
         string Location { get; }
 
-        IElementDefinitionSummary Definition { get; }
+        IElementDefinitionSummary? Definition { get; }
     }
 }

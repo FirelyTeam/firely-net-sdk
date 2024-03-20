@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Introspection
         /// <remarks>For enums shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract. </remarks>
         /// <seealso cref="TryCreate(Type, out EnumMapping?, FhirRelease)"/>
-        public static bool TryGetMappingForEnum(Type t, FhirRelease release, out EnumMapping? mapping)
+        public static bool TryGetMappingForEnum(Type t, FhirRelease release, [NotNullWhen(true)] out EnumMapping? mapping)
         {
             mapping = _mappedEnums.GetOrAdd((t, release), createMapping);
             return mapping is not null;

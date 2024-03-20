@@ -33,7 +33,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Decimal Parse(string value) =>
             TryParse(value, out var result) ? result! : throw new FormatException($"String '{value}' was not recognized as a valid decimal.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)]out Decimal? value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Decimal? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 

@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Long Parse(string value) =>
             TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid long integer.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)]out Long? value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Long? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 

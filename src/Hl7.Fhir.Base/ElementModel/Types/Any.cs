@@ -57,7 +57,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 throw new FormatException($"Input string '{value}' was not in a correct format for type '{primitiveType}'.");
         }
 
-        public static bool TryParse(string value, Type primitiveType, [NotNullWhen(true)]out object? parsed)
+        public static bool TryParse(string value, Type primitiveType, [NotNullWhen(true)] out object? parsed)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
             if (!typeof(Any).IsAssignableFrom(primitiveType)) throw new ArgumentException($"Must be a subclass of {nameof(Any)}.", nameof(primitiveType));
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Try to convert a .NET instance to a Cql/FhirPath Any-based type.
         /// </summary>
-        public static bool TryConvert(object? value, [NotNullWhen(true)]out Any? primitiveValue)
+        public static bool TryConvert(object? value, [NotNullWhen(true)] out Any? primitiveValue)
         {
             primitiveValue = conv();
             return primitiveValue != null;

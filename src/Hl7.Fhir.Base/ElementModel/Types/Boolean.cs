@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Boolean Parse(string value) =>
             TryParse(value, out var result) ? result! : throw new FormatException($"String '{value}' was not recognized as a valid boolean.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)]out Boolean? value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Boolean? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

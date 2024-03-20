@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Utility
         {
             var result = new List<string>();
 
-            if (!doc.Root.AtXhtmlDiv())
+            if (!doc.Root!.AtXhtmlDiv())
                 return new[] { $"Root element of XHTML is not a <div> from the XHTML namespace ({XmlNs.XHTML})." };
 
             if (!hasContent(doc.Root!))

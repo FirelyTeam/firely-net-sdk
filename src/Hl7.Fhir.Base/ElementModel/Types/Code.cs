@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public string? Version { get; }
 
         public static Code Parse(string value) => throw new NotImplementedException();
-        public static bool TryParse(string representation, [NotNullWhen(true)]out Code? value) => throw new NotImplementedException();
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Code? value) => throw new NotImplementedException();
 
         public override int GetHashCode() => (System, Value, Display, Version).GetHashCode();
         public override string ToString() => $"{Value}@{System} " + Display ?? "";

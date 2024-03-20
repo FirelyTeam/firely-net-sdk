@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Specification.Source
         public bool ContainsKey(string key) => properties.ContainsKey(key);
 
         /// <summary>Gets the property value associated with the specified property key.</summary>
-        public bool TryGetValue(string key, [NotNullWhen(true)]out object? value) => properties.TryGetValue(key, out value);
+        public bool TryGetValue(string key, [NotNullWhen(true)] out object? value) => properties.TryGetValue(key, out value);
 
         #endregion
 

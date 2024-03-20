@@ -28,7 +28,7 @@ namespace Hl7.Fhir.ElementModel.Types
 
         public static Ratio Parse(string representation) =>
              TryParse(representation, out var result) ? result! : throw new FormatException($"String '{representation}' was not recognized as a valid ratio.");
-        public static bool TryParse(string representation, [NotNullWhen(true)]out Ratio? value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Ratio? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

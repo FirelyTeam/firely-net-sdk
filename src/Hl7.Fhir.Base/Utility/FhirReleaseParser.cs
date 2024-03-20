@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="fhirMimeVersion">'fhirversion' MIME-Type parameter</param>
         /// <param name="release">Official FHIR Release</param>
         /// <returns>true if the conversion succeeded; false otherwise.</returns>
-        public static bool TryGetFhirReleaseFromMimeVersion(string fhirMimeVersion, out FhirRelease? release)
+        public static bool TryGetFhirReleaseFromMimeVersion(string fhirMimeVersion, [NotNullWhen(true)] out FhirRelease? release)
         {
             release = fhirMimeVersion switch
             {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="packageName">FHIR Core package name</param>
         /// <param name="release">Official FHIR Release</param>
         /// <returns>true if the conversion succeeded; false otherwise</returns>
-        public static bool TryGetFhirReleaseFromCorePackageName(string packageName, out FhirRelease? release)
+        public static bool TryGetFhirReleaseFromCorePackageName(string packageName, [NotNullWhen(true)] out FhirRelease? release)
         {
             release = packageName switch
             {

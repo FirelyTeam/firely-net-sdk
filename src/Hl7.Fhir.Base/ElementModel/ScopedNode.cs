@@ -123,7 +123,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
         /// <inheritdoc />
-        public IElementDefinitionSummary Definition => Current.Definition;
+        public IElementDefinitionSummary? Definition => Current.Definition;
 
         /// <summary>
         /// Get the list of container parents in a list, nearest parent first.

@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Introspection
         /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract. </remarks>
         /// <seealso cref="TryCreate(Type, out ClassMapping?, FhirRelease)"/>
-        public static bool TryGetMappingForType(Type t, FhirRelease release, out ClassMapping? mapping)
+        public static bool TryGetMappingForType(Type t, FhirRelease release, [NotNullWhen(true)] out ClassMapping? mapping)
         {
             mapping = _mappedClasses.GetOrAdd((t, release), createMapping);
             return mapping is not null;
