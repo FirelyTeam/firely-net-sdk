@@ -126,7 +126,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="unit">The parsed unit, either as a UCUM code or a non-UCUM calender unit.</param>
         /// <param name="isCalendarUnit">True is this is a non-UCUM calendar unit.</param>
         /// <returns>True if this is a recognized time unit literal, false otherwise.</returns>
-        public static bool TryParseTimeUnit(string unitLiteral, out string? unit, out bool isCalendarUnit)
+        public static bool TryParseTimeUnit(string unitLiteral, [NotNullWhen(true)] out string? unit, out bool isCalendarUnit)
         {
             if (unitLiteral is null) throw new ArgumentNullException(nameof(unitLiteral));
 

@@ -106,7 +106,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// Converts the date to a full DateTimeOffset instance.
         /// </summary>
         /// <returns></returns>
-        private static bool tryParse(string representation, out Date value)
+        private static bool tryParse(string representation, [NotNullWhen(true)] out Date? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

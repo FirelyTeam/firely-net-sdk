@@ -189,7 +189,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             _ = Quantity.TryParse(left, out var q1);
             _ = Quantity.TryParse(right, out var q2);
 
-            var opResult = operation(q1, q2);
+            var opResult = operation(q1!, q2!);
 
             if (result is string r && Quantity.TryParse(r, out var q3))
             {

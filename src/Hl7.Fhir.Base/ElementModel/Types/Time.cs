@@ -101,7 +101,7 @@ namespace Hl7.Fhir.ElementModel.Types
         private static readonly Regex PARTIALTIMEREGEX =
             new Regex("^" + PARTIALTIMEFORMAT + "$", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        private static bool tryParse(string representation, out Time value)
+        private static bool tryParse(string representation, [NotNullWhen(true)] out Time? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

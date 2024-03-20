@@ -313,9 +313,9 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             public string Name => _wrapped.Name;
 
-            public string InstanceType => _wrapped.InstanceType;
+            public string? InstanceType => _wrapped.InstanceType;
 
-            public object Value => _wrapped.Value;
+            public object? Value => _wrapped.Value;
 
             public string Location => _wrapped.Location;
 

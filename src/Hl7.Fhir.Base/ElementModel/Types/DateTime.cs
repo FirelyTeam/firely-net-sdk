@@ -105,7 +105,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 new("^" + DATETIMEFORMAT + "$",
                 RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        private static bool tryParse(string representation, out DateTime value)
+        private static bool tryParse(string representation, [NotNullWhen(true)] out DateTime? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

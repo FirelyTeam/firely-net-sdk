@@ -23,7 +23,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="name"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        public static bool TryGetSystemTypeByName(string name, out Type? result)
+        public static bool TryGetSystemTypeByName(string name, [NotNullWhen(true)] out Type? result)
         {
             result = get();
             return result != null;
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Try to convert a .NET instance to a Cql/FhirPath Any-based type.
         /// </summary>
-        public static bool TryConvert(object value, [NotNullWhen(true)]out Any? primitiveValue)
+        public static bool TryConvert(object? value, [NotNullWhen(true)]out Any? primitiveValue)
         {
             primitiveValue = conv();
             return primitiveValue != null;
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Converts a .NET instance to a Cql/FhirPath Any-based type.
         /// </summary>
-        public static Any? Convert(object value)
+        public static Any? Convert(object? value)
         {
             if (value == null) return null;
 
