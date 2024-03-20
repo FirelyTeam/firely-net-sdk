@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Terminology
                   ?? throw new CodeSystemUnknownException($"Cannot find codesystem '{codeSystemUri}', so the defined filter(s) cannot be applied.");
 
             if (codeSystem.Content.GetLiteral() != "complete")
-                throw new CodeSystemIncompleteException($"CodeSystem {codeSystemUri} is marked incomplete, so the defines filter(s) cannot be applied.");
+                throw new CodeSystemIncompleteException($"CodeSystem `{codeSystemUri}` is marked incomplete, so the defined filter(s) cannot be applied.");
 
 
             var result = applyFilters(filters, codeSystem);
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return filter.Op switch
             {
                 FilterOperator.IsA => applyIsAFilter(concepts, properties, filter),
-                _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter {filter.Op} are not yet supported.")
+                _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with filter `{filter.Op.GetLiteral()}` are not yet supported.")
             };
         }
 
