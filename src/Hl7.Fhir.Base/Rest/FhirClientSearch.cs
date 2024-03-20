@@ -466,9 +466,11 @@ public partial class BaseFhirClient
             return includes.Select(i => (i, IncludeModifier.None)).ToArray();
         else
             return Array.Empty<(string, IncludeModifier)>();
+        
     }
+    
+    #endregion
 }
-#endregion
 public enum PageDirection
 {
     First,
