@@ -771,7 +771,7 @@ public partial class BaseFhirClient : IDisposable
         var shouldFetchFullRepresentation = noRealBody
                                             && isPostOrPutOrPatch(request)
                                             && Settings.ReturnPreference == ReturnPreference.Representation
-                                            && LastResult.Location is string fetchLocation
+                                            && LastResult.Location is { } fetchLocation
                                             && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
 
         // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
