@@ -12,8 +12,13 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -58,7 +63,7 @@ namespace Hl7.Fhir.Serialization
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoDeserializerSettings deserializerSettings) =>
-        options.ForFhir(inspector, new(), deserializerSettings);
+            options.ForFhir(inspector, new(), deserializerSettings);
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(
@@ -72,14 +77,11 @@ namespace Hl7.Fhir.Serialization
             return options.ForFhir(converter);
         }
 
-
-
         /// <summary>
         /// Initialize the options to serialize using the JsonFhirConverterFactory, producing compact output without whitespace.
         /// </summary>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, FhirJsonConverterFactory converter)
         {
-
             options.Converters.Add(converter);
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
@@ -94,6 +96,44 @@ namespace Hl7.Fhir.Serialization
             options.Converters.Add(converter);
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
+            return options;
+        }
+        
+        /// <summary>
+        /// Modify the options to use a preset list of errors to ignore by specifying a mode. This can be any member of <see cref="DeserializerModes"/>
+        /// </summary>
+        /// <remarks>
+        /// Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
+        /// </remarks>
+        public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializerModes mode)
+        {
+            getCustomFactoryFromList(options.Converters).SetMode(mode);
+            return options;
+        }
+
+        /// <summary>
+        /// Modify the options to use a custom list of errors to enforce. 
+        /// </summary>
+        /// <remarks>
+        /// - Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
+        /// - This also means that enforcing, then ignoring an error has the opposite behaviour as ignoring it, then enforcing it.
+        /// </remarks>
+        public static JsonSerializerOptions Enforcing(this JsonSerializerOptions options, IEnumerable<string> toEnforce)
+        {
+            getCustomFactoryFromList(options.Converters).SetEnforcedErrors(toEnforce);
+            return options;
+        }
+
+        /// <summary>
+        /// Modify the options to use a custom list of errors to ignore. 
+        /// </summary>
+        /// <remarks>
+        /// - Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
+        /// - This also means that enforcing, then ignoring an error has the opposite behaviour as ignoring it, then enforcing it.
+        /// </remarks>
+        public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
+        {
+            getCustomFactoryFromList(options.Converters).SetIgnoredErrors(toIgnore);
             return options;
         }
 
@@ -114,6 +154,44 @@ namespace Hl7.Fhir.Serialization
             options.WriteIndented = true;
             return options;
         }
+
+        // internal for testing purposes
+        internal static JsonConverter? FindCustomConverter(IEnumerable<JsonConverter> converters)
+        {
+            return converters.FirstOrDefault(jsonConverter => jsonConverter.CanConvert(typeof(Resource)));
+        }
+
+        private static FhirJsonConverterFactory getCustomFactoryFromList(IEnumerable<JsonConverter> converters)
+        {
+            return FindCustomConverter(converters) as FhirJsonConverterFactory ?? throw new NotSupportedException(
+                "Customizing a FHIR serializer can only be done after it was created. Try calling .ForFhir first");
+        }
+    }
+
+    /// <summary>
+    /// Enumerates the modes with which a deserializer can be configured
+    /// </summary>
+    public enum DeserializerModes
+    {
+        /// <summary>
+        /// Do not ignore any errors (default behaviour for most implementations)
+        /// </summary>
+        Strict,
+        /// <summary>
+        /// An issue is recoverable if all data present in the parsed data could be retrieved and
+        /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
+        /// </summary>
+        Recoverable,
+        /// <summary>
+        /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
+        /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
+        /// these newer elements and data, so this means data loss may occur.
+        /// </summary>
+        BackwardsCompatible,
+        /// <summary>
+        /// Ignore all errors. Useful for debugging and/or when you know the data to be parsed is a correct instance.
+        /// </summary>
+        Ostrich,
     }
 }
 

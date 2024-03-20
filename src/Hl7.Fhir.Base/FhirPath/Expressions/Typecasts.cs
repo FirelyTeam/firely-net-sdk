@@ -6,11 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
-using P=Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -40,7 +40,8 @@ namespace Hl7.FhirPath.Expressions
                     throw new InvalidCastException($"Cannot convert from '{element.InstanceType}' to Quantity");
             }
 
-            throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity");        }
+            throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity");
+        }
 
 
         internal static P.Quantity ParseQuantity(ITypedElement qe)
@@ -109,11 +110,12 @@ namespace Hl7.FhirPath.Expressions
 
             if (instance is IEnumerable<ITypedElement> list)
             {
-                if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return instance;
+                var cachedEnum = CachedEnumerable.Create(list);
+                if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return cachedEnum;
 
-                if (!list.Any()) return null;
-                if (list.Count() == 1)
-                    instance = list.Single();
+                if (!cachedEnum.Any()) return null;
+                if (cachedEnum.Count() == 1)
+                    instance = cachedEnum.Single();
             }
 
             if (instance is ITypedElement element)
@@ -125,7 +127,7 @@ namespace Hl7.FhirPath.Expressions
                 // start with a lower-case letter, which is true in FHIR but not
                 // in general. When this is a System.* type, we know this is supposed
                 // to represent the object in Value.
-                
+
                 var isPrimitive = element.Value != null ||
                     (element.InstanceType != null &&
                         Char.IsLower(element.InstanceType[0]) || element.InstanceType.StartsWith("System."));
