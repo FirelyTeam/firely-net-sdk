@@ -72,7 +72,6 @@ namespace Hl7.Fhir.Model
                 var result = concept.removeCodeByPredicate(concepts, predicate);
                 if (result != null) return result;
             }
-
             return concepts;
         }
         private static ICollection<CSDC>? removeCodeByPredicate(this CSDC concept, ICollection<CSDC> concepts, Predicate<CSDC> predicate)
@@ -85,10 +84,6 @@ namespace Hl7.Fhir.Model
                 removeCodeByPredicate(concept.Concept, predicate);
             }
             return concepts;
-
-            // Not this node, but this node may have child nodes to check
-
-
         }
 
 
