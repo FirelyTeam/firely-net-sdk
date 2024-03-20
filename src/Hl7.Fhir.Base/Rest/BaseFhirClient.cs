@@ -334,22 +334,6 @@ public partial class BaseFhirClient : IDisposable
 
         await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion(), ct).ConfigureAwait(false);
     }
-
-    /// <summary>
-    /// Conditionally delete a resource
-    /// </summary>
-    /// <param name="resourceType">The type of resource to delete</param>
-    /// <param name="condition">Criteria to use to match the resource to delete.</param>
-    /// <param name="ct"></param>
-    [Obsolete("This overload will be replaced by ConditionalDeleteSingleAsync() and ConditionalDeleteMultipleAsync(). Using the new methods is recommended.")]
-    public virtual async Task DeleteAsync(string resourceType, SearchParams condition, CancellationToken? ct = null)
-    {
-        if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
-        if (condition == null) throw Error.ArgumentNull(nameof(condition));
-
-        var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType).ToBundle();
-        await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
-    }
         
     /// <summary>
     /// Conditionally delete a single resource
@@ -576,6 +560,62 @@ public partial class BaseFhirClient : IDisposable
             history = new TransactionBuilder(Endpoint).ResourceHistory(resourceType, id, summary, pageSize, since);
 
         return executeAsync<Bundle>(history.ToBundle(), HttpStatusCode.OK, ct);
+    }
+
+    #endregion
+    
+    #region DeleteHistory
+    
+    /// <summary>
+    /// Delete a resource's history (all historic versions except current)
+    /// </summary>
+    /// <param name="location">The location of the resource of which the history should be deleted</param>
+    /// <param name="ct"></param>
+    public async Task DeleteHistoryAsync(Uri location, CancellationToken? ct = null)
+    {
+        if (location == null) throw Error.ArgumentNull(nameof(location));
+
+        var id = verifyResourceIdentity(location, needId: true, needVid: false);
+        var tx = new TransactionBuilder(Endpoint).DeleteHistory(id.ResourceType, id.Id).ToBundle();
+
+        await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
+    }
+    
+    /// <summary>
+    /// Delete a resource's history (all historic versions except current)
+    /// </summary>
+    /// <param name="location">The location of the resource of which the history should be deleted</param>
+    /// <param name="ct"></param>
+    public async Task DeleteHistoryAsync(string location, CancellationToken? ct = null)
+    {
+        await DeleteHistoryAsync(new Uri(location, UriKind.Relative), ct).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Delete a specific historical version of a resource
+    /// </summary>
+    /// <param name="location">The location of the resource of which the history should be deleted. Should contain the version ID to be deleted</param>
+    /// <param name="ct"></param>
+    /// <exception cref="ArgumentException"></exception>
+    public async Task DeleteHistoryVersionAsync(Uri location, CancellationToken? ct = null)
+    {
+        if (location == null) throw Error.ArgumentNull(nameof(location));
+
+        var id = verifyResourceIdentity(location, needId: true, needVid: true);
+        var tx = new TransactionBuilder(Endpoint).DeleteHistoryVersion(id.ResourceType, id.Id, id.VersionId).ToBundle();
+
+        await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
+    }
+    
+    /// <summary>
+    /// Delete a specific historical version of a resource
+    /// </summary>
+    /// <param name="location">The location of the resource of which the history should be deleted. Should contain the version ID to be deleted</param>
+    /// <param name="ct"></param>
+    /// <exception cref="ArgumentException"></exception>
+    public async Task DeleteHistoryVersionAsync(string location, CancellationToken? ct = null)
+    {
+        await DeleteHistoryVersionAsync(new Uri(location, UriKind.Relative), ct).ConfigureAwait(false);
     }
 
     #endregion

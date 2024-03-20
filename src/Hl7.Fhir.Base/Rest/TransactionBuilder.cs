@@ -281,6 +281,13 @@ public partial class TransactionBuilder
 
     #region DeleteHistory
 
+    /// <summary>
+    /// Add a "delete-history" entry to the transaction/batch
+    /// </summary>
+    /// <param name="resourceType">the type of the resource of which the history should be deleted</param>
+    /// <param name="id">the id of the resource of which the history should be deleted</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
     public TransactionBuilder DeleteHistory(string resourceType, string id, string? bundleEntryFullUrl = null)
     {
         var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.DeleteHistory, bundleEntryFullUrl);
@@ -290,6 +297,14 @@ public partial class TransactionBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add a "delete-history-version" entry to the transaction/batch
+    /// </summary>
+    /// <param name="resourceType">the type of the resource of which the history should be deleted</param>
+    /// <param name="id">the id of the resource of which the history should be deleted</param>
+    /// <param name="vid">the specific historical version which should be deleted</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
     public TransactionBuilder DeleteHistoryVersion(string resourceType, string id, string vid, string? bundleEntryFullUrl = null)
     {
         var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.DeleteHistoryVersion, bundleEntryFullUrl);

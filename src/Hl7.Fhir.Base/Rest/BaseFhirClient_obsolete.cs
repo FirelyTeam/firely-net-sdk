@@ -165,6 +165,22 @@ public partial class BaseFhirClient
     }
     
     /// <summary>
+    /// Conditionally delete a resource
+    /// </summary>
+    /// <param name="resourceType">The type of resource to delete</param>
+    /// <param name="condition">Criteria to use to match the resource to delete.</param>
+    /// <param name="ct"></param>
+    [Obsolete("This overload will be replaced by ConditionalDeleteSingleAsync() and ConditionalDeleteMultipleAsync(). Using the new methods is recommended.")]
+    public virtual async Task DeleteAsync(string resourceType, SearchParams condition, CancellationToken? ct = null)
+    {
+        if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
+        if (condition == null) throw Error.ArgumentNull(nameof(condition));
+
+        var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType).ToBundle();
+        await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
+    }
+    
+    /// <summary>
     /// Create a resource on a FHIR endpoint
     /// </summary>
     /// <param name="resource">The resource instance to create</param>
