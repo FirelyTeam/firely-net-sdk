@@ -344,7 +344,7 @@ public partial class BaseFhirClient
         return SearchAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource, ct);
     }
 
-    ///<inheritdoc cref="SearchById(string, string, string[], int?, string[])"/>
+    ///<inheritdoc cref="SearchByIdAsync(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)"/>
     public virtual Task<Bundle?> SearchByIdAsync(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null, CancellationToken? ct = null)
     {
         return SearchByIdAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct);

@@ -667,7 +667,7 @@ public partial class BaseFhirClient
         return SearchByIdAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
     }
 
-    ///<inheritdoc cref="SearchByIdAsync(string, string, (string path, IncludeModifier modifier)[], int?, (string path, IncludeModifier modifier)[])"/>
+    ///<inheritdoc cref="SearchById(string, string, string[], int?, string[])"/>
     [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
     public virtual Bundle? SearchById(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
         (string path, IncludeModifier modifier)[]? revIncludes)
