@@ -349,9 +349,9 @@ namespace Hl7.Fhir.Rest
             var upd = new TransactionBuilder(Endpoint);
 
             if (versionAware && resource.HasVersionId)
-                upd.Update(condition, resource, versionId: resource.VersionId);
+                upd.ConditionalUpdate(condition, resource, versionId: resource.VersionId);
             else
-                upd.Update(condition, resource);
+                upd.ConditionalUpdate(condition, resource);
 
             return internalUpdateAsync(resource, upd.ToBundle(), ct);
         }
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
-            var tx = new TransactionBuilder(Endpoint).Create(resource, condition).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).ConditionalCreate(resource, condition).ToBundle();
 
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
         }
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Rest
         {
             var tx = new TransactionBuilder(Endpoint);
             var resourceType = typeNameOrDie<TResource>();
-            tx.Patch(resourceType, condition, patchParameters);
+            tx.ConditionalPatch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
         }

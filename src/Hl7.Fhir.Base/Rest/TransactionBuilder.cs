@@ -163,9 +163,9 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Update(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
+        public TransactionBuilder ConditionalUpdate(SearchParams condition, Resource body, string? versionId = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update, bundleEntryFullUrl);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.ConditionalUpdate, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Add a "patch" entry to the transaction/batch
+        /// Add a "conditional patch" entry to the transaction/batch
         /// </summary>
         /// <param name="resourceType">type of the resource to be patched</param>
         /// <param name="condition">conditions on which the a resource is supposed to be patched</param>
@@ -208,9 +208,9 @@ namespace Hl7.Fhir.Rest
         /// <param name="versionId">optional version id of the resource</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null)
+        public TransactionBuilder ConditionalPatch(string resourceType, SearchParams condition, Parameters body, string? versionId = null, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch, bundleEntryFullUrl);
+            var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.ConditionalPatch, bundleEntryFullUrl);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(resourceType);
@@ -238,19 +238,6 @@ namespace Hl7.Fhir.Rest
             addEntry(entry, path);
 
             return this;
-        }
-
-        /// <summary>
-        /// Add a "conditional delete" entry to the transaction/batch
-        /// </summary>
-        /// <param name="resourceType">type of the resource to be deleted</param>
-        /// <param name="condition">conditions on which the resource should be deleted</param>
-        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
-        /// <returns></returns>
-        [Obsolete("As of R6, conditional deletes will be considered separate operations. Use ConditionalDeleteSingle or ConditionalDeleteMultiple instead.")]
-        public TransactionBuilder Delete(string resourceType, SearchParams condition, string? bundleEntryFullUrl = null)
-        {
-            return ConditionalDeleteSingle(condition, resourceType, bundleEntryFullUrl);
         }
         
         /// <summary>
@@ -291,6 +278,12 @@ namespace Hl7.Fhir.Rest
         }
         
         #endregion
+
+        #region DeleteHistory
+
+        // Todo create these methods
+
+        #endregion
         
         #region Create
 
@@ -310,17 +303,16 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-
         /// <summary>
-        /// Add a "create" entry to the transaction/batch
+        /// Add a "conditional create" entry to the transaction/batch
         /// </summary>
         /// <param name="body">the resource that is to be created</param>
         /// <param name="condition">conditions on which the resource is supposed to be created</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Create(Resource body, SearchParams condition, string? bundleEntryFullUrl = null)
+        public TransactionBuilder ConditionalCreate(Resource body, SearchParams condition, string? bundleEntryFullUrl = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create, bundleEntryFullUrl);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.ConditionalCreate, bundleEntryFullUrl);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
@@ -332,6 +324,49 @@ namespace Hl7.Fhir.Rest
         
         #endregion
 
+        #region Search
+
+        /// <summary>
+        /// Add a "search" entry to the transaction/batch
+        /// </summary>
+        /// <param name="q">search parameters that describe the query to use</param>
+        /// <param name="resourceType">resource type to be searched on</param>       
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+        /// <returns></returns>
+        public TransactionBuilder Search(SearchParams? q = null, string? resourceType = null, string? bundleEntryFullUrl = null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search, bundleEntryFullUrl);
+            var path = newRestUrl();
+            if (resourceType != null) path.AddPath(resourceType);
+            if (q != null) path.AddParams(q.ToUriParamList());
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a "search" entry to the transaction/batch that uses POST instead of GET to search.
+        /// </summary>
+        /// <param name="q">search parameters that describe the query to use</param>
+        /// <param name="resourceType">resource type to be searched on</param>       
+        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+        /// <returns></returns>
+        public TransactionBuilder SearchUsingPost(SearchParams q, string? resourceType = null, string? bundleEntryFullUrl = null)
+        {
+            if (q == null) throw new ArgumentNullException(nameof(q));
+
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Search, bundleEntryFullUrl);
+            var path = newRestUrl();
+            if (resourceType != null) path.AddPath(resourceType);
+            path.AddPath("_search");
+            entry.Resource = q.ToParameters();
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        #endregion
+        
         #region CapabilityStatement
 
         /// <summary>
@@ -514,49 +549,6 @@ namespace Hl7.Fhir.Rest
             if (async) path.AddParam("async", "true");
             if (responseUrl != null) path.AddParam("response-url", responseUrl);
             entry.Resource = messageBundle;
-            addEntry(entry, path);
-
-            return this;
-        }
-
-        #endregion
-
-        #region Search
-
-        /// <summary>
-        /// Add a "search" entry to the transaction/batch
-        /// </summary>
-        /// <param name="q">search parameters that describe the query to use</param>
-        /// <param name="resourceType">resource type to be searched on</param>       
-        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
-        /// <returns></returns>
-        public TransactionBuilder Search(SearchParams? q = null, string? resourceType = null, string? bundleEntryFullUrl = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search, bundleEntryFullUrl);
-            var path = newRestUrl();
-            if (resourceType != null) path.AddPath(resourceType);
-            if (q != null) path.AddParams(q.ToUriParamList());
-            addEntry(entry, path);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Add a "search" entry to the transaction/batch that uses POST instead of GET to search.
-        /// </summary>
-        /// <param name="q">search parameters that describe the query to use</param>
-        /// <param name="resourceType">resource type to be searched on</param>       
-        /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
-        /// <returns></returns>
-        public TransactionBuilder SearchUsingPost(SearchParams q, string? resourceType = null, string? bundleEntryFullUrl = null)
-        {
-            if (q == null) throw new ArgumentNullException(nameof(q));
-
-            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Search, bundleEntryFullUrl);
-            var path = newRestUrl();
-            if (resourceType != null) path.AddPath(resourceType);
-            path.AddPath("_search");
-            entry.Resource = q.ToParameters();
             addEntry(entry, path);
 
             return this;
