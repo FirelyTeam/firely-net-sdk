@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
                 return null;
         }
 
-        public ValueSet.ContainsComponent FindInExpansion(String code, string? system = null)
+        public ValueSet.ContainsComponent? FindInExpansion(String code, string? system = null)
         {
             ensureExpansion();
 
