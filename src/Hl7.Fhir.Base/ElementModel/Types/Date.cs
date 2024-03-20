@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
 
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Date Parse(string representation) =>
             TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid date.");
 
-        public static bool TryParse(string representation, out Date value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)]out Date? value) => tryParse(representation, out value);
 
         public static Date FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Day,
                 bool includeOffset = false) => new(dto, prec, includeOffset);

@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using static Hl7.Fhir.Utility.Result;
 
@@ -26,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Long Parse(string value) =>
             TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid long integer.");
 
-        public static bool TryParse(string representation, out Long value)
+        public static bool TryParse(string representation, [NotNullWhen(true)]out Long? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 

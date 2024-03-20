@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Time Parse(string representation) =>
             TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid time.");
 
-        public static bool TryParse(string representation, out Time value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)]out Time? value) => tryParse(representation, out value);
 
         public static Time FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Fraction,
             bool includeOffset = false) => new(dto, prec, includeOffset);

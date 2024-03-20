@@ -6,6 +6,8 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
@@ -14,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -52,7 +55,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance from the specified exception.</summary>
         /// <param name="error">An exception that occured while harvesting artifact summary information.</param>
         /// <param name="origin">The original location of the target artifact.</param>
-        public static ArtifactSummary FromException(Exception error, string origin)
+        public static ArtifactSummary FromException(Exception error, string? origin)
         {
             if (error == null) { throw Errors.ArgumentNull(nameof(error)); }
             // Create a new (default) ArtifactSummaryPropertyBag to store the artifact origin
@@ -76,7 +79,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Create a new <see cref="ArtifactSummary"/> instance from a set of harvested artifact summary properties
         /// and a runtime exception that occured during harvesting.
         /// </summary>
-        public ArtifactSummary(IArtifactSummaryPropertyBag properties, Exception error)
+        public ArtifactSummary(IArtifactSummaryPropertyBag properties, Exception? error)
         {
             this.properties = properties ?? throw Errors.ArgumentNull(nameof(properties));
             this.Error = error;
@@ -94,7 +97,7 @@ namespace Hl7.Fhir.Specification.Source
         #region Properties
 
         /// <summary>Returns information about errors that occured while generating the artifact summary.</summary>
-        public Exception Error { get; }
+        public Exception? Error { get; }
 
         /// <summary>Indicates if any errors occured while generating the artifact summary.</summary>
         /// <remarks>If <c>true</c>, then the <see cref="Error"/> property returns detailed error information.</remarks>
@@ -171,7 +174,7 @@ namespace Hl7.Fhir.Specification.Source
         public bool ContainsKey(string key) => properties.ContainsKey(key);
 
         /// <summary>Gets the property value associated with the specified property key.</summary>
-        public bool TryGetValue(string key, out object value) => properties.TryGetValue(key, out value);
+        public bool TryGetValue(string key, [NotNullWhen(true)]out object? value) => properties.TryGetValue(key, out value);
 
         #endregion
 
@@ -180,6 +183,6 @@ namespace Hl7.Fhir.Specification.Source
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected virtual string DebuggerDisplay
             => $"{GetType().Name} for {ResourceTypeName} | Origin: {Origin}"
-             + (IsFaulted ? " | Error: " + Error.Message : string.Empty);
+             + (IsFaulted ? " | Error: " + Error!.Message : string.Empty);
     }
 }

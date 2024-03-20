@@ -12,6 +12,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -113,7 +114,7 @@ namespace Hl7.Fhir.Model
         public override IEnumerable<ElementValue> NamedChildren => base.NamedChildren;
 
         /// <inheritdoc/>
-        protected override bool TryGetValue(string key, out object? value)
+        protected override bool TryGetValue(string key, [NotNullWhen(true)]out object? value)
         {
             if (key == "value")
             {

@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using static Hl7.Fhir.Utility.Result;
 
@@ -26,11 +27,11 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Integer Parse(string value) =>
             TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid integer.");
 
-        public static bool TryParse(string representation, out Integer value)
+        public static bool TryParse(string representation, [NotNullWhen(true)]out Integer? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 
-            (var succ, var val) = Any.DoConvert(() => XmlConvert.ToInt32(representation));
+            var (succ, val) = DoConvert(() => XmlConvert.ToInt32(representation));
             value = new Integer(val);
             return succ;
         }

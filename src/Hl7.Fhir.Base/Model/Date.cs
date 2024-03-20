@@ -29,6 +29,7 @@
 */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Model
         /// Converts a Fhir Date to a <see cref="P.Date"/>.
         /// </summary>
         /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
-        public bool TryToDate(out P.Date? date)
+        public bool TryToDate([NotNullWhen(true)]out P.Date? date)
         {
             if (_parsedValue is null)
             {
@@ -90,7 +91,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                date = _parsedValue;
+                date = _parsedValue!;
                 return true;
             }
 

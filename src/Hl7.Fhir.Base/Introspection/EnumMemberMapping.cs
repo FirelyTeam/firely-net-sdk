@@ -11,6 +11,7 @@
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// Inspects the given enum member, extracting metadata from its attributes and creating a new <see cref="EnumMemberMapping"/>.
         /// </summary>
-        public static bool TryCreate(FieldInfo member, out EnumMemberMapping? result, FhirRelease release = (FhirRelease)int.MaxValue, string? defaultSystem = null)
+        public static bool TryCreate(FieldInfo member, [NotNullWhen(true)]out EnumMemberMapping? result, FhirRelease release = (FhirRelease)int.MaxValue, string? defaultSystem = null)
         {
             result = null;
             if (ClassMapping.GetAttribute<EnumLiteralAttribute>(member, release) is not { } ela) return false;

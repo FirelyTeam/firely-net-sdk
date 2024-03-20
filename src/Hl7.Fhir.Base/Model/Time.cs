@@ -31,6 +31,7 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -68,7 +69,7 @@ namespace Hl7.Fhir.Model
         /// Converts a Fhir Time to a <see cref="P.Time"/>.
         /// </summary>
         /// <returns>true if the Fhir Time contains a valid time string, false otherwise.</returns>
-        public bool TryToTime(out P.Time? time)
+        public bool TryToTime([NotNullWhen(true)]out P.Time? time)
         {
             if (_parsedValue is null)
             {
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                time = _parsedValue;
+                time = _parsedValue!;
                 return true;
             }
 
@@ -95,7 +96,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <returns>The Time, or null if the <see cref="Value"/> is null.</returns>
         /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Time.</exception>
-        public P.Time? ToTime() => TryToTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
+        public P.Time ToTime() => TryToTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
 
         protected override void OnObjectValueChanged()
         {
@@ -114,7 +115,7 @@ namespace Hl7.Fhir.Model
         /// Convert this FhirDateTime to a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns>True if the value of the Fhir Time is not null and can be parsed as a Time without an offset, false otherwise.</returns>
-        public bool TryToTimeSpan(out TimeSpan dto)
+        public bool TryToTimeSpan([NotNullWhen(true)]out TimeSpan? dto)
         {
             if (Value is not null && TryToTime(out var dt) && !dt!.HasOffset)
             {

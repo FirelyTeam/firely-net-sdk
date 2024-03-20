@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Gets the property value associated with the specified property key.</summary>
 #pragma warning disable CS8767
-        public bool TryGetValue(string key, out object? value) => properties.TryGetValue(key, out value);
+        public bool TryGetValue(string key, [NotNullWhen(true)]out object? value) => properties.TryGetValue(key, out value);
 #pragma warning restore CS8767
 
         #endregion

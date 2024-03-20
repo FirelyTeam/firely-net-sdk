@@ -11,6 +11,7 @@
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Hl7.Fhir.Utility.Result;
 
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public string? Display { get; }
 
         public static Concept Parse(string representation) => throw new NotImplementedException();
-        public static bool TryParse(string representation, out Concept? value) => throw new NotImplementedException();
+        public static bool TryParse(string representation, [NotNullWhen(true)]out Concept? value) => throw new NotImplementedException();
 
         public override bool Equals(object? obj) => obj is Concept c && Enumerable.SequenceEqual(Codes, c.Codes) && Display == c.Display;
 

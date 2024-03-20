@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract.</remarks>
-        public static bool TryCreate(Type type, out EnumMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
+        public static bool TryCreate(Type type, [NotNullWhen(true)]out EnumMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
         {
             result = default;
             if (!type.IsEnum) return false;

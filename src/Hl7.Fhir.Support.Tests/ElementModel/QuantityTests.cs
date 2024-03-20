@@ -126,10 +126,10 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void QuantityCompareTests(string left, string right, Comparison expectedResult, bool shouldThrowException = false)
         {
 
-            P.Quantity.TryParse(left, out var a);
-            P.Quantity.TryParse(right, out var b);
+            Quantity.TryParse(left, out var a);
+            Quantity.TryParse(right, out var b);
 
-            Func<int> func = () => a.CompareTo(b);
+            Func<int> func = () => a!.CompareTo(b);
 
             if (shouldThrowException)
             {
