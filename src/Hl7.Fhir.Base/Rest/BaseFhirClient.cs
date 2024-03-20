@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="resourceType">The type of resource to delete</param>
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
         /// <param name="ct"></param>
-        [Obsolete("As of R6, conditional deletes will be considered separate operations. Use ConditionalDeleteSingle or ConditionalDeleteMultiple instead.")]
+        [Obsolete("Use ConditionalDeleteSingle or ConditionalDeleteMultiple instead.")]
         public virtual async Task DeleteAsync(string resourceType, SearchParams condition, CancellationToken? ct = null)
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
