@@ -281,7 +281,23 @@ public partial class TransactionBuilder
 
     #region DeleteHistory
 
-    // Todo create these methods
+    public TransactionBuilder DeleteHistory(string resourceType, string id, string? bundleEntryFullUrl = null)
+    {
+        var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.DeleteHistory, bundleEntryFullUrl);
+        var path = newRestUrl().AddPath(resourceType, id, HISTORY);
+        addEntry(entry, path);
+
+        return this;
+    }
+
+    public TransactionBuilder DeleteHistoryVersion(string resourceType, string id, string vid, string? bundleEntryFullUrl = null)
+    {
+        var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.DeleteHistoryVersion, bundleEntryFullUrl);
+        var path = newRestUrl().AddPath(resourceType, id, HISTORY, vid);
+        addEntry(entry, path);
+
+        return this;
+    }
 
     #endregion
         
