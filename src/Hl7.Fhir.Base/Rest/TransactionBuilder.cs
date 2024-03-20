@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
     /// <summary>
     /// Builder to describe a FHIR transaction Bundle
     /// </summary>
-    public class TransactionBuilder
+    public partial class TransactionBuilder
     {
         public const string HISTORY = ResourceIdentity.HISTORY;
         public const string METADATA = "metadata";
@@ -52,50 +52,26 @@ namespace Hl7.Fhir.Rest
             : this(baseUri.OriginalString, type)
         {
         }
-
-        private static Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType, string? fullUrl = null)
-        {
-            var newEntry = new Bundle.EntryComponent
-            {
-                Request = new Bundle.RequestComponent() { Method = method },
-                FullUrl = fullUrl
-            };
-
-            newEntry.AddAnnotation(interactionType);
-
-            return newEntry;
-        }
-
-        private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
-        {
-            var url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl);
-            newEntry.Request.Url = url!.OriginalString;
-            _result.Entry.Add(newEntry);
-        }
-
-        private RestUrl newRestUrl()
-        {
-            return new RestUrl(_baseUrl);
-        }
-
+        
         public Bundle ToBundle()
         {
             return _result;
         }
 
+        #region Get
+
         /// <summary>
         /// Add a "GET" entry to the transaction/batch
         /// </summary>
-        /// <param name="url">relative or absolute url the transaction is supposed to "get"</param>
+        /// <param name="uri">relative or absolute uri of the resource the transaction is supposed to return</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        public TransactionBuilder Get(string url, string? bundleEntryFullUrl = null)
+        public TransactionBuilder Get(Uri uri, string? bundleEntryFullUrl = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified, bundleEntryFullUrl);
-            var uri = new Uri(url, UriKind.RelativeOrAbsolute);
 
             if (uri.IsAbsoluteUri)
-                addEntry(entry, new RestUrl(url));
+                addEntry(entry, new RestUrl(uri));
             else
             {
                 var absoluteUrl = HttpUtil.MakeAbsoluteToBase(uri, _baseUrl);
@@ -107,13 +83,17 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Add a "GET" entry to the transaction/batch
         /// </summary>
-        /// <param name="uri">relative or absolute uri of the resource the transaction is supposed to return</param>
+        /// <param name="url">relative or absolute url the transaction is supposed to "get"</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
-        /// <returns></returns>
-        public TransactionBuilder Get(Uri uri, string? bundleEntryFullUrl = null)
+        /// <returns></returns>\
+        public TransactionBuilder Get(string url, string? bundleEntryFullUrl = null)
         {
-            return Get(uri.OriginalString, bundleEntryFullUrl);
+            return Get(new Uri(url, UriKind.RelativeOrAbsolute), bundleEntryFullUrl);
         }
+
+        #endregion
+
+        #region Read
 
         /// <summary>
         /// Add a "read" entry to the transaction/batch that returns a specific resource
@@ -134,7 +114,7 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
-
+        
         /// <summary>
         /// Add a "version read" entry to that transaction/batch
         /// </summary>
@@ -152,6 +132,10 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        #endregion
+        
+        #region Update
+        
         /// <summary>
         /// Add an "update" entry to the transaction/batch
         /// </summary>
@@ -190,6 +174,10 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+        
+        #endregion
+        
+        #region Patch
 
         /// <summary>
         /// Add a "patch" entry to the transaction/batch
@@ -231,15 +219,10 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+        
+        #endregion
 
-        private static string? createIfMatchETag(string? versionId)
-        {
-            if (versionId == null) return versionId;
-
-            //To not break our previous public interface, we need to make sure we don't double
-            //convert to an eTag
-            return versionId.StartsWith("W/") ? versionId : $"W/\"{versionId}\"";
-        }
+        #region Delete
 
         /// <summary>
         /// Add a "delete" entry to the transaction/batch
@@ -269,7 +252,7 @@ namespace Hl7.Fhir.Rest
         {
             return ConditionalDeleteSingle(condition, resourceType, bundleEntryFullUrl);
         }
-
+        
         /// <summary>
         /// Add a "conditional delete" entry to the transaction/batch
         /// </summary>
@@ -306,6 +289,10 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+        
+        #endregion
+        
+        #region Create
 
         /// <summary>
         /// Add a "create" entry to the transaction/batch
@@ -342,6 +329,10 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+        
+        #endregion
+
+        #region CapabilityStatement
 
         /// <summary>
         /// Add an entry to the transaction/batch that reads the CapabilityStatement of the server 
@@ -360,18 +351,10 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-
-        private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null, string? bundleEntryFullUrl = null)
-        {
-            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History, bundleEntryFullUrl);
-
-            if (summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
-            if (pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
-            if (since.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
-
-            addEntry(entry, path);
-        }
-
+        #endregion
+        
+        #region History
+        
         /// <summary>
         /// Add an entry to request the history of a single resource to the transaction/batch
         /// </summary>
@@ -389,7 +372,7 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
-
+        
         /// <summary>
         /// Add an entry to request the history of all resources of a certain type to the transaction/batch
         /// </summary>
@@ -423,17 +406,10 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+        
+        #endregion
 
-        private static string paramValueToString(Parameters.ParameterComponent parameter) => parameter.Value switch
-        {
-            Identifier id => id.ToToken(),
-            Coding coding => coding.ToToken(),
-            ContactPoint contactPoint => contactPoint.ToToken(),
-            CodeableConcept codeableConcept => codeableConcept.ToToken(),
-            not null when ModelInspector.Base.IsPrimitive(parameter.Value.GetType()) => parameter.Value.ToString()!,
-            _ => throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.")
-        };
-
+        #region CustomOperation
 
         /// <summary>
         /// Add an entry to perform a FHIR operation on a certain endpoint of the server to the transaction/batch
@@ -481,7 +457,7 @@ namespace Hl7.Fhir.Rest
 
             return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
         }
-
+        
         /// <summary>
         /// Add an entry to perform a FHIR operation on the root of the server to the transaction/batch
         /// </summary>
@@ -530,7 +506,7 @@ namespace Hl7.Fhir.Rest
 
             return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
         }
-
+        
         public TransactionBuilder ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null, string? bundleEntryFullUrl = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Operation, bundleEntryFullUrl);
@@ -542,6 +518,10 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+
+        #endregion
+
+        #region Search
 
         /// <summary>
         /// Add a "search" entry to the transaction/batch
@@ -582,6 +562,10 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        #endregion
+        
+        #region Transaction
+        
         /// <summary>
         /// Add a sub-transaction to the transaction/batch
         /// </summary>
@@ -599,6 +583,67 @@ namespace Hl7.Fhir.Rest
 
             return this;
         }
+
+        #endregion
+        
+        #region Utilities
+
+        private static Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType, string? fullUrl = null)
+        {
+            var newEntry = new Bundle.EntryComponent
+            {
+                Request = new Bundle.RequestComponent() { Method = method },
+                FullUrl = fullUrl
+            };
+
+            newEntry.AddAnnotation(interactionType);
+
+            return newEntry;
+        }
+        
+        private static string? createIfMatchETag(string? versionId)
+        {
+            if (versionId == null) return versionId;
+
+            //To not break our previous public interface, we need to make sure we don't double
+            //convert to an eTag
+            return versionId.StartsWith("W/") ? versionId : $"W/\"{versionId}\"";
+        }
+
+        private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
+        {
+            var url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl);
+            newEntry.Request.Url = url!.OriginalString;
+            _result.Entry.Add(newEntry);
+        }
+
+        private RestUrl newRestUrl()
+        {
+            return new RestUrl(_baseUrl);
+        }
+        
+        private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null, string? bundleEntryFullUrl = null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History, bundleEntryFullUrl);
+
+            if (summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
+            if (pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
+            if (since.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
+
+            addEntry(entry, path);
+        }
+        
+        private static string paramValueToString(Parameters.ParameterComponent parameter) => parameter.Value switch
+        {
+            Identifier id => id.ToToken(),
+            Coding coding => coding.ToToken(),
+            ContactPoint contactPoint => contactPoint.ToToken(),
+            CodeableConcept codeableConcept => codeableConcept.ToToken(),
+            not null when ModelInspector.Base.IsPrimitive(parameter.Value.GetType()) => parameter.Value.ToString()!,
+            _ => throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.")
+        };
+
+        #endregion
     }
 }
 #nullable restore
