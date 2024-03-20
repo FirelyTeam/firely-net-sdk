@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">conditions on which the resource should be deleted</param>
         /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
         /// <returns></returns>
-        [Obsolete("As of R6, conditional deletes will be considered separate operations. Use ConditionalDeleteSingle or ConditionalDeleteMultiple instead.")]
+        [Obsolete("Use ConditionalDeleteSingle or ConditionalDeleteMultiple instead.")]
         public TransactionBuilder Delete(string resourceType, SearchParams condition, string? bundleEntryFullUrl = null)
         {
             return ConditionalDeleteSingle(condition, resourceType, bundleEntryFullUrl);
