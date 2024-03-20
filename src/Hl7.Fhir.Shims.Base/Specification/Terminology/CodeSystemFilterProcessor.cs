@@ -3,6 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using CSDC = Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent;
 using T = System.Threading.Tasks;
 
 #nullable enable
@@ -41,7 +42,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result.Select(c => c.ToContainsComponent(codeSystem, settings));
         }
 
-        private static List<CodeSystem.ConceptDefinitionComponent> applyFilters(List<ValueSet.FilterComponent> filters, CodeSystem codeSystem)
+        private static List<CSDC> applyFilters(List<ValueSet.FilterComponent> filters, CodeSystem codeSystem)
         {
             var result = codeSystem.Concept;
             var properties = codeSystem.Property;
@@ -54,32 +55,55 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private static IEnumerable<CodeSystem.ConceptDefinitionComponent> applyFilter(List<CodeSystem.ConceptDefinitionComponent> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+        private static IEnumerable<CSDC> applyFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
         {
             return filter.Op switch
             {
                 FilterOperator.IsA => applyIsAFilter(concepts, properties, filter),
+                FilterOperator.DescendentOf => applyDescentantOfFilter(concepts, properties, filter),
                 _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with filter `{filter.Op.GetLiteral()}` are not yet supported.")
             };
         }
 
-        private static IEnumerable<CodeSystem.ConceptDefinitionComponent> applyIsAFilter(List<CodeSystem.ConceptDefinitionComponent> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+        private static IEnumerable<CSDC> applyDescentantOfFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
         {
-            var result = new List<CodeSystem.ConceptDefinitionComponent>();
+            var result = new List<CSDC>();
+            //find descendants based on subsumedBy
+            if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
+            {
+                //first flatten the codes
+                var flattened = concepts.Flatten();
+
+                //then find the descendants, based on subsumbedBy
+                List<CSDC> descendants = findDescendantsUsingSubsumedBy(filter, flattened);
+                result.AddRange(descendants);
+            }
+            else
+            {
+                //SubsumedBy is not used, we should only check for a nested hierarchy, and find the code and include it's descendants
+                if (concepts.FindCode(filter.Value) is { } concept)
+                    result.AddRange(concept.Concept);
+            }
+
+            return result;
+        }
+
+        private static IEnumerable<CSDC> applyIsAFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+        {
+            var result = new List<CSDC>();
 
             //find descendants based on subsumedBy
             if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
             {
+                //first flatten the codes
+                var flattened = concepts.Flatten();
+
                 //first find the parent itself (if it's in the CodeSystem)
-                if (concepts.FindCode(filter.Value) is { } concept)
+                if (flattened.FindCode(filter.Value) is { } concept)
                     result.Add(concept);
 
-                //Create a lookup which lists children by parent.
-                var flattened = concepts.Flatten();
-                var childrenLookup = CreateSubsumedByLookup(flattened);
-
-                //find descendants based on that lookup
-                var descendants = applySubsumedBy(childrenLookup, filter);
+                //then find the descendants
+                List<CSDC> descendants = findDescendantsUsingSubsumedBy(filter, flattened);
                 result.AddRange(descendants);
             }
             else
@@ -91,7 +115,17 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private static ILookup<string, CodeSystem.ConceptDefinitionComponent> CreateSubsumedByLookup(List<CodeSystem.ConceptDefinitionComponent> flattenedConcepts)
+        private static List<CSDC> findDescendantsUsingSubsumedBy(ValueSet.FilterComponent filter, List<CSDC> flattened)
+        {
+            //Create a lookup which lists children by parent.              
+            var childrenLookup = CreateSubsumedByLookup(flattened);
+
+            //find descendants based on that lookup
+            var descendants = applySubsumedBy(childrenLookup, filter);
+            return descendants;
+        }
+
+        private static ILookup<string, CSDC> CreateSubsumedByLookup(List<CSDC> flattenedConcepts)
         {
             return flattenedConcepts
                 .SelectMany(concept => concept.Property
@@ -100,9 +134,9 @@ namespace Hl7.Fhir.Specification.Terminology
                 .ToLookup(x => x.SubsumedByValue, x => x.Concept);
         }
 
-        private static List<CodeSystem.ConceptDefinitionComponent> applySubsumedBy(ILookup<string, CodeSystem.ConceptDefinitionComponent> lookup, ValueSet.FilterComponent filter)
+        private static List<CSDC> applySubsumedBy(ILookup<string, CSDC> lookup, ValueSet.FilterComponent filter)
         {
-            var result = new List<CodeSystem.ConceptDefinitionComponent>();
+            var result = new List<CSDC>();
             var root = filter.Value;
             if (root != null)
             {
@@ -112,7 +146,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         //recursively loop through all the children to eventually find all descendants.
-        private static void addDescendants(ILookup<string, CodeSystem.ConceptDefinitionComponent> lookup, string parent, List<CodeSystem.ConceptDefinitionComponent> result)
+        private static void addDescendants(ILookup<string, CSDC> lookup, string parent, List<CSDC> result)
         {
             if (lookup[parent] is { } children)
             {

@@ -17,18 +17,8 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         {
             var resolver = new InMemoryResourceResolver();
 
-            var codeSystem = TestTerminologyCreator.GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
-                                       .WithConcept("A",
-                                                   children: new() { TestTerminologyCreator.CreateConcept("AA", children: new(){TestTerminologyCreator.CreateConcept("AAA") })
-                                                                    , TestTerminologyCreator.CreateConcept("AB")})
-                                       .WithConcept("B",
-                                                   children: new() { TestTerminologyCreator.CreateConcept("BA", children: new(){TestTerminologyCreator.CreateConcept("BAA") })
-                                                                    , TestTerminologyCreator.CreateConcept("BB")})
-                                       .WithConcept("C",
-                                                   children: new() { TestTerminologyCreator.CreateConcept("CA", children: new(){TestTerminologyCreator.CreateConcept("CAA") })
-                                                                    , TestTerminologyCreator.CreateConcept("CB")});
+            var codeSystem = TestTerminologyCreator.HierarchicalCodeSystem();
             resolver.Add(codeSystem);
-
 
             //VS has a single include, with a single filter
             var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsA, "A") }).ToList();
@@ -51,19 +41,11 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
-        public async T.Task ExpandFilterIsAWithSubsumesHierarchieCodeSystem()
+        public async T.Task TestSubsumbedByIsAFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
-            var codeSystem = TestTerminologyCreator.GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
-                                        .WithProperty("subsumedBy")
-                                        .WithConcept("A")
-                                        .WithConcept("AA", null, [("subsumedBy", "A")])
-                                        .WithConcept("AAA", null, [("subsumedBy", "AA")])
-                                        .WithConcept("B")
-                                        .WithConcept("BB", null, [("subsumedBy", "B")])
-                                        .WithConcept("AB", null, [("subsumedBy", "A"), ("subsumedBy", "B")])
-                                        .WithConcept("C");
+            var codeSystem = TestTerminologyCreator.SubsumedByCodeSysterm();
 
             resolver.Add(codeSystem);
 
@@ -86,18 +68,56 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
+        public async T.Task TestHierarchicalDescendantOfFilter()
+        {
+            var resolver = new InMemoryResourceResolver();
+
+            var codeSystem = TestTerminologyCreator.HierarchicalCodeSystem();
+            resolver.Add(codeSystem);
+
+            //VS has a single include, with a single filter
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.DescendentOf, "A") }).ToList();
+
+
+            var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            concepts.Should().Contain(c => c.Code == "AA")
+                                              .Which.Contains.Should().Contain(c => c.Code == "AAA");
+            concepts.Should().NotContain(c => c.Code == "C");
+            concepts.Should().NotContain(c => c.Code == "A");
+        }
+
+        [TestMethod]
+        public async T.Task TestSubsumbedByDescendantOfFilter()
+        {
+            var resolver = new InMemoryResourceResolver();
+
+            var codeSystem = TestTerminologyCreator.SubsumedByCodeSysterm();
+
+            resolver.Add(codeSystem);
+
+            //VS has a single include, with a single filter
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.DescendentOf, "A") }).ToList();
+            var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            concepts.Should().Contain(c => c.Code == "AA")
+                                              .And.Contain(c => c.Code == "AAA")
+                                              .And.Contain(c => c.Code == "AB")
+                                              .And.NotContain(c => c.Code == "B");
+
+
+            ///VS has a single include, with a two filter, both filters should be true;
+            filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.DescendentOf, "A"), (FilterOperator.DescendentOf, "B") }).ToList();
+            concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            concepts.Should().OnlyContain(c => c.Code == "AB");
+        }
+
+
+        [TestMethod]
         public void FlattenConceptTest()
         {
-            var codeSystem = TestTerminologyCreator.GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
-                                       .WithConcept("A",
-                                                   children: new() { TestTerminologyCreator.CreateConcept("AA", children: new(){TestTerminologyCreator.CreateConcept("AAA") })
-                                                                    , TestTerminologyCreator.CreateConcept("AB")})
-                                       .WithConcept("B",
-                                                   children: new() { TestTerminologyCreator.CreateConcept("BA", children: new(){TestTerminologyCreator.CreateConcept("BAA") })
-                                                                    , TestTerminologyCreator.CreateConcept("BB")})
-                                       .WithConcept("C",
-                                                   children: new() { TestTerminologyCreator.CreateConcept("CA", children: new(){TestTerminologyCreator.CreateConcept("CAA") })
-                                                                    , TestTerminologyCreator.CreateConcept("CB")});
+            var codeSystem = TestTerminologyCreator.HierarchicalCodeSystem();
 
             var flattened = codeSystem.Concept.Flatten();
 
@@ -127,6 +147,34 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
     internal static class TestTerminologyCreator
     {
+
+
+        internal static CodeSystem HierarchicalCodeSystem()
+        {
+            return GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
+                                       .WithConcept("A",
+                                                   children: new() { CreateConcept("AA", children: new(){ CreateConcept("AAA") })
+                                                            , CreateConcept("AB")})
+                                       .WithConcept("B",
+                                                   children: new() { CreateConcept("BA", children: new(){ CreateConcept("BAA") })
+                                                            , CreateConcept("BB")})
+                                       .WithConcept("C",
+                                                   children: new() { CreateConcept("CA", children: new(){ CreateConcept("CAA") })
+                                                            , CreateConcept("CB")});
+        }
+
+        internal static CodeSystem SubsumedByCodeSysterm()
+        {
+            return GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
+                                        .WithProperty("subsumedBy")
+                                        .WithConcept("A")
+                                        .WithConcept("AA", null, [("subsumedBy", "A")])
+                                        .WithConcept("AAA", null, [("subsumedBy", "AA")])
+                                        .WithConcept("B")
+                                        .WithConcept("BB", null, [("subsumedBy", "B")])
+                                        .WithConcept("AB", null, [("subsumedBy", "A"), ("subsumedBy", "B")])
+                                        .WithConcept("C");
+        }
 
         internal static IEnumerable<ValueSet.FilterComponent> CreateFilters(List<(FilterOperator op, string value)> filters)
         {
