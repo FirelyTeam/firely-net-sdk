@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSDC = Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent;
@@ -60,6 +61,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return filter.Op switch
             {
                 FilterOperator.IsA => applyIsAFilter(concepts, properties, filter),
+                FilterOperator.IsNotA => applyIsNotAFilter(concepts, properties, filter),
                 FilterOperator.DescendentOf => applyDescentantOfFilter(concepts, properties, filter),
                 _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with filter `{filter.Op.GetLiteral()}` are not yet supported.")
             };
@@ -112,6 +114,35 @@ namespace Hl7.Fhir.Specification.Terminology
                 if (concepts.FindCode(filter.Value) is { } concept)
                     result.Add(concept);
             }
+            return result;
+        }
+
+        private static IEnumerable<CSDC> applyIsNotAFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+        {
+            //start with all the concepts
+            var result = concepts;
+
+            //find descendants based on subsumedBy
+            if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
+            {
+                //first flatten the codes
+                var flattened = concepts.Flatten();
+
+                //first find the parent itself (if it's in the CodeSystem) and remove it
+                if (flattened.FindCode(filter.Value) is { } concept)
+                    result.Remove(concept);
+                //then find the descendants, and remove them
+                List<CSDC> descendants = findDescendantsUsingSubsumedBy(filter, flattened);
+
+                result.RemoveAll(descendants.Contains);
+            }
+            else
+            {
+                //SubsumedBy is not used, we should only check for a nested hierarchy, and exclude the code and it's descendants
+                concepts.RemoveCode(filter.Value);
+            }
+
+
             return result;
         }
 

@@ -138,17 +138,66 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
             flattened.Should().NotContain(c => c.Concept.Any());
         }
 
+        [TestMethod]
+        public async T.Task TestHierarchicalIsNotAFilter()
+        {
+            var resolver = new InMemoryResourceResolver();
+
+            var codeSystem = TestTerminologyCreator.HierarchicalCodeSystem();
+            resolver.Add(codeSystem);
+
+            //VS has a single include, with a single filter
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsNotA, "AA") }).ToList();
+
+
+            var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            concepts.Should().Contain(c => c.Code == "A")
+                                        .Which.Contains.Should().Contain(c => c.Code == "AB")
+                                        .And.NotContain(c => c.Code == "AA");
+
+            //VS has a single include, with a two filter, both filters should be true;
+            filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsNotA, "A"), (FilterOperator.IsNotA, "B") }).ToList();
+
+            concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            //No code, which are both A & B;
+            concepts.Should().OnlyContain(c => c.Code == "C");
+        }
+
+        [TestMethod]
+        public async T.Task TestSubsumbedByIsNotAFilter()
+        {
+            var resolver = new InMemoryResourceResolver();
+
+            var codeSystem = TestTerminologyCreator.SubsumedByCodeSysterm();
+
+            resolver.Add(codeSystem);
+
+            //VS has a single include, with a single filter
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsNotA, "A") }).ToList();
+            var concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            concepts.Should().Contain(c => c.Code == "B")
+                                              .And.Contain(c => c.Code == "B")
+                                              .And.Contain(c => c.Code == "BB")
+                                              .And.Contain(c => c.Code == "C")
+                                              .And.NotContain(c => c.Code == "A")
+                                              .And.NotContain(c => c.Code == "AA")
+                                              .And.NotContain(c => c.Code == "AB")
+                                              .And.NotContain(c => c.Code == "AAA");
+
+            ///VS has a single include, with a two filter, both filters should be true;
+            filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsNotA, "A"), (FilterOperator.IsNotA, "B") }).ToList();
+            concepts = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            concepts.Should().OnlyContain(c => c.Code == "C");
+        }
+
     }
-
-
-
-
-
 
     internal static class TestTerminologyCreator
     {
-
-
         internal static CodeSystem HierarchicalCodeSystem()
         {
             return GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
