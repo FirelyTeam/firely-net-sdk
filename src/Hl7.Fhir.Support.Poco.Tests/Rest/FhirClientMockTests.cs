@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
             };
 
             using var client = new MoqBuilder()
-                .Send(response, 
+                .Send(response,
                     h => h.RequestUri == new Uri("http://example.com/Patient?name=henry") &&
                         findInAcceptHeader(h.Headers.Accept, "fhirVersion", useFhirVersionHeader))
                 .AsClient(s => { s.VerifyFhirVersion = false; s.UseFhirVersionInAcceptHeader = useFhirVersionHeader; });
@@ -249,6 +249,48 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
+        public async T.Task TestProcessMessage()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Bundle"" }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/$process-message")
+            };
+
+            using var client = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/$process-message"))
+                .AsClient();
+
+            var message = new TransactionBuilder("http://example.com/", Bundle.BundleType.Message).ToBundle();
+
+            var bundle = await client.ProcessMessageAsync(message);
+
+            bundle.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public async T.Task TestProcessMessageParameters()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Bundle"" }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/$process-message")
+            };
+
+            using var client = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/$process-message?async=true&response-url=http%3A%2F%2Fresponseurl.com"))
+                .AsClient();
+
+            var message = new TransactionBuilder("http://example.com/", Bundle.BundleType.Message).ToBundle();
+
+            var bundle = await client.ProcessMessageAsync(message, true, "http://responseurl.com");
+
+            bundle.Should().NotBeNull();
+        }
+
+        [TestMethod]
         public async Task WillFetchFullRepresentation()
         {
             var mock = new Mock<HttpMessageHandler>();
@@ -305,6 +347,55 @@ namespace Hl7.Fhir.Core.Tests.Rest
             client.LastResult!.Outcome.Should().BeOfType<OperationOutcome>().Which.Id.Should().Be("example");
         }
 
+
+        [TestMethod]
+        public async T.Task TestOperationResponseCodes()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Created,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+            using var client = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
+                .AsClient();
+
+            var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
+            client.LastResult?.Status.Should().Be("201");
+
+            response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Accepted,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+            using var client2 = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
+                .AsClient();
+
+            parameters = await client2.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
+            client2.LastResult?.Status.Should().Be("202");
+
+
+            response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+            using var client3 = new MoqBuilder()
+                .Send(response, h => h.RequestUri == new Uri("http://example.com/fhir/$ping"))
+                .AsClient();
+
+            var function = () => client3.OperationAsync(new Uri("http://example.com/fhir/$ping"));
+            await function.Should().ThrowAsync<FhirOperationException>().WithMessage("Operation was unsuccessful because of a client error (NotFound). Body contains a Parameters.");
+
+        }
+
         private static BaseFhirClient sendBack(string resourceType)
         {
             var mock = new Mock<HttpMessageHandler>();
@@ -324,6 +415,29 @@ namespace Hl7.Fhir.Core.Tests.Rest
             var mock = new Mock<BaseFhirClient>(new object[] { new Uri("http://example.org"), TESTINSPECTOR, FhirClientSettings.CreateDefault() });
             var _ = await mock.Object.ReadAsync<TestPatient>("http://example.org/fhir");
             mock.Verify(c => c.ReadAsync<TestPatient>(It.IsAny<string>(), null, null, null), Times.Once);
+        }
+
+        [TestMethod]
+        public void TestFhirClientSettings()
+        {
+            var fhirClient1 = new BaseFhirClient(
+                new Uri("http://example.org"), TESTINSPECTOR, new FhirClientSettings { SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR) }
+            );
+            
+            MethodInfo? serializationEngineField = fhirClient1.GetType().GetMethod("getSerializationEngine", BindingFlags.NonPublic | BindingFlags.Instance);
+            serializationEngineField.Should().NotBeNull();
+
+            (serializationEngineField!.Invoke(fhirClient1, []) is PocoSerializationEngine).Should().BeTrue();
+
+            var fhirClient2 = new BaseFhirClient(
+                new Uri("http://example.org"), TESTINSPECTOR)
+            ;
+            
+            (serializationEngineField!.Invoke(fhirClient2, []) is ElementModelSerializationEngine).Should().BeTrue();
+            
+            fhirClient2.Settings.SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
+            
+            (serializationEngineField!.Invoke(fhirClient2, []) is PocoSerializationEngine).Should().BeTrue();
         }
 
 

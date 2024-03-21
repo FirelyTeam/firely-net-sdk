@@ -9,6 +9,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel.Tests
@@ -171,9 +172,22 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow(P.DateTimePrecision.Fraction, true, "2001-04-06T13:01:02.89+01:00")]
         public void CanConvertFromDTO(P.DateTimePrecision p, bool hasOffset, string expected)
         {
-            var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
-            var parsed = P.DateTime.FromDateTimeOffset(dt, p, hasOffset);
-            parsed.ToString().Should().Be(expected);
+            CultureInfo current = CultureInfo.CurrentCulture;
+
+            try
+            {
+                // Use Danish locale, since they use '.' as a time separator
+                CultureInfo.CurrentCulture = new CultureInfo("da");
+
+                var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+                var parsed = P.DateTime.FromDateTimeOffset(dt, p, hasOffset);
+                parsed.ToString().Should().Be(expected);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = current;
+            }
+
         }
 
 

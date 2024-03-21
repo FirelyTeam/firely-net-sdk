@@ -217,8 +217,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 // Scan up until the first parent that knowns the instance uri (at the last the
                 // root, if it has been supplied).
-                if (_cache.InstanceUri is null)
-                    _cache.InstanceUri = ParentResources().SkipWhile(p => p.InstanceUri is null).FirstOrDefault()?.InstanceUri;
+                _cache.InstanceUri ??= ParentResources().SkipWhile(p => p.InstanceUri is null).FirstOrDefault()?.InstanceUri;
 
                 return _cache.InstanceUri;
             }

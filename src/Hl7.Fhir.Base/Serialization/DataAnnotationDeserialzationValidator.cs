@@ -15,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+#pragma warning disable CS1580 // Invalid type for parameter in XML comment cref attribute
+#pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
 
 namespace Hl7.Fhir.Serialization
 {

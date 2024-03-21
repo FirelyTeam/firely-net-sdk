@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel
             if (expected.Name != actual.Name)
                 return TreeComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (expected.Text != actual.Text) return TreeComparisonResult.Fail(actual.Location, $"value: was '{actual.Text}', expected '{expected.Text}'");
-            if (expected.Location != actual.Location) TreeComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
+            if (expected.Location != actual.Location) return TreeComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
             var childrenExp = expected.Children().OrderBy(e => e.Name);
@@ -29,14 +29,14 @@ namespace Hl7.Fhir.ElementModel
             foreach (var exp in childrenExp)
             {
                 if (!childrenActual.MoveNext())
-                    TreeComparisonResult.Fail(actual.Location, $"number of children was different");
+                    return TreeComparisonResult.Fail(actual.Location, $"number of children was different");
 
                 var result = exp.IsEqualTo(childrenActual.Current);
                 if (!result.Success)
                     return result;
             }
             if (childrenActual.MoveNext())
-                TreeComparisonResult.Fail(actual.Location, $"number of children was different");
+                return TreeComparisonResult.Fail(actual.Location, $"number of children was different");
 
             return TreeComparisonResult.OK;
         }

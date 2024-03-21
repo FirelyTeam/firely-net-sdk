@@ -8,6 +8,7 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -67,11 +68,11 @@ namespace Hl7.Fhir.Specification.Source
 
             if (!dir.Exists) return false;
 
-            // Sometimes unzipping fails after creating the directory, try to fix that by
-            // checking if there are any files at all.
-            var dirIsEmpty = !dir.EnumerateFileSystemInfos().Any();
-            if (dirIsEmpty) return false;
-
+            // zip unpacking fails sometimes (issue #2164). if this cache is supposed to contain the specification, it should have at least a bunch of files in there (notably, we test for profiles-types.xml)
+            var isSpecificationZip = ZipPath.EndsWith(Path.Combine("specification.zip"));
+            var doesNotHaveCriticalFiles = !File.Exists(Path.Combine(CachePath, "specification", "profiles-types.xml"));
+            if (isSpecificationZip && doesNotHaveCriticalFiles) return false;
+            
             var currentZipFileTime = File.GetLastWriteTimeUtc(ZipPath);
 
             return dir.CreationTimeUtc >= currentZipFileTime;
@@ -107,8 +108,14 @@ namespace Hl7.Fhir.Specification.Source
 
             dir.Create();
 
-
-            ZipFile.ExtractToDirectory(ZipPath, dir.FullName);
+            try
+            {
+                ZipFile.ExtractToDirectory(ZipPath, dir.FullName);
+            }
+            catch
+            {
+                Clear();
+            }
 
             // and also extract the contained zip in there too with all the xsds in there
             if (File.Exists(Path.Combine(dir.FullName, "fhir-all-xsd.zip")))
@@ -130,9 +137,9 @@ namespace Hl7.Fhir.Specification.Source
 
 
         /// <summary>
-        /// Gets the cache directory, but does not create one if it does not yet exist
+        /// Gets the cache directory, or creates an empty cache directory if it does not exist
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Information about the existing (or new) cache directory</returns>
         private DirectoryInfo getCachedZipDirectory()
         {
             // First, create the main "cache" directory.

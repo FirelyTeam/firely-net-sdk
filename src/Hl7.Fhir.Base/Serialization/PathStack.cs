@@ -34,7 +34,8 @@ namespace Hl7.Fhir.Serialization
             _tops.Push(_path.Length);
             _path += RESOURCEPREFIX + name;
 
-            if (!_paths.Any())
+            // or rhs is edge case for EG a split bundle with a backbone element as its root (see issue #2627)
+            if (!_paths.Any() || (_paths.Count == 1 && !_paths.First().StartsWith(RESOURCEPREFIX.ToString())))
                 _paths.Push(name);
         }
 
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Serialization
                 _path = _path.Substring(0, top);
             }
 
-            if (_paths.Count() == 1)
+            if (_paths.Count == 1)
                 _paths.Pop();
         }
 

@@ -304,11 +304,72 @@ namespace Hl7.Fhir.ElementModel.Types
         /// to specify comparison behaviour for date comparisons.</remarks>
         public Result<int> TryCompareTo(Any other) => TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON);
 
-        public static bool operator +(Quantity a, Quantity b) => throw Error.NotSupported("Adding two quantites is not yet supported");
-        public static bool operator -(Quantity a, Quantity b) => throw Error.NotSupported("Subtracting two quantites is not yet supported");
 
-        public static bool operator *(Quantity a, Quantity b) => throw Error.NotSupported("Multiplying two quantites is not yet supported");
-        public static bool operator /(Quantity a, Quantity b) => throw Error.NotSupported("Dividing two quantites is not yet supported");
+        private static (Quantity, Quantity) alignQuantityUnits(Quantity a, Quantity b)
+        {
+            if (a.System != QuantityUnitSystem.UCUM || b.System != QuantityUnitSystem.UCUM)
+            {
+                Error.NotSupported("Arithmetic operations on quantities using systems other than UCUM are not supported.");
+            }
+
+            Quantity? left = a;
+            Quantity? right = b;
+
+            if (a.Unit != b.Unit)
+            {
+                // align units with each other
+                if (!a.TryCanonicalize(out left)) left = a;
+                if (!b.TryCanonicalize(out right)) right = b;
+            }
+
+            return (left!, right!);
+        }
+
+        public static Quantity? operator +(Quantity a, Quantity b) =>
+            Add(a, b).ValueOrDefault();
+
+        public static Quantity? operator -(Quantity a, Quantity b) =>
+            Substract(a, b).ValueOrDefault();
+
+        public static Quantity operator *(Quantity a, Quantity b) =>
+            Multiply(a, b).ValueOrDefault();
+
+        public static Quantity? operator /(Quantity a, Quantity b) =>
+            Divide(a, b).ValueOrDefault();
+
+        internal static Result<Quantity> Add(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return (left!.Unit == right!.Unit)
+                ? Ok<Quantity>(new(left.Value + right.Value, left.Unit))
+                : Fail<Quantity>(Error.InvalidOperation($"The add operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
+        }
+
+        internal static Result<Quantity> Substract(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return (left!.Unit == right!.Unit)
+                ? Ok<Quantity>(new(left.Value - right.Value, left.Unit))
+                : Fail<Quantity>(Error.InvalidOperation($"The substract operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
+        }
+
+        internal static Result<Quantity> Multiply(Quantity a, Quantity b)
+        {
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return Ok<Quantity>(new(left.Value * right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a * b)));
+        }
+
+        internal static Result<Quantity> Divide(Quantity a, Quantity b)
+        {
+            if (b.Value == 0) return Fail<Quantity>(Error.InvalidOperation("Cannot divide by zero."));
+
+            var (left, right) = alignQuantityUnits(a, b);
+
+            return Ok<Quantity>(new(left.Value / right.Value, left.Unit == right.Unit ? "1" : Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a / b)));
+        }
 
         public override int GetHashCode() => (Unit, Value).GetHashCode();
 

@@ -109,9 +109,7 @@ namespace Hl7.Fhir.FhirPath
                     return fhirValue.FhirValue;
                 }
 
-                object result = r.Value;
-
-                return result switch
+                return r.Value switch
                 {
                     bool b => new FhirBoolean(b),
                     long l => new Integer64(l),
@@ -121,7 +119,7 @@ namespace Hl7.Fhir.FhirPath
                     P.Date d => new Date(d.ToString()),
                     P.Time t => new Time(t.ToString()),
                     P.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime()),
-                    _ => (Base)result
+                    var other => (Base?)other
                 };
             });
         }
@@ -283,7 +281,7 @@ namespace Hl7.Fhir.FhirPath
                 "code" when input is ScopedNode sn => inParams.WithCode(code: sn.Value as string, context: sn.LocalLocation),
                 "Coding" => inParams.WithCoding(input.ParseCoding()),
                 "CodeableConcept" => inParams.WithCodeableConcept(input.ParseCodeableConcept()),
-                "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),
+                "string" or "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),
                 _ => null,
             };
 

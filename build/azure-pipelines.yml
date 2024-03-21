@@ -54,10 +54,15 @@ stages:
       inputs:
         versionSpec: '6.4.0' 
 
-    - template: restore.yml@templates
-      parameters:
-        nuGetServiceConnections: GitHubPackageGetFeed
-        nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
+    - ${{ if eq(variables.useGitHubPackageFeed, 'yes') }}:
+      - template: restore.yml@templates
+        parameters:
+          nuGetServiceConnections: GitHubPackageGetFeed
+          nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
+          
+    - ${{ if eq(variables.useGitHubPackageFeed, 'no') }}:
+      - script: dotnet restore --source https://api.nuget.org/v3/index.json
+        displayName: 'Run dotnet restore'
         
     - task: DotNetCoreCLI@2
       displayName: Build
@@ -203,7 +208,6 @@ stages:
           testRunTitle: Tests Serialization R4 test project
           projects: |
             **/publish/Hl7.Fhir.Serialization.R4.Tests.dll
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
     
   - job:
     displayName: Tests Serialization R4B test project

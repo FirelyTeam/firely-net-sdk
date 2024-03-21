@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Rest
     public partial class BaseFhirClient : IDisposable
     {
         internal readonly ModelInspector Inspector;
-        private readonly IFhirSerializationEngine _serializationEngine;
+        private readonly Lazy<List<HttpStatusCode>> _200responses = new(() => Enum.GetValues(typeof(HttpStatusCode)).Cast<HttpStatusCode>().Where(n => (int)n > 199 && (int)n < 300).ToList());
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -77,8 +77,6 @@ namespace Hl7.Fhir.Rest
             Inspector = inspector;
             Settings = settings;
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings.SerializationEngine ??
-                FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, settings.ParserSettings ?? new());
 
             Requester = requester;
 
@@ -914,7 +912,8 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK, ct);
+            //operation responses are expected to return 2xx codes.
+            return executeAsync<Resource>(tx, _200responses.Value, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
@@ -929,13 +928,29 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK, ct);
+            //operation responses are expected to return 2xx codes.
+            return executeAsync<Resource>(tx, _200responses.Value, ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Resource? Operation(Uri operation, Parameters? parameters = null, bool useGet = false)
         {
             return OperationAsync(operation, parameters, useGet).WaitResult();
+        }
+
+        public virtual Task<Bundle?> ProcessMessageAsync(Bundle bundle, bool async = false, string? responseUrl = null, CancellationToken? ct = null)
+        {
+            if (bundle == null) throw new ArgumentNullException(nameof(bundle));
+
+            var tx = new TransactionBuilder(Endpoint).ProcessMessage(bundle, async, responseUrl).ToBundle();
+
+            return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NoContent }, ct);
+        }
+
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
+        public virtual Resource? ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null)
+        {
+            return ProcessMessageAsync(messageBundle, async, responseUrl).WaitResult();
         }
 
         private Task<Resource?> internalOperationAsync(string operationName, string? type = null, string? id = null, string? vid = null,
@@ -958,7 +973,8 @@ namespace Hl7.Fhir.Rest
             else
                 tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted }, ct);
+            //operation responses are expected to return 2xx codes.
+            return executeAsync<Resource>(tx, _200responses.Value, ct);
         }
 
         private Resource? internalOperation(string operationName, string? type = null, string? id = null,
@@ -1050,7 +1066,7 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             var requestMessage = request.ToHttpRequestMessage(
                     Requester.BaseUrl,
-                    _serializationEngine,
+                    getSerializationEngine(),
                     Settings.UseFhirVersionInAcceptHeader ? fhirVersion : null,
                     Settings);
 
@@ -1060,7 +1076,7 @@ namespace Hl7.Fhir.Rest
             // of the server, add a suggestion about this in the (legacy) parsing exception.
             var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
             (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
-                await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError)
+                await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError)
                 .ConfigureAwait(false);
 
             // If an error occurred while trying to interpret and validate the response, we will bail out now.
@@ -1152,6 +1168,11 @@ namespace Hl7.Fhir.Rest
             interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
 
         private bool _versionChecked = false;
+
+        private IFhirSerializationEngine getSerializationEngine()
+        {
+            return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new());
+        }
 
         private async Task verifyServerVersion(CancellationToken ct)
         {

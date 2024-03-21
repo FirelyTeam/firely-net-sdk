@@ -4,6 +4,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,7 +42,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var (poco, expected) = getEdgecases();
 
-            var options = BaseOptions.Pretty();
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).Pretty();
+
             string actual = JsonSerializer.Serialize(poco, options);
 
             var errors = new List<string>();
@@ -83,4 +85,5 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
     }
 
+    
 }

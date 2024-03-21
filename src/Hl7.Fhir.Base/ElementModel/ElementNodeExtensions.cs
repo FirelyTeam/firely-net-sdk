@@ -114,3 +114,5 @@ namespace Hl7.Fhir.ElementModel
             node as ScopedNode ?? new ScopedNode(node);
     }
 }
+
+#nullable restore
