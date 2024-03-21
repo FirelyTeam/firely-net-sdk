@@ -13,10 +13,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
+using FhirJsonConverterFactory = Hl7.Fhir.Serialization.FhirJsonConverterFactory;
 
 #nullable enable
 
@@ -1048,6 +1050,136 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             // System.InvalidOperationException: 'Stack empty.' thrown when attempting to deserialize
             var result = JsonSerializer.Deserialize<Parameters.ParameterComponent>(ref newJsonReader, options);
+        }
+
+        private static IEnumerable<object[]> getExtensionOptionsAndExpectedErrors()
+        {
+            yield return
+            [
+                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                    .UsingMode(DeserializerModes.Ostrich),
+                new Predicate<IEnumerable<CodedException>>(errs => !errs.Any())
+            ];
+            yield return
+            [
+                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                    .UsingMode(DeserializerModes.Recoverable),
+                new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => FilterPredicateExtensions.IsRecoverableIssue(e)))
+            ];
+            yield return
+            [
+                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                    .UsingMode(DeserializerModes.BackwardsCompatible),
+                new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => FilterPredicateExtensions.IsBackwardsCompatibilityIssue(e)))
+            ];
+            yield return
+            [
+                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE]),
+                new Predicate<IEnumerable<CodedException>>(errs => errs.All(e => e.ErrorCode != ERR.UNEXPECTED_JSON_TOKEN_CODE))
+            ];
+            yield return
+            [
+                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).UsingMode(DeserializerModes.Ostrich)
+                    .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.LONG_CANNOT_BE_PARSED_CODE]),
+                new Predicate<IEnumerable<CodedException>>(errs =>
+                {
+                    IEnumerable<CodedException> codedExceptions = errs as CodedException[] ?? errs.ToArray();
+                    return codedExceptions.Any() && codedExceptions.All(e =>
+                        e.ErrorCode is ERR.ARRAYS_CANNOT_BE_EMPTY_CODE or ERR.LONG_CANNOT_BE_PARSED_CODE);
+                })
+            ];
+        }
+        
+        [DataTestMethod]
+        [DynamicData(nameof(getExtensionOptionsAndExpectedErrors), DynamicDataSourceType.Method)]
+        public void TestExtensionMethods(JsonSerializerOptions options, Predicate<IEnumerable<CodedException>> shouldHold)
+        {
+            string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
+            
+            try
+            {
+                _ = JsonSerializer.Deserialize<TestPatient>(testJson, options);
+                throw new DeserializationFailedException(null, []);
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                shouldHold(dfe.Exceptions).Should().BeTrue();
+            }
+        }
+
+        private static Predicate<CodedException> getPredicateFromOptions(JsonSerializerOptions options)
+        {
+            var factory = JsonSerializerOptionsExtensions.FindCustomConverter(options.Converters) as FhirJsonConverterFactory ?? throw new InvalidOperationException();
+            return factory.Engine!.IgnoreFilter;
+        }
+
+        private static IEnumerable<object[]> getIgnoreEnforceTests()
+        {
+            yield return
+            [
+                getPredicateFromOptions(new JsonSerializerOptions()
+                    .ForFhir(typeof(TestPatient).Assembly)
+                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
+                    .Ignoring([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE])
+                    .Ignoring([ERR.INCORRECT_BASE64_DATA_CODE])),
+                new Predicate<CodedException>(ce =>
+                    ce.ErrorCode is (ERR.INCORRECT_BASE64_DATA_CODE or ERR.ARRAYS_CANNOT_BE_EMPTY_CODE
+                        or ERR.UNEXPECTED_JSON_TOKEN_CODE))
+            ];
+            yield return
+            [
+                getPredicateFromOptions(new JsonSerializerOptions()
+                    .ForFhir(typeof(TestPatient).Assembly)
+                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
+                    .Enforcing([ERR.UNEXPECTED_JSON_TOKEN_CODE])),
+                new Predicate<CodedException>(_ => false)
+            ];
+            yield return
+            [
+                getPredicateFromOptions(new JsonSerializerOptions()
+                    .ForFhir(typeof(TestPatient).Assembly)
+                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
+                    .Enforcing([ERR.UNEXPECTED_JSON_TOKEN_CODE])
+                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])),
+                new Predicate<CodedException>(ce => ce.ErrorCode == ERR.UNEXPECTED_JSON_TOKEN_CODE)
+            ];
+        }
+
+        private static IEnumerable<CodedException> getErrorsList()
+        {
+            var testDeserializerOptions = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                .UsingMode(DeserializerModes.Strict);
+            string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
+            
+            try
+            {
+                _ = JsonSerializer.Deserialize<TestPatient>(testJson, testDeserializerOptions);
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                return dfe.Exceptions;
+            }
+
+            throw new InvalidOperationException("Should have encountered errors");
+        }
+            
+            
+        [DataTestMethod]
+        [DynamicData(nameof(getIgnoreEnforceTests), DynamicDataSourceType.Method)]
+        public void TestIgnoreEnforcePrevalence(Predicate<CodedException> actual, Predicate<CodedException> expected)
+        {
+            var errors = getErrorsList();
+
+            foreach (var err in errors) (actual(err) == expected(err)).Should().BeTrue(); // test if predicates are equivalent
+        }
+        
+        
+        [TestMethod]
+        public void TestInvalidCustomization()
+        {
+            var shouldThrow = () => (_ = new JsonSerializerOptions().UsingMode(DeserializerModes.Ostrich));
+            shouldThrow.Should().Throw<NotSupportedException>("Expected error trying to set the mode of a non-existent converter");
         }
     }
 }

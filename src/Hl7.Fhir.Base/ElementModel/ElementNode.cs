@@ -48,7 +48,7 @@ namespace Hl7.Fhir.ElementModel
         public static bool TryConvertToElementValue(object? value, [NotNullWhen(true)] out object? primitiveValue)
         {
             primitiveValue = conv();
-            return primitiveValue != null;
+            return primitiveValue is not null;
 
             object? conv()
             {
@@ -92,15 +92,13 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static IEnumerable<ITypedElement?> CreateList(params object[]? values) =>
-            values != null
-                ? values.Select(value => value switch
-                {
-                    null => null,
-                    ITypedElement element => element,
-                    _ => ForPrimitive(value)
-                })
-                : EmptyList;
+        public static IEnumerable<ITypedElement?> CreateList(params object[] values) =>
+            values switch
+            {
+                null => EmptyList,
+                [var one] => [toTT(one)],
+                _ => values.Select(toTT).ToList()!
+            };
 
         /// <summary>
         /// Create a variable list of values using an enumeration
@@ -108,16 +106,21 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static IEnumerable<ITypedElement?> CreateList(IEnumerable<object>? values) => values != null
-                ? values.Select(value => value switch
-                {
-                    null => null,
-                    ITypedElement element => element,
-                    _ => ForPrimitive(value)
-                })
-                : EmptyList;
+        public static IEnumerable<ITypedElement?> CreateList(IEnumerable<object> values) => values switch
+        {
+            null => EmptyList,
+            _ => values.Select(toTT).ToList()!
+        };
 
-        public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();
+        private static ITypedElement? toTT(object value) => value switch
+        {
+            null => null,
+            ITypedElement element => element,
+            _ => ForPrimitive(value)
+        };
+
+
+        public static readonly IEnumerable<ITypedElement> EmptyList = [];
         public IEnumerable<ITypedElement> Children(string? name = null) => ChildrenInternal(name);
 
         internal ElementNode(string name, object? value, string? instanceType, IElementDefinitionSummary? definition)
@@ -235,11 +238,7 @@ namespace Hl7.Fhir.ElementModel
             if (type == null) throw Error.ArgumentNull(nameof(type));
 
             var sd = provider.Provide(type);
-            IElementDefinitionSummary? definition = null;
-
-            // Should we throw if type is not found?
-            if (sd != null)
-                definition = ElementDefinitionSummary.ForRoot(sd);
+            var definition = sd is not null ? ElementDefinitionSummary.ForRoot(sd) : null;
 
             return new ElementNode(name ?? type, value, type, definition);
         }

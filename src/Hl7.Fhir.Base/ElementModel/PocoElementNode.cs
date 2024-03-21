@@ -1,7 +1,7 @@
-/* 
+/*
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -14,11 +14,13 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
+    internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator,
+        IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
         private readonly ClassMapping _myClassMapping;
@@ -39,13 +41,15 @@ namespace Hl7.Fhir.ElementModel
             ShortPath = InstanceType;
         }
 
-        private PocoElementNode(ModelInspector inspector, Base instance, PocoElementNode parent, PropertyMapping definition, string location, string shortPath)
+        private PocoElementNode(ModelInspector inspector, Base instance, PocoElementNode parent,
+            PropertyMapping definition, string location, string shortPath)
         {
             Current = instance;
             _inspector = inspector;
 
-            var instanceType = definition.Choice != ChoiceType.None ?
-                        instance.GetType() : determineInstanceType(definition);
+            var instanceType = definition.Choice != ChoiceType.None
+                ? instance.GetType()
+                : determineInstanceType(definition);
             _myClassMapping = _inspector.FindOrImportClassMapping(instanceType);
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
@@ -67,7 +71,8 @@ namespace Hl7.Fhir.ElementModel
                 "url" => typeof(FhirUri),
                 "id" => typeof(FhirString),
                 "div" => typeof(XHtml),
-                _ => throw new NotSupportedException($"Encountered unexpected primitive type {Name} in backward compat behaviour for PocoElementNode.InstanceType.")
+                _ => throw new NotSupportedException(
+                    $"Encountered unexpected primitive type {Name} in backward compat behaviour for PocoElementNode.InstanceType.")
             };
         }
 
@@ -75,41 +80,93 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
+        /// <summary>
+        /// Elements from the IReadOnlyDictionary can be of type <see cref="Base"/>, IEnumerable&lt;Base&gt; or string.
+        /// This method uniformly returns a list of (Base, int) tuples, where the int is the index of the element in the IEnumerable.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private IEnumerable<(Base val, int ix)> returnElements(string name, object element)
+        {
+            return (element, Current, name) switch
+            {
+                (Base @base, _, _)  => new[] { (@base, 0) },
+                (IEnumerable<Base> bases, _, _)  => bases.Select((e, i) => (e, i)),
+                (string s, Extension, "url")  => new[]{ ( (Base)new FhirUri(s), 0)},
+                (string s, Element, "id")  => new[]{ ((Base)new FhirString(s), 0)},
+                _ => Enumerable.Empty<(Base, int)>(),
+            };
+        }
+
+        /// <summary>
+        /// Get the children from the IReadOnlyDictionary, and turn them into PocoElementNodes.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public IEnumerable<ITypedElement> Children(string name)
         {
-            if (!(Current is Base parentBase)) yield break;
+            if (Current is null) return Enumerable.Empty<PocoElementNode>();
 
-            var children = parentBase.NamedChildren;
-            string oldElementName = null;
-            int arrayIndex = 0;
+            var rod = Current.AsReadOnlyDictionary();
 
-            foreach (var child in children)
+            if (name is null)
             {
-                if (name == null || child.ElementName == name)
+                return rod.SelectMany(kvp
+                    => createChildNodes(kvp.Key, kvp.Value));
+            }
+
+            rod.TryGetValue(name, out var dictValue);
+            return createChildNodes(name, dictValue);
+
+            IEnumerable<PocoElementNode> createChildNodes(string childName, object value)
+            {
+                var elts = returnElements(childName, value);
+                var elementDef = _myClassMapping.FindMappedElementByName(childName);
+                //Create the list of child nodes differently based on:
+                //- whether multiple children are allowed or not
+                //- whether a parent location is known or not (i.e: root nodes have an empty location) 
+                //I assume that Location and ShortPath are either both null or both not null - CK
+                var input = (elementDef?.IsCollection ?? true, Location == null) switch
                 {
-                    // Poll the actual implementation, which results in a more efficient loopkup when the underlying
-                    // implementation of _mySD is ClassMapping.
-                    var childElementDef = _myClassMapping.FindMappedElementByName(child.ElementName);
-
-                    if (oldElementName != child.ElementName)
-                        arrayIndex = 0;
-                    else
-                        arrayIndex += 1;
-
-                    var location = Location == null
-                        ? child.ElementName
-                        : $"{Location}.{child.ElementName}[{arrayIndex}]";
-                    var shortPath = ShortPath == null
-                        ? child.ElementName
-                        : (childElementDef.IsCollection ?
-                            $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
-                            $"{ShortPath}.{child.ElementName}");
-
-                    yield return new PocoElementNode(_inspector, child.Value, this, childElementDef,
-                        location, shortPath);
-                }
-
-                oldElementName = child.ElementName;
+                    (false, true) =>
+                        elts.Select(c => new PocoElementNode(
+                            location: $"{childName}[{c.ix}]",
+                            shortPath: $"{childName}",
+                            instance: c.val,
+                            definition: elementDef,
+                            inspector: _inspector,
+                            parent: this
+                        )),
+                    (false, false) =>
+                        elts.Select(c => new PocoElementNode(
+                            location: $"{Location}.{childName}[{c.ix}]",
+                            shortPath: $"{ShortPath}.{childName}",
+                            instance: c.val,
+                            definition: elementDef,
+                            inspector: _inspector,
+                            parent: this
+                        )),
+                    (true, true) =>
+                        elts.Select(c => new PocoElementNode(
+                            location: $"{childName}[{c.ix}]",
+                            shortPath: $"{childName}[{c.ix}]",
+                            instance: c.val,
+                            definition: elementDef,
+                            inspector: _inspector,
+                            parent: this
+                        )),
+                    (true, false) =>
+                        elts.Select(c => new PocoElementNode(
+                            location: $"{Location}.{childName}[{c.ix}]",
+                            shortPath: $"{ShortPath}.{childName}[{c.ix}]",
+                            instance: c.val,
+                            definition: elementDef,
+                            inspector: _inspector,
+                            parent: this
+                        )),
+                };
+                return input;
             }
         }
 

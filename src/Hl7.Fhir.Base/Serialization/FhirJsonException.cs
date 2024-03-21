@@ -123,27 +123,29 @@ namespace Hl7.Fhir.Serialization
         internal static FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.", OO_Sev.Warning, OO_Typ.Structure);
 
         /// <summary>
-        /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
+        /// List of issues which do NOT lead to data loss. Recoverable issues mean that all data present in the parsed data could be retrieved and
         /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
         /// </summary>
 #pragma warning disable CS0618 // Type or member is obsolete
-        internal static bool IsRecoverableIssue(FhirJsonException e) =>
-            e.ErrorCode is EXPECTED_PRIMITIVE_NOT_NULL_CODE or
-            INCORRECT_BASE64_DATA_CODE or
-            STRING_ISNOTAN_INSTANT_CODE or
-            NUMBER_CANNOT_BE_PARSED_CODE or
-            UNEXPECTED_JSON_TOKEN_CODE or
-            LONG_CANNOT_BE_PARSED_CODE or
-            LONG_INCORRECT_FORMAT_CODE or
-            EXPECTED_START_OF_ARRAY_CODE or
-            USE_OF_UNDERSCORE_ILLEGAL_CODE or
-            RESOURCETYPE_UNEXPECTED_CODE or
-            OBJECTS_CANNOT_BE_EMPTY_CODE or
-            ARRAYS_CANNOT_BE_EMPTY_CODE or
-            PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE or
-            PRIMITIVE_ARRAYS_ONLY_NULL_CODE or
-            PROPERTY_MAY_NOT_BE_EMPTY_CODE or
-            DUPLICATE_ARRAY_CODE;
+        internal static string[] RecoverableIssues =
+        [
+            EXPECTED_PRIMITIVE_NOT_NULL_CODE,
+            INCORRECT_BASE64_DATA_CODE,
+            STRING_ISNOTAN_INSTANT_CODE,
+            NUMBER_CANNOT_BE_PARSED_CODE,
+            UNEXPECTED_JSON_TOKEN_CODE,
+            LONG_CANNOT_BE_PARSED_CODE,
+            LONG_INCORRECT_FORMAT_CODE,
+            EXPECTED_START_OF_ARRAY_CODE,
+            USE_OF_UNDERSCORE_ILLEGAL_CODE,
+            RESOURCETYPE_UNEXPECTED_CODE,
+            OBJECTS_CANNOT_BE_EMPTY_CODE,
+            ARRAYS_CANNOT_BE_EMPTY_CODE,
+            PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE,
+            PRIMITIVE_ARRAYS_ONLY_NULL_CODE,
+            PROPERTY_MAY_NOT_BE_EMPTY_CODE,
+            DUPLICATE_ARRAY_CODE
+        ];
 #pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
@@ -151,12 +153,12 @@ namespace Hl7.Fhir.Serialization
         /// FHIR release. This means allowing unknown elements, codes and types in a choice element. Note that the POCO model cannot capture
         /// these newer elements and data, so this means data loss may occur.
         /// </summary>
-        internal static bool AllowedForBackwardsCompatibility(CodedException e) =>
-            e.ErrorCode is CodedValidationException.INVALID_CODED_VALUE_CODE or
-            //EXPECTED_PRIMITIVE_NOT_OBJECT_CODE or  
-            //EXPECTED_PRIMITIVE_NOT_ARRAY_CODE or
-            CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE or
-            UNKNOWN_PROPERTY_FOUND_CODE;
+        internal static string[] BackwardsCompatibilityAllowedIssues =
+        [
+            CodedValidationException.INVALID_CODED_VALUE_CODE,
+            CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE,
+            UNKNOWN_PROPERTY_FOUND_CODE
+        ];
 
         public FhirJsonException(string code, string message)
             : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)

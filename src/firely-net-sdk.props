@@ -6,11 +6,11 @@
 
 	<!-- Solution-wide properties for NuGet packaging -->
 	<PropertyGroup>
-		<VersionPrefix>5.6.2</VersionPrefix>
+		<VersionPrefix>5.7.1</VersionPrefix>
 		<VersionSuffix></VersionSuffix>
 		<Authors>Firely (info@fire.ly) and contributors</Authors>
 		<Company>Firely (https://fire.ly)</Company>
-		<Copyright>Copyright 2013-2023 Firely.  Contains materials (C) HL7 International</Copyright>
+		<Copyright>Copyright 2013-2024 Firely.  Contains materials (C) HL7 International</Copyright>
 		<PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>

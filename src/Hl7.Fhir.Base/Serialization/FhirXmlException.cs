@@ -88,33 +88,38 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException ENCOUNTERED_DTD_REFERENCES(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ENCOUNTERED_DTD_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)", OO_Sev.Warning, OO_Typ.Structure);
 
         /// <summary>
-        /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
+        /// List of issues which do NOT lead to data loss. Recoverable issues mean that all data present in the parsed data could be retrieved and
         /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
         /// </summary>
-        internal static bool IsRecoverableIssue(FhirXmlException e) =>
-            e.ErrorCode is EMPTY_ELEMENT_NAMESPACE_CODE or
-            INCORRECT_ELEMENT_NAMESPACE_CODE or
-            INCORRECT_XHTML_NAMESPACE_CODE or
-            INCORRECT_ATTRIBUTE_NAMESPACE_CODE or
-            INCORRECT_BASE64_DATA_CODE or
-            VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE or
-            ELEMENT_OUT_OF_ORDER_CODE or
-            ELEMENT_NOT_IN_SEQUENCE_CODE or
-            ATTRIBUTE_HAS_EMPTY_VALUE_CODE or
-            ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE or
-            SCHEMALOCATION_DISALLOWED_CODE or
-            ENCOUNTERED_DTD_REFERENCES_CODE;
+        internal static string[] RecoverableIssues =
+        [
+            EMPTY_ELEMENT_NAMESPACE_CODE,
+            INCORRECT_ELEMENT_NAMESPACE_CODE,
+            INCORRECT_XHTML_NAMESPACE_CODE,
+            INCORRECT_ATTRIBUTE_NAMESPACE_CODE,
+            INCORRECT_BASE64_DATA_CODE,
+            VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE,
+            ELEMENT_OUT_OF_ORDER_CODE,
+            ELEMENT_NOT_IN_SEQUENCE_CODE,
+            ATTRIBUTE_HAS_EMPTY_VALUE_CODE,
+            ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
+            SCHEMALOCATION_DISALLOWED_CODE,
+            ENCOUNTERED_DTD_REFERENCES_CODE
+        ];
+        
 
         /// <summary>
         /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
         /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
         /// these newer elements and data, so this means data loss may occur.
         /// </summary>
-        internal static bool AllowedForBackwardsCompatibility(CodedException e) =>
-            e.ErrorCode is CodedValidationException.INVALID_CODED_VALUE_CODE or
-            UNKNOWN_ELEMENT_CODE or
-            CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE or
-            UNKNOWN_ATTRIBUTE_CODE;
+        internal static string[] BackwardsCompatibilityAllowedIssues =
+        [
+            CodedValidationException.INVALID_CODED_VALUE_CODE,
+            UNKNOWN_ELEMENT_CODE,
+            CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
+            UNKNOWN_ATTRIBUTE_CODE
+        ];
 
         public FhirXmlException(string code, string message)
         : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)

@@ -109,9 +109,7 @@ namespace Hl7.Fhir.FhirPath
                     return fhirValue.FhirValue;
                 }
 
-                object? result = r.Value;
-
-                return result switch
+                return r.Value switch
                 {
                     bool b => new FhirBoolean(b),
                     long l => new Integer64(l),
@@ -121,7 +119,7 @@ namespace Hl7.Fhir.FhirPath
                     P.Date d => new Date(d.ToString()),
                     P.Time t => new Time(t.ToString()),
                     P.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime()),
-                    _ => result as Base
+                    var other => (Base?)other
                 };
             });
         }
