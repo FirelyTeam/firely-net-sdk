@@ -19,7 +19,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable, IShortPathGenerator
+    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IShortPathGenerator
     {
         /// <summary>
         /// Creates an implementation of ITypedElement that represents a primitive value
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.ElementModel
 
         private IReadOnlyCollection<IElementDefinitionSummary> getChildDefinitions(IStructureDefinitionSummaryProvider provider)
         {
-            LazyInitializer.EnsureInitialized<IReadOnlyCollection<IElementDefinitionSummary>>(ref _childDefinitions, () => this.ChildDefinitions(provider));
+            LazyInitializer.EnsureInitialized(ref _childDefinitions, () => this.ChildDefinitions(provider));
 
             return _childDefinitions;
         }
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.ElementModel
             // we think it should be - this way you can safely first create a node representing
             // an independently created root for a resource of datatype, and then add it to the tree.
             var childDefs = getChildDefinitions(provider ?? throw Error.ArgumentNull(nameof(provider)));
-            var childDef = childDefs?.SingleOrDefault(cd => cd.ElementName == child.Name);
+            var childDef = childDefs.SingleOrDefault(cd => cd.ElementName == child.Name);
 
             child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
 
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.ElementModel
                     me.AddAnnotation(ann);
 
             if (recursive)
-                me.ChildList.AddRange(node.Children()!.Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
+                me.ChildList.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
 
             return me;
         }
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.ElementModel
 
                 }
                 else
-                    return Name!;
+                    return Name;
             }
         }
 
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.ElementModel
                     }
                 }
                 else
-                    return Name!;
+                    return Name;
             }
         }
     }
