@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Introspection
     /// <summary>
     /// A container for the metadata of an element of a FHIR datatype as present on a property of a (generated) .NET POCO class.
     /// </summary>
-    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ElementType.Name}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
     public class PropertyMapping : IElementDefinitionSummary
     {
         // no public constructors
