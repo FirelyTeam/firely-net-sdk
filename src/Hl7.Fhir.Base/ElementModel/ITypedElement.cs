@@ -10,6 +10,7 @@ using Hl7.Fhir.Specification;
 
 #nullable enable
 
+
 namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
