@@ -28,12 +28,12 @@ namespace Hl7.Fhir.Serialization.Tests
             engine.SerializeToXml(
                 engine.DeserializeFromJson(
                     engine.SerializeToJson(
-                        engine.DeserializeFromXml(original))));
+                        engine.DeserializeFromXml(original)!))!);
         public string RoundTripJson(string original) => 
             engine.SerializeToJson(
                 engine.DeserializeFromXml(
                     engine.SerializeToXml(
-                        engine.DeserializeFromJson(original))));
+                        engine.DeserializeFromJson(original)!))!);
     }
     
     internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider provider) : IRoundTripper
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ? NEW_POCO_ENGINE.DeserializeFromXml(input)
                 : NEW_POCO_ENGINE.DeserializeFromJson(input);
 
-            var r2 = (Resource)resource.DeepCopy();
+            var r2 = (Resource)resource!.DeepCopy();
             Assert.IsTrue(resource.Matches(r2),
                 "Serialization of " + name + " did not match output - Matches test");
             Assert.IsTrue(resource.IsExactly(r2),
