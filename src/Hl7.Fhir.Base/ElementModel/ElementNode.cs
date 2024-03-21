@@ -96,7 +96,7 @@ namespace Hl7.Fhir.ElementModel
             values switch
             {
                 null => EmptyList,
-                [var one] => [toTT(one)],
+                [var one] => [toTT(one)!],
                 _ => values.Select(toTT).ToList()!
             };
 
