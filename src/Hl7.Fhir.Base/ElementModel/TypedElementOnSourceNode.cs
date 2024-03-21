@@ -473,7 +473,7 @@ namespace Hl7.Fhir.ElementModel
                 {
                     stateBag.TryGetValue(rule, out object? state);
                     state = rule(child, this, state);
-                    stateBag[rule] = state;
+                    if (state != null) stateBag[rule] = state;
                 }
 
                 yield return child;

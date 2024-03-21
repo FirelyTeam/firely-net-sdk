@@ -128,7 +128,7 @@ namespace Hl7.Fhir.ElementModel
             Definition = definition;
         }
 
-        private IReadOnlyCollection<IElementDefinitionSummary> _childDefinitions = Array.Empty<IElementDefinitionSummary>();
+        private IReadOnlyCollection<IElementDefinitionSummary> _childDefinitions = null!;
 
         private IReadOnlyCollection<IElementDefinitionSummary> getChildDefinitions(IStructureDefinitionSummaryProvider provider)
         {
