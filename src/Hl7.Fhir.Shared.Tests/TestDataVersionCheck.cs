@@ -49,12 +49,12 @@ namespace Hl7.Fhir.Tests
                     string content = File.ReadAllText(item);
                     if (new FileInfo(item).Extension == ".xml")
                     {
-                        Console.WriteLine($"    {item.Replace(path+"\\", "")}");
+                        Console.WriteLine($"    {item.Replace(path+"/", "")}");
                         await xmlParser.ParseAsync<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
-                        Console.WriteLine($"    {item.Replace(path + "\\", "")}");
+                        Console.WriteLine($"    {item.Replace(path + "/", "")}");
                         await jsonParser.ParseAsync<Resource>(content);
                     }
                     else
