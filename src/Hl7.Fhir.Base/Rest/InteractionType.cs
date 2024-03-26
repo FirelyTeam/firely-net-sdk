@@ -11,17 +11,24 @@ namespace Hl7.Fhir.Rest
     //Needs to be in sync with Bundle.HTTPVerbs
     public enum InteractionType
     {
-        Search,
-        Unspecified,
         Read,
-        VRead,
-        Update,
+        VRead, 
+        Update, 
+        ConditionalUpdate,
+        Patch,
+        ConditionalPatch,
         Delete,
-        Create,
-        Capabilities,
+        DeleteHistory,
+        DeleteHistoryVersion,
         History,
-        Operation,
+        Create,
+        ConditionalCreate,
+        Search,
+        ConditionalDeleteSingle,
+        ConditionalDeleteMultiple,
+        Capabilities,
         Transaction,
-        Patch
+        Unspecified,
+        Operation
     }
 }
