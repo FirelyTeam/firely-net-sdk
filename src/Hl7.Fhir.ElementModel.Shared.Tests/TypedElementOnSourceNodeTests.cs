@@ -33,7 +33,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                 getAnnotatedNode,
                 SourceNode.Valued("id", "myId2"),
                 SourceNode.Node("extension",
-                    SourceNode.Valued("valueInt", "4")),
+                    SourceNode.Valued("url", "http://example.org/ext")),
                 SourceNode.Node("extension",
                     SourceNode.Valued("valueString", "world!"))));
         
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("Patient.contained[0].value[0]", getTestPatient.Children("contained").First().Children("value").First().Location);
             Assert.AreEqual("Patient.active[0]", getTestPatient.Children("active").First().Location);
             Assert.AreEqual("Patient.active[0].id[0]", getTestPatient.Children("active").First().Children("id").First().Location);
-            Assert.AreEqual("Patient.active[0].extension[0].value[0]", getTestPatient.Children("active").First().Children("extension").First().Children("value").First().Location);
+            Assert.AreEqual("Patient.active[0].extension[0].url[0]", getTestPatient.Children("active").First().Children("extension").First().Children("url").First().Location);
             Assert.AreEqual("Patient.active[0].extension[1].value[0]", getTestPatient.Children("active").First().Children("extension").Skip(1).First().Children("value").First().Location);
         }
     }
