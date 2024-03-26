@@ -34,6 +34,19 @@ namespace HL7.FhirPath.Tests
                     ("(@2016-01 + 29 weeks) = @2016-07", true, false),
                     ("(@2016-01 + 30 weeks) = @2016-08", true, false),
                     ("(@2016-01 + 31 weeks) = @2016-08", true, false),
+                    
+                    ("(@2012 - 1 year) = @2011", true, false),
+                    ("(@2012-02 - 1 year) = @2011-02", true, false),
+                    ("(@2012-02-13 - 13 month) = @2011-01-13", true, false),
+                    ("(@2012 - 1 month) = @2012", true, false),
+                    ("(@2012 - 12 month) = @2011", true, false),
+                    ("(@2012-03-03 - 5 days) = @2012-02-27", true, false),
+
+                    ("(@2014 - 23 months) = @2013", true, false),
+                    ("(@2016 - 365 days) = @2015", true, false),
+                    ("(@2016-07 - 29 weeks) = @2016-01", true, false),
+                    ("(@2016-08 - 30 weeks) = @2016-01", true, false),
+                    ("(@2016-08 - 31 weeks) = @2016-01", true, false),
 
                     ("(@2012-02-13T10:45:31.1 + 30 minutes) = @2012-02-13T11:15:31.1", true, false),
                     ("(@2012-02-13T10:45:31.1 + 25 hours) = @2012-02-14T11:45:31.1", true, false),
