@@ -31,6 +31,7 @@ namespace Hl7.Fhir.ElementModel
             if (source is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
 
+            Location = source.Location;
             ShortPath = source.Name;
             _source = source;
             (InstanceType, Definition) = buildRootPosition(type);
@@ -66,7 +67,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        private TypedElementOnSourceNode(TypedElementOnSourceNode parent, ISourceNode source, IElementDefinitionSummary definition, string instanceType, string prettyPath)
+        private TypedElementOnSourceNode(TypedElementOnSourceNode parent, ISourceNode source, IElementDefinitionSummary definition, string instanceType, string prettyPath, string location = null)
         {
             _source = source;
             ShortPath = prettyPath;
@@ -75,6 +76,7 @@ namespace Hl7.Fhir.ElementModel
             Definition = definition;
             InstanceType = instanceType;
             _settings = parent._settings;
+            Location = location;
         }
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
@@ -408,6 +410,9 @@ namespace Hl7.Fhir.ElementModel
                 var prettyPath =
                  hit && !info.IsCollection ? $"{ShortPath}.{info.ElementName}" : $"{ShortPath}.{scan.Name}[{_nameIndex}]";
 
+                var location =
+                    hit ? $"{Location}.{info.ElementName}[{_nameIndex}]" : $"{Location}.{scan.Name}[{_nameIndex}]";
+
                 // Special condition for ccda.
                 // If we encounter a xhtml node in a ccda document we will flatten all childnodes
                 // and use their content to build up the xml.
@@ -419,11 +424,11 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore CS0618 // Type or member is obsolete
 
                     var source = SourceNode.Valued(scan.Name, string.Join(string.Empty, xmls));
-                    yield return new TypedElementOnSourceNode(this, source, info, instanceType, prettyPath);
+                    yield return new TypedElementOnSourceNode(this, source, info, instanceType, prettyPath, location);
                     continue;
                 }
 
-                yield return new TypedElementOnSourceNode(this, scan, info, instanceType, prettyPath);
+                yield return new TypedElementOnSourceNode(this, scan, info, instanceType, prettyPath, location);
             }
         }
 
@@ -477,7 +482,7 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore 612, 618
         }
 
-        public string Location => _source.Location;
+        public string Location { get; init; }
 
         public string ShortPath { get; private set; }
 
