@@ -60,7 +60,11 @@ namespace Hl7.Fhir.ElementModel
         public static IDisposable Catch(this ITypedElement source, ExceptionNotificationHandler handler) =>
             source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("Element does not implement IExceptionSource.");
 
-        public static void VisitAll(this ITypedElement nav) => nav.Visit((_, n) => { var dummy = n.Value; });
+        public static void VisitAll(this ITypedElement nav) => nav.Visit((_, n) =>
+        {
+            var dummyValue = n.Value;
+            var dummyDefinition = n.Definition;
+        });
 
         public static List<ExceptionNotification> VisitAndCatch(this ITypedElement node)
         {
