@@ -33,7 +33,7 @@ namespace Hl7.Fhir.ElementModel
             if (source is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
 
-            Location = source.Location;
+            Location = source.Name;
             ShortPath = source.Name;
             _source = source;
             (InstanceType, Definition) = buildRootPosition(type);
