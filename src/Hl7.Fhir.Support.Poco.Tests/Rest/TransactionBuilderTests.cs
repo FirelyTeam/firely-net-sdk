@@ -139,5 +139,40 @@ namespace Hl7.Fhir.Test
             bundle.Entry.Skip(1).Should().ContainSingle().Which.FullUrl.Should().BeNull();
 
         }
+
+        [TestMethod]
+        public void TestConditionalDeleteWithIfmatch()
+        {
+            var p = new TestPatient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                .ConditionalDeleteSingle(new SearchParams().Where("name=foobar"), p.TypeName, versionId: "314");
+            var b = tx.ToBundle();
+
+            Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
+        }
+
+        [TestMethod]
+        public void TestDeleteHistory()
+        {
+            var p = new TestPatient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                .DeleteHistory("Patient", "7");
+            var b = tx.ToBundle();
+            
+            Assert.AreEqual(Bundle.HTTPVerb.DELETE, b.Entry[0].Request.Method);
+            Assert.AreEqual("Patient/7/_history", b.Entry[0].Request.Url);
+        }
+
+        [TestMethod]
+        public void TestDeleteHistoryVersion()
+        {
+            var p = new TestPatient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                .DeleteHistoryVersion("Patient", "7", "1");
+            var b = tx.ToBundle();
+            
+            Assert.AreEqual(Bundle.HTTPVerb.DELETE, b.Entry[0].Request.Method);
+            Assert.AreEqual("Patient/7/_history/1", b.Entry[0].Request.Url);
+        }
     }
 }
