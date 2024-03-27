@@ -3290,6 +3290,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, settings);
 
+            await generateSnapshotAndCompare(profile);
             var (_, expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
