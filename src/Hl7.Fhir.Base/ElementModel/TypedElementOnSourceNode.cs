@@ -38,6 +38,7 @@ namespace Hl7.Fhir.ElementModel
             _source = source;
             (var typeOrNull, Definition) = buildRootPosition(type);
 
+            //TODO can secretly be null, but InstanceType cannot be nullable here since it's based in other classes.
             InstanceType = typeOrNull!;
         }
 
