@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Serialization
         public static bool TryDeserializeResource(
             this BaseFhirXmlPocoDeserializer deserializer, 
             string data, 
-            out Resource? instance, 
+            [NotNullWhen(true)] out Resource? instance, 
             out IEnumerable<CodedException> issues)
         {
             var xmlReader = SerializationUtil.XmlReaderFromXmlText(data);
@@ -135,7 +136,7 @@ namespace Hl7.Fhir.Serialization
         public static bool TryDeserializeResource(
             this BaseFhirJsonPocoDeserializer deserializer, 
             string json, 
-            out Resource? instance, 
+            [NotNullWhen(true)] out Resource? instance, 
             out IEnumerable<CodedException> issues)
         {
             var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(json), new() { CommentHandling = JsonCommentHandling.Skip });

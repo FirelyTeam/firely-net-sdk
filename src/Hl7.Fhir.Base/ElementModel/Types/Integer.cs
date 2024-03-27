@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using static Hl7.Fhir.Utility.Result;
 
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 
-            (var succ, var val) = Any.DoConvert(() => XmlConvert.ToInt32(representation));
+            var (succ, val) = DoConvert(() => XmlConvert.ToInt32(representation));
             value = new Integer(val);
             return succ;
         }

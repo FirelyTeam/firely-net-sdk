@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static DateTime Parse(string representation) =>
             TryParse(representation, out var result) ? result! : throw new FormatException($"String '{representation}' was not recognized as a valid datetime.");
 
-        public static bool TryParse(string representation, out DateTime value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)]out DateTime? value) => tryParse(representation, out value);
 
         /// <summary>
         /// Rounds the contents of a <see cref="DateTimeOffset"/> to the given precision, unused precision if filled out 

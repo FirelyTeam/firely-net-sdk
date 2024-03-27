@@ -256,16 +256,16 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
-                { "summary\\bundle-summary-true.json", SummaryType.True },
-                { "summary\\bundle-summary-false.json", SummaryType.False },
-                { "summary\\bundle-summary-data.json", SummaryType.Data },
-                { "summary\\bundle-summary-text.json", SummaryType.Text },
-                { "summary\\bundle-summary-count.json", SummaryType.Count },
-                { "summary\\bundle-summary-true.xml", SummaryType.True },
-                { "summary\\bundle-summary-false.xml", SummaryType.False },
-                { "summary\\bundle-summary-data.xml", SummaryType.Data },
-                { "summary\\bundle-summary-text.xml", SummaryType.Text },
-                { "summary\\bundle-summary-count.xml", SummaryType.Count }
+                { "summary/bundle-summary-true.json", SummaryType.True },
+                { "summary/bundle-summary-false.json", SummaryType.False },
+                { "summary/bundle-summary-data.json", SummaryType.Data },
+                { "summary/bundle-summary-text.json", SummaryType.Text },
+                { "summary/bundle-summary-count.json", SummaryType.Count },
+                { "summary/bundle-summary-true.xml", SummaryType.True },
+                { "summary/bundle-summary-false.xml", SummaryType.False },
+                { "summary/bundle-summary-data.xml", SummaryType.Data },
+                { "summary/bundle-summary-text.xml", SummaryType.Text },
+                { "summary/bundle-summary-count.xml", SummaryType.Count }
             };
 
             var patientOne = new Patient
@@ -320,14 +320,14 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
-                { "summary\\summary-true.json", SummaryType.True },
-                { "summary\\summary-false.json", SummaryType.False },
-                { "summary\\summary-data.json", SummaryType.Data },
-                { "summary\\summary-text.json", SummaryType.Text },
-                { "summary\\summary-true.xml", SummaryType.True },
-                { "summary\\summary-false.xml", SummaryType.False },
-                { "summary\\summary-data.xml", SummaryType.Data },
-                { "summary\\summary-text.xml", SummaryType.Text }
+                { "summary/summary-true.json", SummaryType.True },
+                { "summary/summary-false.json", SummaryType.False },
+                { "summary/summary-data.json", SummaryType.Data },
+                { "summary/summary-text.json", SummaryType.Text },
+                { "summary/summary-true.xml", SummaryType.True },
+                { "summary/summary-false.xml", SummaryType.False },
+                { "summary/summary-data.xml", SummaryType.Data },
+                { "summary/summary-text.xml", SummaryType.Text }
             };
 
             foreach (var pair in data)
