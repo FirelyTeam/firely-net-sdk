@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
@@ -19,9 +20,7 @@ namespace Hl7.Fhir.ElementModel.Types
 {
     public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
     {
-        public Decimal() : this(default) { }
-
-        public Decimal(decimal value) => Value = value;
+        public Decimal(decimal value = default) => Value = value;
 
         public decimal Value { get; }
 
@@ -30,21 +29,22 @@ namespace Hl7.Fhir.ElementModel.Types
         private static readonly string[] FORBIDDEN_DECIMAL_PREFIXES = new[] { "+", "." };
 
         public static Decimal Parse(string value) =>
-            TryParse(value, out var result) ? result! : throw new FormatException($"String '{value}' was not recognized as a valid decimal.");
+            TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid decimal.");
 
-        public static bool TryParse(string representation, out Decimal? value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Decimal? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 
             value = default;
 
-            if (FORBIDDEN_DECIMAL_PREFIXES.Any(prefix => representation.StartsWith(prefix)) || representation.EndsWith("."))
+            if (FORBIDDEN_DECIMAL_PREFIXES.Any(representation.StartsWith) || representation.EndsWith("."))
                 return false;
 
-            (var succ, var val) = Any.DoConvert(() => decimal.Parse(representation, NumberStyles.AllowDecimalPoint |
-                   NumberStyles.AllowExponent |
-                   NumberStyles.AllowLeadingSign,
-                   CultureInfo.InvariantCulture));
+            var (succ, val) = Any.DoConvert(() => 
+                decimal.Parse(representation, 
+                    NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign, 
+                    CultureInfo.InvariantCulture));
+            
             value = new Decimal(val);
             return succ;
         }
@@ -157,9 +157,9 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Boolean(Decimal d) => ((ICqlConvertible)d).TryConvertToBoolean().ValueOrThrow();
         public static explicit operator String(Decimal d) => ((ICqlConvertible)d).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other, CQL_EQUIVALENCE_COMPARISON);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } && Equals(other, CQL_EQUIVALENCE_COMPARISON);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean() =>
           Value switch

@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -37,7 +38,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// Resolve a the contentReference in a navigator and returns a navigator that is located on the target of the contentReference.
         /// </summary>
         /// <remarks>The current navigator must be located at an element that contains a contentReference.</remarks>
-        public static bool TryFollowContentReference(this ElementDefinitionNavigator sourceNavigator, Func<string, StructureDefinition?> resolver, out ElementDefinitionNavigator? targetNavigator)
+        public static bool TryFollowContentReference(this ElementDefinitionNavigator sourceNavigator, Func<string, StructureDefinition?> resolver, [NotNullWhen(true)] out ElementDefinitionNavigator? targetNavigator)
         {
             targetNavigator = null;
 

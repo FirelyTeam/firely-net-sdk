@@ -32,6 +32,7 @@
 
 using Hl7.Fhir.Serialization;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
@@ -97,7 +98,7 @@ namespace Hl7.Fhir.Model
         /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
         /// </summary>
         /// <returns>true if the FhirDateTime contains a valid date/time string, false otherwise.</returns>
-        public bool TryToDateTime(out P.DateTime? dateTime)
+        public bool TryToDateTime([NotNullWhen(true)] out P.DateTime? dateTime)
         {
             if (_parsedValue is null)
             {
@@ -112,7 +113,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                dateTime = _parsedValue;
+                dateTime = _parsedValue!;
                 return true;
             }
 
@@ -124,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <returns>The DateTime, or null if the <see cref="Value"/> is null.</returns>
         /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR DateTime.</exception>
-        public P.DateTime? ToDateTime() => TryToDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+        public P.DateTime ToDateTime() => TryToDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
         protected override void OnObjectValueChanged()
         {

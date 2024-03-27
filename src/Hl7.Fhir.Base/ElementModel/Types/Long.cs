@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using static Hl7.Fhir.Utility.Result;
 
@@ -77,9 +78,9 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator String(Long l) => ((ICqlConvertible)l).TryConvertToString().ValueOrThrow();
         public static explicit operator Integer(Long l) => ((ICqlConvertible)l).TryConvertToInteger().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => Equals(other);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean() =>
               Value switch

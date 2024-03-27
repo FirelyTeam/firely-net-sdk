@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using static Hl7.Fhir.Utility.Result;
 
@@ -105,9 +106,9 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Long(String s) => ((ICqlConvertible)s).TryConvertToLong().ValueOrThrow();
         public static explicit operator Quantity(String s) => ((ICqlConvertible)s).TryConvertToQuantity().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other, CQL_EQUIVALENCE_COMPARISON);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } && Equals(other, CQL_EQUIVALENCE_COMPARISON);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean()
         {

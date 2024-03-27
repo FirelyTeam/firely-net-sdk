@@ -29,6 +29,7 @@
 */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
@@ -66,7 +67,7 @@ namespace Hl7.Fhir.Model
         [NonSerialized]  // To prevent binary serialization from serializing this field
         private P.Date? _parsedValue = null;
 
-        // This is a sentintel value that marks that the current string representation is
+        // This is a sentinel value that marks that the current string representation is
         // not parseable, so we don't have to try again. It's value is never used, it's just
         // checked by reference.
         private static readonly P.Date INVALID_VALUE = P.Date.FromDateTimeOffset(DateTimeOffset.MinValue);
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Model
         /// Converts a Fhir Date to a <see cref="P.Date"/>.
         /// </summary>
         /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
-        public bool TryToDate(out P.Date? date)
+        public bool TryToDate([NotNullWhen(true)] out P.Date? date)
         {
             if (_parsedValue is null)
             {
@@ -90,7 +91,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                date = _parsedValue;
+                date = _parsedValue!;
                 return true;
             }
 
@@ -134,7 +135,7 @@ namespace Hl7.Fhir.Model
         {
             if (Value is not null && TryToDate(out var dt))
             {
-                dto = dt!.ToDateTimeOffset(TimeSpan.Zero);
+                dto = dt.ToDateTimeOffset(TimeSpan.Zero);
                 return true;
             }
             else
@@ -147,7 +148,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Checks whether the given literal is correctly formatted.
         /// </summary>
-        public static bool IsValidValue(string value) => P.Date.TryParse(value, out var parsed) && !parsed!.HasOffset;
+        public static bool IsValidValue(string value) => P.Date.TryParse(value, out var parsed) && !parsed.HasOffset;
     }
 }
 

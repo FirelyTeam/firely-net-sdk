@@ -6,6 +6,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
         /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
         /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-        public bool TryDeserializeResource(XmlReader reader, out Resource? instance, out IEnumerable<CodedException> issues)
+        public bool TryDeserializeResource(XmlReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
         {
             FhirXmlPocoDeserializerState state = new();
 
@@ -96,7 +97,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
         /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
         /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-        public bool TryDeserializeElement(Type targetType, XmlReader reader, out Base? instance, out IEnumerable<CodedException> issues)
+        public bool TryDeserializeElement(Type targetType, XmlReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
         {
             FhirXmlPocoDeserializerState state = new();
 
