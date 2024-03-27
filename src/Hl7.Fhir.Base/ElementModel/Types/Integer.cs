@@ -80,9 +80,9 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Boolean(Integer i) => ((ICqlConvertible)i).TryConvertToBoolean().ValueOrThrow();
         public static explicit operator String(Integer i) => ((ICqlConvertible)i).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => Equals(other);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean() =>
                 Value switch

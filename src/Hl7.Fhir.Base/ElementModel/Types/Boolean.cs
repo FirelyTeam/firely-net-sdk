@@ -66,8 +66,8 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Quantity(Boolean b) => ((ICqlConvertible)b).TryConvertToQuantity().ValueOrThrow();
         public static explicit operator String(Boolean b) => ((ICqlConvertible)b).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? (bool?)Equals(other) : null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other);
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? (bool?)Equals(other) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => Equals(other);
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean() => Ok(this);
 

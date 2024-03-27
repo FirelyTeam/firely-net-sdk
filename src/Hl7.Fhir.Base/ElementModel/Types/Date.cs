@@ -246,12 +246,12 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Date(DateTimeOffset dto) => FromDateTimeOffset(dto);
         public static explicit operator String(Date d) => ((ICqlConvertible)d).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : (bool?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : null;
 
         // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
-        bool ICqlEquatable.IsEquivalentTo(Any other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
 
-        int? ICqlOrderable.CompareTo(Any other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : null;
 
         Result<DateTime> ICqlConvertible.TryConvertToDateTime() => Ok(ToDateTime());
 

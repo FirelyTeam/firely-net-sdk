@@ -187,13 +187,13 @@ namespace Hl7.Fhir.ElementModel.Types
 
     public interface ICqlEquatable
     {
-        bool? IsEqualTo(Any other);
-        bool IsEquivalentTo(Any other);
+        bool? IsEqualTo(Any? other);
+        bool IsEquivalentTo(Any? other);
     }
 
     public interface ICqlOrderable
     {
-        int? CompareTo(Any other);
+        int? CompareTo(Any? other);
     }
 
     public interface ICqlConvertible
