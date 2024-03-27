@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
@@ -54,6 +57,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 validationResult.Should().AllBeOfType<CodedValidationResult>();
                 validationResult.Should().ContainSingle(vr => ((CodedValidationResult)vr).ValidationException.ErrorCode == errorCode);
             }
+        }
+        
+        [TestMethod]
+        public void Test()
+        {
+            var bundle = new TestPatient{Name = new () {new () {Family = ""}}};
+            const string bundleString = """{ "resourceType":"Patient", "name":[{"family":""}] }""";
+            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            
+            var shouldThrowOnValidate = () => bundle.Validate(true);
+            var shouldThrowOnDeserialize = () => _ = JsonSerializer.Deserialize<Bundle>(bundleString, options);
+            
+            shouldThrowOnValidate.Should().Throw<ValidationException>();
+            shouldThrowOnDeserialize.Should().Throw<DeserializationFailedException>();
         }
     }
 
