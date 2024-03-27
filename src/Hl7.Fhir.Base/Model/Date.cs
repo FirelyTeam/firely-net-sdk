@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
         /// Converts a Fhir Date to a <see cref="P.Date"/>.
         /// </summary>
         /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
-        public bool TryToDate(out P.Date? date)
+        public bool TryToDate([NotNullWhen(true)] out P.Date? date)
         {
             if (_parsedValue is null)
             {
@@ -131,11 +131,11 @@ namespace Hl7.Fhir.Model
         /// Convert this Fhir Date to a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns>True if the value of the Fhir Date is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
-        public bool TryToDateTimeOffset(out DateTimeOffset? dto)
+        public bool TryToDateTimeOffset(out DateTimeOffset dto)
         {
             if (Value is not null && TryToDate(out var dt))
             {
-                dto = dt?.ToDateTimeOffset(TimeSpan.Zero);
+                dto = dt.ToDateTimeOffset(TimeSpan.Zero);
                 return true;
             }
             else

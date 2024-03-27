@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.ObjectValue = "2023-07-11";
             dft.TryToDateTimeOffset(out dto).Should().BeTrue();
-            dto.Month.Should().Be(7);
+            dto.Day.Should().Be(7);
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
             dto.Equals(dto2).Should().BeTrue();
 
