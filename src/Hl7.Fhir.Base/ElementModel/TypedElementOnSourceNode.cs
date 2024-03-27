@@ -36,13 +36,10 @@ namespace Hl7.Fhir.ElementModel
             Location = source.Name;
             ShortPath = source.Name;
             _source = source;
-            (var typeOrNull, Definition) = buildRootPosition(type);
-
-            //TODO can secretly be null, but InstanceType cannot be nullable here since it's based in other classes.
-            InstanceType = typeOrNull!;
+            (InstanceType, Definition) = buildRootPosition(type);
         }
 
-        private (string? instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
+        private (string instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
         {
             var rootType = type ?? _source.GetResourceTypeIndicator();
             if (rootType == null)
@@ -51,7 +48,7 @@ namespace Hl7.Fhir.ElementModel
                     throw Error.Format(nameof(type), $"Cannot determine the type of the root element at '{_source.Location}', " +
                         $"please supply a type argument.");
                 else
-                    return (rootType!, null);
+                    return ("Base", null);
             }
 
             var elementType = Provider.Provide(rootType);
@@ -471,12 +468,11 @@ namespace Hl7.Fhir.ElementModel
         private IEnumerable<ITypedElement> runAdditionalRules(IEnumerable<ITypedElement> children)
         {
 #pragma warning disable 612, 618
-            var additionalRules = _source.Annotations(typeof(AdditionalStructuralRule));
+            var additionalRules = _source.Annotations<AdditionalStructuralRule>().ToArray();
             var stateBag = new Dictionary<AdditionalStructuralRule, object>();
-            IEnumerable<object> enumerable = additionalRules as object[] ?? additionalRules.ToArray();
             foreach (var child in children)
             {
-                foreach (var rule in enumerable.Cast<AdditionalStructuralRule>())
+                foreach (var rule in additionalRules)
                 {
                     stateBag.TryGetValue(rule, out object? state);
                     state = rule(child, this, state);
@@ -493,13 +489,11 @@ namespace Hl7.Fhir.ElementModel
         public string ShortPath { get; private set; }
 
         public override string ToString() =>
-            $"{(InstanceType != null ? ($"[{InstanceType}] ") : "")}{_source}";
+            $"{(($"[{InstanceType}] "))}{_source}";
 
         public IEnumerable<object> Annotations(Type type)
         {
-#pragma warning disable IDE0046 // Convert to conditional expression
             if (type == typeof(TypedElementOnSourceNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
-#pragma warning restore IDE0046 // Convert to conditional expression
                 return new[] { this };
             else
                 return _source.Annotations(type);
@@ -507,6 +501,6 @@ namespace Hl7.Fhir.ElementModel
     }
 
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
-    public delegate object AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object? state);
+    public delegate object? AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object? state);
 }
 

@@ -170,6 +170,14 @@ namespace Hl7.Fhir.ElementModel
         /// <seealso cref="IAnnotated"/>
         public static IEnumerable<object> Annotations(this ISourceNode node, Type type) =>
             node is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
+        
+        /// <summary>
+        /// Gets specific annotations from the list of annotations on the node.
+        /// </summary>
+        /// <returns>All of the annotations of the given type, or an empty list if none were found.</returns>
+        /// <seealso cref="IAnnotated"/>
+        public static IEnumerable<T> Annotations<T>(this ISourceNode node) =>
+            (node is IAnnotated ann ? ann.Annotations<T>() : []);
 
         /// <summary>
         /// Gets a specific annotation from the list of annotations on the node.
