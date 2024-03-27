@@ -84,11 +84,11 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Quantity Parse(string representation) =>
                 TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid quantity.");
 
-        public static bool TryParse(string representation, out Quantity quantity)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Quantity? quantity)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 
-            quantity = new Quantity(default);
+            quantity = null;
 
             var result = QUANTITYREGEX_FOR_PARSE.Match(representation);
             if (!result.Success) return false;
@@ -98,15 +98,15 @@ namespace Hl7.Fhir.ElementModel.Types
 
             if (result.Groups["unit"].Success)
             {
-                quantity = new Quantity(value!, result.Groups["unit"].Value);
+                quantity = new Quantity(value, result.Groups["unit"].Value);
                 return true;
             }
             else if (result.Groups["time"].Success)
             {
                 if (TryParseTimeUnit(result.Groups["time"].Value, out var tv, out var isCalendarUnit))
                 {
-                    quantity = isCalendarUnit ? ForCalendarDuration(value!, tv!)
-                        : new Quantity(value!, tv!);
+                    quantity = isCalendarUnit ? ForCalendarDuration(value, tv)
+                        : new Quantity(value, tv);
                     return true;
                 }
                 else
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.ElementModel.Types
             }
             else
             {
-                quantity = new Quantity(value!, unit: UCUM_UNIT);
+                quantity = new Quantity(value, unit: UCUM_UNIT);
                 return true;
             }
         }
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// NOTE: in the current normative specification, there is a difference between comparing incompatible duration units (result: {}) 
         /// and performing the equals operator on incompatible units (result: false). This is going to be corrected
         /// (see https://jira.hl7.org/browse/FHIR-28144), and this code already reflects this decision.</remarks>
-        public Result<int> TryCompareTo(Any other, QuantityComparison comparisonType)
+        public Result<int> TryCompareTo(Any? other, QuantityComparison comparisonType)
         {
             if (other is null) return 1; // as defined by the .NET framework guidelines
             if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 if (!otherQ.TryCanonicalize(out right)) right = otherQ;
             }
 
-            return (left!.Unit == right!.Unit)
+            return (left.Unit == right.Unit)
                 ? decimal.Compare(Math.Round(left.Value, 8), Math.Round(right.Value, 8))   // aligns with Decimal
                 : Fail<int>(Error.InvalidOperation($"UCUM quanties with unit '{left.Unit}' and '{right.Unit}' cannot be compared."));
         }
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 if (!b.TryCanonicalize(out right)) right = b;
             }
 
-            return (left!, right!);
+            return (left, right);
         }
 
         public static Quantity? operator +(Quantity a, Quantity b) =>
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             var (left, right) = alignQuantityUnits(a, b);
 
-            return (left!.Unit == right!.Unit)
+            return (left.Unit == right.Unit)
                 ? Ok<Quantity>(new(left.Value + right.Value, left.Unit))
                 : Fail<Quantity>(Error.InvalidOperation($"The add operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
         }
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             var (left, right) = alignQuantityUnits(a, b);
 
-            return (left!.Unit == right!.Unit)
+            return (left.Unit == right.Unit)
                 ? Ok<Quantity>(new(left.Value - right.Value, left.Unit))
                 : Fail<Quantity>(Error.InvalidOperation($"The substract operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
         }
@@ -376,13 +376,13 @@ namespace Hl7.Fhir.ElementModel.Types
 
         public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
 
-        bool? ICqlEquatable.IsEqualTo(Any other) =>
-            other is { } && TryEquals(other, CQL_EQUALS_COMPARISON) is Ok<bool> ok ? ok.Value : (bool?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) =>
+            other is { } && TryEquals(other, CQL_EQUALS_COMPARISON) is Ok<bool> ok ? ok.Value : null;
 
         // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
-        bool ICqlEquatable.IsEquivalentTo(Any other) => other is { } && TryEquals(other, CQL_EQUIVALENCE_COMPARISON).ValueOrDefault(false);
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } && TryEquals(other, CQL_EQUIVALENCE_COMPARISON).ValueOrDefault(false);
 
-        int? ICqlOrderable.CompareTo(Any other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
 
         public static explicit operator String(Quantity q) => ((ICqlConvertible)q).TryConvertToString().ValueOrThrow();
 

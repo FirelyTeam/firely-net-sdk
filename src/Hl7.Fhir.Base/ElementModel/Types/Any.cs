@@ -53,7 +53,7 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             if (value is null) throw new ArgumentNullException(nameof(value));
 
-            return TryParse(value, primitiveType, out var result) ? result! :
+            return TryParse(value, primitiveType, out var result) ? result :
                 throw new FormatException($"Input string '{value}' was not in a correct format for type '{primitiveType}'.");
         }
 
@@ -77,9 +77,9 @@ namespace Hl7.Fhir.ElementModel.Types
                 else if (primitiveType == typeof(Decimal))
                     return (Decimal.TryParse(value, out var p), p?.Value);
                 else if (primitiveType == typeof(Integer))
-                    return (Integer.TryParse(value, out var p), p.Value);
+                    return (Integer.TryParse(value, out var p), p?.Value);
                 else if (primitiveType == typeof(Long))
-                    return (Long.TryParse(value, out var p), p.Value);
+                    return (Long.TryParse(value, out var p), p?.Value);
                 else if (primitiveType == typeof(Date))
                     return (Date.TryParse(value, out var p), p);
                 else if (primitiveType == typeof(DateTime))
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 else if (primitiveType == typeof(Quantity))
                     return (Quantity.TryParse(value, out var p), p);
                 else if (primitiveType == typeof(String))
-                    return (String.TryParse(value, out var p), p.Value);
+                    return (String.TryParse(value, out var p), p?.Value);
                 else
                     return (false, null);
             }
@@ -180,20 +180,20 @@ namespace Hl7.Fhir.ElementModel.Types
             new Fail<T>(new InvalidCastException($"Cannot cast value '{from}' of type {from.GetType()} to an instance of type {typeof(T)}."));
 
 
-        protected static Result<T> propagateNull<T>(object obj, Func<T> a) => obj is null ?
+        protected static Result<T> propagateNull<T>(object? obj, Func<T> a) => obj is null ?
             new Fail<T>(ArgNullException) : new Ok<T>(a());
     }
 
 
     public interface ICqlEquatable
     {
-        bool? IsEqualTo(Any other);
-        bool IsEquivalentTo(Any other);
+        bool? IsEqualTo(Any? other);
+        bool IsEquivalentTo(Any? other);
     }
 
     public interface ICqlOrderable
     {
-        int? CompareTo(Any other);
+        int? CompareTo(Any? other);
     }
 
     public interface ICqlConvertible

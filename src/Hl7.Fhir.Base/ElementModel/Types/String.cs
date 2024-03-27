@@ -29,7 +29,7 @@ namespace Hl7.Fhir.ElementModel.Types
 
         // Actually, it's not that trivial, since CQL strings accept a subset of C#'s escape sequences,
         // we *could* validate those here.
-        public static bool TryParse(string representation, out String value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out String? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 
@@ -106,9 +106,9 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Long(String s) => ((ICqlConvertible)s).TryConvertToLong().ValueOrThrow();
         public static explicit operator Quantity(String s) => ((ICqlConvertible)s).TryConvertToQuantity().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other, CQL_EQUIVALENCE_COMPARISON);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } && Equals(other, CQL_EQUIVALENCE_COMPARISON);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean()
         {
@@ -134,30 +134,30 @@ namespace Hl7.Fhir.ElementModel.Types
         }
 
         Result<Decimal> ICqlConvertible.TryConvertToDecimal() =>
-            Decimal.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Decimal>(this);
+            Decimal.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Decimal>(this);
 
         Result<Integer> ICqlConvertible.TryConvertToInteger() =>
-            Integer.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Integer>(this);
+            Integer.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Integer>(this);
 
         Result<Long> ICqlConvertible.TryConvertToLong() =>
-            Long.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Long>(this);
+            Long.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Long>(this);
 
         Result<DateTime> ICqlConvertible.TryConvertToDateTime() =>
-            DateTime.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<DateTime>(this);
+            DateTime.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<DateTime>(this);
 
         Result<Date> ICqlConvertible.TryConvertToDate() =>
-            Date.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Date>(this);
+            Date.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Date>(this);
 
         Result<Time> ICqlConvertible.TryConvertToTime() =>
-            Time.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Time>(this);
+            Time.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Time>(this);
 
         Result<Quantity> ICqlConvertible.TryConvertToQuantity() =>
-            Quantity.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Quantity>(this);
+            Quantity.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Quantity>(this);
 
         Result<String> ICqlConvertible.TryConvertToString() => Ok(this);
 
         Result<Ratio> ICqlConvertible.TryConvertToRatio() =>
-            Ratio.TryParse(Value, out var result) ? Ok(result!) : CannotCastTo<Ratio>(this);
+            Ratio.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Ratio>(this);
 
         Result<Code> ICqlConvertible.TryConvertToCode() => CannotCastTo<Code>(this);
         Result<Concept> ICqlConvertible.TryConvertToConcept() => CannotCastTo<Concept>(this);
