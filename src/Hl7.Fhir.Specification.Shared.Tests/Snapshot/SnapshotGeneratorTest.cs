@@ -3283,10 +3283,12 @@ namespace Hl7.Fhir.Specification.Tests
             // Create a profile without a differential
             var profile = ObservationTypeSliceProfile;
             profile.Differential = null;
+            profile.Kind = StructureDefinition.StructureDefinitionKind.Logical;
+            var settings = new SnapshotGeneratorSettings { ForceRegenerateSnapshots = true };
 
             var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator = new SnapshotGenerator(multiResolver, settings);
 
             var (_, expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
