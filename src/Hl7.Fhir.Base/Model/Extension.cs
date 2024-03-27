@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// Optional Extensions Element
     /// </summary>
     [Serializable]
-    [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_Url}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_url}}")]
     [FhirType("Extension", "http://hl7.org/fhir/StructureDefinition/Extension")]
     [DataContract]
     [Bindable(true)]
@@ -74,11 +74,11 @@ namespace Hl7.Fhir.Model
         [DataMember]
         public string? Url
         {
-            get { return _Url; }
-            set { _Url = value; OnPropertyChanged("Url"); }
+            get { return _url; }
+            set { _url = value; OnPropertyChanged("Url"); }
         }
 
-        private string? _Url;
+        private string? _url;
 
         /// <summary>
         /// Value of extension
@@ -87,17 +87,15 @@ namespace Hl7.Fhir.Model
         [DataMember]
         public DataType? Value
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { return _value; }
+            set { _value = value; OnPropertyChanged("Value"); }
         }
 
-        private DataType? _Value;
+        private DataType? _value;
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Extension;
-
-            if (dest != null)
+            if (other is Extension dest)
             {
                 base.CopyTo(dest);
                 if (Url != null) dest.Url = Url;
@@ -105,7 +103,7 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-                throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", nameof(other));
         }
 
         public override IDeepCopyable DeepCopy()

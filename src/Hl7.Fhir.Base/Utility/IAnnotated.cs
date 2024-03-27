@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Utility
             return annotation != null;
         }
 
-        public static IEnumerable<A> Annotations<A>(this IAnnotated annotated) => annotated.Annotations(typeof(A))?.Cast<A>() ?? Enumerable.Empty<A>();
+        public static IEnumerable<A> Annotations<A>(this IAnnotated annotated) => annotated.Annotations(typeof(A)).Cast<A>();
 
         public static bool HasAnnotation(this IAnnotated annotated, Type type) => annotated.Annotations(type).Any();
 

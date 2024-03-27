@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>There should generally be no reason to call this method, as you can easily get the required PropertyMapping via
         /// a ClassMapping - which will cache this information as well. This constructor is public for historical reasons only.</remarks>
-        public static bool TryCreate(PropertyInfo prop, [NotNullWhen(true)]out PropertyMapping? result, ClassMapping declaringClass, FhirRelease release)
+        public static bool TryCreate(PropertyInfo prop, [NotNullWhen(true)] out PropertyMapping? result, ClassMapping declaringClass, FhirRelease release)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
             result = default;

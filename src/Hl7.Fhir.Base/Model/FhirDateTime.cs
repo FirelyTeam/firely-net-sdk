@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
         /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
         /// </summary>
         /// <returns>true if the FhirDateTime contains a valid date/time string, false otherwise.</returns>
-        public bool TryToDateTime([NotNullWhen(true)]out P.DateTime? dateTime)
+        public bool TryToDateTime([NotNullWhen(true)] out P.DateTime? dateTime)
         {
             if (_parsedValue is null)
             {

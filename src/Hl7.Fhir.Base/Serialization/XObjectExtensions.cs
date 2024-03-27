@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Utility
                 if (attr.NextAttribute != null) return attr.NextAttribute;
 
                 // out of attributes, continue with our parents first "real" node
-                return attr.Parent!.FirstNode;
+                return attr.Parent?.FirstNode;
             }
         }
 

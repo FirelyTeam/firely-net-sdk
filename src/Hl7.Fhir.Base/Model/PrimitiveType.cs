@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
         public override IEnumerable<ElementValue> NamedChildren => base.NamedChildren;
 
         /// <inheritdoc/>
-        protected override bool TryGetValue(string key, [NotNullWhen(true)]out object? value)
+        protected override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
         {
             if (key == "value")
             {

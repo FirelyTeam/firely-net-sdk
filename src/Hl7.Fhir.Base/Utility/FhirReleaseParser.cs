@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="version">Fhir Release version number</param>
         /// <param name="release">Official FHIR Release</param>
         /// <returns>true if the conversion succeeded; false otherwise.</returns>
-        public static bool TryParse(string version, [NotNullWhen(true)]out FhirRelease? release)
+        public static bool TryParse(string version, [NotNullWhen(true)] out FhirRelease? release)
         {
             release = version switch
             {

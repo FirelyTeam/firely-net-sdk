@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Utility
             ProbeIsJson(data) && data.Contains($"\"resourceType\"");
 
 
-        private static XDocument XDocumentFromReaderInternal(XmlReader reader, bool ignoreComments = false)
+        private static XDocument XDocumentFromReaderInternal(XmlReader reader)
         {
             try
             {

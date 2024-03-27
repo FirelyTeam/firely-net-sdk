@@ -43,7 +43,7 @@ namespace Hl7.Fhir.ElementModel.Types
             }
         }
 
-        private static M.Quantity toUnitsOfMeasureQuantity(this decimal value, string unit)
+        private static M.Quantity toUnitsOfMeasureQuantity(this decimal value, string? unit)
         {
             Metric metric = (unit != null) ? SYSTEM.Value.Metric(unit) : new Metric(new List<Metric.Axis>());
             return new M.Quantity(value, metric);

@@ -83,10 +83,8 @@ namespace Hl7.Fhir.Specification.Source
         {
             this.properties = properties ?? throw Errors.ArgumentNull(nameof(properties));
             this.Error = error;
-
-            // Try to parse the specified type name to a known enum value
-            var typeName = ResourceTypeName;
-            if (typeName != null)
+            
+            if (ResourceTypeName != null)
             {
                 ResourceType = ModelInfo.FhirTypeNameToResourceType(ResourceTypeName);
             }
@@ -129,7 +127,7 @@ namespace Hl7.Fhir.Specification.Source
         public string Position => properties.GetPosition();
 
         /// <summary>Gets the type name of the resource.</summary>
-        public string ResourceTypeName => properties.GetTypeName();
+        public string? ResourceTypeName => properties.GetTypeName();
 
         /// <summary>Gets the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
         public ResourceType? ResourceType { get; }
