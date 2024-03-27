@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
     }
 
     // [WMR 20161005] Added specific debugger display attribute that includes the canonical url
-    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}} Url={Url}")]
+    [System.Diagnostics.DebuggerDisplay("/{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}} Url={Url}")]
     public partial class StructureDefinition
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

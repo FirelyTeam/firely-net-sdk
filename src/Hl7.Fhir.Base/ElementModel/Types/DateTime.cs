@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
@@ -26,9 +27,9 @@ namespace Hl7.Fhir.ElementModel.Types
         }
 
         public static DateTime Parse(string representation) =>
-            TryParse(representation, out var result) ? result! : throw new FormatException($"String '{representation}' was not recognized as a valid datetime.");
+            TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid datetime.");
 
-        public static bool TryParse(string representation, out DateTime value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)] out DateTime? value) => tryParse(representation, out value);
 
         /// <summary>
         /// Rounds the contents of a <see cref="DateTimeOffset"/> to the given precision, unused precision if filled out 
@@ -104,14 +105,14 @@ namespace Hl7.Fhir.ElementModel.Types
                 new("^" + DATETIMEFORMAT + "$",
                 RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        private static bool tryParse(string representation, out DateTime value)
+        private static bool tryParse(string representation, out DateTime? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 
             var matches = DATETIMEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new DateTime(default, default, default);
+                value = null;
                 return false;
             }
 
@@ -357,12 +358,12 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Date(DateTime dt) => ((ICqlConvertible)dt).TryConvertToDate().ValueOrThrow();
         public static explicit operator String(DateTime dt) => ((ICqlConvertible)dt).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : (bool?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : null;
 
         // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
-        bool ICqlEquatable.IsEquivalentTo(Any other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
 
-        int? ICqlOrderable.CompareTo(Any other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : null;
 
         Result<DateTime> ICqlConvertible.TryConvertToDateTime() => Ok(this);
 

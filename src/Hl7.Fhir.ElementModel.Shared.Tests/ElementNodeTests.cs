@@ -266,7 +266,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void CanBuildFromITypedElement()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(@"TestData/fp-test-patient.xml");
             var patientElem = (new FhirXmlParser()).Parse(tpXml).ToTypedElement();
             var nodes = ElementNode.FromElement(patientElem);
             Assert.IsTrue(patientElem.IsEqualTo(nodes).Success);

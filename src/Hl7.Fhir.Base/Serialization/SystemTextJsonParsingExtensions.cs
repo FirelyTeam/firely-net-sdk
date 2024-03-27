@@ -9,6 +9,7 @@
 
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
@@ -52,7 +53,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static bool TryGetNumber(this ref Utf8JsonReader reader, out object? value)
+        public static bool TryGetNumber(this ref Utf8JsonReader reader, [NotNullWhen(true)] out object? value)
         {
             value = null;
 

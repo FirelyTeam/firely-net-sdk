@@ -159,5 +159,12 @@ namespace Hl7.Fhir.ElementModel.Tests
             var parsed = P.Date.FromDateTimeOffset(dt, p, hasOffset);
             parsed.ToString().Should().Be(expected);
         }
+        
+        [TestMethod]
+        public void IsNullIfInvalid()
+        {
+            P.Date.TryParse("hi", out var parsed).Should().BeFalse();
+            parsed.Should().BeNull();
+        }
     }
 }

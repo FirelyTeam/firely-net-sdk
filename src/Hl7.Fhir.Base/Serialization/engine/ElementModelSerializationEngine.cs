@@ -14,6 +14,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http.Headers;
 
@@ -43,7 +44,7 @@ namespace Hl7.Fhir.Serialization
             _pocoSettings = pocoSettings;
         }
 
-        public static bool TryUnpackElementModelException(DeserializationFailedException dfe, out FormatException? fe)
+        public static bool TryUnpackElementModelException(DeserializationFailedException dfe, [NotNullWhen(true)] out FormatException? fe)
         {
             if (dfe.Exceptions.Count == 1 && dfe.Exceptions.Single() is ElementModelParserException empe)
             {

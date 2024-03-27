@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
 
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Date Parse(string representation) =>
             TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid date.");
 
-        public static bool TryParse(string representation, out Date value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Date? value) => tryParse(representation, out value);
 
         public static Date FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Day,
                 bool includeOffset = false) => new(dto, prec, includeOffset);
@@ -42,11 +43,11 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// The precision of the date available. 
         /// </summary>
-        public DateTimePrecision Precision { get; private set; }
+        public DateTimePrecision Precision { get; }
 
-        public int? Years => Precision >= DateTimePrecision.Year ? _value.Year : (int?)null;
-        public int? Months => Precision >= DateTimePrecision.Month ? _value.Month : (int?)null;
-        public int? Days => Precision >= DateTimePrecision.Day ? _value.Day : (int?)null;
+        public int? Years => Precision >= DateTimePrecision.Year ? _value.Year : null;
+        public int? Months => Precision >= DateTimePrecision.Month ? _value.Month : null;
+        public int? Days => Precision >= DateTimePrecision.Day ? _value.Day : null;
 
         /// <summary>
         /// The span of time ahead/behind UTC
@@ -105,14 +106,14 @@ namespace Hl7.Fhir.ElementModel.Types
         /// Converts the date to a full DateTimeOffset instance.
         /// </summary>
         /// <returns></returns>
-        private static bool tryParse(string representation, out Date value)
+        private static bool tryParse(string representation, out Date? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 
             var matches = PARTIALDATEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new Date(default, default, default);
+                value = null;
                 return false;
             }
 
@@ -239,18 +240,18 @@ namespace Hl7.Fhir.ElementModel.Types
 
 
         public override int GetHashCode() => _value.GetHashCode();
-        public override string ToString() => _originalParsedString is not null ? _originalParsedString : DateTime.ToStringWithPrecision(_value, Precision, HasOffset);
+        public override string ToString() => _originalParsedString ?? DateTime.ToStringWithPrecision(_value, Precision, HasOffset);
 
         public static implicit operator DateTime(Date pd) => pd.ToDateTime();
         public static explicit operator Date(DateTimeOffset dto) => FromDateTimeOffset(dto);
         public static explicit operator String(Date d) => ((ICqlConvertible)d).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : (bool?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : null;
 
         // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
-        bool ICqlEquatable.IsEquivalentTo(Any other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
 
-        int? ICqlOrderable.CompareTo(Any other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : null;
 
         Result<DateTime> ICqlConvertible.TryConvertToDateTime() => Ok(ToDateTime());
 

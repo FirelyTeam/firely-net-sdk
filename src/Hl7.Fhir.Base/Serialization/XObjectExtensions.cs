@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
+
+#nullable enable
 
 namespace Hl7.Fhir.Utility
 {
     public static class XObjectExtensions
     {
-        public static bool TryGetAttribute(this XElement docNode, XName name, out string value)
+        public static bool TryGetAttribute(this XElement docNode, XName name, [NotNullWhen(true)] out string? value)
         {
             var attr = docNode.Attribute(name);
 
@@ -38,7 +41,7 @@ namespace Hl7.Fhir.Utility
          *
          * Note: XDocumentType, XProcessingInstruction appear only on XDocument 
          */
-        public static XObject FirstChild(this XObject node)
+        public static XObject? FirstChild(this XObject node)
         {
             if (node is XContainer container)
             {
@@ -53,7 +56,7 @@ namespace Hl7.Fhir.Utility
             return null;
         }
 
-        public static XObject NextSibling(this XObject node)
+        public static XObject? NextSibling(this XObject node)
         {
             if (node is XNode n)
                 return n.NextNode;
@@ -64,11 +67,11 @@ namespace Hl7.Fhir.Utility
                 if (attr.NextAttribute != null) return attr.NextAttribute;
 
                 // out of attributes, continue with our parents first "real" node
-                return attr.Parent.FirstNode;
+                return attr.Parent?.FirstNode;
             }
         }
 
-        public static XName Name(this XObject node)
+        public static XName? Name(this XObject node)
         {
             if (node is XElement xe) return xe.Name;
             if (node is XAttribute xa) return xa.Name;
@@ -76,7 +79,7 @@ namespace Hl7.Fhir.Utility
             return null;
         }
 
-        public static string Value(this XObject node)
+        public static string? Value(this XObject node)
         {
             if (node is XElement xe) return xe.Value;
             if (node is XAttribute xa) return xa.Value;
@@ -85,12 +88,12 @@ namespace Hl7.Fhir.Utility
             return null;
         }
 
-        public static string Text(this XObject node)
+        public static string? Text(this XObject node)
         {
             return (node is XContainer container) ?
                 extractString(container.Nodes().OfType<XText>().Select(t => t.Value)) : null;
 
-            string extractString(IEnumerable<string> source)
+            string? extractString(IEnumerable<string> source)
             {
                 var concatenated = string.Concat(source).Trim();
                 return string.IsNullOrEmpty(concatenated) ? null : concatenated;
@@ -110,10 +113,10 @@ namespace Hl7.Fhir.Utility
 
         public static bool AtXhtmlDiv(this XObject node) => (node as XElement)?.Name == XmlNs.XHTMLDIV;
 
-        public static XDocument Rename(this XDocument doc, string newRootName)
+        public static XDocument Rename(this XDocument doc, string? newRootName)
         {
             if (newRootName != null)
-                doc.Root.Name = XName.Get(newRootName, doc.Root.Name.Namespace.NamespaceName);
+                doc.Root!.Name = XName.Get(newRootName, doc.Root.Name.Namespace.NamespaceName);
             return doc;
         }
     }

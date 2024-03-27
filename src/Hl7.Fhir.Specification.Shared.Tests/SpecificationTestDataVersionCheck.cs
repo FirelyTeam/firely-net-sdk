@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task VerifyAllTestDataSpecification()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location) + "\\TestData";
+            var path = Path.GetDirectoryName(location) + "/TestData";
             Console.WriteLine(path);
             List<string> issues = new List<string>();
             await ValidateFolder(path, path, issues);
