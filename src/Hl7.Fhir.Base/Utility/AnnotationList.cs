@@ -6,30 +6,42 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Utility
 {
     /// <summary>
-    /// This class implements the interfaces IAnnotatable and IAnnotated. It can be used by the classes that also implements these
+    /// This class implements the interfaces <see cref="IAnnotatable"/> and <see cref="IAnnotated"/>. It can be used by the classes that also implements these
     /// interfaces to have a common implementation. 
     /// This list is thread safe
     /// </summary>
-    public class AnnotationList : IAnnotatable, IAnnotated
+    [CollectionBuilder(typeof(AnnotationList), nameof(AnnotationList.create) )]
+    public class AnnotationList : IAnnotatable, IAnnotated, IEnumerable<object>
     {
         private Lazy<ConcurrentDictionary<Type, List<object>>> _annotations = new Lazy<ConcurrentDictionary<Type, List<object>>>(() => new ConcurrentDictionary<Type, List<object>>());
         private ConcurrentDictionary<Type, List<object>> annotations { get { return _annotations.Value; } }
 
+        public static AnnotationList create(ReadOnlySpan<object> annotations)
+        {
+            var list = new AnnotationList();
+            foreach (var annotation in annotations)
+            {
+                list.AddAnnotation(annotation);
+            }
+            return list;
+        }
+        
         public void AddAnnotation(object annotation)
         {
             annotations.AddOrUpdate(
                 annotation.GetType(),
-                new List<object>() { annotation },
-                (t, existingList) => new List<object>(existingList) { annotation });
+                [annotation],
+                (_, existingList) => [..existingList, annotation]);
         }
 
         public void RemoveAnnotations(Type type) => annotations.TryRemove(type, out _);
@@ -59,5 +71,9 @@ namespace Hl7.Fhir.Utility
         {
             _annotations = new Lazy<ConcurrentDictionary<Type, List<object>>>(() => new ConcurrentDictionary<Type, List<object>>(source.annotations));
         }
+
+        IEnumerator<object> IEnumerable<object>.GetEnumerator() => annotations.Values.SelectMany(v => v).GetEnumerator();
+
+        public IEnumerator GetEnumerator() => ((IEnumerable<object>)this).GetEnumerator();
     }
 }

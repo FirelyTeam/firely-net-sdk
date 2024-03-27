@@ -29,7 +29,7 @@ namespace Hl7.Fhir.ElementModel
         // HACK: For now, allow a Quantity (which is NOT a primitive) in the .Value property
         // of ITypedElement. This is a temporary situation to make a quick & dirty upgrade of
         // FP to Normative (with Quantity support) possible.
-        public static ITypedElement ForPrimitive(object? value)
+        public static ITypedElement ForPrimitive(object value)
         {
             return value switch
             {
@@ -92,12 +92,12 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static IEnumerable<ITypedElement?> CreateList(params object[] values) =>
+        public static IEnumerable<ITypedElement> CreateList(params object[] values) =>
             values switch
             {
                 null => EmptyList,
-                [var one] => [toTT(one)!],
-                _ => values.Select(toTT).ToList()!
+                [var one] => [toTe(one)!],
+                _ => values.Select(toTe).ToList()!
             };
 
         /// <summary>
@@ -106,13 +106,13 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static IEnumerable<ITypedElement?> CreateList(IEnumerable<object> values) => values switch
+        public static IEnumerable<ITypedElement> CreateList(IEnumerable<object> values) => values switch
         {
             null => EmptyList,
-            _ => values.Select(toTT).ToList()!
+            _ => values.Select(toTe).ToList()!
         };
 
-        private static ITypedElement? toTT(object value) => value switch
+        private static ITypedElement? toTe(object? value) => value switch
         {
             null => null,
             ITypedElement element => element,
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.ElementModel
         public static readonly IEnumerable<ITypedElement> EmptyList = [];
         public IEnumerable<ITypedElement> Children(string? name = null) => ChildrenInternal(name);
 
-        internal ElementNode(string name, object? value, string? instanceType, IElementDefinitionSummary? definition)
+        private ElementNode(string name, object? value, string? instanceType, IElementDefinitionSummary? definition)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             InstanceType = instanceType;
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.ElementModel
             };
 
             if (HasAnnotations)
-                copy.AnnotationsInternal!.AddRange(AnnotationsInternal);
+                copy.AnnotationsInternal.AddRange(AnnotationsInternal);
 
             return copy;
         }
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.ElementModel
             if (type == null) throw new ArgumentNullException(nameof(type));
             return (type == typeof(ElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 ? (new[] { this })
-                : HasAnnotations ? AnnotationsInternal!.OfType(type) : Enumerable.Empty<object>();
+                : HasAnnotations ? AnnotationsInternal.OfType(type) : Enumerable.Empty<object>();
         }
 
         public string Location

@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel
         /// An indication of the location of this node within the data represented by the <c>ITypedElement</c>.
         /// </summary>
         /// <remarks>The format of the location is the dotted name of the property, including indices to make
-        /// sure repeated occurences of an element can be distinguished. It needs to be sufficiently precise to aid 
+        /// sure repeated occurrences of an element can be distinguished. It needs to be sufficiently precise to aid 
         /// the user in locating issues in the data.</remarks>
         string Location { get; }
 

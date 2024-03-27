@@ -20,11 +20,11 @@ namespace Hl7.Fhir.ElementModel
     {
         public string Name { get; set; } = null!;
 
-        private List<T>? _childList = null;
+        private List<T>? _childList;
 
         protected List<T> ChildList
         {
-            get => LazyInitializer.EnsureInitialized(ref _childList, () => new()) ?? throw new InvalidOperationException();
+            get => LazyInitializer.EnsureInitialized(ref _childList, () => [])!;
             set => _childList = value;
         }
 
@@ -33,24 +33,24 @@ namespace Hl7.Fhir.ElementModel
 
         public T? Parent { get; protected set; }
 
-        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenInternal(name));
+        public DomNodeList<T> this[string name] => new (ChildrenInternal(name));
 
-        public T? this[int index] => ChildList?[index];
+        public T this[int index] => ChildList[index];
 
         #region << Annotations >>
-        private AnnotationList? _annotations = null;
-        protected AnnotationList? AnnotationsInternal => LazyInitializer.EnsureInitialized(ref _annotations, () => new());
+        private AnnotationList? _annotations;
+        protected AnnotationList AnnotationsInternal => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
         protected bool HasAnnotations => _annotations is not null && !_annotations.IsEmpty;
 
         public void AddAnnotation(object annotation)
         {
-            AnnotationsInternal!.AddAnnotation(annotation);
+            AnnotationsInternal.AddAnnotation(annotation);
         }
 
         public void RemoveAnnotations(Type type)
         {
-            AnnotationsInternal!.RemoveAnnotations(type);
+            AnnotationsInternal.RemoveAnnotations(type);
         }
         #endregion
     }

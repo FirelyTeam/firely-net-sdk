@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ElementModel
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
-        public PrimitiveElement(object? value, string? name = null, bool useFullTypeName = false)
+        public PrimitiveElement(object value, string? name = null, bool useFullTypeName = false)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
 
@@ -54,13 +54,11 @@ namespace Hl7.Fhir.ElementModel
             InstanceType = useFullTypeName ? systemType.FullName : systemType.Name;
             Name = name ?? "@primitivevalue@";
         }
-
-
-
+        
 
         public string Name { get; private set; }
 
-        public object? Value { get; private set; }
+        public object Value { get; private set; }
 
         public string InstanceType { get; private set; }
 
