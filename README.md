@@ -62,7 +62,7 @@ The SDK has been restructured for the 5.0 release. Please take note of the follo
 * The "old" `Hl7.Fhir.Specification.<release>` package is now a metapackage that will include these two packages.
 * You should not reference any other packages that existed pre-5.0 (`Hl7.Fhir.ElementModel` etc.)
 
-The profile validator has been split off into its own [repository](https://github.com/FirelyTeam/Hl7.Fhir.Validation.Legacy). The NuGet packages for the validator that are compatible with the SDK 5.0 release can be found on [NuGet](https://www.nuget.org/packages?q=Hl7.Fhir.Validation.Legacy).
+The profile validator has been split off into its own [repository](https://github.com/FirelyTeam/firely-validator-api). The NuGet packages for the validator that are compatible with the SDK 5.0 release can be found on [NuGet](https://www.nuget.org/packages?q=Hl7.Fhir.Validation.Legacy).
 
 ## Support 
 We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/firely-net-sdk/issues](https://github.com/FirelyTeam/firely-net-sdk/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netsdk-zulip].
