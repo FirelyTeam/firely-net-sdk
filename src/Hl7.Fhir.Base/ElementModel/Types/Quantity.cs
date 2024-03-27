@@ -84,7 +84,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Quantity Parse(string representation) =>
                 TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid quantity.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)] out Quantity? quantity)
+        public static bool TryParse(string representation, out Quantity quantity)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Time Parse(string representation) =>
             TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid time.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)] out Time? value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Time value) => tryParse(representation, out value);
 
         public static Time FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Fraction,
             bool includeOffset = false) => new(dto, prec, includeOffset);
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.ElementModel.Types
         private static readonly Regex PARTIALTIMEREGEX =
             new Regex("^" + PARTIALTIMEFORMAT + "$", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        private static bool tryParse(string representation, [NotNullWhen(true)] out Time? value)
+        private static bool tryParse(string representation, out Time value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 

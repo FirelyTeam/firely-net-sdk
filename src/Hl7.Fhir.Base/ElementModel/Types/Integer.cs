@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Integer Parse(string value) =>
             TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid integer.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)] out Integer? value)
+        public static bool TryParse(string representation, out Integer value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 

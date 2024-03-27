@@ -77,9 +77,9 @@ namespace Hl7.Fhir.ElementModel.Types
                 else if (primitiveType == typeof(Decimal))
                     return (Decimal.TryParse(value, out var p), p?.Value);
                 else if (primitiveType == typeof(Integer))
-                    return (Integer.TryParse(value, out var p), p?.Value);
+                    return (Integer.TryParse(value, out var p), p.Value);
                 else if (primitiveType == typeof(Long))
-                    return (Long.TryParse(value, out var p), p?.Value);
+                    return (Long.TryParse(value, out var p), p.Value);
                 else if (primitiveType == typeof(Date))
                     return (Date.TryParse(value, out var p), p);
                 else if (primitiveType == typeof(DateTime))
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 else if (primitiveType == typeof(Quantity))
                     return (Quantity.TryParse(value, out var p), p);
                 else if (primitiveType == typeof(String))
-                    return (String.TryParse(value, out var p), p?.Value);
+                    return (String.TryParse(value, out var p), p.Value);
                 else
                     return (false, null);
             }

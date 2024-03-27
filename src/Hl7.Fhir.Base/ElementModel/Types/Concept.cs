@@ -33,10 +33,10 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Concept Parse(string representation) => throw new NotImplementedException();
         public static bool TryParse(string representation, [NotNullWhen(true)] out Concept? value) => throw new NotImplementedException();
 
-        public override bool Equals(object? obj) => obj is Concept c && Enumerable.SequenceEqual(Codes, c.Codes) && Display == c.Display;
+        public override bool Equals(object? obj) => obj is Concept c && Codes.SequenceEqual(c.Codes) && Display == c.Display;
 
         public override int GetHashCode() => (Codes, Display).GetHashCode();
-        public override string ToString() => string.Join(", ", Codes) + Display != null ? $" \"{Display}\"" : "";
+        public override string ToString() => string.Join(", ", Codes) + (Display != null ? $" \"{Display}\"" : "");
 
         Result<Concept> ICqlConvertible.TryConvertToConcept() => Ok(this);
 

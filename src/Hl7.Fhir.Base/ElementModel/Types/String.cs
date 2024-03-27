@@ -29,7 +29,7 @@ namespace Hl7.Fhir.ElementModel.Types
 
         // Actually, it's not that trivial, since CQL strings accept a subset of C#'s escape sequences,
         // we *could* validate those here.
-        public static bool TryParse(string representation, [NotNullWhen(true)] out String? value)
+        public static bool TryParse(string representation, out String value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 
