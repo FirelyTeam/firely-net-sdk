@@ -23,7 +23,7 @@ namespace Hl7.Fhir.ElementModel
         private const string XHTML_INSTANCETYPE = "xhtml";
         private const string XHTML_DIV_TAG_NAME = "div";
 
-        public TypedElementOnSourceNode(ISourceNode source, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings? settings = null)
+        public TypedElementOnSourceNode(ISourceNode source, string? type, IStructureDefinitionSummaryProvider provider, TypedElementSettings? settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
 
@@ -36,10 +36,12 @@ namespace Hl7.Fhir.ElementModel
             Location = source.Name;
             ShortPath = source.Name;
             _source = source;
-            (InstanceType, Definition) = buildRootPosition(type);
+            (var typeOrNull, Definition) = buildRootPosition(type);
+
+            InstanceType = typeOrNull!;
         }
 
-        private (string instanceType, IElementDefinitionSummary? definition) buildRootPosition(string type)
+        private (string? instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
         {
             var rootType = type ?? _source.GetResourceTypeIndicator();
             if (rootType == null)
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.ElementModel
             Location = location;
         }
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; } = null!;
+        public ExceptionNotificationHandler? ExceptionHandler { get; set; }
 
         private void raiseTypeError(string message, object source, bool warning = false, string? location = null)
         {
@@ -459,7 +461,7 @@ namespace Hl7.Fhir.ElementModel
                 else
                     // Ok, pass through the untyped members, but since there is no type information, 
                     // don't bother to run the additional rules
-                    return enumerateElements(childElementDefs, _source, name!);
+                    return enumerateElements(childElementDefs, _source, name);
             }
             else
                 return runAdditionalRules(enumerateElements(childElementDefs, _source, name));
