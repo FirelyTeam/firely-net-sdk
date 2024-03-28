@@ -60,6 +60,34 @@ namespace Hl7.Fhir.Model
                 return null;
         }
 
+        internal static List<CSDC> RemoveCode(this ICollection<CSDC> concepts, string code)
+        {
+            return concepts.removeCodeByPredicate(c => c.Code == code).ToList();
+        }
+
+        private static ICollection<CSDC> removeCodeByPredicate(this ICollection<CSDC> concepts, Predicate<CSDC> predicate)
+        {
+            foreach (var concept in concepts)
+            {
+                var result = concept.removeCodeByPredicate(concepts, predicate);
+                if (result != null) return result;
+            }
+            return concepts;
+        }
+        private static ICollection<CSDC>? removeCodeByPredicate(this CSDC concept, ICollection<CSDC> concepts, Predicate<CSDC> predicate)
+        {
+            // Direct hit
+            if (predicate(concept))
+                concepts.Remove(concept);
+            else if (concept.Concept.Any())
+            {
+                removeCodeByPredicate(concept.Concept, predicate);
+            }
+            return concepts;
+        }
+
+
+
         /// <summary>
         /// Loops through all concepts and descendants and returns a flat list of concepts, without a nested hierarchy
         /// </summary>
