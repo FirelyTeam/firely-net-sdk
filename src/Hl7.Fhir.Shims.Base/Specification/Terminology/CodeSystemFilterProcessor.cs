@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <exception cref="ValueSetExpansionTooComplexException">Thrown when a filter is applied that is not supported (yet)</exception>
         /// <exception cref="CodeSystemUnknownException">Thrown when no resource resolver was set in ValueSetExpanderSettings.ValueSetSource</exception>
         /// <exception cref="CodeSystemUnknownException">Thrown when the requested CodeSystem can not be found by the resource resolver in ValueSetExpanderSettings</exception>
-        internal async static T.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, List<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
+        internal async static T.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, IEnumerable<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
         {
             if (settings.ValueSetSource == null)
                 throw Error.InvalidOperation($"No valueset resolver available to resolve codesystem '{codeSystemUri}', so the expansion cannot be completed.");
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result.Select(c => c.ToContainsComponent(codeSystem, settings));
         }
 
-        private static List<CSDC> applyFilters(List<ValueSet.FilterComponent> filters, CodeSystem codeSystem)
+        private static List<CSDC> applyFilters(IEnumerable<ValueSet.FilterComponent> filters, CodeSystem codeSystem)
         {
             var result = codeSystem.Concept;
             var properties = codeSystem.Property;
@@ -56,97 +56,81 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private static IEnumerable<CSDC> applyFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+        private static IEnumerable<CSDC> applyFilter(IEnumerable<CSDC> concepts, IEnumerable<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
         {
             return filter.Op switch
             {
-                FilterOperator.IsA => applyIsAFilter(concepts, properties, filter),
-                FilterOperator.IsNotA => applyIsNotAFilter(concepts, properties, filter),
-                FilterOperator.DescendentOf => applyDescentantOfFilter(concepts, properties, filter),
+                FilterOperator.IsA => applyFiltersFunctions(concepts, properties, filter, applyIsAfFilterUsingSubsumedBy, applyIsAFilterToANestedHierarchy),
+                FilterOperator.IsNotA => applyFiltersFunctions(concepts, properties, filter, applyIsNotAFilterUsingSubsumedBy, applyIsNotAFilterToANestedHierarchy),
+                FilterOperator.DescendentOf => applyFiltersFunctions(concepts, properties, filter, applyDescendantsOfFilterUsingSubsumedBy, applyDescentantsOfFilterToANestedHierarchy),
                 _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with filter `{filter.Op.GetLiteral()}` are not yet supported.")
             };
         }
 
-        private static IEnumerable<CSDC> applyDescentantOfFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+        private static IEnumerable<CSDC> applyFiltersFunctions(IEnumerable<CSDC> concepts, IEnumerable<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applySubsumedByFilter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applyHierarchicalFilter)
         {
-            var result = new List<CSDC>();
             //find descendants based on subsumedBy
             if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
             {
                 //first flatten the codes
                 var flattened = concepts.Flatten();
-
-                //then find the descendants, based on subsumbedBy
-                List<CSDC> descendants = findDescendantsUsingSubsumedBy(filter, flattened);
-                result.AddRange(descendants);
-            }
-            else
-            {
-                //SubsumedBy is not used, we should only check for a nested hierarchy, and find the code and include it's descendants
-                if (concepts.FindCode(filter.Value) is { } concept)
-                    result.AddRange(concept.Concept);
-            }
-
-            return result;
-        }
-
-        private static IEnumerable<CSDC> applyIsAFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
-        {
-            var result = new List<CSDC>();
-
-            //find descendants based on subsumedBy
-            if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
-            {
-                //first flatten the codes
-                var flattened = concepts.Flatten();
-
-                //first find the parent itself (if it's in the CodeSystem)
-                if (flattened.FindCode(filter.Value) is { } concept)
-                    result.Add(concept);
-
-                //then find the descendants
-                List<CSDC> descendants = findDescendantsUsingSubsumedBy(filter, flattened);
-                result.AddRange(descendants);
+                return applySubsumedByFilter(concepts, filter);
             }
             else
             {
                 //SubsumedBy is not used, we should only check for a nested hierarchy, and include the code and it's descendants
-                if (concepts.FindCode(filter.Value) is { } concept)
-                    result.Add(concept);
+                return applyHierarchicalFilter(concepts, filter);
             }
-            return result;
         }
 
-        private static IEnumerable<CSDC> applyIsNotAFilter(List<CSDC> concepts, List<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter)
+
+        private static IEnumerable<CSDC> applyDescentantsOfFilterToANestedHierarchy(IEnumerable<CSDC> concepts, ValueSet.FilterComponent filter)
         {
-            //start with all the concepts
-            var result = concepts;
+            // look for the code and return it's children (which have their children included already)
+            return (concepts.FindCode(filter.Value) is { } concept) ? concept.Concept : [];
+        }
 
-            //find descendants based on subsumedBy
-            if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
-            {
-                //first flatten the codes
-                var flattened = concepts.Flatten();
+        private static IEnumerable<CSDC> applyIsAfFilterUsingSubsumedBy(IEnumerable<CSDC> flattened, ValueSet.FilterComponent filter)
+        {
+            var result = new List<CSDC>();
 
-                //first find the parent itself (if it's in the CodeSystem) and remove it
-                if (flattened.FindCode(filter.Value) is { } concept)
-                    result.Remove(concept);
-                //then find the descendants, and remove them
-                List<CSDC> descendants = findDescendantsUsingSubsumedBy(filter, flattened);
+            //first find the parent itself (if it's in the CodeSystem)
+            if (flattened.FindCode(filter.Value) is { } concept)
+                result.Add(concept);
 
-                result.RemoveAll(descendants.Contains);
-            }
-            else
-            {
-                //SubsumedBy is not used, we should only check for a nested hierarchy, and exclude the code and it's descendants
-                concepts.RemoveCode(filter.Value);
-            }
-
+            //then find the descendants
+            List<CSDC> descendants = applyDescendantsOfFilterUsingSubsumedBy(flattened, filter);
+            result.AddRange(descendants);
 
             return result;
         }
 
-        private static List<CSDC> findDescendantsUsingSubsumedBy(ValueSet.FilterComponent filter, List<CSDC> flattened)
+        private static IEnumerable<CSDC> applyIsAFilterToANestedHierarchy(IEnumerable<CSDC> concepts, ValueSet.FilterComponent filter)
+        {
+            //just look for the code, because descendants are included
+            return concepts.FindCode(filter.Value) is { } concept ? [concept] : [];
+        }
+
+        private static IEnumerable<CSDC> applyIsNotAFilterUsingSubsumedBy(IEnumerable<CSDC> flattened, ValueSet.FilterComponent filter)
+        {
+            var result = flattened.ToList();
+            //first find the parent itself (if it's in the CodeSystem) and remove it
+            if (flattened.FindCode(filter.Value) is { } concept)
+                result.Remove(concept);
+            //then find the descendants, and remove them
+            List<CSDC> descendants = applyDescendantsOfFilterUsingSubsumedBy(flattened, filter);
+
+            result.RemoveAll(descendants.Contains);
+            return result;
+        }
+
+        private static IEnumerable<CSDC> applyIsNotAFilterToANestedHierarchy(IEnumerable<CSDC> concepts, ValueSet.FilterComponent filter)
+        {
+            //We should only check for a nested hierarchy, and exclude the code and thereby it's included descendants
+            return concepts.ToList().RemoveCode(filter.Value);
+        }
+
+        private static List<CSDC> applyDescendantsOfFilterUsingSubsumedBy(IEnumerable<CSDC> flattened, ValueSet.FilterComponent filter)
         {
             //Create a lookup which lists children by parent.              
             var childrenLookup = CreateSubsumedByLookup(flattened);
@@ -156,7 +140,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return descendants;
         }
 
-        private static ILookup<string, CSDC> CreateSubsumedByLookup(List<CSDC> flattenedConcepts)
+        private static ILookup<string, CSDC> CreateSubsumedByLookup(IEnumerable<CSDC> flattenedConcepts)
         {
             return flattenedConcepts
                 .SelectMany(concept => concept.Property
