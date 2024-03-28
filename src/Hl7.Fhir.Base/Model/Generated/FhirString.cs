@@ -71,6 +71,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(SystemPrimitive.String))]
     [DataMember]
+    [StringPattern]
     public string Value
     {
       get { return (string)ObjectValue; }

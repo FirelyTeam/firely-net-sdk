@@ -267,7 +267,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(1, assertXHtml.Count());
             Assert.AreEqual("text", assertXHtml.First().Name);
             Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
-            Assert.AreEqual("text", assertXHtml.First().Location);
+            Assert.AreEqual("Section.text[0]", assertXHtml.First().Location);
             Assert.IsNotNull(assertXHtml.First().Value);
 
 

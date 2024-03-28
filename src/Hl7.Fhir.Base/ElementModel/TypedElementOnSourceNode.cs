@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading;
 using P = Hl7.Fhir.ElementModel.Types;
 
+#nullable enable
+
 namespace Hl7.Fhir.ElementModel
 {
     internal class TypedElementOnSourceNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
@@ -21,7 +23,7 @@ namespace Hl7.Fhir.ElementModel
         private const string XHTML_INSTANCETYPE = "xhtml";
         private const string XHTML_DIV_TAG_NAME = "div";
 
-        public TypedElementOnSourceNode(ISourceNode source, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings settings = null)
+        public TypedElementOnSourceNode(ISourceNode source, string? type, IStructureDefinitionSummaryProvider provider, TypedElementSettings? settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
 
@@ -31,12 +33,13 @@ namespace Hl7.Fhir.ElementModel
             if (source is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
 
+            Location = source.Name;
             ShortPath = source.Name;
             _source = source;
             (InstanceType, Definition) = buildRootPosition(type);
         }
 
-        private (string instanceType, IElementDefinitionSummary definition) buildRootPosition(string type)
+        private (string instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
         {
             var rootType = type ?? _source.GetResourceTypeIndicator();
             if (rootType == null)
@@ -45,7 +48,7 @@ namespace Hl7.Fhir.ElementModel
                     throw Error.Format(nameof(type), $"Cannot determine the type of the root element at '{_source.Location}', " +
                         $"please supply a type argument.");
                 else
-                    return (rootType, null);
+                    return ("Base", null);
             }
 
             var elementType = Provider.Provide(rootType);
@@ -66,7 +69,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        private TypedElementOnSourceNode(TypedElementOnSourceNode parent, ISourceNode source, IElementDefinitionSummary definition, string instanceType, string prettyPath)
+        private TypedElementOnSourceNode(TypedElementOnSourceNode parent, ISourceNode source, IElementDefinitionSummary? definition, string instanceType, string prettyPath, string location)
         {
             _source = source;
             ShortPath = prettyPath;
@@ -75,11 +78,12 @@ namespace Hl7.Fhir.ElementModel
             Definition = definition;
             InstanceType = instanceType;
             _settings = parent._settings;
+            Location = location;
         }
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        public ExceptionNotificationHandler? ExceptionHandler { get; set; }
 
-        private void raiseTypeError(string message, object source, bool warning = false, string location = null)
+        private void raiseTypeError(string message, object source, bool warning = false, string? location = null)
         {
             var exMessage = $"Type checking the data: {message}";
             if (!string.IsNullOrEmpty(location))
@@ -101,7 +105,7 @@ namespace Hl7.Fhir.ElementModel
 
         private readonly TypedElementSettings _settings;
 
-        public IElementDefinitionSummary Definition { get; private set; }
+        public IElementDefinitionSummary? Definition { get; private set; }
 
         public string Name => Definition?.ElementName ?? _source.Name;
 
@@ -120,7 +124,7 @@ namespace Hl7.Fhir.ElementModel
         // R3 and R4, these value (and url and id elements by the way) will indicate which type
         // of system types there are, implicitly specifying the mapping between primitive
         // FHIR types and system types.
-        private static Type tryMapFhirPrimitiveTypeToSystemType(string fhirType)
+        private static Type? tryMapFhirPrimitiveTypeToSystemType(string fhirType)
         {
             switch (fhirType)
             {
@@ -158,7 +162,7 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private object valueFactory()
+        private object? valueFactory()
         {
             string sourceText = _source.Text;
 
@@ -209,7 +213,7 @@ namespace Hl7.Fhir.ElementModel
                     if (P.Any.TryParse(sourceText, typeof(P.DateTime), out var dateTimeVal))
                     {
                         // TruncateToDate converts 1991-02-03T11:22:33Z to 1991-02-03+00:00 which is not a valid date! 
-                        var date = (dateTimeVal as P.DateTime).TruncateToDate();
+                        var date = (dateTimeVal as P.DateTime)!.TruncateToDate();
                         // so we cut off timezone by converting it to timeoffset and cast back to date.
                         return P.Date.FromDateTimeOffset(date.ToDateTimeOffset(0, 0, 0, TimeSpan.Zero));
                     }
@@ -220,13 +224,13 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private object _value;
+        private object? _value;
         private bool _valueInitialized = false;
         private static object _initializationLock = new();
 
-        public object Value => LazyInitializer.EnsureInitialized(ref _value, ref _valueInitialized, ref _initializationLock, valueFactory);
+        public object Value => LazyInitializer.EnsureInitialized(ref _value, ref _valueInitialized, ref _initializationLock, valueFactory)!;
 
-        private string deriveInstanceType(ISourceNode current, IElementDefinitionSummary info)
+        private string? deriveInstanceType(ISourceNode current, IElementDefinitionSummary info)
         {
             var resourceTypeIndicator = current.GetResourceTypeIndicator();
 
@@ -338,7 +342,7 @@ namespace Hl7.Fhir.ElementModel
             return pos > -1 ? type.Substring(pos + 1) : type;
         }
 
-        private bool tryGetBySuffixedName(Dictionary<string, IElementDefinitionSummary> dis, string name, out IElementDefinitionSummary info)
+        private bool tryGetBySuffixedName(Dictionary<string, IElementDefinitionSummary> dis, string name, out IElementDefinitionSummary? info)
         {
             // Simplest case, one on one match between name and element name
             if (dis.TryGetValue(name, out info))
@@ -361,7 +365,7 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string, IElementDefinitionSummary> dis, ISourceNode parent, string name)
+        private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string, IElementDefinitionSummary> dis, ISourceNode parent, string? name)
         {
             IEnumerable<ISourceNode> childSet;
 
@@ -372,17 +376,17 @@ namespace Hl7.Fhir.ElementModel
             {
                 var hit = dis.TryGetValue(name, out var info);
                 childSet = hit
-                    ? (info.IsChoiceElement ? parent.Children(name + "*") : parent.Children(name))
+                    ? (info!.IsChoiceElement ? parent.Children(name + "*") : parent.Children(name))
                     : Enumerable.Empty<ISourceNode>();
             }
 
-            string lastName = null;
+            string? lastName = null;
             int _nameIndex = 0;
 
             foreach (var scan in childSet)
             {
                 var hit = tryGetBySuffixedName(dis, scan.Name, out var info);
-                string instanceType = info == null ? null :
+                string? instanceType = info == null ? null :
                     deriveInstanceType(scan, info);
 
                 // If we have definitions for the children, but we didn't find definitions for this 
@@ -406,28 +410,31 @@ namespace Hl7.Fhir.ElementModel
                 }
 
                 var prettyPath =
-                 hit && !info.IsCollection ? $"{ShortPath}.{info.ElementName}" : $"{ShortPath}.{scan.Name}[{_nameIndex}]";
+                 hit && !info!.IsCollection ? $"{ShortPath}.{info.ElementName}" : $"{ShortPath}.{scan.Name}[{_nameIndex}]";
+
+                var location =
+                    hit ? $"{Location}.{info!.ElementName}[{_nameIndex}]" : $"{Location}.{scan.Name}[{_nameIndex}]";
 
                 // Special condition for ccda.
                 // If we encounter a xhtml node in a ccda document we will flatten all childnodes
                 // and use their content to build up the xml.
                 // The xml will be put in this node and children will be ignored.
-                if (instanceType == XHTML_INSTANCETYPE && info.Representation == XmlRepresentation.CdaText)
+                if (instanceType == XHTML_INSTANCETYPE && info!.Representation == XmlRepresentation.CdaText)
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
                     var xmls = scan.Children().Select(c => c.Annotation<ICdaInfoSupplier>()?.XHtmlText);
 #pragma warning restore CS0618 // Type or member is obsolete
 
                     var source = SourceNode.Valued(scan.Name, string.Join(string.Empty, xmls));
-                    yield return new TypedElementOnSourceNode(this, source, info, instanceType, prettyPath);
+                    yield return new TypedElementOnSourceNode(this, source, info, instanceType, prettyPath, location);
                     continue;
                 }
 
-                yield return new TypedElementOnSourceNode(this, scan, info, instanceType, prettyPath);
+                yield return new TypedElementOnSourceNode(this, scan, info, instanceType!, prettyPath, location);
             }
         }
 
-        public IEnumerable<ITypedElement> Children(string name = null)
+        public IEnumerable<ITypedElement> Children(string? name = null)
         {
             // If we have an xhtml typed node and there is not a div tag around the content
             // then we will not enumerate through the children of this node, since there will be no types
@@ -461,13 +468,13 @@ namespace Hl7.Fhir.ElementModel
         private IEnumerable<ITypedElement> runAdditionalRules(IEnumerable<ITypedElement> children)
         {
 #pragma warning disable 612, 618
-            var additionalRules = _source.Annotations(typeof(AdditionalStructuralRule));
+            var additionalRules = _source.Annotations<AdditionalStructuralRule>().ToArray();
             var stateBag = new Dictionary<AdditionalStructuralRule, object>();
             foreach (var child in children)
             {
-                foreach (var rule in additionalRules.Cast<AdditionalStructuralRule>())
+                foreach (var rule in additionalRules)
                 {
-                    stateBag.TryGetValue(rule, out object state);
+                    stateBag.TryGetValue(rule, out object? state);
                     state = rule(child, this, state);
                     if (state != null) stateBag[rule] = state;
                 }
@@ -477,18 +484,16 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore 612, 618
         }
 
-        public string Location => _source.Location;
+        public string Location { get; init; }
 
         public string ShortPath { get; private set; }
 
         public override string ToString() =>
-            $"{(InstanceType != null ? ($"[{InstanceType}] ") : "")}{_source}";
+            $"{(($"[{InstanceType}] "))}{_source}";
 
         public IEnumerable<object> Annotations(Type type)
         {
-#pragma warning disable IDE0046 // Convert to conditional expression
             if (type == typeof(TypedElementOnSourceNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
-#pragma warning restore IDE0046 // Convert to conditional expression
                 return new[] { this };
             else
                 return _source.Annotations(type);
@@ -496,6 +501,6 @@ namespace Hl7.Fhir.ElementModel
     }
 
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
-    public delegate object AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object state);
+    public delegate object? AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object? state);
 }
 
