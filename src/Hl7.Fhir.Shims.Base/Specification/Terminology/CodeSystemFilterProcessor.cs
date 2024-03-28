@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification.Terminology
             };
         }
 
-        private static IEnumerable<CSDC> applyFilterBasedOnHierarchy(IEnumerable<CSDC> concepts, IEnumerable<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applySubsumedByFilter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applyHierarchicalFilter)
+        private static IEnumerable<CSDC> applyFilterBasedOnHierarchy(IEnumerable<CSDC> concepts, IEnumerable<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applySubsumedByFilter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applyFilterToANestedHierarchy)
         {
             //find descendants based on subsumedBy
             if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Terminology
             else
             {
                 //SubsumedBy is not used, we should only check for a nested hierarchy, and include the code and it's descendants
-                return applyHierarchicalFilter(concepts, filter);
+                return applyFilterToANestedHierarchy(concepts, filter);
             }
         }
 
