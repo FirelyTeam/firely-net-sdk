@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
                                                             , CreateConcept("CB")});
         }
 
-        internal static CodeSystem SubsumedByCodeSysterm()
+        internal static CodeSystem SubsumedByCodeSystem()
         {
             return GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
                                         .WithProperty("subsumedBy")
