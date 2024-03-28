@@ -60,14 +60,14 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             return filter.Op switch
             {
-                FilterOperator.IsA => applyFiltersFunctions(concepts, properties, filter, applyIsAfFilterUsingSubsumedBy, applyIsAFilterToANestedHierarchy),
-                FilterOperator.IsNotA => applyFiltersFunctions(concepts, properties, filter, applyIsNotAFilterUsingSubsumedBy, applyIsNotAFilterToANestedHierarchy),
-                FilterOperator.DescendentOf => applyFiltersFunctions(concepts, properties, filter, applyDescendantsOfFilterUsingSubsumedBy, applyDescentantsOfFilterToANestedHierarchy),
+                FilterOperator.IsA => applyFilterBasedOnHierarchy(concepts, properties, filter, applyIsAfFilterUsingSubsumedBy, applyIsAFilterToANestedHierarchy),
+                FilterOperator.IsNotA => applyFilterBasedOnHierarchy(concepts, properties, filter, applyIsNotAFilterUsingSubsumedBy, applyIsNotAFilterToANestedHierarchy),
+                FilterOperator.DescendentOf => applyFilterBasedOnHierarchy(concepts, properties, filter, applyDescendantsOfFilterUsingSubsumedBy, applyDescentantsOfFilterToANestedHierarchy),
                 _ => throw new ValueSetExpansionTooComplexException($"ConceptSets with filter `{filter.Op.GetLiteral()}` are not yet supported.")
             };
         }
 
-        private static IEnumerable<CSDC> applyFiltersFunctions(IEnumerable<CSDC> concepts, IEnumerable<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applySubsumedByFilter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applyHierarchicalFilter)
+        private static IEnumerable<CSDC> applyFilterBasedOnHierarchy(IEnumerable<CSDC> concepts, IEnumerable<CodeSystem.PropertyComponent> properties, ValueSet.FilterComponent filter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applySubsumedByFilter, Func<IEnumerable<CSDC>, ValueSet.FilterComponent, IEnumerable<CSDC>> applyHierarchicalFilter)
         {
             //find descendants based on subsumedBy
             if (properties.Any(p => p.Code == SUBSUMEDBYCODE))
