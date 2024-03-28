@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         {
             var resolver = new InMemoryResourceResolver();
 
-            var codeSystem = TestTerminologyCreator.SubsumedByCodeSysterm();
+            var codeSystem = TestTerminologyCreator.SubsumedByCodeSystem();
 
             resolver.Add(codeSystem);
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         {
             var resolver = new InMemoryResourceResolver();
 
-            var codeSystem = TestTerminologyCreator.SubsumedByCodeSysterm();
+            var codeSystem = TestTerminologyCreator.SubsumedByCodeSystem();
 
             resolver.Add(codeSystem);
 
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         {
             var resolver = new InMemoryResourceResolver();
 
-            var codeSystem = TestTerminologyCreator.SubsumedByCodeSysterm();
+            var codeSystem = TestTerminologyCreator.SubsumedByCodeSystem();
 
             resolver.Add(codeSystem);
 
