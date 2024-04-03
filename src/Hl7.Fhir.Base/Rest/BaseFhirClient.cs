@@ -14,6 +14,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -852,8 +853,10 @@ public partial class BaseFhirClient : IDisposable
         return result;
     }
     
+    // either msg or entryComponent should be set
     private async Task<TResource?> extractResourceFromHttpResponse<TResource>(IEnumerable<HttpStatusCode> expect, HttpResponseMessage responseMessage, HttpRequestMessage? msg = null, Bundle.EntryComponent? entryComponent = null) where TResource : Resource
     {
+        if (msg is null && entryComponent is null) throw new InvalidOperationException("Either msg or entryComponent must be set");
         // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
         // of the server, add a suggestion about this in the (legacy) parsing exception.
         var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
