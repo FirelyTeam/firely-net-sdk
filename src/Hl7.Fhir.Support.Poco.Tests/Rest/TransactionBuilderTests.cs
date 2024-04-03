@@ -154,7 +154,6 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestDeleteHistory()
     {
-        var p = new TestPatient();
         var tx = new TransactionBuilder("http://myserver.org/fhir")
             .DeleteHistory("Patient", "7");
         var b = tx.ToBundle();
@@ -166,7 +165,6 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestDeleteHistoryVersion()
     {
-        var p = new TestPatient();
         var tx = new TransactionBuilder("http://myserver.org/fhir")
             .DeleteHistoryVersion("Patient", "7", "1");
         var b = tx.ToBundle();

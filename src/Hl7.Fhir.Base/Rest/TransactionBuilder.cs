@@ -219,7 +219,7 @@ public partial class TransactionBuilder
 
         return this;
     }
-        
+
     #endregion
 
     #region Delete

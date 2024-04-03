@@ -438,7 +438,6 @@ public partial class BaseFhirClient : IDisposable
     {
         if (id == null) throw Error.ArgumentNull(nameof(id));
 
-
         var tx = new TransactionBuilder(Endpoint);
         var resourceType = typeNameOrDie<TResource>();
 
@@ -448,6 +447,30 @@ public partial class BaseFhirClient : IDisposable
             tx.Patch(resourceType, id, patchParameters);
 
         return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
+    }
+
+    public virtual Task<HttpResponseMessage> PatchAsync<TResource>(string id, string patchDocument, ResourceFormat format, CancellationToken? ct = null)
+    {
+        if (id == null) throw Error.ArgumentNull(nameof(id));
+        
+        var cancellation = ct ?? CancellationToken.None;
+
+        cancellation.ThrowIfCancellationRequested();
+
+        var resourceType = typeNameOrDie<TResource>();
+        var url = new RestUrl(Endpoint).AddPath(resourceType, id);
+
+        var request = new HttpRequestMessage(new("PATCH"), url.Uri).WithFormatParameter(format);
+        
+        request.Content = new StringContent(patchDocument);
+        request.Content.Headers.ContentType = new MediaTypeHeaderValue(format switch
+        {
+            ResourceFormat.Json => "application/json-patch+json",
+            ResourceFormat.Xml => "application/xml-patch+xml",
+            _ => throw Error.Argument(nameof(format), "Unsupported format")
+        });
+        
+        return Requester.ExecuteAsync(request, cancellation);
     }
 
     /// <summary>
@@ -916,6 +939,7 @@ public partial class BaseFhirClient : IDisposable
 
     private bool _versionChecked = false;
 
+    
     private IFhirSerializationEngine getSerializationEngine()
     {
         return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new());
