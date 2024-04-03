@@ -856,7 +856,7 @@ public partial class BaseFhirClient : IDisposable
     // either msg or entryComponent should be set
     private async Task<TResource?> extractResourceFromHttpResponse<TResource>(IEnumerable<HttpStatusCode> expect, HttpResponseMessage responseMessage, HttpRequestMessage? msg = null, Bundle.EntryComponent? entryComponent = null) where TResource : Resource
     {
-        if (msg is null && entryComponent is null) throw new InvalidOperationException("Either msg or entryComponent must be set");
+        if (msg is null && entryComponent is null) throw new ArgumentException("Either msg or entryComponent should be set");
         // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
         // of the server, add a suggestion about this in the (legacy) parsing exception.
         var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
