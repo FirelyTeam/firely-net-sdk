@@ -8,10 +8,7 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
 
 namespace Hl7.Fhir.Rest;
