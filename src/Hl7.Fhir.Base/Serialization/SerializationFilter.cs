@@ -53,6 +53,13 @@ namespace Hl7.Fhir.Serialization
                 IncludeMandatory = true
             }));
 
+        public static SerializationFilter ForCount() => new BundleFilter(new TopLevelFilter(
+            new ElementMetadataFilter()
+            {
+                IncludeMandatory = true,
+                IncludeNames = new[] { "id", "total", "link" }
+            }));
+
         /// <summary>
         /// Construct a new filter that conforms to the `_summary=data` summarized form.
         /// </summary>

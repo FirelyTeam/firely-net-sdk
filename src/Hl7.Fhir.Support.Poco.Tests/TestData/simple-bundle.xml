@@ -1,0 +1,12 @@
+<Bundle xmlns="http://hl7.org/fhir">
+    <id value="bundle-example"/>
+    <meta>
+        <lastUpdated value="2014-08-18T01:43:30Z"/>
+    </meta>
+    <type value="searchset"/>
+    <total value="0"/>
+    <link>
+        <relation value="self"/>
+        <url value="https://example.com/base/Observation?subject=Patient/347"/>
+    </link>
+</Bundle>
