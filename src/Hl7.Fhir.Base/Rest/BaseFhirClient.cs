@@ -449,13 +449,9 @@ public partial class BaseFhirClient : IDisposable
         return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
     }
 
-    public virtual Task<HttpResponseMessage> PatchAsync<TResource>(string id, string patchDocument, ResourceFormat format, CancellationToken? ct = null)
+    public virtual Task<TResource?> PatchAsync<TResource>(string id, string patchDocument, ResourceFormat format, CancellationToken? ct = null) where TResource : Resource
     {
         if (id == null) throw Error.ArgumentNull(nameof(id));
-        
-        var cancellation = ct ?? CancellationToken.None;
-
-        cancellation.ThrowIfCancellationRequested();
 
         var resourceType = typeNameOrDie<TResource>();
         var url = new RestUrl(Endpoint).AddPath(resourceType, id);
@@ -469,8 +465,8 @@ public partial class BaseFhirClient : IDisposable
             ResourceFormat.Xml => "application/xml-patch+xml",
             _ => throw Error.Argument(nameof(format), "Unsupported format")
         });
-        
-        return Requester.ExecuteAsync(request, cancellation);
+
+        return executeAsync<TResource>(request, new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
     }
 
     /// <summary>
@@ -810,57 +806,18 @@ public partial class BaseFhirClient : IDisposable
 
         using var responseMessage = await Requester.ExecuteAsync(requestMessage, cancellation).ConfigureAwait(false);
 
-        // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
-        // of the server, add a suggestion about this in the (legacy) parsing exception.
-        var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
-        (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
-            await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError)
-                .ConfigureAwait(false);
+        return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, entryComponent: request);
+    }
 
-        // If an error occurred while trying to interpret and validate the response, we will bail out now.
-        if (issue is not null) throw issue;
+    private async Task<TResource?> executeAsync<TResource>(HttpRequestMessage request, IEnumerable<HttpStatusCode> expect, CancellationToken? ct) where TResource : Resource
+    {
+        var cancellation = ct ?? CancellationToken.None;
 
-        // If the response is an operation outcome, add it to response.outcome.
-        // This is necessary for when a client uses return=OperationOutcome as a prefer header.
-        // See also issue #1681.
-        if (LastBodyAsResource is OperationOutcome oo)
-            LastResult.Outcome = oo;
+        cancellation.ThrowIfCancellationRequested();
+        
+        using var responseMessage = await Requester.ExecuteAsync(request, cancellation).ConfigureAwait(false);
 
-        // If the full representation was requested (using the Prefer header), but the server did not return the resource
-        // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
-        // This behavior is only valid for PUT, POST and PATCH requests, where the server may device whether or not to return
-        // the full body of the altered resource.
-        var noRealBody = LastBodyAsResource is null || (LastBodyAsResource is OperationOutcome && string.IsNullOrEmpty(LastBodyAsResource.Id));
-        var shouldFetchFullRepresentation = noRealBody
-                                            && isPostOrPutOrPatch(request)
-                                            && Settings.ReturnPreference == ReturnPreference.Representation
-                                            && LastResult.Location is { } fetchLocation
-                                            && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
-
-        // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
-        // and all state (e.g. Last Result etc) will be overwritten from this point on.
-        var execResult = shouldFetchFullRepresentation ?
-            await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
-
-        // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
-        return execResult switch
-        {
-            // We have the expected resource type, fine!
-            TResource resource => resource,
-
-            // If this is an operationoutcome, that may still be all right. The OperationOutcome has 
-            // been stored in the LastResult, and return null as the result of the function.
-            OperationOutcome => null,
-
-            // If there's nothing to return, return null. Note that the LastBodyXXXX properties can still contain useful data.
-            null => null,
-
-            // Unexpected response type in the body, throw.
-            _ => throw new FhirOperationException(unexpectedBodyType(request.Request), responseMessage.StatusCode)
-        };
-
-        static string unexpectedBodyType(Bundle.RequestComponent rc) => $"Operation {rc.Method} on {rc.Url} " +
-                                                                        $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
+        return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, request);
     }
 
     #endregion
@@ -893,6 +850,64 @@ public partial class BaseFhirClient : IDisposable
         if (needVid && !result.HasVersion) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the version id in its path");
 
         return result;
+    }
+    
+    private async Task<TResource?> extractResourceFromHttpResponse<TResource>(IEnumerable<HttpStatusCode> expect, HttpResponseMessage responseMessage, HttpRequestMessage? msg = null, Bundle.EntryComponent? entryComponent = null) where TResource : Resource
+    {
+        // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
+        // of the server, add a suggestion about this in the (legacy) parsing exception.
+        var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
+        (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
+            await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError)
+                .ConfigureAwait(false);
+
+        // If an error occurred while trying to interpret and validate the response, we will bail out now.
+        if (issue is not null) throw issue;
+
+        // If the response is an operation outcome, add it to response.outcome.
+        // This is necessary for when a client uses return=OperationOutcome as a prefer header.
+        // See also issue #1681.
+        if (LastBodyAsResource is OperationOutcome oo)
+            LastResult.Outcome = oo;
+
+        // If the full representation was requested (using the Prefer header), but the server did not return the resource
+        // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
+        // This behavior is only valid for PUT, POST and PATCH requests, where the server may device whether or not to return
+        // the full body of the altered resource.
+        var noRealBody = LastBodyAsResource is null || (LastBodyAsResource is OperationOutcome && string.IsNullOrEmpty(LastBodyAsResource.Id));
+        var shouldFetchFullRepresentation = noRealBody
+                                            && (msg is not null ? isPostOrPutOrPatch(msg.Method) : isPostOrPutOrPatch(entryComponent!))
+                                            && Settings.ReturnPreference == ReturnPreference.Representation
+                                            && LastResult.Location is { } fetchLocation
+                                            && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
+
+        // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
+        // and all state (e.g. Last Result etc) will be overwritten from this point on.
+        var execResult = shouldFetchFullRepresentation ?
+            await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
+
+        // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
+        return execResult switch
+        {
+            // We have the expected resource type, fine!
+            TResource resource => resource,
+
+            // If this is an operationoutcome, that may still be all right. The OperationOutcome has 
+            // been stored in the LastResult, and return null as the result of the function.
+            OperationOutcome => null,
+
+            // If there's nothing to return, return null. Note that the LastBodyXXXX properties can still contain useful data.
+            null => null,
+
+            // Unexpected response type in the body, throw.
+            _ => throw new FhirOperationException(entryComponent is not null ? unexpectedBodyTypeForBundle(entryComponent.Request) : unexpectedBodyTypeForMessage(msg!), responseMessage.StatusCode)
+        };
+        
+        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent rc) => $"Operation {rc.Method} on {rc.Url} " +
+                                                                        $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
+        
+        static string unexpectedBodyTypeForMessage(HttpRequestMessage msg) => $"Operation {msg.Method} on {msg.RequestUri} " +
+                                                                        $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
     }
 
     /// <summary>
@@ -936,6 +951,9 @@ public partial class BaseFhirClient : IDisposable
 
     private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>
         interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
+    
+    private static bool isPostOrPutOrPatch(HttpMethod method) =>
+        method == HttpMethod.Post || method == HttpMethod.Put || method == new HttpMethod("PATCH");
 
     private bool _versionChecked = false;
 
