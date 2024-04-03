@@ -470,13 +470,59 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             // Start the task and wait until it is "blocking"
             var blockingTask = client.OperationAsync(new Uri("http://example.com/fhir/$ping"), ct: cts.Token);
-            while (!isBlocking) ;
+            while (!isBlocking);
 
             // now cancel it.
             cts.Cancel();
 
             var act = async () => await blockingTask;
             await act.Should().ThrowAsync<OperationCanceledException>();
+        }
+
+        [TestMethod]
+        public async Task TestCustomJsonPatch()
+        {
+            var body = """
+                       [
+                       	{
+                       		"path": "/name/0/id",
+                       		"op": "test",
+                       		"value": "12804999"
+                       	},
+                       	{
+                       		"path": "/name/0/given",
+                       		"op": "replace",
+                       		"value": [
+                       			"Beulah",
+                       			"Z"
+                       		]
+                       	}
+                       ]
+                       """; // A JSON Patch operation\
+            
+            var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+            handlerMock
+                .Protected()
+                // Setup the PROTECTED method to mock
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>()
+                ).ReturnsAsync(new HttpResponseMessage()).Verifiable();
+            
+            var client = new BaseFhirClient(new ("http://example.com/fhir/"), handlerMock.Object, TESTINSPECTOR, new FhirClientSettings { ExplicitFhirVersion = TESTVERSION, VerifyFhirVersion = false });
+
+            _ = await client.PatchAsync<TestPatient>("1", body, ResourceFormat.Json);
+
+            handlerMock.Protected().Verify(
+                "SendAsync",
+                Times.Once(),
+                ItExpr.Is<HttpRequestMessage>(req =>
+                    req.Content.Headers.ContentType.ToString() == "application/json-patch+json" &&
+                    req.Content.ReadAsStringAsync().Result == body &&
+                    req.RequestUri.ToString().Contains("_format=json")
+                    ),
+                ItExpr.IsAny<CancellationToken>());
         }
     }
 }
