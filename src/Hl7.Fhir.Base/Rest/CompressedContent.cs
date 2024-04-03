@@ -40,8 +40,6 @@ namespace Hl7.Fhir.Rest
             length = -1;
             return false;
         }
-        
-        // @Ewout why is this here?
 
         protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context)
         {

@@ -20,13 +20,13 @@ namespace Hl7.Fhir.Utility
     /// interfaces to have a common implementation. 
     /// This list is thread safe
     /// </summary>
-    [CollectionBuilder(typeof(AnnotationList), nameof(AnnotationList.create) )]
+    [CollectionBuilder(typeof(AnnotationList), nameof(AnnotationList.Create) )]
     public class AnnotationList : IAnnotatable, IAnnotated, IEnumerable<object>
     {
         private Lazy<ConcurrentDictionary<Type, List<object>>> _annotations = new Lazy<ConcurrentDictionary<Type, List<object>>>(() => new ConcurrentDictionary<Type, List<object>>());
         private ConcurrentDictionary<Type, List<object>> annotations { get { return _annotations.Value; } }
 
-        public static AnnotationList create(ReadOnlySpan<object> annotations)
+        public static AnnotationList Create(ReadOnlySpan<object> annotations)
         {
             var list = new AnnotationList();
             foreach (var annotation in annotations)
