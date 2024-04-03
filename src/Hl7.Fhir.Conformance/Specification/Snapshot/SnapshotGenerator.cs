@@ -144,13 +144,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         public async T.Task UpdateAsync(StructureDefinition structure)
         {
                 var result = await GenerateAsync(structure).ConfigureAwait(false);
-                
-                if(result == null) return;
-                
-                structure.Snapshot = new StructureDefinition.SnapshotComponent()
-                {
-                    Element = result
-                };
+
+                if (result == null && structure.Snapshot?.Element != null) return;
+
+                structure.Snapshot = new StructureDefinition.SnapshotComponent { Element = result };
                 structure.Snapshot.SetCreatedBySnapshotGenerator();
 
                 // [WMR 20170209] TODO: also merge global StructureDefinition.Mapping components
