@@ -3,7 +3,9 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using NSubstitute.Exceptions;
 using System;
 using System.Data;
 using System.Linq;
@@ -166,22 +168,20 @@ namespace Hl7.Fhir.Support.Tests.Specification
 
         private static ITerminologyService setupMockTermService(Parameters input, Parameters output)
         {
-            var mock = new Mock<ITerminologyService>();
+            var mock = Substitute.For<ITerminologyService>();
 
-            mock.Setup(m => m.ValueSetValidateCode(input, null, false))
-                .ReturnsAsync(output);
+            mock.ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Is((string)null), Arg.Is(false)).Returns(output);
 
-            return mock.Object;
+            return mock;
         }
 
         private static ITerminologyService setupExceptionThrowingMockTermService(string message, HttpStatusCode statusCode)
         {
-            var mock = new Mock<ITerminologyService>();
+            var mock = Substitute.For<ITerminologyService>();
 
-            mock.Setup(m => m.ValueSetValidateCode(new Parameters(), null, false))
-                .Throws(new FhirOperationException(message, statusCode));
+            mock.ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Is((string)null), Arg.Is(false)).ThrowsAsync(new FhirOperationException(message, statusCode));
 
-            return mock.Object;
+            return mock;
         }
     }
 }

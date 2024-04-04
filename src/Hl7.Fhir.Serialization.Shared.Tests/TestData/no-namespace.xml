@@ -3,6 +3,10 @@
   <meta>
     <lastUpdated value="2014-08-18T01:43:30Z"/>
   </meta>
+  <link>
+    <relation value="self"/>
+    <url value="https://example.com/base/Observation?subject=Patient/347"/>
+  </link>
   <type value="searchset"/>
   <total value="3"/>
   <entry>

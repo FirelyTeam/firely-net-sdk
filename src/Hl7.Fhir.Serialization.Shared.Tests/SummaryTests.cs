@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -73,6 +74,17 @@ namespace Hl7.Fhir.Serialization.Tests
 
             ITypedElement getXmlNodeSDSP(string xml, FhirXmlParsingSettings s = null) =>
                 XmlParsingHelpers.ParseToTypedElement(xml, new StructureDefinitionSummaryProvider(ZipSource.CreateValidationSource()), s);
+        }
+
+        [TestMethod]
+        public void TestSummaryCountSelfLinks()
+        {
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "no-namespace.xml"));
+
+            var nav = new ScopedNode(getXmlNode(tpXml));
+            var masker = MaskingNode.ForCount(nav);
+            
+            masker.Children("link").Children("relation").First().Value.Should().BeEquivalentTo("self");
         }
     }
 }
