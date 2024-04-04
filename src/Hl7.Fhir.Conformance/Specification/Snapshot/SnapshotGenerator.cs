@@ -143,14 +143,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
         public async T.Task UpdateAsync(StructureDefinition structure)
         {
-            structure.Snapshot = new StructureDefinition.SnapshotComponent()
-            {
-                Element = await GenerateAsync(structure).ConfigureAwait(false)
-            };
-            structure.Snapshot.SetCreatedBySnapshotGenerator();
+                var result = await GenerateAsync(structure).ConfigureAwait(false);
 
-            // [WMR 20170209] TODO: also merge global StructureDefinition.Mapping components
-            // structure.Mappings = ElementDefnMerger.Merge(...)
+                if (result == null && structure.Snapshot?.Element != null) return;
+
+                structure.Snapshot = new StructureDefinition.SnapshotComponent { Element = result };
+                structure.Snapshot.SetCreatedBySnapshotGenerator();
+
+                // [WMR 20170209] TODO: also merge global StructureDefinition.Mapping components
+                // structure.Mappings = ElementDefnMerger.Merge(...)
         }
 
         /// <inheritdoc cref="UpdateAsync(StructureDefinition)"/>
