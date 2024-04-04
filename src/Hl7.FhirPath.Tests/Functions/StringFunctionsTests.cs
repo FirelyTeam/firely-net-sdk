@@ -28,7 +28,11 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void SubString()
         {
-            StringOperators.FpSubstring()
+            StringOperators.FpSubstring("Ewout", 0, 3).Should().Be("Ewo");
+            StringOperators.FpSubstring("Ewout", 2, 3).Should().Be("out");
+            StringOperators.FpSubstring("Ewout", 0, null).Should().Be("Ewout");
+            StringOperators.FpSubstring("Ewout", 0, 0).Should().Be("");
+            StringOperators.FpSubstring("Ewout", 0, -1).Should().Be("");
         }
 
         [TestMethod]
