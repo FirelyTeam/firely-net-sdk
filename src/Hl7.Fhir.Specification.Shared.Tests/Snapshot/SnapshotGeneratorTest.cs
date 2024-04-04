@@ -34,7 +34,8 @@ using Hl7.Fhir.Specification.Tests.Snapshot;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
+using NSubstitute.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -205,9 +206,9 @@ namespace Hl7.Fhir.Specification.Tests
                 });
             derivedSD.BaseDefinition = baseSD.Url;
 
-            var resourceResolver = new Mock<IResourceResolver>();
-            resourceResolver.Setup(resolver => resolver.ResolveByCanonicalUri(It.IsAny<string>())).Returns(baseSD);
-            var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
+            var resourceResolver = Substitute.For<IResourceResolver>();
+            resourceResolver.ResolveByCanonicalUri(Arg.Any<string>()).Returns(baseSD);
+            var snapshotGenerator = new SnapshotGenerator(resourceResolver, new SnapshotGeneratorSettings());
             await snapshotGenerator.UpdateAsync(derivedSD);
 
             derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be(discriminatorPath, "The discriminator should be copied from base");
