@@ -29,6 +29,11 @@ namespace Hl7.FhirPath
             Resource = resource;
             RootResource = rootResource ?? resource;
         }
+        
+        public EvaluationContext(ITypedElement resource, ITypedElement rootResource, IDictionary<string, IEnumerable<ITypedElement>> environment) : this(resource, rootResource)
+        {
+            Environment = environment;
+        }
 
         /// <summary>
         /// The data represented by <c>%rootResource</c>.
@@ -39,6 +44,11 @@ namespace Hl7.FhirPath
         /// The data represented by <c>%resource</c>.
         /// </summary>
         public ITypedElement Resource { get; set; }
+        
+        /// <summary>
+        /// The environment variables that are available to the FHIRPath expressions.
+        /// </summary>
+        public IDictionary<string, IEnumerable<ITypedElement>> Environment { get; set; }
 
         /// <summary>
         /// A delegate that handles the output for the <c>trace()</c> function.

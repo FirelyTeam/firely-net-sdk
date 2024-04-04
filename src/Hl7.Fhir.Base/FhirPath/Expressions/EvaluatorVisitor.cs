@@ -80,6 +80,11 @@ namespace Hl7.FhirPath.Expressions
             if (expression.Name == "rootResource")
                 return InvokeeFactory.GetRootResource;
 
+            if (expression is ContextVariableRefExpression Cvre)
+            {
+                return Cvre.Resolve;
+            }
+
             // Variables are still functions without arguments. For now variables are treated separately here,
             //Functions are handled elsewhere.
             return resolve(Symbols, expression.Name, Enumerable.Empty<Type>());

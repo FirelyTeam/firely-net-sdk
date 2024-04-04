@@ -329,6 +329,14 @@ namespace Hl7.FhirPath.Expressions
             return base.GetHashCode() ^ Name.GetHashCode();
         }
     }
+    
+    public class ContextVariableRefExpression(string name) : VariableRefExpression(name)
+    {
+        internal IEnumerable<ITypedElement> Resolve(Closure context, IEnumerable<Invokee> _)
+        {
+            return context.EvaluationContext.Environment[Name];
+        }
+    }
 
     public class AxisExpression : VariableRefExpression
     {
