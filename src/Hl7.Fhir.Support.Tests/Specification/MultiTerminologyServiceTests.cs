@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
         {
             var mock = Substitute.For<ITerminologyService>();
 
-            mock.ValueSetValidateCode(input, null, false).Returns(output);
+            mock.ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Is((string)null), Arg.Is(false)).Returns(output);
 
             return mock;
         }
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
         {
             var mock = Substitute.For<ITerminologyService>();
 
-            mock.ValueSetValidateCode(new Parameters(), null, false).ThrowsAsync(new FhirOperationException(message, statusCode));
+            mock.ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Is((string)null), Arg.Is(false)).ThrowsAsync(new FhirOperationException(message, statusCode));
 
             return mock;
         }
