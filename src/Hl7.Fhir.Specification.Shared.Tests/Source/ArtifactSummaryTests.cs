@@ -7,7 +7,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -486,11 +486,11 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestIsConformanceSummary(bool typeNameFound)
         {
             object value = typeNameFound ? "unknownTypeName" : null;
-            var propertiesMock = new Mock<IArtifactSummaryPropertyBag>();
+            var propertiesMock = Substitute.For<IArtifactSummaryPropertyBag>();
 
-            propertiesMock.Setup(p => p.TryGetValue(ArtifactSummaryProperties.TypeNameKey, out value)).Returns(typeNameFound);
+            propertiesMock.TryGetValue(ArtifactSummaryProperties.TypeNameKey, out value).Returns(typeNameFound);
             
-            var result = propertiesMock.Object.IsConformanceSummary(ModelInfo.ModelInspector);
+            var result = propertiesMock.IsConformanceSummary(ModelInfo.ModelInspector);
 
             result.Should().BeFalse();
         }
