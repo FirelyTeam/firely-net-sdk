@@ -26,6 +26,12 @@ namespace HL7.FhirPath.Tests.Functions
         }
 
         [TestMethod]
+        public void SubString()
+        {
+            StringOperators.FpSubstring()
+        }
+
+        [TestMethod]
         public void EncodeBase64()
         {
             StringOperators.EncodeBase64(null).Should().BeNull();
