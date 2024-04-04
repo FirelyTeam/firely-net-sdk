@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using static Hl7.Fhir.Utility.Result;
 
 namespace Hl7.Fhir.ElementModel.Types
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Boolean Parse(string value) =>
             TryParse(value, out var result) ? result! : throw new FormatException($"String '{value}' was not recognized as a valid boolean.");
 
-        public static bool TryParse(string representation, out Boolean? value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Boolean? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 
@@ -65,8 +66,8 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Quantity(Boolean b) => ((ICqlConvertible)b).TryConvertToQuantity().ValueOrThrow();
         public static explicit operator String(Boolean b) => ((ICqlConvertible)b).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? (bool?)Equals(other) : null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other);
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? (bool?)Equals(other) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => Equals(other);
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean() => Ok(this);
 

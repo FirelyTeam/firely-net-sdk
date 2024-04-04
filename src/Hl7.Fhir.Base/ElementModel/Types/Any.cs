@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.ElementModel.Types
 {
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="name"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        public static bool TryGetSystemTypeByName(string name, out Type? result)
+        public static bool TryGetSystemTypeByName(string name, [NotNullWhen(true)] out Type? result)
         {
             result = get();
             return result != null;
@@ -56,7 +57,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 throw new FormatException($"Input string '{value}' was not in a correct format for type '{primitiveType}'.");
         }
 
-        public static bool TryParse(string value, Type primitiveType, out object? parsed)
+        public static bool TryParse(string value, Type primitiveType, [NotNullWhen(true)] out object? parsed)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
             if (!typeof(Any).IsAssignableFrom(primitiveType)) throw new ArgumentException($"Must be a subclass of {nameof(Any)}.", nameof(primitiveType));
@@ -76,9 +77,9 @@ namespace Hl7.Fhir.ElementModel.Types
                 else if (primitiveType == typeof(Decimal))
                     return (Decimal.TryParse(value, out var p), p?.Value);
                 else if (primitiveType == typeof(Integer))
-                    return (Integer.TryParse(value, out var p), p?.Value);
+                    return (Integer.TryParse(value, out var p), p.Value);
                 else if (primitiveType == typeof(Long))
-                    return (Long.TryParse(value, out var p), p?.Value);
+                    return (Long.TryParse(value, out var p), p.Value);
                 else if (primitiveType == typeof(Date))
                     return (Date.TryParse(value, out var p), p);
                 else if (primitiveType == typeof(DateTime))
@@ -90,7 +91,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 else if (primitiveType == typeof(Quantity))
                     return (Quantity.TryParse(value, out var p), p);
                 else if (primitiveType == typeof(String))
-                    return (String.TryParse(value, out var p), p?.Value);
+                    return (String.TryParse(value, out var p), p.Value);
                 else
                     return (false, null);
             }
@@ -111,7 +112,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Try to convert a .NET instance to a Cql/FhirPath Any-based type.
         /// </summary>
-        public static bool TryConvert(object value, out Any? primitiveValue)
+        public static bool TryConvert(object? value, [NotNullWhen(true)] out Any? primitiveValue)
         {
             primitiveValue = conv();
             return primitiveValue != null;
@@ -158,7 +159,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Converts a .NET instance to a Cql/FhirPath Any-based type.
         /// </summary>
-        public static Any? Convert(object value)
+        public static Any? Convert(object? value)
         {
             if (value == null) return null;
 
@@ -186,13 +187,13 @@ namespace Hl7.Fhir.ElementModel.Types
 
     public interface ICqlEquatable
     {
-        bool? IsEqualTo(Any other);
-        bool IsEquivalentTo(Any other);
+        bool? IsEqualTo(Any? other);
+        bool IsEquivalentTo(Any? other);
     }
 
     public interface ICqlOrderable
     {
-        int? CompareTo(Any other);
+        int? CompareTo(Any? other);
     }
 
     public interface ICqlConvertible

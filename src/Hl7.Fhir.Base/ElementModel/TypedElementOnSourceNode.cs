@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ElementModel
             (InstanceType, Definition) = buildRootPosition(type);
         }
 
-        private (string instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
+        private (string? instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
         {
             var rootType = type ?? _source.GetResourceTypeIndicator();
             if (rootType == null)
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.ElementModel
                     throw Error.Format(nameof(type), $"Cannot determine the type of the root element at '{_source.Location}', " +
                         $"please supply a type argument.");
                 else
-                    return ("Base", null);
+                    return (null, null);
             }
 
             var elementType = Provider.Provide(rootType);
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.ElementModel
             ExceptionHandler.NotifyOrThrow(source, notification);
         }
 
-        public string InstanceType { get; private set; }
+        public string? InstanceType { get; private set; }
 
         private readonly ISourceNode _source;
 
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.ElementModel
         public string ShortPath { get; private set; }
 
         public override string ToString() =>
-            $"{(($"[{InstanceType}] "))}{_source}";
+            $"{(InstanceType != null ? ($"[{InstanceType}] ") : "")}{_source}";
 
         public IEnumerable<object> Annotations(Type type)
         {

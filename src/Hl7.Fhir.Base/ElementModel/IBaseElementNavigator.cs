@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="name">Return only the children with the given name.</param>
         /// <returns></returns>
-        IEnumerable<TDerived> Children(string? name = null);
+        IEnumerable<ITypedElement> Children(string? name = null);
 
         /// <summary>
         /// Name of the node, e.g. "active", "value".
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Type of the node. If a FHIR type, this is just a simple string, otherwise a StructureDefinition url for a type defined as a logical model.
         /// </summary>
-        string InstanceType { get; }
+        string? InstanceType { get; }
 
         /// <summary>
         /// The value of the node (if it represents a primitive FHIR value)
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.ElementModel
         /// base64Binary    string (uuencoded)
         /// xhtml           string
         /// </remarks>
-        object Value { get; }
+        object? Value { get; }
     }
 }
 

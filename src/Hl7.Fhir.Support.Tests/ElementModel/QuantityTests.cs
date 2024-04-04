@@ -6,15 +6,14 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using FluentAssertions;
 using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using P = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 namespace Hl7.Fhir.ElementModel.Tests
 {
@@ -24,16 +23,16 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void QuantityParsing()
         {
-            Assert.AreEqual(new P.Quantity(75.5m, "kg"), P.Quantity.Parse("75.5 'kg'"));
-            Assert.AreEqual(new P.Quantity(75.5m, "kg"), P.Quantity.Parse("75.5'kg'"));
-            Assert.AreEqual(new P.Quantity(75m, "kg"), P.Quantity.Parse("75 'kg'"));
-            Assert.AreEqual(new P.Quantity(40m, "wk"), P.Quantity.Parse("40 'wk'"));
-            Assert.AreEqual(new P.Quantity(40m, "wk"), P.Quantity.Parse("40 weeks"));
-            Assert.AreEqual(P.Quantity.ForCalendarDuration(2m, "year"), P.Quantity.Parse("2 year"));
-            Assert.AreEqual(P.Quantity.ForCalendarDuration(6m, "month"), P.Quantity.Parse("6 months"));
-            Assert.AreEqual(new P.Quantity(40.0m, P.Quantity.UCUM_UNIT), P.Quantity.Parse("40.0"));
-            Assert.AreEqual(new P.Quantity(1m), P.Quantity.Parse("1 '1'"));
-            Assert.AreEqual(new P.Quantity(1m, "m/s"), P.Quantity.Parse("1 'm/s'"));
+            Assert.AreEqual(new Quantity(75.5m, "kg"), Quantity.Parse("75.5 'kg'"));
+            Assert.AreEqual(new Quantity(75.5m, "kg"), Quantity.Parse("75.5'kg'"));
+            Assert.AreEqual(new Quantity(75m, "kg"), Quantity.Parse("75 'kg'"));
+            Assert.AreEqual(new Quantity(40m, "wk"), Quantity.Parse("40 'wk'"));
+            Assert.AreEqual(new Quantity(40m, "wk"), Quantity.Parse("40 weeks"));
+            Assert.AreEqual(Quantity.ForCalendarDuration(2m, "year"), Quantity.Parse("2 year"));
+            Assert.AreEqual(Quantity.ForCalendarDuration(6m, "month"), Quantity.Parse("6 months"));
+            Assert.AreEqual(new Quantity(40.0m), Quantity.Parse("40.0"));
+            Assert.AreEqual(new Quantity(1m), Quantity.Parse("1 '1'"));
+            Assert.AreEqual(new Quantity(1m, "m/s"), Quantity.Parse("1 'm/s'"));
 
             reject("40,5 weeks");
             reject("40 weks");
@@ -46,19 +45,19 @@ namespace Hl7.Fhir.ElementModel.Tests
 
         void reject(string testValue)
         {
-            Assert.IsFalse(P.Quantity.TryParse(testValue, out _));
+            Assert.IsFalse(Quantity.TryParse(testValue, out _));
         }
 
         [TestMethod]
         public void QuantityFormatting()
         {
-            Assert.AreEqual("75.6 'kg'", new P.Quantity(75.6m, "kg").ToString());
+            Assert.AreEqual("75.6 'kg'", new Quantity(75.6m, "kg").ToString());
         }
 
         [TestMethod]
         public void QuantityConstructor()
         {
-            var newq = new P.Quantity(3.14m, "kg");
+            var newq = new Quantity(3.14m, "kg");
             Assert.AreEqual("kg", newq.Unit);
             Assert.AreEqual(3.14m, newq.Value);
         }
@@ -66,20 +65,21 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void QuantityEquals()
         {
-            var newq = new P.Quantity(3.14m, "kg");
+            var newq = new Quantity(3.14m, "kg");
 
-            Assert.AreEqual(newq, new P.Quantity(3.14m, "kg"));
-            Assert.AreNotEqual(newq, new P.Quantity(3.15m, "kg"));
+            Assert.AreEqual(newq, new Quantity(3.14m, "kg"));
+            Assert.AreNotEqual(newq, new Quantity(3.15m, "kg"));
         }
 
         [TestMethod]
         public void QuantityComparison()
         {
-            var smaller = new P.Quantity(3.14m, "kg");
-            var bigger = new P.Quantity(4.0m, "kg");
+            var smaller = new Quantity(3.14m, "kg");
+            var bigger = new Quantity(4.0m, "kg");
 
             Assert.IsTrue(smaller < bigger);
 #pragma warning disable CS1718 // Comparison made to same variable
+            // ReSharper disable once EqualExpressionComparison
             Assert.IsTrue(smaller <= smaller);
 #pragma warning restore CS1718 // Comparison made to same variable
             Assert.IsTrue(bigger >= smaller);
@@ -93,8 +93,8 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void DifferentUnitsNotSupported()
         {
-            var a = new P.Quantity(3.14m, "kg");
-            var b = new P.Quantity(30.5m, "g");
+            var a = new Quantity(3.14m, "kg");
+            var b = new Quantity(30.5m, "g");
             /*
             Func<object> func = () => a < b;
             ExceptionAssert.Throws<NotSupportedException>);
@@ -126,8 +126,8 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void QuantityCompareTests(string left, string right, Comparison expectedResult, bool shouldThrowException = false)
         {
 
-            P.Quantity.TryParse(left, out var a);
-            P.Quantity.TryParse(right, out var b);
+            Quantity.TryParse(left, out var a);
+            Quantity.TryParse(right, out var b);
 
             Func<int> func = () => a.CompareTo(b);
 
@@ -154,31 +154,25 @@ namespace Hl7.Fhir.ElementModel.Tests
 
         public static IEnumerable<object?[]> ArithmeticTestdata => new[]
                 {
-                    new object[] { "25 'kg'", "5 'kg'", "30 'kg'" , (object)Quantity.Add },
-                    new object[] { "25 'kg'", "1000 'g'", "26000 'g'", (object)Quantity.Add },
-                    new object[] { "3 '[in_i]'", "2 '[in_i]'", "5 '[in_i]'", (object)Quantity.Add },
-                    new object[] { "4.0 'kg.m/s2'", "2000 'g.m.s-2'", "6000 'g.m.s-2'", (object)Quantity.Add } ,
-                    new object[] { "3 'm'", "3 'cm'", "303 'cm'", (object)Quantity.Add },
-                    new object[] { "3 'm'", "0 'cm'","300 'cm'", (object)Quantity.Add },
-                    new object[] { "3 'm'", "-80 'cm'", "220 'cm'", (object)Quantity.Add },
-
-                    new object?[] { "3 'm'", "0 'kg'", null, (object)Quantity.Add },
-
-                    new object[] { "25 'kg'", "500 'g'", "24500 'g'", (object)Quantity.Substract },
-                    new object[] { "25 'kg'", "25001 'g'", "-1 'g'", (object)Quantity.Substract},
-                    new object[] { "1 '[in_i]'", "2 'cm'", "0.005400 'm'", (object)Quantity.Substract },
-
-                    new object?[] { "1 '[in_i]'", "2 'kg'", null, (object)Quantity.Substract },
-
-                    new object[] { "25 'km'", "20 'cm'", "5000 'm2'", (object)Quantity.Multiply },
-                    new object[] { "2.0 'cm'", "2.0 'm'", "0.040 'm2'", (object)Quantity.Multiply  },
-                    new object[] { "2.0 'cm'", "9 'kg'", "180 'g.m'", (object)Quantity.Multiply  },
-
-
-                    new object[] { "14.4 'km'", "2.0 'h'", "2 'm.s-1'", (object)Quantity.Divide },
-                    new object[] { "9 'm2'", "3 'm'", "3 'm'", (object)Quantity.Divide },
-                    new object[] { "6 'm'", "3 'm'", "2 '1'", (object)Quantity.Divide },
-                    new object?[] { "3 'm'", "0 'cm'", null, (object)Quantity.Divide },
+                    ["25 'kg'", "5 'kg'", "30 'kg'" , (object)Quantity.Add], 
+                    ["25 'kg'", "1000 'g'", "26000 'g'", (object)Quantity.Add], 
+                    ["3 '[in_i]'", "2 '[in_i]'", "5 '[in_i]'", (object)Quantity.Add],
+                    ["4.0 'kg.m/s2'", "2000 'g.m.s-2'", "6000 'g.m.s-2'", (object)Quantity.Add],
+                    ["3 'm'", "3 'cm'", "303 'cm'", (object)Quantity.Add],
+                    ["3 'm'", "0 'cm'","300 'cm'", (object)Quantity.Add],
+                    ["3 'm'", "-80 'cm'", "220 'cm'", (object)Quantity.Add],
+                    ["3 'm'", "0 'kg'", null, (object)Quantity.Add],
+                    ["25 'kg'", "500 'g'", "24500 'g'", (object)Quantity.Substract],
+                    ["25 'kg'", "25001 'g'", "-1 'g'", (object)Quantity.Substract],
+                    ["1 '[in_i]'", "2 'cm'", "0.005400 'm'", (object)Quantity.Substract],
+                    ["1 '[in_i]'", "2 'kg'", null, (object)Quantity.Substract],
+                    ["25 'km'", "20 'cm'", "5000 'm2'", (object)Quantity.Multiply],
+                    ["2.0 'cm'", "2.0 'm'", "0.040 'm2'", (object)Quantity.Multiply],
+                    ["2.0 'cm'", "9 'kg'", "180 'g.m'", (object)Quantity.Multiply],
+                    ["14.4 'km'", "2.0 'h'", "2 'm.s-1'", (object)Quantity.Divide],
+                    ["9 'm2'", "3 'm'", "3 'm'", (object)Quantity.Divide],
+                    ["6 'm'", "3 'm'", "2 '1'", (object)Quantity.Divide],
+                    new[] { "3 'm'", "0 'cm'", null, (object)Quantity.Divide }
                 };
 
 
@@ -202,5 +196,3 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
     }
 }
-
-#nullable restore
