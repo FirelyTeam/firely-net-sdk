@@ -334,7 +334,7 @@ namespace Hl7.FhirPath.Expressions
     {
         internal IEnumerable<ITypedElement> Resolve(Closure context, IEnumerable<Invokee> _)
         {
-            return context.EvaluationContext.Environment[Name];
+            return context.EvaluationContext.Environment[Name] ?? throw Error.InvalidOperation($"Variable {Name} not found in environment");
         }
     }
 
