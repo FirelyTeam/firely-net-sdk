@@ -12,6 +12,7 @@
 using Fhir.Metrics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using M = Fhir.Metrics;
 
 namespace Hl7.Fhir.ElementModel.Types
@@ -26,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="quantity">A system type Quantity of system Ucum</param>
         /// <param name="canonicalizedQuantity">The converted system type Quantity when the conversion was a success.</param>
         /// <returns><c>true</c> when the conversion succeeded. Or <c>false</c> otherwise.</returns>
-        internal static bool TryCanonicalize(this Quantity quantity, out Quantity? canonicalizedQuantity)
+        internal static bool TryCanonicalize(this Quantity quantity, [NotNullWhen(true)] out Quantity? canonicalizedQuantity)
         {
             try
             {
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.ElementModel.Types
             }
         }
 
-        private static M.Quantity toUnitsOfMeasureQuantity(this decimal value, string unit)
+        private static M.Quantity toUnitsOfMeasureQuantity(this decimal value, string? unit)
         {
             Metric metric = (unit != null) ? SYSTEM.Value.Metric(unit) : new Metric(new List<Metric.Axis>());
             return new M.Quantity(value, metric);

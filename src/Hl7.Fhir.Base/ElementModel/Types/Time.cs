@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Time Parse(string representation) =>
             TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid time.");
 
-        public static bool TryParse(string representation, out Time value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Time value) => tryParse(representation, out value);
 
         public static Time FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Fraction,
             bool includeOffset = false) => new(dto, prec, includeOffset);
@@ -42,10 +43,10 @@ namespace Hl7.Fhir.ElementModel.Types
         /// </summary>
         public DateTimePrecision Precision { get; private set; }
 
-        public int? Hours => Precision >= DateTimePrecision.Hour ? _value.Hour : (int?)null;
-        public int? Minutes => Precision >= DateTimePrecision.Minute ? _value.Minute : (int?)null;
-        public int? Seconds => Precision >= DateTimePrecision.Second ? _value.Second : (int?)null;
-        public int? Millis => Precision >= DateTimePrecision.Fraction ? _value.Millisecond : (int?)null;
+        public int? Hours => Precision >= DateTimePrecision.Hour ? _value.Hour : null;
+        public int? Minutes => Precision >= DateTimePrecision.Minute ? _value.Minute : null;
+        public int? Seconds => Precision >= DateTimePrecision.Second ? _value.Second : null;
+        public int? Millis => Precision >= DateTimePrecision.Fraction ? _value.Millisecond : null;
 
         /// <summary>
         /// The span of time ahead/behind UTC
@@ -221,12 +222,12 @@ namespace Hl7.Fhir.ElementModel.Types
         public static explicit operator Time(DateTimeOffset dto) => FromDateTimeOffset(dto);
         public static explicit operator String(Time dt) => ((ICqlConvertible)dt).TryConvertToString().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : (bool?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } && TryEquals(other) is Ok<bool> ok ? ok.Value : null;
 
         // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
-        bool ICqlEquatable.IsEquivalentTo(Any other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } pd && TryEquals(pd).ValueOrDefault(false);
 
-        int? ICqlOrderable.CompareTo(Any other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : null;
 
         Result<String> ICqlConvertible.TryConvertToString() => Ok(new String(ToString()));
 

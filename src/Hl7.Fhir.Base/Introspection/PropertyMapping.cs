@@ -11,6 +11,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -23,7 +24,7 @@ namespace Hl7.Fhir.Introspection
     /// <summary>
     /// A container for the metadata of an element of a FHIR datatype as present on a property of a (generated) .NET POCO class.
     /// </summary>
-    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ElementType.Name}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
     public class PropertyMapping : IElementDefinitionSummary
     {
         // no public constructors
@@ -172,7 +173,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>There should generally be no reason to call this method, as you can easily get the required PropertyMapping via
         /// a ClassMapping - which will cache this information as well. This constructor is public for historical reasons only.</remarks>
-        public static bool TryCreate(PropertyInfo prop, out PropertyMapping? result, ClassMapping declaringClass, FhirRelease release)
+        public static bool TryCreate(PropertyInfo prop, [NotNullWhen(true)] out PropertyMapping? result, ClassMapping declaringClass, FhirRelease release)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
             result = default;

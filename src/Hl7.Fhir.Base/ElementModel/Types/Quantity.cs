@@ -11,6 +11,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
@@ -125,7 +126,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="unit">The parsed unit, either as a UCUM code or a non-UCUM calender unit.</param>
         /// <param name="isCalendarUnit">True is this is a non-UCUM calendar unit.</param>
         /// <returns>True if this is a recognized time unit literal, false otherwise.</returns>
-        public static bool TryParseTimeUnit(string unitLiteral, out string? unit, out bool isCalendarUnit)
+        public static bool TryParseTimeUnit(string unitLiteral, [NotNullWhen(true)] out string? unit, out bool isCalendarUnit)
         {
             if (unitLiteral is null) throw new ArgumentNullException(nameof(unitLiteral));
 
@@ -375,13 +376,13 @@ namespace Hl7.Fhir.ElementModel.Types
 
         public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
 
-        bool? ICqlEquatable.IsEqualTo(Any other) =>
-            other is { } && TryEquals(other, CQL_EQUALS_COMPARISON) is Ok<bool> ok ? ok.Value : (bool?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) =>
+            other is { } && TryEquals(other, CQL_EQUALS_COMPARISON) is Ok<bool> ok ? ok.Value : null;
 
         // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
-        bool ICqlEquatable.IsEquivalentTo(Any other) => other is { } && TryEquals(other, CQL_EQUIVALENCE_COMPARISON).ValueOrDefault(false);
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } && TryEquals(other, CQL_EQUIVALENCE_COMPARISON).ValueOrDefault(false);
 
-        int? ICqlOrderable.CompareTo(Any other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : (int?)null;
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } && TryCompareTo(other) is Ok<int> ok ? ok.Value : null;
 
         public static explicit operator String(Quantity q) => ((ICqlConvertible)q).TryConvertToString().ValueOrThrow();
 
