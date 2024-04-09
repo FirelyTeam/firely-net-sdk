@@ -167,6 +167,10 @@ namespace Hl7.FhirPath.Expressions
             t.Add("split", (string f, string seperator) => f.FpSplit(seperator), doNullProp: true);
             t.Add("join", (IEnumerable<ITypedElement> f, string separator) => f.FpJoin(separator), doNullProp: true);
             t.Add("join", (IEnumerable<ITypedElement> f) => f.FpJoin(), doNullProp: true);
+            t.Add("indexOf", (IEnumerable<ITypedElement> f, ITypedElement elem, int start) => f.IndexOf(elem, start), doNullProp: true);
+            t.Add("indexOf", (IEnumerable<ITypedElement> f, ITypedElement elem) => f.IndexOf(elem), doNullProp: true);
+            t.Add("lastIndexOf", (IEnumerable<ITypedElement> f, ITypedElement elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
+            t.Add("lastIndexOf", (IEnumerable<ITypedElement> f, ITypedElement elem) => f.LastIndexOf(elem), doNullProp: true);
 
             // Math functions
             t.Add("abs", (decimal f) => Math.Abs(f), doNullProp: true);
