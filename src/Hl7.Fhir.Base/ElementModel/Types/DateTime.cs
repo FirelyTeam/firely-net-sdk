@@ -27,9 +27,9 @@ namespace Hl7.Fhir.ElementModel.Types
         }
 
         public static DateTime Parse(string representation) =>
-            TryParse(representation, out var result) ? result! : throw new FormatException($"String '{representation}' was not recognized as a valid datetime.");
+            TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid datetime.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)]out DateTime? value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)] out DateTime? value) => tryParse(representation, out value);
 
         /// <summary>
         /// Rounds the contents of a <see cref="DateTimeOffset"/> to the given precision, unused precision if filled out 
@@ -105,14 +105,14 @@ namespace Hl7.Fhir.ElementModel.Types
                 new("^" + DATETIMEFORMAT + "$",
                 RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        private static bool tryParse(string representation, out DateTime value)
+        private static bool tryParse(string representation, out DateTime? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 
             var matches = DATETIMEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new DateTime(default, default, default);
+                value = null;
                 return false;
             }
 
