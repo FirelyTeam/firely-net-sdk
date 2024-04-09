@@ -194,5 +194,12 @@ namespace Hl7.Fhir.ElementModel.Tests
                 opResult.Should().BeAssignableTo<IFailed>();
             }
         }
+
+        [TestMethod]
+        public void IsNullWhenInvalid()
+        {
+            Quantity.TryParse("hi", out var parsed).Should().BeFalse();
+            parsed.Should().BeNull();
+        }
     }
 }

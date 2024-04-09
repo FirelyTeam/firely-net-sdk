@@ -81,7 +81,7 @@ namespace Hl7.Fhir.ElementModel
         public string Name => Current.Name;
 
         /// <inheritdoc/>
-        public string InstanceType => Current.InstanceType!;
+        public string? InstanceType => Current.InstanceType;
 
         /// <inheritdoc/>
         public object? Value => Current.Value;
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// The instance type of the resource this element is part of.
         /// </summary>
-        public string NearestResourceType => ParentResource == null ? Location : ParentResource.InstanceType;
+        public string? NearestResourceType => ParentResource == null ? Location : ParentResource.InstanceType;
 
         /// <summary>
         /// The %resource context, as defined by FHIRPath

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="name">Return only the children with the given name.</param>
         /// <returns></returns>
-        IEnumerable<ITypedElement> Children(string? name = null);
+        IEnumerable<TDerived> Children(string? name = null);
 
         /// <summary>
         /// Name of the node, e.g. "active", "value".
