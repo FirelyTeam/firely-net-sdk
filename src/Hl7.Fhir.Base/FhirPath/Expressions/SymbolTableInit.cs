@@ -209,6 +209,8 @@ namespace Hl7.FhirPath.Expressions
             t.Add(new CallSignature("exists", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.Add(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
             t.Add(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
+            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string)), DefineVariable);
+            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
 
             t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee)), runAggregate);
             t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
@@ -291,6 +293,27 @@ namespace Hl7.FhirPath.Expressions
             List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
             var selectResults = runSelect(ctx, selectArgs);
             ctx?.EvaluationContext?.Tracer?.Invoke(name, selectResults);
+
+            return focus;
+        }
+        
+        private static IEnumerable<ITypedElement> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
+        {
+            Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
+            var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
+            string name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
+            
+            if (enumerable.Length == 2)
+            {
+                ctx.SetValue(name, focus);
+            }
+            else
+            {
+                var newContext = ctx.Nest(focus);
+                newContext.SetThis(focus);
+                var result = enumerable[2](newContext, InvokeeFactory.EmptyArgs);
+                ctx.SetValue(name, result);
+            }
 
             return focus;
         }

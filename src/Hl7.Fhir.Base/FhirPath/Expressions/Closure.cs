@@ -9,6 +9,9 @@
 
 using Hl7.Fhir.ElementModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Dynamic;
+using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -20,15 +23,24 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
+        public Closure ReturnedNewClosure { get; private set; }
+
         public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
         {
             var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };
 
             var input = new[] { root };
+
+            foreach (var assignment in newContext.EvaluationContext.Environment)
+            {
+                newContext.SetValue(assignment.Key, assignment.Value);
+            }
+            
             newContext.SetThis(input);
             newContext.SetThat(input);
             newContext.SetIndex(ElementNode.CreateList(0));
             newContext.SetOriginalContext(input);
+            
             if (ctx.Resource != null) newContext.SetResource(new[] { ctx.Resource });
             if (ctx.RootResource != null) newContext.SetRootResource(new[] { ctx.RootResource });
 

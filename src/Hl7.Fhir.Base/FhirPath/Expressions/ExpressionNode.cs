@@ -305,6 +305,11 @@ namespace Hl7.FhirPath.Expressions
         {
             Name = name ?? throw Error.ArgumentNull("name");
         }
+        
+        internal IEnumerable<ITypedElement> ResolveVariable(Closure context, IEnumerable<Invokee> _)
+        {
+            return context.ResolveValue(Name) ?? throw Error.InvalidOperation($"Variable {Name} not found in environment");
+        }
 
         public string Name { get; private set; }
 
@@ -327,14 +332,6 @@ namespace Hl7.FhirPath.Expressions
         public override int GetHashCode()
         {
             return base.GetHashCode() ^ Name.GetHashCode();
-        }
-    }
-    
-    public class ContextVariableRefExpression(string name) : VariableRefExpression(name)
-    {
-        internal IEnumerable<ITypedElement> Resolve(Closure context, IEnumerable<Invokee> _)
-        {
-            return context.EvaluationContext.Environment[Name] ?? throw Error.InvalidOperation($"Variable {Name} not found in environment");
         }
     }
 
