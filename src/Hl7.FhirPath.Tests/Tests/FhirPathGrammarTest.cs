@@ -75,6 +75,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14)", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeSpecifier.Any,
                         new ConstantExpression("hi"), new ConstantExpression(3.14m)));
             AssertParser.SucceedsMatch(parser, "%external", new VariableRefExpression("external"));
+            AssertParser.SucceedsMatch(parser, "%%contextvar", new ContextVariableRefExpression("contextvar"));
             AssertParser.SucceedsMatch(parser, "@2013-12", new ConstantExpression(P.Date.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "@2013-12T", new ConstantExpression(P.DateTime.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3));
