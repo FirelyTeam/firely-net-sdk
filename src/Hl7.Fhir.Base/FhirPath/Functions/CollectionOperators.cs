@@ -65,6 +65,34 @@ namespace Hl7.FhirPath.Functions
         public static IEnumerable<ITypedElement> Exclude(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
             => focus.Where(f => !other.Contains(f));
 
+        public static int IndexOf(this IEnumerable<ITypedElement> focus, ITypedElement item, int start = 0)
+        {
+            var typedElements = focus as ITypedElement[] ?? focus.ToArray();
+            for (int i = start; i < typedElements.Length; i++)
+            {
+                if (EqualityOperators.TypedElementEqualityComparer.Equals(typedElements[i], item))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public static int LastIndexOf(this IEnumerable<ITypedElement> focus, ITypedElement item, int to = -1)
+        {
+            var typedElements = focus as ITypedElement[] ?? focus.ToArray();
+            to = to < 0 ? typedElements.Count() - 1 : to;
+            for (int i = to; i >= 0; i--)
+            {
+                if (EqualityOperators.TypedElementEqualityComparer.Equals(typedElements[i], item))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        
+
         public static IEnumerable<ITypedElement> Navigate(this IEnumerable<ITypedElement> elements, string name)
             => elements.SelectMany(e => e.Navigate(name));
 
