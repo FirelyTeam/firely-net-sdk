@@ -558,35 +558,15 @@ namespace Hl7.FhirPath.R4.Tests
                 ex.Message.Should().Contain("Unknown symbol 'fam'");
             }
         }
-
-        /*
+        
         [TestMethod]
         public void redefining_variable_throws_error()
         {
             var expr = "defineVariable('v1').defineVariable('v1').select(%v1)";
-            expect(() =>
-            {
-                fhirpath.evaluate(input.patientExample, expr, r4_model);
-            }).toThrowError("Variable %v1 already defined");
+            Assert.ThrowsException<InvalidOperationException>(() => fixture.PatientExample.Select(expr).ToList());
         }
+        
 
-        /*
-        // Yury's tests
-        [TestMethod]
-        public void defineVariable_could_not_be_the_first_child()
-        {
-            // test with a variable that is not in the context that should throw an error
-            var expr = "Patient.name.defineVariable('n1', first()).active | Patient.name.defineVariable('n2', skip(1).first()).select(%n1.given)";
-            // var ast = fhirpath.parse(expr);
-            // ast = PruneTree(ast);
-            // console.log("ast", JSON.stringify(ast, null, 2));
-            expect(() =>
-            {
-                fhirpath.evaluate(input.patientExample, expr, r4_model);
-            }).toThrowError("Attempting to access an undefined environment variable: n1");
-        }
-
-        /*/
         [TestMethod]
         public void sequence_of_variable_definitions_tweak()
         {
@@ -623,17 +603,7 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.AreEqual("r1-v2", r.Skip(1).First().ToString());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
         }
-        /* 
-        [TestMethod]
-        public void multi_tree_vars_exception()
-        {
-            var expr = "defineVariable('root', 'r1-').select(defineVariable('v1', 'v1').defineVariable('v2', 'v2').select(%v1 | %v2)).select(%root & $this & %v1)";
-            expect(() =>
-            {
-                fhirpath.evaluate(input.patientExample, expr, r4_model);
-            }).toThrowError("Attempting to access an undefined environment variable: v1");
-        }
-        */
+        
         [TestMethod]
         public void defineVariable_with_compile_success()
         {

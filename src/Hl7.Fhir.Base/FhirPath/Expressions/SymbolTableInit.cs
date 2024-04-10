@@ -303,6 +303,8 @@ namespace Hl7.FhirPath.Expressions
             var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
             string name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
             
+            if(ctx.ResolveValue(name) is not null) throw new InvalidOperationException($"Variable {name} is already defined in this scope");
+            
             if (enumerable.Length == 2)
             {
                 ctx.SetValue(name, focus);
