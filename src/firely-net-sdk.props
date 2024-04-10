@@ -7,7 +7,7 @@
 	<!-- Solution-wide properties for NuGet packaging -->
 	<PropertyGroup>
 		<VersionPrefix>5.7.1</VersionPrefix>
-		<VersionSuffix></VersionSuffix>
+		<VersionSuffix>preview</VersionSuffix>
 		<Authors>Firely (info@fire.ly) and contributors</Authors>
 		<Company>Firely (https://fire.ly)</Company>
 		<Copyright>Copyright 2013-2024 Firely.  Contains materials (C) HL7 International</Copyright>
@@ -43,6 +43,8 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<EnablePackageValidation>true</EnablePackageValidation>
+		<PackageValidationBaselineVersion>5.7.0</PackageValidationBaselineVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
