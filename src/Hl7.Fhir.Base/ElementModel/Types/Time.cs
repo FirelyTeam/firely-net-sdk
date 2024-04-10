@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Time Parse(string representation) =>
             TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid time.");
 
-        public static bool TryParse(string representation, [NotNullWhen(true)] out Time value) => tryParse(representation, out value);
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Time? value) => tryParse(representation, out value);
 
         public static Time FromDateTimeOffset(DateTimeOffset dto, DateTimePrecision prec = DateTimePrecision.Fraction,
             bool includeOffset = false) => new(dto, prec, includeOffset);
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// The precision of the time available. 
         /// </summary>
-        public DateTimePrecision Precision { get; private set; }
+        public DateTimePrecision Precision { get; }
 
         public int? Hours => Precision >= DateTimePrecision.Hour ? _value.Hour : null;
         public int? Minutes => Precision >= DateTimePrecision.Minute ? _value.Minute : null;
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Whether the time specifies an offset to UTC
         /// </summary>
-        public bool HasOffset { get; private set; }
+        public bool HasOffset { get; }
 
         private string? _originalParsedString;
         private readonly DateTimeOffset _value;
@@ -101,14 +101,14 @@ namespace Hl7.Fhir.ElementModel.Types
         private static readonly Regex PARTIALTIMEREGEX =
             new Regex("^" + PARTIALTIMEFORMAT + "$", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        private static bool tryParse(string representation, out Time value)
+        private static bool tryParse(string representation, out Time? value)
         {
             if (representation is null) throw new ArgumentNullException(nameof(representation));
 
             var matches = PARTIALTIMEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new Time(default, DateTimePrecision.Hour, default);
+                value = null;
                 return false;
             }
 

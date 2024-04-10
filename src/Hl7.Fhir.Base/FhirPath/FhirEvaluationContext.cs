@@ -10,6 +10,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.FhirPath;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -30,6 +31,15 @@ namespace Hl7.Fhir.FhirPath
 
         /// <inheritdoc cref="EvaluationContext(ITypedElement, ITypedElement)"/>
         public FhirEvaluationContext(ITypedElement resource, ITypedElement rootResource) : base(resource, rootResource)
+        {
+        }
+
+        /// <summary>
+        /// Create a FhirEvaluationContext with a resource and an environment.
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="environment"></param>
+        public FhirEvaluationContext(ITypedElement resource, IDictionary<string, IEnumerable<ITypedElement>> environment) : base(resource, null, environment)
         {
         }
 
