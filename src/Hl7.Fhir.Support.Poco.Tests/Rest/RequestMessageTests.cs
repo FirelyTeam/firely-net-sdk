@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Task TestBinaryAsBinary()
         {
-            var entryRequest = makeMessage(new FhirClientSettings { BinaryTransfer = BinaryTransferBehaviour.UseData }, resource: testBinary, interaction: InteractionType.Create);
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseData }, resource: testBinary, interaction: InteractionType.Create);
             Assert.IsNotNull(entryRequest.Content);
             Assert.AreEqual(testBinary.ContentType, entryRequest.Content.Headers.ContentType!.MediaType);
             Assert.AreEqual("test body", await entryRequest.Content.ReadAsStringAsync());

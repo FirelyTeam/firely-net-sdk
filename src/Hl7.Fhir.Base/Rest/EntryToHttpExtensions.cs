@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Rest
 
                 message = entry.Resource switch
                 {
-                    Binary binaryData when settings.BinaryTransfer is BinaryTransferBehaviour.UseData => message.WithBinaryContent(binaryData),
+                    Binary binaryData when settings.BinarySendBehaviour is BinaryTransferBehaviour.UseData => message.WithBinaryContent(binaryData),
                     Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
                     Resource resource => message.WithResourceContent(resource, serialization, ser, fhirVersion),
                     null => message.WithNoBody()
