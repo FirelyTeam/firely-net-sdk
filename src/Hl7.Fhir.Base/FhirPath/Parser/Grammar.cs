@@ -60,7 +60,6 @@ namespace Hl7.FhirPath.Parser
         //  : invocation                                            #invocationTerm
         //  | literal                                               #literalTerm
         //  | externalConstant                                      #externalConstantTerm
-        //  | externalVariable                                      #externalVariableTerm
         //  | '(' expression ')'                                    #parenthesizedTerm
         //  | '{' '}'                                               #nullLiteral
         //  ;
@@ -102,7 +101,6 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<Expression> Term =
             Literal
             .Or(FunctionInvocation(AxisExpression.That))
-            .XOr(Lexer.ExternalVariable.Select(n => new ContextVariableRefExpression(n)))
             .Or(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
