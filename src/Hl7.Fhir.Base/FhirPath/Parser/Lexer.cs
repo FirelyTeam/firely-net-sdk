@@ -78,13 +78,6 @@ namespace Hl7.FhirPath.Parser
         //  ;
         public static readonly Parser<string> Identifier =
             Id.XOr(DelimitedIdentifier);
-        
-        // externalVariable
-        //  : '%%' identifier
-        //  ;
-        public static readonly Parser<string> ExternalVariable =
-            Parse.String("%%").Then(_ => Identifier.XOr(String))
-                .Named("external variable");
 
         // externalConstant
         //  : '%' identifier

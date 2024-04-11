@@ -177,7 +177,7 @@ namespace Hl7.FhirPath.R4.Tests
                 bool invalid = expressionNode.Attribute("invalid")?.Value == "true";
 
                 if (mode?.Value == "strict" || invalid) continue; // don't do 'strict' or invlaid tests yet
-                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
+                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath/input");
 
                 if (!_cache.ContainsKey(inputfile))
                 {
