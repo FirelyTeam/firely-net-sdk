@@ -84,7 +84,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(P.DateTime.Parse("2014-12-13T12:00:00+02:00")));
             AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
-            AssertParser.SucceedsMatch(parser, "10.1 'mg'", new ConstantExpression(new P.Quantity(10.1m, "mg")));
+            AssertParser.SucceedsMatch(parser, "10.1 'mg'", new ConstantExpression(new P.Quantity(10.1m, "mg"))); 
         }
 
         [TestMethod]
@@ -130,6 +130,7 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.SucceedsMatch(parser, "Patient.name.doSomething(true)",
                     new FunctionCallExpression(PATIENTNAME, "doSomething", TypeSpecifier.Any, new ConstantExpression(true)));
+            AssertParser.SucceedsMatch(parser, "\'ewout\'.indexOf(\'o\', 2)", new FunctionCallExpression(new ConstantExpression("ewout"), "indexOf", TypeSpecifier.Any, [new ConstantExpression("o"), new ConstantExpression(2)]));
 
             AssertParser.FailsMatch(parser, "Patient.");
             //AssertParser.FailsMatch(parser, "Patient. name");     //oops

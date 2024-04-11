@@ -278,7 +278,7 @@ namespace HL7.FhirPath.Tests
                     ("'abcdefg'.indexOf('bc') = 1", true, false),
                     ("'abcdefg'.indexOf('x') = -1", true, false),
                     ("'abcdefg'.indexOf('abcdefg') = 0", true, false),
-                    ("('a' | 'b').indexOf('a')", true, true),  // should throw an error
+                    ("('a' | 'b').indexOf('a') = 0", true, false), // used to throw an exception, but indexOf is now implemented for collections
 
                     // function substring(start : Integer [, length : Integer]) : String
                     ("{}.substring(0).empty()", true, false),
