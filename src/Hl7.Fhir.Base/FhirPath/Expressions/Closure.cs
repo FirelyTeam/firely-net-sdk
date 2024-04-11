@@ -23,8 +23,6 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public Closure ReturnedNewClosure { get; private set; }
-
         public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
         {
             var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };

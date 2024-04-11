@@ -305,11 +305,6 @@ namespace Hl7.FhirPath.Expressions
         {
             Name = name ?? throw Error.ArgumentNull("name");
         }
-        
-        internal IEnumerable<ITypedElement> ResolveVariable(Closure context, IEnumerable<Invokee> _)
-        {
-            return context.ResolveValue(Name) ?? throw Error.InvalidOperation($"Variable {Name} not found in environment");
-        }
 
         public string Name { get; private set; }
 
