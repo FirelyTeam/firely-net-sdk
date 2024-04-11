@@ -799,15 +799,17 @@ public partial class BaseFhirClient : IDisposable
         await verifyServerVersion(cancellation).ConfigureAwait(false);
 
         var request = tx.Entry[0];
+        var maybeBinaryInteraction = new ResourceIdentity(request.Request.Url).ResourceType == "Binary";
         var requestMessage = request.ToHttpRequestMessage(
             Requester.BaseUrl,
             getSerializationEngine(),
             Settings.UseFhirVersionInAcceptHeader ? fhirVersion : null,
-            Settings);
+            Settings, 
+            maybeBinaryInteraction);
 
         using var responseMessage = await Requester.ExecuteAsync(requestMessage, cancellation).ConfigureAwait(false);
 
-        return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, entryComponent: request);
+        return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, entryComponent: request, useBinaryProtocol: maybeBinaryInteraction);
     }
 
     private async Task<TResource?> executeAsync<TResource>(HttpRequestMessage request, IEnumerable<HttpStatusCode> expect, CancellationToken? ct) where TResource : Resource
@@ -854,14 +856,14 @@ public partial class BaseFhirClient : IDisposable
     }
     
     // either msg or entryComponent should be set
-    private async Task<TResource?> extractResourceFromHttpResponse<TResource>(IEnumerable<HttpStatusCode> expect, HttpResponseMessage responseMessage, HttpRequestMessage? msg = null, Bundle.EntryComponent? entryComponent = null) where TResource : Resource
+    private async Task<TResource?> extractResourceFromHttpResponse<TResource>(IEnumerable<HttpStatusCode> expect, HttpResponseMessage responseMessage, HttpRequestMessage? msg = null, Bundle.EntryComponent? entryComponent = null, bool useBinaryProtocol = false) where TResource : Resource
     {
         if (msg is null && entryComponent is null) throw new ArgumentException("Either msg or entryComponent should be set");
         // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
         // of the server, add a suggestion about this in the (legacy) parsing exception.
         var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
         (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
-            await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError, useBinaryProtocol: false)
+            await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError, useBinaryProtocol)
                 .ConfigureAwait(false);
 
         // If an error occurred while trying to interpret and validate the response, we will bail out now.

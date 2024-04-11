@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Test
             response.Headers.Location = new Uri("http://nu.nl");
             response.Headers.TryAddWithoutValidation("Test-key", "Test-value");
 
-            var extracted = await response.ExtractResponseData(engine, useBinaryProtocol: false);
+            var extracted = await response.ExtractResponseData(engine, expectBinaryProtocol: false);
 
             extracted.BodyText.Should().Be(DEFAULT_XML);
             engine.SerializeToXml(extracted.BodyResource!).Should().Be(DEFAULT_XML);
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Test
         public async Task GetEmptyResponse()
         {
             var response = new HttpResponseMessage(HttpStatusCode.Conflict);
-            var components = await response.ExtractResponseData(POCOENGINE, useBinaryProtocol: false);
+            var components = await response.ExtractResponseData(POCOENGINE, expectBinaryProtocol: false);
 
             components.Response.Status.Should().Be("409");
             components.BodyData.Should().BeNull();
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Test
         private static async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
             bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
         {
-            var components = await response.ExtractResponseData(engine, useBinaryProtocol: false).ConfigureAwait(false);
+            var components = await response.ExtractResponseData(engine, expectBinaryProtocol: false).ConfigureAwait(false);
             await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern);
         }
 

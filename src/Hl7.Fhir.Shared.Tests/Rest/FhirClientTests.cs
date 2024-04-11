@@ -9,6 +9,7 @@
  */
 
 using FluentAssertions;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -894,6 +895,21 @@ namespace Hl7.Fhir.Tests.Rest
             var loc = await client.ReadAsync<Location>(LOCATIONIDEP);
             Assert.IsNotNull(testDegatingHandler.LastRequest);
             Assert.IsNotNull(testMessageHandler.LastResponse);
+        }
+        
+        
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async T.Task TestBinaryOperations()
+        {
+            var client = new FhirClient(TestEndpoint, new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseData });
+            var binary = FhirSerializationEngineFactory.Strict(ModelInspector.Base).DeserializeFromJson(await File.ReadAllTextAsync("/Users/kasdejong/RiderProjects/firely-net-sdk/src/Hl7.Fhir.Shared.Tests/TestData/BinaryPicture.json")) as Binary;
+            
+            var created = await client.CreateAsync<Binary>(binary!);
+            created.Should().BeOfType(typeof(Binary));
+            
+            var read = await client.ReadAsync<Binary>(created.ResourceIdentity());
+            read.Should().BeOfType(typeof(Binary));
         }
     }
 

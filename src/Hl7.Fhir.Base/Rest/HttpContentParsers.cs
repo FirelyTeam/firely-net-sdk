@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>If the status of the response indicates failure, this function will be lenient and return the body data 
         /// instead of throwing an <see cref="UnsupportedBodyTypeException"/> when the content type or content itself is not recognizable as FHIR. This improves
         /// the chances of capturing diagnostic (non-FHIR) bodies returned by the server when an operation fails.</remarks>
-        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser, bool useBinaryProtocol)
+        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser, bool expectBinaryProtocol)
         {
             var component = message.ExtractResponseComponent();
             var data = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
@@ -157,14 +157,16 @@ namespace Hl7.Fhir.Rest
             if (data.Length == 0) return result;
 
             // If this is not binary data, try to capture the body as text
-            if (!useBinaryProtocol)
+            if (!expectBinaryProtocol)
                 result = result with { BodyText = await message.Content.GetBodyAsString().ConfigureAwait(false) };
+            
+            var isResource = ContentType.GetResourceFormatFromContentType(message.Content.GetContentType()) != ResourceFormat.Unknown;
 
             try
             {
                 var resource = message switch
                 {
-                    { IsSuccessStatusCode: true } when useBinaryProtocol is true => await ReadBinaryDataFromMessage(message).ConfigureAwait(false),
+                    { IsSuccessStatusCode: true } when expectBinaryProtocol && !isResource => await ReadBinaryDataFromMessage(message).ConfigureAwait(false),
                     { IsSuccessStatusCode: true } => await ReadResourceFromMessage(message.Content, ser).ConfigureAwait(false),
                     { IsSuccessStatusCode: false } => await ReadOutcomeFromMessage(message.Content, ser).ConfigureAwait(false),
                 };
@@ -200,7 +202,7 @@ namespace Hl7.Fhir.Rest
 
             result.Data = result.Content = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             result.ContentType = message.Content.GetContentType();
-            result.SecurityContext = message.GetSecurityContext() is string reference ? new ResourceReference(reference) : null;
+            result.SecurityContext = message.GetSecurityContext() is { } reference ? new ResourceReference(reference) : null;
             result.Meta ??= new();
             result.Meta.LastUpdated = message.Content.Headers.LastModified;
             result.Meta.VersionId = message.GetVersionFromETag();

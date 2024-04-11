@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\BinaryPicture.json" />
     <Content Include="$(MSBuildThisFileDirectory)TestData\bundle-contained-references.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

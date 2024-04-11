@@ -16,6 +16,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -144,7 +145,7 @@ namespace Hl7.Fhir.Test
             var request = makeMessage();
             request.RequestUri!.Should().Be(url);
 
-            var settings = new FhirClientSettings { UseFormatParameter = true };
+            var settings = new FhirClientSettings { UseFormatParameter = true, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseResource };
             request = makeMessage(settings);
             request.RequestUri!.Should().Be(url + "?_format=xml");
 
@@ -200,7 +201,7 @@ namespace Hl7.Fhir.Test
         [DataRow(ResourceFormat.Json)]
         public void SetAccept(ResourceFormat fmt)
         {
-            var settings = new FhirClientSettings { PreferredFormat = fmt };
+            var settings = new FhirClientSettings { PreferredFormat = fmt, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseResource };
             var request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
             request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
             request.Headers.AcceptEncoding.Should().BeEmpty();
@@ -224,7 +225,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Task TestBinaryAsBinary()
         {
-            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseData }, resource: testBinary, interaction: InteractionType.Create);
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData }, resource: testBinary, interaction: InteractionType.Create);
             Assert.IsNotNull(entryRequest.Content);
             Assert.AreEqual(testBinary.ContentType, entryRequest.Content.Headers.ContentType!.MediaType);
             Assert.AreEqual("test body", await entryRequest.Content.ReadAsStringAsync());
@@ -233,7 +234,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Task TestBinaryAsResource()
         {
-            var entryRequest = makeMessage(resource: testBinary, interaction: InteractionType.Create);
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseResource }, resource: testBinary, interaction: InteractionType.Create);
 
             var resource = await entryRequest.Content!.ReadResourceFromMessage(TESTENGINE);
             var binary = resource.Should().BeOfType<Binary>().Subject;
@@ -241,7 +242,6 @@ namespace Hl7.Fhir.Test
             binary.ContentType.Should().Be("text/plain");
             (binary.Data ?? binary.Content).Should().BeEquivalentTo(testBinary.Content ?? testBinary.Data);
         }
-
 
         [TestMethod]
         [DataRow(false)]

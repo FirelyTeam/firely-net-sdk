@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Linq;
 using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
@@ -25,7 +26,8 @@ namespace Hl7.Fhir.Rest
             Uri baseUrl,
             IFhirSerializationEngine ser,
             string? fhirVersion,
-            FhirClientSettings settings)
+            FhirClientSettings settings,
+            bool binaryEndpoint = true)
         {
             var request = entry.Request;
             var interaction = entry.Annotation<InteractionType>();
@@ -33,16 +35,20 @@ namespace Hl7.Fhir.Rest
                         ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(request));
             var serialization = settings.PreferredFormat;
 
-            var uri = getRequestUrl(request.Url, baseUrl);
+            var uri = getRequestUrl(baseUrl, request.Url);
+            
             var message = new HttpRequestMessage(method, uri);
 
+            if (!(binaryEndpoint && settings.BinaryReceiveBehaviour == BinaryTransferBehaviour.UseData))
+            {
+                message = settings.UseFormatParameter 
+                    ? message.WithFormatParameter(serialization)
+                    : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
+            }
+            
             message = setBody(message)
                 .WithDefaultAgent()
                 .WithPreconditions(request.IfMatch, request.IfNoneMatch, request.IfModifiedSince, request.IfNoneExist);
-
-            message = settings.UseFormatParameter
-                ? message.WithFormatParameter(serialization)
-                : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
 
             bool canHaveReturnPreference = interaction is InteractionType.Create or InteractionType.Update or InteractionType.Patch or InteractionType.Transaction;
 
@@ -73,7 +79,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static Uri getRequestUrl(string requestUrl, Uri baseUrl)
+        private static Uri getRequestUrl(Uri baseUrl, string requestUrl)
         {
             // Create an absolute uri when the interaction.Url is relative.
             var uri = new Uri(
