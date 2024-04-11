@@ -132,18 +132,13 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// How to transfer binary data when sending data to a Binary endpoint.
         /// </summary>
-        public BinaryTransferBehaviour BinarySendBehaviour = BinaryTransferBehaviour.UseData;
+        public BinaryTransferBehaviour BinarySendBehaviour = BinaryTransferBehaviour.UseResource;
 
         /// <summary>
         /// How to transfer binary data when receiving data from a Binary endpoint.
         /// </summary>
         public BinaryTransferBehaviour BinaryReceiveBehaviour = BinaryTransferBehaviour.UseData;
         
-        
-        /// <summary>
-        /// Whether this client is currently communicating with a server that has a Binary endpoint.
-        /// </summary>
-
 
         public FhirClientSettings() { }
 
