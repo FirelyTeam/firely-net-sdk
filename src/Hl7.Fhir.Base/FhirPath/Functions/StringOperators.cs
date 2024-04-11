@@ -20,7 +20,12 @@ namespace Hl7.FhirPath.Functions
     {
         public static string FpSubstring(this string me, long start, long? length)
         {
-            var l = length ?? me.Length;
+            var l = length switch
+            {
+                < 0 => 0,
+                null => me.Length,
+                _ => length.Value
+            };
 
             if (start < 0 || start >= me.Length) return null;
             l = Math.Min(l, me.Length - start);
@@ -30,7 +35,7 @@ namespace Hl7.FhirPath.Functions
 
         public static ITypedElement FpIndexOf(this string me, string fragment)
         {
-            return ElementNode.ForPrimitive(me.IndexOf(fragment));
+            return ElementNode.ForPrimitive(me.IndexOf(fragment, StringComparison.Ordinal));
         }
 
         public static IEnumerable<ITypedElement> ToChars(this string me) =>
