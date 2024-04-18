@@ -58,8 +58,8 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual("1.0.2", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.DSTU2));
             Assert.AreEqual("3.0.2", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.STU3));
             Assert.AreEqual("4.0.1", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R4));
-            Assert.AreEqual("4.3.0-snapshot1", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R4B));
-            Assert.AreEqual("5.0.0-snapshot1", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R5));
+            Assert.AreEqual("4.3.0", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R4B));
+            Assert.AreEqual("5.0.0", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R5));
         }
 
         [TestMethod]
