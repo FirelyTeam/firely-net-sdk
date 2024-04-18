@@ -135,9 +135,9 @@ namespace Hl7.Fhir.Rest
         public BinaryTransferBehaviour BinarySendBehaviour = BinaryTransferBehaviour.UseResource;
 
         /// <summary>
-        /// How to transfer binary data when receiving data from a Binary endpoint.
+        /// Whether we ask the server to return us binary data or a Binary resource.
         /// </summary>
-        public BinaryTransferBehaviour BinaryReceiveBehaviour = BinaryTransferBehaviour.UseData;
+        public BinaryTransferBehaviour BinaryReceivePreference = BinaryTransferBehaviour.UseResource;
         
 
         public FhirClientSettings() { }
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Rest
             other.PreferredParameterHandling = PreferredParameterHandling;
             other.SerializationEngine = SerializationEngine;
             other.RequestBodyCompressionMethod = RequestBodyCompressionMethod;
-            other.BinaryReceiveBehaviour = BinaryReceiveBehaviour;
+            other.BinaryReceivePreference = BinaryReceivePreference;
             other.BinarySendBehaviour = BinarySendBehaviour;
         }
 

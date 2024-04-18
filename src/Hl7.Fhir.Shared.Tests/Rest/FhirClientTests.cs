@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async T.Task TestCreatingBinaryResourceHttpClient()
         {
             byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
-            using (var client = new FhirClient(TestEndpoint))
+            using (var client = new FhirClient(TestEndpoint, new FhirClientSettings{BinarySendBehaviour = BinaryTransferBehaviour.UseResource, BinaryReceivePreference = BinaryTransferBehaviour.UseData}))
             {
                 var binary = new Binary() { Data = arr, ContentType = "image/png" };
                 var result = await client.CreateAsync(binary);
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async T.Task TestBinaryOperations()
         {
-            var client = new FhirClient(TestEndpoint, new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseData });
+            var client = new FhirClient(TestEndpoint, new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData, BinaryReceivePreference = BinaryTransferBehaviour.UseData });
             var binary = FhirSerializationEngineFactory.Strict(ModelInspector.Base).DeserializeFromJson(await File.ReadAllTextAsync("/Users/kasdejong/RiderProjects/firely-net-sdk/src/Hl7.Fhir.Shared.Tests/TestData/BinaryPicture.json")) as Binary;
             
             var created = await client.CreateAsync<Binary>(binary!);

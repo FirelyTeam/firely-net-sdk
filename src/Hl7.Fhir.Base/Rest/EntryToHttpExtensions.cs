@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Rest
             IFhirSerializationEngine ser,
             string? fhirVersion,
             FhirClientSettings settings,
-            bool binaryEndpoint = true)
+            bool binaryEndpoint = false)
         {
             var request = entry.Request;
             var interaction = entry.Annotation<InteractionType>();
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Rest
             
             var message = new HttpRequestMessage(method, uri);
 
-            if (!(binaryEndpoint && settings.BinaryReceiveBehaviour == BinaryTransferBehaviour.UseData))
+            if (!(binaryEndpoint && settings.BinaryReceivePreference == BinaryTransferBehaviour.UseData))
             {
                 message = settings.UseFormatParameter 
                     ? message.WithFormatParameter(serialization)

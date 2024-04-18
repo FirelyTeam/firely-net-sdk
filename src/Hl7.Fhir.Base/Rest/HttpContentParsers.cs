@@ -160,13 +160,13 @@ namespace Hl7.Fhir.Rest
             if (!expectBinaryProtocol)
                 result = result with { BodyText = await message.Content.GetBodyAsString().ConfigureAwait(false) };
             
-            var isResource = ContentType.GetResourceFormatFromContentType(message.Content.GetContentType()) != ResourceFormat.Unknown;
+            var usesFhirFormat = ContentType.GetResourceFormatFromContentType(message.Content.GetContentType()) != ResourceFormat.Unknown;
 
             try
             {
                 var resource = message switch
                 {
-                    { IsSuccessStatusCode: true } when expectBinaryProtocol && !isResource => await ReadBinaryDataFromMessage(message).ConfigureAwait(false),
+                    { IsSuccessStatusCode: true } when expectBinaryProtocol && !usesFhirFormat => await ReadBinaryDataFromMessage(message).ConfigureAwait(false),
                     { IsSuccessStatusCode: true } => await ReadResourceFromMessage(message.Content, ser).ConfigureAwait(false),
                     { IsSuccessStatusCode: false } => await ReadOutcomeFromMessage(message.Content, ser).ConfigureAwait(false),
                 };
