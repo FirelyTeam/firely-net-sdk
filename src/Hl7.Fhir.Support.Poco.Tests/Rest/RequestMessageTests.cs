@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Test
             var request = makeMessage();
             request.RequestUri!.Should().Be(url);
 
-            var settings = new FhirClientSettings { UseFormatParameter = true, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseResource };
+            var settings = new FhirClientSettings { UseFormatParameter = true, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             request = makeMessage(settings);
             request.RequestUri!.Should().Be(url + "?_format=xml");
 
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Test
         [DataRow(ResourceFormat.Json)]
         public void SetAccept(ResourceFormat fmt)
         {
-            var settings = new FhirClientSettings { PreferredFormat = fmt, BinaryReceiveBehaviour = BinaryTransferBehaviour.UseResource };
+            var settings = new FhirClientSettings { PreferredFormat = fmt, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             var request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
             request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
             request.Headers.AcceptEncoding.Should().BeEmpty();

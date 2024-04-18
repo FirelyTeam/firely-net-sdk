@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Whether we ask the server to return us binary data or a Binary resource.
         /// </summary>
-        public BinaryTransferBehaviour BinaryReceivePreference = BinaryTransferBehaviour.UseResource;
+        public BinaryTransferBehaviour BinaryReceivePreference = BinaryTransferBehaviour.UseData;
         
 
         public FhirClientSettings() { }
