@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -57,11 +58,28 @@ namespace Hl7.Fhir.Serialization
         public static bool TryDeserializeResource(
             this BaseFhirXmlPocoDeserializer deserializer, 
             string data, 
-            out Resource? instance, 
+            [NotNullWhen(true)] out Resource? instance, 
             out IEnumerable<CodedException> issues)
         {
             var xmlReader = SerializationUtil.XmlReaderFromXmlText(data);
             return deserializer.TryDeserializeResource(xmlReader, out instance, out issues);
+        }
+        
+        /// <summary>
+        /// Deserialize the FHIR xml from a reader and create a new POCO resource containing the data from the reader.
+        /// </summary>
+        /// <param name="deserializer">The deserializer to use.</param>
+        /// <param name="reader">A reader for the XML from which to deserialize the resource.</param>
+        /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
+        /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
+        /// <returns>A fully initialized POCO with the data from the reader.</returns>
+        public static bool TryDeserializeResource(
+            this BaseFhirXmlPocoDeserializer deserializer, 
+            XmlReader reader, 
+            out Resource? instance, 
+            out IEnumerable<CodedException> issues)
+        {
+            return deserializer.TryDeserializeResource(reader, out instance, out issues);
         }
 
         /// <summary>
@@ -118,10 +136,27 @@ namespace Hl7.Fhir.Serialization
         public static bool TryDeserializeResource(
             this BaseFhirJsonPocoDeserializer deserializer, 
             string json, 
-            out Resource? instance, 
+            [NotNullWhen(true)] out Resource? instance, 
             out IEnumerable<CodedException> issues)
         {
             var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(json), new() { CommentHandling = JsonCommentHandling.Skip });
+            return deserializer.TryDeserializeResource(ref reader, out instance, out issues);
+        }
+        
+        /// <summary>
+        /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
+        /// </summary>
+        /// <param name="deserializer">The deserializer to use.</param>
+        /// <param name="reader">The Json reader</param>
+        /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
+        /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
+        /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+        public static bool TryDeserializeResource(
+            this BaseFhirJsonPocoDeserializer deserializer, 
+            Utf8JsonReader reader, 
+            out Resource? instance, 
+            out IEnumerable<CodedException> issues)
+        {
             return deserializer.TryDeserializeResource(ref reader, out instance, out issues);
         }
 

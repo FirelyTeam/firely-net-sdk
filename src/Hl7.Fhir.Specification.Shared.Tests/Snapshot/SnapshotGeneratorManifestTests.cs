@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass, TestCategory("Snapshot")]
     public class SnapshotGeneratorManifestTests
     {
-        const string ManifestPath = @"TestData\snapshot-test\Type Slicing";
+        const string ManifestPath = @"TestData/snapshot-test/Type Slicing";
         const string ManifestFileName = "manifest.xml";
         //const string ExtensionsPath = @"C:\Users\Michel\.fhir\packages\simplifier.core.r4.extensions-4.0.0\package";
 

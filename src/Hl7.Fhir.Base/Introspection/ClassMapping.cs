@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -39,7 +40,7 @@ namespace Hl7.Fhir.Introspection
         /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract. </remarks>
         /// <seealso cref="TryCreate(Type, out ClassMapping?, FhirRelease)"/>
-        public static bool TryGetMappingForType(Type t, FhirRelease release, out ClassMapping? mapping)
+        public static bool TryGetMappingForType(Type t, FhirRelease release, [NotNullWhen(true)] out ClassMapping? mapping)
         {
             mapping = _mappedClasses.GetOrAdd((t, release), createMapping);
             return mapping is not null;
@@ -53,7 +54,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract.</remarks>
-        public static bool TryCreate(Type type, out ClassMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
+        public static bool TryCreate(Type type, [NotNullWhen(true)]out ClassMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
         {
             // Simulate reading the ClassMappings from the primitive types (from http://hl7.org/fhirpath namespace).
             // These are in fact defined as POCOs in Hl7.Fhir.ElementModel.Types,

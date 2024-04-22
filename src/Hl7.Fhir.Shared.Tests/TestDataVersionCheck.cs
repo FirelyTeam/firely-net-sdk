@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Tests
         public async Tasks.Task VerifyAllTestData()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location) + "\\TestData";
+            var path = Path.GetDirectoryName(location) + "/TestData";
             Console.WriteLine(path);
             StringBuilder issues = new StringBuilder();
             await ValidateFolder(path, path, issues);
@@ -49,12 +49,12 @@ namespace Hl7.Fhir.Tests
                     string content = File.ReadAllText(item);
                     if (new FileInfo(item).Extension == ".xml")
                     {
-                        Console.WriteLine($"    {item.Replace(path+"\\", "")}");
+                        Console.WriteLine($"    {item.Replace(path+"/", "")}");
                         await xmlParser.ParseAsync<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
-                        Console.WriteLine($"    {item.Replace(path + "\\", "")}");
+                        Console.WriteLine($"    {item.Replace(path + "/", "")}");
                         await jsonParser.ParseAsync<Resource>(content);
                     }
                     else

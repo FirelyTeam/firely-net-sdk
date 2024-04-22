@@ -7,9 +7,11 @@ assignees: ''
 
 ---
 
-:information_source: Do you want to ask something or start a discussion, then go [here](https://github.com/FirelyTeam/firely-net-sdk/discussions)
+:information_source: Do you want to ask something or start a discussion, then go [here](https://github.com/FirelyTeam/firely-net-sdk/discussions).
 
 :information_source: Is your feature request about Firely Server Facade, please send an email to [server@fire.ly](mailto:server@fire.ly) or submit a feature request to Jira if you are a paying customer.
+
+:information_source: If your feature request concerns the validator, please submit your issue to the validator repository [here](https://github.com/FirelyTeam/firely-validator-api).
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]

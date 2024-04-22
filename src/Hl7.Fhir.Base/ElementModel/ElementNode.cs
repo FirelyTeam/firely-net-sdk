@@ -6,17 +6,20 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable, IShortPathGenerator
+    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IShortPathGenerator
     {
         /// <summary>
         /// Creates an implementation of ITypedElement that represents a primitive value
@@ -42,12 +45,12 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="value"></param>
         /// <param name="primitiveValue"></param>
         /// <returns></returns>
-        public static bool TryConvertToElementValue(object value, out object primitiveValue)
+        public static bool TryConvertToElementValue(object? value, [NotNullWhen(true)] out object? primitiveValue)
         {
             primitiveValue = conv();
-            return primitiveValue != null;
+            return primitiveValue is not null;
 
-            object conv()
+            object? conv()
             {
                 // NOTE: Keep Any.TryConvertToSystemValue, TypeSpecifier.TryGetNativeType and TypeSpecifier.ForNativeType in sync
                 switch (value)
@@ -90,13 +93,12 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="values"></param>
         /// <returns></returns>
         public static IEnumerable<ITypedElement> CreateList(params object[] values) =>
-            values != null
-                ? values.Select(value => value == null
-                    ? null
-                    : value is ITypedElement element
-                        ? element
-                        : ForPrimitive(value))
-                : EmptyList;
+            values switch
+            {
+                null => EmptyList,
+                [var one] => [toTe(one)!],
+                _ => values.Select(toTe).ToList()!
+            };
 
         /// <summary>
         /// Create a variable list of values using an enumeration
@@ -104,14 +106,24 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static IEnumerable<ITypedElement> CreateList(IEnumerable<object> values) => values != null
-                ? values.Select(value => value == null ? null : value is ITypedElement element ? element : ForPrimitive(value))
-                : EmptyList;
+        public static IEnumerable<ITypedElement> CreateList(IEnumerable<object> values) => values switch
+        {
+            null => EmptyList,
+            _ => values.Select(toTe).ToList()!
+        };
 
-        public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();
-        public IEnumerable<ITypedElement> Children(string name = null) => ChildrenInternal(name);
+        private static ITypedElement? toTe(object? value) => value switch
+        {
+            null => null,
+            ITypedElement element => element,
+            _ => ForPrimitive(value)
+        };
 
-        internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
+
+        public static readonly IEnumerable<ITypedElement> EmptyList = [];
+        public IEnumerable<ITypedElement> Children(string? name = null) => ChildrenInternal(name);
+
+        private ElementNode(string name, object? value, string? instanceType, IElementDefinitionSummary? definition)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             InstanceType = instanceType;
@@ -119,7 +131,7 @@ namespace Hl7.Fhir.ElementModel
             Definition = definition;
         }
 
-        private IReadOnlyCollection<IElementDefinitionSummary> _childDefinitions = null;
+        private IReadOnlyCollection<IElementDefinitionSummary> _childDefinitions = null!;
 
         private IReadOnlyCollection<IElementDefinitionSummary> getChildDefinitions(IStructureDefinitionSummaryProvider provider)
         {
@@ -128,7 +140,7 @@ namespace Hl7.Fhir.ElementModel
             return _childDefinitions;
         }
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child, string name = null)
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child, string? name = null)
         {
             if (provider == null) throw new ArgumentNullException(nameof(provider));
             if (child == null) throw new ArgumentNullException(nameof(child));
@@ -137,7 +149,7 @@ namespace Hl7.Fhir.ElementModel
             return child;
         }
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value = null, string instanceType = null)
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object? value = null, string? instanceType = null)
         {
             if (provider == null) throw new ArgumentNullException(nameof(provider));
             if (name == null) throw new ArgumentNullException(nameof(name));
@@ -172,7 +184,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Will update the child to reflect it being a child of this element, but will not yet add the child at any position within this element
         /// </summary>
-        private void importChild(IStructureDefinitionSummaryProvider provider, ElementNode child, string name, int? position = null)
+        private void importChild(IStructureDefinitionSummaryProvider provider, ElementNode child, string? name, int? position = null)
         {
             child.Name = name ?? child.Name;
             if (child.Name == null) throw Error.Argument($"The ElementNode given should have its Name property set or the '{nameof(name)}' parameter should be given.");
@@ -185,7 +197,7 @@ namespace Hl7.Fhir.ElementModel
             // we think it should be - this way you can safely first create a node representing
             // an independently created root for a resource of datatype, and then add it to the tree.
             var childDefs = getChildDefinitions(provider ?? throw Error.ArgumentNull(nameof(provider)));
-            var childDef = childDefs.Where(cd => cd.ElementName == child.Name).SingleOrDefault();
+            var childDef = childDefs.SingleOrDefault(cd => cd.ElementName == child.Name);
 
             child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
 
@@ -220,28 +232,24 @@ namespace Hl7.Fhir.ElementModel
 
         }
 
-        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name = null, object value = null)
+        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string? name = null, object? value = null)
         {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (type == null) throw Error.ArgumentNull(nameof(type));
 
             var sd = provider.Provide(type);
-            IElementDefinitionSummary definition = null;
-
-            // Should we throw if type is not found?
-            if (sd != null)
-                definition = ElementDefinitionSummary.ForRoot(sd);
+            var definition = sd is not null ? ElementDefinitionSummary.ForRoot(sd) : null;
 
             return new ElementNode(name ?? type, value, type, definition);
         }
 
-        public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
+        public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type>? annotationsToCopy = null)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
             return buildNode(node, recursive, annotationsToCopy, null);
         }
 
-        private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type> annotationsToCopy, ElementNode parent)
+        private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type>? annotationsToCopy, ElementNode? parent)
         {
             var me = new ElementNode(node.Name, node.Value, node.InstanceType, node.Definition)
             {
@@ -282,11 +290,11 @@ namespace Hl7.Fhir.ElementModel
             return copy;
         }
 
-        public IElementDefinitionSummary Definition { get; private set; }
+        public IElementDefinitionSummary? Definition { get; private set; }
 
-        public string InstanceType { get; private set; }
+        public string? InstanceType { get; private set; }
 
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
         public IEnumerable<object> Annotations(Type type)
         {

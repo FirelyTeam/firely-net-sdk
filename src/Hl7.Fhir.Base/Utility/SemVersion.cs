@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 #if NET452
 using System.Runtime.Serialization;
@@ -118,7 +119,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="strict">If set to <see langword="true"/> minor and patch version are required,
         /// otherwise they are optional.</param>
         /// <returns><see langword="false"/> when a invalid version string is passed, otherwise <see langword="true"/>.</returns>
-        public static bool TryParse(string version, out SemVersion semver, bool strict = false)
+        public static bool TryParse(string version, [NotNullWhen(true)] out SemVersion semver, bool strict = false)
         {
             semver = null;
             if (version is null) return false;

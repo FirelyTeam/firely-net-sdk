@@ -206,7 +206,8 @@ namespace Hl7.FhirPath.Expressions
             {
                 try
                 {
-                    return invokee(ctx, arguments);
+                    var wrappedArguments = arguments.Skip(1).Select(wrapWithNextContext);
+                    return invokee(ctx, [arguments.First(),.. wrappedArguments]);
                 }
                 catch (Exception e)
                 {
@@ -214,6 +215,14 @@ namespace Hl7.FhirPath.Expressions
                         $"Invocation of {formatFunctionName(functionName)} failed: {e.Message}");
                 }
             };
+            
+            Invokee wrapWithNextContext(Invokee unwrappedArgument)
+            {
+                return (ctx, args) =>
+                {
+                    return unwrappedArgument(ctx.Nest(ctx.GetThis()), args);
+                };
+            }
 
             string formatFunctionName(string name)
             {
