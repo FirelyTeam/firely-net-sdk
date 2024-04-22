@@ -72,7 +72,7 @@ namespace Hl7.FhirPath.Parser
             .Named("BracketExpr");
 
         public static readonly Parser<Expression> EmptyList =
-            Parse.Char('{').TokenIgnoreComments().Then(c => Parse.Char('}').Token())
+            Parse.Char('{').Token().Then(c => Parse.Char('}').Token())
                     .Select(v => NewNodeListInitExpression.Empty).Positioned();
 
         public static Parser<FunctionCallExpression> Function(Expression context)
@@ -170,7 +170,7 @@ namespace Hl7.FhirPath.Parser
         // '[' expression ']'                             #indexerExpression
         public static Parser<Expression> IndexerInvocation(Expression focus)
         {
-            return Parse.Contained(Expression, Parse.Char('[').TokenIgnoreComments(), Parse.Char(']').TokenIgnoreComments())
+            return Parse.Contained(Expression, Parse.Char('[').Token(), Parse.Char(']').Token())
                 .Select(ix => new IndexerExpression(focus, ix)).Positioned();
         }
 
