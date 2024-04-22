@@ -83,7 +83,7 @@ namespace Hl7.FhirPath.Parser
         //  : '%' identifier
         //  ;
         public static readonly Parser<string> ExternalConstant =
-            Parse.Char('%').Then(c => Identifier.XOr(String))
+            Parse.Char('%').Then(_ => Identifier.XOr(String))
             .Named("external constant");
 
         // DATE

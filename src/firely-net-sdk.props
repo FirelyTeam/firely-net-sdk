@@ -1,16 +1,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Solution-wide properties for NuGet packaging -->
 	<PropertyGroup>
-		<VersionPrefix>5.5.1</VersionPrefix>
+		<VersionPrefix>5.7.1</VersionPrefix>
 		<VersionSuffix></VersionSuffix>
 		<Authors>Firely (info@fire.ly) and contributors</Authors>
 		<Company>Firely (https://fire.ly)</Company>
-		<Copyright>Copyright 2013-2023 Firely.  Contains materials (C) HL7 International</Copyright>
+		<Copyright>Copyright 2013-2024 Firely.  Contains materials (C) HL7 International</Copyright>
 		<PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
@@ -39,10 +39,13 @@
 
 	<!-- Compiler settings -->
 	<PropertyGroup>
-		<LangVersion>11.0</LangVersion>
+		<LangVersion>12.0</LangVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<EnablePackageValidation>true</EnablePackageValidation>
+		<PackageValidationBaselineVersion>5.7.0</PackageValidationBaselineVersion>
+		<GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">

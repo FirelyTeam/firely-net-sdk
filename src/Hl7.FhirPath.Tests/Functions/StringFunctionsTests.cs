@@ -3,6 +3,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HL7.FhirPath.Tests.Functions
@@ -23,6 +24,22 @@ namespace HL7.FhirPath.Tests.Functions
 
             // The test from the spec
             Assert.AreEqual(5, StringOperators.FpSplit("Peter,James,Jim,Peter,James", ",").Count());
+        }
+
+        private static IEnumerable<object[]> substringTests()
+        {
+            yield return ["Ewout", 0, (long?)3, "Ewo"];
+            yield return ["Ewout", 2, (long?)3, "out"];
+            yield return ["Ewout", 0, null, "Ewout"];
+            yield return ["Ewout", 0, (long?)0, ""];
+            yield return ["Ewout", 0, (long?)-1, ""];
+        }
+        
+        [DataTestMethod]
+        [DynamicData(nameof(substringTests), DynamicDataSourceType.Method)]
+        public void SubString(string input, long start, long? length, string expected)
+        {
+            input.FpSubstring(start, length).Should().Be(expected);
         }
 
         [TestMethod]

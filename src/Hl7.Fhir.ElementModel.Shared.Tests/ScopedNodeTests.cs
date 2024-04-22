@@ -92,9 +92,9 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             entry = entry.Children("resource").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry);
-            entry = entry!.Children("contained").FirstOrDefault() as ScopedNode;
+            entry = entry.Children("contained").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry);
-            Assert.AreNotEqual("Bundle", entry!.InstanceType);
+            Assert.AreNotEqual("Bundle", entry.InstanceType);
 
             Assert.IsTrue(entry.AtResource);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", entry.Location);
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             entry = entry.Children("id").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry);
-            Assert.AreNotEqual("Bundle", entry!.InstanceType);
+            Assert.AreNotEqual("Bundle", entry.InstanceType);
 
             Assert.IsFalse(entry.AtResource);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0].id[0]", entry.Location);
@@ -144,17 +144,17 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
 
             var entry3 = entries[3].Resource;
-            entry3 = entry3!.Children("managingOrganization").FirstOrDefault() as ScopedNode;
+            entry3 = entry3?.Children("managingOrganization").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry3);
-            entry3 = entry3!.Children("reference").FirstOrDefault() as ScopedNode;
+            entry3 = entry3.Children("reference").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry3);
-            Assert.AreEqual(entries[3].FullUrl, entry3!.FullUrl());
-            Assert.AreEqual(entry3!.ParentResource!.FullUrl(), entry3.FullUrl());
+            Assert.AreEqual(entries[3].FullUrl, entry3.FullUrl());
+            Assert.AreEqual(entry3.ParentResource!.FullUrl(), entry3.FullUrl());
 
             var entry6 = entries[6].Resource;
-            entry6 = entry6!.Children("contained").Skip(1).FirstOrDefault() as ScopedNode;
+            entry6 = entry6?.Children("contained").Skip(1).FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry6);
-            Assert.AreEqual("#orgY", entry6!.Id());
+            Assert.AreEqual("#orgY", entry6.Id());
             Assert.AreEqual(entries[6].FullUrl, entry6.FullUrl());
             Assert.AreEqual(entry6.ParentResource!.FullUrl(), entry6.FullUrl());
         }
@@ -165,9 +165,9 @@ namespace Hl7.Fhir.ElementModel.Tests
             var inner0 = _bundleNode!.Children("entry").First().Children("resource").Children("active").SingleOrDefault() as ScopedNode;
             Assert.IsNotNull(inner0);
 
-            Assert.AreEqual("http://example.org/fhir/Patient/3", inner0!.MakeAbsolute("Patient/3"));
-            Assert.AreEqual("http://nu.nl/myPat/3x", inner0!.MakeAbsolute("http://nu.nl/myPat/3x"));
-            Assert.AreEqual("http://example.org/fhir/Organization/5", inner0!.MakeAbsolute("http://example.org/fhir/Organization/5"));
+            Assert.AreEqual("http://example.org/fhir/Patient/3", inner0.MakeAbsolute("Patient/3"));
+            Assert.AreEqual("http://nu.nl/myPat/3x", inner0.MakeAbsolute("http://nu.nl/myPat/3x"));
+            Assert.AreEqual("http://example.org/fhir/Organization/5", inner0.MakeAbsolute("http://example.org/fhir/Organization/5"));
 
             var inner1 = _bundleNode.Children("entry").Skip(1).First().Children("resource").Children("active").SingleOrDefault() as ScopedNode;
 
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             ScopedNode inner7 = (_bundleNode!.Children("entry").Skip(6).First().Children("resource").Children("managingOrganization").SingleOrDefault() as ScopedNode)!;
 
             Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7!.Resolve("#orgY")!.Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.Location);
             Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("#e")!.Location);
             Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/d")!.Location);
             Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("Patient/d")!.Location);
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNull(inner7.Resolve("http://nu.nl/3"));
 
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve()!.Location);
-            Assert.IsTrue(inner7!.Children("reference").Any());
+            Assert.IsTrue(inner7.Children("reference").Any());
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Children("reference").First().Resolve()!.Location);
 
             string lastUrlResolved = "";
@@ -264,11 +264,12 @@ namespace Hl7.Fhir.ElementModel.Tests
             var assertXHtml = typedElement.Children("text");
 
             Assert.IsNotNull(assertXHtml);
-            Assert.AreEqual(1, assertXHtml.Count());
-            Assert.AreEqual("text", assertXHtml.First().Name);
-            Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
-            Assert.AreEqual("text", assertXHtml.First().Location);
-            Assert.IsNotNull(assertXHtml.First().Value);
+            IEnumerable<ITypedElement> typedElements = assertXHtml as ITypedElement[] ?? assertXHtml.ToArray();
+            Assert.AreEqual(1, typedElements.Count());
+            Assert.AreEqual("text", typedElements.First().Name);
+            Assert.AreEqual("xhtml", typedElements.First().InstanceType);
+            Assert.AreEqual("Section.text[0]", typedElements.First().Location);
+            Assert.IsNotNull(typedElements.First().Value);
 
 
         }
@@ -313,9 +314,9 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             public string Name => _wrapped.Name;
 
-            public string InstanceType => _wrapped.InstanceType;
+            public string? InstanceType => _wrapped.InstanceType;
 
-            public object Value => _wrapped.Value;
+            public object? Value => _wrapped.Value;
 
             public string Location => _wrapped.Location;
 

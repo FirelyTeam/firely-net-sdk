@@ -144,6 +144,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 traverse(full.StatusElement).Count());
         }
 
+        [TestMethod]
+        public void SummaryCount()
+        {
+            var (full, summarized) = runSummarize<Bundle>("simple-bundle.xml", SerializationFilter.ForCount());
+            
+            // check if result contains the link
+            traverse(summarized).Should().ContainKey("link");
+        }
+
         private (T full, T summarized) runSummarize<T>(string filename, SerializationFilter filter) where T : Resource
         {
             var fullXml = File.ReadAllText(Path.Combine("TestData", filename));

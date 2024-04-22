@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using boolean = System.Boolean;
+using Boolean = System.Boolean;
 using DecimalType = Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
 using Model = Hl7.Fhir.Model;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -64,7 +64,7 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         // @SuppressWarnings("deprecation")
-        private void testBoolean(Model.Resource resource, Model.Base focus, String focusType, String expression, boolean value)
+        private void testBoolean(Model.Resource resource, Model.Base focus, String focusType, String expression, Boolean value)
         {
             var input = focus.ToTypedElement();
             var container = resource?.ToTypedElement();
@@ -177,7 +177,7 @@ namespace Hl7.FhirPath.R4.Tests
                 bool invalid = expressionNode.Attribute("invalid")?.Value == "true";
 
                 if (mode?.Value == "strict" || invalid) continue; // don't do 'strict' or invlaid tests yet
-                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
+                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath/input");
 
                 if (!_cache.ContainsKey(inputfile))
                 {

@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -85,7 +86,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
         /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
         /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-        public bool TryDeserializeResource(ref Utf8JsonReader reader, out Resource? instance, out IEnumerable<CodedException> issues)
+        public bool TryDeserializeResource(ref Utf8JsonReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
         {
             if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
                 throw new InvalidOperationException("The reader must be set to ignore or refuse comments.");
@@ -109,7 +110,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
         /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
         /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-        public bool TryDeserializeObject(Type targetType, ref Utf8JsonReader reader, out Base? instance, out IEnumerable<CodedException> issues)
+        public bool TryDeserializeObject(Type targetType, ref Utf8JsonReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
         {
             if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
                 throw new InvalidOperationException("The reader must be set to ignore or refuse comments.");
@@ -351,7 +352,10 @@ namespace Hl7.Fhir.Serialization
 
             if (propertyValueMapping.IsFhirPrimitive)
             {
-                var fhirType = propertyMapping.FhirType.FirstOrDefault();
+                // fix for https://github.com/FirelyTeam/firely-net-sdk/issues/2701 - use the known native type if it is in the list
+                var fhirType = propertyMapping.FhirType.Contains(propertyValueMapping.NativeType)
+                    ? propertyValueMapping.NativeType
+                    : propertyMapping.FhirType.FirstOrDefault();
 
                 // Note that the POCO model will always allocate a new list if the property had not been set before,
                 // so there is always an existingValue for IList
@@ -364,11 +368,28 @@ namespace Hl7.Fhir.Serialization
                 // This is not a FHIR primitive, so we should not be dealing with these weird _name members.
                 if (propertyName[0] == '_')
                     state.Errors.Add(ERR.USE_OF_UNDERSCORE_ILLEGAL(ref reader, state.Path.GetInstancePath(), propertyMapping.Name, propertyName));
-
+                
                 // Note that repeating simple elements (like Extension.url) do not currently exist in the FHIR serialization
-                result = propertyMapping.IsCollection
-                    ? deserializeNormalList((IList)existingValue!, propertyValueMapping, ref reader, propertyMapping, state)
-                    : deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
+                if (propertyMapping.IsCollection)
+                {
+                    var l = (IList)existingValue!;
+                    // if the list is already populated, a property with an identical key was encountered earlier
+                    if (l.Count > 0)
+                    {
+                        state.Path.IncrementIndex(l.Count);
+                        state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+                    }
+                    result = deserializeNormalList(l, propertyValueMapping, ref reader, propertyMapping, state);
+                } 
+                else 
+                {
+                    // if the property already has a value, its key must have been encountered before
+                    if (existingValue is not null)
+                    {
+                        state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
+                    }
+                    result = deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
+                }
             }
 
             // Only do validation when no parse errors were encountered, otherwise we'll just
@@ -410,12 +431,6 @@ namespace Hl7.Fhir.Serialization
             PropertyMapping propertyMapping,
             FhirJsonPocoDeserializerState state)
         {
-            if (existingList?.Count > 0)
-            {
-                state.Path.IncrementIndex(existingList.Count);
-                state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
-            }
-
             // Create a list of the type of this property's value.
             IList listInstance = existingList ?? propertyValueMapping.ListFactory();
 
@@ -618,6 +633,11 @@ namespace Hl7.Fhir.Serialization
 
                         PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator, propertyValueContext, state.Errors);
                     }
+
+                    if (targetPrimitive.ObjectValue is not null)
+                    {
+                        state.Errors.Add(FhirJsonException.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
+                    }
                     targetPrimitive.ObjectValue = result;
                 }
                 finally
@@ -628,6 +648,11 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 // The complex part of a primitive - read the object's primitives into the target
+                if (targetPrimitive.Extension.Any() ||
+                    targetPrimitive.ElementId is not null)
+                {
+                    state.Errors.Add(FhirJsonException.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
+                }
                 deserializeObjectInto(targetPrimitive, propertyValueMapping, ref reader, DeserializedObjectKind.FhirPrimitive, state, stayOnLastToken: false);
             }
 

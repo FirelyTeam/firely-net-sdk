@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using static Hl7.Fhir.Utility.Result;
 
@@ -26,12 +27,12 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Long Parse(string value) =>
             TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid long integer.");
 
-        public static bool TryParse(string representation, out Long value)
+        public static bool TryParse(string representation, [NotNullWhen(true)] out Long? value)
         {
             if (representation == null) throw new ArgumentNullException(nameof(representation));
 
-            (var succ, var val) = Any.DoConvert(() => XmlConvert.ToInt64(representation));
-            value = new Long(val);
+            var (succ, val) = Any.DoConvert(() => XmlConvert.ToInt64(representation));
+            value = succ ? new Long(val) : null;
             return succ;
         }
 
@@ -69,17 +70,17 @@ namespace Hl7.Fhir.ElementModel.Types
         public override string ToString() => XmlConvert.ToString(Value);
 
         public static implicit operator long(Long i) => i.Value;
-        public static implicit operator Decimal(Long i) => new Decimal(i.Value);
-        public static implicit operator Quantity(Long i) => new Quantity(i.Value, Quantity.UCUM_UNIT);
+        public static implicit operator Decimal(Long i) => new (i.Value);
+        public static implicit operator Quantity(Long i) => new (i.Value);
 
-        public static explicit operator Long(long i) => new Long(i);
+        public static explicit operator Long(long i) => new (i);
         public static explicit operator Boolean(Long l) => ((ICqlConvertible)l).TryConvertToBoolean().ValueOrThrow();
         public static explicit operator String(Long l) => ((ICqlConvertible)l).TryConvertToString().ValueOrThrow();
         public static explicit operator Integer(Long l) => ((ICqlConvertible)l).TryConvertToInteger().ValueOrThrow();
 
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => Equals(other);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
 
         Result<Boolean> ICqlConvertible.TryConvertToBoolean() =>
               Value switch

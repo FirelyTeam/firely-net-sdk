@@ -28,12 +28,15 @@
 
 */
 
+#nullable enable
+
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 
@@ -43,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// Optional Extensions Element
     /// </summary>
     [Serializable]
-    [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_Url}}")]
+    [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_url}}")]
     [FhirType("Extension", "http://hl7.org/fhir/StructureDefinition/Extension")]
     [DataContract]
     [Bindable(true)]
@@ -69,32 +72,30 @@ namespace Hl7.Fhir.Model
         [Cardinality(Min = 1, Max = 1)]
         [UriPattern]
         [DataMember]
-        public string Url
+        public string? Url
         {
-            get { return _Url; }
-            set { _Url = value; OnPropertyChanged("Url"); }
+            get { return _url; }
+            set { _url = value; OnPropertyChanged("Url"); }
         }
 
-        private string _Url;
+        private string? _url;
 
         /// <summary>
         /// Value of extension
         /// </summary>
         [FhirElement("value", InSummary = true, Order = 40, Choice = ChoiceType.DatatypeChoice)]
         [DataMember]
-        public Hl7.Fhir.Model.DataType Value
+        public DataType? Value
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { return _value; }
+            set { _value = value; OnPropertyChanged("Value"); }
         }
 
-        private Hl7.Fhir.Model.DataType _Value;
+        private DataType? _value;
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Extension;
-
-            if (dest != null)
+            if (other is Extension dest)
             {
                 base.CopyTo(dest);
                 if (Url != null) dest.Url = Url;
@@ -102,7 +103,7 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-                throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", nameof(other));
         }
 
         public override IDeepCopyable DeepCopy()
@@ -155,7 +156,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        protected override bool TryGetValue(string key, out object value)
+        protected override bool TryGetValue(string key, [NotNullWhen(true)]out object? value)
         {
             switch (key)
             {

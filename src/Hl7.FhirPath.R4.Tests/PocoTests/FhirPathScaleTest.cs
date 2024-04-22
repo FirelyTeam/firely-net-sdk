@@ -19,7 +19,7 @@ namespace Hl7.Fhir
         [TestMethod]
         public void QuestionnaireResponseFhirpathPocoTest()
         {
-            var xml = File.ReadAllText(@"TestData\Large-QuestionnaireResponse.xml");
+            var xml = File.ReadAllText(@"TestData/Large-QuestionnaireResponse.xml");
 
             var qr = (new FhirXmlParser()).Parse<QuestionnaireResponse>(xml);
 

@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
@@ -37,6 +38,18 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNull(noway);
         }
 
+        [TestMethod]
+        public void TestIsBindable()
+        {
+            ModelInspector.Base.IsBindable("string").Should().BeTrue();
+            ModelInspector.Base.IsBindable("uri").Should().BeTrue();
+            ModelInspector.Base.IsBindable("Quantity").Should().BeTrue();
+            ModelInspector.Base.IsBindable("Extension").Should().BeTrue();
+            ModelInspector.Base.IsBindable("Coding").Should().BeTrue();
+            ModelInspector.Base.IsBindable("CodeableConcept").Should().BeTrue();
+            ModelInspector.Base.IsBindable("CodeableReference").Should().BeTrue();
+            ModelInspector.Base.IsBindable("integer").Should().BeFalse();
+        }
 
         [TestMethod]
         public void TestAssemblyInspection()

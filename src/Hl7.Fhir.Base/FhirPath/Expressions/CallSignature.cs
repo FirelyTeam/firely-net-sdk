@@ -20,7 +20,7 @@ namespace Hl7.FhirPath.Expressions
 
         public Type ReturnType { get; private set; }
 
-        public CallSignature(string name, Type returnType, params Type[] argTypes )
+        public CallSignature(string name, Type returnType, params Type[] argTypes)
         {
             Name = name;
             ArgumentTypes = argTypes;
@@ -35,18 +35,18 @@ namespace Hl7.FhirPath.Expressions
 
         public bool DynamicMatches(string functionName, IEnumerable<object> arguments)
         {
-            return functionName == Name && arguments.Count() == ArgumentTypes.Count() &&
-                   arguments.Zip(ArgumentTypes, (call, sig) => Typecasts.CanCastTo(call, sig)).All(r => r == true);
+            return functionName == Name && arguments.Count() == ArgumentTypes.Length &&
+                   arguments.Zip(ArgumentTypes, Typecasts.CanCastTo).All(r => r == true);
         }
         public bool DynamicExactMatches(string functionName, IEnumerable<object> arguments)
         {
-            return functionName == Name && arguments.Count() == ArgumentTypes.Count() &&
-                   arguments.Zip(ArgumentTypes, (call, sig) => Typecasts.IsOfExactType(call, sig)).All(r => r == true);
+            return functionName == Name && arguments.Count() == ArgumentTypes.Length &&
+                   arguments.Zip(ArgumentTypes, Typecasts.IsOfExactType).All(r => r == true);
         }
 
         public bool Matches(string functionName, int argCount)
         {
-            return functionName == Name && ArgumentTypes.Count() == argCount;
+            return functionName == Name && ArgumentTypes.Length == argCount;
         }
     }
 }

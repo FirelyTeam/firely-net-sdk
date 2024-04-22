@@ -74,6 +74,11 @@ namespace Hl7.Fhir.Model
     {
 
     }
+    
+    public partial class Library : IVersionableConformanceResource
+    {
+
+    }
 
 
     //public partial class ExpansionProfile : IVersionableConformanceResource

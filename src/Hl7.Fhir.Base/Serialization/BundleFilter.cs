@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Introspection;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <inheritdoc />
-        public override bool TryEnterMember(string name, object value, PropertyMapping? mapping) =>
+        public override bool TryEnterMember(string name, object value, [NotNullWhen(true)] PropertyMapping? mapping) =>
             inRootBundle || ChildFilter.TryEnterMember(name, value, mapping);
 
         /// <inheritdoc />

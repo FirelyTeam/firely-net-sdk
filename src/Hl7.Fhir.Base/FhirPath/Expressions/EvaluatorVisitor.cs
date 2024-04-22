@@ -80,11 +80,14 @@ namespace Hl7.FhirPath.Expressions
             if (expression.Name == "rootResource")
                 return InvokeeFactory.GetRootResource;
 
-            // Variables are still functions without arguments. For now variables are treated separately here,
-            //Functions are handled elsewhere.
-            return resolve(Symbols, expression.Name, Enumerable.Empty<Type>());
+            return chainResolves;
+            
+            IEnumerable<ITypedElement> chainResolves(Closure context, IEnumerable<Invokee> invokees)
+            {
+                return context.ResolveValue(expression.Name) ?? resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, []);
+            }
         }
-
+        
         private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)
         {
             // For now, we don't have the types or the parameters statically, so we just match on name

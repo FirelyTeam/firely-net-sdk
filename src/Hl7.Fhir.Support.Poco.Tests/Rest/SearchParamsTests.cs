@@ -266,19 +266,16 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams();
             var formatException = AssertThrows<FormatException>(() => q.Add("_count", String.Empty));
-            Assert.AreEqual("Invalid _count: '' is not a positive integer", formatException.Message);
-
-            formatException = AssertThrows<FormatException>(() => q.Add("_count", "0"));
-            Assert.AreEqual("Invalid _count: '0' is not a positive integer", formatException.Message);
+            Assert.AreEqual("Invalid _count: '' is not a non-negative integer", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_count", "-100"));
-            Assert.AreEqual("Invalid _count: '-100' is not a positive integer", formatException.Message);
+            Assert.AreEqual("Invalid _count: '-100' is not a non-negative integer", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_count", "3.14"));
-            Assert.AreEqual("Invalid _count: '3.14' is not a positive integer", formatException.Message);
+            Assert.AreEqual("Invalid _count: '3.14' is not a non-negative integer", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_count", "12zz"));
-            Assert.AreEqual("Invalid _count: '12zz' is not a positive integer", formatException.Message);
+            Assert.AreEqual("Invalid _count: '12zz' is not a non-negative integer", formatException.Message);
         }
 
         [TestMethod]
