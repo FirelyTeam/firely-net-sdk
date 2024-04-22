@@ -115,6 +115,8 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
+        public new string Value { get => base.Value as string; }
+
         IdentifierExpression IPositionAware<IdentifierExpression>.SetPos(Position startPos, int length) => SetPos<IdentifierExpression>(startPos, length);
     }
 
