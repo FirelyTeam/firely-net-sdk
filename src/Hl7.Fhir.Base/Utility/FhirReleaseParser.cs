@@ -83,8 +83,8 @@ namespace Hl7.Fhir.Utility
                 FhirRelease.DSTU2 => "1.0.2",
                 FhirRelease.STU3 => "3.0.2",
                 FhirRelease.R4 => "4.0.1",
-                FhirRelease.R4B => "4.3.0-snapshot1",
-                FhirRelease.R5 => "5.0.0-snapshot1",
+                FhirRelease.R4B => "4.3.0",
+                FhirRelease.R5 => "5.0.0",
                 _ => throw new NotSupportedException($"Unknown FHIR version {fhirRelease}")
             };
         }
