@@ -172,6 +172,12 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<bool> Bool =
             Parse.String("true").XOr(Parse.String("false")).Text().Select(s => (bool)P.Boolean.Parse(s));
 
+        // COMMENTS: // and /* ... */
+        private static readonly CommentParser CommentParse = new CommentParser("//", "/*", "*/", "\n");
+
+        public static readonly Parser<string> Comment =
+            CommentParse.AnyComment.Text();
+
         //qualifiedIdentifier
         //   : identifier ('.' identifier)*
         //   ;
@@ -190,6 +196,23 @@ namespace Hl7.FhirPath.Parser
 
     public static class ParserExtensions
     {
+        /// <summary>
+        /// Parse the token, embedded in any amount of whitespace characters.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        public static Parser<T> TokenIgnoreComments<T>(this Parser<T> parser)
+        {
+            if (parser == null) throw new ArgumentNullException("parser");
+
+            return from leading in Parse.WhiteSpace.Many().XOr(Lexer.Comment).Many()
+                   from item in parser
+                   from trailing in Parse.WhiteSpace.Many().XOr(Lexer.Comment).Many()
+                   select item;
+        }
+
+
         public static Parser<string> Unescape(this Parser<IEnumerable<char>> c)
         {
             return c.Select(chr => new string(Unescape(chr.Single()), 1));

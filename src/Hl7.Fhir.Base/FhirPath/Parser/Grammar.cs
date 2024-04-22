@@ -21,7 +21,7 @@ namespace Hl7.FhirPath.Parser
         private static IResult<P.Quantity> quantityParser(IInput i)
         {
             var current = i;
-            var result = Lexer.Quantity.Token()(i);
+            var result = Lexer.Quantity.TokenIgnoreComments()(i);
 
             if (result.WasSuccessful)
             {
@@ -46,14 +46,14 @@ namespace Hl7.FhirPath.Parser
         //  | quantity
         //  ;
         public static readonly Parser<ConstantExpression> Literal =
-            Lexer.String.Select(v => new ConstantExpression(v, TypeSpecifier.String))
-                .Or(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeSpecifier.DateTime)))
-                .Or(Lexer.Date.Select(v => new ConstantExpression(v, TypeSpecifier.Date)))
-                .Or(Lexer.Time.Select(v => new ConstantExpression(v, TypeSpecifier.Time)))
-                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeSpecifier.Boolean)))
-                .Or(Quantity.Select(v => new ConstantExpression(v, TypeSpecifier.Quantity)))
-                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Decimal)))
-                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Integer)));
+            Lexer.String.Select(v => new ConstantExpression(v, TypeSpecifier.String)).Positioned()
+                .Or(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeSpecifier.DateTime)).Positioned())
+                .Or(Lexer.Date.Select(v => new ConstantExpression(v, TypeSpecifier.Date)).Positioned())
+                .Or(Lexer.Time.Select(v => new ConstantExpression(v, TypeSpecifier.Time)).Positioned())
+                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeSpecifier.Boolean)).Positioned())
+                .Or(Quantity.Select(v => new ConstantExpression(v, TypeSpecifier.Quantity)).Positioned())
+                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Decimal)).Positioned())
+                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Integer)).Positioned());
 
 
         //term
@@ -65,47 +65,51 @@ namespace Hl7.FhirPath.Parser
         //  ;
         public static readonly Parser<Expression> BracketExpr =
             (from lparen in Parse.Char('(')
-             from expr in Parse.Ref(() => Expression)
+             from expr in Parse.Ref(() => Expression) //.Positioned()
              from rparen in Parse.Char(')')
              select new BracketExpression(expr))
+            .Positioned()
             .Named("BracketExpr");
 
         public static readonly Parser<Expression> EmptyList =
-            Parse.Char('{').Token().Then(c => Parse.Char('}').Token())
-                    .Select(v => NewNodeListInitExpression.Empty);
+            Parse.Char('{').TokenIgnoreComments().Then(c => Parse.Char('}').TokenIgnoreComments())
+                    .Select(v => NewNodeListInitExpression.Empty)
+                    .Positioned();
 
         public static Parser<Expression> Function(Expression context)
         {
             return
+                (
                 from n in Lexer.Identifier.Select(name => name)
-                from lparen in Parse.Char('(').Token()
-                from paramList in Parse.Ref(() => FunctionParameter(n).Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
-                from rparen in Parse.Char(')').Token()
-                select new FunctionCallExpression(context, n, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+                from lparen in Parse.Char('(').TokenIgnoreComments()
+                from paramList in Parse.Ref(() => FunctionParameter(n).Named("parameter")).DelimitedBy(Parse.Char(',').TokenIgnoreComments()).Optional()
+                from rparen in Parse.Char(')').TokenIgnoreComments()
+                select new FunctionCallExpression(context, n, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>())))
+                .Positioned();
         }
 
         public static Parser<Expression> FunctionParameter(string name) =>
             // Make exception for is() and as() FUNCTIONS (operators are handled elsewhere), since they don't
             // take a normal parameter, but an identifier (which is not normally a FhirPath type)
-            name != "is" && name != "as" && name != "ofType" ? Grammar.Expression : TypeSpec.Select(s => new IdentifierExpression(s));
+            (name != "is" && name != "as" && name != "ofType" ? Grammar.Expression : TypeSpec.Select(s => new IdentifierExpression(s))).Positioned();
 
 
         public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
-                .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)))
+                .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)).Positioned())
                 //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
-                .Token();
+                .TokenIgnoreComments();
         }
 
         public static readonly Parser<Expression> Term =
             Literal
             .Or(FunctionInvocation(AxisExpression.That))
-            .Or(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+            .XOr(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n)).Positioned()) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
-            .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
-            .Token()
+            .XOr(Lexer.Axis.Select(a => new AxisExpression(a)).Positioned())
+            .TokenIgnoreComments()
             .Named("Term");
 
 
@@ -122,7 +126,7 @@ namespace Hl7.FhirPath.Parser
         }
 
         public static readonly Parser<string> TypeSpec =
-            Lexer.QualifiedIdentifier.Token();
+            Lexer.QualifiedIdentifier.TokenIgnoreComments();
 
         //expression
         // : term                                                      #termExpression
@@ -168,19 +172,20 @@ namespace Hl7.FhirPath.Parser
         // '[' expression ']'                             #indexerExpression
         public static Parser<Expression> IndexerInvocation(Expression focus)
         {
-            return Parse.Contained(Expression, Parse.Char('[').Token(), Parse.Char(']').Token())
-                .Select(ix => new IndexerExpression(focus, ix));
+            return Parse.Contained(Expression, Parse.Char('[').TokenIgnoreComments(), Parse.Char(']').TokenIgnoreComments())
+                .Select(ix => new IndexerExpression(focus, ix)).Positioned();
         }
 
         // | ('+' | '-') expression                                    #polarityExpression
         public static readonly Parser<Expression> PolarityExpression =
-            from op in Lexer.PolarityOperator.Optional()
+            (from op in Lexer.PolarityOperator.Optional()
             from indexer in InvocationExpression
-            select op.IsEmpty ? indexer : new UnaryExpression(op.Get(), indexer);
+            select op.IsEmpty ? indexer : new UnaryExpression(op.Get(), indexer))
+            .Positioned();
 
         public static Parser<Expression> BinaryExpression(Parser<string> oper, Parser<Expression> operands)
         {
-            return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op, left, right));
+            return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op, left, right)).Positioned();
             //return
             //   from left in operands
             //   from right in (from op in oper
@@ -205,9 +210,11 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<Expression> TypeExpression =
             InEqExpression.Then(
                     ineq => (from isas in Lexer.TypeOperator
-                             from tp in TypeSpec.Select(v => new IdentifierExpression(v))
+                             from tp in TypeSpec.Select(v => new IdentifierExpression(v)).Positioned()
                              select new BinaryExpression(isas, ineq, tp))
-                    .Or(Parse.Return(ineq)));
+                    .Or(Parse.Return(ineq).Positioned()))
+                    // .Positioned()
+                    ;
 
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
         public static readonly Parser<Expression> EqExpression = BinaryExpression(Lexer.EqOperator, TypeExpression);

@@ -43,7 +43,7 @@ namespace Hl7.FhirPath
         public Expression Parse(string expression)
 #pragma warning restore CA1822 // This might access instance data in the future.
         {
-            var parse = Grammar.Expression.End().TryParse(expression);
+            var parse = Grammar.Expression.End().Positioned().TryParse(expression);
 
             return parse.WasSuccessful ? parse.Value : throw new FormatException("Compilation failed: " + parse.ToString());
         }
