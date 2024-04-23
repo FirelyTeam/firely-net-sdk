@@ -273,8 +273,8 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.AddExpression.End();
             AssertParser.SucceedsMatch(parser, " 1 + 50 ", new BinaryExpression(
                 '+',
-                new ConstantExpression(1, SetLoc(1, 1, 0, 3)),
-                new ConstantExpression(50, SetLoc(1, 6, 5, 3)),
+                new ConstantExpression(1, SetLoc(1, 2, 1, 1)),
+                new ConstantExpression(50, SetLoc(1, 6, 5, 2)),
                 SetLoc(1, 4, 3, 2)));
         }
 
