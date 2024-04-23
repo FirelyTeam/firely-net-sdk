@@ -16,6 +16,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace Hl7.Fhir.Test
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
         private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly IFhirSerializationEngine TESTENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
         private static readonly string TESTVERSION = "3.0.1";
 
         private static HttpRequestMessage makeMessage(
@@ -143,7 +145,7 @@ namespace Hl7.Fhir.Test
             var request = makeMessage();
             request.RequestUri!.Should().Be(url);
 
-            var settings = new FhirClientSettings { UseFormatParameter = true };
+            var settings = new FhirClientSettings { UseFormatParameter = true, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             request = makeMessage(settings);
             request.RequestUri!.Should().Be(url + "?_format=xml");
 
@@ -199,7 +201,7 @@ namespace Hl7.Fhir.Test
         [DataRow(ResourceFormat.Json)]
         public void SetAccept(ResourceFormat fmt)
         {
-            var settings = new FhirClientSettings { PreferredFormat = fmt };
+            var settings = new FhirClientSettings { PreferredFormat = fmt, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             var request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
             request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
             request.Headers.AcceptEncoding.Should().BeEmpty();
@@ -210,25 +212,36 @@ namespace Hl7.Fhir.Test
             request.Headers.AcceptEncoding.Select(h => h.Value).Should().BeEquivalentTo("gzip", "deflate");
         }
 
-        [TestMethod]
-        public async Task TestBinaryBody()
+        private static readonly Binary testBinary = new Binary
         {
-            var bin = new Binary
-            {
 #if STU3
                     Data = Encoding.UTF8.GetBytes("test body"),
 #else
-                Content = Encoding.UTF8.GetBytes("test body"),
+            Content = Encoding.UTF8.GetBytes("test body"),
 #endif
-                ContentType = "text/plain"
-            };
+            ContentType = "text/plain"
+        };
 
-            var entryRequest = makeMessage(resource: bin, interaction: InteractionType.Create);
+        [TestMethod]
+        public async Task TestBinaryAsBinary()
+        {
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData }, resource: testBinary, interaction: InteractionType.Create);
             Assert.IsNotNull(entryRequest.Content);
-            Assert.AreEqual(bin.ContentType, entryRequest.Content.Headers.ContentType!.MediaType);
+            Assert.AreEqual(testBinary.ContentType, entryRequest.Content.Headers.ContentType!.MediaType);
             Assert.AreEqual("test body", await entryRequest.Content.ReadAsStringAsync());
         }
 
+        [TestMethod]
+        public async Task TestBinaryAsResource()
+        {
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseResource }, resource: testBinary, interaction: InteractionType.Create);
+
+            var resource = await entryRequest.Content!.ReadResourceFromMessage(TESTENGINE);
+            var binary = resource.Should().BeOfType<Binary>().Subject;
+
+            binary.ContentType.Should().Be("text/plain");
+            (binary.Data ?? binary.Content).Should().BeEquivalentTo(testBinary.Content ?? testBinary.Data);
+        }
 
         [TestMethod]
         [DataRow(false)]
@@ -249,7 +262,7 @@ namespace Hl7.Fhir.Test
             var xml = await entryRequest.Content.ReadAsStringAsync();
 
             xml.Should().StartWith("<Patient");
-            
+
             if (!hasLu)
                 entryRequest.Content!.Headers.LastModified.Should().Be(null);
             else
@@ -264,7 +277,7 @@ namespace Hl7.Fhir.Test
                 Active = true,
             };
 
-            var settings = new FhirClientSettings {  RequestBodyCompressionMethod = DecompressionMethods.GZip };
+            var settings = new FhirClientSettings { RequestBodyCompressionMethod = DecompressionMethods.GZip };
             var entryRequest = makeMessage(settings: settings, resource: pat, method: Bundle.HTTPVerb.POST);
 
             entryRequest.Content!.Headers.ContentType!.ToString().Should().Be(ContentType.BuildContentType(ResourceFormat.Xml, TESTVERSION));
@@ -322,7 +335,7 @@ namespace Hl7.Fhir.Test
         {
             var request = makeMessage(method: verb, interaction: interaction);
             request.Method.Method.Should().Be(method);
-        }      
+        }
     }
 }
 
