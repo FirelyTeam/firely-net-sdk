@@ -6,9 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Language;
-using Hl7.Fhir.Language.Debugging;
-
 namespace Hl7.FhirPath.Expressions
 {
     public abstract class ExpressionVisitor<T>

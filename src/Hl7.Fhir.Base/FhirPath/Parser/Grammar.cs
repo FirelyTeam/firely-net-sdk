@@ -64,10 +64,10 @@ namespace Hl7.FhirPath.Parser
         //  | '{' '}'                                               #nullLiteral
         //  ;
         public static readonly Parser<Expression> BracketExpr =
-            (from lparen in Parse.Char('(')
-             from expr in Parse.Ref(() => Expression) //.Positioned()
-             from rparen in Parse.Char(')')
-             select new BracketExpression(expr))
+            (from lparen in Parse.Char('(').Token().Select(v => new SubTokenExpression(v)).Positioned()
+             from expr in Parse.Ref(() => Expression)
+             from rparen in Parse.Char(')').Token().Select(v => new SubTokenExpression(v)).Positioned()
+             select new BracketExpression(lparen, rparen, expr))
             .Positioned()
             .Named("BracketExpr");
 
@@ -76,16 +76,15 @@ namespace Hl7.FhirPath.Parser
                     .Select(v => NewNodeListInitExpression.Empty)
                     .Positioned();
 
-        public static Parser<Expression> Function(Expression context)
+        public static Parser<FunctionCallExpression> Function(Expression context)
         {
             return
-                (
-                from n in Lexer.Identifier.Select(name => name)
-                from lparen in Parse.Char('(').TokenIgnoreComments()
-                from paramList in Parse.Ref(() => FunctionParameter(n).Named("parameter")).DelimitedBy(Parse.Char(',').TokenIgnoreComments()).Optional()
-                from rparen in Parse.Char(')').TokenIgnoreComments()
-                select new FunctionCallExpression(context, n, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>())))
-                .Positioned();
+                from n in Lexer.Identifier.Select(name => new IdentifierExpression(name)).Positioned()
+                from lparen in Parse.Char('(').TokenIgnoreComments().Select(v => new SubTokenExpression(v)).Positioned()
+                from paramList in Parse.Ref(() => FunctionParameter(n.Value).Named("parameter")).DelimitedBy(Parse.Char(',').TokenIgnoreComments()).Optional()
+                from rparen in Parse.Char(')').TokenIgnoreComments().Select(v => new SubTokenExpression(v)).Positioned()
+                select new FunctionCallExpression(context, n.Value, lparen, rparen, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()))
+                .UsePositionFrom(n.Location);
         }
 
         public static Parser<Expression> FunctionParameter(string name) =>
@@ -97,7 +96,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
-                .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)).Positioned())
+                .Or(Lexer.Identifier.Select(i => new ConstantExpression(i)).Positioned().Select(i => new ChildExpression(focus, i)).Positioned())
                 //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 .TokenIgnoreComments();
         }
@@ -105,7 +104,7 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<Expression> Term =
             Literal
             .Or(FunctionInvocation(AxisExpression.That))
-            .XOr(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n)).Positioned()) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+            .XOr(Lexer.ExternalConstant.Select(n => new SubTokenExpression(n)).Positioned().Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
             .XOr(Lexer.Axis.Select(a => new AxisExpression(a)).Positioned())
@@ -113,16 +112,16 @@ namespace Hl7.FhirPath.Parser
             .Named("Term");
 
 
-        public static Expression BuildVariableRefExpression(string name)
+        public static Expression BuildVariableRefExpression(SubTokenExpression name)
         {
-            if (name.StartsWith("ext-"))
-                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeSpecifier.String, new ConstantExpression(name.Substring(4)));
+            if (name.Value.StartsWith("ext-"))
+                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(4)).UsePositionFrom(name.Location));
 #pragma warning disable IDE0046 // Convert to conditional expression
-            else if (name.StartsWith("vs-"))
+            else if (name.Value.StartsWith("vs-"))
 #pragma warning restore IDE0046 // Convert to conditional expression
-                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeSpecifier.String, new ConstantExpression(name.Substring(3)));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(3)).UsePositionFrom(name.Location));
             else
-                return new VariableRefExpression(name);
+                return new VariableRefExpression(name.Value).UsePositionFrom(name.Location);
         }
 
         public static readonly Parser<string> TypeSpec =
@@ -166,7 +165,7 @@ namespace Hl7.FhirPath.Parser
         // '.' invocation
         public static Parser<Expression> DotInvocation(Expression focus)
         {
-            return Parse.Char('.').Then(op => FunctionInvocation(focus));
+            return Parse.Char('.').Select(v => new SubTokenExpression(v)).Positioned().Then(op => FunctionInvocation(focus).Select(t => { t.SetPositionFrom(op.Location); return t; }));
         }
 
         // '[' expression ']'                             #indexerExpression
@@ -178,14 +177,13 @@ namespace Hl7.FhirPath.Parser
 
         // | ('+' | '-') expression                                    #polarityExpression
         public static readonly Parser<Expression> PolarityExpression =
-            (from op in Lexer.PolarityOperator.Optional()
+            from op in Lexer.PolarityOperator.Select(v => new SubTokenExpression(v)).Positioned().Optional()
             from indexer in InvocationExpression
-            select op.IsEmpty ? indexer : new UnaryExpression(op.Get(), indexer))
-            .Positioned();
+            select op.IsEmpty ? indexer : new UnaryExpression(op.Get().Value[0], indexer).UsePositionFrom(op.Get().Location);
 
-        public static Parser<Expression> BinaryExpression(Parser<string> oper, Parser<Expression> operands)
+        public static Parser<Expression> BinaryExpression(Parser<SubTokenExpression> oper, Parser<Expression> operands)
         {
-            return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op, left, right)).Positioned();
+            return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op.Value, left, right).UsePositionFrom(op.Location));
             //return
             //   from left in operands
             //   from right in (from op in oper
@@ -195,41 +193,57 @@ namespace Hl7.FhirPath.Parser
         }
 
         // | expression('*' | '/' | 'div' | 'mod') expression         #multiplicativeExpression
-        public static readonly Parser<Expression> MulExpression = BinaryExpression(Lexer.MulOperator, PolarityExpression);
+        public static readonly Parser<Expression> MulExpression = BinaryExpression(
+                                    Lexer.MulOperator.Select(v => new SubTokenExpression(v)).Positioned(),
+                                    PolarityExpression);
 
         // | expression('+' | '-' ) expression                        #additiveExpression
-        public static readonly Parser<Expression> AddExpression = BinaryExpression(Lexer.AddOperator, MulExpression);
+        public static readonly Parser<Expression> AddExpression = BinaryExpression(
+                                    Lexer.AddOperator.Select(v => new SubTokenExpression(v)).Positioned(),
+                                    MulExpression);
 
         // | expression '|' expression                                 #unionExpression
-        public static readonly Parser<Expression> UnionExpression = BinaryExpression(Lexer.UnionOperator, AddExpression);
+        public static readonly Parser<Expression> UnionExpression = BinaryExpression(
+                                    Lexer.UnionOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    AddExpression);
 
         // | expression('<=' | '<' | '>' | '>=') expression           #inequalityExpression
-        public static readonly Parser<Expression> InEqExpression = BinaryExpression(Lexer.InEqOperator, UnionExpression);
+        public static readonly Parser<Expression> InEqExpression = BinaryExpression(
+                                    Lexer.InEqOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    UnionExpression);
 
         // | expression('is' | 'as') typeSpecifier                    #typeExpression
         public static readonly Parser<Expression> TypeExpression =
             InEqExpression.Then(
-                    ineq => (from isas in Lexer.TypeOperator
+                    ineq => (from isas in Lexer.TypeOperator.Select(v => new SubTokenExpression(v)).Positioned()
                              from tp in TypeSpec.Select(v => new IdentifierExpression(v)).Positioned()
-                             select new BinaryExpression(isas, ineq, tp))
-                    .Or(Parse.Return(ineq).Positioned()))
-                    // .Positioned()
-                    ;
+                             select new BinaryExpression(isas.Value, ineq, tp).UsePositionFrom(isas.Location))
+                    .Or(Parse.Return(ineq)));
 
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
-        public static readonly Parser<Expression> EqExpression = BinaryExpression(Lexer.EqOperator, TypeExpression);
+        public static readonly Parser<Expression> EqExpression = BinaryExpression(
+                                    Lexer.EqOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    TypeExpression);
 
         // | expression('in' | 'contains') expression                 #membershipExpression
-        public static readonly Parser<Expression> MembershipExpression = BinaryExpression(Lexer.MembershipOperator, EqExpression);
+        public static readonly Parser<Expression> MembershipExpression = BinaryExpression(
+                                    Lexer.MembershipOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    EqExpression);
 
         // | expression 'and' expression                               #andExpression
-        public static readonly Parser<Expression> AndExpression = BinaryExpression(Lexer.AndOperator, MembershipExpression);
+        public static readonly Parser<Expression> AndExpression = BinaryExpression(
+                                    Lexer.AndOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    MembershipExpression);
 
         // | expression('or' | 'xor') expression                      #orExpression
-        public static readonly Parser<Expression> OrExpression = BinaryExpression(Lexer.OrOperator, AndExpression);
+        public static readonly Parser<Expression> OrExpression = BinaryExpression(
+                                    Lexer.OrOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    AndExpression);
 
         // | expression 'implies' expression                           #impliesExpression
-        public static readonly Parser<Expression> ImpliesExpression = BinaryExpression(Lexer.ImpliesOperator, OrExpression);
+        public static readonly Parser<Expression> ImpliesExpression = BinaryExpression(
+                                    Lexer.ImpliesOperator.Select(v => new SubTokenExpression(v)).Positioned(), 
+                                    OrExpression);
 
         public static readonly Parser<Expression> Expression = ImpliesExpression;
     }

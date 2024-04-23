@@ -44,6 +44,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
+            AssertParser.SucceedsMatch(parser, "`child-name`", new ChildExpression(AxisExpression.That, "childname"));
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.That, "childname"));
             // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
 
@@ -92,7 +93,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "@2013-12T", new ConstantExpression(P.DateTime.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
-            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new ConstantExpression(3)));
+            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new SubTokenExpression("("), new SubTokenExpression(")"), new ConstantExpression(3)));
             AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(P.DateTime.Parse("2014-12-13T12:00:00+02:00")));
             AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
@@ -130,7 +131,14 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.Term.End();
             // The length of the function includes all the way to the end of the closing brackets (not just the function name)
             AssertParser.SucceedsMatch(parser, "doSomething()", 
-                new FunctionCallExpression(AxisExpression.This, "doSomething", TypeSpecifier.Any, new Expression[] { }, SetLoc(1, 1, 0, 13)));
+                new FunctionCallExpression(
+                    AxisExpression.This, 
+                    "doSomething", 
+                    new SubTokenExpression('(', SetLoc(1, 14, 13, 1)),
+                    new SubTokenExpression(')', SetLoc(1, 15, 14, 1)),
+                    TypeSpecifier.Any, 
+                    new Expression[] { }, 
+                    SetLoc(1, 1, 0, 11)));
         }
 
         [TestMethod]
@@ -138,9 +146,14 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Term.End();
             AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14)", 
-                    new FunctionCallExpression(AxisExpression.This, "doSomething", TypeSpecifier.Any,
+                    new FunctionCallExpression(
+                        AxisExpression.This, 
+                        "doSomething",
+                        new SubTokenExpression('(', SetLoc(1, 1, 0, 23)),
+                        new SubTokenExpression(')', SetLoc(1, 1, 0, 23)),
+                        TypeSpecifier.Any,
                         new[] { new ConstantExpression("hi", SetLoc(1, 13, 12, 4)), new ConstantExpression(3.14m, SetLoc(1, 19, 18, 4)) }
-                        , SetLoc(1, 1, 0, 23))
+                        , SetLoc(1, 1, 0, 11))
                     );
         }
 
@@ -183,7 +196,10 @@ namespace Hl7.FhirPath.Tests
         public void FhirPath_LocationInfo_Brackets()
         {
             var parser = Grammar.Term.End();
-            AssertParser.SucceedsMatch(parser, "  ( 3 ) ", new BracketExpression(new ConstantExpression(3, SetLoc(1, 2, 2, 1)), SetLoc(1, 3, 2, 5)));
+            AssertParser.SucceedsMatch(parser, "  ( 3 ) ", 
+                new BracketExpression(
+                    new ConstantExpression(3, SetLoc(1, 2, 2, 1)),
+                    SetLoc(1, 3, 2, 6)));
         }
 
         [TestMethod]
@@ -220,11 +236,13 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.Term.End();
             AssertParser.SucceedsMatch(parser, "ofType(Patient)", 
                 new FunctionCallExpression(
-                    AxisExpression.This, 
+                    AxisExpression.This,
                     "ofType", 
+                    new SubTokenExpression('(', SetLoc(1, 7, 6, 1)),
+                    new SubTokenExpression(')', SetLoc(1, 15, 14, 1)),
                     TypeSpecifier.Any, 
-                    new[] { new IdentifierExpression("", SetLoc(1, 8, 7, 7)) },
-                    SetLoc(1, 1, 0, 15)
+                    new[] { new IdentifierExpression("Patient", SetLoc(1, 8, 7, 7)) },
+                    SetLoc(1, 1, 0, 6)
                 ));
         }
 
@@ -235,7 +253,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "name[10]", new IndexerExpression(
                 new ChildExpression(AxisExpression.This, "name", SetLoc(1, 1, 0, 4)),
                 new ConstantExpression(10, SetLoc(1, 6, 5, 2)),
-                SetLoc(1, 1, 0, 8)));
+                SetLoc(1, 5, 4, 4)));
         }
 
         [TestMethod]
@@ -246,7 +264,7 @@ namespace Hl7.FhirPath.Tests
                 '+',
                 new ConstantExpression(1, SetLoc(1, 1, 0, 1)),
                 new ConstantExpression(50, SetLoc(1, 3, 2, 2)),
-                SetLoc(1, 1, 0, 4)));
+                SetLoc(1, 2, 1, 1)));
         }
 
         [TestMethod]
@@ -257,7 +275,7 @@ namespace Hl7.FhirPath.Tests
                 '+',
                 new ConstantExpression(1, SetLoc(1, 1, 0, 3)),
                 new ConstantExpression(50, SetLoc(1, 6, 5, 3)),
-                SetLoc(1, 1, 0, 8)));
+                SetLoc(1, 4, 3, 2)));
         }
 
         [TestMethod]
@@ -267,7 +285,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "-10", new UnaryExpression(
                 '-',
                 new ConstantExpression(10, SetLoc(1, 2, 1, 2)),
-                SetLoc(1, 1, 0, 3)));
+                SetLoc(1, 1, 0, 1)));
         }
 
         [TestMethod]
@@ -326,7 +344,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "Patient.name", PATIENTNAME);
+            AssertParser.SucceedsMatch(parser, "Patient . name", PATIENTNAME);
             AssertParser.SucceedsMatch(parser, "Patient.name [4 ]",
                     new IndexerExpression(PATIENTNAME, new ConstantExpression(4)));
             AssertParser.SucceedsMatch(parser, "$this[4].name",
