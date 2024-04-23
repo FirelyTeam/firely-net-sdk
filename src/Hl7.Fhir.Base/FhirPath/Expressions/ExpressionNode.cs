@@ -43,7 +43,7 @@ namespace Hl7.FhirPath.Expressions
         public abstract T Accept<T>(ExpressionVisitor<T> visitor);
 
         public override bool Equals(object obj) => Equals(obj as Expression);
-        public bool Equals(Expression other)
+        public virtual bool Equals(Expression other)
         {
             if (other == null)
                 return false;
@@ -202,7 +202,8 @@ namespace Hl7.FhirPath.Expressions
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitConstant(this);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object obj) => Equals(obj as ConstantExpression);
+        public override bool Equals(Expression obj)
         {
             if (base.Equals(obj) && obj is ConstantExpression ce)
             {
@@ -267,7 +268,8 @@ namespace Hl7.FhirPath.Expressions
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitFunctionCall(this);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object obj) => Equals(obj as FunctionCallExpression);
+        public override bool Equals(Expression obj)
         {
             if (base.Equals(obj) && obj is FunctionCallExpression fce)
             {
@@ -462,7 +464,8 @@ namespace Hl7.FhirPath.Expressions
         public IEnumerable<Expression> Contents { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitNewNodeListInit(this);
-        public override bool Equals(object obj)
+        public override bool Equals(object obj) => Equals(obj as NewNodeListInitExpression);
+        public override bool Equals(Expression obj)
         {
             if (base.Equals(obj) && obj is NewNodeListInitExpression ne)
             {
@@ -496,7 +499,8 @@ namespace Hl7.FhirPath.Expressions
         {
             return visitor.VisitVariableRef(this);
         }
-        public override bool Equals(object obj)
+        public override bool Equals(object obj) => Equals(obj as VariableRefExpression);
+        public override bool Equals(Expression obj)
         {
             if (base.Equals(obj) && obj is VariableRefExpression expression)
             {

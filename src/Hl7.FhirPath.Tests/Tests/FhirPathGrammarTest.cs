@@ -44,7 +44,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "`child-name`", new ChildExpression(AxisExpression.That, "childname"));
+            AssertParser.SucceedsMatch(parser, "`child-name`", new ChildExpression(AxisExpression.That, "child-name"));
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.That, "childname"));
             // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
 
@@ -474,7 +474,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "4=4 implies 4 != 5 and ('h' ~ 'H' or 'a' !~ 'b')",
                 new BinaryExpression("implies", constOp("=", 4, 4),
                   new BinaryExpression("and",
-                    constOp("!=", 4, 5), new BinaryExpression("or", constOp("~", 'h', 'H'), constOp("!~", 'a', 'b')))));
+                    constOp("!=", 4, 5), new BracketExpression(new BinaryExpression("or", constOp("~", 'h', 'H'), constOp("!~", 'a', 'b'))))));
 
             AssertParser.FailsMatch(parser, "true implies false and 4 != 5 and 4 <> 6 and ('h' ~ 'H' or 'a' !~ 'b')");
         }
