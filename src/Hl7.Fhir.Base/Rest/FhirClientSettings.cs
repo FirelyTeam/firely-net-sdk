@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
@@ -128,6 +129,17 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
+        /// <summary>
+        /// How to transfer binary data when sending data to a Binary endpoint.
+        /// </summary>
+        public BinaryTransferBehaviour BinarySendBehaviour = BinaryTransferBehaviour.UseResource;
+
+        /// <summary>
+        /// Whether we ask the server to return us binary data or a Binary resource.
+        /// </summary>
+        public BinaryTransferBehaviour BinaryReceivePreference = BinaryTransferBehaviour.UseData;
+        
+
         public FhirClientSettings() { }
 
         /// <summary>Clone constructor. Generates a new <see cref="FhirClientSettings"/> instance initialized from the state of the specified instance.</summary>
@@ -158,6 +170,8 @@ namespace Hl7.Fhir.Rest
             other.PreferredParameterHandling = PreferredParameterHandling;
             other.SerializationEngine = SerializationEngine;
             other.RequestBodyCompressionMethod = RequestBodyCompressionMethod;
+            other.BinaryReceivePreference = BinaryReceivePreference;
+            other.BinarySendBehaviour = BinarySendBehaviour;
         }
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> object that is a copy of the current instance.</summary>
@@ -165,6 +179,22 @@ namespace Hl7.Fhir.Rest
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> instance with default property values.</summary>
         public static FhirClientSettings CreateDefault() => new();
+    }
+
+    /// <summary>
+    /// Describes how the client sends and receives data at the Binary endpoint.
+    /// </summary>
+    public enum BinaryTransferBehaviour
+    {
+        /// <summary>
+        /// Prefer to package binary data in a <see cref="Binary"/> resource.
+        /// </summary>
+        UseResource,
+
+        /// <summary>
+        /// Prefer to send and receive the binary data directly to and from the endpoint.
+        /// </summary>
+        UseData
     }
 }
 

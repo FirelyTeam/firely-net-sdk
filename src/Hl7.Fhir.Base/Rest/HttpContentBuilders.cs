@@ -9,16 +9,15 @@
 #nullable enable
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Linq;
-using Hl7.Fhir.Serialization;
-using System;
-using System.Text.Unicode;
 using System.Text;
-using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
@@ -34,6 +33,7 @@ namespace Hl7.Fhir.Rest
         {
             var content = new ByteArrayContent(b.Data ?? b.Content);
             content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType);
+            content.Headers.LastModified = b.Meta?.LastUpdated;
 
             if (b.SecurityContext?.Reference is { } secRef)
                 content.Headers.Add(HttpUtil.SECURITYCONTEXT, secRef);
