@@ -86,7 +86,7 @@ namespace Hl7.FhirPath.Tests
             where T : Expression
         {
             SucceedsWith<T>(parser, input, result => {
-                var rt = result.RoundTrip();
+                var rt = result.ToCanonicalExpression();
                 Assert.AreEqual(canonicalInput ?? input, rt);
             });
         }

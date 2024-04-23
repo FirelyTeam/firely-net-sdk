@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.FhirPath.Expressions
 {
-    public class RoundTripVisitor : ExpressionVisitor<StringBuilder>
+    public class CanonicalVisitor : ExpressionVisitor<StringBuilder>
     {
         private readonly StringBuilder _result = new StringBuilder();
 
@@ -195,11 +195,11 @@ namespace Hl7.FhirPath.Expressions
         }
     }
 
-    public static class RoundTripVisitorExtensions
+    public static class CanonicalVisitorExtensions
     {
-        public static string RoundTrip(this Expression expr)
+        public static string ToCanonicalExpression(this Expression expr)
         {
-            var dumper = new RoundTripVisitor();
+            var dumper = new CanonicalVisitor();
             return expr.Accept(dumper).ToString();
         }
     }
