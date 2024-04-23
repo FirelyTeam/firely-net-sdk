@@ -104,14 +104,14 @@ namespace Hl7.FhirPath.Expressions
     }
 
 
-    public class SubTokenExpression : IPositionAware<SubTokenExpression>
+    public class SubToken : IPositionAware<SubToken>
     {
-        public SubTokenExpression(string value, ISourcePositionInfo location = null)
+        public SubToken(string value, ISourcePositionInfo location = null)
         {
             Value = value;
             Location = location;
         }
-        public SubTokenExpression(char value, ISourcePositionInfo location = null)
+        public SubToken(char value, ISourcePositionInfo location = null)
         {
             Value = $"{value}";
             Location = location;
@@ -119,11 +119,13 @@ namespace Hl7.FhirPath.Expressions
 
         public string Value { get; private set; }
         public ISourcePositionInfo Location { get; private set; }
+        SubToken IPositionAware<SubToken>.SetPos(Position startPos, int length) => SetPos<SubToken>(startPos, length);
 
-        SubTokenExpression IPositionAware<SubTokenExpression>.SetPos(Position startPos, int length)
+        protected internal T SetPos<T>(Position startPos, int length)
+            where T : SubToken
         {
             Location = new FhirPathExpressionLocationInfo() { LinePosition = startPos.Column, LineNumber = startPos.Line, RawPosition = startPos.Pos, Length = length };
-            return this;
+            return this as T;
         }
     }
 
@@ -152,7 +154,7 @@ namespace Hl7.FhirPath.Expressions
             Operand = operand;
         }
 
-        public BracketExpression(SubTokenExpression leftBrace, SubTokenExpression rightBrace, Expression operand, ISourcePositionInfo location = null) : base(operand.ExpressionType, location)
+        public BracketExpression(SubToken leftBrace, SubToken rightBrace, Expression operand, ISourcePositionInfo location = null) : base(operand.ExpressionType, location)
         {
             Operand = operand;
             LeftBrace = leftBrace;
@@ -160,8 +162,8 @@ namespace Hl7.FhirPath.Expressions
         }
         
         public Expression Operand { get; private set; }
-        public SubTokenExpression LeftBrace { get; private set; }
-        public SubTokenExpression RightBrace { get; private set; }
+        public SubToken LeftBrace { get; private set; }
+        public SubToken RightBrace { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitCustomExpression(this);
 
@@ -233,11 +235,11 @@ namespace Hl7.FhirPath.Expressions
             Arguments = arguments != null ? arguments.ToArray() : throw Error.ArgumentNull("arguments");
         }
 
-        public FunctionCallExpression(Expression focus, string name, SubTokenExpression leftBrace, SubTokenExpression rightBrace, TypeSpecifier type, params Expression[] arguments) : this(focus, name, leftBrace, rightBrace, type, (IEnumerable<Expression>)arguments)
+        public FunctionCallExpression(Expression focus, string name, SubToken leftBrace, SubToken rightBrace, TypeSpecifier type, params Expression[] arguments) : this(focus, name, leftBrace, rightBrace, type, (IEnumerable<Expression>)arguments)
         {
         }
 
-        public FunctionCallExpression(Expression focus, string name, SubTokenExpression leftBrace, SubTokenExpression rightBrace, TypeSpecifier type, IEnumerable<Expression> arguments, ISourcePositionInfo location = null) : base(type, location)
+        public FunctionCallExpression(Expression focus, string name, SubToken leftBrace, SubToken rightBrace, TypeSpecifier type, IEnumerable<Expression> arguments, ISourcePositionInfo location = null) : base(type, location)
         {
             if (string.IsNullOrEmpty(name)) throw Error.ArgumentNull(nameof(name));
             Focus = focus;
@@ -258,8 +260,8 @@ namespace Hl7.FhirPath.Expressions
 
         public Expression Focus { get; private set; }
         public string FunctionName { get; private set; }
-        public SubTokenExpression LeftBrace { get; private set; }
-        public SubTokenExpression RightBrace { get; private set; }
+        public SubToken LeftBrace { get; private set; }
+        public SubToken RightBrace { get; private set; }
 
         public IEnumerable<Expression> Arguments { get; private set; }
 
@@ -329,6 +331,11 @@ namespace Hl7.FhirPath.Expressions
     public class IndexerExpression : FunctionCallExpression, Sprache.IPositionAware<IndexerExpression>
     {
         public IndexerExpression(Expression collection, Expression index, ISourcePositionInfo location = null) : base(collection, OP_PREFIX + "item", TypeSpecifier.Any, index, location)
+        {
+        }
+
+        public IndexerExpression(Expression collection, Expression index, SubToken leftSqBrace, SubToken rightSqBrace, ISourcePositionInfo location = null)
+            : base(collection, OP_PREFIX + "item", leftSqBrace, rightSqBrace, TypeSpecifier.Any, new[] { index }, location)
         {
         }
 

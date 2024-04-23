@@ -93,7 +93,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "@2013-12T", new ConstantExpression(P.DateTime.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
-            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new SubTokenExpression("("), new SubTokenExpression(")"), new ConstantExpression(3)));
+            AssertParser.SucceedsMatch(parser, "(3)", new BracketExpression(new SubToken("("), new SubToken(")"), new ConstantExpression(3)));
             AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(P.DateTime.Parse("2014-12-13T12:00:00+02:00")));
             AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
@@ -134,8 +134,8 @@ namespace Hl7.FhirPath.Tests
                 new FunctionCallExpression(
                     AxisExpression.This, 
                     "doSomething", 
-                    new SubTokenExpression('(', SetLoc(1, 14, 13, 1)),
-                    new SubTokenExpression(')', SetLoc(1, 15, 14, 1)),
+                    new SubToken('(', SetLoc(1, 14, 13, 1)),
+                    new SubToken(')', SetLoc(1, 15, 14, 1)),
                     TypeSpecifier.Any, 
                     new Expression[] { }, 
                     SetLoc(1, 1, 0, 11)));
@@ -149,8 +149,8 @@ namespace Hl7.FhirPath.Tests
                     new FunctionCallExpression(
                         AxisExpression.This, 
                         "doSomething",
-                        new SubTokenExpression('(', SetLoc(1, 1, 0, 23)),
-                        new SubTokenExpression(')', SetLoc(1, 1, 0, 23)),
+                        new SubToken('(', SetLoc(1, 1, 0, 23)),
+                        new SubToken(')', SetLoc(1, 1, 0, 23)),
                         TypeSpecifier.Any,
                         new[] { new ConstantExpression("hi", SetLoc(1, 13, 12, 4)), new ConstantExpression(3.14m, SetLoc(1, 19, 18, 4)) }
                         , SetLoc(1, 1, 0, 11))
@@ -238,8 +238,8 @@ namespace Hl7.FhirPath.Tests
                 new FunctionCallExpression(
                     AxisExpression.This,
                     "ofType", 
-                    new SubTokenExpression('(', SetLoc(1, 7, 6, 1)),
-                    new SubTokenExpression(')', SetLoc(1, 15, 14, 1)),
+                    new SubToken('(', SetLoc(1, 7, 6, 1)),
+                    new SubToken(')', SetLoc(1, 15, 14, 1)),
                     TypeSpecifier.Any, 
                     new[] { new IdentifierExpression("Patient", SetLoc(1, 8, 7, 7)) },
                     SetLoc(1, 1, 0, 6)
