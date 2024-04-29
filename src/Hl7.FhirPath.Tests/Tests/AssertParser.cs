@@ -91,6 +91,15 @@ namespace Hl7.FhirPath.Tests
             });
         }
 
+        public static void SucceedsEcho<T>(Parser<T> parser, string input)
+            where T : Expression
+        {
+            SucceedsWith<T>(parser, input, result => {
+                var rt = result.EchoExpression();
+                Assert.AreEqual(input, rt);
+            });
+        }
+
         public static void FailsMatch<T>(Parser<T> parser, string input)
         {
             FailsWith<T>(parser, input, result => { });

@@ -68,7 +68,7 @@ namespace Hl7.FhirPath.Parser
 
         public static readonly Parser<string> DelimitedIdentifier =
 
-            DelimitedContents('"')
+            DelimitedContents('"') // this isn't to standard
             .XOr(DelimitedContents('`'));
 
         // identifier
@@ -176,7 +176,10 @@ namespace Hl7.FhirPath.Parser
         private static readonly CommentParser CommentParse = new CommentParser("//", "/*", "*/", "\n");
 
         public static readonly Parser<string> Comment =
-            CommentParse.AnyComment.Text();
+            CommentParse.SingleLineComment.Text();
+
+        public static readonly Parser<string> CommentBlock =
+            CommentParse.MultiLineComment.Text();
 
         //qualifiedIdentifier
         //   : identifier ('.' identifier)*
@@ -189,6 +192,7 @@ namespace Hl7.FhirPath.Parser
             from name in Parse.String("this").XOr(Parse.String("index")).Or(Parse.String("total")).Text()
             select name;
 
+        [Obsolete("This lexer is no longer used by the fhirpath parser as it processes the tokens correctly", false)]
         public static readonly Parser<string> Quantity =
            Parse.Regex(P.Quantity.QUANTITYREGEX);
     }
@@ -196,23 +200,6 @@ namespace Hl7.FhirPath.Parser
 
     public static class ParserExtensions
     {
-        /// <summary>
-        /// Parse the token, embedded in any amount of whitespace characters.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="parser"></param>
-        /// <returns></returns>
-        public static Parser<T> TokenIgnoreComments<T>(this Parser<T> parser)
-        {
-            if (parser == null) throw new ArgumentNullException("parser");
-
-            return from leading in Parse.WhiteSpace.Many().XOr(Lexer.Comment).Many()
-                   from item in parser
-                   from trailing in Parse.WhiteSpace.Many().XOr(Lexer.Comment).Many()
-                   select item;
-        }
-
-
         public static Parser<string> Unescape(this Parser<IEnumerable<char>> c)
         {
             return c.Select(chr => new string(Unescape(chr.Single()), 1));

@@ -294,9 +294,24 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Lexer.Comment.End();
 
-            AssertParser.SucceedsMatch(parser, "/* alsfdkgsdlkfgjs\r\nlkfdgj */", " alsfdkgsdlkfgjs\r\nlkfdgj ");
-
             AssertParser.SucceedsMatch(parser, "// this is a juicy comment", " this is a juicy comment");
+
+            AssertParser.Fails(parser, "");
+            AssertParser.Fails(parser, "True");
+            AssertParser.Fails(parser, "TRUE");
+            AssertParser.Fails(parser, "False");
+            AssertParser.Fails(parser, "FALSE");
+            AssertParser.Fails(parser, "xyz");
+            AssertParser.Fails(parser, "1");
+            AssertParser.Fails(parser, "0");
+        }
+
+        [TestMethod]
+        public void FhirPath_Lex_CommentBlock()
+        {
+            var parser = Lexer.CommentBlock.End();
+
+            AssertParser.SucceedsMatch(parser, "/* alsfdkgsdlkfgjs\r\nlkfdgj */", " alsfdkgsdlkfgjs\r\nlkfdgj ");
 
             AssertParser.Fails(parser, "");
             AssertParser.Fails(parser, "True");
