@@ -467,39 +467,6 @@ namespace Hl7.FhirPath.Expressions
         UnaryExpression IPositionAware<UnaryExpression>.SetPos(Position startPos, int length) => SetPos<UnaryExpression>(startPos, length);
     }
 
-    //public class LambdaExpression : Expression
-    //{
-    //    public LambdaExpression(Expression body) : base(body.ExpressionType)
-    //    {
-    //        if (body == null) throw Error.ArgumentNull("body");
-
-    //        Body = body;
-    //    }
-    //    public Expression Body { get; private set;  }
-
-    //    public override T Accept<T>(ExpressionVisitor<T> visitor)
-    //    {
-    //        return visitor.VisitLambda(this);
-    //    }
-    //    public override bool Equals(object obj)
-    //    {
-    //        if (base.Equals(obj) && obj is LambdaExpression)
-    //        {
-    //            var f = (LambdaExpression)obj;
-
-    //            return Object.Equals(f.Body,Body);
-    //        }
-    //        else
-    //            return false;
-    //    }
-
-    //    public override int GetHashCode()
-    //    {
-    //        return base.GetHashCode() ^ Body.GetHashCode();
-    //    }
-
-    //}
-
     public class NewNodeListInitExpression : Expression, Sprache.IPositionAware<NewNodeListInitExpression>
     {
         public NewNodeListInitExpression(IEnumerable<Expression> contents, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)
