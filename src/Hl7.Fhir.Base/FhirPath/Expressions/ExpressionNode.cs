@@ -123,7 +123,8 @@ namespace Hl7.FhirPath.Expressions
 
     /// <summary>
     /// The CustomExpression class permits the inclusion of addition expression nodes/types not known
-    /// to the core FHIR Path implementation.
+    /// to the core FHIR Path implementation, however they must be able to be reduced to an existing
+    /// expression type to be executed.<br/>
     /// These will be handled via the visitor pattern, and the Reduce() method will be called to
     /// convert it to a known expression type.
     /// The initial use of this is for the BracketExpression so it can be included in the tree to
@@ -204,6 +205,26 @@ namespace Hl7.FhirPath.Expressions
         public ConstantExpression(object value, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)
         {
             if (value == null) Error.ArgumentNull("value");
+
+            if (ElementNode.TryConvertToElementValue(value, out var systemValue))
+            {
+                Value = systemValue;
+                ExpressionType = TypeSpecifier.ForNativeType(value.GetType());
+            }
+            else
+                throw Error.InvalidOperation("Internal logic error: encountered unmappable Value of type " + Value.GetType().Name);
+        }
+
+        /// <summary>
+        /// Constructor used for Quantity type constants (so that the parsed unit token is preserved)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit">Raw unit token as parsed</param>
+        /// <param name="location"></param>
+        public ConstantExpression(object value, SubToken unit, ISourcePositionInfo location = null) : base(TypeSpecifier.Quantity, location)
+        {
+            if (value == null) Error.ArgumentNull("value");
+            Unit = unit;
 
             if (ElementNode.TryConvertToElementValue(value, out var systemValue))
             {
