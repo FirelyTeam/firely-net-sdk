@@ -30,7 +30,11 @@ namespace Hl7.FhirPath.Expressions
     /// have recently been added which are in the grammar, however are not required by the execution
     /// as they are implied by operator precedence which is already handled by the execution tree.<br/>
     /// These are removed from the expression tree before execution via the <see cref="CustomExpression.Reduce"/> method
-    /// in the <see cref="ExpressionVisitor{T}.VisitCustomExpression(CustomExpression)">expression visitor</see>.
+    /// in the <see cref="ExpressionVisitor{T}.VisitCustomExpression(CustomExpression)">expression visitor</see>.<br/>
+    /// <br/>
+    /// Across all the classes derived from Expression, there is a constructor that has an optional ISourcePositionInfo
+    /// parameter, this is used to permit the position information for the node. This is only used in Unit Tests to
+    /// provide the information, the parser uses the <see cref="SetPos{T}(Position, int)"/> method.
     /// </remarks>
     public abstract class Expression : IEquatable<Expression>, Sprache.IPositionAware<Expression>
     {
@@ -166,7 +170,15 @@ namespace Hl7.FhirPath.Expressions
         }
         
         public Expression Operand { get; private set; }
+
+        /// <summary>
+        /// Raw parsed left brace token
+        /// </summary>
         public SubToken LeftBrace { get; private set; }
+
+        /// <summary>
+        /// Raw parsed right brace token
+        /// </summary>
         public SubToken RightBrace { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitCustomExpression(this);
@@ -203,6 +215,11 @@ namespace Hl7.FhirPath.Expressions
         }
 
         public object Value { get; private set; }
+
+        /// <summary>
+        /// If this is a quantity type, then this is the unit of the quantity as parsed
+        /// </summary>
+        public SubToken Unit { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitConstant(this);
 
@@ -265,7 +282,15 @@ namespace Hl7.FhirPath.Expressions
 
         public Expression Focus { get; private set; }
         public string FunctionName { get; private set; }
+
+        /// <summary>
+        /// Raw parsed left brace token
+        /// </summary>
         public SubToken LeftBrace { get; private set; }
+
+        /// <summary>
+        /// Raw parsed right brace token
+        /// </summary>
         public SubToken RightBrace { get; private set; }
 
         public IEnumerable<Expression> Arguments { get; private set; }
@@ -368,6 +393,23 @@ namespace Hl7.FhirPath.Expressions
         public BinaryExpression(string op, Expression left, Expression right, ISourcePositionInfo location = null) : base(AxisExpression.That, BIN_PREFIX + op, TypeSpecifier.Any, new[] { left, right }, location)
         {
         }
+
+        public BinaryExpression(SubToken op, Expression left, Expression right, ISourcePositionInfo location = null) : base(AxisExpression.That, BIN_PREFIX + op.Value, TypeSpecifier.Any, new[] { left, right }, location)
+        {
+            OpToken = op;
+        }
+
+        /// <summary>
+        /// The Raw token parsed for the Operator (that contains the location information)
+        /// </summary>
+        public SubToken OpToken { get; private set; }
+
+        /// <summary>
+        /// The String representation of the operator
+        /// </summary>
+        /// <remarks>
+        /// This is internally stored in the FunctionName property with the prefix "binary."
+        /// </remarks>
         public string Op
         {
             get
@@ -465,7 +507,25 @@ namespace Hl7.FhirPath.Expressions
             Contents = contents ?? throw Error.ArgumentNull("contents");
         }
 
+        public NewNodeListInitExpression(SubToken leftBrace, SubToken rightBrace, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)
+        {
+            LeftBrace = leftBrace;
+            RightBrace = rightBrace;
+            Contents = Enumerable.Empty<Expression>();
+        }
+
+        // This isn't a set constructor, it's an empty set, so why the contents?
         public IEnumerable<Expression> Contents { get; private set; }
+
+        /// <summary>
+        /// Raw parsed left brace token
+        /// </summary>
+        public SubToken LeftBrace { get; private set; }
+
+        /// <summary>
+        /// Raw parsed right brace token
+        /// </summary>
+        public SubToken RightBrace { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor) => visitor.VisitNewNodeListInit(this);
         public override bool Equals(object obj) => Equals(obj as NewNodeListInitExpression);
