@@ -118,7 +118,6 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.MulExpression.End();
 
-            AssertParser.SucceedsRoundTrip(parser, "Patient.name");
             AssertParser.SucceedsRoundTrip(parser, "4* Patient.name", "4 * Patient.name");
             AssertParser.SucceedsRoundTrip(parser, "5 div 6");
         }

@@ -20,6 +20,18 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.Expressions
 {
+    /// <summary>
+    /// The base class for all components within a fhirpath expression<br/>
+    /// </summary>
+    /// <remarks>
+    /// Each component (represented by an derived instance of this class) may also
+    /// contain several Sub-Components (<see cref="SubToken"/>) that do not impact execution<br/>
+    /// There may also be <see cref="CustomExpression"/> such as <see cref="BracketExpression"/> that
+    /// have recently been added which are in the grammar, however are not required by the execution
+    /// as they are implied by operator precedence which is already handled by the execution tree.<br/>
+    /// These are removed from the expression tree before execution via the <see cref="CustomExpression.Reduce"/> method
+    /// in the <see cref="ExpressionVisitor{T}.VisitCustomExpression(CustomExpression)">expression visitor</see>.
+    /// </remarks>
     public abstract class Expression : IEquatable<Expression>, Sprache.IPositionAware<Expression>
     {
         internal const string OP_PREFIX = "builtin.";
@@ -30,14 +42,32 @@ namespace Hl7.FhirPath.Expressions
             ExpressionType = type;
         }
 
-        // [Obsolete("This will be removed... this happens through the SetPos()", false)]
         protected Expression(TypeSpecifier type, ISourcePositionInfo location) : this(type)
         {
             Location = location;
         }
 
+        /// <summary>
+        /// Location information for this expression component in the parsed complete fhirpath expression
+        /// </summary>
         public ISourcePositionInfo Location { get; private set; }
 
+        /// <summary>
+        /// Any leading whitespace or comments encountered immediately before this Expression
+        /// </summary>
+        public IEnumerable<WhitespaceSubToken> leadingWhitespace { get; internal set; }
+
+        /// <summary>
+        /// Any trailing whitespace or comments encountered immediately after this Expression
+        /// </summary>
+        public IEnumerable<WhitespaceSubToken> trailingWhitespace { get; internal set; }
+
+        /// <summary>
+        /// The DataType that would be returned be evaluating this ExpressionNode
+        /// </summary>
+        /// <remarks>
+        /// If multiple types are possible, it will return <see cref="TypeSpecifier.Any"/>
+        /// </remarks>
         public TypeSpecifier ExpressionType { get; protected set; }
 
         public abstract T Accept<T>(ExpressionVisitor<T> visitor);
@@ -73,6 +103,7 @@ namespace Hl7.FhirPath.Expressions
         }
 
         public override int GetHashCode() => -28965461 + EqualityComparer<TypeSpecifier>.Default.GetHashCode(ExpressionType);
+
         Expression IPositionAware<Expression>.SetPos(Position startPos, int length) => SetPos<Expression>(startPos, length);
 
         protected internal T SetPos<T>(Position startPos, int length)
@@ -103,32 +134,6 @@ namespace Hl7.FhirPath.Expressions
         public abstract Expression Reduce();
     }
 
-
-    public class SubToken : IPositionAware<SubToken>
-    {
-        public SubToken(string value, ISourcePositionInfo location = null)
-        {
-            Value = value;
-            Location = location;
-        }
-        public SubToken(char value, ISourcePositionInfo location = null)
-        {
-            Value = $"{value}";
-            Location = location;
-        }
-
-        public string Value { get; private set; }
-        public ISourcePositionInfo Location { get; private set; }
-        SubToken IPositionAware<SubToken>.SetPos(Position startPos, int length) => SetPos<SubToken>(startPos, length);
-
-        protected internal T SetPos<T>(Position startPos, int length)
-            where T : SubToken
-        {
-            Location = new FhirPathExpressionLocationInfo() { LinePosition = startPos.Column, LineNumber = startPos.Line, RawPosition = startPos.Pos, Length = length };
-            return this as T;
-        }
-    }
-
     public class IdentifierExpression : ConstantExpression, Sprache.IPositionAware<IdentifierExpression>
     {
         public IdentifierExpression(object value, TypeSpecifier type, ISourcePositionInfo location = null)
@@ -146,7 +151,6 @@ namespace Hl7.FhirPath.Expressions
         IdentifierExpression IPositionAware<IdentifierExpression>.SetPos(Position startPos, int length) => SetPos<IdentifierExpression>(startPos, length);
     }
 
-    // Discuss: Reduce function? - Skip this in the compile stage? - Update the visitor to skip the bracket too
     public class BracketExpression : CustomExpression, Sprache.IPositionAware<BracketExpression>
     {
         public BracketExpression(Expression operand, ISourcePositionInfo location = null) : base(operand.ExpressionType, location)
