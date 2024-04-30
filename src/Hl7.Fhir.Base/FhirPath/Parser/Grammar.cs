@@ -99,18 +99,18 @@ namespace Hl7.FhirPath.Parser
         {
             return
                 from ws1 in WhitespaceOrComments()
-                from n in Lexer.Identifier.Select(name => new IdentifierExpression(name) { leadingWhitespace = ws1 }).Positioned()
+                from n in Lexer.Identifier.Select(name => new IdentifierExpression(name).WithLeadingWS(ws1)).Positioned()
 
                 from ws2 in WhitespaceOrComments()
-                from lparen in Parse.Char('(').Select(v => new SubToken(v) { leadingWhitespace = ws2 }).Positioned()
+                from lparen in Parse.Char('(').Select(v => new SubToken(v).WithLeadingWS(ws2)).Positioned()
 
                 from paramList in Parse.Ref(() => FunctionParameter(n.Value).Named("parameter")).DelimitedBy(Parse.Char(',')).Optional()
 
                 from ws3 in WhitespaceOrComments()
-                from rparen in Parse.Char(')').Select(v => new SubToken(v) { leadingWhitespace = ws3 }).Positioned()
+                from rparen in Parse.Char(')').Select(v => new SubToken(v).WithLeadingWS(ws3)).Positioned()
 
                 from ws4 in WhitespaceOrComments()
-                select new FunctionCallExpression(context, n.Value, lparen, rparen, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>())) { trailingWhitespace = ws4 }
+                select new FunctionCallExpression(context, n.Value, lparen, rparen, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>())).WithTrailingWS(ws4)
                 .UsePositionFrom(n.Location);
         }
 
@@ -201,7 +201,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> DotInvocation(Expression focus)
         {
             return WhitespaceOrComments().Then(wsBeforeDot => Parse.Char('.').Select(v => new SubToken(v).WithLeadingWS(wsBeforeDot)).Positioned())
-                .Then(op => FunctionInvocation(focus).Select(t => { t.SetPositionFrom(op.Location); t.WithLeadingWS(op.leadingWhitespace); return t; }));
+                .Then(op => FunctionInvocation(focus).Select(t => { t.SetPositionFrom(op.Location); t.WithLeadingWS(op.LeadingWhitespace); return t; }));
         }
 
         // '[' expression ']'                             #indexerExpression
@@ -227,7 +227,7 @@ namespace Hl7.FhirPath.Parser
         // | ('+' | '-') expression                                    #polarityExpression
         public static readonly Parser<Expression> PolarityExpression =
             from ws1 in WhitespaceOrComments()
-            from op in Lexer.PolarityOperator.Select(v => new SubToken(v) { leadingWhitespace = ws1 }).Positioned().Optional()
+            from op in Lexer.PolarityOperator.Select(v => new SubToken(v).WithLeadingWS(ws1)).Positioned().Optional()
 
             from ws2 in WhitespaceOrComments()
             from indexer in InvocationExpression

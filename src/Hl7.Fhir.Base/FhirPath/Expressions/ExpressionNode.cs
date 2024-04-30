@@ -59,12 +59,12 @@ namespace Hl7.FhirPath.Expressions
         /// <summary>
         /// Any leading whitespace or comments encountered immediately before this Expression
         /// </summary>
-        public IEnumerable<WhitespaceSubToken> leadingWhitespace { get; internal set; }
+        public IEnumerable<WhitespaceSubToken> LeadingWhitespace { get; internal set; }
 
         /// <summary>
         /// Any trailing whitespace or comments encountered immediately after this Expression
         /// </summary>
-        public IEnumerable<WhitespaceSubToken> trailingWhitespace { get; internal set; }
+        public IEnumerable<WhitespaceSubToken> TrailingWhitespace { get; internal set; }
 
         /// <summary>
         /// The DataType that would be returned be evaluating this ExpressionNode

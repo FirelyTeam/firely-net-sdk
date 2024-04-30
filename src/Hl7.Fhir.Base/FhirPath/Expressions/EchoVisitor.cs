@@ -36,13 +36,13 @@ namespace Hl7.FhirPath.Expressions
 
         private void OutputPrecedingTokens(Expression? expr)
         {
-            if (expr?.leadingWhitespace?.Any() == true)
-                _result.Append(System.String.Join("", expr.leadingWhitespace.Select(ws => ws.ToString())));
+            if (expr?.LeadingWhitespace?.Any() == true)
+                _result.Append(System.String.Join("", expr.LeadingWhitespace.Select(ws => ws.ToString())));
         }
         private void OutputTrailingTokens(Expression expr)
         {
-            if (expr.trailingWhitespace?.Any() == true)
-                _result.Append(System.String.Join("", expr.trailingWhitespace.Select(ws => ws.ToString())));
+            if (expr.TrailingWhitespace?.Any() == true)
+                _result.Append(System.String.Join("", expr.TrailingWhitespace.Select(ws => ws.ToString())));
         }
 
         private void OutputSubToken(SubToken subtoken)
@@ -56,14 +56,14 @@ namespace Hl7.FhirPath.Expressions
         private void OutputPrecedingTokens(SubToken subtoken)
         {
             if (subtoken == null) return;
-            if (subtoken.leadingWhitespace?.Any() == true)
-                _result.Append(System.String.Join("", subtoken.leadingWhitespace.Select(ws => ws.ToString())));
+            if (subtoken.LeadingWhitespace?.Any() == true)
+                _result.Append(System.String.Join("", subtoken.LeadingWhitespace.Select(ws => ws.ToString())));
         }
         private void OutputTrailingTokens(SubToken subtoken)
         {
             if (subtoken == null) return;
-            if (subtoken.trailingWhitespace?.Any() == true)
-                _result.Append(System.String.Join("", subtoken.trailingWhitespace.Select(ws => ws.ToString())));
+            if (subtoken.TrailingWhitespace?.Any() == true)
+                _result.Append(System.String.Join("", subtoken.TrailingWhitespace.Select(ws => ws.ToString())));
         }
         #endregion
 

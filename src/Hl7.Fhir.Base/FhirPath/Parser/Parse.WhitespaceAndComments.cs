@@ -25,7 +25,7 @@ namespace Hl7.FhirPath.Parser
                 if (r.WasSuccessful)
                 {
                     if (leading != null & leading.Any())
-                        r.Value.leadingWhitespace = leading;
+                        r.Value.LeadingWhitespace = leading;
                 }
                 return r;
             };
@@ -40,7 +40,7 @@ namespace Hl7.FhirPath.Parser
                 if (r.WasSuccessful)
                 {
                     if (leading != null && leading.Any())
-                        r.Value.leadingWhitespace = leading;
+                        r.Value.LeadingWhitespace = leading;
                 }
                 return r;
             };
@@ -49,30 +49,30 @@ namespace Hl7.FhirPath.Parser
         public static T WithLeadingWS<T>(this T expr, IEnumerable<WhitespaceSubToken> leading) where T : Hl7.FhirPath.Expressions.Expression
         {
             if (leading != null && leading.Any())
-                expr.leadingWhitespace = leading;
+                expr.LeadingWhitespace = leading;
             return expr;
         }
 
         public static SubToken WithLeadingWS(this SubToken expr, IEnumerable<WhitespaceSubToken> leading)
         {
             if (leading != null && leading.Any())
-                expr.leadingWhitespace = leading;
+                expr.LeadingWhitespace = leading;
             return expr;
         }
 
         public static T WithTrailingWS<T>(this T expr, IEnumerable<WhitespaceSubToken> trailing) where T : Hl7.FhirPath.Expressions.Expression
         {
             if (trailing != null && trailing.Any())
-                expr.trailingWhitespace = trailing;
+                expr.TrailingWhitespace = trailing;
             return expr;
         }
 
         public static T CaptureWhitespaceAndComments<T>(this T expr, IEnumerable<WhitespaceSubToken> leading, IEnumerable<WhitespaceSubToken> trailing) where T : Hl7.FhirPath.Expressions.Expression
         {
             if (leading != null && leading.Any())
-                expr.leadingWhitespace = leading;
+                expr.LeadingWhitespace = leading;
             if (trailing != null && trailing.Any())
-                expr.trailingWhitespace = trailing;
+                expr.TrailingWhitespace = trailing;
             return expr;
         }
     }
