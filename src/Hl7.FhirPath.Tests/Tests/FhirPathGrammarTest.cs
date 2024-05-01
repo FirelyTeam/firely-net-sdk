@@ -143,15 +143,61 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Term.End();
             // The length of the function includes all the way to the end of the closing brackets (not just the function name)
-            AssertParser.SucceedsMatch(parser, "doSomething()", 
+            AssertParser.SucceedsMatch(parser, "today()", 
                 new FunctionCallExpression(
-                    AxisExpression.This, 
-                    "doSomething", 
+                    AxisExpression.This,
+                    "today", 
                     new SubToken('(', SetLoc(1, 14, 13, 1)),
                     new SubToken(')', SetLoc(1, 15, 14, 1)),
                     TypeSpecifier.Any, 
                     new Expression[] { }, 
-                    SetLoc(1, 1, 0, 11)));
+                    SetLoc(1, 1, 0, 5)));
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_Function2()
+        {
+            var parser = Grammar.Expression.End();
+            // The length of the function includes all the way to the end of the closing brackets (not just the function name)
+            AssertParser.SucceedsMatch(parser, "today().toString()",
+                new FunctionCallExpression(
+                    new FunctionCallExpression(
+                        AxisExpression.This,
+                        "today",
+                        new SubToken('(', SetLoc(1, 14, 13, 1)),
+                        new SubToken(')', SetLoc(1, 15, 14, 1)),
+                        TypeSpecifier.Any,
+                        new Expression[] { },
+                        SetLoc(1, 1, 0, 5)
+                    ),
+                    "toString",
+                    new SubToken('(', SetLoc(1, 14, 13, 1)),
+                    new SubToken(')', SetLoc(1, 15, 14, 1)),
+                    TypeSpecifier.Any,
+                    new Expression[] { },
+                    SetLoc(1, 9, 8, 8))
+                );
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_Function3()
+        {
+            var parser = Grammar.Expression.End();
+            // The length of the function includes all the way to the end of the closing brackets (not just the function name)
+            AssertParser.SucceedsMatch(parser, "given.join(' ')",
+                new FunctionCallExpression(
+                    new ChildExpression(
+                        AxisExpression.This,
+                        "given",
+                        SetLoc(1, 1, 0, 5)
+                    ),
+                    "join",
+                    new SubToken('(', SetLoc(1, 14, 13, 1)),
+                    new SubToken(')', SetLoc(1, 15, 14, 1)),
+                    TypeSpecifier.Any,
+                    new Expression[] { new ConstantExpression(" ", SetLoc(1, 12, 11, 3)) },
+                    SetLoc(1, 7, 6, 4))
+                );
         }
 
         [TestMethod]

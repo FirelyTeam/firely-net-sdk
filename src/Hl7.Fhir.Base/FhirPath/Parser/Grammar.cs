@@ -201,7 +201,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> DotInvocation(Expression focus)
         {
             return WhitespaceOrComments().Then(wsBeforeDot => Parse.Char('.').Select(v => new SubToken(v).WithLeadingWS(wsBeforeDot)).Positioned())
-                .Then(op => FunctionInvocation(focus).Select(t => { t.SetPositionFrom(op.Location); t.WithLeadingWS(op.LeadingWhitespace); return t; }));
+                .Then(op => FunctionInvocation(focus).Select(t => { t.WithLeadingWS(op.LeadingWhitespace); return t; }));
         }
 
         // '[' expression ']'                             #indexerExpression
