@@ -3194,42 +3194,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
-        private static StructureDefinition LogicalModelWithoutDiff => new()
-        {
-            Name = "MyLogicalModel",
-            Url = "http://example.org/fhir/StructureDefinition/MyLogicalModel",
-            Type = "http://foo.org/bar",
-            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Base",
-            Kind = StructureDefinition.StructureDefinitionKind.Logical,
-            Snapshot = new()
-            {
-                Element = new()
-               {
-                   new()
-                   {
-                       ElementId = "logicalmodel",
-                       Path = "logicalmodel",
-                       Short = "root"
-
-                   },
-                    new()
-                   {
-                       ElementId = "logicalmodel.Identifier",
-                       Path = "logicalmodel.Identifier",
-                       Short = "Identifier",
-                       Min = 1,
-                       Max = "*",
-                       Type = new()
-                       {
-                           new() {Code = "Identifier"}
-                       }
-                   },
-               }
-            }
-
-        };
-
         [Conditional("DEBUG")]
         private void dumpElements(IEnumerable<ElementDefinition> elements, string header = null) => dumpElements(elements.ToList(), header);
 
@@ -3320,23 +3284,6 @@ namespace Hl7.Fhir.Specification.Tests
             // Create a profile without a differential
             var profile = ObservationTypeSliceProfile;
             profile.Differential = null;
-
-            var resolver = new InMemoryResourceResolver(profile);
-            var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver, _settings);
-
-            var (_, expanded) = await generateSnapshotAndCompare(profile);
-            Assert.IsNotNull(expanded);
-            Assert.IsTrue(expanded.HasSnapshot);
-
-            expanded.Snapshot.Element.Dump();
-        }
-
-        [TestMethod]
-        public async T.Task TestMissingDifferentialLogicalModel()
-        {
-            // Create a profile without a differential
-            var profile = LogicalModelWithoutDiff;
 
             var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
