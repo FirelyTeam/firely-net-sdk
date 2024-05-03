@@ -125,11 +125,10 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("1 'd'", "3 days", Comparison.LessThan)]
         public void QuantityCompareTests(string left, string right, Comparison expectedResult, bool shouldThrowException = false)
         {
+            Quantity.TryParse(left, out var a).Should().BeTrue();
+            Quantity.TryParse(right, out var b).Should().BeTrue();
 
-            Quantity.TryParse(left, out var a);
-            Quantity.TryParse(right, out var b);
-
-            Func<int> func = () => a.CompareTo(b);
+            Func<int> func = () => a!.CompareTo(b);
 
             if (shouldThrowException)
             {
@@ -180,10 +179,10 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DynamicData(nameof(ArithmeticTestdata))]
         public void ArithmeticOperationsTests(string left, string right, object result, Func<Quantity, Quantity, Result<Quantity>> operation)
         {
-            _ = Quantity.TryParse(left, out var q1);
-            _ = Quantity.TryParse(right, out var q2);
+            Quantity.TryParse(left, out var q1).Should().BeTrue();
+            Quantity.TryParse(right, out var q2).Should().BeTrue();
 
-            var opResult = operation(q1, q2);
+            var opResult = operation(q1!, q2!);
 
             if (result is string r && Quantity.TryParse(r, out var q3))
             {

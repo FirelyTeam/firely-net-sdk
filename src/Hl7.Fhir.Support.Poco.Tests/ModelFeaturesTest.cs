@@ -42,14 +42,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             new Code("bla").ToCodings().Should().BeEquivalentTo(l(c(null, "bla")));
             new Coding("http://nu.nl", "bla").ToCodings().Should().BeEquivalentTo(l(c("http://nu.nl", "bla")));
-            new Code<TestAdministrativeGender>(TestAdministrativeGender.Male).ToCodings().Should().BeEquivalentTo(l(new Coding("http://hl7.org/fhir/administrative-gender", "male")));
+            new Code<AdministrativeGender>(AdministrativeGender.Male).ToCodings().Should().BeEquivalentTo(l(new Coding("http://hl7.org/fhir/administrative-gender", "male")));
             new CodeableConcept().Add("http://nu.nl", "bla1").Add("http://nu.nl", "bla2").ToCodings().Should().BeEquivalentTo(new[] { c("http://nu.nl", "bla1"), c("http://nu.nl", "bla2") });
             new FhirString("bla").ToCodings().Should().BeEquivalentTo(l(c(null, "bla")));
 
             var list = new[]
             {
-                new Code<TestAdministrativeGender>(TestAdministrativeGender.Male),
-                new Code<TestAdministrativeGender>(TestAdministrativeGender.Other)
+                new Code<AdministrativeGender>(AdministrativeGender.Male),
+                new Code<AdministrativeGender>(AdministrativeGender.Other)
             };
 
             list.ToCodings().Should().BeEquivalentTo(new[] { c("http://hl7.org/fhir/administrative-gender", "male"), c("http://hl7.org/fhir/administrative-gender", "other") });

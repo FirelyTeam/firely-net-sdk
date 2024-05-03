@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async void LocalTSDisplayIncorrectAsMessage()
+        public async T.Task LocalTSDisplayIncorrectAsMessage()
         {
             var svc = new LocalTerminologyService(_resolver);
             var inParams = new ValidateCodeParameters()
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async void LocalTermServiceValidateCodeWithParamsTest()
+        public async T.Task LocalTermServiceValidateCodeWithParamsTest()
         {
             var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceTranslateSimpleTranslate()
+        public async T.Task ExternalServiceTranslateSimpleTranslate()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceTranslateSimpleAutomap()
+        public async T.Task ExternalServiceTranslateSimpleAutomap()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
+        public async T.Task ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupInactiveStatus()
+        public async T.Task ExternalServiceLookupInactiveStatus()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupSNOMEDCode()
+        public async T.Task ExternalServiceLookupSNOMEDCode()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceExpandExplicitValueSet()
+        public async T.Task ExternalServiceExpandExplicitValueSet()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceExpandImplicitValueSetWithFilter()
+        public async T.Task ExternalServiceExpandImplicitValueSetWithFilter()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceSubsumesConceptASubsumesConceptB()
+        public async T.Task ExternalServiceSubsumesConceptASubsumesConceptB()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceValidateCodeTest()
+        public async T.Task ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async void FallbackServiceValidateCodeWithParamsTest()
+        public async T.Task FallbackServiceValidateCodeWithParamsTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
@@ -854,4 +854,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-

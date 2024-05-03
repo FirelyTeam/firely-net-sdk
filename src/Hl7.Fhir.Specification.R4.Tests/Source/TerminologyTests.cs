@@ -3,13 +3,14 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
 using System.Collections.Generic;
 using Xunit;
+using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     public partial class TerminologyTests
     {
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceClosureExample()
+        public async T.Task ExternalServiceClosureExample()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -248,4 +249,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-

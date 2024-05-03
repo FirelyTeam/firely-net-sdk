@@ -12,7 +12,7 @@ namespace Firely.Sdk.Benchmarks
     [MemoryDiagnoser]
     public class SerializationBenchmarks
     {
-        internal TestPatient Patient;
+        internal Patient Patient;
         JsonSerializerOptions Options;
         BaseFhirXmlPocoSerializer XmlSerializer;
 
@@ -24,9 +24,9 @@ namespace Firely.Sdk.Benchmarks
             var data = File.ReadAllText(filename);
             // For now, deserialize with the existing deserializer, until we have completed
             // the dynamicserializer too.
-            Patient = FhirJsonNode.Parse(data).ToPoco<TestPatient>(ModelInspector.ForType<TestPatient>());
-            Options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
-            XmlSerializer = new BaseFhirXmlPocoSerializer(Hl7.Fhir.Specification.FhirRelease.STU3);
+            Patient = FhirJsonNode.Parse(data).ToPoco<Patient>();
+            Options = new JsonSerializerOptions().ForFhir();
+            XmlSerializer = new FhirXmlPocoSerializer();
         }
 
         [Benchmark]
@@ -44,13 +44,13 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public string TypedElementSerializerJson()
         {
-            return Patient.ToTypedElement(ModelInspector.ForType<TestPatient>()).ToJson();
+            return Patient.ToTypedElement().ToJson();
         }
 
         [Benchmark]
         public string TypedElementSerializerXml()
         {
-            return Patient.ToTypedElement(ModelInspector.ForType<TestPatient>()).ToXml();
+            return Patient.ToTypedElement().ToXml();
         }
     }
 }

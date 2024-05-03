@@ -21,7 +21,7 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestBuild()
     {
-        var p = new TestPatient();
+        var p = new Patient();
         var b = new TransactionBuilder("http://myserver.org/fhir")
             .Create(p)
             .ResourceHistory("Patient", "7")
@@ -55,7 +55,7 @@ public class TransactionBuilderTests
         tx = new TransactionBuilder("http://myserver.org/fhir").ServerOperation("$everything", null);
         Assert.AreEqual(InteractionType.Operation, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-        var p = new TestPatient();
+        var p = new Patient();
         tx = new TransactionBuilder("http://myserver.org/fhir").Create(p);
         Assert.AreEqual(InteractionType.Create, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
@@ -67,7 +67,7 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestConditionalCreate()
     {
-        var p = new TestPatient();
+        var p = new Patient();
         var tx = new TransactionBuilder("http://myserver.org/fhir")
             .ConditionalCreate(p, new SearchParams().Where("name=foobar"));
         var b = tx.ToBundle();
@@ -79,7 +79,7 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestConditionalUpdate()
     {
-        var p = new TestPatient();
+        var p = new Patient();
         var tx = new TransactionBuilder("http://myserver.org/fhir")
             .ConditionalUpdate(new SearchParams().Where("name=foobar"), p, versionId: "314");
         var b = tx.ToBundle();
@@ -107,7 +107,7 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestTransactionWithAbsoluteUri()
     {
-        var patient = new TestPatient();
+        var patient = new Patient();
         var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
 
         var transaction = new TransactionBuilder(endpoint)
@@ -125,14 +125,14 @@ public class TransactionBuilderTests
     public void TransactionBuilderWithFullUrlTest()
     {
         var fullUrl = "http://myserver.org/fhir/123";
-        var p = new TestPatient();
+        var p = new Patient();
         var tx = new TransactionBuilder("http://myserver.org/fhir")
             .ConditionalUpdate(new SearchParams().Where("name=foobar"), p, versionId: "314", fullUrl);
         var bundle = tx.ToBundle();
 
         bundle.Entry.Should().ContainSingle().Which.FullUrl.Should().Be(fullUrl);
 
-        tx.Read("TestPatient", "123");
+        tx.Read("Patient", "123");
 
         bundle = tx.ToBundle();
 
@@ -143,7 +143,7 @@ public class TransactionBuilderTests
     [TestMethod]
     public void TestConditionalDeleteWithIfmatch()
     {
-        var p = new TestPatient();
+        var p = new Patient();
         var tx = new TransactionBuilder("http://myserver.org/fhir")
             .ConditionalDeleteSingle(new SearchParams().Where("name=foobar"), p.TypeName, versionId: "314");
         var b = tx.ToBundle();
