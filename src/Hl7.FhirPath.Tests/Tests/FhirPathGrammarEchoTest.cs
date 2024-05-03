@@ -178,6 +178,13 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_Echo_StringWithDelimiters()
+        {
+            var parser = Grammar.Expression.End();
+            AssertParser.SucceedsEcho(parser, @"id.replaceMatches('example','\\\nA')");
+        }
+
+        [TestMethod]
         public void FhirPath_Echo_Type()
         {
             var parser = Grammar.TypeExpression.End();

@@ -122,7 +122,7 @@ namespace Hl7.FhirPath.Expressions
                     }
                     break;
                 case "String":
-                    _result.Append($"'{t}'");
+                    _result.Append("'" + Functions.StringOperators.EscapeJson(t) + "'"); 
                     break;
                 case "Ratio":
                     _result.Append($"{t}");
