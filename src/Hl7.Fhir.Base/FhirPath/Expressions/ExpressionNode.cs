@@ -355,7 +355,12 @@ namespace Hl7.FhirPath.Expressions
 
     public class ChildExpression : FunctionCallExpression, Sprache.IPositionAware<ChildExpression>
     {
-        public ChildExpression(Expression focus, string name, ISourcePositionInfo location = null) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
+        public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
+                new ConstantExpression(name, TypeSpecifier.String))
+        {
+        }
+
+        public ChildExpression(Expression focus, string name, ISourcePositionInfo location) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
                 new ConstantExpression(name, TypeSpecifier.String), location)
         {
         }
@@ -382,7 +387,11 @@ namespace Hl7.FhirPath.Expressions
 
     public class IndexerExpression : FunctionCallExpression, Sprache.IPositionAware<IndexerExpression>
     {
-        public IndexerExpression(Expression collection, Expression index, ISourcePositionInfo location = null) : base(collection, OP_PREFIX + "item", TypeSpecifier.Any, index, location)
+        public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX + "item", TypeSpecifier.Any, index)
+        {
+        }
+
+        public IndexerExpression(Expression collection, Expression index, ISourcePositionInfo location) : base(collection, OP_PREFIX + "item", TypeSpecifier.Any, index, location)
         {
         }
 
@@ -407,11 +416,19 @@ namespace Hl7.FhirPath.Expressions
         internal static readonly int BIN_PREFIX_LEN = BIN_PREFIX.Length;
 
 
-        public BinaryExpression(char op, Expression left, Expression right, ISourcePositionInfo location = null) : this(new string(op, 1), left, right, location)
+        public BinaryExpression(char op, Expression left, Expression right) : this(new string(op, 1), left, right, null)
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right, ISourcePositionInfo location = null) : base(AxisExpression.That, BIN_PREFIX + op, TypeSpecifier.Any, new[] { left, right }, location)
+        public BinaryExpression(char op, Expression left, Expression right, ISourcePositionInfo location) : this(new string(op, 1), left, right, location)
+        {
+        }
+
+        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.That, BIN_PREFIX + op, TypeSpecifier.Any, new[] { left, right }, null)
+        {
+        }
+
+        public BinaryExpression(string op, Expression left, Expression right, ISourcePositionInfo location) : base(AxisExpression.That, BIN_PREFIX + op, TypeSpecifier.Any, new[] { left, right }, location)
         {
         }
 
@@ -463,13 +480,22 @@ namespace Hl7.FhirPath.Expressions
         internal const string URY_PREFIX = "unary.";
         internal static readonly int URY_PREFIX_LEN = URY_PREFIX.Length;
 
-        public UnaryExpression(char op, Expression operand, ISourcePositionInfo location = null) : this(new string(op, 1), operand, location)
+        public UnaryExpression(char op, Expression operand) : this(new string(op, 1), operand)
         {
         }
 
-        public UnaryExpression(string op, Expression operand, ISourcePositionInfo location = null) : base(AxisExpression.That, URY_PREFIX + op, TypeSpecifier.Any, operand, location)
+        public UnaryExpression(char op, Expression operand, ISourcePositionInfo location) : this(new string(op, 1), operand, location)
         {
         }
+
+        public UnaryExpression(string op, Expression operand) : base(AxisExpression.That, URY_PREFIX + op, TypeSpecifier.Any, operand)
+        {
+        }
+
+        public UnaryExpression(string op, Expression operand, ISourcePositionInfo location) : base(AxisExpression.That, URY_PREFIX + op, TypeSpecifier.Any, operand, location)
+        {
+        }
+
         public string Op
         {
             get
@@ -490,7 +516,12 @@ namespace Hl7.FhirPath.Expressions
 
     public class NewNodeListInitExpression : Expression, Sprache.IPositionAware<NewNodeListInitExpression>
     {
-        public NewNodeListInitExpression(IEnumerable<Expression> contents, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)
+        public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(TypeSpecifier.Any, null)
+        {
+            Contents = contents ?? throw Error.ArgumentNull("contents");
+        }
+
+        public NewNodeListInitExpression(IEnumerable<Expression> contents, ISourcePositionInfo location) : base(TypeSpecifier.Any, location)
         {
             Contents = contents ?? throw Error.ArgumentNull("contents");
         }
@@ -573,7 +604,12 @@ namespace Hl7.FhirPath.Expressions
 
     public class AxisExpression : VariableRefExpression, Sprache.IPositionAware<AxisExpression>
     {
-        public AxisExpression(string axisName, ISourcePositionInfo location = null) : base(OP_PREFIX + axisName, location)
+        public AxisExpression(string axisName) : base(OP_PREFIX + axisName, null)
+        {
+            if (axisName == null) throw Error.ArgumentNull("axisName");
+        }
+
+        public AxisExpression(string axisName, ISourcePositionInfo location) : base(OP_PREFIX + axisName, location)
         {
             if (axisName == null) throw Error.ArgumentNull("axisName");
         }
