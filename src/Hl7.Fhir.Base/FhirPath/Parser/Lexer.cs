@@ -68,7 +68,7 @@ namespace Hl7.FhirPath.Parser
 
         public static readonly Parser<string> DelimitedIdentifier =
 
-            DelimitedContents('"') // this isn't to standard
+            DelimitedContents('"') // Included for backward compatibility with older versions of fhirpath
             .XOr(DelimitedContents('`'));
 
         // identifier
