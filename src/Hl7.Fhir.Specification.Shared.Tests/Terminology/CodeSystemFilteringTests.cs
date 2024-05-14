@@ -5,7 +5,7 @@ using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 {
@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
     public class CodeSystemFilteringTests
     {
         [TestMethod]
-        public async T.Task TestHierarchicalIsAFilter()
+        public async Tasks.Task TestHierarchicalIsAFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
-        public async T.Task TestSubsumbedByIsAFilter()
+        public async Tasks.Task TestSubsumbedByIsAFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
-        public async T.Task TestHierarchicalDescendantOfFilter()
+        public async Tasks.Task TestHierarchicalDescendantOfFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
-        public async T.Task TestSubsumbedByDescendantOfFilter()
+        public async Tasks.Task TestSubsumbedByDescendantOfFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
-        public async T.Task TestHierarchicalIsNotAFilter()
+        public async Tasks.Task TestHierarchicalIsNotAFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
-        public async T.Task TestSubsumbedByIsNotAFilter()
+        public async Tasks.Task TestSubsumbedByIsNotAFilter()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -280,5 +280,3 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
 
 
 }
-
-

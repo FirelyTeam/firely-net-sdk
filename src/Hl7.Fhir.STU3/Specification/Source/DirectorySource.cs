@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Specification.Source
                 try
                 {
                     // Process files in parallel
-                    var loopResult = T.Parallel.For(0, cnt,
+                    var loopResult = Tasks.Parallel.For(0, cnt,
                         // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                         i =>
                         {
@@ -1004,9 +1004,9 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         protected IEnumerable<string> GetFileNames() => GetSummaries().Select(s => Path.GetFileName(s.Origin)).Distinct();
 
-        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
+        public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
 
-        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
 
         #endregion
 

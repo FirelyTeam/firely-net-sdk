@@ -15,7 +15,7 @@ using Hl7.Fhir.Support;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 using Hl7.Fhir.Rest;
 using System.Net.Http;
 
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod,TestCategory("IntegrationTest")]
-        public async T.Task RetrieveArtifactMulti()
+        public async Tasks.Task RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
 
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod, TestCategory("IntegrationTest")]
-        public async T.Task TestSourceCaching()
+        public async Tasks.Task TestSourceCaching()
         {
             var src = new CachedResolver(
                 new MultiResolver(
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestCacheInvalidation()
+        public async Tasks.Task TestCacheInvalidation()
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestCacheLoadingStrategy()
+        public async Tasks.Task TestCacheLoadingStrategy()
         {
             const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
 
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & ResolvingConflictException
         [TestMethod]
-        public async T.Task TestCanonicalUrlConflicts()
+        public async Tasks.Task TestCanonicalUrlConflicts()
         {
             //const string srcFileName = "extension-definitions.xml";
             const string dupFileName = "diagnosticorder-reason-duplicate";

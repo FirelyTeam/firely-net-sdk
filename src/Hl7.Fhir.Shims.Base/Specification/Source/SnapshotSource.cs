@@ -3,7 +3,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public async T.Task<Resource> ResolveByUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
+        public async Tasks.Task<Resource> ResolveByUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByUriAsync(string)"/>
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public async T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
+        public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)"/>
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Source
 
         // If the specified resource is a StructureDefinition,
         // then ensure snapshot component is available, (re-)generate on demand
-        private async T.Task<Resource> ensureSnapshot(Resource res)
+        private async Tasks.Task<Resource> ensureSnapshot(Resource res)
         {
             if (res is StructureDefinition sd)
             {

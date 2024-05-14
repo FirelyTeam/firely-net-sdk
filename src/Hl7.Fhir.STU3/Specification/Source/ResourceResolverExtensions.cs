@@ -13,7 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Resolve the given url and verify it defines an Extension.
         /// </summary>
         /// <returns>Returns a StructureDefinition if it is resolvable and defines an extension, otherwise <c>null</c>.</returns>
-        public static async T.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
+        public static async Tasks.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
         {
             if (await resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) is not StructureDefinition sd) return null;
 
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Resolve the given url and verify it is a StructureDefinition
         /// </summary>
         /// <returns>The resolved StructureDefinition or <c>null</c> if it cannot be resolved or does not resolve to a StructureDefinition.</returns>
-        public static async T.Task<StructureDefinition> FindStructureDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
+        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
             => await resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as StructureDefinition;
 
         /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, string)"/>
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>If the <paramref name="typename"/> is a uri, will resolve the given uri, if it is a simple typename,
         /// it will resolve the typename below <c>http://hl7.org/fhir/StructureDefinition/</c>.
         /// </remarks>
-        public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
+        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
         {
             var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfo.CanonicalUriForFhirCoreType(typename).Value;
             return await resolver.FindStructureDefinitionAsync(url).ConfigureAwait(false);
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.
         /// </summary>
-        public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
+        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
             => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type)).ConfigureAwait(false);
 
         /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string)"/>
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Find a ValueSet by canonical url.
         /// </summary>
-        public static async T.Task<ValueSet> FindValueSetAsync(this IAsyncResourceResolver source, string uri)
+        public static async Tasks.Task<ValueSet> FindValueSetAsync(this IAsyncResourceResolver source, string uri)
             => await source.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as ValueSet;
 
         /// <inheritdoc cref="FindCodeSystemAsync(IAsyncResourceResolver, string)"/>
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Find a CodeSystem by canonical url.
         /// </summary>
-        public static async T.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri)
+        public static async Tasks.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri)
             => await source.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as CodeSystem;
 
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource

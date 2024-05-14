@@ -18,7 +18,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return TerminologyServiceFactory.CreateDefaultForCore(coreResourceResolver, expanderSettings);
         }
 
-        internal async T.Task<ValueSet?> FindValueSet(string canonical)
+        internal async Tasks.Task<ValueSet?> FindValueSet(string canonical)
         {
             var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
 
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         ///<inheritdoc />
-        public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+        public async Tasks.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
         {
             parameters.CheckForValidityOfValidateCodeParams();
 
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         ///<inheritdoc />
-        public async T.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
+        public async Tasks.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
         {
             parameters.NoDuplicates();
 
@@ -212,42 +212,42 @@ namespace Hl7.Fhir.Specification.Terminology
 
         #region Not implemented methods
         ///<inheritdoc />
-        public T.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+        public Tasks.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
         ///<inheritdoc />
-        public T.Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
+        public Tasks.Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
         ///<inheritdoc />
-        public T.Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
+        public Tasks.Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
         ///<inheritdoc />
-        public T.Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
+        public Tasks.Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
 
         ///<inheritdoc />
-        public T.Task<Resource> Closure(Parameters parameters, bool useGet = false)
+        public Tasks.Task<Resource> Closure(Parameters parameters, bool useGet = false)
         {
             // make this method async, when implementing
             throw new NotImplementedException();
         }
         #endregion
 
-        private async T.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
+        private async Tasks.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
         {
             var result = new Parameters();
 
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
 
             // Else, look for one succesful match in any of the codes in the CodeableConcept
-            var callResults = await T.Task.WhenAll(cc.Coding.Select(coding => validateCodeVS(vs, coding, abstractAllowed))).ConfigureAwait(false);
+            var callResults = await Tasks.Task.WhenAll(cc.Coding.Select(coding => validateCodeVS(vs, coding, abstractAllowed))).ConfigureAwait(false);
             var anySuccesful = callResults.Any(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
 
             if (anySuccesful == false)
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private async T.Task<Parameters> validateCodeVS(ValueSet vs, Coding coding, bool? abstractAllowed)
+        private async Tasks.Task<Parameters> validateCodeVS(ValueSet vs, Coding coding, bool? abstractAllowed)
         {
             return await validateCodeVS(vs, coding.Code, coding.System, coding.Display, abstractAllowed).ConfigureAwait(false);
         }
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private async T.Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel, StringBuilder messages)
+        private async Tasks.Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel, StringBuilder messages)
         {
             if (system is not null && await isValueSet(system).ConfigureAwait(false))
             {
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 messages.AppendLine($"{codeLabel} does not exist in the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
             }
 
-            async T.Task<bool> isValueSet(string system)
+            async Tasks.Task<bool> isValueSet(string system)
             {
                 // First, conduct a quick initial check, and if that fails, proceed with a more comprehensive approach.
                 return (system.Contains(@"/ValueSet/") || await _resolver.FindValueSetAsync(system).ConfigureAwait(false) is not null);
