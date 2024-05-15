@@ -21,8 +21,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
-using Tasks = System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Test
 {
@@ -30,7 +29,7 @@ namespace Hl7.Fhir.Test
     public class ResponseMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
         private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngineFactory.Legacy.Permissive(TESTINSPECTOR);
         private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
 
@@ -84,7 +83,7 @@ namespace Hl7.Fhir.Test
             new(status) { Content = makeJsonContent(json), RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
 
         [TestMethod]
-        public async Tasks.Task SetAndExtractRelevantHeaders()
+        public async Task SetAndExtractRelevantHeaders()
         {
             var engine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
             var xmlContent = makeXmlContent();

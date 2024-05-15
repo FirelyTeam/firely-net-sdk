@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Vonk.FhirPath.R4.Tests
 {
@@ -32,7 +32,7 @@ namespace Vonk.FhirPath.R4.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public async T.Task TestSelectMethods()
+        public async Tasks.Task TestSelectMethods()
         {
             await MassiveParallelSelectsShouldBeCorrect("Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
             await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context)));
@@ -46,7 +46,7 @@ namespace Vonk.FhirPath.R4.Tests
         /// This may indicate a multithreading problem in the FhirPath evaluation.
         /// You may need to run the test in Release mode to reveal the error.
         /// </summary>
-        public static async T.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
+        public static async Tasks.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
             var buffer = new BufferBlock<ValueSet>();
@@ -135,4 +135,3 @@ namespace Vonk.FhirPath.R4.Tests
 
     }
 }
-

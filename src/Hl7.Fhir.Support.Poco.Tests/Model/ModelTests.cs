@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void ExtensionManagement()
         {
-            TestPatient p = new();
+            Patient p = new();
             var u1 = "http://fhir.org/ext/ext-test";
             Assert.IsNull(p.GetExtension("http://fhir.org/ext/ext-test"));
 
@@ -175,9 +175,9 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void FindContainedResource()
         {
-            var cPat1 = new TestPatient() { Id = "pat1" };
-            var cPat2 = new TestPatient() { Id = "pat2" };
-            var pat = new TestPatient
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
             {
                 Contained = new List<Resource> { cPat1, cPat2 }
             };
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.AreEqual(pat, pat.FindContainedResource("#"));
 
-            var pat2 = new TestPatient();
+            var pat2 = new Patient();
             Assert.IsNull(pat2.FindContainedResource("#pat1"));
         }
 
@@ -201,9 +201,9 @@ namespace Hl7.Fhir.Tests.Model
         [ExpectedException(typeof(ArgumentNullException))]
         public void FindContainedResourceExceptionExpected()
         {
-            var cPat1 = new TestPatient() { Id = "pat1" };
-            var cPat2 = new TestPatient() { Id = "pat2" };
-            var pat = new TestPatient
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
             {
                 Contained = new List<Resource> { cPat1, cPat2 }
             };
@@ -214,12 +214,12 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestListDeepCopy()
         {
-            var x = new List<TestPatient>();
-            x.Add(new TestPatient());
-            x.Add(new TestPatient());
+            var x = new List<Patient>();
+            x.Add(new Patient());
+            x.Add(new Patient());
 
-            var y = new List<TestPatient>(x.DeepCopy());
-            Assert.IsTrue(x[0] is TestPatient);
+            var y = new List<Patient>(x.DeepCopy());
+            Assert.IsTrue(x[0] is Patient);
             Assert.AreNotEqual(x[0], y[0]);
             Assert.AreNotEqual(x[1], y[1]);
         }
@@ -228,8 +228,8 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestLazyCreatedLists()
         {
-            var p = new TestPatient();
-            p.Name.Add(new TestHumanName());
+            var p = new Patient();
+            p.Name.Add(new HumanName());
         }
 
 
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestChildren_EmptyPatient()
         {
-            var patient = new TestPatient();
+            var patient = new Patient();
             var children = patient.Children.ToArray();
             Base[] expected = { };
             Assert.IsTrue(expected.SequenceEqual(children));
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestChildren_EmptyHumanName()
         {
-            var timing = new TestHumanName();
+            var timing = new HumanName();
             var children = timing.Children.ToArray();
             Base[] expected = { };
             Assert.IsTrue(expected.SequenceEqual(children));
@@ -330,16 +330,16 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestChildren_Patient()
         {
-            var patient = new TestPatient()
+            var patient = new Patient()
             {
                 Name =
                 {
-                    new TestHumanName()
+                    new HumanName()
                     {
                         Given = new string[] { "John" },
                         Family = "Doe"
                     },
-                     new TestHumanName()
+                     new HumanName()
                     {
                         Given = new string[] { "Alias" },
                         Family = "Alternate"
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Tests.Model
                 },
                 Address =
                 {
-                    new TestAddress()
+                    new Address()
                     {
                         City = "Amsterdam",
                         Line = new string[] { "Rokin" }

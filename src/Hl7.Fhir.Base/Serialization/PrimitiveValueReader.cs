@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
             {
                 // The POCO's know nothing about the special partial date/time classes used by ITypedElement, 
                 // instead FhirDateTime, Time and FhirDate all represent these values as simple strings.
-                if (primitiveValue is P.DateTime || primitiveValue is P.Time || primitiveValue is P.Date)
+                if (primitiveValue is P.DateTime or P.Time or P.Date)
                     return PrimitiveTypeConverter.ConvertTo(primitiveValue.ToString(), nativeType);
                 else
                     return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);

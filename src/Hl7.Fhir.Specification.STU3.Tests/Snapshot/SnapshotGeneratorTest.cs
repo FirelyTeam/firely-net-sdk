@@ -30,7 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task OverriddenNestedStructureDefinitionLists()
+        public async Tasks.Task OverriddenNestedStructureDefinitionLists()
         {
             var baseCanonical = "http://yourdomain.org/fhir/StructureDefinition/Base";
             var code = "someCode";
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GenerateExtensionSnapshot()
+        public async Tasks.Task GenerateExtensionSnapshot()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync(@"http://fhir.nl/fhir/StructureDefinition/nl-core-address-official");
 
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GenerateSnapshotForExternalProfiles()
+        public async Tasks.Task GenerateSnapshotForExternalProfiles()
         {
             //Test external type profile
             var sd = await _testResolver.FindStructureDefinitionAsync(@"http://issue.com/fhir/StructureDefinition/MyPatient");
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GenerateSingleSnapshot()
+        public async Tasks.Task GenerateSingleSnapshot()
         {
             // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestChoiceTypeWithMultipleProfileConstraints()
+        public async Tasks.Task TestChoiceTypeWithMultipleProfileConstraints()
         {
             // [WMR 20161005] The following profile defines several type constraints on Observation.value[x]
             // - Type = Quantity, Profile = WeightQuantity
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GenerateRepeatedSnapshot()
+        public async Tasks.Task GenerateRepeatedSnapshot()
         {
             // [WMR 20161005] This generated exceptions in an early version of the snapshot generator (fixed)
 
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
         [TestMethod]
-        public async T.Task TestFullyExpandCoreOrganization()
+        public async Tasks.Task TestFullyExpandCoreOrganization()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180115] NEW - Replacement for expandAllComplexElements (OBSOLETE)
         // Expand all elements with complex type and no children
-        private async T.Task<List<ElementDefinition>> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues = null)
+        private async Tasks.Task<List<ElementDefinition>> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues = null)
         {
             var nav = new ElementDefinitionNavigator(elements);
             // Skip root element
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Expand current element if it has a complex type and no children (recursively)
-        private async T.Task fullyExpandElement(ElementDefinitionNavigator nav, List<OperationOutcome.IssueComponent> issues)
+        private async Tasks.Task fullyExpandElement(ElementDefinitionNavigator nav, List<OperationOutcome.IssueComponent> issues)
         {
             if (nav.HasChildren || (isExpandableElement(nav.Current) && await _generator.ExpandElementAsync(nav)))
             {
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
         [TestMethod]
-        public async T.Task TestFullyExpandCorePatient()
+        public async Tasks.Task TestFullyExpandCorePatient()
         {
             // [WMR 20180115] Iteratively expand all complex elements
             // 1. First generate regular snapshot
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Note: result is different from TestCoreOrganizationNL, contains more elements - correct!
         // Older approach was flawed, e.g. see exclusion for Organization.type
         [TestMethod]
-        public async T.Task TestFullyExpandNLCoreOrganization()
+        public async Tasks.Task TestFullyExpandNLCoreOrganization()
         {
             // core-organization-nl references extension core-address-nl
             // BUG: expanded extension child elements have incorrect .Base.Path ...?!
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestSnapshotRecursionChecker()
+        public async Tasks.Task TestSnapshotRecursionChecker()
         {
             // Following structuredefinition has a recursive element type profile
             // Verify that the snapshot generator detects recursion and aborts with exception
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20170424] Add qicore-encounter.xml (STU3) as separate content file
         // Source: http://build.fhir.org/ig/cqframework/qi-core/StructureDefinition-qicore-encounter.xml.html
         [TestMethod]
-        public async T.Task GenerateDerivedProfileSnapshot()
+        public async Tasks.Task GenerateDerivedProfileSnapshot()
         {
             // [WMR 20161005] Verify that the snapshot generator supports profiles on profiles
 
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        private async T.Task<StructureDefinition> generateSnapshot(string url, Action<StructureDefinition> preprocessor = null)
+        private async Tasks.Task<StructureDefinition> generateSnapshot(string url, Action<StructureDefinition> preprocessor = null)
         {
             var structure = await _testResolver.FindStructureDefinitionAsync(url);
             Assert.IsNotNull(structure);
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170412] Fixed
         [TestMethod]
-        public async T.Task GeneratePatientWithExtensionsSnapshot()
+        public async Tasks.Task GeneratePatientWithExtensionsSnapshot()
         {
             // [WMR 20161005] Very complex set of examples by Chris Grenz
             // https://github.com/chrisgrenz/FHIR-Primer/blob/master/profiles/patient-extensions-profile.xml
@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GenerateSnapshotExpandExternalProfile()
+        public async Tasks.Task GenerateSnapshotExpandExternalProfile()
         {
             // Profile MyLocation references extension MyLocationExtension
             // MyLocationExtension extension profile does not have a snapshot component => expand on demand
@@ -988,7 +988,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GenerateSnapshotIgnoreMissingExternalProfile()
+        public async Tasks.Task GenerateSnapshotIgnoreMissingExternalProfile()
         {
             // [WMR 20161005] Verify that the snapshot generator gracefully handles unresolved external profile references
             // This should generate a partial snapshot and OperationOutcome Issues for each missing dependency.
@@ -1044,7 +1044,7 @@ namespace Hl7.Fhir.Specification.Tests
         //	// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
         //};
         [TestMethod, Ignore]
-        public async T.Task GenerateSnapshot()
+        public async Tasks.Task GenerateSnapshot()
         {
             var sw = new Stopwatch();
             int count = 0;
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Specification.Tests
             _source.ShowDuration(count, sw.Elapsed);
         }
 
-        private async T.Task<StructureDefinition> generateSnapshot(StructureDefinition original)
+        private async Tasks.Task<StructureDefinition> generateSnapshot(StructureDefinition original)
         {
             if (_generator == null)
             {
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Specification.Tests
             return expanded;
         }
 
-        private async T.Task<(bool, StructureDefinition expanded)> generateSnapshotAndCompare(StructureDefinition original)
+        private async Tasks.Task<(bool, StructureDefinition expanded)> generateSnapshotAndCompare(StructureDefinition original)
         {
             var expanded = await generateSnapshot(original);
 
@@ -1245,7 +1245,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 #if false
         [TestMethod]
-        public async T.Task DebugDifferentialTree()
+        public async Tasks.Task DebugDifferentialTree()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.com/fhir/SD/patient-research-auth-reslice");
             Assert.IsNotNull(sd);
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20161005] internal expandElement method is no longer unit-testable; uninitialized recursion stack causes exceptions
 
         //[TestMethod]
-        //public async T.Task TestExpandChild()
+        //public async Tasks.Task TestExpandChild()
         //{
         //    var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Questionnaire);
         //    Assert.IsNotNull(sd);
@@ -1279,33 +1279,33 @@ namespace Hl7.Fhir.Specification.Tests
         //}
 
         [TestMethod]
-        public async T.Task TestExpandElement_PatientIdentifier()
+        public async Tasks.Task TestExpandElement_PatientIdentifier()
         {
             await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
         }
 
         [TestMethod]
-        public async T.Task TestExpandElement_PatientName()
+        public async Tasks.Task TestExpandElement_PatientName()
         {
             await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
         }
 
         [TestMethod]
-        public async T.Task TestExpandElement_QuestionnaireItem()
+        public async Tasks.Task TestExpandElement_QuestionnaireItem()
         {
             // Validate name reference expansion
             await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item");
         }
 
         [TestMethod]
-        public async T.Task TestExpandElement_QuestionnaireItemItem()
+        public async Tasks.Task TestExpandElement_QuestionnaireItemItem()
         {
             // Validate name reference expansion
             await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
         }
 
         [TestMethod]
-        public async T.Task TestExpandElement_Slice()
+        public async Tasks.Task TestExpandElement_Slice()
         {
             // Resolve lipid profile from profile-others.xml
             var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/lipidprofile");
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandElement(sd, nav.Current);
         }
 
-        private async T.Task testExpandElement(string srcProfileUrl, string expandElemPath)
+        private async Tasks.Task testExpandElement(string srcProfileUrl, string expandElemPath)
         {
             // Prepare...
             var sd = await _testResolver.FindStructureDefinitionAsync(srcProfileUrl);
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandElement(sd, elem);
         }
 
-        private async T.Task testExpandElement(StructureDefinition sd, ElementDefinition elem)
+        private async Tasks.Task testExpandElement(StructureDefinition sd, ElementDefinition elem)
         {
             Assert.IsNotNull(elem);
             var elems = sd.Snapshot.Element;
@@ -1382,7 +1382,7 @@ namespace Hl7.Fhir.Specification.Tests
             await verifyExpandElement(elem, elems, result);
         }
 
-        private async T.Task verifyExpandElement(ElementDefinition elem, IList<ElementDefinition> elems, IList<ElementDefinition> result)
+        private async Tasks.Task verifyExpandElement(ElementDefinition elem, IList<ElementDefinition> elems, IList<ElementDefinition> result)
         {
             var expandElemPath = elem.Path;
 
@@ -1626,7 +1626,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task GenerateSnapshotEmitBaseData()
+        public async Tasks.Task GenerateSnapshotEmitBaseData()
         {
             // Verify that the SnapshotGenerator events provide stable references to associated base ElementDefinition instances.
             // If two different profile elements have the same type, then the PrepareElement event should provide the exact same
@@ -1734,7 +1734,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestBaseAnnotations_ExplicitCoreTypeProfile()
+        public async Tasks.Task TestBaseAnnotations_ExplicitCoreTypeProfile()
         {
             // Verify processing of explicit core element type profile in differential
             // e.g. if the differential specifies explicit core type profile url
@@ -1827,7 +1827,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestBaseAnnotations_CustomTypeProfile()
+        public async Tasks.Task TestBaseAnnotations_CustomTypeProfile()
         {
             // Verify generated base annotations for a profile that references an external element type profile
             // e.g. Patient profile with a custom Identifier profile on the Patient.identifier element
@@ -1936,7 +1936,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestBaseAnnotations_InlineExtension()
+        public async Tasks.Task TestBaseAnnotations_InlineExtension()
         {
             // Verify generated base annotations for a profile that references an external extension definition profile
 
@@ -2035,7 +2035,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestBaseAnnotations_StructureDefinition_ExtensionHeaderSlicingElement()
+        public async Tasks.Task TestBaseAnnotations_StructureDefinition_ExtensionHeaderSlicingElement()
         {
             const string url = @"https://example.org/fhir/StructureDefinition/MyPatient";
             const string urlExtension = @"http://hl7.org/fhir/StructureDefinition/cqf-initialValue";
@@ -2117,7 +2117,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20190805] Updated, verify base annotation on extension definition root element
         // Should point to core "Extension", not "Element"
         [TestMethod]
-        public async T.Task TestBaseAnnotations_ExtensionDefinition()
+        public async Tasks.Task TestBaseAnnotations_ExtensionDefinition()
         {
             const string url = @"http://example.org/fhir/StructureDefinition/MyTestExtension";
             var sd = new StructureDefinition()
@@ -2230,7 +2230,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestBaseAnnotations_BackboneElement()
+        public async Tasks.Task TestBaseAnnotations_BackboneElement()
         {
             var sd = MyTestObservation;
             var resolver = new InMemoryProfileResolver(sd);
@@ -2528,25 +2528,25 @@ namespace Hl7.Fhir.Specification.Tests
         private static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDiff();
 
         [TestMethod]
-        public async T.Task TestExpandCoreElement()
+        public async Tasks.Task TestExpandCoreElement()
         {
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
         }
 
         [TestMethod]
-        public async T.Task TestExpandCoreBackBoneElement()
+        public async Tasks.Task TestExpandCoreBackBoneElement()
         {
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
         }
 
         [TestMethod]
-        public async T.Task TestExpandCoreExtension()
+        public async Tasks.Task TestExpandCoreExtension()
         {
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
         }
 
         [TestMethod]
-        public async T.Task TestExpandCoreArtifacts()
+        public async Tasks.Task TestExpandCoreArtifacts()
         {
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
@@ -2572,7 +2572,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestExpandAllCoreTypes()
+        public async Tasks.Task TestExpandAllCoreTypes()
         {
             // these are the types that are part of R5, but retrospectively introduced
             // as POCOs already in R3. There are no StructDefs available for these,
@@ -2591,7 +2591,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public async T.Task TestExpandAllCoreResources()
+        public async Tasks.Task TestExpandAllCoreResources()
         {
             // Generate snapshots for all core resources, in the original order as they are defined
             // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. data types)
@@ -2599,7 +2599,7 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandResources(coreResourceUrls.ToArray());
         }
 
-        private async T.Task testExpandResources(string[] profileUris)
+        private async Tasks.Task testExpandResources(string[] profileUris)
         {
             var sw = new Stopwatch();
             int count = profileUris.Length;
@@ -2615,7 +2615,7 @@ namespace Hl7.Fhir.Specification.Tests
             _source.ShowDuration(count, sw.Elapsed);
         }
 
-        private async T.Task<bool> testExpandResource(string url)
+        private async Tasks.Task<bool> testExpandResource(string url)
         {
             Debug.Print("[testExpandResource] url = '{0}'", url);
             var sd = await _testResolver.FindStructureDefinitionAsync(url);
@@ -2653,7 +2653,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestExpandCoreTypesByHierarchy()
+        public async Tasks.Task TestExpandCoreTypesByHierarchy()
         {
             // [WMR 20160912] Expand all core data types
             // Start at root types without a base (Element, Extension), then recursively expand derived types
@@ -2689,7 +2689,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private struct ProfileInfo { public string Url; public string BaseDefinition; }
 
-        private async T.Task expandStructuresBasedOn(IAsyncResourceResolver resolver, ProfileInfo[] profileInfo, string baseUrl)
+        private async Tasks.Task expandStructuresBasedOn(IAsyncResourceResolver resolver, ProfileInfo[] profileInfo, string baseUrl)
         {
             var derivedStructures = profileInfo.Where(pi => pi.BaseDefinition == baseUrl);
             if (derivedStructures.Any())
@@ -2705,7 +2705,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        private async T.Task updateSnapshot(StructureDefinition sd)
+        private async Tasks.Task updateSnapshot(StructureDefinition sd)
         {
             Assert.IsNotNull(sd);
             Debug.Print("Profile: '{0}' : '{1}'".FormatWith(sd.Url, sd.BaseDefinition));
@@ -2872,7 +2872,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20161207] NEW
         // Verify reslicing order
         [TestMethod]
-        public async T.Task TestReslicingOrder()
+        public async Tasks.Task TestReslicingOrder()
         {
             var dirSource = new DirectorySource("TestData/validation");
             var sd = await dirSource.FindStructureDefinitionAsync("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
@@ -2979,7 +2979,7 @@ namespace Hl7.Fhir.Specification.Tests
         // http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen : 'TestData/snapshot-test/extensions\extension-questionnaire-enablewhen.xml'
 
         [TestMethod]
-        public async T.Task FindComplexTestExtensions()
+        public async Tasks.Task FindComplexTestExtensions()
         {
             Debug.WriteLine("Complex extension in TestData folder:");
             var dirSource = new DirectorySource("TestData/snapshot-test/extensions");
@@ -3056,7 +3056,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestTypeSlicing()
+        public async Tasks.Task TestTypeSlicing()
         {
             // Create a profile with a type slice: { value[x], value[x] : String }
             var profile = ObservationTypeSliceProfile;
@@ -3110,7 +3110,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestMissingDifferential()
+        public async Tasks.Task TestMissingDifferential()
         {
             // Create a profile without a differential
             var profile = ObservationTypeSliceProfile;
@@ -3128,7 +3128,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestUnresolvedBaseProfile()
+        public async Tasks.Task TestUnresolvedBaseProfile()
         {
             // Create a profile with an unresolved base profile reference
             var profile = ObservationTypeSliceProfile;
@@ -3197,7 +3197,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestTypeReslicing()
+        public async Tasks.Task TestTypeReslicing()
         {
             // Create a derived profile from a base profile with a type slice
             var profile = ObservationTypeResliceProfile;
@@ -3255,7 +3255,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestChoiceTypeConstraint()
+        public async Tasks.Task TestChoiceTypeConstraint()
         {
             // Create a profile with a choice type constraint: value[x] => valueString
             var profile = ObservationTypeConstraintProfile;
@@ -3280,7 +3280,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestInvalidChoiceTypeConstraints()
+        public async Tasks.Task TestInvalidChoiceTypeConstraints()
         {
             // Create a profile with multiple (invalid!) choice type constraint: value[x] => { valueString, valueInteger }
             var profile = ObservationTypeConstraintProfile;
@@ -3347,7 +3347,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestEmptyClosedExtensionSlice()
+        public async Tasks.Task TestEmptyClosedExtensionSlice()
         {
             var profile = ClosedExtensionSliceObservationProfile;
 
@@ -3370,7 +3370,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestSlicingEntryWithChilren()
+        public async Tasks.Task TestSlicingEntryWithChilren()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/StructureDefinition/DocumentComposition");
             Assert.IsNotNull(sd);
@@ -3394,12 +3394,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestObservationProfileWithExtensions() => await testObservationProfileWithExtensions(false);
+        public async Tasks.Task TestObservationProfileWithExtensions() => await testObservationProfileWithExtensions(false);
 
         [TestMethod]
-        public async T.Task TestObservationProfileWithExtensions_ExpandAll() => await testObservationProfileWithExtensions(true);
+        public async Tasks.Task TestObservationProfileWithExtensions_ExpandAll() => await testObservationProfileWithExtensions(true);
 
-        private async T.Task testObservationProfileWithExtensions(bool expandAll)
+        private async Tasks.Task testObservationProfileWithExtensions(bool expandAll)
         {
             // Same as TestObservationProfileWithExtensions, but with full expansion of all complex elements (inc. extensions!)
 
@@ -3517,7 +3517,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Specifically, snapshot generator drops the slicing component from the slice entry element
         // Explanation: Organization.type is not a list (max = 1) and not a choice type => slicing is not allowed!
         [TestMethod]
-        public async T.Task TestOrganizationTypeSlice()
+        public async Tasks.Task TestOrganizationTypeSlice()
         {
             var org = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MySlicedOrganization");
             Assert.IsNotNull(org);
@@ -3549,7 +3549,7 @@ namespace Hl7.Fhir.Specification.Tests
         // If the diff constrains only Binding.Strength, then snapshot also contains only Binding.Strength - WRONG!
         // Expected: snapshot contains inherited properties from base, i.e. description, valueSetUri/valueSetReference
         [TestMethod]
-        public async T.Task TestElementBinding()
+        public async Tasks.Task TestElementBinding()
         {
             var sd = new StructureDefinition()
             {
@@ -3620,7 +3620,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Reported by Thomas Tveit Rosenlund: https://simplifier.net/Velferdsteknologi2/FlagVFT (geoPositions)
         // Don't expand; emit outcome issue
         [TestMethod]
-        public async T.Task TestInvalidProfileExtensionTarget()
+        public async Tasks.Task TestInvalidProfileExtensionTarget()
         {
             var sdLocation = new StructureDefinition()
             {
@@ -3784,7 +3784,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestSliceBase_SlicedPatient()
+        public async Tasks.Task TestSliceBase_SlicedPatient()
         {
             var profile = SlicedPatientProfile;
 
@@ -3955,7 +3955,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestSliceBase_SlicedNationalPatient()
+        public async Tasks.Task TestSliceBase_SlicedNationalPatient()
         {
             var baseProfile = NationalPatientProfile;
             var profile = SlicedNationalPatientProfile;
@@ -4148,7 +4148,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestSliceBase_ReslicedNationalPatient()
+        public async Tasks.Task TestSliceBase_ReslicedNationalPatient()
         {
             var baseProfile = NationalPatientProfile;
             var profile = ReslicedNationalPatientProfile;
@@ -4268,7 +4268,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestSliceBase_PatientTelecomResliceEK()
+        public async Tasks.Task TestSliceBase_PatientTelecomResliceEK()
         {
             var dirSource = new DirectorySource("TestData/validation");
             var source = new TimingSource(dirSource);
@@ -4435,7 +4435,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementMappings()
+        public async Tasks.Task TestElementMappings()
         {
             var profile = await _testResolver.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
             Assert.IsNotNull(profile);
@@ -4510,7 +4510,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestPatientNonTypeSlice()
+        public async Tasks.Task TestPatientNonTypeSlice()
         {
             var profile = PatientNonTypeSliceProfile;
 
@@ -4561,7 +4561,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170321] NEW
         [TestMethod]
-        public async T.Task TestSimpleQuantityObservationProfile()
+        public async Tasks.Task TestSimpleQuantityObservationProfile()
         {
             var profile = ObservationSimpleQuantityProfile;
 
@@ -4601,7 +4601,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         //Ignore invalid slice name error on the root of SimpleQuantity.
         [TestMethod]
-        public async T.Task TestSimpleQuantity()
+        public async Tasks.Task TestSimpleQuantity()
         {
             var resource = await _testResolver.FindStructureDefinitionAsync(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
             _generator = new SnapshotGenerator(_testResolver);
@@ -4618,7 +4618,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Profile defines constraints on child elements of the complex extension
         // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
         [TestMethod]   // test data needs to be converted from dstu2 -> stu3
-        public async T.Task TestProfileConstraintsOnComplexExtensionChildren()
+        public async Tasks.Task TestProfileConstraintsOnComplexExtensionChildren()
         {
             var profile = await _testResolver.FindStructureDefinitionAsync("https://example.org/fhir/StructureDefinition/cds-basecancer");
             Assert.IsNotNull(profile);
@@ -4739,7 +4739,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestElementIds_Questionnaire()
+        public async Tasks.Task TestElementIds_Questionnaire()
         {
 #if false // DEBUG
             var coreProfile = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Questionnaire);
@@ -4891,7 +4891,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestElementIds_PatientWithTypeSlice()
+        public async Tasks.Task TestElementIds_PatientWithTypeSlice()
         {
             var profile = TestPatientTypeSliceProfile;
             var resolver = new InMemoryProfileResolver(profile);
@@ -4975,7 +4975,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestElementIds_SlicedPatientWithCustomIdProfile()
+        public async Tasks.Task TestElementIds_SlicedPatientWithCustomIdProfile()
         {
             var profile = TestSlicedPatientWithCustomIdProfile;
             var resolver = new InMemoryProfileResolver(profile);
@@ -5060,7 +5060,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementIds_SlicedPatientWithCustomIdProfile2()
+        public async Tasks.Task TestElementIds_SlicedPatientWithCustomIdProfile2()
         {
             var profile = await _testResolver.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/PatientWithCustomElementIds");
             Assert.IsNotNull(profile);
@@ -5105,7 +5105,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170426] NEW - Bug with generating base element annotations for merged external type profiles?
         [TestMethod]
-        public async T.Task TestPatientWithAddress()
+        public async Tasks.Task TestPatientWithAddress()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
             Assert.IsNotNull(sd);
@@ -5249,7 +5249,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestTypeProfileWithChildElementBinding()
+        public async Tasks.Task TestTypeProfileWithChildElementBinding()
         {
             var patientProfile = PatientProfileWithIdentifierProfile;
             var resolver = new InMemoryProfileResolver(patientProfile, PatientIdentifierProfile);
@@ -5341,7 +5341,7 @@ namespace Hl7.Fhir.Specification.Tests
         //
         // However in STU3, the core def example binding DOES include a valueset reference.
         [TestMethod]
-        public async T.Task TestQRSliceChildrenBindings()
+        public async Tasks.Task TestQRSliceChildrenBindings()
         {
             var sd = QuestionnaireResponseWithSlice;
             var resolver = new InMemoryProfileResolver(sd);
@@ -5411,7 +5411,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestDerivedObservation()
+        public async Tasks.Task TestDerivedObservation()
         {
             var derivedObs = MyDerivedObservation;
             var resolver = new InMemoryProfileResolver(derivedObs);
@@ -5483,7 +5483,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestMoreDerivedObservation()
+        public async Tasks.Task TestMoreDerivedObservation()
         {
             var derivedObs = MyDerivedObservation;
             var moreDerivedObs = MyMoreDerivedObservation;
@@ -5572,7 +5572,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Instead, named slice base should always have Min = 0
         // Only slice entry inherits cardinality from base.
         [TestMethod]
-        public async T.Task TestNamedSliceMinCardinality()
+        public async Tasks.Task TestNamedSliceMinCardinality()
         {
             var sd = MySlicedDocumentReference;
             var resolver = new InMemoryProfileResolver(sd);
@@ -5681,7 +5681,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // https://trello.com/c/Mnn0EBOg
         [TestMethod]
-        public async T.Task TestConstraintOnSliceEntry()
+        public async Tasks.Task TestConstraintOnSliceEntry()
         {
             var sd = MyMoreDerivedPatient;
             var resolver = new InMemoryProfileResolver(sd, MySlicedBasePatient);
@@ -5725,7 +5725,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170810] https://trello.com/c/KNMYa44V
         [TestMethod]
-        public async T.Task TestDosage()
+        public async Tasks.Task TestDosage()
         {
             // Note: resolved from TestData\snapshot-test\profiles-types.xml
             var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Dosage);
@@ -5806,7 +5806,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestSimpleQuantitySlice()
+        public async Tasks.Task TestSimpleQuantitySlice()
         {
             var sd = MedicationStatementWithSimpleQuantitySlice;
             var resolver = new InMemoryProfileResolver(sd);
@@ -5961,7 +5961,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestPatientDe()
+        public async Tasks.Task TestPatientDe()
         {
             var sd = SL_PatientDerived;
             var resolver = new InMemoryProfileResolver(sd, SL_PatientBasis, SL_HumanNameBasis, SL_HumanNameTitleSuffix);
@@ -6011,7 +6011,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Observation.component.referenceRange => Observation.referenceRange
         // https://trello.com/c/p1RbTjwi
         [TestMethod]
-        public async T.Task TestObservationComponentReferenceRange()
+        public async Tasks.Task TestObservationComponentReferenceRange()
         {
             var sd = new StructureDefinition()
             {
@@ -6071,7 +6071,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // https://trello.com/c/pA4uF7IR
         [TestMethod]
-        public async T.Task TestInheritedDataTypeProfileExtensions()
+        public async Tasks.Task TestInheritedDataTypeProfileExtensions()
         {
             var sdHumanNameExtension = new StructureDefinition()
             {
@@ -6194,7 +6194,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Verify generated outcome issue for incompatible type profile
         // Also verify that choice type element renaming is not affected
         [TestMethod]
-        public async T.Task TestIncompatibleTypeProfile()
+        public async Tasks.Task TestIncompatibleTypeProfile()
         {
             const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
             var sd = new StructureDefinition()
@@ -6276,7 +6276,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Verify no outcome issue for incompatible type profiles
         // Also verify that choice type element renaming is not affected
         [TestMethod]
-        public async T.Task TestMultipleIncompatibleTypeProfiles()
+        public async Tasks.Task TestMultipleIncompatibleTypeProfiles()
         {
             const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
             var sd = new StructureDefinition()
@@ -6353,7 +6353,7 @@ namespace Hl7.Fhir.Specification.Tests
         // even if there are multiple type options (with same code)
         // https://trello.com/c/OvQFRdCJ
         [TestMethod]
-        public async T.Task TestExtensionValueReferenceRenaming()
+        public async Tasks.Task TestExtensionValueReferenceRenaming()
         {
             const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
             var sd = new StructureDefinition()
@@ -6445,7 +6445,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow(FHIRAllTypes.Patient, "", "", true)]
         [DataRow(FHIRAllTypes.Patient, "", "gender", false)]
         [DataRow(FHIRAllTypes.Patient, "", "gender", true)]
-        public async T.Task TestExpandBundleEntryResource(FHIRAllTypes fhirType, string profileCanonical, string differentialElement, bool alwaysExpand)
+        public async Tasks.Task TestExpandBundleEntryResource(FHIRAllTypes fhirType, string profileCanonical, string differentialElement, bool alwaysExpand)
         {
             const string BundleEntryResource = "Bundle.entry.resource";
 
@@ -6577,7 +6577,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/firely-net-sdk/issues/510
         // "Missing diff annotation on ElementDefinition.TypeRefComponent"
         [TestMethod]
-        public async T.Task TestConstrainedByDiff_Type()
+        public async Tasks.Task TestConstrainedByDiff_Type()
         {
             StructureDefinition sd = new StructureDefinition()
             {
@@ -6650,7 +6650,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestAuPatientWithExtensions()
+        public async Tasks.Task TestAuPatientWithExtensions()
         {
             // Forge issue: https://trello.com/c/Q13pabzq
 
@@ -6702,7 +6702,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180410] Unit test to investigate issue reported by David McKillop
         [TestMethod]
-        public async T.Task TestAuPatientDerived()
+        public async Tasks.Task TestAuPatientDerived()
         {
             var sd = new StructureDefinition()
             {
@@ -6754,7 +6754,7 @@ namespace Hl7.Fhir.Specification.Tests
         // TODO: Gracefully handle multiple matches, emit issue, use first match
         [Ignore]
         [TestMethod]
-        public async T.Task TestAuPatientDerived2()
+        public async Tasks.Task TestAuPatientDerived2()
         {
             var sd = new StructureDefinition()
             {
@@ -6826,7 +6826,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public async T.Task TestContentReferenceQuestionnaire()
+        public async Tasks.Task TestContentReferenceQuestionnaire()
         {
             var sd = QuestionnaireWithNestedItems;
 
@@ -6851,7 +6851,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestContentReferenceQuestionnaireDerived()
+        public async Tasks.Task TestContentReferenceQuestionnaireDerived()
         {
             var sd = new StructureDefinition
             {
@@ -6904,7 +6904,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/firely-net-sdk/issues/611
 
         [TestMethod]
-        public async T.Task TestSnapshotForDerivedSlice()
+        public async Tasks.Task TestSnapshotForDerivedSlice()
         {
             var sdBase = new StructureDefinition
             {
@@ -7021,7 +7021,7 @@ namespace Hl7.Fhir.Specification.Tests
         // then element in snapshot only contains the first code entry.
 
         [TestMethod]
-        public async T.Task TestObservationWithDisplayCodes()
+        public async Tasks.Task TestObservationWithDisplayCodes()
         {
             var sd = new StructureDefinition
             {
@@ -7073,7 +7073,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestExtensionOnValueSetBinding()
+        public async Tasks.Task TestExtensionOnValueSetBinding()
         {
             var profile = new StructureDefinition()
             {
@@ -7119,7 +7119,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         [TestMethod]
         [Ignore] //[MS 20201211] TODO: Changing elementDefnMerger from mergeprimitives to mergecomplexattribute seems to do the trick, but there are is some string specific code that will be ignored in that case.
-        public async T.Task TestExtensionOnPrimitive()
+        public async Tasks.Task TestExtensionOnPrimitive()
         {
             var profile = new StructureDefinition()
             {
@@ -7158,7 +7158,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestInvariantsOnValueX()
+        public async Tasks.Task TestInvariantsOnValueX()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/MedicationAdministration");
 
@@ -7180,7 +7180,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestReferenceTargetProfile()
+        public async Tasks.Task TestReferenceTargetProfile()
         {
             // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
             var ReferenceProfile = new StructureDefinition()
@@ -7279,7 +7279,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Extension.2Eurl.20-.20fixedString.20or.20fixedUri.3F
 
         [TestMethod]
-        public async T.Task TestExtensionUrlFixedValueSimple()
+        public async Tasks.Task TestExtensionUrlFixedValueSimple()
         {
             StructureDefinition SimpleTestExtension = new StructureDefinition()
             {
@@ -7315,7 +7315,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestExtensionUrlFixedValueComplex()
+        public async Tasks.Task TestExtensionUrlFixedValueComplex()
         {
             StructureDefinition ComplexTestExtension = new()
             {
@@ -7407,7 +7407,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task TestElementWithoutPath()
+        public async Tasks.Task TestElementWithoutPath()
         {
             var sd = new StructureDefinition()
             {
@@ -7430,7 +7430,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            async T.Task generate()
+            async Tasks.Task generate()
             {
                 await generateSnapshotAndCompare(sd);
             }
@@ -7442,7 +7442,7 @@ namespace Hl7.Fhir.Specification.Tests
         // #1123 SnapshotGenerator - ElementDefinition.base is empty for children of contentreference
 
         [TestMethod]
-        public async T.Task TestElementDefinitionBase_ContentReference()
+        public async Tasks.Task TestElementDefinitionBase_ContentReference()
         {
             // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
             var ProvenanceProfile = new StructureDefinition()
@@ -7497,7 +7497,7 @@ namespace Hl7.Fhir.Specification.Tests
         // #1108/#1303 - incorrectly copies the 0..* root cardinality of a referenced datatype profile
         // over unto an element that has base cardinality 0..1
         [TestMethod]
-        public async T.Task ShouldRespectMaxCardinalityFromBase()
+        public async Tasks.Task ShouldRespectMaxCardinalityFromBase()
         {
             var cr = new CachedResolver(
                 new SnapshotSource(
@@ -7512,7 +7512,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task NewSlicetoDerivedProfile()
+        public async Tasks.Task NewSlicetoDerivedProfile()
         {
             var resolver = new CachedResolver(
                 new SnapshotSource(
@@ -7530,7 +7530,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task AddingSliceInClosedSlicing()
+        public async Tasks.Task AddingSliceInClosedSlicing()
         {
             var testProfiles = new TestProfileArtifactSource();
 
@@ -7547,14 +7547,14 @@ namespace Hl7.Fhir.Specification.Tests
             openingSlice.Should().NotBeNull("The opening slice should be present in the snapshot");
             openingSlice.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
 
-            Func<T.Task> act = async () => { await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicingQuantity"); };
+            Func<Tasks.Task> act = async () => { await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicingQuantity"); };
             await act
               .Should().ThrowAsync<InvalidOperationException>()
               .WithMessage("*choice type of diff does not occur in snap*");
         }
 
         [TestMethod]
-        public async T.Task SnapshotSucceedsWithExtendedVariantElementDef()
+        public async Tasks.Task SnapshotSucceedsWithExtendedVariantElementDef()
         {
             var structureDef = new StructureDefinition
             {
@@ -7610,7 +7610,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestExtensionValueXCommentShouldBeNull()
+        public async Tasks.Task TestExtensionValueXCommentShouldBeNull()
         {
             const string ElementId = "Extension.value[x]";
 
@@ -7640,7 +7640,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task CheckCardinalityOfProfiledType()
+        public async Tasks.Task CheckCardinalityOfProfiledType()
         {
             var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
             var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
@@ -7663,7 +7663,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestAbsoluteContentReferenceGeneration()
+        public async Tasks.Task TestAbsoluteContentReferenceGeneration()
         {
             //prepare 
             var zipSource = ZipSource.CreateValidationSource();
@@ -7743,7 +7743,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task DiscriminatorBaseElementWithExpansionTest()
+        public async Tasks.Task DiscriminatorBaseElementWithExpansionTest()
         {
             var parentId = "Patient.address";
             var elementId = "Patient.address.country.extension:countryCode.value[x]:valueCodeableConcept.coding";
@@ -7787,7 +7787,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task ConstrainChoiceTypeInDerivedProfileCorrectly()
+        public async Tasks.Task ConstrainChoiceTypeInDerivedProfileCorrectly()
         {
             var baseStructureDefinition = new StructureDefinition()
             {
@@ -7854,7 +7854,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task ConstrainChoiceTypeWithExplicitSlicesInDerivedProfileCorrectly()
+        public async Tasks.Task ConstrainChoiceTypeWithExplicitSlicesInDerivedProfileCorrectly()
         {
             var baseStructureDefinition = new StructureDefinition()
             {
@@ -7969,7 +7969,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestConstraintSource()
+        public async Tasks.Task TestConstraintSource()
         {
             var observation = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Observation");
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -7986,7 +7986,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
-        public async T.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
+        public async Tasks.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
         {
             var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
             var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
@@ -8078,7 +8078,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("TestExtension1star", 2, "1", 2, "1", 1, "*")] // [N1]
         [DataRow("TestExtension1star", 2, "2", 2, "2", 1, "*")]
         [DataRow("TestExtension1star", 2, "*", 2, "*", 1, "*")]
-        public async T.Task CardinalityOfExtension(string extension, int? diffMin, string diffMax, int extMin, string extMax, int baseMin, string baseMax)
+        public async Tasks.Task CardinalityOfExtension(string extension, int? diffMin, string diffMax, int extMin, string extMax, int baseMin, string baseMax)
         {
             // Arrange
             string url = $"https://example.org/fhir/StructureDefinition/issue-1981-patient";
@@ -8162,7 +8162,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task BindingRemovedAfterTypeSlicing()
+        public async Tasks.Task BindingRemovedAfterTypeSlicing()
         {
             // Arrange
             var resolver = new CachedResolver(
@@ -8189,7 +8189,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task BindingRemovedAfterTypeConstraint()
+        public async Tasks.Task BindingRemovedAfterTypeConstraint()
         {
             // Arrange
             var resolver = new CachedResolver(
@@ -8247,7 +8247,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// <returns></returns>
         [DataTestMethod]
         [DynamicData(nameof(ElementDefinitionPropertyExtensionTestCasesStu3), DynamicDataSourceType.Property)]
-        public async T.Task ElementDefinitionPropertyExtensionTest(FHIRAllTypes profileType, string elementId, string propertyName, Extension[] baseExtensions, Extension[] diffExtensions)
+        public async Tasks.Task ElementDefinitionPropertyExtensionTest(FHIRAllTypes profileType, string elementId, string propertyName, Extension[] baseExtensions, Extension[] diffExtensions)
         {
             // Arrange
             var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
@@ -8347,7 +8347,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestMergingAPreviouslyRemovedElement()
+        public async Tasks.Task TestMergingAPreviouslyRemovedElement()
         {
             var structure = await _testResolver.FindStructureDefinitionAsync("http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes");
             _generator = new SnapshotGenerator(_testResolver, _settings);
