@@ -20,14 +20,17 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Literal.End();
 
-            AssertParser.SucceedsRoundTrip(parser, "'hi there'");
-            AssertParser.SucceedsRoundTrip(parser, "3");
-            AssertParser.SucceedsRoundTrip(parser, "3.14");
-            AssertParser.SucceedsRoundTrip(parser, "true");
-            AssertParser.SucceedsRoundTrip(parser, "@2013-12");
-            AssertParser.SucceedsRoundTrip(parser, "@2013-12T");
-            AssertParser.SucceedsRoundTrip(parser, "@T12:23:34");
-            AssertParser.SucceedsRoundTrip(parser, "@2014-12-13T12:00:00+02:00");
+            AssertParser.SucceedsRoundTrip(parser, "/*A*/'hi there'/*B*/", "'hi there'");
+            AssertParser.SucceedsRoundTrip(parser, " /*A*/ 3/*B*/", "3");
+            AssertParser.SucceedsRoundTrip(parser, "/*A*/ 3.14/*B*/", "3.14");
+            AssertParser.SucceedsRoundTrip(parser, " /*A*/true/*B*/", "true");
+            AssertParser.SucceedsRoundTrip(parser, "/*A*/@2013-12/*B*/", "@2013-12");
+            AssertParser.SucceedsRoundTrip(parser, "/*A*/@2013-12T/*B*/", "@2013-12T");
+            AssertParser.SucceedsRoundTrip(parser, "/*A*/@T12:23:34/*B*/", "@T12:23:34");
+            AssertParser.SucceedsRoundTrip(parser, "/*A*/@2014-12-13T12:00:00+02:00/*B*/", "@2014-12-13T12:00:00+02:00");
+            AssertParser.SucceedsRoundTrip(parser, "10 'mg'");
+            AssertParser.SucceedsRoundTrip(parser, " 4 'day' ", "4 'day'");
+            AssertParser.SucceedsRoundTrip(parser, "4 days", "4 'day'");
         }
 
         [TestMethod]
@@ -66,8 +69,18 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsRoundTrip(parser, "(3)");
             AssertParser.SucceedsRoundTrip(parser, "{}");
             AssertParser.SucceedsRoundTrip(parser, "@2014-12-13T12:00:00+02:00");
+        }
+
+        [TestMethod]
+        public void FhirPath_Roundtrip_Quantity()
+        {
+            var parser = Grammar.Term.End();
+
+            AssertParser.SucceedsRoundTrip(parser, "78");
             AssertParser.SucceedsRoundTrip(parser, "78 'kg'");
             AssertParser.SucceedsRoundTrip(parser, "10.1 'mg'");
+            AssertParser.SucceedsRoundTrip(parser, " 10.1 'mg' ", "10.1 'mg'");
+            AssertParser.SucceedsRoundTrip(parser, "10.1 /* some weird comment inside a quantity */  'mg'", "10.1 'mg'");
         }
 
         [TestMethod]
@@ -84,10 +97,11 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
-            AssertParser.SucceedsRoundTrip(parser, "Patient.name.doSomething(true)");
+            AssertParser.SucceedsRoundTrip(parser, "Patient.name", "Patient.name");
+            AssertParser.SucceedsRoundTrip(parser, "Patient .name", "Patient.name");
             AssertParser.SucceedsRoundTrip(parser, "Patient. name", "Patient.name");
             AssertParser.SucceedsRoundTrip(parser, "Patient . name", "Patient.name");
-            AssertParser.SucceedsRoundTrip(parser, "Patient .name", "Patient.name");
+            AssertParser.SucceedsRoundTrip(parser, "Patient.name.doSomething(true)");
         }
 
         [TestMethod]
@@ -146,7 +160,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.TypeExpression.End();
             AssertParser.SucceedsRoundTrip(parser, "(8.as(notoddbuteven))");
-            AssertParser.SucceedsRoundTrip(parser, " ( ( 8.as(notoddbuteven) )\t)", "((8.as(notoddbuteven)))");
+            AssertParser.SucceedsRoundTrip(parser, " ( (/*Smile*/ 8.as(notoddbuteven) )\t)", "((8.as(notoddbuteven)))");
         }
 
         [TestMethod]

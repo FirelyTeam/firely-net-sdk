@@ -55,21 +55,21 @@ namespace Hl7.FhirPath.Expressions
         /// <summary>
         /// Any leading whitespace or comments encountered immediately before this SubToken
         /// </summary>
-        public IEnumerable<WhitespaceSubToken> leadingWhitespace { get; internal set; }
+        public IEnumerable<WhitespaceSubToken> LeadingWhitespace { get; internal set; }
 
         /// <summary>
         /// Any trailing whitespace or comments encountered immediately after this SubToken
         /// </summary>
-        public IEnumerable<WhitespaceSubToken> trailingWhitespace { get; internal set; }
+        public IEnumerable<WhitespaceSubToken> TrailingWhitespace { get; internal set; }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (leadingWhitespace?.Any() == true)
-                sb.Append(System.String.Join("", leadingWhitespace.Select(ws => ws.ToString())));
+            if (LeadingWhitespace?.Any() == true)
+                sb.Append(System.String.Join("", LeadingWhitespace.Select(ws => ws.ToString())));
             sb.Append(Value);
-            if (trailingWhitespace?.Any() == true)
-                sb.Append(System.String.Join("", trailingWhitespace.Select(ws => ws.ToString())));
+            if (TrailingWhitespace?.Any() == true)
+                sb.Append(System.String.Join("", TrailingWhitespace.Select(ws => ws.ToString())));
             return sb.ToString();
         }
 
@@ -120,8 +120,8 @@ namespace Hl7.FhirPath.Expressions
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (leadingWhitespace?.Any() == true)
-                sb.Append(System.String.Join("", leadingWhitespace.Select(ws => ws.ToString())));
+            if (LeadingWhitespace?.Any() == true)
+                sb.Append(System.String.Join("", LeadingWhitespace.Select(ws => ws.ToString())));
             if (block)
                 sb.Append("/*");
             else
@@ -129,8 +129,8 @@ namespace Hl7.FhirPath.Expressions
             sb.Append(Value);
             if (block)
                 sb.Append("*/");
-            if (trailingWhitespace?.Any() == true)
-                sb.Append(System.String.Join("", trailingWhitespace.Select(ws => ws.ToString())));
+            if (TrailingWhitespace?.Any() == true)
+                sb.Append(System.String.Join("", TrailingWhitespace.Select(ws => ws.ToString())));
             return sb.ToString();
         }
 

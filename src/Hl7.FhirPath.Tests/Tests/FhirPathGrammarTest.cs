@@ -126,19 +126,78 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_Location_Type()
+        {
+            var parser = Grammar.TypeExpression.End();
+
+            AssertParser.SucceedsMatch(parser, "/*A*/ 8 /*B*/ as /*C*/ notoddbuteven /*D*/", new BinaryExpression(
+                "as",
+                new ConstantExpression(8, SetLoc(1, 7, 6, 1)),
+                new IdentifierExpression("notoddbuteven", SetLoc(1, 24, 23, 13)),
+                SetLoc(1, 15, 14, 2)));
+            AssertParser.SucceedsEcho(parser, "/*A*/ 8 /*B*/ as /*C*/ notoddbuteven /*D*/");
+        }
+
+        [TestMethod]
         public void FhirPath_LocationInfo_Function()
         {
             var parser = Grammar.Term.End();
             // The length of the function includes all the way to the end of the closing brackets (not just the function name)
-            AssertParser.SucceedsMatch(parser, "doSomething()", 
+            AssertParser.SucceedsMatch(parser, "today()", 
                 new FunctionCallExpression(
-                    AxisExpression.This, 
-                    "doSomething", 
+                    AxisExpression.This,
+                    "today", 
                     new SubToken('(', SetLoc(1, 14, 13, 1)),
                     new SubToken(')', SetLoc(1, 15, 14, 1)),
                     TypeSpecifier.Any, 
                     new Expression[] { }, 
-                    SetLoc(1, 1, 0, 11)));
+                    SetLoc(1, 1, 0, 5)));
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_Function2()
+        {
+            var parser = Grammar.Expression.End();
+            // The length of the function includes all the way to the end of the closing brackets (not just the function name)
+            AssertParser.SucceedsMatch(parser, "today().toString()",
+                new FunctionCallExpression(
+                    new FunctionCallExpression(
+                        AxisExpression.This,
+                        "today",
+                        new SubToken('(', SetLoc(1, 14, 13, 1)),
+                        new SubToken(')', SetLoc(1, 15, 14, 1)),
+                        TypeSpecifier.Any,
+                        new Expression[] { },
+                        SetLoc(1, 1, 0, 5)
+                    ),
+                    "toString",
+                    new SubToken('(', SetLoc(1, 14, 13, 1)),
+                    new SubToken(')', SetLoc(1, 15, 14, 1)),
+                    TypeSpecifier.Any,
+                    new Expression[] { },
+                    SetLoc(1, 9, 8, 8))
+                );
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_Function3()
+        {
+            var parser = Grammar.Expression.End();
+            // The length of the function includes all the way to the end of the closing brackets (not just the function name)
+            AssertParser.SucceedsMatch(parser, "given.join(' ')",
+                new FunctionCallExpression(
+                    new ChildExpression(
+                        AxisExpression.This,
+                        "given",
+                        SetLoc(1, 1, 0, 5)
+                    ),
+                    "join",
+                    new SubToken('(', SetLoc(1, 14, 13, 1)),
+                    new SubToken(')', SetLoc(1, 15, 14, 1)),
+                    TypeSpecifier.Any,
+                    new Expression[] { new ConstantExpression(" ", SetLoc(1, 12, 11, 3)) },
+                    SetLoc(1, 7, 6, 4))
+                );
         }
 
         [TestMethod]
@@ -193,13 +252,24 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_LocationInfo_Union()
+        {
+            var parser = Grammar.Expression.End();
+            AssertParser.SucceedsMatch(parser, " 1 | 50 ", new BinaryExpression(
+                '|',
+                new ConstantExpression(1, SetLoc(1, 2, 1, 1)),
+                new ConstantExpression(50, SetLoc(1, 6, 5, 2)),
+                SetLoc(1, 4, 3, 1)));
+        }
+
+        [TestMethod]
         public void FhirPath_LocationInfo_Brackets()
         {
-            var parser = Grammar.Term.End();
+            var parser = Grammar.Expression.End();
             AssertParser.SucceedsMatch(parser, "  ( 3 ) ", 
                 new BracketExpression(
                     new ConstantExpression(3, SetLoc(1, 2, 2, 1)),
-                    SetLoc(1, 3, 2, 6)));
+                    SetLoc(1, 3, 2, 5)));
         }
 
         [TestMethod]
@@ -207,6 +277,42 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Term.End();
             AssertParser.SucceedsMatch(parser, "{}", new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 1, 0, 2)));
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_EmptySet2()
+        {
+            var parser = Grammar.Expression.End();
+            AssertParser.SucceedsMatch(parser, "{}|{}",
+                new BinaryExpression('|',
+                    new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 1, 0, 2)),
+                    new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 4, 3, 2)),
+                    SetLoc(1, 3, 2, 1)
+                ));
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_EmptySet3()
+        {
+            var parser = Grammar.Expression.End();
+            AssertParser.SucceedsMatch(parser, "{}| {}",
+                new BinaryExpression('|',
+                    new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 1, 0, 2)),
+                    new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 5, 4, 2)),
+                    SetLoc(1, 3, 2, 1)
+                ));
+        }
+
+        [TestMethod]
+        public void FhirPath_LocationInfo_EmptySet4()
+        {
+            var parser = Grammar.Expression.End();
+            AssertParser.SucceedsMatch(parser, "{} |{}",
+                new BinaryExpression('|',
+                    new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 1, 0, 2)),
+                    new NewNodeListInitExpression(Enumerable.Empty<Expression>(), SetLoc(1, 5, 4, 2)),
+                    SetLoc(1, 4, 3, 1)
+                ));
         }
 
         [TestMethod]
@@ -221,6 +327,9 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Term.End();
             AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg"), SetLoc(1, 1, 0, 7)));
+
+            // and sub-token checks too (for comments and units)
+            AssertParser.SucceedsMatch(parser, " 78 /* smile */ days ", new ConstantExpression(new P.Quantity(78m, "day", Hl7.Fhir.ElementModel.Types.QuantityUnitSystem.CalendarDuration), SetLoc(1, 2, 1, 19)));
         }
 
         [TestMethod]
@@ -257,6 +366,16 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_LocationInfo_IndexerWithComments()
+        {
+            var parser = Grammar.Expression.End();
+            AssertParser.SucceedsMatch(parser, "/*A*/name/*B*/[/*C*/10/*D*/]/*E*/", new IndexerExpression(
+                new ChildExpression(AxisExpression.This, "name", SetLoc(1, 1, 0, 4)),
+                new ConstantExpression(10, SetLoc(1, 21, 20, 2)),
+                SetLoc(1, 15, 14, 14)));
+        }
+
+        [TestMethod]
         public void FhirPath_LocationInfo_BinaryExpr()
         {
             var parser = Grammar.Expression.End();
@@ -275,7 +394,7 @@ namespace Hl7.FhirPath.Tests
                 '+',
                 new ConstantExpression(1, SetLoc(1, 2, 1, 1)),
                 new ConstantExpression(50, SetLoc(1, 6, 5, 2)),
-                SetLoc(1, 4, 3, 2)));
+                SetLoc(1, 4, 3, 1)));
         }
 
         [TestMethod]
@@ -310,12 +429,12 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Quantity.End();
 
-            AssertParser.SucceedsMatch(parser, "78 'kg'", new P.Quantity(78m, "kg"));
-            AssertParser.SucceedsMatch(parser, "78.0 'kg'", new P.Quantity(78m, "kg"));
-            AssertParser.SucceedsMatch(parser, "78.0'kg'", new P.Quantity(78m, "kg"));
-            AssertParser.SucceedsMatch(parser, "4 months", P.Quantity.ForCalendarDuration(4m, "month"));
-            AssertParser.SucceedsMatch(parser, "4 'mo'", new P.Quantity(4m, "mo"));
-            AssertParser.SucceedsMatch(parser, "1 '1'", new P.Quantity(1m, P.Quantity.UCUM_UNIT));
+            AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
+            AssertParser.SucceedsMatch(parser, "78.0 'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
+            AssertParser.SucceedsMatch(parser, "78.0'kg'", new ConstantExpression(new P.Quantity(78m, "kg")));
+            AssertParser.SucceedsMatch(parser, "4 months", new ConstantExpression(P.Quantity.ForCalendarDuration(4m, "month")));
+            AssertParser.SucceedsMatch(parser, "4 'mo'", new ConstantExpression(new P.Quantity(4m, "mo")));
+            AssertParser.SucceedsMatch(parser, "1 '1'", new ConstantExpression(new P.Quantity(1m, P.Quantity.UCUM_UNIT)));
 
             AssertParser.FailsMatch(parser, "78");   // still a integer
             AssertParser.FailsMatch(parser, "78.0");   // still a decimal
@@ -422,19 +541,20 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void FhirPath_Gramm_Comment()
         {
-            var parser = Grammar.TypeExpression.End();
+            var parser = Grammar.Expression.End();
 
             System.Diagnostics.Trace.WriteLine("");
             var t1 = parser.Parse("(name[0].family | %glarb | {} | @2023-01) is string // sdf");
-            DumpLocations(t1);
+            // DumpLocations(t1);
             System.Diagnostics.Trace.WriteLine("");
 
             var t2 = parser.Parse("  -8 * 3.pow(2)// sdf");
-            DumpLocations(t2);
+            // DumpLocations(t2);
             System.Diagnostics.Trace.WriteLine("");
 
-            var t3 = parser.Parse("8 /* sdf */ //\n * 323 // testme");
-            DumpLocations(t3);
+            t2 = parser.Parse("  8 \n  *  323 // testme");
+            // t2 = parser.Parse("8 /* sdf */ //\n * 323 // testme");
+            DumpLocations(t2);
             System.Diagnostics.Trace.WriteLine("");
 
             AssertParser.SucceedsMatch(parser, "8 // blah", new ConstantExpression(8));
