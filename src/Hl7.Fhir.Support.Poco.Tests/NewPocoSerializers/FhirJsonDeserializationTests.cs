@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         private static BaseFhirJsonPocoDeserializer getTestDeserializer(FhirJsonPocoDeserializerSettings settings) =>
-            new(typeof(TestPatient).Assembly, settings);
+            new(typeof(Patient).Assembly, settings);
 
         [TestMethod]
         public void TestCustomRecovery()
@@ -230,8 +230,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             PrimitiveType test()
             {
-                var inspector = ModelInspector.ForAssembly(typeof(TestPatient).Assembly);
-                var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
+                var inspector = ModelInspector.ForAssembly(typeof(Patient).Assembly);
+                var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly);
                 var mapping = inspector.ImportType(targetType)!;
 
                 var reader = constructReader(value);
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             FhirJsonPocoDeserializerSettings settings)
         {
             // For the tests, enable full XHML validation so we can test it when necessary.
-            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly, settings);
+            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly, settings);
             Utf8JsonReader reader = constructReader(testObject);
             reader.Read();
 
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(testObject);
             reader.Read();
 
-            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
+            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly);
             var state = new FhirJsonPocoDeserializerState();
             _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
             assertErrors(state.Errors, errors);
@@ -505,56 +505,57 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE);
             yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
 
-            yield return data<TestAttachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
-            yield return data<TestAttachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID_CODE);
+            yield return data<Attachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
+         //   yield return data<Attachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID_CODE);
+         // This is an URL in our datamodel now, since that's what it is in R4 and later.
         }
 
         public static IEnumerable<object?[]> TestPrimitiveArrayData()
         {
-            yield return data<TestAddress>(new { line = "hi!" }, ERR.EXPECTED_START_OF_ARRAY_CODE);
-            yield return data<TestAddress>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
-            yield return data<TestAddress>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() },
+            yield return data<Address>(new { line = "hi!" }, ERR.EXPECTED_START_OF_ARRAY_CODE);
+            yield return data<Address>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+            yield return data<Address>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() },
                 ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
-            yield return data<TestAddress>(new { line = Array.Empty<string>(), _line = new string?[] { null } },
+            yield return data<Address>(new { line = Array.Empty<string>(), _line = new string?[] { null } },
                 ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
-            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } },
+            yield return data<Address>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } },
                 ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
-            yield return data<TestAddress>(new { line = new[] { "Ewout" }, _line = new string?[] { null } },
+            yield return data<Address>(new { line = new[] { "Ewout" }, _line = new string?[] { null } },
                 ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
-            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new string?[] { null } },
+            yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null } },
                 ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
-            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new string?[] { null, null } },
+            yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null, null } },
                 ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
-            yield return data<TestAddress>(new { line = new string?[] { null, null }, _line = new string?[] { null } },
+            yield return data<Address>(new { line = new string?[] { null, null }, _line = new string?[] { null } },
                 ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
-            yield return data<TestAddress>(new { line = new[] { "Ewout", "Wouter" } }, checkName);
-            yield return data<TestAddress>(
+            yield return data<Address>(new { line = new[] { "Ewout", "Wouter" } }, checkName);
+            yield return data<Address>(
                 new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" } } }, checkId1AndName);
-            yield return data<TestAddress>(
+            yield return data<Address>(
                 new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" }, null } }, checkId1AndName);
-            yield return data<TestAddress>(
+            yield return data<Address>(
                 new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" }, new { id = "2" } } },
                 checkAll);
-            yield return data<TestAddress>(new
+            yield return data<Address>(new
             {
                 line = new[] { "Ewout", null }, _line = new[] { null, new { id = "2" } }
             });
-            yield return data<TestAddress>(
+            yield return data<Address>(
                 new { line = new[] { "Ewout", null }, _line = new[] { new { id = "1" }, null } }, checkId1,
                 COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
-            yield return data<TestAddress>(new { _line = new[] { new { id = "1" }, null } }, checkId1,
+            yield return data<Address>(new { _line = new[] { new { id = "1" }, null } }, checkId1,
                 COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
-            yield return data<TestAddress>(new { _line = new[] { new { id = "1" }, new { id = "2" } } }, checkIds);
+            yield return data<Address>(new { _line = new[] { new { id = "1" }, new { id = "2" } } }, checkIds);
 
-            static void checkName(object parsed) => parsed.Should().BeOfType<TestAddress>().Which.Line.Should()
+            static void checkName(object parsed) => parsed.Should().BeOfType<Address>().Which.Line.Should()
                 .BeEquivalentTo("Ewout", "Wouter");
 
             static void checkIds(object parsed) =>
-                parsed.Should().BeOfType<TestAddress>().Which.LineElement.Select(le => le?.ElementId).Should()
+                parsed.Should().BeOfType<Address>().Which.LineElement.Select(le => le?.ElementId).Should()
                     .BeEquivalentTo("1", "2");
 
             static void checkId1(object parsed) =>
-                parsed.Should().BeOfType<TestAddress>().Which.LineElement.Select(le => le?.ElementId).Should()
+                parsed.Should().BeOfType<Address>().Which.LineElement.Select(le => le?.ElementId).Should()
                     .BeEquivalentTo("1", null);
 
             static void checkId1AndName(object parsed)
@@ -632,11 +633,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var filename = Path.Combine("TestData", "fp-test-patient-errors.json");
             var jsonInput = File.ReadAllText(filename);
 
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
             try
             {
-                var actual = JsonSerializer.Deserialize<TestPatient>(jsonInput, options);
+                var actual = JsonSerializer.Deserialize<Patient>(jsonInput, options);
                 Assert.Fail("Should have encountered errors.");
             }
             catch (DeserializationFailedException dfe)
@@ -692,13 +693,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
             attachment = deserializeAttachment(new() { DisableBase64Decoding = true });
             attachment.DataElement.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
 
-            static TestAttachment deserializeAttachment(FhirJsonPocoDeserializerSettings settings)
+            static Attachment deserializeAttachment(FhirJsonPocoDeserializerSettings settings)
             {
                 var (attachment, errors) =
-                    deserializeComplex(typeof(TestAttachment), new { data = "SGkh" }, out _, settings);
+                    deserializeComplex(typeof(Attachment), new { data = "SGkh" }, out _, settings);
                 errors.Any().Should().BeFalse();
 
-                return (TestAttachment)attachment!;
+                return (Attachment)attachment!;
             }
         }
 
@@ -812,14 +813,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             static void test(IDeserializationValidator validator)
             {
-                var (result, errors) = deserializeComplex(typeof(TestPatient),
+                var (result, errors) = deserializeComplex(typeof(Patient),
                     new { resourceType = "Patient", deceasedDateTime = "2070-01-01T12:01:02Z" },
                     out _, new() { Validator = validator });
 
                 errors.Any().Should().BeTrue();
                 errors.Should().AllBeOfType<COVE>()
                     .And.ContainSingle(e => ((COVE)e).ErrorCode == COVE.DATETIME_LITERAL_INVALID_CODE);
-                result.Should().BeOfType<TestPatient>()
+                result.Should().BeOfType<Patient>()
                     .Which.Deceased.Should().BeOfType<FhirDateTime>()
                     .Which.Value.Should().EndWith("+00:00");
             }
@@ -827,7 +828,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private class MixedClass
         {
-            public TestPatient? FhirPatient { get; set; }
+            public Patient? FhirPatient { get; set; }
 
             public string? HandledByTextJson { get; set; }
 
@@ -842,7 +843,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var reader = constructReader(new { system = "http://nu.nl", value = "bla" });
 
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
             var identifier = JsonSerializer.Deserialize<Identifier>(ref reader, options)!;
             identifier.Should().BeOfType<Identifier>();
@@ -852,7 +853,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void CanParseMixedClass()
         {
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
             var mc = new MixedClass
             {
@@ -874,7 +875,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void ReportsMissingMandatoryElements()
         {
-            var (codesystem, errors) = deserializeComplex(typeof(TestCodeSystem),
+            var (codesystem, errors) = deserializeComplex(typeof(CodeSystem),
                 new { resourceType = "CodeSystem", content = "example" }, out _, new());
 
             // should contain error that mandatory item "status" is missing.
@@ -992,11 +993,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DynamicData(nameof(getDuplicatePropertyTests), DynamicDataSourceType.Method)]
         public void TestDuplicateProperties(string testJson, string[] expectedErrs)
         {
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
             try
             {
-                _ = JsonSerializer.Deserialize<TestPatient>(testJson, options);
+                _ = JsonSerializer.Deserialize<Patient>(testJson, options);
                 Assert.Fail("Should have encountered errors.");
             }
             catch (DeserializationFailedException dfe)
@@ -1018,11 +1019,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
             
             string expected = ERR.DUPLICATE_PROPERTY_CODE;
 
-            var jsonSerializerOptions = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var jsonSerializerOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
             try
             {
-                _ = JsonSerializer.Deserialize<TestPatient>(scenario, jsonSerializerOptions);
+                _ = JsonSerializer.Deserialize<Patient>(scenario, jsonSerializerOptions);
                 Assert.Fail("Should have encountered errors.");
             }
             catch (DeserializationFailedException dfe)
@@ -1034,12 +1035,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void TestBackboneElementEmptyStack()
         {
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
             var bundleEntryComponent = new Parameters.ParameterComponent()
             {
                 Name = "name",
-                Resource = new TestPatient{Gender = TestAdministrativeGender.Female}
+                Resource = new Patient{Gender = AdministrativeGender.Female}
             };
 
             var jsonString = JsonSerializer.Serialize(bundleEntryComponent, options);
@@ -1056,31 +1057,31 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             yield return
             [
-                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
                     .UsingMode(DeserializerModes.Ostrich),
                 new Predicate<IEnumerable<CodedException>>(errs => !errs.Any())
             ];
             yield return
             [
-                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
                     .UsingMode(DeserializerModes.Recoverable),
                 new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => FilterPredicateExtensions.IsRecoverableIssue(e)))
             ];
             yield return
             [
-                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
                     .UsingMode(DeserializerModes.BackwardsCompatible),
                 new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => FilterPredicateExtensions.IsBackwardsCompatibilityIssue(e)))
             ];
             yield return
             [
-                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+                new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
                     .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE]),
                 new Predicate<IEnumerable<CodedException>>(errs => errs.All(e => e.ErrorCode != ERR.UNEXPECTED_JSON_TOKEN_CODE))
             ];
             yield return
             [
-                new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly).UsingMode(DeserializerModes.Ostrich)
+                new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).UsingMode(DeserializerModes.Ostrich)
                     .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.LONG_CANNOT_BE_PARSED_CODE]),
                 new Predicate<IEnumerable<CodedException>>(errs =>
                 {
@@ -1099,7 +1100,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             
             try
             {
-                _ = JsonSerializer.Deserialize<TestPatient>(testJson, options);
+                _ = JsonSerializer.Deserialize<Patient>(testJson, options);
                 throw new DeserializationFailedException(null, []);
             }
             catch (DeserializationFailedException dfe)
@@ -1110,7 +1111,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private static Predicate<CodedException> getPredicateFromOptions(JsonSerializerOptions options)
         {
-            var factory = JsonSerializerOptionsExtensions.FindCustomConverter(options.Converters) as FhirJsonConverterFactory ?? throw new InvalidOperationException();
+            var factory = options.Converters.FindCustomConverter() as FhirJsonConverterFactory ?? throw new InvalidOperationException();
             return factory.Engine!.IgnoreFilter;
         }
 
@@ -1119,7 +1120,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return
             [
                 getPredicateFromOptions(new JsonSerializerOptions()
-                    .ForFhir(typeof(TestPatient).Assembly)
+                    .ForFhir(typeof(Patient).Assembly)
                     .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
                     .Ignoring([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE])
                     .Ignoring([ERR.INCORRECT_BASE64_DATA_CODE])),
@@ -1130,7 +1131,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return
             [
                 getPredicateFromOptions(new JsonSerializerOptions()
-                    .ForFhir(typeof(TestPatient).Assembly)
+                    .ForFhir(typeof(Patient).Assembly)
                     .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
                     .Enforcing([ERR.UNEXPECTED_JSON_TOKEN_CODE])),
                 new Predicate<CodedException>(_ => false)
@@ -1138,7 +1139,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return
             [
                 getPredicateFromOptions(new JsonSerializerOptions()
-                    .ForFhir(typeof(TestPatient).Assembly)
+                    .ForFhir(typeof(Patient).Assembly)
                     .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
                     .Enforcing([ERR.UNEXPECTED_JSON_TOKEN_CODE])
                     .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])),
@@ -1148,13 +1149,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private static IEnumerable<CodedException> getErrorsList()
         {
-            var testDeserializerOptions = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly)
+            var testDeserializerOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
                 .UsingMode(DeserializerModes.Strict);
             string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
             
             try
             {
-                _ = JsonSerializer.Deserialize<TestPatient>(testJson, testDeserializerOptions);
+                _ = JsonSerializer.Deserialize<Patient>(testJson, testDeserializerOptions);
             }
             catch (DeserializationFailedException dfe)
             {

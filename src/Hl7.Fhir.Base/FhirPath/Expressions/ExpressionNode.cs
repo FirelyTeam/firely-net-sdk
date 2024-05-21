@@ -196,7 +196,7 @@ namespace Hl7.FhirPath.Expressions
         public ConstantExpression(object value, TypeSpecifier type, ISourcePositionInfo location = null) : base(type, location)
         {
             if (value == null) Error.ArgumentNull("value");
-            if (value is P.Any && (value is P.Boolean || value is P.Decimal || value is P.Integer || value is P.Long || value is P.String))
+            if (value is P.Any and (P.Boolean or P.Decimal or P.Integer or P.Long or P.String))
                 throw new ArgumentException("Internal error: not yet ready to handle Any-based primitives in FhirPath.");
 
             Value = value;

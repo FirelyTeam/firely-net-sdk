@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementMatcher_Patient_Simple()
+        public async Tasks.Task TestElementMatcher_Patient_Simple()
         {
             // Match element constraints on Patient and Patient.identifier to Patient core definition
             // Both element constraints should be merged
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementMatcher_Patient_Identity()
+        public async Tasks.Task TestElementMatcher_Patient_Identity()
         {
             // Match core patient profile to itself
             // All element constraints should be merged
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementMatcher_Patient_Extension_New()
+        public async Tasks.Task TestElementMatcher_Patient_Extension_New()
         {
             // Slice core Patient.extension, introduce a new extension
             // Extension does not need a slicing introduction in differential
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementMatcher_ComplexExtension()
+        public async Tasks.Task TestElementMatcher_ComplexExtension()
         {
             var baseProfile = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Extension);
             var userProfile = new StructureDefinition()
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestElementMatcher_Patient_Identifier_Slice()
+        public async Tasks.Task TestElementMatcher_Patient_Identifier_Slice()
         {
             // Slice Patient.identifier (named)
 
@@ -1784,7 +1784,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20190902] #1090 SnapshotGenerator should support logical models
         [TestMethod]
-        public async T.Task TestElementMatcher_LogicalModel()
+        public async Tasks.Task TestElementMatcher_LogicalModel()
         {
             const string rootPath = "MyModel";
             var SimpleLogicalModel = new StructureDefinition()

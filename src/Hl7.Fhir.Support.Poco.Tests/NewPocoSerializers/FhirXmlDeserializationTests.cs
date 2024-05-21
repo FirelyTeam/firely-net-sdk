@@ -89,8 +89,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResource(reader);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
         }
 
         [TestMethod]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ATTRIBUTE_HAS_EMPTY_VALUE_CODE);
 
-            resource.Should().BeOfType<TestPatient>();
+            resource.Should().BeOfType<Patient>();
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
 
-            resource.Should().BeOfType<TestPatient>();
+            resource.Should().BeOfType<Patient>();
         }
 
         [TestMethod]
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
 
-            resource.Should().BeOfType<TestPatient>();
+            resource.Should().BeOfType<Patient>();
         }
 
 
@@ -161,8 +161,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.EMPTY_ELEMENT_NAMESPACE_CODE);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
         }
 
         [TestMethod]
@@ -179,8 +179,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().BeEmpty();
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
         }
 
 
@@ -202,8 +202,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().Contain(ce => ce.ErrorCode == ERR.SCHEMALOCATION_DISALLOWED_CODE);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
         }
 
         [TestMethod]
@@ -217,8 +217,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResource(reader);
 
-            resource.As<TestPatient>().Text.Status.Should().Be(Narrative.NarrativeStatus.Generated);
-            resource.As<TestPatient>().Text.Div.Should().Be("<div xmlns=\"http://www.w3.org/1999/xhtml\">this is text</div>");
+            resource.As<Patient>().Text.Status.Should().Be(Narrative.NarrativeStatus.Generated);
+            resource.As<Patient>().Text.Div.Should().Be("<div xmlns=\"http://www.w3.org/1999/xhtml\">this is text</div>");
         }
 
 
@@ -233,11 +233,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResource(reader);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
-            resource.As<TestPatient>().Extension.Should().HaveCount(1);
-            resource.As<TestPatient>().Extension[0].Url.Should().Be("http://fire.ly/fhir/StructureDefinition/extension-test");
-            resource.As<TestPatient>().Extension[0].Value.As<FhirString>().Value.Should().Be("foo");
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
+            resource.As<Patient>().Extension.Should().HaveCount(1);
+            resource.As<Patient>().Extension[0].Url.Should().Be("http://fire.ly/fhir/StructureDefinition/extension-test");
+            resource.As<Patient>().Extension[0].Value.As<FhirString>().Value.Should().Be("foo");
         }
 
         [TestMethod]
@@ -251,9 +251,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResource(reader);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
-            resource.As<TestPatient>().Gender.Value.Should().Be(TestAdministrativeGender.Female);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
+            resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
         }
 
 
@@ -281,12 +281,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResource(reader);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
-            resource.As<TestPatient>().Gender.Value.Should().Be(TestAdministrativeGender.Female);
-            resource.As<TestPatient>().Contained.Should().HaveCount(2);
-            resource.As<TestPatient>().Contained[0].As<TestPatient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
-            resource.As<TestPatient>().Contained[1].As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
+            resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
+            resource.As<Patient>().Contained.Should().HaveCount(2);
+            resource.As<Patient>().Contained[0].As<Patient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
+            resource.As<Patient>().Contained[1].As<Patient>().Active.Value.Should().Be(true);
         }
 
         [TestMethod]
@@ -319,12 +319,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
-            resource.As<TestPatient>().Gender.Value.Should().Be(TestAdministrativeGender.Female);
-            resource.As<TestPatient>().Contained.Should().HaveCount(2);
-            resource.As<TestPatient>().Contained[0].As<TestPatient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
-            resource.As<TestPatient>().Contained[1].As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
+            resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
+            resource.As<Patient>().Contained.Should().HaveCount(2);
+            resource.As<Patient>().Contained[0].As<Patient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
+            resource.As<Patient>().Contained[1].As<Patient>().Active.Value.Should().Be(true);
         }
 
 
@@ -350,13 +350,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResource(reader);
 
-            resource.Should().BeOfType<TestPatient>();
-            resource.As<TestPatient>().Active.Value.Should().Be(true);
+            resource.Should().BeOfType<Patient>();
+            resource.As<Patient>().Active.Value.Should().Be(true);
 
-            resource.As<TestPatient>().Name.Should().HaveCount(2);
-            resource.As<TestPatient>().Name[0].ElementId.Should().Be("1337");
-            resource.As<TestPatient>().Name[0].Given.Should().Equal("foo", "bar");
-            resource.As<TestPatient>().Name[1].Given.Should().Equal("foo2", "bar2");
+            resource.As<Patient>().Name.Should().HaveCount(2);
+            resource.As<Patient>().Name[0].ElementId.Should().Be("1337");
+            resource.As<Patient>().Name[0].Given.Should().Equal("foo", "bar");
+            resource.As<Patient>().Name[1].Given.Should().Equal("foo2", "bar2");
         }
 
 
@@ -369,10 +369,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var datatype = deserializer.DeserializeElement(typeof(TestHumanName), reader);
+            var datatype = deserializer.DeserializeElement(typeof(HumanName), reader);
 
-            datatype.Should().BeOfType<TestHumanName>();
-            datatype.As<TestHumanName>().Given.Should().HaveCount(2);
+            datatype.Should().BeOfType<HumanName>();
+            datatype.As<HumanName>().Given.Should().HaveCount(2);
         }
 
         [TestMethod]
@@ -391,11 +391,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var state = new FhirXmlPocoDeserializerState();
 
             var deserializer = getTestDeserializer(new());
-            var datatype = deserializer.DeserializeElementInternal(typeof(TestHumanName), reader, state);
+            var datatype = deserializer.DeserializeElementInternal(typeof(HumanName), reader, state);
 
-            datatype.Should().BeOfType<TestHumanName>();
-            datatype.As<TestHumanName>().Given.Should().HaveCount(3);
-            datatype.As<TestHumanName>().Family.Should().Be("oof");
+            datatype.Should().BeOfType<HumanName>();
+            datatype.As<HumanName>().Given.Should().HaveCount(3);
+            datatype.As<HumanName>().Family.Should().Be("oof");
 
             state.Errors.Should().HaveCount(2);
             state.Errors.Should().Contain(ce => ce.ErrorCode == ERR.ELEMENT_OUT_OF_ORDER_CODE);
@@ -413,11 +413,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             var state = new FhirXmlPocoDeserializerState();
             var deserializer = getTestDeserializer(new());
-            var datatype = deserializer.DeserializeElementInternal(typeof(TestHumanName), reader, state);
+            var datatype = deserializer.DeserializeElementInternal(typeof(HumanName), reader, state);
 
-            datatype.Should().BeOfType<TestHumanName>();
-            datatype.As<TestHumanName>().GivenElement[0].Value.Should().Be("foo");
-            datatype.As<TestHumanName>().Family.Should().Be("oof");
+            datatype.Should().BeOfType<HumanName>();
+            datatype.As<HumanName>().GivenElement[0].Value.Should().Be("foo");
+            datatype.As<HumanName>().Family.Should().Be("oof");
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.UNKNOWN_ELEMENT_CODE);
         }
@@ -443,8 +443,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var resource = deserializer.DeserializeResourceInternal(reader, state);
             resource.Should().NotBeNull();
 
-            resource.As<TestCodeSystem>().Concept[0].Code.Should().Be("foo");
-            resource.As<TestCodeSystem>().Concept[0].Concept[0].Code.Should().Be("bar");
+            resource.As<CodeSystem>().Concept[0].Code.Should().Be("foo");
+            resource.As<CodeSystem>().Concept[0].Concept[0].Code.Should().Be("bar");
         }
 
         [TestMethod]
@@ -467,12 +467,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var resource = deserializer.DeserializeResource(reader);
             resource.Should().NotBeNull();
 
-            resource.As<TestPatient>().BirthDateElement.ElementId.Should().Be("314159");
-            resource.As<TestPatient>().BirthDate.Should().Be("1932-09-24");
+            resource.As<Patient>().BirthDateElement.ElementId.Should().Be("314159");
+            resource.As<Patient>().BirthDate.Should().Be("1932-09-24");
 
-            resource.As<TestPatient>().Name.Should().ContainSingle().Which.ElementId.Should().Be("f2");
-            resource.As<TestPatient>().Name[0].FamilyElement.ElementId.Should().Be("a2");
-            resource.As<TestPatient>().Name[0].Family.Should().Be("Van");
+            resource.As<Patient>().Name.Should().ContainSingle().Which.ElementId.Should().Be("f2");
+            resource.As<Patient>().Name[0].FamilyElement.ElementId.Should().Be("a2");
+            resource.As<Patient>().Name[0].Family.Should().Be("Van");
 
         }
 
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 state.Errors.HasExceptions.Should().BeTrue();
                 state.Errors.Should().AllBeOfType<CodedValidationException>()
                     .And.ContainSingle(e => ((CodedValidationException)e).ErrorCode == CodedValidationException.DATETIME_LITERAL_INVALID_CODE);
-                result.Should().BeOfType<TestPatient>()
+                result.Should().BeOfType<Patient>()
                     .Which.Deceased.Should().BeOfType<FhirDateTime>()
                     .Which.Value.Should().EndWith("+00:00");
             }
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void TestNewXmlParserNarrativeParsing()
         {
-            var patient = new TestPatient { Id = "example" };
+            var patient = new Patient { Id = "example" };
             patient.Text = new Narrative() { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">some test data</div>" };
             var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
             var actual = SerializationUtil.WriteXmlToString(patient, (o, w) => serializer.Serialize(o, w));
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new());
             using (var reader = SerializationUtil.XmlReaderFromXmlText(actual))
             {
-                var np = ds.DeserializeResource(reader) as TestPatient;
+                var np = ds.DeserializeResource(reader) as Patient;
                 Assert.AreEqual(patient.Text.Div, np.Text.Div, "New narrative should be the same");
             }
         }
@@ -539,10 +539,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             state.Errors.HasExceptions.Should().BeTrue();
 
-            result.Should().BeOfType<TestPatient>();
-            result.As<TestPatient>().Contained.Should().HaveCount(2);
-            result.As<TestPatient>().Contained[0].As<TestPatient>().Name[0].ElementId.Should().Be("firstname");
-            result.As<TestPatient>().Contained[1].As<TestQuestionnaire>().Text.Div.Should().NotBeNull();
+            result.Should().BeOfType<Patient>();
+            result.As<Patient>().Contained.Should().HaveCount(2);
+            result.As<Patient>().Contained[0].As<Patient>().Name[0].ElementId.Should().Be("firstname");
+            result.As<Patient>().Contained[1].As<Questionnaire>().Text.Div.Should().NotBeNull();
         }
 
         private static XmlReader constructReader(string xml)
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         private static BaseFhirXmlPocoDeserializer getTestDeserializer(FhirXmlPocoDeserializerSettings settings) =>
-                new(typeof(TestPatient).Assembly, settings);
+                new(typeof(Patient).Assembly, settings);
         
         [TestMethod]
         public void TestDateTimeStuff()

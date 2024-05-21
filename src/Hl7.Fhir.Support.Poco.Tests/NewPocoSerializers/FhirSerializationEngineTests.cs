@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirSerializationEngineTests
     {
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
 
         private const string CORRECTXML = """<Patient xmlns="http://hl7.org/fhir"><active value="true"  /></Patient>""";
         private const string PERMISSIVEXML = """<Patient xmlns="http://hl7.org/fhir"><gender value=""  /></Patient>""";

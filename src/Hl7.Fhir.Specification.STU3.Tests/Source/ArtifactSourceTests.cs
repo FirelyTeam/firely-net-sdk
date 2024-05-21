@@ -17,7 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Ssac = System.Security.AccessControl;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task FileSourceSkipsInvalidXml()
+        public async Tasks.Task FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath)
             {
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/firely-net-sdk/issues/875
 
         [TestMethod]
-        public async T.Task OpenDuplicateFileNames()
+        public async Tasks.Task OpenDuplicateFileNames()
         {
             var testPath = prepareExampleDirectory(out int _);
 
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
 
-            async T.Task<Resource> OpenStream(string filePath)
+            async Tasks.Task<Resource> OpenStream(string filePath)
             {
                 using (var stream = dirSource.LoadArtifactByName(filePath))
                 {

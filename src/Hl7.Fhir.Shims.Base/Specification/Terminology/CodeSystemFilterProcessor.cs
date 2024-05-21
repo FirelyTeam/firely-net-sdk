@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSDC = Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 #nullable enable
 
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <exception cref="ValueSetExpansionTooComplexException">Thrown when a filter is applied that is not supported (yet)</exception>
         /// <exception cref="CodeSystemUnknownException">Thrown when no resource resolver was set in ValueSetExpanderSettings.ValueSetSource</exception>
         /// <exception cref="CodeSystemUnknownException">Thrown when the requested CodeSystem can not be found by the resource resolver in ValueSetExpanderSettings</exception>
-        internal async static T.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, IEnumerable<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
+        internal async static Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, IEnumerable<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
         {
             if (settings.ValueSetSource == null)
                 throw Error.InvalidOperation($"No valueset resolver available to resolve codesystem '{codeSystemUri}', so the expansion cannot be completed.");

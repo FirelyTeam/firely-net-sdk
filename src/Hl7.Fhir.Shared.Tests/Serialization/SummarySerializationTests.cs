@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
-        public async T.Task TestSummary()
+        public async Tasks.Task TestSummary()
         {
             var p = new Patient
             {
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async T.Task TestIncludeMandatory()
+        public async Tasks.Task TestIncludeMandatory()
         {
             var l = new Library();
             l.Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") };
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async T.Task TestElements()
+        public async Tasks.Task TestElements()
         {
             var p = new Patient
             {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async T.Task TestWithMetadata()
+        public async Tasks.Task TestWithMetadata()
         {
             var p = new Patient
             {
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public async T.Task TestBundleSummary()
+        public async Tasks.Task TestBundleSummary()
         {
             var p = new Patient
             {
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async T.Task TestBundleWithSummaryJson()
+        public async Tasks.Task TestBundleWithSummaryJson()
         {
             Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async T.Task TestResourceWithSummary()
+        public async Tasks.Task TestResourceWithSummary()
         {
             Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async T.Task TestIdInSummary()
+        public async Tasks.Task TestIdInSummary()
         {
             var p = new Patient
             {

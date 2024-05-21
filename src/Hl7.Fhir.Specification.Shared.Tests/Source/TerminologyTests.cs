@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using Xunit;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Tests
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
 
         [Fact]
-        public async T.Task ExpansionOfWholeSystem()
+        public async Tasks.Task ExpansionOfWholeSystem()
         {
             var issueTypeVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task ExpansionOfComposeInclude()
+        public async Tasks.Task ExpansionOfComposeInclude()
         {
             var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/resource-security-category")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async T.Task ExpansionOfComposeImport()
+        public async Tasks.Task ExpansionOfComposeImport()
         {
             var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task TestIncludeDesignation()
+        public async Tasks.Task TestIncludeDesignation()
         {
             var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task TestPropertyRetrieval()
+        public async Tasks.Task TestPropertyRetrieval()
         {
             var testCs = await _resolver.FindCodeSystemAsync("http://hl7.org/fhir/item-type");
 
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        private async T.Task testServiceAsync(ITerminologyService svc)
+        private async Tasks.Task testServiceAsync(ITerminologyService svc)
         {
             var vsUrl = "http://hl7.org/fhir/ValueSet/administrative-gender";
             var result = await validateCodedValue(svc, vsUrl, code: "female", system: "http://hl7.org/fhir/administrative-gender");
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTSDisplayIncorrectAsWarningAsync()
+        public async Tasks.Task LocalTSDisplayIncorrectAsWarningAsync()
         {
             var svc = new LocalTerminologyService(_resolver);
 
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async void LocalTSDisplayIncorrectAsMessage()
+        public async Tasks.Task LocalTSDisplayIncorrectAsMessage()
         {
             var svc = new LocalTerminologyService(_resolver);
             var inParams = new ValidateCodeParameters()
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTermServiceValidateCodeTest()
+        public async Tasks.Task LocalTermServiceValidateCodeTest()
         {
             var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async void LocalTermServiceValidateCodeWithParamsTest()
+        public async Tasks.Task LocalTermServiceValidateCodeWithParamsTest()
         {
             var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
+        public async Tasks.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
         {
             var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async T.Task LocalTermServiceUsingDuplicateParameters()
+        public async Tasks.Task LocalTermServiceUsingDuplicateParameters()
         {
             var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTermServiceValidateCodeFromImplicitValueSet()
+        public async Tasks.Task LocalTermServiceValidateCodeFromImplicitValueSet()
         {
             var csUrl = "http://fire.ly/CodeSystem/test-cs";
             var customResolver = new OnlyCodeSystemResolver(csUrl);
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async T.Task TestOperationOutcomesAsync()
+        public async Tasks.Task TestOperationOutcomesAsync()
         {
             var svc = new LocalTerminologyService(_resolver);
 
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceTranslateSimpleTranslate()
+        public async Tasks.Task ExternalServiceTranslateSimpleTranslate()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceTranslateSimpleAutomap()
+        public async Tasks.Task ExternalServiceTranslateSimpleAutomap()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
+        public async Tasks.Task ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupInactiveStatus()
+        public async Tasks.Task ExternalServiceLookupInactiveStatus()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupSNOMEDCode()
+        public async Tasks.Task ExternalServiceLookupSNOMEDCode()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceExpandExplicitValueSet()
+        public async Tasks.Task ExternalServiceExpandExplicitValueSet()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceExpandImplicitValueSetWithFilter()
+        public async Tasks.Task ExternalServiceExpandImplicitValueSetWithFilter()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceSubsumesConceptASubsumesConceptB()
+        public async Tasks.Task ExternalServiceSubsumesConceptASubsumesConceptB()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceValidateCodeTest()
+        public async Tasks.Task ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async T.Task FallbackServiceValidateCodeTestAsync()
+        public async Tasks.Task FallbackServiceValidateCodeTestAsync()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async void FallbackServiceValidateCodeWithParamsTest()
+        public async Tasks.Task FallbackServiceValidateCodeWithParamsTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async T.Task FallbackServiceValidateCodeTestWithVS()
+        public async Tasks.Task FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var service = new ExternalTerminologyService(client);
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
         /// </summary>
         [Fact, Trait("Category", "LongRunner")]
-        public async T.Task RunValueSetExpanderMultiThreaded()
+        public async Tasks.Task RunValueSetExpanderMultiThreaded()
         {
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<(string uri, int total)>();
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         #region helper functions
-        private static T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
+        private static Tasks.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
             string system = null, string version = null, string display = null,
             Coding coding = null, CodeableConcept codeableConcept = null)
         {
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                return await T.Task.FromResult(uri == _myOnlyVS.Url) ? _myOnlyVS : null;
+                return await Tasks.Task.FromResult(uri == _myOnlyVS.Url) ? _myOnlyVS : null;
             }
 
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Specification.Tests
             public Resource ResolveByCanonicalUri(string uri) => throw new NotImplementedException();
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                return await T.Task.FromResult(uri == _onlyCs.Url ? _onlyCs : null);
+                return await Tasks.Task.FromResult(uri == _onlyCs.Url ? _onlyCs : null);
             }
             public Resource ResolveByUri(string uri) => throw new NotImplementedException();
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
@@ -854,4 +854,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-
