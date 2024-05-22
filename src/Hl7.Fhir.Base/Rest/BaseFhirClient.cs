@@ -14,7 +14,6 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -28,15 +27,15 @@ namespace Hl7.Fhir.Rest;
 public partial class BaseFhirClient : IDisposable
 {
     #region Properties
-    
+
     private readonly Lazy<List<HttpStatusCode>> _200Responses = new(() => Enum.GetValues(typeof(HttpStatusCode)).Cast<HttpStatusCode>().Where(n => (int)n > 199 && (int)n < 300).ToList());
-    
+
     private string fhirVersion => Settings?.ExplicitFhirVersion ?? Inspector.FhirVersion ??
         throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
                                     $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
-    
+
     internal readonly ModelInspector Inspector;
-    
+
     internal HttpClientRequester Requester { get; init; }
 
     /// <summary>
@@ -75,11 +74,11 @@ public partial class BaseFhirClient : IDisposable
     /// The body returned by the last http request as a FHIR resource (or null if the body did not have a FHIR payload).
     /// </summary>
     public virtual Resource? LastBodyAsResource { get; private set; }
-    
+
     #endregion
-    
+
     #region Constructors
-    
+
     /// <summary>
     /// Creates a new client using a default endpoint
     /// If the endpoint does not end with a slash (/), it will be added.
@@ -139,7 +138,7 @@ public partial class BaseFhirClient : IDisposable
     {
         // nothing
     }
-    
+
     #endregion
 
     #region Read
@@ -274,7 +273,7 @@ public partial class BaseFhirClient : IDisposable
 
         return internalUpdateAsync(resource, upd.ToBundle(), ct);
     }
-    
+
     private Task<TResource?> internalUpdateAsync<TResource>(TResource resource, Bundle tx, CancellationToken? ct) where TResource : Resource
     {
         resource.ResourceBase = Endpoint;
@@ -287,7 +286,7 @@ public partial class BaseFhirClient : IDisposable
     {
         return internalUpdateAsync(resource, tx, ct).WaitResult();
     }
-    
+
     #endregion
 
     #region Delete
@@ -335,7 +334,7 @@ public partial class BaseFhirClient : IDisposable
 
         await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion(), ct).ConfigureAwait(false);
     }
-        
+
     /// <summary>
     /// Conditionally delete a single resource
     /// </summary>
@@ -348,7 +347,7 @@ public partial class BaseFhirClient : IDisposable
         var tx = new TransactionBuilder(Endpoint).ConditionalDeleteSingle(condition, resourceType, versionId).ToBundle();
         await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
     }
-        
+
     /// <summary>
     /// Conditionally delete multiple resources
     /// </summary>
@@ -458,7 +457,7 @@ public partial class BaseFhirClient : IDisposable
         var url = new RestUrl(Endpoint).AddPath(resourceType, id);
 
         var request = new HttpRequestMessage(new("PATCH"), url.Uri).WithFormatParameter(format);
-        
+
         request.Content = new StringContent(patchDocument);
         request.Content.Headers.ContentType = new MediaTypeHeaderValue(format switch
         {
@@ -583,9 +582,9 @@ public partial class BaseFhirClient : IDisposable
     }
 
     #endregion
-    
+
     #region DeleteHistory
-    
+
     /// <summary>
     /// Delete a resource's history (all historic versions except current)
     /// </summary>
@@ -600,7 +599,7 @@ public partial class BaseFhirClient : IDisposable
 
         await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Delete a resource's history (all historic versions except current)
     /// </summary>
@@ -626,7 +625,7 @@ public partial class BaseFhirClient : IDisposable
 
         await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, ct).ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Delete a specific historical version of a resource
     /// </summary>
@@ -666,7 +665,7 @@ public partial class BaseFhirClient : IDisposable
         if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
         return internalOperationAsync(operationName, parameters: parameters, useGet: useGet, ct: ct);
     }
-    
+
     public virtual Task<Resource?> TypeOperationAsync<TResource>(string operationName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
         where TResource : Resource
     {
@@ -675,7 +674,7 @@ public partial class BaseFhirClient : IDisposable
 
         return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet, ct);
     }
-    
+
     public virtual Task<Resource?> TypeOperationAsync(string operationName, string typeName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
     {
         if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
@@ -751,7 +750,7 @@ public partial class BaseFhirClient : IDisposable
     #endregion
 
     #region Get
-    
+
     /// <summary>
     /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
     /// </summary>
@@ -789,7 +788,7 @@ public partial class BaseFhirClient : IDisposable
     {
         return executeAsync<TResource>(tx, new[] { expect }, ct);
     }
-    
+
     private async Task<TResource?> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect, CancellationToken? ct) where TResource : Resource
     {
         var cancellation = ct ?? CancellationToken.None;
@@ -804,7 +803,7 @@ public partial class BaseFhirClient : IDisposable
             Requester.BaseUrl,
             getSerializationEngine(),
             Settings.UseFhirVersionInAcceptHeader ? fhirVersion : null,
-            Settings, 
+            Settings,
             maybeBinaryInteraction);
 
         using var responseMessage = await Requester.ExecuteAsync(requestMessage, cancellation).ConfigureAwait(false);
@@ -817,7 +816,7 @@ public partial class BaseFhirClient : IDisposable
         var cancellation = ct ?? CancellationToken.None;
 
         cancellation.ThrowIfCancellationRequested();
-        
+
         using var responseMessage = await Requester.ExecuteAsync(request, cancellation).ConfigureAwait(false);
 
         return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, request);
@@ -826,14 +825,14 @@ public partial class BaseFhirClient : IDisposable
     #endregion
 
     #region Utilities
-    
+
     // Create our own and add decompression strategy in default handler.
     private static HttpClientHandler makeDefaultHandler() =>
         new()
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         };
-    
+
     private static Uri getValidatedEndpoint(Uri endpoint)
     {
         if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
@@ -854,7 +853,7 @@ public partial class BaseFhirClient : IDisposable
 
         return result;
     }
-    
+
     // either msg or entryComponent should be set
     private async Task<TResource?> extractResourceFromHttpResponse<TResource>(IEnumerable<HttpStatusCode> expect, HttpResponseMessage responseMessage, HttpRequestMessage? msg = null, Bundle.EntryComponent? entryComponent = null, bool useBinaryProtocol = false) where TResource : Resource
     {
@@ -905,34 +904,34 @@ public partial class BaseFhirClient : IDisposable
             null => null,
 
             // Unexpected response type in the body, throw.
-            _ => throw new FhirOperationException(entryComponent is not null ? unexpectedBodyTypeForBundle(entryComponent.Request) : unexpectedBodyTypeForMessage(msg!), responseMessage.StatusCode)
+            _ => throw new FhirOperationException(entryComponent is not null ? unexpectedBodyTypeForBundle(entryComponent.Request, execResult) : unexpectedBodyTypeForMessage(msg!, execResult), responseMessage.StatusCode)
         };
-        
-        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent rc) => $"Operation {rc.Method} on {rc.Url} " +
-                                                                        $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
-        
-        static string unexpectedBodyTypeForMessage(HttpRequestMessage msg) => $"Operation {msg.Method} on {msg.RequestUri} " +
-                                                                        $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
+
+        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent rc, Resource result) => $"Operation {rc.Method} on {rc.Url} " +
+                                                                        $"expected a body of type {typeof(TResource).Name} but a {result.GetType().Name} was returned.";
+
+        static string unexpectedBodyTypeForMessage(HttpRequestMessage msg, Resource result) => $"Operation {msg.Method} on {msg.RequestUri} " +
+                                                                        $"expected a body of type {typeof(TResource).Name} but a {result.GetType().Name} was returned.";
     }
 
-        /// <summary>
-        /// Validates the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions.
-        /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
-        /// </summary>        
-        /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
-        /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
-        /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
-        /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine, bool)"/>
-        internal static async Task<ResponseData> ValidateResponse(
-            HttpResponseMessage responseMessage,
-            IEnumerable<HttpStatusCode> expect,
-            IFhirSerializationEngine engine,
-            string? suggestedVersionOnParseError,
-            bool useBinaryProtocol)
-        {
-            var responseData = (await responseMessage.ExtractResponseData(engine, useBinaryProtocol).ConfigureAwait(false))
-                .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
-                .TranslateLegacyParserException(suggestedVersionOnParseError);
+    /// <summary>
+    /// Validates the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions.
+    /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
+    /// </summary>        
+    /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
+    /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
+    /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
+    /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine, bool)"/>
+    internal static async Task<ResponseData> ValidateResponse(
+        HttpResponseMessage responseMessage,
+        IEnumerable<HttpStatusCode> expect,
+        IFhirSerializationEngine engine,
+        string? suggestedVersionOnParseError,
+        bool useBinaryProtocol)
+    {
+        var responseData = (await responseMessage.ExtractResponseData(engine, useBinaryProtocol).ConfigureAwait(false))
+            .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
+            .TranslateLegacyParserException(suggestedVersionOnParseError);
 
         // If extracting the data caused an issue, return it immediately
         if (responseData.Issue is not null)
@@ -961,13 +960,13 @@ public partial class BaseFhirClient : IDisposable
 
     private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>
         interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
-    
+
     private static bool isPostOrPutOrPatch(HttpMethod method) =>
         method == HttpMethod.Post || method == HttpMethod.Put || method == new HttpMethod("PATCH");
 
     private bool _versionChecked = false;
 
-    
+
     private IFhirSerializationEngine getSerializationEngine()
     {
         return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new());
@@ -1024,9 +1023,9 @@ public partial class BaseFhirClient : IDisposable
 
     private string typeNameOrDie<TResource>() => Inspector.GetFhirTypeNameForType(typeof(TResource)) ??
                                                  throw new ArgumentException($"Type parameter {nameof(TResource)} is not a known resource.");
-    
-    
-    
+
+
+
     #endregion
 
     #region IDisposable Support
