@@ -360,7 +360,12 @@ namespace Hl7.Fhir.ElementModel.Types
         {
             var (left, right) = alignQuantityUnits(a, b);
 
-            return Ok<Quantity>(new(left.Value * right.Value, Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a * b)));
+            if (!left.TryMultiply(right, out var result))
+            {
+                return Fail<Quantity>(Error.InvalidOperation($"The multiply operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
+            }
+            
+            return Ok(result);
         }
 
         internal static Result<Quantity> Divide(Quantity a, Quantity b)
@@ -369,7 +374,12 @@ namespace Hl7.Fhir.ElementModel.Types
 
             var (left, right) = alignQuantityUnits(a, b);
 
-            return Ok<Quantity>(new(left.Value / right.Value, left.Unit == right.Unit ? "1" : Ucum.PerformMetricOperation(left.Unit, right.Unit, (a, b) => a / b)));
+            if (!left.TryDivide(right, out var result))
+            {
+                return Fail<Quantity>(Error.InvalidOperation($"The divide operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
+            }
+            
+            return Ok(result);
         }
 
         public override int GetHashCode() => (Unit, Value).GetHashCode();

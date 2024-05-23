@@ -8,18 +8,24 @@
 
 #nullable enable
 
-
 using Fhir.Metrics;
+using M = Fhir.Metrics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using M = Fhir.Metrics;
+using System.Globalization;
 
 namespace Hl7.Fhir.ElementModel.Types
 {
+    public static class MetricConfiguration
+    {
+        [CLSCompliant(false)]
+        public static Lazy<IMetricService> MetricService { get; set; } = new(() => FhirMetricService.Instance.Value);
+    }
+    
     internal static class Ucum
     {
-        private static readonly Lazy<SystemOfUnits> SYSTEM = new(() => UCUM.Load());
+        private static readonly IMetricService METRIC_SERVICE = MetricConfiguration.MetricService.Value;
 
         /// <summary>
         /// Try to canonicalize the system type quantity to Umum base quantity. So a 1,000 cm will be 10 m. Or an inch will be converted to a meter.
@@ -29,31 +35,78 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <returns><c>true</c> when the conversion succeeded. Or <c>false</c> otherwise.</returns>
         internal static bool TryCanonicalize(this Quantity quantity, [NotNullWhen(true)] out Quantity? canonicalizedQuantity)
         {
-            try
-            {
-                M.Quantity metricsQuantity = quantity.Value.toUnitsOfMeasureQuantity(quantity.Unit);
-                metricsQuantity = SYSTEM.Value.Canonical(metricsQuantity);
-                canonicalizedQuantity = new(metricsQuantity.Value.ToDecimal(), metricsQuantity.Metric.ToString(), QuantityUnitSystem.UCUM);
-                return true;
-            }
-            catch (Exception ex) when (ex is ArgumentException or InvalidCastException)
+            var qtyTuple = (
+                quantity.Value.ToString(CultureInfo.InvariantCulture),
+                quantity.Unit,
+                quantity.System == QuantityUnitSystem.UCUM ? "http://unitsofmeasure.org" : ""
+            );
+            
+            if (!METRIC_SERVICE.TryCanonicalize(qtyTuple, out var canonicalized))
             {
                 canonicalizedQuantity = null;
                 return false;
             }
+
+            canonicalizedQuantity = quantityFromTuple(canonicalized!.Value);
+
+            return true;
+        }
+        
+        internal static bool TryMultiply(this Quantity quantity, Quantity multiplier, [NotNullWhen(true)] out Quantity? result)
+        {
+            var qty1 = (
+                quantity.Value.ToString(CultureInfo.InvariantCulture),
+                quantity.Unit,
+                quantity.System == QuantityUnitSystem.UCUM ? "http://unitsofmeasure.org" : ""
+            );
+            var qty2 = (
+                multiplier.Value.ToString(CultureInfo.InvariantCulture),
+                multiplier.Unit,
+                multiplier.System == QuantityUnitSystem.UCUM ? "http://unitsofmeasure.org" : ""
+            );
+
+            if (!METRIC_SERVICE.TryMultiply(qty1, qty2, out var resultTuple))
+            {
+                result = null;
+                return false;
+            }
+
+            result = quantityFromTuple(resultTuple!.Value);
+
+            return true;
+        }
+        
+        internal static bool TryDivide(this Quantity quantity, Quantity divisor, [NotNullWhen(true)] out Quantity? result)
+        {
+            var qty1 = (
+                quantity.Value.ToString(CultureInfo.InvariantCulture),
+                quantity.Unit,
+                quantity.System == QuantityUnitSystem.UCUM ? "http://unitsofmeasure.org" : ""
+            );
+            var qty2 = (
+                divisor.Value.ToString(CultureInfo.InvariantCulture),
+                divisor.Unit,
+                divisor.System == QuantityUnitSystem.UCUM ? "http://unitsofmeasure.org" : ""
+            );
+
+            if (!METRIC_SERVICE.TryDivide(qty1, qty2, out var resultTuple))
+            {
+                result = null;
+                return false;
+            }
+
+            result = quantityFromTuple(resultTuple!.Value);
+
+            return true;
         }
 
-        private static M.Quantity toUnitsOfMeasureQuantity(this decimal value, string? unit)
+        private static Quantity quantityFromTuple((string value, string unit, string codesystem) quantity)
         {
-            Metric metric = (unit != null) ? SYSTEM.Value.Metric(unit) : new Metric(new List<Metric.Axis>());
-            return new M.Quantity(value, metric);
-        }
-
-        internal static string PerformMetricOperation(string unit1, string unit2, Func<Metric, Metric, Metric> operation)
-        {
-            var a = SYSTEM.Value.Metric(unit1);
-            var b = SYSTEM.Value.Metric(unit2);
-            return operation(a, b).ToString();
+            return new Quantity(
+                decimal.Parse(quantity.value, NumberStyles.Any, CultureInfo.InvariantCulture),
+                quantity.unit == "" ? "1" : quantity.unit,
+                QuantityUnitSystem.UCUM
+            );
         }
     }
 }
