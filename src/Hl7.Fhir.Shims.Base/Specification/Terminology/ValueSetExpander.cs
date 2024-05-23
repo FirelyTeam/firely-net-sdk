@@ -14,7 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -53,9 +53,9 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public T.Task ExpandAsync(ValueSet source) => expandAsync(source, new());
+        public Tasks.Task ExpandAsync(ValueSet source) => expandAsync(source, new());
 
-        private async T.Task expandAsync(ValueSet source, Stack<string> inclusionChain)
+        private async Tasks.Task expandAsync(ValueSet source, Stack<string> inclusionChain)
         {
             // Note we are expanding the valueset in-place, so it's up to the caller to decide whether
             // to clone the valueset, depending on store and performance requirements.
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Specification.Terminology
             //TODO add more parameters to the valuset here when we implement them.
         }
 
-        private async T.Task handleCompose(ValueSet source, Stack<string> inclusionChain)
+        private async Tasks.Task handleCompose(ValueSet source, Stack<string> inclusionChain)
         {
             if (source.Compose == null) return;
 
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Specification.Terminology
         // * The "System" group (system + filter + concepts).
         // * The "ValueSet" group (valueset)
         // The results of both of these parts are then intersected.
-        private async T.Task<List<ValueSet.ContainsComponent>> processConceptSet(ValueSet.ConceptSetComponent conceptSet, Stack<string> inclusionChain)
+        private async Tasks.Task<List<ValueSet.ContainsComponent>> processConceptSet(ValueSet.ConceptSetComponent conceptSet, Stack<string> inclusionChain)
         {
             // vsd-1
             if (!conceptSet.ValueSetElement.Any() && conceptSet.System == null)
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
         // > For each valueSet, find the referenced value set by ValueSet.url, expand that
         // > to produce a collection of result sets.This means that expansion across imports is a recursive process.
-        private async T.Task<List<ValueSet.ContainsComponent>> processValueSetGroup(ValueSet.ConceptSetComponent conceptSet, Stack<string> inclusionChain)
+        private async Tasks.Task<List<ValueSet.ContainsComponent>> processValueSetGroup(ValueSet.ConceptSetComponent conceptSet, Stack<string> inclusionChain)
         {
             var result = new List<ValueSet.ContainsComponent>();
 
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 // > valueSet(s) only: Codes are 'selected' for inclusion if they are in all the referenced value sets
                 // "all the referenced sets" means we need to calculate the intersection of the expanded valuesets.
-                var expanded = await T.Task.WhenAll(conceptSet.ValueSet.Select(vs => expandValueSetAndFilterOnSystem(vs))).ConfigureAwait(false);
+                var expanded = await Tasks.Task.WhenAll(conceptSet.ValueSet.Select(vs => expandValueSetAndFilterOnSystem(vs))).ConfigureAwait(false);
                 var concepts = expanded.Length == 1 ? expanded.Single() : expanded.Aggregate((l, r) => l.Intersect(r, _systemAndCodeComparer));
 
                 addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet)}' would result in an expansion larger than the maximum expansion size.");
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 IEnumerable<ValueSet.ContainsComponent> filterOnSystem(IEnumerable<ValueSet.ContainsComponent> concepts) =>
                     conceptSet.System is not null ? concepts.Where(c => c.System == conceptSet.System) : concepts;
 
-                async T.Task<IEnumerable<ValueSet.ContainsComponent>> expandValueSetAndFilterOnSystem(string canonical)
+                async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> expandValueSetAndFilterOnSystem(string canonical)
                 {
                     var expansion = await getExpansionForValueSet(canonical, inclusionChain).ConfigureAwait(false);
                     return filterOnSystem(expansion);
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Specification.Terminology
         // > * If there are no codes or filters, add every code in the code system to the result set.
         // > * If codes are listed, check that they are valid, and check their active status, and if ok, add them to the result set(the parameters to the $expand operation may be used to control whether active codes are included).
         // > * If any filters are present, process them in order(as explained above), and add the intersection of their results to the result set.
-        private async T.Task<List<ValueSet.ContainsComponent>> processSystemGroup(ValueSet.ConceptSetComponent conceptSet)
+        private async Tasks.Task<List<ValueSet.ContainsComponent>> processSystemGroup(ValueSet.ConceptSetComponent conceptSet)
         {
             var result = new List<ValueSet.ContainsComponent>();
 
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Specification.Terminology
             dest.AddRange(cappedSource);
         }
 
-        private async T.Task handleInclude(ValueSet source, Stack<string> inclusionChain)
+        private async Tasks.Task handleInclude(ValueSet source, Stack<string> inclusionChain)
         {
             if (!source.Compose.Include.Any()) return;
 
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private async T.Task handleExclude(ValueSet source, Stack<string> inclusionChain)
+        private async Tasks.Task handleExclude(ValueSet source, Stack<string> inclusionChain)
         {
             if (!source.Compose.Exclude.Any()) return;
 
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private async T.Task<IEnumerable<ValueSet.ContainsComponent>> getExpansionForValueSet(string uri, Stack<string> inclusionChain)
+        private async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> getExpansionForValueSet(string uri, Stack<string> inclusionChain)
         {
             if (inclusionChain.Contains(uri))
                 throw new TerminologyServiceException($"ValueSet expansion encountered a cycling dependency from {inclusionChain.Peek()} back to {uri}.");
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 : throw new ValueSetUnknownException($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
         }
 
-        private async T.Task<IEnumerable<ValueSet.ContainsComponent>> getAllConceptsFromCodeSystem(string uri)
+        private async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> getAllConceptsFromCodeSystem(string uri)
         {
             if (Settings.ValueSetSource == null)
                 throw Error.InvalidOperation($"No valueset resolver available to resolve codesystem '{uri}', so the expansion cannot be completed.");

@@ -14,7 +14,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.R5\Hl7.Fhir.R5.csproj" />
-		<ProjectReference Include="..\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.Specification.Data.R5\Hl7.Fhir.Specification.Data.R5.csproj" />
 	</ItemGroup>
 

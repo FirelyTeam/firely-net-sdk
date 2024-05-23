@@ -3,7 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T=System.Threading.Tasks;
+using Tasks=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -37,8 +37,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         public Resource ResolveByUri(string uri) => null;
 
-        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
-        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
 
         #endregion
 

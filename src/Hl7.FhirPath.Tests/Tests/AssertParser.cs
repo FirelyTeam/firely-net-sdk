@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.FhirPath.Sprache;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.FhirPath.Expressions;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -13,7 +14,7 @@ namespace Hl7.FhirPath.Tests
         {
             SucceedsWith(parser, input, t =>
             {
-                Assert.AreEqual(1,t.Count());
+                Assert.AreEqual(1, t.Count());
                 Assert.AreEqual(expectedResult, t.Single());
             });
         }
@@ -79,6 +80,24 @@ namespace Hl7.FhirPath.Tests
         public static void SucceedsMatch<T>(Parser<T> parser, string input, T match)
         {
             SucceedsWith<T>(parser, input, result => Assert.AreEqual(match, result));
+        }
+
+        public static void SucceedsRoundTrip<T>(Parser<T> parser, string input, string canonicalInput = null)
+            where T : Expression
+        {
+            SucceedsWith<T>(parser, input, result => {
+                var rt = result.ToCanonicalExpression();
+                Assert.AreEqual(canonicalInput ?? input, rt);
+            });
+        }
+
+        public static void SucceedsEcho<T>(Parser<T> parser, string input)
+            where T : Expression
+        {
+            SucceedsWith<T>(parser, input, result => {
+                var rt = result.EchoExpression();
+                Assert.AreEqual(input, rt);
+            });
         }
 
         public static void FailsMatch<T>(Parser<T> parser, string input)

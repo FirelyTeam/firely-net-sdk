@@ -13,7 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -23,14 +23,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     partial class SnapshotGenerator
     {
-        private T.Task ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false) =>
+        private Tasks.Task ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false) =>
             ensureBaseComponents(structureDef.Snapshot.Element, structureDef.BaseDefinition, force);
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.BaseDefinition"/> property.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        private async T.Task ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
+        private async Tasks.Task ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
         {
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private async T.Task ensureBaseComponents(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
+        private async Tasks.Task ensureBaseComponents(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
         {
             // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  Base = '{baseNav.Path}'");
             var elem = nav.Current;

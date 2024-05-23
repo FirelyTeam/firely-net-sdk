@@ -17,22 +17,31 @@ namespace Hl7.FhirPath.Parser
 {
     internal class Grammar
     {
-        public static readonly Parser<P.Quantity> Quantity = quantityParser;
-        private static IResult<P.Quantity> quantityParser(IInput i)
+        public static readonly Parser<ConstantExpression> Quantity = quantityParser;
+        private static IResult<ConstantExpression> quantityParser(IInput i)
         {
-            var current = i;
-            var result = Lexer.Quantity.Token()(i);
+            // No longer uses the lexer for quantities so that it can decompose the individual tokens and whitespace
+            // Note that quantities are always parsed with a unit, otherwise they would be an integer or decimal
+            // and the +/- are unary operators and not a part of the quantity itself.
+            var result = (
+                from val in Lexer.DecimalNumber.Select(n => $"{n}").Or(Lexer.IntegerNumber.Select(n => $"{n}")).Select(v => new SubToken(v)).Positioned()
+                from ws in WhitespaceOrComments()
+                from unit in Lexer.String.Select(u => $"'{u.Replace("'", "\\'")}'").Or(Lexer.Id).Select(v => new SubToken(v).WithLeadingWS(ws)).Positioned()
+                select (valToken: val, unitToken: unit)
+                          )(i);
 
             if (result.WasSuccessful)
             {
-                var success = P.Quantity.TryParse(result.Value, out var quantity);
+                var success = P.Quantity.TryParse($"{result.Value.valToken.Value} {result.Value.unitToken.Value}", out var quantity);
                 if (success)
-                    return Result.Success(quantity, result.Remainder);
+                {
+                    var qv = new ConstantExpression(quantity, result.Value.unitToken);
+                    return Result.Success(qv, result.Remainder);
+                }
             }
 
-            return Result.Failure<P.Quantity>(i, $"Quantity is invalid",
+            return Result.Failure<ConstantExpression>(i, $"Quantity is invalid",
                 new[] { "a quantity" });
-
         }
 
 
@@ -46,14 +55,18 @@ namespace Hl7.FhirPath.Parser
         //  | quantity
         //  ;
         public static readonly Parser<ConstantExpression> Literal =
-            Lexer.String.Select(v => new ConstantExpression(v, TypeSpecifier.String))
-                .Or(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeSpecifier.DateTime)))
-                .Or(Lexer.Date.Select(v => new ConstantExpression(v, TypeSpecifier.Date)))
-                .Or(Lexer.Time.Select(v => new ConstantExpression(v, TypeSpecifier.Time)))
-                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeSpecifier.Boolean)))
-                .Or(Quantity.Select(v => new ConstantExpression(v, TypeSpecifier.Quantity)))
-                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Decimal)))
-                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Integer)));
+            from wsLeading in WhitespaceOrComments()
+            from l in
+            Lexer.String.Select(v => new ConstantExpression(v, TypeSpecifier.String)).Positioned()
+                .Or(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeSpecifier.DateTime)).Positioned())
+                .Or(Lexer.Date.Select(v => new ConstantExpression(v, TypeSpecifier.Date)).Positioned())
+                .Or(Lexer.Time.Select(v => new ConstantExpression(v, TypeSpecifier.Time)).Positioned())
+                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeSpecifier.Boolean)).Positioned())
+                .Or(Quantity.Positioned())
+                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Decimal)).Positioned())
+                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Integer)).Positioned())
+            from wsTrailing in WhitespaceOrComments()
+            select l.CaptureWhitespaceAndComments(wsLeading, wsTrailing);
 
 
         //term
@@ -64,65 +77,90 @@ namespace Hl7.FhirPath.Parser
         //  | '{' '}'                                               #nullLiteral
         //  ;
         public static readonly Parser<Expression> BracketExpr =
-            (from lparen in Parse.Char('(')
-             from expr in Parse.Ref(() => Expression)
-             from rparen in Parse.Char(')')
-             select expr)
+            (
+                 from lparen in Parse.Char('(').Select(v => new SubToken(v)).Positioned()
+                 from expr in Parse.Ref(() => Expression)
+                 from rparen in Parse.Char(')').Select(v => new SubToken(v)).Positioned()
+                 select new BracketExpression(lparen, rparen, expr)
+            ).Positioned()
             .Named("BracketExpr");
 
+        // Doesn't support exposing the comments if they are embedded in the new empty node list
         public static readonly Parser<Expression> EmptyList =
-            Parse.Char('{').Token().Then(c => Parse.Char('}').Token())
-                    .Select(v => NewNodeListInitExpression.Empty);
+            (
+                from lparen in Parse.Char('{').Select(v => new SubToken(v)).Positioned()
+                from wsMiddle in WhitespaceOrComments()
+                from rparen in Parse.Char('}').Select(v => new SubToken(v).WithLeadingWS(wsMiddle)).Positioned()
+                select new NewNodeListInitExpression(lparen, rparen)
+            ).Named("EmptyList")
+            .Positioned();
 
-        public static Parser<Expression> Function(Expression context)
+        public static Parser<FunctionCallExpression> Function(Expression context)
         {
             return
-                from n in Lexer.Identifier.Select(name => name)
-                from lparen in Parse.Char('(').Token()
-                from paramList in Parse.Ref(() => FunctionParameter(n).Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
-                from rparen in Parse.Char(')').Token()
-                select new FunctionCallExpression(context, n, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+                from ws1 in WhitespaceOrComments()
+                from n in Lexer.Identifier.Select(name => new IdentifierExpression(name).WithLeadingWS(ws1)).Positioned()
+
+                from ws2 in WhitespaceOrComments()
+                from lparen in Parse.Char('(').Select(v => new SubToken(v).WithLeadingWS(ws2)).Positioned()
+
+                from paramList in Parse.Ref(() => FunctionParameter(n.Value).Named("parameter")).DelimitedBy(Parse.Char(',')).Optional()
+
+                from ws3 in WhitespaceOrComments()
+                from rparen in Parse.Char(')').Select(v => new SubToken(v).WithLeadingWS(ws3)).Positioned()
+
+                from ws4 in WhitespaceOrComments()
+                select new FunctionCallExpression(context, n.Value, lparen, rparen, TypeSpecifier.Any, paramList.GetOrElse(Enumerable.Empty<Expression>())).WithTrailingWS(ws4)
+                .UsePositionFrom(n.Location);
         }
 
-        public static Parser<Expression> FunctionParameter(string name) =>
+        public static Parser<Expression> FunctionParameter(string name)
+        {
             // Make exception for is() and as() FUNCTIONS (operators are handled elsewhere), since they don't
             // take a normal parameter, but an identifier (which is not normally a FhirPath type)
-            name != "is" && name != "as" && name != "ofType" ? Grammar.Expression : TypeSpec.Select(s => new ConstantExpression(s));
+            if (name != "is" && name != "as" && name != "ofType")
+                return Grammar.Expression;
+            return WhitespaceOrComments()
+                .Then(wsLeading => TypeSpec.Select(s => new IdentifierExpression(s).WithLeadingWS(wsLeading)).Positioned())
+                .Then(i => WhitespaceOrComments().Select(wsTrailing => i.WithTrailingWS(wsTrailing)));
+        }
 
-
+        // no "capturing" the comments here
         public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
-                .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)))
+                .Or(WhitespaceOrComments().Then(wsLeading => Lexer.Identifier.Select(i => new ConstantExpression(i).WithLeadingWS(wsLeading)).Positioned()).Select(i => new ChildExpression(focus, i)).Positioned())
                 //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
-                .Token();
+                ;
         }
 
         public static readonly Parser<Expression> Term =
-            Literal
-            .Or(FunctionInvocation(AxisExpression.That))
-            .Or(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
-            .XOr(BracketExpr)
-            .XOr(EmptyList)
-            .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
-            .Token()
-            .Named("Term");
+            (
+                from wsLeading in WhitespaceOrComments()
+                from l in Literal
+                    .Or(FunctionInvocation(AxisExpression.That))
+                    .XOr(Lexer.ExternalConstant.Select(n => new SubToken(n)).Positioned().Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+                    .XOr(BracketExpr)
+                    .XOr(EmptyList)
+                    .XOr(Lexer.Axis.Select(a => new AxisExpression(a)).Positioned())
+                from wsTrailing in WhitespaceOrComments()
+                select l.CaptureWhitespaceAndComments(wsLeading, wsTrailing)
+            ).Named("Term");
 
-
-        public static Expression BuildVariableRefExpression(string name)
+        public static Expression BuildVariableRefExpression(SubToken name)
         {
-            if (name.StartsWith("ext-"))
-                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeSpecifier.String, new ConstantExpression(name.Substring(4)));
+            if (name.Value.StartsWith("ext-"))
+                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(4)).UsePositionFrom(name.Location));
 #pragma warning disable IDE0046 // Convert to conditional expression
-            else if (name.StartsWith("vs-"))
+            else if (name.Value.StartsWith("vs-"))
 #pragma warning restore IDE0046 // Convert to conditional expression
-                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeSpecifier.String, new ConstantExpression(name.Substring(3)));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(3)).UsePositionFrom(name.Location));
             else
-                return new VariableRefExpression(name);
+                return new VariableRefExpression(name.Value).UsePositionFrom(name.Location);
         }
 
         public static readonly Parser<string> TypeSpec =
-            Lexer.QualifiedIdentifier.Token();
+            Lexer.QualifiedIdentifier;
 
         //expression
         // : term                                                      #termExpression
@@ -162,68 +200,123 @@ namespace Hl7.FhirPath.Parser
         // '.' invocation
         public static Parser<Expression> DotInvocation(Expression focus)
         {
-            return Parse.Char('.').Then(op => FunctionInvocation(focus));
+            return WhitespaceOrComments().Then(wsBeforeDot => Parse.Char('.').Select(v => new SubToken(v).WithLeadingWS(wsBeforeDot)).Positioned())
+                .Then(op => FunctionInvocation(focus).Select(t => { t.WithLeadingWS(op.LeadingWhitespace); return t; }));
         }
 
         // '[' expression ']'                             #indexerExpression
         public static Parser<Expression> IndexerInvocation(Expression focus)
         {
-            return Parse.Contained(Expression, Parse.Char('[').Token(), Parse.Char(']').Token())
-                .Select(ix => new IndexerExpression(focus, ix));
+            return
+                // The whitespace before the '[' is captured in the ws1 token
+                // so that the position information for the indexer isn't confused with the comment
+                from wsLeading in WhitespaceOrComments()
+                from indexer in (
+                    from lparen in Parse.Char('[').Select(v => new SubToken(v)).Positioned()
+
+                    from ix in Expression
+
+                    from rparen in Parse.Char(']').Select(v => new SubToken(v)).Positioned()
+
+                    select new IndexerExpression(focus, ix, lparen, rparen)
+                ).Positioned()
+                .Select(r => { r.LeftBrace.WithLeadingWS(wsLeading); return r; })
+                select indexer;
         }
 
         // | ('+' | '-') expression                                    #polarityExpression
         public static readonly Parser<Expression> PolarityExpression =
-            from op in Lexer.PolarityOperator.Optional()
-            from indexer in InvocationExpression
-            select op.IsEmpty ? indexer : new UnaryExpression(op.Get(), indexer);
+            from ws1 in WhitespaceOrComments()
+            from op in Lexer.PolarityOperator.Select(v => new SubToken(v).WithLeadingWS(ws1)).Positioned().Optional()
 
-        public static Parser<Expression> BinaryExpression(Parser<string> oper, Parser<Expression> operands)
+            from ws2 in WhitespaceOrComments()
+            from indexer in InvocationExpression
+            select op.IsEmpty ? indexer.WithLeadingWS(ws1) : new UnaryExpression(op.Get().Value[0], indexer.WithLeadingWS(ws2)).UsePositionFrom(op.Get().Location);
+
+        private static Parser<SubToken> WrapSubTokenParameter(Parser<SubToken> parser)
         {
-            return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op, left, right));
-            //return
-            //   from left in operands
-            //   from right in (from op in oper
-            //                  from right in operands
-            //                  select Tuple.Create(op, right)).Optional()
-            //   select right.IsEmpty ? left : new BinaryExpression(right.Get().Item1, left, right.Get().Item2);
+            return 
+                from wsLeading in WhitespaceOrComments()
+                from p in parser.SubTokenWithLeadingWS(wsLeading)
+                select p;
+        }
+
+        public static Parser<Expression> BinaryExpression(Parser<SubToken> oper, Parser<Expression> operands)
+        {
+            return Parse.ChainOperator(WrapSubTokenParameter(oper), operands, (op, left, right) => new BinaryExpression(op, left, right).UsePositionFrom(op.Location));
         }
 
         // | expression('*' | '/' | 'div' | 'mod') expression         #multiplicativeExpression
-        public static readonly Parser<Expression> MulExpression = BinaryExpression(Lexer.MulOperator, PolarityExpression);
+        public static readonly Parser<Expression> MulExpression = BinaryExpression(
+                                    WhitespaceOrComments().Then(ws => Lexer.MulOperator.Select(v => new SubToken(v)).Positioned()),
+                                    PolarityExpression);
 
         // | expression('+' | '-' ) expression                        #additiveExpression
-        public static readonly Parser<Expression> AddExpression = BinaryExpression(Lexer.AddOperator, MulExpression);
+        public static readonly Parser<Expression> AddExpression = BinaryExpression(
+                                    Lexer.AddOperator.Select(v => new SubToken(v)).Positioned(),
+                                    MulExpression);
 
         // | expression '|' expression                                 #unionExpression
-        public static readonly Parser<Expression> UnionExpression = BinaryExpression(Lexer.UnionOperator, AddExpression);
+        public static readonly Parser<Expression> UnionExpression = BinaryExpression(
+                                    Lexer.UnionOperator.Select(v => new SubToken(v)).Positioned(),
+                                    AddExpression);
 
         // | expression('<=' | '<' | '>' | '>=') expression           #inequalityExpression
-        public static readonly Parser<Expression> InEqExpression = BinaryExpression(Lexer.InEqOperator, UnionExpression);
+        public static readonly Parser<Expression> InEqExpression = BinaryExpression(
+                                    Lexer.InEqOperator.Select(v => new SubToken(v)).Positioned(),
+                                    UnionExpression);
 
-        // | expression('is' | 'as') typeSpecifier                    #typeExpression
+        // | expression ('is' | 'as') typeSpecifier                    #typeExpression
         public static readonly Parser<Expression> TypeExpression =
             InEqExpression.Then(
-                    ineq => (from isas in Lexer.TypeOperator
-                             from tp in TypeSpec
-                             select new BinaryExpression(isas, ineq, new ConstantExpression(tp)))
+                    ineq => (
+                        from wsLeading in WhitespaceOrComments()
+                        from isas in Lexer.TypeOperator.Select(v => new SubToken(v).WithLeadingWS(wsLeading)).Positioned()
+                        from wsLeadingTypeSpec in WhitespaceOrComments()
+                        from tp in TypeSpec.Select(v => new IdentifierExpression(v).WithLeadingWS(wsLeadingTypeSpec)).Positioned()
+                        from wsTrailing in WhitespaceOrComments()
+                        select new BinaryExpression(isas, ineq, tp).WithTrailingWS(wsTrailing)
+                        .UsePositionFrom(isas.Location)
+                    )
                     .Or(Parse.Return(ineq)));
 
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
-        public static readonly Parser<Expression> EqExpression = BinaryExpression(Lexer.EqOperator, TypeExpression);
+        public static readonly Parser<Expression> EqExpression = BinaryExpression(
+                                    Lexer.EqOperator.Select(v => new SubToken(v)).Positioned(),
+                                    TypeExpression);
 
         // | expression('in' | 'contains') expression                 #membershipExpression
-        public static readonly Parser<Expression> MembershipExpression = BinaryExpression(Lexer.MembershipOperator, EqExpression);
+        public static readonly Parser<Expression> MembershipExpression = BinaryExpression(
+                                    Lexer.MembershipOperator.Select(v => new SubToken(v)).Positioned(),
+                                    EqExpression);
 
         // | expression 'and' expression                               #andExpression
-        public static readonly Parser<Expression> AndExpression = BinaryExpression(Lexer.AndOperator, MembershipExpression);
+        public static readonly Parser<Expression> AndExpression = BinaryExpression(
+                                    Lexer.AndOperator.Select(v => new SubToken(v)).Positioned(),
+                                    MembershipExpression);
 
         // | expression('or' | 'xor') expression                      #orExpression
-        public static readonly Parser<Expression> OrExpression = BinaryExpression(Lexer.OrOperator, AndExpression);
+        public static readonly Parser<Expression> OrExpression = BinaryExpression(
+                                    Lexer.OrOperator.Select(v => new SubToken(v)).Positioned(),
+                                    AndExpression);
 
         // | expression 'implies' expression                           #impliesExpression
-        public static readonly Parser<Expression> ImpliesExpression = BinaryExpression(Lexer.ImpliesOperator, OrExpression);
+        public static readonly Parser<Expression> ImpliesExpression = BinaryExpression(
+                                    Lexer.ImpliesOperator.Select(v => new SubToken(v)).Positioned(),
+                                    OrExpression);
 
-        public static readonly Parser<Expression> Expression = ImpliesExpression;
+        public static readonly Parser<Expression> Expression =
+            from wsLeading in WhitespaceOrComments()
+            from op in ImpliesExpression.WithLeadingWS(wsLeading)
+            from wsTrailing in WhitespaceOrComments()
+            select op.WithTrailingWS(wsTrailing);
+
+        // Whitespace or comments
+        private static Parser<System.Collections.Generic.IEnumerable<WhitespaceSubToken>> WhitespaceOrComments() => 
+            Parse.WhiteSpace.Many().Select(w => new WhitespaceSubToken(new string(w.ToArray()))).Positioned()
+            .XOr(Lexer.Comment.Select(v => new CommentSubToken(v, false)).Positioned())
+            .XOr(Lexer.CommentBlock.Select(v => new CommentSubToken(v, true)).Positioned())
+            .Many()
+            .Named("Whitespace and/or comments");
     }
 }

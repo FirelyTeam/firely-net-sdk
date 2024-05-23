@@ -19,5 +19,16 @@ namespace Hl7.FhirPath.Expressions
         public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
 
         public abstract T VisitVariableRef(VariableRefExpression expression);
+
+        /// <summary>
+        /// The default implementation of the CustomExpression Visit requests the node
+        /// to <see cref="CustomExpression.Reduce">Reduce</see> to one of the standard expression types and then visits that type.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public virtual T VisitCustomExpression(CustomExpression expression)
+        {
+            return expression.Reduce().Accept<T>(this);
+        }
     }
 }

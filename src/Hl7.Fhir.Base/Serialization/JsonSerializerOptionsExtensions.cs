@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         // internal for testing purposes
-        internal static JsonConverter? FindCustomConverter(IEnumerable<JsonConverter> converters)
+        internal static JsonConverter? FindCustomConverter(this IEnumerable<JsonConverter> converters)
         {
             return converters.FirstOrDefault(jsonConverter => jsonConverter.CanConvert(typeof(Resource)));
         }

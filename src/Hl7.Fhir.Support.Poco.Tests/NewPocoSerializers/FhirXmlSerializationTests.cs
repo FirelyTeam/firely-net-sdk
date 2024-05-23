@@ -17,14 +17,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirXmlSerializationTests
     {
-        private (TestPatient, string) getEdgecases()
+        private (Patient, string) getEdgecases()
         {
             var filename = Path.Combine("TestData", "fp-test-patient.xml");
             var expected = File.ReadAllText(filename);
 
             // For now, deserialize with the existing deserializer, until we have completed
             // the dynamicserializer too.
-            return (FhirXmlNode.Parse(expected).ToPoco<TestPatient>(ModelInspector.ForType<TestPatient>()), expected);
+            return (FhirXmlNode.Parse(expected).ToPoco<Patient>(ModelInspector.ForType<Patient>()), expected);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(b, (o, w) => serializer.Serialize(o, w)));
             Assert.AreEqual("treu", xdoc.Root.Attribute(XName.Get("value")).Value);
 
-            TestPatient p = new() { Contact = new() { new TestPatient.ContactComponent() } };
+            Patient p = new() { Contact = new() { new Patient.ContactComponent() } };
             xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(p, (o, w) => serializer.Serialize(o, w)));
             var contactArray = xdoc.Root.Elements(XName.Get("contact", XmlNs.FHIR));
             contactArray.Count().Should().Be(1);

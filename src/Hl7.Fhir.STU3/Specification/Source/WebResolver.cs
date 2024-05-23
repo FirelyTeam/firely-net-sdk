@@ -13,7 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics;
 using System.Net;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -90,8 +90,8 @@ namespace Hl7.Fhir.Specification.Source
             return ResolveByUri(uri);
         }
 
-        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
-        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
+        public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

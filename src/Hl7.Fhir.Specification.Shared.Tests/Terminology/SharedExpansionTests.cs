@@ -5,14 +5,14 @@ using Hl7.Fhir.Specification.Terminology;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     public class SharedExpansionTests
     {
         [Fact]
-        public async T.Task CanCallThroughLocalTerminologyService()
+        public async Tasks.Task CanCallThroughLocalTerminologyService()
         {
             var vs1 = new ValueSet { Url = "http://source", Status = PublicationStatus.Active }
                 .Includes(i => i.System("http://nu.nl").Concepts("1", "2", "3"));
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task CanCombineValueSets()
+        public async Tasks.Task CanCombineValueSets()
         {
             var vs1 = buildVs("http://valuesetA", "1", "2", "3").Includes(i => i.System("http://systemX").Concepts("A"));
             var vs2 = buildVs("http://valuesetB", "2", "3", "4");
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task CatchesCyclicExpansions()
+        public async Tasks.Task CatchesCyclicExpansions()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task TestExpandingVsWithUnknownSystem()
+        public async Tasks.Task TestExpandingVsWithUnknownSystem()
         {
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = new InMemoryResourceResolver() });
@@ -115,4 +115,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-

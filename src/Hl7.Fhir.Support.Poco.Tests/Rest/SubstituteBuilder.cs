@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 {
     public class SubstituteBuilder
     {
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
         private static readonly string TESTVERSION = "3.0.1";
 
         private TestHttpMessageHandler Instance { get; } = Substitute.For<TestHttpMessageHandler>();

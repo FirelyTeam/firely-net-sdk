@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -35,32 +35,32 @@ namespace Hl7.Fhir.Specification.Terminology
         }
         
         ///<inheritdoc />
-        public T.Task<Resource> Closure(Parameters parameters, bool useGet = false) =>
+        public Tasks.Task<Resource> Closure(Parameters parameters, bool useGet = false) =>
             throw new NotImplementedException();
 
         ///<inheritdoc />
-        public T.Task<Parameters>
+        public Tasks.Task<Parameters>
             CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>
             throw new NotImplementedException();
 
         ///<inheritdoc />
-        public T.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false) =>
+        public Tasks.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false) =>
             throw new NotImplementedException();
 
         ///<inheritdoc />
-        public T.Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
+        public Tasks.Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
             throw new NotImplementedException();
 
         ///<inheritdoc />
-        public T.Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) =>
+        public Tasks.Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) =>
             throw new NotImplementedException();
 
         ///<inheritdoc />
-        public T.Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) =>
+        public Tasks.Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) =>
             throw new NotImplementedException();
 
         ///<inheritdoc />
-        public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null,
+        public async Tasks.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null,
             bool useGet = false)
         {
             parameters.CheckForValidityOfValidateCodeParams();
