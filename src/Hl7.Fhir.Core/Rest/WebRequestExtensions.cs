@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Rest
 
         internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout)
         {
+#if NETSTANDARD1_1
             return Task.Factory.StartNew<WebResponse>(() =>
             {
                 var t = Task.Factory.FromAsync<WebResponse>(
@@ -119,7 +120,10 @@ namespace Hl7.Fhir.Rest
                     try
                     {
                         if (!t.Wait(timeout))
+                        {
+                            request.Abort();
                             throw new TimeoutException();
+                        }
                     }
                     catch (AggregateException we)
                     {
@@ -136,85 +140,27 @@ namespace Hl7.Fhir.Rest
                 }
                 return t.Result;
             });
-        }
+#else
+            var t = Task.Factory.FromAsync<WebResponse>(
+                request.BeginGetResponse,
+                request.EndGetResponse,
+                null);
 
-
-		public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
-        {
-            try
+            return t.ContinueWith(parent =>
             {
-                return (HttpWebResponse)req.EndGetResponse(ar);
-            }
-            catch (WebException we)
-            {
-                var resp = we.Response as HttpWebResponse;
-                if (resp == null)
-                    throw;
-                return resp;
-            }
-        }
-
-        public static WebResponse GetResponseNoEx(this WebRequest req)
-        {
-            WebResponse result = null;
-            ManualResetEvent responseReady = new ManualResetEvent(initialState: false);
-            Exception caught = null;
-
-            AsyncCallback callback = new AsyncCallback(ar =>
+                if (parent.IsFaulted)
                 {
-                    //var request = (WebRequest)ar.AsyncState;
-                    try
+                    if (parent.Exception.GetBaseException() is WebException wex)
                     {
-                        result = req.EndGetResponseNoEx(ar);
+                        if (!(wex.Response is HttpWebResponse resp))
+                            throw t.Exception.GetBaseException();
+                        return resp;
                     }
-                    catch(Exception ex)
-                    {
-                        caught = ex;
-                    }
-                    finally
-                    {
-                        responseReady.Set();
-                    }
-                });
-
-            var async = req.BeginGetResponse(callback, null);
-
-            if (!async.IsCompleted)
-            {
-#if !NETSTANDARD1_1
-                ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
-#endif
-
-                //async.AsyncWaitHandle.WaitOne();
-                // Not having thread affinity seems to work better with ManualResetEvent
-                // Using AsyncWaitHandle.WaitOne() gave unpredictable results (in the
-                // unit tests), when EndGetResponse would return null without any error
-                // thrown
-                responseReady.WaitOne();
-                //async.AsyncWaitHandle.WaitOne();
-            }
-
-            if (caught != null) throw caught;
-
-            return result;
-        }
-
-
-        private static void TimeoutCallback(object state, bool timedOut)
-        {
-            if (timedOut)
-            {
-                HttpWebRequest request = state as HttpWebRequest;
-                if (request != null)
-                {
-                    request.Abort();
+                    throw t.Exception.GetBaseException();
                 }
-            }
+                return parent.Result;
+            });
+#endif
         }
-
     }
 }
-
-
-
-
