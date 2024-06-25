@@ -1,8 +1,11 @@
-﻿using Hl7.Fhir.ElementModel.Adapters;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel.Adapters;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.ElementModel.Tests
@@ -73,6 +76,44 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), result.GetType());
             Assert.AreEqual("Patient", adapter.GetResourceTypeIndicator());
             Assert.AreSame(adapter, result as ISourceNode);
+        }
+        
+        [TestMethod]
+        public void SourceNodeToTypedElementToSourceNode_WithChoiceType_RoundTrips_Location()
+        {
+            var sourceNode = SourceNode.Resource("Patient", "Patient", 
+                SourceNode.Node("extension",
+                SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/patient-birthTime"),
+                SourceNode.Valued("valueDateTime", "2021-01-01T00:00:00Z")));
+            var extensionValueSourceLocation = 
+                sourceNode.Children("extension").First().Children("valueDateTime").First().Location;
+
+            var sdsProvider = new PocoStructureDefinitionSummaryProvider();
+            var typedElement = sourceNode.ToTypedElement(sdsProvider);
+
+            var result = typedElement.ToSourceNode();
+            result.Children("extension").First().Children("valueDateTime").First().Location.Should()
+                .Be(extensionValueSourceLocation, 
+                    "On a SourceNode from a TypedElement, a choice type should again have the same Location as the original SourceNode");
+        }
+
+        [TestMethod]
+        public void PocoToSourceNode_WithChoiceType_HasSameLocationAsSourceNode()
+        {
+            var sourceNode = SourceNode.Resource("Patient", "Patient",
+                SourceNode.Node("extension",
+                    SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/patient-birthTime"),
+                    SourceNode.Valued("valueDateTime", "2021-01-01T00:00:00Z")));
+            var extensionValueSourceLocation =
+                sourceNode.Children("extension").First().Children("valueDateTime").First().Location;
+
+            var poco = new Patient();
+            poco.Extension.Add(new Extension("http://hl7.org/fhir/StructureDefinition/patient-birthTime", new FhirDateTime("2021-01-01T00:00:00Z")));
+
+            var result = poco.ToSourceNode(ModelInspector.ForType<Patient>());
+            result.Children("extension").First().Children("valueDateTime").First().Location.Should()
+                .Be(extensionValueSourceLocation,
+                    "On a SourceNode from a TypedElement, a choice type should again have the same Location as if it was constructed as SourceNode");
         }
     }
 }
