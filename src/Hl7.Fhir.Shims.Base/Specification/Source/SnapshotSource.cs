@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (res is StructureDefinition sd)
             {
-                if (!sd.HasSnapshot || Generator.Settings.ForceRegenerateSnapshots || !sd.Snapshot.IsCreatedBySnapshotGenerator())
+                if (!sd.HasSnapshot || (Generator.Settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 {
                     await Generator.UpdateAsync(sd).ConfigureAwait(false);
                 }
