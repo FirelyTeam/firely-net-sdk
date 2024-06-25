@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Rest
             }
 
             // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
-            if (result.BodyResource is not null && (message.Headers.Location?.OriginalString ?? message.RequestMessage?.RequestUri?.OriginalString) is {} location)
+            if (result.BodyResource is not null && (message.Headers.Location?.OriginalString ?? message.GetRequestUri()?.OriginalString) is {} location)
             {
                 var ri = new ResourceIdentity(location);
                 result.BodyResource.ResourceBase = ri.HasBaseUri && ri.Form == ResourceIdentityForm.AbsoluteRestUrl
