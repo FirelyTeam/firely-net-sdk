@@ -22,6 +22,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public TypedElementToSourceNodeAdapter(ITypedElement element)
         {
             this.Current = element ?? throw Error.ArgumentNull(nameof(element));
+            this.Location = element.Location;
 
             if (element is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
@@ -31,6 +32,14 @@ namespace Hl7.Fhir.ElementModel.Adapters
         {
             Current = child;
             ExceptionHandler = parent.ExceptionHandler;
+            // if the typed element was derived from a source node, we can use the location of the source node
+            Location = Current.Annotation<ISourceNode>()?.Location ?? 
+                (child.Definition?.IsChoiceElement is true 
+                    // if the child is a choice element, we need to insert the type name into the location
+                    ? child.Location.Insert(child.Location.LastIndexOf("[0]", StringComparison.Ordinal), child.InstanceType.Capitalize()) 
+                    // otherwise we can just use the location of the child (NOT the shortpath, since the shortpath does not contain the index of non-collection elements, which should be preserved on source nodes)
+                    : child.Location
+                );
         }
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
@@ -47,7 +56,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public string Text => Current.Value == null ? null :
             PrimitiveTypeConverter.ConvertTo<string>(Current.Value);
 
-        public string Location => Current.Location;
+        public string Location { get; }
 
         public string ResourceType
         {
