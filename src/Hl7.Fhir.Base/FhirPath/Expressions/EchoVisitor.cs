@@ -5,6 +5,8 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
+
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -113,7 +115,7 @@ namespace Hl7.FhirPath.Expressions
                 case "Quantity":
                     if (expression.Value is P.Quantity q)
                     {
-                        _result.Append($"{q?.Value}");
+                        _result.Append(q.Value.ToString(CultureInfo.InvariantCulture));
                         OutputSubToken(expression.Unit);
                     }
                     else
