@@ -11,6 +11,7 @@ using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Sprache;
 using P = Hl7.Fhir.ElementModel.Types;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Hl7.FhirPath.Parser
@@ -24,7 +25,8 @@ namespace Hl7.FhirPath.Parser
             // Note that quantities are always parsed with a unit, otherwise they would be an integer or decimal
             // and the +/- are unary operators and not a part of the quantity itself.
             var result = (
-                from val in Lexer.DecimalNumber.Select(n => $"{n}").Or(Lexer.IntegerNumber.Select(n => $"{n}")).Select(v => new SubToken(v)).Positioned()
+                from val in Lexer.DecimalNumber.Select(n => n.ToString(CultureInfo.InvariantCulture))
+                    .Or(Lexer.IntegerNumber.Select(n => n.ToString(CultureInfo.InvariantCulture))).Select(v => new SubToken(v)).Positioned()
                 from ws in WhitespaceOrComments()
                 from unit in Lexer.String.Select(u => $"'{u.Replace("'", "\\'")}'").Or(Lexer.Id).Select(v => new SubToken(v).WithLeadingWS(ws)).Positioned()
                 select (valToken: val, unitToken: unit)
