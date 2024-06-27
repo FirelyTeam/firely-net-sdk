@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Test
         }
 
         private const string DEFAULT_XML = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"true\" /></Patient>";
-        private static readonly Uri REQUEST_URI = new("http://server.nl/fhir/SomeResource/1", UriKind.Absolute);
+        private static readonly Uri REQUEST_URI = new("http://server.nl/fhir/", UriKind.Absolute);
         private static HttpContent makeXmlContent(string? xml = null) =>
             new StringContent(xml ?? DEFAULT_XML, Encoding.UTF8, ContentType.XML_CONTENT_HEADER);
         private static HttpResponseMessage makeXmlMessage(HttpStatusCode status = HttpStatusCode.OK, string? xml = null) =>
