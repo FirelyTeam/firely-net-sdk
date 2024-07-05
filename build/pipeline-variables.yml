@@ -4,6 +4,3 @@
 
 variables:
   isTagBranch: $[startswith(variables['Build.SourceBranch'], 'refs/tags/v')]
-  GITHUB_PACKAGES_APIKEY: $(GitHubPushPackagesAPIKey)  # key is set in variable group APIKeys
-  NUGET_APIKEY: $(NuGetSDKAPIKey) # key is set in variable group APIKeys
-  useGitHubPackageFeed: 'no' # possible values: 'yes', 'no'

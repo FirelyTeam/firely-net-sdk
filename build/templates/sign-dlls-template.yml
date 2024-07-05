@@ -17,9 +17,10 @@ steps:
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
   - powershell: |
         $sdkfiles   =  Get-ChildItem -Path $(Build.SourcesDirectory)\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
+        $commonfiles = Get-ChildItem -Path $(Build.SourcesDirectory)\common\src\Hl7.Fhir*\bin\Release\*\Hl7.*Fhir*.dll -Exclude Hl7.Fhir*Tests
 
         Write-Verbose "Last exitcode before signing: $lastexitcode"
-        foreach ($file in ($sdkfiles))
+        foreach ($file in ($sdkfiles + $commonfiles))
         {
           Write-Verbose "Signing file: $file"
 
