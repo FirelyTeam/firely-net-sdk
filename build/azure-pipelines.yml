@@ -28,6 +28,10 @@ resources:
   - repository: self
     type: git
     ref: develop-stu3
+  - repository: templates
+    type: github
+    name: FirelyTeam/azure-pipeline-templates
+    endpoint: FirelyTeam 
 
 stages:
 - stage: build
