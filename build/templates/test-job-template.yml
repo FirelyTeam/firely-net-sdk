@@ -7,19 +7,16 @@ parameters:
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Use .NET Core sdk 2.1.x'
+  displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
   inputs:
-    version: 2.1.x
+    packageType: runtime
+    version: $(NET_CORE_SDK)
 
 - task: DownloadPipelineArtifact@2
   inputs:
     displayName: Download Build artifacts
     artifact: 'TestBuild'
     path: $(System.DefaultWorkingDirectory)/TestBuild
-
-- powershell: |
-    cd D:\a\1\s\TestBuild\common\src\Hl7.FhirPath.Tests\bin\Release\netcoreapp2.1\publish\
-    ls
     
 - task: DotNetCoreCLI@2
   displayName: Running unit tests
