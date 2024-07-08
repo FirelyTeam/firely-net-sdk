@@ -16,6 +16,10 @@ steps:
     displayName: Download Build artifacts
     artifact: 'TestBuild'
     path: $(System.DefaultWorkingDirectory)/TestBuild
+
+- powershell: |
+    cd D:\a\1\s\TestBuild\
+    ls
     
 - task: DotNetCoreCLI@2
   displayName: Running unit tests
