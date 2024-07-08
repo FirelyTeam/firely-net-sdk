@@ -5,5 +5,5 @@
 variables:
   NET_CORE_SDK: 8.0.x
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  TEST_TARGETFRAMEWORK: net8.0
+  TEST_TARGETFRAMEWORK: netcoreapp2.1
   buildConfiguration: Release
