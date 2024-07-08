@@ -120,10 +120,6 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
-    
-    - task: NuGetToolInstaller@1
-      inputs:
-        versionSpec: 5.x
 
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - template: codesign-nuget-packages.yml@templates
@@ -131,7 +127,7 @@ stages:
           certificateValue: $(FirelyCodeSignerCertificate)
           certificatePasswordValue: $(CodeSigningPassword)
           packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
-
+          
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
