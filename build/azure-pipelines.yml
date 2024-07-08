@@ -19,6 +19,7 @@ variables:
 - template: build-variables.yml
 - template: pipeline-variables.yml
 - group: APIKeys
+- group: CodeSigning
   
 pool:
   vmImage: windows-latest
@@ -119,6 +120,14 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
+
+    - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - template: codesign-nuget-packages.yml@templates
+        parameters:
+          certificateValue: $(FirelyCodeSignerCertificate)
+          certificatePasswordValue: $(CodeSigningPassword)
+          packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
+          
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
