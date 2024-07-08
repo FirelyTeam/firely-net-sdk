@@ -18,7 +18,7 @@ steps:
     path: $(System.DefaultWorkingDirectory)/TestBuild
 
 - powershell: |
-    cd D:\a\1\s\TestBuild\
+    cd D:\a\1\s\TestBuild\common\src\Hl7.FhirPath.Tests\bin\Release\netcoreapp2.1\publish\
     ls
     
 - task: DotNetCoreCLI@2
