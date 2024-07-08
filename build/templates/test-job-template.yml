@@ -9,7 +9,7 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk 2.1.x'
   inputs:
-    version: "8.0.x"
+    version: 2.1.x
 
 - task: DownloadPipelineArtifact@2
   inputs:
