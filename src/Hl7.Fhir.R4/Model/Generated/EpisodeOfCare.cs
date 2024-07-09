@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("onhold"), Description("On Hold")]
       Onhold,
       /// <summary>
-      /// This episode of care is finished and the organization is not expecting to be providing further care to the patient. Can also be known as "closed", "completed" or other similar terms.
+      /// This episode of care is finished and the organization is not expecting to be providing further care to the patient. Can also be known as \"closed\", \"completed\" or other similar terms.
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
       [EnumLiteral("finished"), Description("Finished")]
@@ -657,18 +657,18 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopy();
-      if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(StatusHistory.DeepCopy());
-      if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-      if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(Diagnosis.DeepCopy());
+      if(StatusHistory.Any()) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(StatusHistory.DeepCopy());
+      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+      if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(Diagnosis.DeepCopy());
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
+      if(ReferralRequest.Any()) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
       if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopy();
-      if(Team != null) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
-      if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
+      if(Team.Any()) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
+      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
       return dest;
     }
 

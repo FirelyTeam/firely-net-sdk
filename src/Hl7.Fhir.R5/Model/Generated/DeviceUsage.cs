@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
-      /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
+      /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called \"suspended\".
       /// (system: http://hl7.org/fhir/deviceusage-status)
       /// </summary>
       [EnumLiteral("on-hold"), Description("On Hold")]
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
+        if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
         return dest;
       }
 
@@ -545,23 +545,23 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>)StatusElement.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-      if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
+      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
       if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
       if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
       if(DateAssertedElement != null) dest.DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime)DateAssertedElement.DeepCopy();
       if(UsageStatus != null) dest.UsageStatus = (Hl7.Fhir.Model.CodeableConcept)UsageStatus.DeepCopy();
-      if(UsageReason != null) dest.UsageReason = new List<Hl7.Fhir.Model.CodeableConcept>(UsageReason.DeepCopy());
+      if(UsageReason.Any()) dest.UsageReason = new List<Hl7.Fhir.Model.CodeableConcept>(UsageReason.DeepCopy());
       if(Adherence != null) dest.Adherence = (Hl7.Fhir.Model.DeviceUsage.AdherenceComponent)Adherence.DeepCopy();
       if(InformationSource != null) dest.InformationSource = (Hl7.Fhir.Model.ResourceReference)InformationSource.DeepCopy();
       if(Device != null) dest.Device = (Hl7.Fhir.Model.CodeableReference)Device.DeepCopy();
-      if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
+      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
       if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)BodySite.DeepCopy();
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       return dest;
     }
 

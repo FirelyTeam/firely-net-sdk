@@ -246,8 +246,8 @@ namespace Hl7.Fhir.Model
         if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopy();
         if(FivePrime != null) dest.FivePrime = (Hl7.Fhir.Model.CodeableConcept)FivePrime.DeepCopy();
         if(ThreePrime != null) dest.ThreePrime = (Hl7.Fhir.Model.CodeableConcept)ThreePrime.DeepCopy();
-        if(Linkage != null) dest.Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(Linkage.DeepCopy());
-        if(Sugar != null) dest.Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(Sugar.DeepCopy());
+        if(Linkage.Any()) dest.Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(Linkage.DeepCopy());
+        if(Sugar.Any()) dest.Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(Sugar.DeepCopy());
         return dest;
       }
 
@@ -912,7 +912,7 @@ namespace Hl7.Fhir.Model
       if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopy();
       if(AreaOfHybridisationElement != null) dest.AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString)AreaOfHybridisationElement.DeepCopy();
       if(OligoNucleotideType != null) dest.OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept)OligoNucleotideType.DeepCopy();
-      if(Subunit != null) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(Subunit.DeepCopy());
+      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(Subunit.DeepCopy());
       return dest;
     }
 

@@ -154,8 +154,8 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.CodeableConcept)Purpose.DeepCopy();
-      if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
-      if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
+      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
       if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
       if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();

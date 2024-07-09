@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(RatioType != null) dest.RatioType = (Hl7.Fhir.Model.CodeableConcept)RatioType.DeepCopy();
-        if(StartingMaterial != null) dest.StartingMaterial = new List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>(StartingMaterial.DeepCopy());
+        if(StartingMaterial.Any()) dest.StartingMaterial = new List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>(StartingMaterial.DeepCopy());
         return dest;
       }
 
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(AverageMolecularFormulaElement != null) dest.AverageMolecularFormulaElement = (Hl7.Fhir.Model.FhirString)AverageMolecularFormulaElement.DeepCopy();
         if(RepeatUnitAmountType != null) dest.RepeatUnitAmountType = (Hl7.Fhir.Model.CodeableConcept)RepeatUnitAmountType.DeepCopy();
-        if(RepeatUnit != null) dest.RepeatUnit = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>(RepeatUnit.DeepCopy());
+        if(RepeatUnit.Any()) dest.RepeatUnit = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>(RepeatUnit.DeepCopy());
         return dest;
       }
 
@@ -686,8 +686,8 @@ namespace Hl7.Fhir.Model
         if(UnitElement != null) dest.UnitElement = (Hl7.Fhir.Model.FhirString)UnitElement.DeepCopy();
         if(Orientation != null) dest.Orientation = (Hl7.Fhir.Model.CodeableConcept)Orientation.DeepCopy();
         if(AmountElement != null) dest.AmountElement = (Hl7.Fhir.Model.Integer)AmountElement.DeepCopy();
-        if(DegreeOfPolymerisation != null) dest.DegreeOfPolymerisation = new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>(DegreeOfPolymerisation.DeepCopy());
-        if(StructuralRepresentation != null) dest.StructuralRepresentation = new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>(StructuralRepresentation.DeepCopy());
+        if(DegreeOfPolymerisation.Any()) dest.DegreeOfPolymerisation = new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>(DegreeOfPolymerisation.DeepCopy());
+        if(StructuralRepresentation.Any()) dest.StructuralRepresentation = new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>(StructuralRepresentation.DeepCopy());
         return dest;
       }
 
@@ -1343,10 +1343,10 @@ namespace Hl7.Fhir.Model
       if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
       if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
       if(Geometry != null) dest.Geometry = (Hl7.Fhir.Model.CodeableConcept)Geometry.DeepCopy();
-      if(CopolymerConnectivity != null) dest.CopolymerConnectivity = new List<Hl7.Fhir.Model.CodeableConcept>(CopolymerConnectivity.DeepCopy());
+      if(CopolymerConnectivity.Any()) dest.CopolymerConnectivity = new List<Hl7.Fhir.Model.CodeableConcept>(CopolymerConnectivity.DeepCopy());
       if(ModificationElement != null) dest.ModificationElement = (Hl7.Fhir.Model.FhirString)ModificationElement.DeepCopy();
-      if(MonomerSet != null) dest.MonomerSet = new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>(MonomerSet.DeepCopy());
-      if(Repeat != null) dest.Repeat = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>(Repeat.DeepCopy());
+      if(MonomerSet.Any()) dest.MonomerSet = new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>(MonomerSet.DeepCopy());
+      if(Repeat.Any()) dest.Repeat = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>(Repeat.DeepCopy());
       return dest;
     }
 

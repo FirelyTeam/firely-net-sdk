@@ -834,9 +834,9 @@ namespace Hl7.Fhir.Model
         if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopy();
         if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopy();
         if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent)MolecularWeight.DeepCopy();
-        if(Technique != null) dest.Technique = new List<Hl7.Fhir.Model.CodeableConcept>(Technique.DeepCopy());
-        if(SourceDocument != null) dest.SourceDocument = new List<Hl7.Fhir.Model.ResourceReference>(SourceDocument.DeepCopy());
-        if(Representation != null) dest.Representation = new List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent>(Representation.DeepCopy());
+        if(Technique.Any()) dest.Technique = new List<Hl7.Fhir.Model.CodeableConcept>(Technique.DeepCopy());
+        if(SourceDocument.Any()) dest.SourceDocument = new List<Hl7.Fhir.Model.ResourceReference>(SourceDocument.DeepCopy());
+        if(Representation.Any()) dest.Representation = new List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent>(Representation.DeepCopy());
         return dest;
       }
 
@@ -1278,8 +1278,8 @@ namespace Hl7.Fhir.Model
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
         if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
         return dest;
       }
 
@@ -1606,13 +1606,13 @@ namespace Hl7.Fhir.Model
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
         if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
-        if(Language != null) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
-        if(Domain != null) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(Domain.DeepCopy());
-        if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-        if(Synonym != null) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Synonym.DeepCopy());
-        if(Translation != null) dest.Translation = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Translation.DeepCopy());
-        if(Official != null) dest.Official = new List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent>(Official.DeepCopy());
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(Language.Any()) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
+        if(Domain.Any()) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(Domain.DeepCopy());
+        if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+        if(Synonym.Any()) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Synonym.DeepCopy());
+        if(Translation.Any()) dest.Translation = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Translation.DeepCopy());
+        if(Official.Any()) dest.Official = new List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent>(Official.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
         return dest;
       }
 
@@ -2092,7 +2092,7 @@ namespace Hl7.Fhir.Model
         if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
         if(RatioHighLimitAmount != null) dest.RatioHighLimitAmount = (Hl7.Fhir.Model.Ratio)RatioHighLimitAmount.DeepCopy();
         if(Comparator != null) dest.Comparator = (Hl7.Fhir.Model.CodeableConcept)Comparator.DeepCopy();
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
         return dest;
       }
 
@@ -2315,7 +2315,7 @@ namespace Hl7.Fhir.Model
         if(Genus != null) dest.Genus = (Hl7.Fhir.Model.CodeableConcept)Genus.DeepCopy();
         if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
         if(Part != null) dest.Part = (Hl7.Fhir.Model.CodeableConcept)Part.DeepCopy();
-        if(CountryOfOrigin != null) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(CountryOfOrigin.DeepCopy());
+        if(CountryOfOrigin.Any()) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(CountryOfOrigin.DeepCopy());
         return dest;
       }
 
@@ -2737,24 +2737,24 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-      if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.CodeableConcept>(Classification.DeepCopy());
+      if(Classification.Any()) dest.Classification = new List<Hl7.Fhir.Model.CodeableConcept>(Classification.DeepCopy());
       if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopy();
-      if(Grade != null) dest.Grade = new List<Hl7.Fhir.Model.CodeableConcept>(Grade.DeepCopy());
+      if(Grade.Any()) dest.Grade = new List<Hl7.Fhir.Model.CodeableConcept>(Grade.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(InformationSource != null) dest.InformationSource = new List<Hl7.Fhir.Model.ResourceReference>(InformationSource.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
-      if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
-      if(Moiety != null) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent>(Moiety.DeepCopy());
-      if(Property != null) dest.Property = new List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent>(Property.DeepCopy());
-      if(MolecularWeight != null) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent>(MolecularWeight.DeepCopy());
+      if(InformationSource.Any()) dest.InformationSource = new List<Hl7.Fhir.Model.ResourceReference>(InformationSource.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+      if(Supplier.Any()) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
+      if(Moiety.Any()) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent>(Moiety.DeepCopy());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent>(Property.DeepCopy());
+      if(MolecularWeight.Any()) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent>(MolecularWeight.DeepCopy());
       if(Structure != null) dest.Structure = (Hl7.Fhir.Model.SubstanceDefinition.StructureComponent)Structure.DeepCopy();
-      if(Code != null) dest.Code = new List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent>(Code.DeepCopy());
-      if(Name != null) dest.Name = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Name.DeepCopy());
-      if(Relationship != null) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent>(Relationship.DeepCopy());
+      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent>(Code.DeepCopy());
+      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Name.DeepCopy());
+      if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent>(Relationship.DeepCopy());
       if(SourceMaterial != null) dest.SourceMaterial = (Hl7.Fhir.Model.SubstanceDefinition.SourceMaterialComponent)SourceMaterial.DeepCopy();
       return dest;
     }

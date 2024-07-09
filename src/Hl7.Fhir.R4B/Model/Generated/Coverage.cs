@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        if(Exception != null) dest.Exception = new List<Hl7.Fhir.Model.Coverage.ExemptionComponent>(Exception.DeepCopy());
+        if(Exception.Any()) dest.Exception = new List<Hl7.Fhir.Model.Coverage.ExemptionComponent>(Exception.DeepCopy());
         return dest;
       }
 
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(PolicyHolder != null) dest.PolicyHolder = (Hl7.Fhir.Model.ResourceReference)PolicyHolder.DeepCopy();
@@ -929,13 +929,13 @@ namespace Hl7.Fhir.Model
       if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.FhirString)DependentElement.DeepCopy();
       if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Payor != null) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopy());
-      if(Class != null) dest.Class = new List<Hl7.Fhir.Model.Coverage.ClassComponent>(Class.DeepCopy());
+      if(Payor.Any()) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopy());
+      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.Coverage.ClassComponent>(Class.DeepCopy());
       if(OrderElement != null) dest.OrderElement = (Hl7.Fhir.Model.PositiveInt)OrderElement.DeepCopy();
       if(NetworkElement != null) dest.NetworkElement = (Hl7.Fhir.Model.FhirString)NetworkElement.DeepCopy();
-      if(CostToBeneficiary != null) dest.CostToBeneficiary = new List<Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent>(CostToBeneficiary.DeepCopy());
+      if(CostToBeneficiary.Any()) dest.CostToBeneficiary = new List<Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent>(CostToBeneficiary.DeepCopy());
       if(SubrogationElement != null) dest.SubrogationElement = (Hl7.Fhir.Model.FhirBoolean)SubrogationElement.DeepCopy();
-      if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());
+      if(Contract.Any()) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());
       return dest;
     }
 

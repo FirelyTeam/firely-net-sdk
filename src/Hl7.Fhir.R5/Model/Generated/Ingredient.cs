@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableReference)Code.DeepCopy();
-        if(Strength != null) dest.Strength = new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>(Strength.DeepCopy());
+        if(Strength.Any()) dest.Strength = new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>(Strength.DeepCopy());
         return dest;
       }
 
@@ -575,8 +575,8 @@ namespace Hl7.Fhir.Model
         if(TextConcentrationElement != null) dest.TextConcentrationElement = (Hl7.Fhir.Model.FhirString)TextConcentrationElement.DeepCopy();
         if(Basis != null) dest.Basis = (Hl7.Fhir.Model.CodeableConcept)Basis.DeepCopy();
         if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
-        if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
-        if(ReferenceStrength != null) dest.ReferenceStrength = new List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>(ReferenceStrength.DeepCopy());
+        if(Country.Any()) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
+        if(ReferenceStrength.Any()) dest.ReferenceStrength = new List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>(ReferenceStrength.DeepCopy());
         return dest;
       }
 
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
         if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableReference)Substance.DeepCopy();
         if(Strength != null) dest.Strength = (Hl7.Fhir.Model.DataType)Strength.DeepCopy();
         if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
-        if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
+        if(Country.Any()) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
         return dest;
       }
 
@@ -1119,13 +1119,13 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
-      if(For != null) dest.For = new List<Hl7.Fhir.Model.ResourceReference>(For.DeepCopy());
+      if(For.Any()) dest.For = new List<Hl7.Fhir.Model.ResourceReference>(For.DeepCopy());
       if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-      if(Function != null) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
+      if(Function.Any()) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
       if(Group != null) dest.Group = (Hl7.Fhir.Model.CodeableConcept)Group.DeepCopy();
       if(AllergenicIndicatorElement != null) dest.AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)AllergenicIndicatorElement.DeepCopy();
       if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
-      if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent>(Manufacturer.DeepCopy());
+      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent>(Manufacturer.DeepCopy());
       if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Ingredient.SubstanceComponent)Substance.DeepCopy();
       return dest;
     }

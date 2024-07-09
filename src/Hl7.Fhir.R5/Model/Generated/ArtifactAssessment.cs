@@ -457,13 +457,13 @@ namespace Hl7.Fhir.Model
         if(InformationTypeElement != null) dest.InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>)InformationTypeElement.DeepCopy();
         if(SummaryElement != null) dest.SummaryElement = (Hl7.Fhir.Model.Markdown)SummaryElement.DeepCopy();
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
         if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-        if(PathElement != null) dest.PathElement = new List<Hl7.Fhir.Model.FhirUri>(PathElement.DeepCopy());
-        if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+        if(PathElement.Any()) dest.PathElement = new List<Hl7.Fhir.Model.FhirUri>(PathElement.DeepCopy());
+        if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
         if(FreeToShareElement != null) dest.FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean)FreeToShareElement.DeepCopy();
-        if(Component != null) dest.Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Component.DeepCopy());
+        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Component.DeepCopy());
         return dest;
       }
 
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
       if(CiteAs != null) dest.CiteAs = (Hl7.Fhir.Model.DataType)CiteAs.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model
       if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
       if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
       if(Artifact != null) dest.Artifact = (Hl7.Fhir.Model.DataType)Artifact.DeepCopy();
-      if(Content != null) dest.Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Content.DeepCopy());
+      if(Content.Any()) dest.Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Content.DeepCopy());
       if(WorkflowStatusElement != null) dest.WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>)WorkflowStatusElement.DeepCopy();
       if(DispositionElement != null) dest.DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>)DispositionElement.DeepCopy();
       return dest;

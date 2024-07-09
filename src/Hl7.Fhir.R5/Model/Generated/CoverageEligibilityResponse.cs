@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
         if(InforceElement != null) dest.InforceElement = (Hl7.Fhir.Model.FhirBoolean)InforceElement.DeepCopy();
         if(BenefitPeriod != null) dest.BenefitPeriod = (Hl7.Fhir.Model.Period)BenefitPeriod.DeepCopy();
-        if(Item != null) dest.Item = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent>(Item.DeepCopy());
+        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent>(Item.DeepCopy());
         return dest;
       }
 
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
         if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
-        if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+        if(Modifier.Any()) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
         if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
         if(ExcludedElement != null) dest.ExcludedElement = (Hl7.Fhir.Model.FhirBoolean)ExcludedElement.DeepCopy();
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -790,9 +790,9 @@ namespace Hl7.Fhir.Model
         if(Network != null) dest.Network = (Hl7.Fhir.Model.CodeableConcept)Network.DeepCopy();
         if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopy();
         if(Term != null) dest.Term = (Hl7.Fhir.Model.CodeableConcept)Term.DeepCopy();
-        if(Benefit != null) dest.Benefit = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent>(Benefit.DeepCopy());
+        if(Benefit.Any()) dest.Benefit = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent>(Benefit.DeepCopy());
         if(AuthorizationRequiredElement != null) dest.AuthorizationRequiredElement = (Hl7.Fhir.Model.FhirBoolean)AuthorizationRequiredElement.DeepCopy();
-        if(AuthorizationSupporting != null) dest.AuthorizationSupporting = new List<Hl7.Fhir.Model.CodeableConcept>(AuthorizationSupporting.DeepCopy());
+        if(AuthorizationSupporting.Any()) dest.AuthorizationSupporting = new List<Hl7.Fhir.Model.CodeableConcept>(AuthorizationSupporting.DeepCopy());
         if(AuthorizationUrlElement != null) dest.AuthorizationUrlElement = (Hl7.Fhir.Model.FhirUri)AuthorizationUrlElement.DeepCopy();
         return dest;
       }
@@ -1208,7 +1208,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(ExpressionElement != null) dest.ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(ExpressionElement.DeepCopy());
+        if(ExpressionElement.Any()) dest.ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(ExpressionElement.DeepCopy());
         return dest;
       }
 
@@ -1645,11 +1645,11 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
-      if(PurposeElement != null) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(PurposeElement.DeepCopy());
+      if(PurposeElement.Any()) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(PurposeElement.DeepCopy());
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-      if(Event != null) dest.Event = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.EventComponent>(Event.DeepCopy());
+      if(Event.Any()) dest.Event = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.EventComponent>(Event.DeepCopy());
       if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
       if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
       if(Requestor != null) dest.Requestor = (Hl7.Fhir.Model.ResourceReference)Requestor.DeepCopy();
@@ -1657,10 +1657,10 @@ namespace Hl7.Fhir.Model
       if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>)OutcomeElement.DeepCopy();
       if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
       if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
-      if(Insurance != null) dest.Insurance = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent>(Insurance.DeepCopy());
+      if(Insurance.Any()) dest.Insurance = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent>(Insurance.DeepCopy());
       if(PreAuthRefElement != null) dest.PreAuthRefElement = (Hl7.Fhir.Model.FhirString)PreAuthRefElement.DeepCopy();
       if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-      if(Error != null) dest.Error = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent>(Error.DeepCopy());
+      if(Error.Any()) dest.Error = new List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent>(Error.DeepCopy());
       return dest;
     }
 

@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
         if(MaxDosePerDay != null) dest.MaxDosePerDay = (Hl7.Fhir.Model.Quantity)MaxDosePerDay.DeepCopy();
         if(MaxDosePerTreatmentPeriod != null) dest.MaxDosePerTreatmentPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerTreatmentPeriod.DeepCopy();
         if(MaxTreatmentPeriod != null) dest.MaxTreatmentPeriod = (Hl7.Fhir.Model.Duration)MaxTreatmentPeriod.DeepCopy();
-        if(TargetSpecies != null) dest.TargetSpecies = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent>(TargetSpecies.DeepCopy());
+        if(TargetSpecies.Any()) dest.TargetSpecies = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent>(TargetSpecies.DeepCopy());
         return dest;
       }
 
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(WithdrawalPeriod != null) dest.WithdrawalPeriod = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.WithdrawalPeriodComponent>(WithdrawalPeriod.DeepCopy());
+        if(WithdrawalPeriod.Any()) dest.WithdrawalPeriod = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.WithdrawalPeriodComponent>(WithdrawalPeriod.DeepCopy());
         return dest;
       }
 
@@ -854,13 +854,13 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(AdministrableDoseForm != null) dest.AdministrableDoseForm = (Hl7.Fhir.Model.CodeableConcept)AdministrableDoseForm.DeepCopy();
       if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
-      if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopy());
-      if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
-      if(Characteristics != null) dest.Characteristics = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent>(Characteristics.DeepCopy());
-      if(RouteOfAdministration != null) dest.RouteOfAdministration = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent>(RouteOfAdministration.DeepCopy());
+      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopy());
+      if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
+      if(Characteristics.Any()) dest.Characteristics = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent>(Characteristics.DeepCopy());
+      if(RouteOfAdministration.Any()) dest.RouteOfAdministration = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent>(RouteOfAdministration.DeepCopy());
       return dest;
     }
 

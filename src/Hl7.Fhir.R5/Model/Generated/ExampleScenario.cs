@@ -543,8 +543,8 @@ namespace Hl7.Fhir.Model
         if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(Content != null) dest.Content = (Hl7.Fhir.Model.ResourceReference)Content.DeepCopy();
-        if(Version != null) dest.Version = new List<Hl7.Fhir.Model.ExampleScenario.VersionComponent>(Version.DeepCopy());
-        if(ContainedInstance != null) dest.ContainedInstance = new List<Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent>(ContainedInstance.DeepCopy());
+        if(Version.Any()) dest.Version = new List<Hl7.Fhir.Model.ExampleScenario.VersionComponent>(Version.DeepCopy());
+        if(ContainedInstance.Any()) dest.ContainedInstance = new List<Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent>(ContainedInstance.DeepCopy());
         return dest;
       }
 
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(PreConditionsElement != null) dest.PreConditionsElement = (Hl7.Fhir.Model.Markdown)PreConditionsElement.DeepCopy();
         if(PostConditionsElement != null) dest.PostConditionsElement = (Hl7.Fhir.Model.Markdown)PostConditionsElement.DeepCopy();
-        if(Step != null) dest.Step = new List<Hl7.Fhir.Model.ExampleScenario.StepComponent>(Step.DeepCopy());
+        if(Step.Any()) dest.Step = new List<Hl7.Fhir.Model.ExampleScenario.StepComponent>(Step.DeepCopy());
         return dest;
       }
 
@@ -1529,7 +1529,7 @@ namespace Hl7.Fhir.Model
         if(Process != null) dest.Process = (Hl7.Fhir.Model.ExampleScenario.ProcessComponent)Process.DeepCopy();
         if(WorkflowElement != null) dest.WorkflowElement = (Hl7.Fhir.Model.Canonical)WorkflowElement.DeepCopy();
         if(Operation != null) dest.Operation = (Hl7.Fhir.Model.ExampleScenario.OperationComponent)Operation.DeepCopy();
-        if(Alternative != null) dest.Alternative = new List<Hl7.Fhir.Model.ExampleScenario.AlternativeComponent>(Alternative.DeepCopy());
+        if(Alternative.Any()) dest.Alternative = new List<Hl7.Fhir.Model.ExampleScenario.AlternativeComponent>(Alternative.DeepCopy());
         if(PauseElement != null) dest.PauseElement = (Hl7.Fhir.Model.FhirBoolean)PauseElement.DeepCopy();
         return dest;
       }
@@ -2147,7 +2147,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(Step != null) dest.Step = new List<Hl7.Fhir.Model.ExampleScenario.StepComponent>(Step.DeepCopy());
+        if(Step.Any()) dest.Step = new List<Hl7.Fhir.Model.ExampleScenario.StepComponent>(Step.DeepCopy());
         return dest;
       }
 
@@ -2738,7 +2738,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -2747,16 +2747,16 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
-      if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.ExampleScenario.ActorComponent>(Actor.DeepCopy());
-      if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent>(Instance.DeepCopy());
-      if(Process != null) dest.Process = new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>(Process.DeepCopy());
+      if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.ExampleScenario.ActorComponent>(Actor.DeepCopy());
+      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent>(Instance.DeepCopy());
+      if(Process.Any()) dest.Process = new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>(Process.DeepCopy());
       return dest;
     }
 

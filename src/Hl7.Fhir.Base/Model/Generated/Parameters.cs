@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
         if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-        if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopy());
+        if(Part.Any()) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopy());
         return dest;
       }
 
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopy());
+      if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopy());
       return dest;
     }
 

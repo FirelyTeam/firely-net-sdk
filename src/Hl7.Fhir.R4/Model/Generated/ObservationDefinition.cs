@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
         if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>)CategoryElement.DeepCopy();
         if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
         if(Context != null) dest.Context = (Hl7.Fhir.Model.CodeableConcept)Context.DeepCopy();
-        if(AppliesTo != null) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopy());
+        if(AppliesTo.Any()) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopy());
         if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
         if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
         if(GestationalAge != null) dest.GestationalAge = (Hl7.Fhir.Model.Range)GestationalAge.DeepCopy();
@@ -965,15 +965,15 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(PermittedDataTypeElement != null) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
       if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopy();
       if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
       if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopy();
       if(QuantitativeDetails != null) dest.QuantitativeDetails = (Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent)QuantitativeDetails.DeepCopy();
-      if(QualifiedInterval != null) dest.QualifiedInterval = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>(QualifiedInterval.DeepCopy());
+      if(QualifiedInterval.Any()) dest.QualifiedInterval = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>(QualifiedInterval.DeepCopy());
       if(ValidCodedValueSet != null) dest.ValidCodedValueSet = (Hl7.Fhir.Model.ResourceReference)ValidCodedValueSet.DeepCopy();
       if(NormalCodedValueSet != null) dest.NormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)NormalCodedValueSet.DeepCopy();
       if(AbnormalCodedValueSet != null) dest.AbnormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)AbnormalCodedValueSet.DeepCopy();

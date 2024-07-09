@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(ChannelType != null) dest.ChannelType = (Hl7.Fhir.Model.Coding)ChannelType.DeepCopy();
       if(Address != null) dest.Address = (Hl7.Fhir.Model.DataType)Address.DeepCopy();
-      if(AdditionalInfoElement != null) dest.AdditionalInfoElement = new List<Hl7.Fhir.Model.FhirUrl>(AdditionalInfoElement.DeepCopy());
+      if(AdditionalInfoElement.Any()) dest.AdditionalInfoElement = new List<Hl7.Fhir.Model.FhirUrl>(AdditionalInfoElement.DeepCopy());
       if(MaxParticipantsElement != null) dest.MaxParticipantsElement = (Hl7.Fhir.Model.PositiveInt)MaxParticipantsElement.DeepCopy();
       if(SessionKeyElement != null) dest.SessionKeyElement = (Hl7.Fhir.Model.FhirString)SessionKeyElement.DeepCopy();
       return dest;

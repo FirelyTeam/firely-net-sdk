@@ -175,8 +175,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-        if(MimeTypeElement != null) dest.MimeTypeElement = new List<Hl7.Fhir.Model.Code>(MimeTypeElement.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(MimeTypeElement.Any()) dest.MimeTypeElement = new List<Hl7.Fhir.Model.Code>(MimeTypeElement.DeepCopy());
         return dest;
       }
 
@@ -529,18 +529,18 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>)StatusElement.DeepCopy();
-      if(ConnectionType != null) dest.ConnectionType = new List<Hl7.Fhir.Model.CodeableConcept>(ConnectionType.DeepCopy());
+      if(ConnectionType.Any()) dest.ConnectionType = new List<Hl7.Fhir.Model.CodeableConcept>(ConnectionType.DeepCopy());
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(EnvironmentType != null) dest.EnvironmentType = new List<Hl7.Fhir.Model.CodeableConcept>(EnvironmentType.DeepCopy());
+      if(EnvironmentType.Any()) dest.EnvironmentType = new List<Hl7.Fhir.Model.CodeableConcept>(EnvironmentType.DeepCopy());
       if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.Endpoint.PayloadComponent>(Payload.DeepCopy());
+      if(Payload.Any()) dest.Payload = new List<Hl7.Fhir.Model.Endpoint.PayloadComponent>(Payload.DeepCopy());
       if(AddressElement != null) dest.AddressElement = (Hl7.Fhir.Model.FhirUrl)AddressElement.DeepCopy();
-      if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
+      if(HeaderElement.Any()) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
       return dest;
     }
 

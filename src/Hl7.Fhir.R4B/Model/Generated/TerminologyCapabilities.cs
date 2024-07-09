@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.Canonical)UriElement.DeepCopy();
-        if(Version != null) dest.Version = new List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent>(Version.DeepCopy());
+        if(Version.Any()) dest.Version = new List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent>(Version.DeepCopy());
         if(SubsumptionElement != null) dest.SubsumptionElement = (Hl7.Fhir.Model.FhirBoolean)SubsumptionElement.DeepCopy();
         return dest;
       }
@@ -822,9 +822,9 @@ namespace Hl7.Fhir.Model
         if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.FhirString)CodeElement.DeepCopy();
         if(IsDefaultElement != null) dest.IsDefaultElement = (Hl7.Fhir.Model.FhirBoolean)IsDefaultElement.DeepCopy();
         if(CompositionalElement != null) dest.CompositionalElement = (Hl7.Fhir.Model.FhirBoolean)CompositionalElement.DeepCopy();
-        if(LanguageElement != null) dest.LanguageElement = new List<Hl7.Fhir.Model.Code>(LanguageElement.DeepCopy());
-        if(Filter != null) dest.Filter = new List<Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent>(Filter.DeepCopy());
-        if(PropertyElement != null) dest.PropertyElement = new List<Hl7.Fhir.Model.Code>(PropertyElement.DeepCopy());
+        if(LanguageElement.Any()) dest.LanguageElement = new List<Hl7.Fhir.Model.Code>(LanguageElement.DeepCopy());
+        if(Filter.Any()) dest.Filter = new List<Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent>(Filter.DeepCopy());
+        if(PropertyElement.Any()) dest.PropertyElement = new List<Hl7.Fhir.Model.Code>(PropertyElement.DeepCopy());
         return dest;
       }
 
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-        if(OpElement != null) dest.OpElement = new List<Hl7.Fhir.Model.Code>(OpElement.DeepCopy());
+        if(OpElement.Any()) dest.OpElement = new List<Hl7.Fhir.Model.Code>(OpElement.DeepCopy());
         return dest;
       }
 
@@ -1272,7 +1272,7 @@ namespace Hl7.Fhir.Model
         if(HierarchicalElement != null) dest.HierarchicalElement = (Hl7.Fhir.Model.FhirBoolean)HierarchicalElement.DeepCopy();
         if(PagingElement != null) dest.PagingElement = (Hl7.Fhir.Model.FhirBoolean)PagingElement.DeepCopy();
         if(IncompleteElement != null) dest.IncompleteElement = (Hl7.Fhir.Model.FhirBoolean)IncompleteElement.DeepCopy();
-        if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent>(Parameter.DeepCopy());
+        if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent>(Parameter.DeepCopy());
         if(TextFilterElement != null) dest.TextFilterElement = (Hl7.Fhir.Model.Markdown)TextFilterElement.DeepCopy();
         return dest;
       }
@@ -2532,17 +2532,17 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.CapabilityStatementKind>)KindElement.DeepCopy();
       if(Software != null) dest.Software = (Hl7.Fhir.Model.TerminologyCapabilities.SoftwareComponent)Software.DeepCopy();
       if(Implementation != null) dest.Implementation = (Hl7.Fhir.Model.TerminologyCapabilities.ImplementationComponent)Implementation.DeepCopy();
       if(LockedDateElement != null) dest.LockedDateElement = (Hl7.Fhir.Model.FhirBoolean)LockedDateElement.DeepCopy();
-      if(CodeSystem != null) dest.CodeSystem = new List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent>(CodeSystem.DeepCopy());
+      if(CodeSystem.Any()) dest.CodeSystem = new List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent>(CodeSystem.DeepCopy());
       if(Expansion != null) dest.Expansion = (Hl7.Fhir.Model.TerminologyCapabilities.ExpansionComponent)Expansion.DeepCopy();
       if(CodeSearchElement != null) dest.CodeSearchElement = (Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport>)CodeSearchElement.DeepCopy();
       if(ValidateCode != null) dest.ValidateCode = (Hl7.Fhir.Model.TerminologyCapabilities.ValidateCodeComponent)ValidateCode.DeepCopy();

@@ -332,15 +332,15 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
       if(DiseaseSymptomProcedure != null) dest.DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableConcept)DiseaseSymptomProcedure.DeepCopy();
       if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopy();
-      if(Comorbidity != null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
+      if(Comorbidity.Any()) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
       if(IntendedEffect != null) dest.IntendedEffect = (Hl7.Fhir.Model.CodeableConcept)IntendedEffect.DeepCopy();
       if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopy();
-      if(OtherTherapy != null) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>(OtherTherapy.DeepCopy());
-      if(UndesirableEffect != null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopy());
-      if(Population != null) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopy());
+      if(OtherTherapy.Any()) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>(OtherTherapy.DeepCopy());
+      if(UndesirableEffect.Any()) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopy());
+      if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopy());
       return dest;
     }
 

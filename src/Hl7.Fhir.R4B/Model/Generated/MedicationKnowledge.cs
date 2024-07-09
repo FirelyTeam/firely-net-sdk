@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.ResourceReference>(Reference.DeepCopy());
+        if(Reference.Any()) dest.Reference = new List<Hl7.Fhir.Model.ResourceReference>(Reference.DeepCopy());
         return dest;
       }
 
@@ -940,9 +940,9 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent>(Dosage.DeepCopy());
+        if(Dosage.Any()) dest.Dosage = new List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent>(Dosage.DeepCopy());
         if(Indication != null) dest.Indication = (Hl7.Fhir.Model.DataType)Indication.DeepCopy();
-        if(PatientCharacteristics != null) dest.PatientCharacteristics = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent>(PatientCharacteristics.DeepCopy());
+        if(PatientCharacteristics.Any()) dest.PatientCharacteristics = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent>(PatientCharacteristics.DeepCopy());
         return dest;
       }
 
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.Dosage>(Dosage.DeepCopy());
+        if(Dosage.Any()) dest.Dosage = new List<Hl7.Fhir.Model.Dosage>(Dosage.DeepCopy());
         return dest;
       }
 
@@ -1241,7 +1241,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Characteristic != null) dest.Characteristic = (Hl7.Fhir.Model.DataType)Characteristic.DeepCopy();
-        if(ValueElement != null) dest.ValueElement = new List<Hl7.Fhir.Model.FhirString>(ValueElement.DeepCopy());
+        if(ValueElement.Any()) dest.ValueElement = new List<Hl7.Fhir.Model.FhirString>(ValueElement.DeepCopy());
         return dest;
       }
 
@@ -1375,7 +1375,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.CodeableConcept>(Classification.DeepCopy());
+        if(Classification.Any()) dest.Classification = new List<Hl7.Fhir.Model.CodeableConcept>(Classification.DeepCopy());
         return dest;
       }
 
@@ -1812,8 +1812,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(RegulatoryAuthority != null) dest.RegulatoryAuthority = (Hl7.Fhir.Model.ResourceReference)RegulatoryAuthority.DeepCopy();
-        if(Substitution != null) dest.Substitution = new List<Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent>(Substitution.DeepCopy());
-        if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent>(Schedule.DeepCopy());
+        if(Substitution.Any()) dest.Substitution = new List<Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent>(Substitution.DeepCopy());
+        if(Schedule.Any()) dest.Schedule = new List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent>(Schedule.DeepCopy());
         if(MaxDispense != null) dest.MaxDispense = (Hl7.Fhir.Model.MedicationKnowledge.MaxDispenseComponent)MaxDispense.DeepCopy();
         return dest;
       }
@@ -2372,8 +2372,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(AreaUnderCurve != null) dest.AreaUnderCurve = new List<Hl7.Fhir.Model.Quantity>(AreaUnderCurve.DeepCopy());
-        if(LethalDose50 != null) dest.LethalDose50 = new List<Hl7.Fhir.Model.Quantity>(LethalDose50.DeepCopy());
+        if(AreaUnderCurve.Any()) dest.AreaUnderCurve = new List<Hl7.Fhir.Model.Quantity>(AreaUnderCurve.DeepCopy());
+        if(LethalDose50.Any()) dest.LethalDose50 = new List<Hl7.Fhir.Model.Quantity>(LethalDose50.DeepCopy());
         if(HalfLifePeriod != null) dest.HalfLifePeriod = (Hl7.Fhir.Model.Duration)HalfLifePeriod.DeepCopy();
         return dest;
       }
@@ -2844,23 +2844,23 @@ namespace Hl7.Fhir.Model
       if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
       if(DoseForm != null) dest.DoseForm = (Hl7.Fhir.Model.CodeableConcept)DoseForm.DeepCopy();
       if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
-      if(SynonymElement != null) dest.SynonymElement = new List<Hl7.Fhir.Model.FhirString>(SynonymElement.DeepCopy());
-      if(RelatedMedicationKnowledge != null) dest.RelatedMedicationKnowledge = new List<Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent>(RelatedMedicationKnowledge.DeepCopy());
-      if(AssociatedMedication != null) dest.AssociatedMedication = new List<Hl7.Fhir.Model.ResourceReference>(AssociatedMedication.DeepCopy());
-      if(ProductType != null) dest.ProductType = new List<Hl7.Fhir.Model.CodeableConcept>(ProductType.DeepCopy());
-      if(Monograph != null) dest.Monograph = new List<Hl7.Fhir.Model.MedicationKnowledge.MonographComponent>(Monograph.DeepCopy());
-      if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent>(Ingredient.DeepCopy());
+      if(SynonymElement.Any()) dest.SynonymElement = new List<Hl7.Fhir.Model.FhirString>(SynonymElement.DeepCopy());
+      if(RelatedMedicationKnowledge.Any()) dest.RelatedMedicationKnowledge = new List<Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent>(RelatedMedicationKnowledge.DeepCopy());
+      if(AssociatedMedication.Any()) dest.AssociatedMedication = new List<Hl7.Fhir.Model.ResourceReference>(AssociatedMedication.DeepCopy());
+      if(ProductType.Any()) dest.ProductType = new List<Hl7.Fhir.Model.CodeableConcept>(ProductType.DeepCopy());
+      if(Monograph.Any()) dest.Monograph = new List<Hl7.Fhir.Model.MedicationKnowledge.MonographComponent>(Monograph.DeepCopy());
+      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent>(Ingredient.DeepCopy());
       if(PreparationInstructionElement != null) dest.PreparationInstructionElement = (Hl7.Fhir.Model.Markdown)PreparationInstructionElement.DeepCopy();
-      if(IntendedRoute != null) dest.IntendedRoute = new List<Hl7.Fhir.Model.CodeableConcept>(IntendedRoute.DeepCopy());
-      if(Cost != null) dest.Cost = new List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent>(Cost.DeepCopy());
-      if(MonitoringProgram != null) dest.MonitoringProgram = new List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent>(MonitoringProgram.DeepCopy());
-      if(AdministrationGuidelines != null) dest.AdministrationGuidelines = new List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent>(AdministrationGuidelines.DeepCopy());
-      if(MedicineClassification != null) dest.MedicineClassification = new List<Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent>(MedicineClassification.DeepCopy());
+      if(IntendedRoute.Any()) dest.IntendedRoute = new List<Hl7.Fhir.Model.CodeableConcept>(IntendedRoute.DeepCopy());
+      if(Cost.Any()) dest.Cost = new List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent>(Cost.DeepCopy());
+      if(MonitoringProgram.Any()) dest.MonitoringProgram = new List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent>(MonitoringProgram.DeepCopy());
+      if(AdministrationGuidelines.Any()) dest.AdministrationGuidelines = new List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent>(AdministrationGuidelines.DeepCopy());
+      if(MedicineClassification.Any()) dest.MedicineClassification = new List<Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent>(MedicineClassification.DeepCopy());
       if(Packaging != null) dest.Packaging = (Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent)Packaging.DeepCopy();
-      if(DrugCharacteristic != null) dest.DrugCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent>(DrugCharacteristic.DeepCopy());
-      if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(Contraindication.DeepCopy());
-      if(Regulatory != null) dest.Regulatory = new List<Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent>(Regulatory.DeepCopy());
-      if(Kinetics != null) dest.Kinetics = new List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent>(Kinetics.DeepCopy());
+      if(DrugCharacteristic.Any()) dest.DrugCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent>(DrugCharacteristic.DeepCopy());
+      if(Contraindication.Any()) dest.Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(Contraindication.DeepCopy());
+      if(Regulatory.Any()) dest.Regulatory = new List<Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent>(Regulatory.DeepCopy());
+      if(Kinetics.Any()) dest.Kinetics = new List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent>(Kinetics.DeepCopy());
       return dest;
     }
 

@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("retired"), Description("Retired")]
     Retired,
     /// <summary>
-    /// The authoring system does not know which of the status values currently applies for this resource.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
+    /// The authoring system does not know which of the status values currently applies for this resource.  Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply, it's just not known which one.
     /// (system: http://hl7.org/fhir/publication-status)
     /// </summary>
     [EnumLiteral("unknown"), Description("Unknown")]

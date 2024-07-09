@@ -166,8 +166,8 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
         if(ImagingStudy != null) dest.ImagingStudy = (Hl7.Fhir.Model.ResourceReference)ImagingStudy.DeepCopy();
-        if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
-        if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>(Series.DeepCopy());
+        if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
+        if(Series.Any()) dest.Series = new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>(Series.DeepCopy());
         return dest;
       }
 
@@ -355,8 +355,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-        if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
-        if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>(Instance.DeepCopy());
+        if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
+        if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>(Instance.DeepCopy());
         return dest;
       }
 
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
       if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopy();
       if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(Study != null) dest.Study = new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>(Study.DeepCopy());
+      if(Study.Any()) dest.Study = new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>(Study.DeepCopy());
       return dest;
     }
 

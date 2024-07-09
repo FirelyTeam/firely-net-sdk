@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(VariableRole != null) dest.VariableRole = (Hl7.Fhir.Model.CodeableConcept)VariableRole.DeepCopy();
         if(Observed != null) dest.Observed = (Hl7.Fhir.Model.ResourceReference)Observed.DeepCopy();
         if(Intended != null) dest.Intended = (Hl7.Fhir.Model.ResourceReference)Intended.DeepCopy();
@@ -518,15 +518,15 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(StatisticType != null) dest.StatisticType = (Hl7.Fhir.Model.CodeableConcept)StatisticType.DeepCopy();
         if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
         if(NumberOfEventsElement != null) dest.NumberOfEventsElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfEventsElement.DeepCopy();
         if(NumberAffectedElement != null) dest.NumberAffectedElement = (Hl7.Fhir.Model.UnsignedInt)NumberAffectedElement.DeepCopy();
         if(SampleSize != null) dest.SampleSize = (Hl7.Fhir.Model.Evidence.SampleSizeComponent)SampleSize.DeepCopy();
-        if(AttributeEstimate != null) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
-        if(ModelCharacteristic != null) dest.ModelCharacteristic = new List<Hl7.Fhir.Model.Evidence.ModelCharacteristicComponent>(ModelCharacteristic.DeepCopy());
+        if(AttributeEstimate.Any()) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
+        if(ModelCharacteristic.Any()) dest.ModelCharacteristic = new List<Hl7.Fhir.Model.Evidence.ModelCharacteristicComponent>(ModelCharacteristic.DeepCopy());
         return dest;
       }
 
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(NumberOfStudiesElement != null) dest.NumberOfStudiesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfStudiesElement.DeepCopy();
         if(NumberOfParticipantsElement != null) dest.NumberOfParticipantsElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfParticipantsElement.DeepCopy();
         if(KnownDataCountElement != null) dest.KnownDataCountElement = (Hl7.Fhir.Model.UnsignedInt)KnownDataCountElement.DeepCopy();
@@ -1100,12 +1100,12 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
         if(LevelElement != null) dest.LevelElement = (Hl7.Fhir.Model.FhirDecimal)LevelElement.DeepCopy();
         if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
-        if(AttributeEstimate != null) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
+        if(AttributeEstimate.Any()) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
         return dest;
       }
 
@@ -1311,8 +1311,8 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         if(Value != null) dest.Value = (Hl7.Fhir.Model.Quantity)Value.DeepCopy();
-        if(Variable != null) dest.Variable = new List<Hl7.Fhir.Model.Evidence.VariableComponent>(Variable.DeepCopy());
-        if(AttributeEstimate != null) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
+        if(Variable.Any()) dest.Variable = new List<Hl7.Fhir.Model.Evidence.VariableComponent>(Variable.DeepCopy());
+        if(AttributeEstimate.Any()) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
         return dest;
       }
 
@@ -1526,9 +1526,9 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(VariableDefinition != null) dest.VariableDefinition = (Hl7.Fhir.Model.ResourceReference)VariableDefinition.DeepCopy();
         if(HandlingElement != null) dest.HandlingElement = (Code<Hl7.Fhir.Model.EvidenceVariableHandling>)HandlingElement.DeepCopy();
-        if(ValueCategory != null) dest.ValueCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCategory.DeepCopy());
-        if(ValueQuantity != null) dest.ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(ValueQuantity.DeepCopy());
-        if(ValueRange != null) dest.ValueRange = new List<Hl7.Fhir.Model.Range>(ValueRange.DeepCopy());
+        if(ValueCategory.Any()) dest.ValueCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCategory.DeepCopy());
+        if(ValueQuantity.Any()) dest.ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(ValueQuantity.DeepCopy());
+        if(ValueRange.Any()) dest.ValueRange = new List<Hl7.Fhir.Model.Range>(ValueRange.DeepCopy());
         return dest;
       }
 
@@ -1779,11 +1779,11 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(Rating != null) dest.Rating = (Hl7.Fhir.Model.CodeableConcept)Rating.DeepCopy();
         if(RaterElement != null) dest.RaterElement = (Hl7.Fhir.Model.FhirString)RaterElement.DeepCopy();
-        if(Subcomponent != null) dest.Subcomponent = new List<Hl7.Fhir.Model.Evidence.CertaintyComponent>(Subcomponent.DeepCopy());
+        if(Subcomponent.Any()) dest.Subcomponent = new List<Hl7.Fhir.Model.Evidence.CertaintyComponent>(Subcomponent.DeepCopy());
         return dest;
       }
 
@@ -2605,7 +2605,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -2617,24 +2617,24 @@ namespace Hl7.Fhir.Model
       if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
       if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
-      if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ContactDetail>(Author.DeepCopy());
-      if(Editor != null) dest.Editor = new List<Hl7.Fhir.Model.ContactDetail>(Editor.DeepCopy());
-      if(Reviewer != null) dest.Reviewer = new List<Hl7.Fhir.Model.ContactDetail>(Reviewer.DeepCopy());
-      if(Endorser != null) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Author.Any()) dest.Author = new List<Hl7.Fhir.Model.ContactDetail>(Author.DeepCopy());
+      if(Editor.Any()) dest.Editor = new List<Hl7.Fhir.Model.ContactDetail>(Editor.DeepCopy());
+      if(Reviewer.Any()) dest.Reviewer = new List<Hl7.Fhir.Model.ContactDetail>(Reviewer.DeepCopy());
+      if(Endorser.Any()) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
       if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
-      if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+      if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(AssertionElement != null) dest.AssertionElement = (Hl7.Fhir.Model.Markdown)AssertionElement.DeepCopy();
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(VariableDefinition != null) dest.VariableDefinition = new List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent>(VariableDefinition.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(VariableDefinition.Any()) dest.VariableDefinition = new List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent>(VariableDefinition.DeepCopy());
       if(SynthesisType != null) dest.SynthesisType = (Hl7.Fhir.Model.CodeableConcept)SynthesisType.DeepCopy();
-      if(StudyDesign != null) dest.StudyDesign = new List<Hl7.Fhir.Model.CodeableConcept>(StudyDesign.DeepCopy());
-      if(Statistic != null) dest.Statistic = new List<Hl7.Fhir.Model.Evidence.StatisticComponent>(Statistic.DeepCopy());
-      if(Certainty != null) dest.Certainty = new List<Hl7.Fhir.Model.Evidence.CertaintyComponent>(Certainty.DeepCopy());
+      if(StudyDesign.Any()) dest.StudyDesign = new List<Hl7.Fhir.Model.CodeableConcept>(StudyDesign.DeepCopy());
+      if(Statistic.Any()) dest.Statistic = new List<Hl7.Fhir.Model.Evidence.StatisticComponent>(Statistic.DeepCopy());
+      if(Certainty.Any()) dest.Certainty = new List<Hl7.Fhir.Model.Evidence.CertaintyComponent>(Certainty.DeepCopy());
       return dest;
     }
 

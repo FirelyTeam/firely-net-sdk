@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Quantity)Period.DeepCopy();
-      if(SpecialPrecautionsForStorage != null) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialPrecautionsForStorage.DeepCopy());
+      if(SpecialPrecautionsForStorage.Any()) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialPrecautionsForStorage.DeepCopy());
       return dest;
     }
 

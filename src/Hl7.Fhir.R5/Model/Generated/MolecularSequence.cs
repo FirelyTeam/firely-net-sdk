@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
         if(OrdinalPositionElement != null) dest.OrdinalPositionElement = (Hl7.Fhir.Model.Integer)OrdinalPositionElement.DeepCopy();
         if(SequenceRange != null) dest.SequenceRange = (Hl7.Fhir.Model.Range)SequenceRange.DeepCopy();
         if(StartingSequence != null) dest.StartingSequence = (Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent)StartingSequence.DeepCopy();
-        if(Edit != null) dest.Edit = new List<Hl7.Fhir.Model.MolecularSequence.EditComponent>(Edit.DeepCopy());
+        if(Edit.Any()) dest.Edit = new List<Hl7.Fhir.Model.MolecularSequence.EditComponent>(Edit.DeepCopy());
         return dest;
       }
 
@@ -1116,16 +1116,16 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)TypeElement.DeepCopy();
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
       if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
       if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
       if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
       if(LiteralElement != null) dest.LiteralElement = (Hl7.Fhir.Model.FhirString)LiteralElement.DeepCopy();
-      if(Formatted != null) dest.Formatted = new List<Hl7.Fhir.Model.Attachment>(Formatted.DeepCopy());
-      if(Relative != null) dest.Relative = new List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>(Relative.DeepCopy());
+      if(Formatted.Any()) dest.Formatted = new List<Hl7.Fhir.Model.Attachment>(Formatted.DeepCopy());
+      if(Relative.Any()) dest.Relative = new List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>(Relative.DeepCopy());
       return dest;
     }
 

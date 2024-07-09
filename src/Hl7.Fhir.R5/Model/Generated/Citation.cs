@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
         return dest;
       }
 
@@ -1015,21 +1015,21 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-        if(RelatedIdentifier != null) dest.RelatedIdentifier = new List<Hl7.Fhir.Model.Identifier>(RelatedIdentifier.DeepCopy());
+        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+        if(RelatedIdentifier.Any()) dest.RelatedIdentifier = new List<Hl7.Fhir.Model.Identifier>(RelatedIdentifier.DeepCopy());
         if(DateAccessedElement != null) dest.DateAccessedElement = (Hl7.Fhir.Model.FhirDateTime)DateAccessedElement.DeepCopy();
         if(Version != null) dest.Version = (Hl7.Fhir.Model.Citation.CitedArtifactVersionComponent)Version.DeepCopy();
-        if(CurrentState != null) dest.CurrentState = new List<Hl7.Fhir.Model.CodeableConcept>(CurrentState.DeepCopy());
-        if(StatusDate != null) dest.StatusDate = new List<Hl7.Fhir.Model.Citation.CitedArtifactStatusDateComponent>(StatusDate.DeepCopy());
-        if(Title != null) dest.Title = new List<Hl7.Fhir.Model.Citation.CitedArtifactTitleComponent>(Title.DeepCopy());
-        if(Abstract != null) dest.Abstract = new List<Hl7.Fhir.Model.Citation.CitedArtifactAbstractComponent>(Abstract.DeepCopy());
+        if(CurrentState.Any()) dest.CurrentState = new List<Hl7.Fhir.Model.CodeableConcept>(CurrentState.DeepCopy());
+        if(StatusDate.Any()) dest.StatusDate = new List<Hl7.Fhir.Model.Citation.CitedArtifactStatusDateComponent>(StatusDate.DeepCopy());
+        if(Title.Any()) dest.Title = new List<Hl7.Fhir.Model.Citation.CitedArtifactTitleComponent>(Title.DeepCopy());
+        if(Abstract.Any()) dest.Abstract = new List<Hl7.Fhir.Model.Citation.CitedArtifactAbstractComponent>(Abstract.DeepCopy());
         if(Part != null) dest.Part = (Hl7.Fhir.Model.Citation.CitedArtifactPartComponent)Part.DeepCopy();
-        if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.Citation.CitedArtifactRelatesToComponent>(RelatesTo.DeepCopy());
-        if(PublicationForm != null) dest.PublicationForm = new List<Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormComponent>(PublicationForm.DeepCopy());
-        if(WebLocation != null) dest.WebLocation = new List<Hl7.Fhir.Model.Citation.CitedArtifactWebLocationComponent>(WebLocation.DeepCopy());
-        if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.Citation.CitedArtifactClassificationComponent>(Classification.DeepCopy());
+        if(RelatesTo.Any()) dest.RelatesTo = new List<Hl7.Fhir.Model.Citation.CitedArtifactRelatesToComponent>(RelatesTo.DeepCopy());
+        if(PublicationForm.Any()) dest.PublicationForm = new List<Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormComponent>(PublicationForm.DeepCopy());
+        if(WebLocation.Any()) dest.WebLocation = new List<Hl7.Fhir.Model.Citation.CitedArtifactWebLocationComponent>(WebLocation.DeepCopy());
+        if(Classification.Any()) dest.Classification = new List<Hl7.Fhir.Model.Citation.CitedArtifactClassificationComponent>(Classification.DeepCopy());
         if(Contributorship != null) dest.Contributorship = (Hl7.Fhir.Model.Citation.CitedArtifactContributorshipComponent)Contributorship.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         return dest;
       }
 
@@ -1630,7 +1630,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
         if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopy();
         if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.Markdown)TextElement.DeepCopy();
         return dest;
@@ -2341,7 +2341,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>)TypeElement.DeepCopy();
-        if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
         if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
         if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
         if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.Markdown)CitationElement.DeepCopy();
@@ -2925,7 +2925,7 @@ namespace Hl7.Fhir.Model
         if(PublicationDateTextElement != null) dest.PublicationDateTextElement = (Hl7.Fhir.Model.FhirString)PublicationDateTextElement.DeepCopy();
         if(PublicationDateSeasonElement != null) dest.PublicationDateSeasonElement = (Hl7.Fhir.Model.FhirString)PublicationDateSeasonElement.DeepCopy();
         if(LastRevisionDateElement != null) dest.LastRevisionDateElement = (Hl7.Fhir.Model.FhirDateTime)LastRevisionDateElement.DeepCopy();
-        if(Language != null) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
+        if(Language.Any()) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
         if(AccessionNumberElement != null) dest.AccessionNumberElement = (Hl7.Fhir.Model.FhirString)AccessionNumberElement.DeepCopy();
         if(PageStringElement != null) dest.PageStringElement = (Hl7.Fhir.Model.FhirString)PageStringElement.DeepCopy();
         if(FirstPageElement != null) dest.FirstPageElement = (Hl7.Fhir.Model.FhirString)FirstPageElement.DeepCopy();
@@ -3246,7 +3246,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
         if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
         if(Publisher != null) dest.Publisher = (Hl7.Fhir.Model.ResourceReference)Publisher.DeepCopy();
         if(PublisherLocationElement != null) dest.PublisherLocationElement = (Hl7.Fhir.Model.FhirString)PublisherLocationElement.DeepCopy();
@@ -3424,7 +3424,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         return dest;
       }
@@ -3576,8 +3576,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
-        if(ArtifactAssessment != null) dest.ArtifactAssessment = new List<Hl7.Fhir.Model.ResourceReference>(ArtifactAssessment.DeepCopy());
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+        if(ArtifactAssessment.Any()) dest.ArtifactAssessment = new List<Hl7.Fhir.Model.ResourceReference>(ArtifactAssessment.DeepCopy());
         return dest;
       }
 
@@ -3753,8 +3753,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(CompleteElement != null) dest.CompleteElement = (Hl7.Fhir.Model.FhirBoolean)CompleteElement.DeepCopy();
-        if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>(Entry.DeepCopy());
-        if(Summary != null) dest.Summary = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>(Summary.DeepCopy());
+        if(Entry.Any()) dest.Entry = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>(Entry.DeepCopy());
+        if(Summary.Any()) dest.Summary = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>(Summary.DeepCopy());
         return dest;
       }
 
@@ -4041,10 +4041,10 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Contributor != null) dest.Contributor = (Hl7.Fhir.Model.ResourceReference)Contributor.DeepCopy();
         if(ForenameInitialsElement != null) dest.ForenameInitialsElement = (Hl7.Fhir.Model.FhirString)ForenameInitialsElement.DeepCopy();
-        if(Affiliation != null) dest.Affiliation = new List<Hl7.Fhir.Model.ResourceReference>(Affiliation.DeepCopy());
-        if(ContributionType != null) dest.ContributionType = new List<Hl7.Fhir.Model.CodeableConcept>(ContributionType.DeepCopy());
+        if(Affiliation.Any()) dest.Affiliation = new List<Hl7.Fhir.Model.ResourceReference>(Affiliation.DeepCopy());
+        if(ContributionType.Any()) dest.ContributionType = new List<Hl7.Fhir.Model.CodeableConcept>(ContributionType.DeepCopy());
         if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-        if(ContributionInstance != null) dest.ContributionInstance = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryContributionInstanceComponent>(ContributionInstance.DeepCopy());
+        if(ContributionInstance.Any()) dest.ContributionInstance = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryContributionInstanceComponent>(ContributionInstance.DeepCopy());
         if(CorrespondingContactElement != null) dest.CorrespondingContactElement = (Hl7.Fhir.Model.FhirBoolean)CorrespondingContactElement.DeepCopy();
         if(RankingOrderElement != null) dest.RankingOrderElement = (Hl7.Fhir.Model.PositiveInt)RankingOrderElement.DeepCopy();
         return dest;
@@ -5214,7 +5214,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -5223,26 +5223,26 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
       if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
       if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
       if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-      if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ContactDetail>(Author.DeepCopy());
-      if(Editor != null) dest.Editor = new List<Hl7.Fhir.Model.ContactDetail>(Editor.DeepCopy());
-      if(Reviewer != null) dest.Reviewer = new List<Hl7.Fhir.Model.ContactDetail>(Reviewer.DeepCopy());
-      if(Endorser != null) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
-      if(Summary != null) dest.Summary = new List<Hl7.Fhir.Model.Citation.SummaryComponent>(Summary.DeepCopy());
-      if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.Citation.ClassificationComponent>(Classification.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(CurrentState != null) dest.CurrentState = new List<Hl7.Fhir.Model.CodeableConcept>(CurrentState.DeepCopy());
-      if(StatusDate != null) dest.StatusDate = new List<Hl7.Fhir.Model.Citation.StatusDateComponent>(StatusDate.DeepCopy());
-      if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+      if(Author.Any()) dest.Author = new List<Hl7.Fhir.Model.ContactDetail>(Author.DeepCopy());
+      if(Editor.Any()) dest.Editor = new List<Hl7.Fhir.Model.ContactDetail>(Editor.DeepCopy());
+      if(Reviewer.Any()) dest.Reviewer = new List<Hl7.Fhir.Model.ContactDetail>(Reviewer.DeepCopy());
+      if(Endorser.Any()) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
+      if(Summary.Any()) dest.Summary = new List<Hl7.Fhir.Model.Citation.SummaryComponent>(Summary.DeepCopy());
+      if(Classification.Any()) dest.Classification = new List<Hl7.Fhir.Model.Citation.ClassificationComponent>(Classification.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(CurrentState.Any()) dest.CurrentState = new List<Hl7.Fhir.Model.CodeableConcept>(CurrentState.DeepCopy());
+      if(StatusDate.Any()) dest.StatusDate = new List<Hl7.Fhir.Model.Citation.StatusDateComponent>(StatusDate.DeepCopy());
+      if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(CitedArtifact != null) dest.CitedArtifact = (Hl7.Fhir.Model.Citation.CitedArtifactComponent)CitedArtifact.DeepCopy();
       return dest;
     }

@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("usual"), Description("Usual")]
       Usual,
       /// <summary>
-      /// The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called "legal name".
+      /// The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called \"legal name\".
       /// (system: http://hl7.org/fhir/name-use)
       /// </summary>
       [EnumLiteral("official"), Description("Official")]
@@ -329,9 +329,9 @@ namespace Hl7.Fhir.Model
       if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>)UseElement.DeepCopy();
       if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
       if(FamilyElement != null) dest.FamilyElement = (Hl7.Fhir.Model.FhirString)FamilyElement.DeepCopy();
-      if(GivenElement != null) dest.GivenElement = new List<Hl7.Fhir.Model.FhirString>(GivenElement.DeepCopy());
-      if(PrefixElement != null) dest.PrefixElement = new List<Hl7.Fhir.Model.FhirString>(PrefixElement.DeepCopy());
-      if(SuffixElement != null) dest.SuffixElement = new List<Hl7.Fhir.Model.FhirString>(SuffixElement.DeepCopy());
+      if(GivenElement.Any()) dest.GivenElement = new List<Hl7.Fhir.Model.FhirString>(GivenElement.DeepCopy());
+      if(PrefixElement.Any()) dest.PrefixElement = new List<Hl7.Fhir.Model.FhirString>(PrefixElement.DeepCopy());
+      if(SuffixElement.Any()) dest.SuffixElement = new List<Hl7.Fhir.Model.FhirString>(SuffixElement.DeepCopy());
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
       return dest;
     }

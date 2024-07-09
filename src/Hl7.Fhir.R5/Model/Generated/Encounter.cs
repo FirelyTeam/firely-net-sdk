@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
         if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
         if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
         return dest;
@@ -317,8 +317,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Use != null) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopy());
-        if(Value != null) dest.Value = new List<Hl7.Fhir.Model.CodeableReference>(Value.DeepCopy());
+        if(Use.Any()) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopy());
+        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.CodeableReference>(Value.DeepCopy());
         return dest;
       }
 
@@ -456,8 +456,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.CodeableReference>(Condition.DeepCopy());
-        if(Use != null) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopy());
+        if(Condition.Any()) dest.Condition = new List<Hl7.Fhir.Model.CodeableReference>(Condition.DeepCopy());
+        if(Use.Any()) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopy());
         return dest;
       }
 
@@ -1449,34 +1449,34 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopy();
-      if(Class != null) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopy());
+      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopy());
       if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
-      if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-      if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
+      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(SubjectStatus != null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)SubjectStatus.DeepCopy();
-      if(EpisodeOfCare != null) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(CareTeam != null) dest.CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(CareTeam.DeepCopy());
+      if(EpisodeOfCare.Any()) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(CareTeam.Any()) dest.CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(CareTeam.DeepCopy());
       if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
       if(ServiceProvider != null) dest.ServiceProvider = (Hl7.Fhir.Model.ResourceReference)ServiceProvider.DeepCopy();
-      if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
-      if(Appointment != null) dest.Appointment = new List<Hl7.Fhir.Model.ResourceReference>(Appointment.DeepCopy());
-      if(VirtualService != null) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopy());
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
+      if(Appointment.Any()) dest.Appointment = new List<Hl7.Fhir.Model.ResourceReference>(Appointment.DeepCopy());
+      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopy());
       if(ActualPeriod != null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)ActualPeriod.DeepCopy();
       if(PlannedStartDateElement != null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedStartDateElement.DeepCopy();
       if(PlannedEndDateElement != null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedEndDateElement.DeepCopy();
       if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
-      if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.Encounter.ReasonComponent>(Reason.DeepCopy());
-      if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.Encounter.DiagnosisComponent>(Diagnosis.DeepCopy());
-      if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
-      if(DietPreference != null) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
-      if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
-      if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
+      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.Encounter.ReasonComponent>(Reason.DeepCopy());
+      if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.Encounter.DiagnosisComponent>(Diagnosis.DeepCopy());
+      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
+      if(DietPreference.Any()) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
+      if(SpecialArrangement.Any()) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
+      if(SpecialCourtesy.Any()) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
       if(Admission != null) dest.Admission = (Hl7.Fhir.Model.Encounter.AdmissionComponent)Admission.DeepCopy();
-      if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
+      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
       return dest;
     }
 

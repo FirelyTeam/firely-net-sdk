@@ -296,9 +296,9 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(Interactant != null) dest.Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(Interactant.DeepCopy());
+      if(Interactant.Any()) dest.Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(Interactant.DeepCopy());
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(Effect != null) dest.Effect = (Hl7.Fhir.Model.CodeableConcept)Effect.DeepCopy();
       if(Incidence != null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)Incidence.DeepCopy();

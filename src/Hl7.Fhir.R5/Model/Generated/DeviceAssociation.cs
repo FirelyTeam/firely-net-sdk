@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-        if(Operator != null) dest.Operator = new List<Hl7.Fhir.Model.ResourceReference>(Operator.DeepCopy());
+        if(Operator.Any()) dest.Operator = new List<Hl7.Fhir.Model.ResourceReference>(Operator.DeepCopy());
         if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
         return dest;
       }
@@ -398,15 +398,15 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-      if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
+      if(StatusReason.Any()) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(BodyStructure != null) dest.BodyStructure = (Hl7.Fhir.Model.ResourceReference)BodyStructure.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Operation != null) dest.Operation = new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>(Operation.DeepCopy());
+      if(Operation.Any()) dest.Operation = new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>(Operation.DeepCopy());
       return dest;
     }
 

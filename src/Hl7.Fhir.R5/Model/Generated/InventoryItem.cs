@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
         if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
         if(ExpiryElement != null) dest.ExpiryElement = (Hl7.Fhir.Model.FhirDateTime)ExpiryElement.DeepCopy();
         if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
@@ -1360,18 +1360,18 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>)StatusElement.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
-      if(Name != null) dest.Name = new List<Hl7.Fhir.Model.InventoryItem.NameComponent>(Name.DeepCopy());
-      if(ResponsibleOrganization != null) dest.ResponsibleOrganization = new List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent>(ResponsibleOrganization.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
+      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.InventoryItem.NameComponent>(Name.DeepCopy());
+      if(ResponsibleOrganization.Any()) dest.ResponsibleOrganization = new List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent>(ResponsibleOrganization.DeepCopy());
       if(Description != null) dest.Description = (Hl7.Fhir.Model.InventoryItem.DescriptionComponent)Description.DeepCopy();
-      if(InventoryStatus != null) dest.InventoryStatus = new List<Hl7.Fhir.Model.CodeableConcept>(InventoryStatus.DeepCopy());
+      if(InventoryStatus.Any()) dest.InventoryStatus = new List<Hl7.Fhir.Model.CodeableConcept>(InventoryStatus.DeepCopy());
       if(BaseUnit != null) dest.BaseUnit = (Hl7.Fhir.Model.CodeableConcept)BaseUnit.DeepCopy();
       if(NetContent != null) dest.NetContent = (Hl7.Fhir.Model.Quantity)NetContent.DeepCopy();
-      if(Association != null) dest.Association = new List<Hl7.Fhir.Model.InventoryItem.AssociationComponent>(Association.DeepCopy());
-      if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent>(Characteristic.DeepCopy());
+      if(Association.Any()) dest.Association = new List<Hl7.Fhir.Model.InventoryItem.AssociationComponent>(Association.DeepCopy());
+      if(Characteristic.Any()) dest.Characteristic = new List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent>(Characteristic.DeepCopy());
       if(Instance != null) dest.Instance = (Hl7.Fhir.Model.InventoryItem.InstanceComponent)Instance.DeepCopy();
       if(ProductReference != null) dest.ProductReference = (Hl7.Fhir.Model.ResourceReference)ProductReference.DeepCopy();
       return dest;

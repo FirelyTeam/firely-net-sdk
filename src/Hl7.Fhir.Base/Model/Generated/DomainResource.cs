@@ -127,9 +127,9 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopy();
-      if(Contained != null) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopy());
-      if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
-      if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
+      if(Contained.Any()) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopy());
+      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
+      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
       return dest;
     }
 

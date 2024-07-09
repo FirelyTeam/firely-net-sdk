@@ -201,14 +201,9 @@ namespace Hl7.Fhir.Model
       HS,
       /// <summary>
       /// Description: Upon waking up from a regular period of sleep, in order to start regular activities (this would exclude waking up from a nap or temporarily waking up during a period of sleep)
-      /// 
-      ///                         
-      ///                            Usage Notes: e.g.
-      /// 
+      ///                                                    Usage Notes: e.g.
       ///                         Take pulse rate on waking in management of thyrotoxicosis.
-      /// 
       ///                         Take BP on waking in management of hypertension
-      /// 
       ///                         Take basal body temperature on waking in establishing date of ovulation
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
@@ -786,9 +781,9 @@ namespace Hl7.Fhir.Model
         if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
         if(PeriodMaxElement != null) dest.PeriodMaxElement = (Hl7.Fhir.Model.FhirDecimal)PeriodMaxElement.DeepCopy();
         if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopy();
-        if(DayOfWeekElement != null) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopy());
-        if(TimeOfDayElement != null) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopy());
-        if(WhenElement != null) dest.WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(WhenElement.DeepCopy());
+        if(DayOfWeekElement.Any()) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopy());
+        if(TimeOfDayElement.Any()) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopy());
+        if(WhenElement.Any()) dest.WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(WhenElement.DeepCopy());
         if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.UnsignedInt)OffsetElement.DeepCopy();
         return dest;
       }
@@ -1043,7 +1038,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(EventElement != null) dest.EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(EventElement.DeepCopy());
+      if(EventElement.Any()) dest.EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(EventElement.DeepCopy());
       if(Repeat != null) dest.Repeat = (Hl7.Fhir.Model.Timing.RepeatComponent)Repeat.DeepCopy();
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       return dest;

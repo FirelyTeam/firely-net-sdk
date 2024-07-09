@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(GeneSequenceOrigin != null) dest.GeneSequenceOrigin = (Hl7.Fhir.Model.CodeableConcept)GeneSequenceOrigin.DeepCopy();
         if(Gene != null) dest.Gene = (Hl7.Fhir.Model.CodeableConcept)Gene.DeepCopy();
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
         return dest;
       }
 
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(Element != null) dest.Element = (Hl7.Fhir.Model.Identifier)Element.DeepCopy();
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
         return dest;
       }
 
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
         if(OrganismType != null) dest.OrganismType = (Hl7.Fhir.Model.CodeableConcept)OrganismType.DeepCopy();
         if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
         if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
         return dest;
       }
 
@@ -723,9 +723,9 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-      if(Gene != null) dest.Gene = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>(Gene.DeepCopy());
-      if(GeneElement != null) dest.GeneElement = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>(GeneElement.DeepCopy());
-      if(Target != null) dest.Target = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>(Target.DeepCopy());
+      if(Gene.Any()) dest.Gene = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>(Gene.DeepCopy());
+      if(GeneElement.Any()) dest.GeneElement = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>(GeneElement.DeepCopy());
+      if(Target.Any()) dest.Target = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>(Target.DeepCopy());
       return dest;
     }
 

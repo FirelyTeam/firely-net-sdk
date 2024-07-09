@@ -1516,7 +1516,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -1526,10 +1526,10 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopy();
       if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
@@ -1537,13 +1537,13 @@ namespace Hl7.Fhir.Model
       if(HasSeverityElement != null) dest.HasSeverityElement = (Hl7.Fhir.Model.FhirBoolean)HasSeverityElement.DeepCopy();
       if(HasBodySiteElement != null) dest.HasBodySiteElement = (Hl7.Fhir.Model.FhirBoolean)HasBodySiteElement.DeepCopy();
       if(HasStageElement != null) dest.HasStageElement = (Hl7.Fhir.Model.FhirBoolean)HasStageElement.DeepCopy();
-      if(DefinitionElement != null) dest.DefinitionElement = new List<Hl7.Fhir.Model.FhirUri>(DefinitionElement.DeepCopy());
-      if(Observation != null) dest.Observation = new List<Hl7.Fhir.Model.ConditionDefinition.ObservationComponent>(Observation.DeepCopy());
-      if(Medication != null) dest.Medication = new List<Hl7.Fhir.Model.ConditionDefinition.MedicationComponent>(Medication.DeepCopy());
-      if(Precondition != null) dest.Precondition = new List<Hl7.Fhir.Model.ConditionDefinition.PreconditionComponent>(Precondition.DeepCopy());
-      if(Team != null) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
-      if(Questionnaire != null) dest.Questionnaire = new List<Hl7.Fhir.Model.ConditionDefinition.QuestionnaireComponent>(Questionnaire.DeepCopy());
-      if(Plan != null) dest.Plan = new List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent>(Plan.DeepCopy());
+      if(DefinitionElement.Any()) dest.DefinitionElement = new List<Hl7.Fhir.Model.FhirUri>(DefinitionElement.DeepCopy());
+      if(Observation.Any()) dest.Observation = new List<Hl7.Fhir.Model.ConditionDefinition.ObservationComponent>(Observation.DeepCopy());
+      if(Medication.Any()) dest.Medication = new List<Hl7.Fhir.Model.ConditionDefinition.MedicationComponent>(Medication.DeepCopy());
+      if(Precondition.Any()) dest.Precondition = new List<Hl7.Fhir.Model.ConditionDefinition.PreconditionComponent>(Precondition.DeepCopy());
+      if(Team.Any()) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
+      if(Questionnaire.Any()) dest.Questionnaire = new List<Hl7.Fhir.Model.ConditionDefinition.QuestionnaireComponent>(Questionnaire.DeepCopy());
+      if(Plan.Any()) dest.Plan = new List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent>(Plan.DeepCopy());
       return dest;
     }
 

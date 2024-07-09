@@ -330,8 +330,8 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-        if(Period != null) dest.Period = new List<Hl7.Fhir.Model.Period>(Period.DeepCopy());
-        if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+        if(Period.Any()) dest.Period = new List<Hl7.Fhir.Model.Period>(Period.DeepCopy());
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
         if(Party != null) dest.Party = (Hl7.Fhir.Model.ResourceReference)Party.DeepCopy();
         return dest;
       }
@@ -998,7 +998,7 @@ namespace Hl7.Fhir.Model
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-        if(IntendedExposure != null) dest.IntendedExposure = new List<Hl7.Fhir.Model.ResourceReference>(IntendedExposure.DeepCopy());
+        if(IntendedExposure.Any()) dest.IntendedExposure = new List<Hl7.Fhir.Model.ResourceReference>(IntendedExposure.DeepCopy());
         if(ObservedGroup != null) dest.ObservedGroup = (Hl7.Fhir.Model.ResourceReference)ObservedGroup.DeepCopy();
         return dest;
       }
@@ -1427,7 +1427,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
         return dest;
@@ -2138,37 +2138,37 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(Label != null) dest.Label = new List<Hl7.Fhir.Model.ResearchStudy.LabelComponent>(Label.DeepCopy());
-      if(Protocol != null) dest.Protocol = new List<Hl7.Fhir.Model.ResourceReference>(Protocol.DeepCopy());
-      if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
-      if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+      if(Label.Any()) dest.Label = new List<Hl7.Fhir.Model.ResearchStudy.LabelComponent>(Label.DeepCopy());
+      if(Protocol.Any()) dest.Protocol = new List<Hl7.Fhir.Model.ResourceReference>(Protocol.DeepCopy());
+      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
+      if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
       if(PrimaryPurposeType != null) dest.PrimaryPurposeType = (Hl7.Fhir.Model.CodeableConcept)PrimaryPurposeType.DeepCopy();
       if(Phase != null) dest.Phase = (Hl7.Fhir.Model.CodeableConcept)Phase.DeepCopy();
-      if(StudyDesign != null) dest.StudyDesign = new List<Hl7.Fhir.Model.CodeableConcept>(StudyDesign.DeepCopy());
-      if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.CodeableReference>(Focus.DeepCopy());
-      if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.CodeableConcept>(Condition.DeepCopy());
-      if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());
-      if(Region != null) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopy());
+      if(StudyDesign.Any()) dest.StudyDesign = new List<Hl7.Fhir.Model.CodeableConcept>(StudyDesign.DeepCopy());
+      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.CodeableReference>(Focus.DeepCopy());
+      if(Condition.Any()) dest.Condition = new List<Hl7.Fhir.Model.CodeableConcept>(Condition.DeepCopy());
+      if(Keyword.Any()) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());
+      if(Region.Any()) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopy());
       if(DescriptionSummaryElement != null) dest.DescriptionSummaryElement = (Hl7.Fhir.Model.Markdown)DescriptionSummaryElement.DeepCopy();
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Site != null) dest.Site = new List<Hl7.Fhir.Model.ResourceReference>(Site.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
-      if(AssociatedParty != null) dest.AssociatedParty = new List<Hl7.Fhir.Model.ResearchStudy.AssociatedPartyComponent>(AssociatedParty.DeepCopy());
-      if(ProgressStatus != null) dest.ProgressStatus = new List<Hl7.Fhir.Model.ResearchStudy.ProgressStatusComponent>(ProgressStatus.DeepCopy());
+      if(Site.Any()) dest.Site = new List<Hl7.Fhir.Model.ResourceReference>(Site.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
+      if(AssociatedParty.Any()) dest.AssociatedParty = new List<Hl7.Fhir.Model.ResearchStudy.AssociatedPartyComponent>(AssociatedParty.DeepCopy());
+      if(ProgressStatus.Any()) dest.ProgressStatus = new List<Hl7.Fhir.Model.ResearchStudy.ProgressStatusComponent>(ProgressStatus.DeepCopy());
       if(WhyStopped != null) dest.WhyStopped = (Hl7.Fhir.Model.CodeableConcept)WhyStopped.DeepCopy();
       if(Recruitment != null) dest.Recruitment = (Hl7.Fhir.Model.ResearchStudy.RecruitmentComponent)Recruitment.DeepCopy();
-      if(ComparisonGroup != null) dest.ComparisonGroup = new List<Hl7.Fhir.Model.ResearchStudy.ComparisonGroupComponent>(ComparisonGroup.DeepCopy());
-      if(Objective != null) dest.Objective = new List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent>(Objective.DeepCopy());
-      if(OutcomeMeasure != null) dest.OutcomeMeasure = new List<Hl7.Fhir.Model.ResearchStudy.OutcomeMeasureComponent>(OutcomeMeasure.DeepCopy());
-      if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
+      if(ComparisonGroup.Any()) dest.ComparisonGroup = new List<Hl7.Fhir.Model.ResearchStudy.ComparisonGroupComponent>(ComparisonGroup.DeepCopy());
+      if(Objective.Any()) dest.Objective = new List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent>(Objective.DeepCopy());
+      if(OutcomeMeasure.Any()) dest.OutcomeMeasure = new List<Hl7.Fhir.Model.ResearchStudy.OutcomeMeasureComponent>(OutcomeMeasure.DeepCopy());
+      if(Result.Any()) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
       return dest;
     }
 

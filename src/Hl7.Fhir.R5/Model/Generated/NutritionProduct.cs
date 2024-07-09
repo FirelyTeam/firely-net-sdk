@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
-      /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
+      /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be \"cancelled\" rather than \"entered-in-error\".).
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
       [EnumLiteral("entered-in-error"), Description("Entered in Error")]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
-        if(Amount != null) dest.Amount = new List<Hl7.Fhir.Model.Ratio>(Amount.DeepCopy());
+        if(Amount.Any()) dest.Amount = new List<Hl7.Fhir.Model.Ratio>(Amount.DeepCopy());
         return dest;
       }
 
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
-        if(Amount != null) dest.Amount = new List<Hl7.Fhir.Model.Ratio>(Amount.DeepCopy());
+        if(Amount.Any()) dest.Amount = new List<Hl7.Fhir.Model.Ratio>(Amount.DeepCopy());
         return dest;
       }
 
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-        if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
         if(ExpiryElement != null) dest.ExpiryElement = (Hl7.Fhir.Model.FhirDateTime)ExpiryElement.DeepCopy();
@@ -989,14 +989,14 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus>)StatusElement.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
-      if(Nutrient != null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent>(Nutrient.DeepCopy());
-      if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent>(Ingredient.DeepCopy());
-      if(KnownAllergen != null) dest.KnownAllergen = new List<Hl7.Fhir.Model.CodeableReference>(KnownAllergen.DeepCopy());
-      if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.NutritionProduct.CharacteristicComponent>(Characteristic.DeepCopy());
-      if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.NutritionProduct.InstanceComponent>(Instance.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+      if(Nutrient.Any()) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent>(Nutrient.DeepCopy());
+      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent>(Ingredient.DeepCopy());
+      if(KnownAllergen.Any()) dest.KnownAllergen = new List<Hl7.Fhir.Model.CodeableReference>(KnownAllergen.DeepCopy());
+      if(Characteristic.Any()) dest.Characteristic = new List<Hl7.Fhir.Model.NutritionProduct.CharacteristicComponent>(Characteristic.DeepCopy());
+      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.NutritionProduct.InstanceComponent>(Instance.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       return dest;
     }
 

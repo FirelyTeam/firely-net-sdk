@@ -594,17 +594,17 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(ProductCategory != null) dest.ProductCategory = (Hl7.Fhir.Model.Coding)ProductCategory.DeepCopy();
       if(ProductCode != null) dest.ProductCode = (Hl7.Fhir.Model.CodeableConcept)ProductCode.DeepCopy();
-      if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
-      if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Parent.Any()) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
+      if(Request.Any()) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(BiologicalSourceEvent != null) dest.BiologicalSourceEvent = (Hl7.Fhir.Model.Identifier)BiologicalSourceEvent.DeepCopy();
-      if(ProcessingFacility != null) dest.ProcessingFacility = new List<Hl7.Fhir.Model.ResourceReference>(ProcessingFacility.DeepCopy());
+      if(ProcessingFacility.Any()) dest.ProcessingFacility = new List<Hl7.Fhir.Model.ResourceReference>(ProcessingFacility.DeepCopy());
       if(DivisionElement != null) dest.DivisionElement = (Hl7.Fhir.Model.FhirString)DivisionElement.DeepCopy();
       if(ProductStatus != null) dest.ProductStatus = (Hl7.Fhir.Model.Coding)ProductStatus.DeepCopy();
       if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
       if(Collection != null) dest.Collection = (Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent)Collection.DeepCopy();
       if(StorageTempRequirements != null) dest.StorageTempRequirements = (Hl7.Fhir.Model.Range)StorageTempRequirements.DeepCopy();
-      if(Property != null) dest.Property = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>(Property.DeepCopy());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>(Property.DeepCopy());
       return dest;
     }
 

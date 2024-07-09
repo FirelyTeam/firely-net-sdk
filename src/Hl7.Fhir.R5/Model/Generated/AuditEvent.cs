@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("critical"), Description("Critical")]
       Critical,
       /// <summary>
-      /// Error conditions. e.g., An application has exceeded its file storage limit and attempts to write are failing. 
+      /// Error conditions. e.g., An application has exceeded its file storage limit and attempts to write are failing.
       /// (system: http://hl7.org/fhir/audit-event-severity)
       /// </summary>
       [EnumLiteral("error"), Description("Error")]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
-        if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.CodeableConcept>(Detail.DeepCopy());
+        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.CodeableConcept>(Detail.DeepCopy());
         return dest;
       }
 
@@ -483,13 +483,13 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
+        if(Role.Any()) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
         if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
         if(RequestorElement != null) dest.RequestorElement = (Hl7.Fhir.Model.FhirBoolean)RequestorElement.DeepCopy();
         if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-        if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
+        if(PolicyElement.Any()) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
         if(Network != null) dest.Network = (Hl7.Fhir.Model.DataType)Network.DeepCopy();
-        if(Authorization != null) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(Authorization.DeepCopy());
+        if(Authorization.Any()) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(Authorization.DeepCopy());
         return dest;
       }
 
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Site != null) dest.Site = (Hl7.Fhir.Model.ResourceReference)Site.DeepCopy();
         if(Observer != null) dest.Observer = (Hl7.Fhir.Model.ResourceReference)Observer.DeepCopy();
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
         return dest;
       }
 
@@ -916,10 +916,10 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(What != null) dest.What = (Hl7.Fhir.Model.ResourceReference)What.DeepCopy();
         if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-        if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(SecurityLabel.DeepCopy());
+        if(SecurityLabel.Any()) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(SecurityLabel.DeepCopy());
         if(QueryElement != null) dest.QueryElement = (Hl7.Fhir.Model.Base64Binary)QueryElement.DeepCopy();
-        if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(Detail.DeepCopy());
-        if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
+        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(Detail.DeepCopy());
+        if(Agent.Any()) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
         return dest;
       }
 
@@ -1441,20 +1441,20 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)ActionElement.DeepCopy();
       if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>)SeverityElement.DeepCopy();
       if(Occurred != null) dest.Occurred = (Hl7.Fhir.Model.DataType)Occurred.DeepCopy();
       if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
       if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.AuditEvent.OutcomeComponent)Outcome.DeepCopy();
-      if(Authorization != null) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(Authorization.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(Authorization.Any()) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(Authorization.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-      if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
+      if(Agent.Any()) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
       if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)Source.DeepCopy();
-      if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(Entity.DeepCopy());
+      if(Entity.Any()) dest.Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(Entity.DeepCopy());
       return dest;
     }
 

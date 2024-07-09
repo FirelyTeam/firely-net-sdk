@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("logical-group"), Description("Logical Group")]
     LogicalGroup,
     /// <summary>
-    /// A group of related alternative actions is a sentence group if the target referenced by the action is the same in all the actions and each action simply constitutes a different variation on how to specify the details for the target. For example, two actions that could be in a SentenceGroup are "aspirin, 500 mg, 2 times per day" and "aspirin, 300 mg, 3 times per day". In both cases, aspirin is the target referenced by the action, and the two actions represent different options for how aspirin might be ordered for the patient. Note that a SentenceGroup would almost always have an associated selection behavior of "AtMostOne", unless it's a required action, in which case, it would be "ExactlyOne".
+    /// A group of related alternative actions is a sentence group if the target referenced by the action is the same in all the actions and each action simply constitutes a different variation on how to specify the details for the target. For example, two actions that could be in a SentenceGroup are \"aspirin, 500 mg, 2 times per day\" and \"aspirin, 300 mg, 3 times per day\". In both cases, aspirin is the target referenced by the action, and the two actions represent different options for how aspirin might be ordered for the patient. Note that a SentenceGroup would almost always have an associated selection behavior of \"AtMostOne\", unless it's a required action, in which case, it would be \"ExactlyOne\".
     /// (system: http://hl7.org/fhir/action-grouping-behavior)
     /// </summary>
     [EnumLiteral("sentence-group"), Description("Sentence Group")]
@@ -155,13 +155,13 @@ namespace Hl7.Fhir.Model
   public enum ActionPrecheckBehavior
   {
     /// <summary>
-    /// An action with this behavior is one of the most frequent action that is, or should be, included by an end user, for the particular context in which the action occurs. The system displaying the action to the end user should consider "pre-checking" such an action as a convenience for the user.
+    /// An action with this behavior is one of the most frequent action that is, or should be, included by an end user, for the particular context in which the action occurs. The system displaying the action to the end user should consider \"pre-checking\" such an action as a convenience for the user.
     /// (system: http://hl7.org/fhir/action-precheck-behavior)
     /// </summary>
     [EnumLiteral("yes"), Description("Yes")]
     Yes,
     /// <summary>
-    /// An action with this behavior is one of the less frequent actions included by the end user, for the particular context in which the action occurs. The system displaying the actions to the end user would typically not "pre-check" such an action.
+    /// An action with this behavior is one of the less frequent actions included by the end user, for the particular context in which the action occurs. The system displaying the actions to the end user would typically not \"pre-check\" such an action.
     /// (system: http://hl7.org/fhir/action-precheck-behavior)
     /// </summary>
     [EnumLiteral("no"), Description("No")]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("base64Binary", "http://hl7.org/fhir/data-types"), Description("base64Binary")]
     Base64Binary,
     /// <summary>
-    /// Value of "true" or "false"
+    /// Value of \"true\" or \"false\"
     /// (system: http://hl7.org/fhir/data-types)
     /// </summary>
     [EnumLiteral("boolean", "http://hl7.org/fhir/data-types"), Description("boolean")]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("decimal", "http://hl7.org/fhir/data-types"), Description("decimal")]
     Decimal,
     /// <summary>
-    /// Any combination of letters, numerals, "-" and ".", with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive.
+    /// Any combination of letters, numerals, \"-\" and \".\", with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive.
     /// (system: http://hl7.org/fhir/data-types)
     /// </summary>
     [EnumLiteral("id", "http://hl7.org/fhir/data-types"), Description("id")]
@@ -811,8 +811,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Basic"), Description("Basic")]
     Basic,
     /// <summary>
-    /// A material substance originating from a biological entity intended to be transplanted or infused
-    /// into another (possibly the same) biological entity.
+    /// A material substance originating from a biological entity intended to be transplanted or infusedinto another (possibly the same) biological entity.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("BiologicallyDerivedProduct"), Description("BiologicallyDerivedProduct")]
@@ -878,7 +877,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
     ClaimResponse,
     /// <summary>
-    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
+    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called \"ClinicalImpression\" rather than \"ClinicalAssessment\" to avoid confusion with the recording of assessment tools such as Apgar score.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
@@ -1136,7 +1135,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Immunization"), Description("Immunization")]
     Immunization,
     /// <summary>
-    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
+    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is \"valid\" in relation to those  recommendations.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ImmunizationEvaluation"), Description("ImmunizationEvaluation")]
@@ -1178,7 +1177,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Library"), Description("Library")]
     Library,
     /// <summary>
-    /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
+    /// Identifies two or more records (resource instances) that refer to the same real-world \"occurrence\".
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("Linkage"), Description("Linkage")]
@@ -1244,14 +1243,13 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("MedicationKnowledge"), Description("MedicationKnowledge")]
     MedicationKnowledge,
     /// <summary>
-    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
+    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called \"MedicationRequest\" rather than \"MedicationPrescription\" or \"MedicationOrder\" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
     MedicationRequest,
     /// <summary>
-    /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
-    /// The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
+    /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
@@ -1281,7 +1279,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("MolecularSequence"), Description("MolecularSequence")]
     MolecularSequence,
     /// <summary>
-    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
+    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a \"System\" used within the Identifier and Coding data types.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("NamingSystem"), Description("NamingSystem")]
@@ -1419,7 +1417,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
-    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
+    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as \"give this medication after that one\".
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("RequestGroup"), Description("RequestGroup")]
@@ -1431,7 +1429,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("ResearchDefinition"), Description("ResearchDefinition")]
     ResearchDefinition,
     /// <summary>
-    /// The ResearchElementDefinition resource describes a "PICO" element that knowledge (evidence, assertion, recommendation) is about.
+    /// The ResearchElementDefinition resource describes a \"PICO\" element that knowledge (evidence, assertion, recommendation) is about.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ResearchElementDefinition"), Description("ResearchElementDefinition")]
@@ -1503,7 +1501,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("StructureMap"), Description("StructureMap")]
     StructureMap,
     /// <summary>
-    /// The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined "channel" so that another system can take an appropriate action.
+    /// The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined \"channel\" so that another system can take an appropriate action.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("Subscription"), Description("Subscription")]
@@ -1695,7 +1693,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("final"), Description("Final")]
     Final,
     /// <summary>
-    /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
+    /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as \"final\" and the composition is complete and verified by an authorized person.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
     [EnumLiteral("amended"), Description("Amended")]
@@ -6603,7 +6601,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("base64Binary", "http://hl7.org/fhir/data-types"), Description("base64Binary")]
     Base64Binary,
     /// <summary>
-    /// Value of "true" or "false"
+    /// Value of \"true\" or \"false\"
     /// (system: http://hl7.org/fhir/data-types)
     /// </summary>
     [EnumLiteral("boolean", "http://hl7.org/fhir/data-types"), Description("boolean")]
@@ -6639,7 +6637,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("decimal", "http://hl7.org/fhir/data-types"), Description("decimal")]
     Decimal,
     /// <summary>
-    /// Any combination of letters, numerals, "-" and ".", with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive.
+    /// Any combination of letters, numerals, \"-\" and \".\", with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive.
     /// (system: http://hl7.org/fhir/data-types)
     /// </summary>
     [EnumLiteral("id", "http://hl7.org/fhir/data-types"), Description("id")]
@@ -6795,8 +6793,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Basic"), Description("Basic")]
     Basic,
     /// <summary>
-    /// A material substance originating from a biological entity intended to be transplanted or infused
-    /// into another (possibly the same) biological entity.
+    /// A material substance originating from a biological entity intended to be transplanted or infusedinto another (possibly the same) biological entity.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("BiologicallyDerivedProduct"), Description("BiologicallyDerivedProduct")]
@@ -6862,7 +6859,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
     ClaimResponse,
     /// <summary>
-    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
+    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called \"ClinicalImpression\" rather than \"ClinicalAssessment\" to avoid confusion with the recording of assessment tools such as Apgar score.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
@@ -7120,7 +7117,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Immunization"), Description("Immunization")]
     Immunization,
     /// <summary>
-    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
+    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is \"valid\" in relation to those  recommendations.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ImmunizationEvaluation"), Description("ImmunizationEvaluation")]
@@ -7162,7 +7159,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Library"), Description("Library")]
     Library,
     /// <summary>
-    /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
+    /// Identifies two or more records (resource instances) that refer to the same real-world \"occurrence\".
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("Linkage"), Description("Linkage")]
@@ -7228,14 +7225,13 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("MedicationKnowledge"), Description("MedicationKnowledge")]
     MedicationKnowledge,
     /// <summary>
-    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
+    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called \"MedicationRequest\" rather than \"MedicationPrescription\" or \"MedicationOrder\" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
     MedicationRequest,
     /// <summary>
-    /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
-    /// The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
+    /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
@@ -7265,7 +7261,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("MolecularSequence"), Description("MolecularSequence")]
     MolecularSequence,
     /// <summary>
-    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
+    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a \"System\" used within the Identifier and Coding data types.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("NamingSystem"), Description("NamingSystem")]
@@ -7403,7 +7399,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
-    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
+    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as \"give this medication after that one\".
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("RequestGroup"), Description("RequestGroup")]
@@ -7415,7 +7411,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("ResearchDefinition"), Description("ResearchDefinition")]
     ResearchDefinition,
     /// <summary>
-    /// The ResearchElementDefinition resource describes a "PICO" element that knowledge (evidence, assertion, recommendation) is about.
+    /// The ResearchElementDefinition resource describes a \"PICO\" element that knowledge (evidence, assertion, recommendation) is about.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ResearchElementDefinition"), Description("ResearchElementDefinition")]
@@ -7487,7 +7483,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("StructureMap"), Description("StructureMap")]
     StructureMap,
     /// <summary>
-    /// The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined "channel" so that another system can take an appropriate action.
+    /// The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined \"channel\" so that another system can take an appropriate action.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("Subscription"), Description("Subscription")]
@@ -7731,13 +7727,13 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("completed"), Description("Completed")]
     Completed,
     /// <summary>
-    /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
+    /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be \"stopped\" rather than \"entered-in-error\".).
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
     [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
-    /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
+    /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
     [EnumLiteral("unknown"), Description("Unknown")]
@@ -8003,7 +7999,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("preliminary"), Description("Preliminary")]
     Preliminary,
     /// <summary>
-    /// The observation is complete and there are no further actions needed. Additional information such "released", "signed", etc would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
+    /// The observation is complete and there are no further actions needed. Additional information such \"released\", \"signed\", etc would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
     [EnumLiteral("final"), Description("Final")]
@@ -8021,19 +8017,19 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("corrected"), Description("Corrected")]
     Corrected,
     /// <summary>
-    /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+    /// The observation is unavailable because the measurement was not started or not completed (also sometimes called \"aborted\").
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
     [EnumLiteral("cancelled"), Description("Cancelled")]
     Cancelled,
     /// <summary>
-    /// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
+    /// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be \"cancelled\" rather than \"entered-in-error\".).
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
     [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
-    /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
+    /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
     [EnumLiteral("unknown"), Description("Unknown")]
@@ -8267,13 +8263,13 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("completed"), Description("Completed")]
     Completed,
     /// <summary>
-    /// This request should never have existed and should be considered 'void'.  (It is possible that real-world decisions were based on it.  If real-world activity has occurred, the status should be "revoked" rather than "entered-in-error".).
+    /// This request should never have existed and should be considered 'void'.  (It is possible that real-world decisions were based on it.  If real-world activity has occurred, the status should be \"revoked\" rather than \"entered-in-error\".).
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
     [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
-    /// The authoring/source system does not know which of the status values currently applies for this request.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
+    /// The authoring/source system does not know which of the status values currently applies for this request.  Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
     [EnumLiteral("unknown"), Description("Unknown")]
@@ -8367,8 +8363,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Basic"), Description("Basic")]
     Basic,
     /// <summary>
-    /// A material substance originating from a biological entity intended to be transplanted or infused
-    /// into another (possibly the same) biological entity.
+    /// A material substance originating from a biological entity intended to be transplanted or infusedinto another (possibly the same) biological entity.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("BiologicallyDerivedProduct"), Description("BiologicallyDerivedProduct")]
@@ -8434,7 +8429,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
     ClaimResponse,
     /// <summary>
-    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
+    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called \"ClinicalImpression\" rather than \"ClinicalAssessment\" to avoid confusion with the recording of assessment tools such as Apgar score.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
@@ -8692,7 +8687,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Immunization"), Description("Immunization")]
     Immunization,
     /// <summary>
-    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
+    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is \"valid\" in relation to those  recommendations.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ImmunizationEvaluation"), Description("ImmunizationEvaluation")]
@@ -8734,7 +8729,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("Library"), Description("Library")]
     Library,
     /// <summary>
-    /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
+    /// Identifies two or more records (resource instances) that refer to the same real-world \"occurrence\".
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("Linkage"), Description("Linkage")]
@@ -8800,14 +8795,13 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("MedicationKnowledge"), Description("MedicationKnowledge")]
     MedicationKnowledge,
     /// <summary>
-    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
+    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called \"MedicationRequest\" rather than \"MedicationPrescription\" or \"MedicationOrder\" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
     MedicationRequest,
     /// <summary>
-    /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
-    /// The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
+    /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
@@ -8837,7 +8831,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("MolecularSequence"), Description("MolecularSequence")]
     MolecularSequence,
     /// <summary>
-    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
+    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a \"System\" used within the Identifier and Coding data types.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("NamingSystem"), Description("NamingSystem")]
@@ -8975,7 +8969,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
-    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
+    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as \"give this medication after that one\".
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("RequestGroup"), Description("RequestGroup")]
@@ -8987,7 +8981,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("ResearchDefinition"), Description("ResearchDefinition")]
     ResearchDefinition,
     /// <summary>
-    /// The ResearchElementDefinition resource describes a "PICO" element that knowledge (evidence, assertion, recommendation) is about.
+    /// The ResearchElementDefinition resource describes a \"PICO\" element that knowledge (evidence, assertion, recommendation) is about.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("ResearchElementDefinition"), Description("ResearchElementDefinition")]
@@ -9059,7 +9053,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("StructureMap"), Description("StructureMap")]
     StructureMap,
     /// <summary>
-    /// The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined "channel" so that another system can take an appropriate action.
+    /// The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined \"channel\" so that another system can take an appropriate action.
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
     [EnumLiteral("Subscription"), Description("Subscription")]

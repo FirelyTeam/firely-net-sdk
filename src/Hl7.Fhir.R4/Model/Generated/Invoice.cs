@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
         if(ChargeItem != null) dest.ChargeItem = (Hl7.Fhir.Model.DataType)ChargeItem.DeepCopy();
-        if(PriceComponent != null) dest.PriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(PriceComponent.DeepCopy());
+        if(PriceComponent.Any()) dest.PriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(PriceComponent.DeepCopy());
         return dest;
       }
 
@@ -943,22 +943,22 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>)StatusElement.DeepCopy();
       if(CancelledReasonElement != null) dest.CancelledReasonElement = (Hl7.Fhir.Model.FhirString)CancelledReasonElement.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)Recipient.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-      if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(Participant.DeepCopy());
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(Participant.DeepCopy());
       if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
       if(Account != null) dest.Account = (Hl7.Fhir.Model.ResourceReference)Account.DeepCopy();
-      if(LineItem != null) dest.LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(LineItem.DeepCopy());
-      if(TotalPriceComponent != null) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(TotalPriceComponent.DeepCopy());
+      if(LineItem.Any()) dest.LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(LineItem.DeepCopy());
+      if(TotalPriceComponent.Any()) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(TotalPriceComponent.DeepCopy());
       if(TotalNet != null) dest.TotalNet = (Hl7.Fhir.Model.Money)TotalNet.DeepCopy();
       if(TotalGross != null) dest.TotalGross = (Hl7.Fhir.Model.Money)TotalGross.DeepCopy();
       if(PaymentTermsElement != null) dest.PaymentTermsElement = (Hl7.Fhir.Model.Markdown)PaymentTermsElement.DeepCopy();
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       return dest;
     }
 

@@ -273,9 +273,9 @@ namespace Hl7.Fhir.Model
       if(NominalVolume != null) dest.NominalVolume = (Hl7.Fhir.Model.Quantity)NominalVolume.DeepCopy();
       if(ExternalDiameter != null) dest.ExternalDiameter = (Hl7.Fhir.Model.Quantity)ExternalDiameter.DeepCopy();
       if(ShapeElement != null) dest.ShapeElement = (Hl7.Fhir.Model.FhirString)ShapeElement.DeepCopy();
-      if(ColorElement != null) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(ColorElement.DeepCopy());
-      if(ImprintElement != null) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(ImprintElement.DeepCopy());
-      if(Image != null) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
+      if(ColorElement.Any()) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(ColorElement.DeepCopy());
+      if(ImprintElement.Any()) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(ImprintElement.DeepCopy());
+      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
       if(Scoring != null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)Scoring.DeepCopy();
       return dest;
     }

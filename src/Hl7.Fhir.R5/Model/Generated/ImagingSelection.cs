@@ -74,13 +74,13 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
-      /// The imaging selection has been withdrawn following a release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
+      /// The imaging selection has been withdrawn following a release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be \"cancelled\" rather than \"entered-in-error\".).
       /// (system: http://hl7.org/fhir/imagingselection-status)
       /// </summary>
       [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
-      /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
+      /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/imagingselection-status)
       /// </summary>
       [EnumLiteral("unknown"), Description("Unknown")]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("ellipse"), Description("ELLIPSE")]
       Ellipse,
       /// <summary>
-      /// a three-dimensional geometric surface whose plane sections are either ellipses or circles and contains three intersecting orthogonal axes, "a", "b", and "c"; the ellipsoid is defined by six (x,y,z) triplets, the first and second triplets specifying the endpoints of axis "a", the third and fourth triplets specifying the endpoints of axis "b", and the fifth and sixth triplets specifying the endpoints of axis "c".
+      /// a three-dimensional geometric surface whose plane sections are either ellipses or circles and contains three intersecting orthogonal axes, \"a\", \"b\", and \"c\"; the ellipsoid is defined by six (x,y,z) triplets, the first and second triplets specifying the endpoints of axis \"a\", the third and fourth triplets specifying the endpoints of axis \"b\", and the fifth and sixth triplets specifying the endpoints of axis \"c\".
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
       [EnumLiteral("ellipsoid"), Description("ELLIPSOID")]
@@ -478,9 +478,9 @@ namespace Hl7.Fhir.Model
         if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Id)UidElement.DeepCopy();
         if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
         if(SopClass != null) dest.SopClass = (Hl7.Fhir.Model.Coding)SopClass.DeepCopy();
-        if(SubsetElement != null) dest.SubsetElement = new List<Hl7.Fhir.Model.FhirString>(SubsetElement.DeepCopy());
-        if(ImageRegion2D != null) dest.ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(ImageRegion2D.DeepCopy());
-        if(ImageRegion3D != null) dest.ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(ImageRegion3D.DeepCopy());
+        if(SubsetElement.Any()) dest.SubsetElement = new List<Hl7.Fhir.Model.FhirString>(SubsetElement.DeepCopy());
+        if(ImageRegion2D.Any()) dest.ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(ImageRegion2D.DeepCopy());
+        if(ImageRegion3D.Any()) dest.ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(ImageRegion3D.DeepCopy());
         return dest;
       }
 
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>)RegionTypeElement.DeepCopy();
-        if(CoordinateElement != null) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
+        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
         return dest;
       }
 
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>)RegionTypeElement.DeepCopy();
-        if(CoordinateElement != null) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
+        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
         return dest;
       }
 
@@ -1310,23 +1310,23 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>)StatusElement.DeepCopy();
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-      if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(Performer.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(Performer.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(StudyUidElement != null) dest.StudyUidElement = (Hl7.Fhir.Model.Id)StudyUidElement.DeepCopy();
-      if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
-      if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
+      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
+      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
       if(SeriesUidElement != null) dest.SeriesUidElement = (Hl7.Fhir.Model.Id)SeriesUidElement.DeepCopy();
       if(SeriesNumberElement != null) dest.SeriesNumberElement = (Hl7.Fhir.Model.UnsignedInt)SeriesNumberElement.DeepCopy();
       if(FrameOfReferenceUidElement != null) dest.FrameOfReferenceUidElement = (Hl7.Fhir.Model.Id)FrameOfReferenceUidElement.DeepCopy();
       if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)BodySite.DeepCopy();
-      if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
-      if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(Instance.DeepCopy());
+      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(Instance.DeepCopy());
       return dest;
     }
 

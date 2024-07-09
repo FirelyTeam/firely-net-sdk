@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("sms"), Description("SMS")]
       Sms,
       /// <summary>
-      /// A contact that is not a phone, fax, page or email address and is not expressible as a URL.  E.g. Internal mail address.  This SHOULD NOT be used for contacts that are expressible as a URL (e.g. Skype, Twitter, Facebook, etc.)  Extensions may be used to distinguish "other" contact types.
+      /// A contact that is not a phone, fax, page or email address and is not expressible as a URL.  E.g. Internal mail address.  This SHOULD NOT be used for contacts that are expressible as a URL (e.g. Skype, Twitter, Facebook, etc.)  Extensions may be used to distinguish \"other\" contact types.
       /// (system: http://hl7.org/fhir/contact-point-system)
       /// </summary>
       [EnumLiteral("other"), Description("Other")]

@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
         if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
         if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopy();
-        if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
+        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
         return dest;
       }
 
@@ -1188,14 +1188,14 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
-      if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
+      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
-      if(MustSupportElement != null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
-      if(CodeFilter != null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
-      if(DateFilter != null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());
-      if(ValueFilter != null) dest.ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(ValueFilter.DeepCopy());
+      if(MustSupportElement.Any()) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
+      if(CodeFilter.Any()) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
+      if(DateFilter.Any()) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());
+      if(ValueFilter.Any()) dest.ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(ValueFilter.DeepCopy());
       if(LimitElement != null) dest.LimitElement = (Hl7.Fhir.Model.PositiveInt)LimitElement.DeepCopy();
-      if(Sort != null) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(Sort.DeepCopy());
+      if(Sort.Any()) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(Sort.DeepCopy());
       return dest;
     }
 

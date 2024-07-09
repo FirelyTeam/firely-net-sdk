@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(DaysOfWeekElement != null) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
+        if(DaysOfWeekElement.Any()) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
         if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopy();
         if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopy();
         if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopy();
@@ -495,8 +495,8 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(AvailableTime.DeepCopy());
-      if(NotAvailableTime != null) dest.NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(NotAvailableTime.DeepCopy());
+      if(AvailableTime.Any()) dest.AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(AvailableTime.DeepCopy());
+      if(NotAvailableTime.Any()) dest.NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(NotAvailableTime.DeepCopy());
       return dest;
     }
 

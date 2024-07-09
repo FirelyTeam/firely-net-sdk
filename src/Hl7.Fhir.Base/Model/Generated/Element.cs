@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(ElementId != null) dest.ElementId = ElementId;
-      if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
+      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
       return dest;
     }
 

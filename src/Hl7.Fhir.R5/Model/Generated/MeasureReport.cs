@@ -276,9 +276,9 @@ namespace Hl7.Fhir.Model
         if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-        if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(Population.DeepCopy());
+        if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(Population.DeepCopy());
         if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.DataType)MeasureScore.DeepCopy();
-        if(Stratifier != null) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(Stratifier.DeepCopy());
+        if(Stratifier.Any()) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(Stratifier.DeepCopy());
         return dest;
       }
 
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
         if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopy();
-        if(SubjectReport != null) dest.SubjectReport = new List<Hl7.Fhir.Model.ResourceReference>(SubjectReport.DeepCopy());
+        if(SubjectReport.Any()) dest.SubjectReport = new List<Hl7.Fhir.Model.ResourceReference>(SubjectReport.DeepCopy());
         if(Subjects != null) dest.Subjects = (Hl7.Fhir.Model.ResourceReference)Subjects.DeepCopy();
         return dest;
       }
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(Stratum != null) dest.Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(Stratum.DeepCopy());
+        if(Stratum.Any()) dest.Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(Stratum.DeepCopy());
         return dest;
       }
 
@@ -922,8 +922,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        if(Component != null) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(Component.DeepCopy());
-        if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopy());
+        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(Component.DeepCopy());
+        if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopy());
         if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.DataType)MeasureScore.DeepCopy();
         return dest;
       }
@@ -1355,7 +1355,7 @@ namespace Hl7.Fhir.Model
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
         if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopy();
-        if(SubjectReport != null) dest.SubjectReport = new List<Hl7.Fhir.Model.ResourceReference>(SubjectReport.DeepCopy());
+        if(SubjectReport.Any()) dest.SubjectReport = new List<Hl7.Fhir.Model.ResourceReference>(SubjectReport.DeepCopy());
         if(Subjects != null) dest.Subjects = (Hl7.Fhir.Model.ResourceReference)Subjects.DeepCopy();
         return dest;
       }
@@ -1821,7 +1821,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)StatusElement.DeepCopy();
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)TypeElement.DeepCopy();
       if(DataUpdateTypeElement != null) dest.DataUpdateTypeElement = (Code<Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType>)DataUpdateTypeElement.DeepCopy();
@@ -1835,9 +1835,9 @@ namespace Hl7.Fhir.Model
       if(InputParameters != null) dest.InputParameters = (Hl7.Fhir.Model.ResourceReference)InputParameters.DeepCopy();
       if(Scoring != null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)Scoring.DeepCopy();
       if(ImprovementNotation != null) dest.ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept)ImprovementNotation.DeepCopy();
-      if(Group != null) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopy());
-      if(SupplementalData != null) dest.SupplementalData = new List<Hl7.Fhir.Model.ResourceReference>(SupplementalData.DeepCopy());
-      if(EvaluatedResource != null) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(EvaluatedResource.DeepCopy());
+      if(Group.Any()) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopy());
+      if(SupplementalData.Any()) dest.SupplementalData = new List<Hl7.Fhir.Model.ResourceReference>(SupplementalData.DeepCopy());
+      if(EvaluatedResource.Any()) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(EvaluatedResource.DeepCopy());
       return dest;
     }
 

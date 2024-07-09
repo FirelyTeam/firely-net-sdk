@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
         if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
         if(IntraspecificType != null) dest.IntraspecificType = (Hl7.Fhir.Model.CodeableConcept)IntraspecificType.DeepCopy();
         if(IntraspecificDescriptionElement != null) dest.IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString)IntraspecificDescriptionElement.DeepCopy();
-        if(Author != null) dest.Author = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>(Author.DeepCopy());
+        if(Author.Any()) dest.Author = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>(Author.DeepCopy());
         if(Hybrid != null) dest.Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent)Hybrid.DeepCopy();
         if(OrganismGeneral != null) dest.OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent)OrganismGeneral.DeepCopy();
         return dest;
@@ -1461,14 +1461,14 @@ namespace Hl7.Fhir.Model
       if(SourceMaterialState != null) dest.SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialState.DeepCopy();
       if(OrganismId != null) dest.OrganismId = (Hl7.Fhir.Model.Identifier)OrganismId.DeepCopy();
       if(OrganismNameElement != null) dest.OrganismNameElement = (Hl7.Fhir.Model.FhirString)OrganismNameElement.DeepCopy();
-      if(ParentSubstanceId != null) dest.ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(ParentSubstanceId.DeepCopy());
-      if(ParentSubstanceNameElement != null) dest.ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(ParentSubstanceNameElement.DeepCopy());
-      if(CountryOfOrigin != null) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(CountryOfOrigin.DeepCopy());
-      if(GeographicalLocationElement != null) dest.GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(GeographicalLocationElement.DeepCopy());
+      if(ParentSubstanceId.Any()) dest.ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(ParentSubstanceId.DeepCopy());
+      if(ParentSubstanceNameElement.Any()) dest.ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(ParentSubstanceNameElement.DeepCopy());
+      if(CountryOfOrigin.Any()) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(CountryOfOrigin.DeepCopy());
+      if(GeographicalLocationElement.Any()) dest.GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(GeographicalLocationElement.DeepCopy());
       if(DevelopmentStage != null) dest.DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept)DevelopmentStage.DeepCopy();
-      if(FractionDescription != null) dest.FractionDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>(FractionDescription.DeepCopy());
+      if(FractionDescription.Any()) dest.FractionDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>(FractionDescription.DeepCopy());
       if(Organism != null) dest.Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent)Organism.DeepCopy();
-      if(PartDescription != null) dest.PartDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>(PartDescription.DeepCopy());
+      if(PartDescription.Any()) dest.PartDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>(PartDescription.DeepCopy());
       return dest;
     }
 

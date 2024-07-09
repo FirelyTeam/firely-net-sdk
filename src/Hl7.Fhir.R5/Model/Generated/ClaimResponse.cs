@@ -346,11 +346,11 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(ItemSequenceElement != null) dest.ItemSequenceElement = (Hl7.Fhir.Model.PositiveInt)ItemSequenceElement.DeepCopy();
-        if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
-        if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
+        if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+        if(NoteNumberElement.Any()) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
         if(ReviewOutcome != null) dest.ReviewOutcome = (Hl7.Fhir.Model.ClaimResponse.ReviewOutcomeComponent)ReviewOutcome.DeepCopy();
-        if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
-        if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent>(Detail.DeepCopy());
+        if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent>(Detail.DeepCopy());
         return dest;
       }
 
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Decision != null) dest.Decision = (Hl7.Fhir.Model.CodeableConcept)Decision.DeepCopy();
-        if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
+        if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
         if(PreAuthRefElement != null) dest.PreAuthRefElement = (Hl7.Fhir.Model.FhirString)PreAuthRefElement.DeepCopy();
         if(PreAuthPeriod != null) dest.PreAuthPeriod = (Hl7.Fhir.Model.Period)PreAuthPeriod.DeepCopy();
         return dest;
@@ -992,11 +992,11 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DetailSequenceElement != null) dest.DetailSequenceElement = (Hl7.Fhir.Model.PositiveInt)DetailSequenceElement.DeepCopy();
-        if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
-        if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
+        if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+        if(NoteNumberElement.Any()) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
         if(ReviewOutcome != null) dest.ReviewOutcome = (Hl7.Fhir.Model.ClaimResponse.ReviewOutcomeComponent)ReviewOutcome.DeepCopy();
-        if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
-        if(SubDetail != null) dest.SubDetail = new List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent>(SubDetail.DeepCopy());
+        if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+        if(SubDetail.Any()) dest.SubDetail = new List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent>(SubDetail.DeepCopy());
         return dest;
       }
 
@@ -1242,10 +1242,10 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(SubDetailSequenceElement != null) dest.SubDetailSequenceElement = (Hl7.Fhir.Model.PositiveInt)SubDetailSequenceElement.DeepCopy();
-        if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
-        if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
+        if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+        if(NoteNumberElement.Any()) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
         if(ReviewOutcome != null) dest.ReviewOutcome = (Hl7.Fhir.Model.ClaimResponse.ReviewOutcomeComponent)ReviewOutcome.DeepCopy();
-        if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+        if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
         return dest;
       }
 
@@ -1793,17 +1793,17 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(ItemSequenceElement != null) dest.ItemSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(ItemSequenceElement.DeepCopy());
-        if(DetailSequenceElement != null) dest.DetailSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(DetailSequenceElement.DeepCopy());
-        if(SubdetailSequenceElement != null) dest.SubdetailSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(SubdetailSequenceElement.DeepCopy());
-        if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
-        if(Provider != null) dest.Provider = new List<Hl7.Fhir.Model.ResourceReference>(Provider.DeepCopy());
+        if(ItemSequenceElement.Any()) dest.ItemSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(ItemSequenceElement.DeepCopy());
+        if(DetailSequenceElement.Any()) dest.DetailSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(DetailSequenceElement.DeepCopy());
+        if(SubdetailSequenceElement.Any()) dest.SubdetailSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(SubdetailSequenceElement.DeepCopy());
+        if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+        if(Provider.Any()) dest.Provider = new List<Hl7.Fhir.Model.ResourceReference>(Provider.DeepCopy());
         if(Revenue != null) dest.Revenue = (Hl7.Fhir.Model.CodeableConcept)Revenue.DeepCopy();
         if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
         if(ProductOrServiceEnd != null) dest.ProductOrServiceEnd = (Hl7.Fhir.Model.CodeableConcept)ProductOrServiceEnd.DeepCopy();
-        if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
-        if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
-        if(ProgramCode != null) dest.ProgramCode = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramCode.DeepCopy());
+        if(Request.Any()) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
+        if(Modifier.Any()) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+        if(ProgramCode.Any()) dest.ProgramCode = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramCode.DeepCopy());
         if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
         if(Location != null) dest.Location = (Hl7.Fhir.Model.DataType)Location.DeepCopy();
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -1811,11 +1811,11 @@ namespace Hl7.Fhir.Model
         if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
         if(Tax != null) dest.Tax = (Hl7.Fhir.Model.Money)Tax.DeepCopy();
         if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
-        if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.ClaimResponse.BodySiteComponent>(BodySite.DeepCopy());
-        if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
+        if(BodySite.Any()) dest.BodySite = new List<Hl7.Fhir.Model.ClaimResponse.BodySiteComponent>(BodySite.DeepCopy());
+        if(NoteNumberElement.Any()) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
         if(ReviewOutcome != null) dest.ReviewOutcome = (Hl7.Fhir.Model.ClaimResponse.ReviewOutcomeComponent)ReviewOutcome.DeepCopy();
-        if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
-        if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemDetailComponent>(Detail.DeepCopy());
+        if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemDetailComponent>(Detail.DeepCopy());
         return dest;
       }
 
@@ -2121,8 +2121,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Site != null) dest.Site = new List<Hl7.Fhir.Model.CodeableReference>(Site.DeepCopy());
-        if(SubSite != null) dest.SubSite = new List<Hl7.Fhir.Model.CodeableConcept>(SubSite.DeepCopy());
+        if(Site.Any()) dest.Site = new List<Hl7.Fhir.Model.CodeableReference>(Site.DeepCopy());
+        if(SubSite.Any()) dest.SubSite = new List<Hl7.Fhir.Model.CodeableConcept>(SubSite.DeepCopy());
         return dest;
       }
 
@@ -2457,20 +2457,20 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+        if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
         if(Revenue != null) dest.Revenue = (Hl7.Fhir.Model.CodeableConcept)Revenue.DeepCopy();
         if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
         if(ProductOrServiceEnd != null) dest.ProductOrServiceEnd = (Hl7.Fhir.Model.CodeableConcept)ProductOrServiceEnd.DeepCopy();
-        if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+        if(Modifier.Any()) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
         if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
         if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
         if(Tax != null) dest.Tax = (Hl7.Fhir.Model.Money)Tax.DeepCopy();
         if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
-        if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
+        if(NoteNumberElement.Any()) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
         if(ReviewOutcome != null) dest.ReviewOutcome = (Hl7.Fhir.Model.ClaimResponse.ReviewOutcomeComponent)ReviewOutcome.DeepCopy();
-        if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
-        if(SubDetail != null) dest.SubDetail = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemSubDetailComponent>(SubDetail.DeepCopy());
+        if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+        if(SubDetail.Any()) dest.SubDetail = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemSubDetailComponent>(SubDetail.DeepCopy());
         return dest;
       }
 
@@ -2887,19 +2887,19 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+        if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
         if(Revenue != null) dest.Revenue = (Hl7.Fhir.Model.CodeableConcept)Revenue.DeepCopy();
         if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
         if(ProductOrServiceEnd != null) dest.ProductOrServiceEnd = (Hl7.Fhir.Model.CodeableConcept)ProductOrServiceEnd.DeepCopy();
-        if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+        if(Modifier.Any()) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
         if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
         if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
         if(Tax != null) dest.Tax = (Hl7.Fhir.Model.Money)Tax.DeepCopy();
         if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
-        if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
+        if(NoteNumberElement.Any()) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
         if(ReviewOutcome != null) dest.ReviewOutcome = (Hl7.Fhir.Model.ClaimResponse.ReviewOutcomeComponent)ReviewOutcome.DeepCopy();
-        if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+        if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
         return dest;
       }
 
@@ -4105,7 +4105,7 @@ namespace Hl7.Fhir.Model
         if(DetailSequenceElement != null) dest.DetailSequenceElement = (Hl7.Fhir.Model.PositiveInt)DetailSequenceElement.DeepCopy();
         if(SubDetailSequenceElement != null) dest.SubDetailSequenceElement = (Hl7.Fhir.Model.PositiveInt)SubDetailSequenceElement.DeepCopy();
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(ExpressionElement != null) dest.ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(ExpressionElement.DeepCopy());
+        if(ExpressionElement.Any()) dest.ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(ExpressionElement.DeepCopy());
         return dest;
       }
 
@@ -4789,8 +4789,8 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(TraceNumber != null) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(TraceNumber.Any()) dest.TraceNumber = new List<Hl7.Fhir.Model.Identifier>(TraceNumber.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(SubType != null) dest.SubType = (Hl7.Fhir.Model.CodeableConcept)SubType.DeepCopy();
@@ -4805,22 +4805,22 @@ namespace Hl7.Fhir.Model
       if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
       if(PreAuthRefElement != null) dest.PreAuthRefElement = (Hl7.Fhir.Model.FhirString)PreAuthRefElement.DeepCopy();
       if(PreAuthPeriod != null) dest.PreAuthPeriod = (Hl7.Fhir.Model.Period)PreAuthPeriod.DeepCopy();
-      if(Event != null) dest.Event = new List<Hl7.Fhir.Model.ClaimResponse.EventComponent>(Event.DeepCopy());
+      if(Event.Any()) dest.Event = new List<Hl7.Fhir.Model.ClaimResponse.EventComponent>(Event.DeepCopy());
       if(PayeeType != null) dest.PayeeType = (Hl7.Fhir.Model.CodeableConcept)PayeeType.DeepCopy();
-      if(Encounter != null) dest.Encounter = new List<Hl7.Fhir.Model.ResourceReference>(Encounter.DeepCopy());
+      if(Encounter.Any()) dest.Encounter = new List<Hl7.Fhir.Model.ResourceReference>(Encounter.DeepCopy());
       if(DiagnosisRelatedGroup != null) dest.DiagnosisRelatedGroup = (Hl7.Fhir.Model.CodeableConcept)DiagnosisRelatedGroup.DeepCopy();
-      if(Item != null) dest.Item = new List<Hl7.Fhir.Model.ClaimResponse.ItemComponent>(Item.DeepCopy());
-      if(AddItem != null) dest.AddItem = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>(AddItem.DeepCopy());
-      if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
-      if(Total != null) dest.Total = new List<Hl7.Fhir.Model.ClaimResponse.TotalComponent>(Total.DeepCopy());
+      if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.ClaimResponse.ItemComponent>(Item.DeepCopy());
+      if(AddItem.Any()) dest.AddItem = new List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>(AddItem.DeepCopy());
+      if(Adjudication.Any()) dest.Adjudication = new List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>(Adjudication.DeepCopy());
+      if(Total.Any()) dest.Total = new List<Hl7.Fhir.Model.ClaimResponse.TotalComponent>(Total.DeepCopy());
       if(Payment != null) dest.Payment = (Hl7.Fhir.Model.ClaimResponse.PaymentComponent)Payment.DeepCopy();
       if(FundsReserve != null) dest.FundsReserve = (Hl7.Fhir.Model.CodeableConcept)FundsReserve.DeepCopy();
       if(FormCode != null) dest.FormCode = (Hl7.Fhir.Model.CodeableConcept)FormCode.DeepCopy();
       if(Form != null) dest.Form = (Hl7.Fhir.Model.Attachment)Form.DeepCopy();
-      if(ProcessNote != null) dest.ProcessNote = new List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>(ProcessNote.DeepCopy());
-      if(CommunicationRequest != null) dest.CommunicationRequest = new List<Hl7.Fhir.Model.ResourceReference>(CommunicationRequest.DeepCopy());
-      if(Insurance != null) dest.Insurance = new List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>(Insurance.DeepCopy());
-      if(Error != null) dest.Error = new List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent>(Error.DeepCopy());
+      if(ProcessNote.Any()) dest.ProcessNote = new List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>(ProcessNote.DeepCopy());
+      if(CommunicationRequest.Any()) dest.CommunicationRequest = new List<Hl7.Fhir.Model.ResourceReference>(CommunicationRequest.DeepCopy());
+      if(Insurance.Any()) dest.Insurance = new List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>(Insurance.DeepCopy());
+      if(Error.Any()) dest.Error = new List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent>(Error.DeepCopy());
       return dest;
     }
 

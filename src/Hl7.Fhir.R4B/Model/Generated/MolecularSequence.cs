@@ -1794,13 +1794,13 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(ScoreElement != null) dest.ScoreElement = new List<Hl7.Fhir.Model.Integer>(ScoreElement.DeepCopy());
-        if(NumTPElement != null) dest.NumTPElement = new List<Hl7.Fhir.Model.Integer>(NumTPElement.DeepCopy());
-        if(NumFPElement != null) dest.NumFPElement = new List<Hl7.Fhir.Model.Integer>(NumFPElement.DeepCopy());
-        if(NumFNElement != null) dest.NumFNElement = new List<Hl7.Fhir.Model.Integer>(NumFNElement.DeepCopy());
-        if(PrecisionElement != null) dest.PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(PrecisionElement.DeepCopy());
-        if(SensitivityElement != null) dest.SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(SensitivityElement.DeepCopy());
-        if(FMeasureElement != null) dest.FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(FMeasureElement.DeepCopy());
+        if(ScoreElement.Any()) dest.ScoreElement = new List<Hl7.Fhir.Model.Integer>(ScoreElement.DeepCopy());
+        if(NumTPElement.Any()) dest.NumTPElement = new List<Hl7.Fhir.Model.Integer>(NumTPElement.DeepCopy());
+        if(NumFPElement.Any()) dest.NumFPElement = new List<Hl7.Fhir.Model.Integer>(NumFPElement.DeepCopy());
+        if(NumFNElement.Any()) dest.NumFNElement = new List<Hl7.Fhir.Model.Integer>(NumFNElement.DeepCopy());
+        if(PrecisionElement.Any()) dest.PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(PrecisionElement.DeepCopy());
+        if(SensitivityElement.Any()) dest.SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(SensitivityElement.DeepCopy());
+        if(FMeasureElement.Any()) dest.FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(FMeasureElement.DeepCopy());
         return dest;
       }
 
@@ -3140,7 +3140,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)TypeElement.DeepCopy();
       if(CoordinateSystemElement != null) dest.CoordinateSystemElement = (Hl7.Fhir.Model.Integer)CoordinateSystemElement.DeepCopy();
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
@@ -3149,13 +3149,13 @@ namespace Hl7.Fhir.Model
       if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
       if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
       if(ReferenceSeq != null) dest.ReferenceSeq = (Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent)ReferenceSeq.DeepCopy();
-      if(Variant != null) dest.Variant = new List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>(Variant.DeepCopy());
+      if(Variant.Any()) dest.Variant = new List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>(Variant.DeepCopy());
       if(ObservedSeqElement != null) dest.ObservedSeqElement = (Hl7.Fhir.Model.FhirString)ObservedSeqElement.DeepCopy();
-      if(Quality != null) dest.Quality = new List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>(Quality.DeepCopy());
+      if(Quality.Any()) dest.Quality = new List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>(Quality.DeepCopy());
       if(ReadCoverageElement != null) dest.ReadCoverageElement = (Hl7.Fhir.Model.Integer)ReadCoverageElement.DeepCopy();
-      if(Repository != null) dest.Repository = new List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>(Repository.DeepCopy());
-      if(Pointer != null) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(Pointer.DeepCopy());
-      if(StructureVariant != null) dest.StructureVariant = new List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>(StructureVariant.DeepCopy());
+      if(Repository.Any()) dest.Repository = new List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>(Repository.DeepCopy());
+      if(Pointer.Any()) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(Pointer.DeepCopy());
+      if(StructureVariant.Any()) dest.StructureVariant = new List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>(StructureVariant.DeepCopy());
       return dest;
     }
 

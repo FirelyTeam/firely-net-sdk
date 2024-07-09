@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("string"), Description("String")]
     String,
     /// <summary>
-    /// Search parameter on a coded element or identifier. May be used to search through the text, display, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
+    /// Search parameter on a coded element or identifier. May be used to search through the text, display, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a \"|\", depending on the modifier used.
     /// (system: http://hl7.org/fhir/search-param-type)
     /// </summary>
     [EnumLiteral("token"), Description("Token")]

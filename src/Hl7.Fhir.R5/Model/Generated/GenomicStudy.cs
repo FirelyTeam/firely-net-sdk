@@ -80,19 +80,19 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
-      /// The genomic study is unavailable because the genomic study was not started or not completed (also sometimes called "aborted").
+      /// The genomic study is unavailable because the genomic study was not started or not completed (also sometimes called \"aborted\").
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
       [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
-      /// The genomic study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
+      /// The genomic study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be \"cancelled\" rather than \"entered-in-error\".).
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
       [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
-      /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
+      /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
       [EnumLiteral("unknown"), Description("Unknown")]
@@ -457,24 +457,24 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-        if(MethodType != null) dest.MethodType = new List<Hl7.Fhir.Model.CodeableConcept>(MethodType.DeepCopy());
-        if(ChangeType != null) dest.ChangeType = new List<Hl7.Fhir.Model.CodeableConcept>(ChangeType.DeepCopy());
+        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+        if(MethodType.Any()) dest.MethodType = new List<Hl7.Fhir.Model.CodeableConcept>(MethodType.DeepCopy());
+        if(ChangeType.Any()) dest.ChangeType = new List<Hl7.Fhir.Model.CodeableConcept>(ChangeType.DeepCopy());
         if(GenomeBuild != null) dest.GenomeBuild = (Hl7.Fhir.Model.CodeableConcept)GenomeBuild.DeepCopy();
         if(InstantiatesCanonicalElement != null) dest.InstantiatesCanonicalElement = (Hl7.Fhir.Model.Canonical)InstantiatesCanonicalElement.DeepCopy();
         if(InstantiatesUriElement != null) dest.InstantiatesUriElement = (Hl7.Fhir.Model.FhirUri)InstantiatesUriElement.DeepCopy();
         if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-        if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
-        if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
+        if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+        if(Specimen.Any()) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
         if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-        if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(ProtocolPerformed != null) dest.ProtocolPerformed = (Hl7.Fhir.Model.ResourceReference)ProtocolPerformed.DeepCopy();
-        if(RegionsStudied != null) dest.RegionsStudied = new List<Hl7.Fhir.Model.ResourceReference>(RegionsStudied.DeepCopy());
-        if(RegionsCalled != null) dest.RegionsCalled = new List<Hl7.Fhir.Model.ResourceReference>(RegionsCalled.DeepCopy());
-        if(Input != null) dest.Input = new List<Hl7.Fhir.Model.GenomicStudy.InputComponent>(Input.DeepCopy());
-        if(Output != null) dest.Output = new List<Hl7.Fhir.Model.GenomicStudy.OutputComponent>(Output.DeepCopy());
-        if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent>(Performer.DeepCopy());
-        if(Device != null) dest.Device = new List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent>(Device.DeepCopy());
+        if(RegionsStudied.Any()) dest.RegionsStudied = new List<Hl7.Fhir.Model.ResourceReference>(RegionsStudied.DeepCopy());
+        if(RegionsCalled.Any()) dest.RegionsCalled = new List<Hl7.Fhir.Model.ResourceReference>(RegionsCalled.DeepCopy());
+        if(Input.Any()) dest.Input = new List<Hl7.Fhir.Model.GenomicStudy.InputComponent>(Input.DeepCopy());
+        if(Output.Any()) dest.Output = new List<Hl7.Fhir.Model.GenomicStudy.OutputComponent>(Output.DeepCopy());
+        if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent>(Performer.DeepCopy());
+        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent>(Device.DeepCopy());
         return dest;
       }
 
@@ -1565,21 +1565,21 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>)StatusElement.DeepCopy();
-      if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
       if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopy();
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
       if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.ResourceReference)Referrer.DeepCopy();
-      if(Interpreter != null) dest.Interpreter = new List<Hl7.Fhir.Model.ResourceReference>(Interpreter.DeepCopy());
-      if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
+      if(Interpreter.Any()) dest.Interpreter = new List<Hl7.Fhir.Model.ResourceReference>(Interpreter.DeepCopy());
+      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
       if(InstantiatesCanonicalElement != null) dest.InstantiatesCanonicalElement = (Hl7.Fhir.Model.Canonical)InstantiatesCanonicalElement.DeepCopy();
       if(InstantiatesUriElement != null) dest.InstantiatesUriElement = (Hl7.Fhir.Model.FhirUri)InstantiatesUriElement.DeepCopy();
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(Analysis != null) dest.Analysis = new List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent>(Analysis.DeepCopy());
+      if(Analysis.Any()) dest.Analysis = new List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent>(Analysis.DeepCopy());
       return dest;
     }
 

@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model
     public enum GroupType
     {
       /// <summary>
-      /// Group contains "person" Patient resources.
+      /// Group contains \"person\" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
       [EnumLiteral("person"), Description("Person")]
       Person,
       /// <summary>
-      /// Group contains "animal" Patient resources.
+      /// Group contains \"animal\" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
       [EnumLiteral("animal"), Description("Animal")]
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)TypeElement.DeepCopy();
       if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
@@ -739,8 +739,8 @@ namespace Hl7.Fhir.Model
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
       if(ManagingEntity != null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)ManagingEntity.DeepCopy();
-      if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
-      if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopy());
+      if(Characteristic.Any()) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
+      if(Member.Any()) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopy());
       return dest;
     }
 

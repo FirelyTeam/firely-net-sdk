@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("IRR"), Description("Iranian rial")]
       IRR,
       /// <summary>
-      /// Icelandic krC3na
+      /// Icelandic króna
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("ISK"), Description("Icelandic króna")]
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("MMK"), Description("Myanmar kyat")]
       MMK,
       /// <summary>
-      /// Mongolian tC6grC6g
+      /// Mongolian tögrög
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("MNT"), Description("Mongolian tögrög")]
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("NGN"), Description("Nigerian naira")]
       NGN,
       /// <summary>
-      /// Nicaraguan cC3rdoba
+      /// Nicaraguan córdoba
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("NIO"), Description("Nicaraguan córdoba")]
@@ -773,13 +773,13 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("PKR"), Description("Pakistani rupee")]
       PKR,
       /// <summary>
-      /// Polish zEoty
+      /// Polish złoty
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("PLN"), Description("Polish złoty")]
       PLN,
       /// <summary>
-      /// Paraguayan guaranC-
+      /// Paraguayan guaraní
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("PYG"), Description("Paraguayan guaraní")]
@@ -881,13 +881,13 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("SSP"), Description("South Sudanese pound")]
       SSP,
       /// <summary>
-      /// SC#o TomC) and PrC-ncipe dobra
+      /// São Tomé and Príncipe dobra
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("STN"), Description("São Tomé and Príncipe dobra")]
       STN,
       /// <summary>
-      /// Salvadoran colC3n
+      /// Salvadoran colón
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("SVC"), Description("Salvadoran colón")]
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("TND"), Description("Tunisian dinar")]
       TND,
       /// <summary>
-      /// Tongan paJ;anga
+      /// Tongan paʻanga
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("TOP"), Description("Tongan paʻanga")]
@@ -1007,13 +1007,13 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("UZS"), Description("Uzbekistan som")]
       UZS,
       /// <summary>
-      /// Venezuelan bolC-var
+      /// Venezuelan bolívar
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("VEF"), Description("Venezuelan bolívar")]
       VEF,
       /// <summary>
-      /// Vietnamese D#a;%ng
+      /// Vietnamese dồng
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
       [EnumLiteral("VND"), Description("Vietnamese dồng")]

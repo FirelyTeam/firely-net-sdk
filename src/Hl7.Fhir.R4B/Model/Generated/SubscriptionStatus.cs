@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
         if(EventNumberElement != null) dest.EventNumberElement = (Hl7.Fhir.Model.FhirString)EventNumberElement.DeepCopy();
         if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
         if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopy();
-        if(AdditionalContext != null) dest.AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(AdditionalContext.DeepCopy());
+        if(AdditionalContext.Any()) dest.AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(AdditionalContext.DeepCopy());
         return dest;
       }
 
@@ -507,10 +507,10 @@ namespace Hl7.Fhir.Model
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)StatusElement.DeepCopy();
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>)TypeElement.DeepCopy();
       if(EventsSinceSubscriptionStartElement != null) dest.EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.FhirString)EventsSinceSubscriptionStartElement.DeepCopy();
-      if(NotificationEvent != null) dest.NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(NotificationEvent.DeepCopy());
+      if(NotificationEvent.Any()) dest.NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(NotificationEvent.DeepCopy());
       if(Subscription != null) dest.Subscription = (Hl7.Fhir.Model.ResourceReference)Subscription.DeepCopy();
       if(TopicElement != null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)TopicElement.DeepCopy();
-      if(Error != null) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopy());
+      if(Error.Any()) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopy());
       return dest;
     }
 

@@ -87,8 +87,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("follow-up"), Description("Follow-up")]
       FollowUp,
       /// <summary>
-      /// A person who did not meet one or more criteria required for participation in a study is considered to have failed screening or
-      /// is ineligible for the study.
+      /// A person who did not meet one or more criteria required for participation in a study is considered to have failed screening oris ineligible for the study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
       [EnumLiteral("ineligible"), Description("Ineligible")]
@@ -100,8 +99,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("not-registered"), Description("Not Registered")]
       NotRegistered,
       /// <summary>
-      /// A person that has ended their participation on a study either because their treatment/observation is complete or through not
-      /// responding, withdrawal, non-compliance and/or adverse event.
+      /// A person that has ended their participation on a study either because their treatment/observation is complete or through notresponding, withdrawal, non-compliance and/or adverse event.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
       [EnumLiteral("off-study"), Description("Off-study")]
@@ -119,7 +117,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("on-study-intervention"), Description("On-study-intervention")]
       OnStudyIntervention,
       /// <summary>
-      /// The subject is being evaluated via tests and assessments according to the study calendar, but is not receiving any intervention. Note that this state is study-dependent and might not exist in all studies.  A synonym for this is "short-term follow-up".
+      /// The subject is being evaluated via tests and assessments according to the study calendar, but is not receiving any intervention. Note that this state is study-dependent and might not exist in all studies.  A synonym for this is \"short-term follow-up\".
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
       [EnumLiteral("on-study-observation"), Description("On-study-observation")]
@@ -332,7 +330,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>)StatusElement.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
       if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();

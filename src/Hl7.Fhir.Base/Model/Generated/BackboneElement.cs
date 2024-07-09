@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
+      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
       return dest;
     }
 

@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("BSD-2-Clause-Patent"), Description("BSD-2-Clause Plus Patent License")]
       BSD2ClausePatent,
       /// <summary>
-      /// BSD 2-Clause "Simplified" License.
+      /// BSD 2-Clause \"Simplified\" License.
       /// (system: http://hl7.org/fhir/spdx-license)
       /// </summary>
       [EnumLiteral("BSD-2-Clause"), Description("BSD 2-Clause \"Simplified\" License")]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("BSD-3-Clause-No-Nuclear-Warranty"), Description("BSD 3-Clause No Nuclear Warranty")]
       BSD3ClauseNoNuclearWarranty,
       /// <summary>
-      /// BSD 3-Clause "New" or "Revised" License.
+      /// BSD 3-Clause \"New\" or \"Revised\" License.
       /// (system: http://hl7.org/fhir/spdx-license)
       /// </summary>
       [EnumLiteral("BSD-3-Clause"), Description("BSD 3-Clause \"New\" or \"Revised\" License")]
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("BSD-4-Clause-UC"), Description("BSD-4-Clause (University of California-Specific)")]
       BSD4ClauseUC,
       /// <summary>
-      /// BSD 4-Clause "Original" or "Old" License.
+      /// BSD 4-Clause \"Original\" or \"Old\" License.
       /// (system: http://hl7.org/fhir/spdx-license)
       /// </summary>
       [EnumLiteral("BSD-4-Clause"), Description("BSD 4-Clause \"Original\" or \"Old\" License")]
@@ -2218,7 +2218,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("expansion-parameter"), Description("Expansion Profile")]
       ExpansionParameter,
       /// <summary>
-      /// The value of this string 0..1 parameter is either "warning" or "error" (default = "error"). If the value is "warning" then IG build tools allow the IG to be considered successfully build even when there is no internal broken links.
+      /// The value of this string 0..1 parameter is either \"warning\" or \"error\" (default = \"error\"). If the value is \"warning\" then IG build tools allow the IG to be considered successfully build even when there is no internal broken links.
       /// (system: http://hl7.org/fhir/guide-parameter-code)
       /// </summary>
       [EnumLiteral("rule-broken-links"), Description("Broken Links Rule")]
@@ -2734,11 +2734,11 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Grouping != null) dest.Grouping = new List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent>(Grouping.DeepCopy());
-        if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(Resource.DeepCopy());
+        if(Grouping.Any()) dest.Grouping = new List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent>(Grouping.DeepCopy());
+        if(Resource.Any()) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(Resource.DeepCopy());
         if(Page != null) dest.Page = (Hl7.Fhir.Model.ImplementationGuide.PageComponent)Page.DeepCopy();
-        if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ImplementationGuide.ParameterComponent>(Parameter.DeepCopy());
-        if(Template != null) dest.Template = new List<Hl7.Fhir.Model.ImplementationGuide.TemplateComponent>(Template.DeepCopy());
+        if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.ImplementationGuide.ParameterComponent>(Parameter.DeepCopy());
+        if(Template.Any()) dest.Template = new List<Hl7.Fhir.Model.ImplementationGuide.TemplateComponent>(Template.DeepCopy());
         return dest;
       }
 
@@ -3202,7 +3202,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
-        if(FhirVersionElement != null) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
+        if(FhirVersionElement.Any()) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
         if(Example != null) dest.Example = (Hl7.Fhir.Model.DataType)Example.DeepCopy();
@@ -3447,7 +3447,7 @@ namespace Hl7.Fhir.Model
         if(Name != null) dest.Name = (Hl7.Fhir.Model.DataType)Name.DeepCopy();
         if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
         if(GenerationElement != null) dest.GenerationElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageGeneration>)GenerationElement.DeepCopy();
-        if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(Page.DeepCopy());
+        if(Page.Any()) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(Page.DeepCopy());
         return dest;
       }
 
@@ -4077,10 +4077,10 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(RenderingElement != null) dest.RenderingElement = (Hl7.Fhir.Model.FhirUrl)RenderingElement.DeepCopy();
-        if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ManifestResourceComponent>(Resource.DeepCopy());
-        if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.ManifestPageComponent>(Page.DeepCopy());
-        if(ImageElement != null) dest.ImageElement = new List<Hl7.Fhir.Model.FhirString>(ImageElement.DeepCopy());
-        if(OtherElement != null) dest.OtherElement = new List<Hl7.Fhir.Model.FhirString>(OtherElement.DeepCopy());
+        if(Resource.Any()) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ManifestResourceComponent>(Resource.DeepCopy());
+        if(Page.Any()) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.ManifestPageComponent>(Page.DeepCopy());
+        if(ImageElement.Any()) dest.ImageElement = new List<Hl7.Fhir.Model.FhirString>(ImageElement.DeepCopy());
+        if(OtherElement.Any()) dest.OtherElement = new List<Hl7.Fhir.Model.FhirString>(OtherElement.DeepCopy());
         return dest;
       }
 
@@ -4489,7 +4489,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-        if(AnchorElement != null) dest.AnchorElement = new List<Hl7.Fhir.Model.FhirString>(AnchorElement.DeepCopy());
+        if(AnchorElement.Any()) dest.AnchorElement = new List<Hl7.Fhir.Model.FhirString>(AnchorElement.DeepCopy());
         return dest;
       }
 
@@ -5107,16 +5107,16 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(PackageIdElement != null) dest.PackageIdElement = (Hl7.Fhir.Model.Id)PackageIdElement.DeepCopy();
       if(LicenseElement != null) dest.LicenseElement = (Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense>)LicenseElement.DeepCopy();
-      if(FhirVersionElement != null) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
-      if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent>(DependsOn.DeepCopy());
-      if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(Global.DeepCopy());
+      if(FhirVersionElement.Any()) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
+      if(DependsOn.Any()) dest.DependsOn = new List<Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent>(DependsOn.DeepCopy());
+      if(Global.Any()) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(Global.DeepCopy());
       if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ImplementationGuide.DefinitionComponent)Definition.DeepCopy();
       if(Manifest != null) dest.Manifest = (Hl7.Fhir.Model.ImplementationGuide.ManifestComponent)Manifest.DeepCopy();
       return dest;

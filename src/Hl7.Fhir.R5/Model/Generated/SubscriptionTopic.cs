@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.FhirUri)ResourceElement.DeepCopy();
-        if(SupportedInteractionElement != null) dest.SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(SupportedInteractionElement.DeepCopy());
+        if(SupportedInteractionElement.Any()) dest.SupportedInteractionElement = new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>(SupportedInteractionElement.DeepCopy());
         if(QueryCriteria != null) dest.QueryCriteria = (Hl7.Fhir.Model.SubscriptionTopic.QueryCriteriaComponent)QueryCriteria.DeepCopy();
         if(FhirPathCriteriaElement != null) dest.FhirPathCriteriaElement = (Hl7.Fhir.Model.FhirString)FhirPathCriteriaElement.DeepCopy();
         return dest;
@@ -1104,8 +1104,8 @@ namespace Hl7.Fhir.Model
         if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.FhirUri)ResourceElement.DeepCopy();
         if(FilterParameterElement != null) dest.FilterParameterElement = (Hl7.Fhir.Model.FhirString)FilterParameterElement.DeepCopy();
         if(FilterDefinitionElement != null) dest.FilterDefinitionElement = (Hl7.Fhir.Model.FhirUri)FilterDefinitionElement.DeepCopy();
-        if(ComparatorElement != null) dest.ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(ComparatorElement.DeepCopy());
-        if(ModifierElement != null) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(ModifierElement.DeepCopy());
+        if(ComparatorElement.Any()) dest.ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(ComparatorElement.DeepCopy());
+        if(ModifierElement.Any()) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(ModifierElement.DeepCopy());
         return dest;
       }
 
@@ -1343,8 +1343,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.FhirUri)ResourceElement.DeepCopy();
-        if(IncludeElement != null) dest.IncludeElement = new List<Hl7.Fhir.Model.FhirString>(IncludeElement.DeepCopy());
-        if(RevIncludeElement != null) dest.RevIncludeElement = new List<Hl7.Fhir.Model.FhirString>(RevIncludeElement.DeepCopy());
+        if(IncludeElement.Any()) dest.IncludeElement = new List<Hl7.Fhir.Model.FhirString>(IncludeElement.DeepCopy());
+        if(RevIncludeElement.Any()) dest.RevIncludeElement = new List<Hl7.Fhir.Model.FhirString>(RevIncludeElement.DeepCopy());
         return dest;
       }
 
@@ -2057,30 +2057,30 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(DerivedFromElement != null) dest.DerivedFromElement = new List<Hl7.Fhir.Model.Canonical>(DerivedFromElement.DeepCopy());
+      if(DerivedFromElement.Any()) dest.DerivedFromElement = new List<Hl7.Fhir.Model.Canonical>(DerivedFromElement.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
       if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
       if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
       if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-      if(ResourceTrigger != null) dest.ResourceTrigger = new List<Hl7.Fhir.Model.SubscriptionTopic.ResourceTriggerComponent>(ResourceTrigger.DeepCopy());
-      if(EventTrigger != null) dest.EventTrigger = new List<Hl7.Fhir.Model.SubscriptionTopic.EventTriggerComponent>(EventTrigger.DeepCopy());
-      if(CanFilterBy != null) dest.CanFilterBy = new List<Hl7.Fhir.Model.SubscriptionTopic.CanFilterByComponent>(CanFilterBy.DeepCopy());
-      if(NotificationShape != null) dest.NotificationShape = new List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent>(NotificationShape.DeepCopy());
+      if(ResourceTrigger.Any()) dest.ResourceTrigger = new List<Hl7.Fhir.Model.SubscriptionTopic.ResourceTriggerComponent>(ResourceTrigger.DeepCopy());
+      if(EventTrigger.Any()) dest.EventTrigger = new List<Hl7.Fhir.Model.SubscriptionTopic.EventTriggerComponent>(EventTrigger.DeepCopy());
+      if(CanFilterBy.Any()) dest.CanFilterBy = new List<Hl7.Fhir.Model.SubscriptionTopic.CanFilterByComponent>(CanFilterBy.DeepCopy());
+      if(NotificationShape.Any()) dest.NotificationShape = new List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent>(NotificationShape.DeepCopy());
       return dest;
     }
 

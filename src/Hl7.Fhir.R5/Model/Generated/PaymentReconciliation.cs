@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
       if(Kind != null) dest.Kind = (Hl7.Fhir.Model.CodeableConcept)Kind.DeepCopy();
@@ -1318,9 +1318,9 @@ namespace Hl7.Fhir.Model
       if(ReturnedAmount != null) dest.ReturnedAmount = (Hl7.Fhir.Model.Money)ReturnedAmount.DeepCopy();
       if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopy();
       if(PaymentIdentifier != null) dest.PaymentIdentifier = (Hl7.Fhir.Model.Identifier)PaymentIdentifier.DeepCopy();
-      if(Allocation != null) dest.Allocation = new List<Hl7.Fhir.Model.PaymentReconciliation.AllocationComponent>(Allocation.DeepCopy());
+      if(Allocation.Any()) dest.Allocation = new List<Hl7.Fhir.Model.PaymentReconciliation.AllocationComponent>(Allocation.DeepCopy());
       if(FormCode != null) dest.FormCode = (Hl7.Fhir.Model.CodeableConcept)FormCode.DeepCopy();
-      if(ProcessNote != null) dest.ProcessNote = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(ProcessNote.DeepCopy());
+      if(ProcessNote.Any()) dest.ProcessNote = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(ProcessNote.DeepCopy());
       return dest;
     }
 

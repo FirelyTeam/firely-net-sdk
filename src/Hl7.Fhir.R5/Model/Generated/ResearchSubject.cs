@@ -610,15 +610,15 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
-      if(Progress != null) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopy());
+      if(Progress.Any()) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopy());
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
       if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(AssignedComparisonGroupElement != null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)AssignedComparisonGroupElement.DeepCopy();
       if(ActualComparisonGroupElement != null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)ActualComparisonGroupElement.DeepCopy();
-      if(Consent != null) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(Consent.DeepCopy());
+      if(Consent.Any()) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(Consent.DeepCopy());
       return dest;
     }
 

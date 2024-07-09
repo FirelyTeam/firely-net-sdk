@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
         if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
         if(ItemStatus != null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)ItemStatus.DeepCopy();
         if(CountingDateTimeElement != null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)CountingDateTimeElement.DeepCopy();
-        if(Item != null) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(Item.DeepCopy());
+        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(Item.DeepCopy());
         return dest;
       }
 
@@ -673,7 +673,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)StatusElement.DeepCopy();
       if(CountTypeElement != null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)CountTypeElement.DeepCopy();
       if(OperationType != null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)OperationType.DeepCopy();
@@ -681,8 +681,8 @@ namespace Hl7.Fhir.Model
       if(ReportedDateTimeElement != null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReportedDateTimeElement.DeepCopy();
       if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
       if(ReportingPeriod != null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)ReportingPeriod.DeepCopy();
-      if(InventoryListing != null) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(InventoryListing.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(InventoryListing.Any()) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(InventoryListing.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       return dest;
     }
 

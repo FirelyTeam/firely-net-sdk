@@ -162,9 +162,9 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Structure != null) dest.Structure = (Hl7.Fhir.Model.CodeableConcept)Structure.DeepCopy();
         if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.CodeableConcept)Laterality.DeepCopy();
-        if(BodyLandmarkOrientation != null) dest.BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(BodyLandmarkOrientation.DeepCopy());
-        if(SpatialReference != null) dest.SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(SpatialReference.DeepCopy());
-        if(Qualifier != null) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopy());
+        if(BodyLandmarkOrientation.Any()) dest.BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(BodyLandmarkOrientation.DeepCopy());
+        if(SpatialReference.Any()) dest.SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(SpatialReference.DeepCopy());
+        if(Qualifier.Any()) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopy());
         return dest;
       }
 
@@ -355,10 +355,10 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(LandmarkDescription != null) dest.LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(LandmarkDescription.DeepCopy());
-        if(ClockFacePosition != null) dest.ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(ClockFacePosition.DeepCopy());
-        if(DistanceFromLandmark != null) dest.DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(DistanceFromLandmark.DeepCopy());
-        if(SurfaceOrientation != null) dest.SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(SurfaceOrientation.DeepCopy());
+        if(LandmarkDescription.Any()) dest.LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(LandmarkDescription.DeepCopy());
+        if(ClockFacePosition.Any()) dest.ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(ClockFacePosition.DeepCopy());
+        if(DistanceFromLandmark.Any()) dest.DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(DistanceFromLandmark.DeepCopy());
+        if(SurfaceOrientation.Any()) dest.SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(SurfaceOrientation.DeepCopy());
         return dest;
       }
 
@@ -511,8 +511,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Device != null) dest.Device = new List<Hl7.Fhir.Model.CodeableReference>(Device.DeepCopy());
-        if(Value != null) dest.Value = new List<Hl7.Fhir.Model.Quantity>(Value.DeepCopy());
+        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.CodeableReference>(Device.DeepCopy());
+        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.Quantity>(Value.DeepCopy());
         return dest;
       }
 
@@ -753,13 +753,13 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
       if(Morphology != null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)Morphology.DeepCopy();
-      if(IncludedStructure != null) dest.IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(IncludedStructure.DeepCopy());
-      if(ExcludedStructure != null) dest.ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(ExcludedStructure.DeepCopy());
+      if(IncludedStructure.Any()) dest.IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(IncludedStructure.DeepCopy());
+      if(ExcludedStructure.Any()) dest.ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(ExcludedStructure.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(Image != null) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
+      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       return dest;
     }

@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Contributor.ContributorType>)TypeElement.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       return dest;
     }
 

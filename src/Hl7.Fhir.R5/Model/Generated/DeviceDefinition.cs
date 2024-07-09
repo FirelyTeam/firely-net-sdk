@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
         if(DeviceIdentifierElement != null) dest.DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString)DeviceIdentifierElement.DeepCopy();
         if(IssuerElement != null) dest.IssuerElement = (Hl7.Fhir.Model.FhirUri)IssuerElement.DeepCopy();
         if(JurisdictionElement != null) dest.JurisdictionElement = (Hl7.Fhir.Model.FhirUri)JurisdictionElement.DeepCopy();
-        if(MarketDistribution != null) dest.MarketDistribution = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent>(MarketDistribution.DeepCopy());
+        if(MarketDistribution.Any()) dest.MarketDistribution = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent>(MarketDistribution.DeepCopy());
         return dest;
       }
 
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Justification != null) dest.Justification = new List<Hl7.Fhir.Model.RelatedArtifact>(Justification.DeepCopy());
+        if(Justification.Any()) dest.Justification = new List<Hl7.Fhir.Model.RelatedArtifact>(Justification.DeepCopy());
         return dest;
       }
 
@@ -1226,8 +1226,8 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
         if(Specification != null) dest.Specification = (Hl7.Fhir.Model.CodeableConcept)Specification.DeepCopy();
-        if(VersionElement != null) dest.VersionElement = new List<Hl7.Fhir.Model.FhirString>(VersionElement.DeepCopy());
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.RelatedArtifact>(Source.DeepCopy());
+        if(VersionElement.Any()) dest.VersionElement = new List<Hl7.Fhir.Model.FhirString>(VersionElement.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.RelatedArtifact>(Source.DeepCopy());
         return dest;
       }
 
@@ -1606,9 +1606,9 @@ namespace Hl7.Fhir.Model
         if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
         if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-        if(Distributor != null) dest.Distributor = new List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent>(Distributor.DeepCopy());
-        if(UdiDeviceIdentifier != null) dest.UdiDeviceIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
-        if(Packaging != null) dest.Packaging = new List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>(Packaging.DeepCopy());
+        if(Distributor.Any()) dest.Distributor = new List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent>(Distributor.DeepCopy());
+        if(UdiDeviceIdentifier.Any()) dest.UdiDeviceIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
+        if(Packaging.Any()) dest.Packaging = new List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>(Packaging.DeepCopy());
         return dest;
       }
 
@@ -1793,7 +1793,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(OrganizationReference != null) dest.OrganizationReference = new List<Hl7.Fhir.Model.ResourceReference>(OrganizationReference.DeepCopy());
+        if(OrganizationReference.Any()) dest.OrganizationReference = new List<Hl7.Fhir.Model.ResourceReference>(OrganizationReference.DeepCopy());
         return dest;
       }
 
@@ -2673,12 +2673,12 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+        if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
         if(UsageInstructionElement != null) dest.UsageInstructionElement = (Hl7.Fhir.Model.Markdown)UsageInstructionElement.DeepCopy();
-        if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
-        if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
-        if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.CodeableConcept>(Contraindication.DeepCopy());
-        if(Warning != null) dest.Warning = new List<Hl7.Fhir.Model.CodeableConcept>(Warning.DeepCopy());
+        if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+        if(Indication.Any()) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
+        if(Contraindication.Any()) dest.Contraindication = new List<Hl7.Fhir.Model.CodeableConcept>(Contraindication.DeepCopy());
+        if(Warning.Any()) dest.Warning = new List<Hl7.Fhir.Model.CodeableConcept>(Warning.DeepCopy());
         if(IntendedUseElement != null) dest.IntendedUseElement = (Hl7.Fhir.Model.FhirString)IntendedUseElement.DeepCopy();
         return dest;
       }
@@ -3076,7 +3076,7 @@ namespace Hl7.Fhir.Model
         if(ChargeItemCode != null) dest.ChargeItemCode = (Hl7.Fhir.Model.CodeableReference)ChargeItemCode.DeepCopy();
         if(Count != null) dest.Count = (Hl7.Fhir.Model.Quantity)Count.DeepCopy();
         if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-        if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+        if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
         return dest;
       }
 
@@ -3622,31 +3622,31 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(UdiDeviceIdentifier != null) dest.UdiDeviceIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
-      if(RegulatoryIdentifier != null) dest.RegulatoryIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>(RegulatoryIdentifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(UdiDeviceIdentifier.Any()) dest.UdiDeviceIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
+      if(RegulatoryIdentifier.Any()) dest.RegulatoryIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>(RegulatoryIdentifier.DeepCopy());
       if(PartNumberElement != null) dest.PartNumberElement = (Hl7.Fhir.Model.FhirString)PartNumberElement.DeepCopy();
       if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
-      if(DeviceName != null) dest.DeviceName = new List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>(DeviceName.DeepCopy());
+      if(DeviceName.Any()) dest.DeviceName = new List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>(DeviceName.DeepCopy());
       if(ModelNumberElement != null) dest.ModelNumberElement = (Hl7.Fhir.Model.FhirString)ModelNumberElement.DeepCopy();
-      if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent>(Classification.DeepCopy());
-      if(ConformsTo != null) dest.ConformsTo = new List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent>(ConformsTo.DeepCopy());
-      if(HasPart != null) dest.HasPart = new List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent>(HasPart.DeepCopy());
-      if(Packaging != null) dest.Packaging = new List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>(Packaging.DeepCopy());
-      if(Version != null) dest.Version = new List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent>(Version.DeepCopy());
-      if(Safety != null) dest.Safety = new List<Hl7.Fhir.Model.CodeableConcept>(Safety.DeepCopy());
-      if(ShelfLifeStorage != null) dest.ShelfLifeStorage = new List<Hl7.Fhir.Model.ProductShelfLife>(ShelfLifeStorage.DeepCopy());
-      if(LanguageCode != null) dest.LanguageCode = new List<Hl7.Fhir.Model.CodeableConcept>(LanguageCode.DeepCopy());
-      if(Property != null) dest.Property = new List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>(Property.DeepCopy());
+      if(Classification.Any()) dest.Classification = new List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent>(Classification.DeepCopy());
+      if(ConformsTo.Any()) dest.ConformsTo = new List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent>(ConformsTo.DeepCopy());
+      if(HasPart.Any()) dest.HasPart = new List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent>(HasPart.DeepCopy());
+      if(Packaging.Any()) dest.Packaging = new List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>(Packaging.DeepCopy());
+      if(Version.Any()) dest.Version = new List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent>(Version.DeepCopy());
+      if(Safety.Any()) dest.Safety = new List<Hl7.Fhir.Model.CodeableConcept>(Safety.DeepCopy());
+      if(ShelfLifeStorage.Any()) dest.ShelfLifeStorage = new List<Hl7.Fhir.Model.ProductShelfLife>(ShelfLifeStorage.DeepCopy());
+      if(LanguageCode.Any()) dest.LanguageCode = new List<Hl7.Fhir.Model.CodeableConcept>(LanguageCode.DeepCopy());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>(Property.DeepCopy());
       if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
-      if(Link != null) dest.Link = new List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent>(Link.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(Material != null) dest.Material = new List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>(Material.DeepCopy());
-      if(ProductionIdentifierInUDIElement != null) dest.ProductionIdentifierInUDIElement = new List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(ProductionIdentifierInUDIElement.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
+      if(Link.Any()) dest.Link = new List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent>(Link.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Material.Any()) dest.Material = new List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>(Material.DeepCopy());
+      if(ProductionIdentifierInUDIElement.Any()) dest.ProductionIdentifierInUDIElement = new List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>(ProductionIdentifierInUDIElement.DeepCopy());
       if(Guideline != null) dest.Guideline = (Hl7.Fhir.Model.DeviceDefinition.GuidelineComponent)Guideline.DeepCopy();
       if(CorrectiveAction != null) dest.CorrectiveAction = (Hl7.Fhir.Model.DeviceDefinition.CorrectiveActionComponent)CorrectiveAction.DeepCopy();
-      if(ChargeItem != null) dest.ChargeItem = new List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent>(ChargeItem.DeepCopy());
+      if(ChargeItem.Any()) dest.ChargeItem = new List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent>(ChargeItem.DeepCopy());
       return dest;
     }
 

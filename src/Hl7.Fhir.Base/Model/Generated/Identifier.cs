@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model
     public enum IdentifierUse
     {
       /// <summary>
-      /// The identifier recommended for display and use in real-world interactions which should be used when such identifier is different from the "official" identifier.
+      /// The identifier recommended for display and use in real-world interactions which should be used when such identifier is different from the \"official\" identifier.
       /// (system: http://hl7.org/fhir/identifier-use)
       /// </summary>
       [EnumLiteral("usual"), Description("Usual")]
       Usual,
       /// <summary>
-      /// The identifier considered to be most trusted for the identification of this item. Sometimes also known as "primary" and "main". The determination of "official" is subjective and implementation guides often provide additional guidelines for use.
+      /// The identifier considered to be most trusted for the identification of this item. Sometimes also known as \"primary\" and \"main\". The determination of \"official\" is subjective and implementation guides often provide additional guidelines for use.
       /// (system: http://hl7.org/fhir/identifier-use)
       /// </summary>
       [EnumLiteral("official"), Description("Official")]

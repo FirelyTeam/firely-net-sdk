@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
-      /// Supply has been delivered ("completed").
+      /// Supply has been delivered (\"completed\").
       /// (system: http://hl7.org/fhir/supplydelivery-status)
       /// </summary>
       [EnumLiteral("completed"), Description("Delivered")]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("abandoned"), Description("Abandoned")]
       Abandoned,
       /// <summary>
-      /// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
+      /// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be \"abandoned\" rather than \"entered-in-error\".).
       /// (system: http://hl7.org/fhir/supplydelivery-status)
       /// </summary>
       [EnumLiteral("entered-in-error"), Description("Entered In Error")]
@@ -455,17 +455,17 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>)StatusElement.DeepCopy();
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(SuppliedItem != null) dest.SuppliedItem = new List<Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent>(SuppliedItem.DeepCopy());
+      if(SuppliedItem.Any()) dest.SuppliedItem = new List<Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent>(SuppliedItem.DeepCopy());
       if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
       if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
       if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-      if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
+      if(Receiver.Any()) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
       return dest;
     }
 

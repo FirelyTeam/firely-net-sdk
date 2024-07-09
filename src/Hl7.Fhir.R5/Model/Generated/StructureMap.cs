@@ -933,8 +933,8 @@ namespace Hl7.Fhir.Model
         if(ExtendsElement != null) dest.ExtendsElement = (Hl7.Fhir.Model.Id)ExtendsElement.DeepCopy();
         if(TypeModeElement != null) dest.TypeModeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode>)TypeModeElement.DeepCopy();
         if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
-        if(Input != null) dest.Input = new List<Hl7.Fhir.Model.StructureMap.InputComponent>(Input.DeepCopy());
-        if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.StructureMap.RuleComponent>(Rule.DeepCopy());
+        if(Input.Any()) dest.Input = new List<Hl7.Fhir.Model.StructureMap.InputComponent>(Input.DeepCopy());
+        if(Rule.Any()) dest.Rule = new List<Hl7.Fhir.Model.StructureMap.RuleComponent>(Rule.DeepCopy());
         return dest;
       }
 
@@ -1446,10 +1446,10 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Id)NameElement.DeepCopy();
-        if(Source != null) dest.Source = new List<Hl7.Fhir.Model.StructureMap.SourceComponent>(Source.DeepCopy());
-        if(Target != null) dest.Target = new List<Hl7.Fhir.Model.StructureMap.TargetComponent>(Target.DeepCopy());
-        if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.StructureMap.RuleComponent>(Rule.DeepCopy());
-        if(Dependent != null) dest.Dependent = new List<Hl7.Fhir.Model.StructureMap.DependentComponent>(Dependent.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.StructureMap.SourceComponent>(Source.DeepCopy());
+        if(Target.Any()) dest.Target = new List<Hl7.Fhir.Model.StructureMap.TargetComponent>(Target.DeepCopy());
+        if(Rule.Any()) dest.Rule = new List<Hl7.Fhir.Model.StructureMap.RuleComponent>(Rule.DeepCopy());
+        if(Dependent.Any()) dest.Dependent = new List<Hl7.Fhir.Model.StructureMap.DependentComponent>(Dependent.DeepCopy());
         if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
         return dest;
       }
@@ -2326,10 +2326,10 @@ namespace Hl7.Fhir.Model
         if(ContextElement != null) dest.ContextElement = (Hl7.Fhir.Model.FhirString)ContextElement.DeepCopy();
         if(ElementElement != null) dest.ElementElement = (Hl7.Fhir.Model.FhirString)ElementElement.DeepCopy();
         if(VariableElement != null) dest.VariableElement = (Hl7.Fhir.Model.Id)VariableElement.DeepCopy();
-        if(ListModeElement != null) dest.ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(ListModeElement.DeepCopy());
+        if(ListModeElement.Any()) dest.ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(ListModeElement.DeepCopy());
         if(ListRuleIdElement != null) dest.ListRuleIdElement = (Hl7.Fhir.Model.Id)ListRuleIdElement.DeepCopy();
         if(TransformElement != null) dest.TransformElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapTransform>)TransformElement.DeepCopy();
-        if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>(Parameter.DeepCopy());
+        if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>(Parameter.DeepCopy());
         return dest;
       }
 
@@ -2634,7 +2634,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Id)NameElement.DeepCopy();
-        if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>(Parameter.DeepCopy());
+        if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>(Parameter.DeepCopy());
         return dest;
       }
 
@@ -3251,7 +3251,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
@@ -3260,17 +3260,17 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
-      if(Structure != null) dest.Structure = new List<Hl7.Fhir.Model.StructureMap.StructureComponent>(Structure.DeepCopy());
-      if(ImportElement != null) dest.ImportElement = new List<Hl7.Fhir.Model.Canonical>(ImportElement.DeepCopy());
-      if(Const != null) dest.Const = new List<Hl7.Fhir.Model.StructureMap.ConstComponent>(Const.DeepCopy());
-      if(Group != null) dest.Group = new List<Hl7.Fhir.Model.StructureMap.GroupComponent>(Group.DeepCopy());
+      if(Structure.Any()) dest.Structure = new List<Hl7.Fhir.Model.StructureMap.StructureComponent>(Structure.DeepCopy());
+      if(ImportElement.Any()) dest.ImportElement = new List<Hl7.Fhir.Model.Canonical>(ImportElement.DeepCopy());
+      if(Const.Any()) dest.Const = new List<Hl7.Fhir.Model.StructureMap.ConstComponent>(Const.DeepCopy());
+      if(Group.Any()) dest.Group = new List<Hl7.Fhir.Model.StructureMap.GroupComponent>(Group.DeepCopy());
       return dest;
     }
 

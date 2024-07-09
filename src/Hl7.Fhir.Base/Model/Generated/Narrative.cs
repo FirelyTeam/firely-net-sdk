@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("additional"), Description("Additional")]
       Additional,
       /// <summary>
-      /// The contents of the narrative are some equivalent of "No human-readable text provided in this case".
+      /// The contents of the narrative are some equivalent of \"No human-readable text provided in this case\".
       /// (system: http://hl7.org/fhir/narrative-status)
       /// </summary>
       [EnumLiteral("empty"), Description("Empty")]

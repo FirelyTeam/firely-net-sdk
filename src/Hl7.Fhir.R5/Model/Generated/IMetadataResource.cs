@@ -670,22 +670,15 @@ namespace Hl7.Fhir.Model
       set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.topic");}
     }
 
+    /// <remarks>
+    /// MedicationKnowledge.Author (ComplexTypeReference { Name = Reference, PropertyTypeString = Hl7.Fhir.Model.ResourceReference, PocoTypeName = ResourceReference }) is incompatible with
+    /// IMetadataResource.author (ListTypeReference { Name = List, PropertyTypeString = List&lt;Hl7.Fhir.Model.ContactDetail&gt;, Element = ComplexTypeReference { Name = ContactDetail, PropertyTypeString = Hl7.Fhir.Model.ContactDetail, PocoTypeName = ContactDetail } })
+    /// </remarks>
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get
-      {
-        if (Author == null) return new List<Hl7.Fhir.Model.ContactDetail>();
-        return new List<Hl7.Fhir.Model.ContactDetail>() { Author };
-      }
-
-      set
-      {
-        if (value.Count == 0) { Author = null; }
-        else if (value.Count == 1) { Author = value.First(); }
-        else { throw new NotImplementedException("Resource MedicationKnowledge can only have a single IMetadataResource.Author value"); }
-      }
-
+      get { return null; }
+      set { throw new NotImplementedException("MedicationKnowledge.Author (ComplexTypeReference { Name = Reference, PropertyTypeString = Hl7.Fhir.Model.ResourceReference, PocoTypeName = ResourceReference }) is incompatible with IMetadataResource.author (ListTypeReference { Name = List, PropertyTypeString = List<Hl7.Fhir.Model.ContactDetail>, Element = ComplexTypeReference { Name = ContactDetail, PropertyTypeString = Hl7.Fhir.Model.ContactDetail, PocoTypeName = ContactDetail } })");}
     }
 
     [IgnoreDataMember]

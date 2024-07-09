@@ -603,9 +603,9 @@ namespace Hl7.Fhir.Model
         if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
         if(Condition != null) dest.Condition = (Hl7.Fhir.Model.CodeableReference)Condition.DeepCopy();
         if(DateOfDiagnosisElement != null) dest.DateOfDiagnosisElement = (Hl7.Fhir.Model.FhirDateTime)DateOfDiagnosisElement.DeepCopy();
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
         if(OnAdmissionElement != null) dest.OnAdmissionElement = (Hl7.Fhir.Model.FhirBoolean)OnAdmissionElement.DeepCopy();
-        if(PackageCode != null) dest.PackageCode = new List<Hl7.Fhir.Model.CodeableConcept>(PackageCode.DeepCopy());
+        if(PackageCode.Any()) dest.PackageCode = new List<Hl7.Fhir.Model.CodeableConcept>(PackageCode.DeepCopy());
         return dest;
       }
 
@@ -870,9 +870,9 @@ namespace Hl7.Fhir.Model
         if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableReference)Code.DeepCopy();
         if(DateOfServiceElement != null) dest.DateOfServiceElement = (Hl7.Fhir.Model.FhirDateTime)DateOfServiceElement.DeepCopy();
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-        if(PackageCode != null) dest.PackageCode = new List<Hl7.Fhir.Model.CodeableConcept>(PackageCode.DeepCopy());
-        if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(PackageCode.Any()) dest.PackageCode = new List<Hl7.Fhir.Model.CodeableConcept>(PackageCode.DeepCopy());
+        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
         return dest;
       }
 
@@ -1645,22 +1645,22 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>)StatusElement.DeepCopy();
       if(BillingStatus != null) dest.BillingStatus = (Hl7.Fhir.Model.CodeableConcept)BillingStatus.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-      if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
       if(ServicePeriod != null) dest.ServicePeriod = (Hl7.Fhir.Model.Period)ServicePeriod.DeepCopy();
-      if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.Account.CoverageComponent>(Coverage.DeepCopy());
+      if(Coverage.Any()) dest.Coverage = new List<Hl7.Fhir.Model.Account.CoverageComponent>(Coverage.DeepCopy());
       if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(Guarantor != null) dest.Guarantor = new List<Hl7.Fhir.Model.Account.GuarantorComponent>(Guarantor.DeepCopy());
-      if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.Account.DiagnosisComponent>(Diagnosis.DeepCopy());
-      if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.Account.ProcedureComponent>(Procedure.DeepCopy());
-      if(RelatedAccount != null) dest.RelatedAccount = new List<Hl7.Fhir.Model.Account.RelatedAccountComponent>(RelatedAccount.DeepCopy());
+      if(Guarantor.Any()) dest.Guarantor = new List<Hl7.Fhir.Model.Account.GuarantorComponent>(Guarantor.DeepCopy());
+      if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.Account.DiagnosisComponent>(Diagnosis.DeepCopy());
+      if(Procedure.Any()) dest.Procedure = new List<Hl7.Fhir.Model.Account.ProcedureComponent>(Procedure.DeepCopy());
+      if(RelatedAccount.Any()) dest.RelatedAccount = new List<Hl7.Fhir.Model.Account.RelatedAccountComponent>(RelatedAccount.DeepCopy());
       if(Currency != null) dest.Currency = (Hl7.Fhir.Model.CodeableConcept)Currency.DeepCopy();
-      if(Balance != null) dest.Balance = new List<Hl7.Fhir.Model.Account.BalanceComponent>(Balance.DeepCopy());
+      if(Balance.Any()) dest.Balance = new List<Hl7.Fhir.Model.Account.BalanceComponent>(Balance.DeepCopy());
       if(CalculatedAtElement != null) dest.CalculatedAtElement = (Hl7.Fhir.Model.Instant)CalculatedAtElement.DeepCopy();
       return dest;
     }

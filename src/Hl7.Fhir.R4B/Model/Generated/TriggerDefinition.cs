@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
-      if(Data != null) dest.Data = new List<Hl7.Fhir.Model.DataRequirement>(Data.DeepCopy());
+      if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.DataRequirement>(Data.DeepCopy());
       if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Expression)Condition.DeepCopy();
       return dest;
     }

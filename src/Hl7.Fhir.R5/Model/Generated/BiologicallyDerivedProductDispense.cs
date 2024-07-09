@@ -569,21 +569,21 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>)StatusElement.DeepCopy();
       if(OriginRelationshipType != null) dest.OriginRelationshipType = (Hl7.Fhir.Model.CodeableConcept)OriginRelationshipType.DeepCopy();
       if(Product != null) dest.Product = (Hl7.Fhir.Model.ResourceReference)Product.DeepCopy();
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(MatchStatus != null) dest.MatchStatus = (Hl7.Fhir.Model.CodeableConcept)MatchStatus.DeepCopy();
-      if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.PerformerComponent>(Performer.DeepCopy());
+      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.PerformerComponent>(Performer.DeepCopy());
       if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
       if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
       if(PreparedDateElement != null) dest.PreparedDateElement = (Hl7.Fhir.Model.FhirDateTime)PreparedDateElement.DeepCopy();
       if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
       if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       if(UsageInstructionElement != null) dest.UsageInstructionElement = (Hl7.Fhir.Model.FhirString)UsageInstructionElement.DeepCopy();
       return dest;
     }

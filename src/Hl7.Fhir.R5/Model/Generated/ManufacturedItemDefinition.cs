@@ -302,11 +302,11 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Function != null) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
-        if(Amount != null) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(Amount.DeepCopy());
-        if(Constituent != null) dest.Constituent = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>(Constituent.DeepCopy());
-        if(Property != null) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
-        if(Component != null) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(Component.DeepCopy());
+        if(Function.Any()) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
+        if(Amount.Any()) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(Amount.DeepCopy());
+        if(Constituent.Any()) dest.Constituent = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>(Constituent.DeepCopy());
+        if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
+        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(Component.DeepCopy());
         return dest;
       }
 
@@ -499,10 +499,10 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Amount != null) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(Amount.DeepCopy());
-        if(Location != null) dest.Location = new List<Hl7.Fhir.Model.CodeableConcept>(Location.DeepCopy());
-        if(Function != null) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
-        if(HasIngredient != null) dest.HasIngredient = new List<Hl7.Fhir.Model.CodeableReference>(HasIngredient.DeepCopy());
+        if(Amount.Any()) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(Amount.DeepCopy());
+        if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.CodeableConcept>(Location.DeepCopy());
+        if(Function.Any()) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
+        if(HasIngredient.Any()) dest.HasIngredient = new List<Hl7.Fhir.Model.CodeableReference>(HasIngredient.DeepCopy());
         return dest;
       }
 
@@ -792,16 +792,16 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(ManufacturedDoseForm != null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)ManufacturedDoseForm.DeepCopy();
       if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
-      if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
-      if(MarketingStatus != null) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopy());
-      if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(Ingredient.DeepCopy());
-      if(Property != null) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
-      if(Component != null) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(Component.DeepCopy());
+      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+      if(MarketingStatus.Any()) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopy());
+      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(Ingredient.DeepCopy());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
+      if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(Component.DeepCopy());
       return dest;
     }
 

@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Coding != null) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopy());
+      if(Coding.Any()) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopy());
       if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
       return dest;
     }

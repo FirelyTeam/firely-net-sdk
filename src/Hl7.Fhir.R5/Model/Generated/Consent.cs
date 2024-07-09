@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         if(VerificationType != null) dest.VerificationType = (Hl7.Fhir.Model.CodeableConcept)VerificationType.DeepCopy();
         if(VerifiedBy != null) dest.VerifiedBy = (Hl7.Fhir.Model.ResourceReference)VerifiedBy.DeepCopy();
         if(VerifiedWith != null) dest.VerifiedWith = (Hl7.Fhir.Model.ResourceReference)VerifiedWith.DeepCopy();
-        if(VerificationDateElement != null) dest.VerificationDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(VerificationDateElement.DeepCopy());
+        if(VerificationDateElement.Any()) dest.VerificationDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(VerificationDateElement.DeepCopy());
         return dest;
       }
 
@@ -704,17 +704,17 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-        if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.Consent.provisionActorComponent>(Actor.DeepCopy());
-        if(Action != null) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopy());
-        if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.Coding>(SecurityLabel.DeepCopy());
-        if(Purpose != null) dest.Purpose = new List<Hl7.Fhir.Model.Coding>(Purpose.DeepCopy());
-        if(DocumentType != null) dest.DocumentType = new List<Hl7.Fhir.Model.Coding>(DocumentType.DeepCopy());
-        if(ResourceType != null) dest.ResourceType = new List<Hl7.Fhir.Model.Coding>(ResourceType.DeepCopy());
-        if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
+        if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.Consent.provisionActorComponent>(Actor.DeepCopy());
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopy());
+        if(SecurityLabel.Any()) dest.SecurityLabel = new List<Hl7.Fhir.Model.Coding>(SecurityLabel.DeepCopy());
+        if(Purpose.Any()) dest.Purpose = new List<Hl7.Fhir.Model.Coding>(Purpose.DeepCopy());
+        if(DocumentType.Any()) dest.DocumentType = new List<Hl7.Fhir.Model.Coding>(DocumentType.DeepCopy());
+        if(ResourceType.Any()) dest.ResourceType = new List<Hl7.Fhir.Model.Coding>(ResourceType.DeepCopy());
+        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
         if(DataPeriod != null) dest.DataPeriod = (Hl7.Fhir.Model.Period)DataPeriod.DeepCopy();
-        if(Data != null) dest.Data = new List<Hl7.Fhir.Model.Consent.provisionDataComponent>(Data.DeepCopy());
+        if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.Consent.provisionDataComponent>(Data.DeepCopy());
         if(Expression != null) dest.Expression = (Hl7.Fhir.Model.Expression)Expression.DeepCopy();
-        if(Provision != null) dest.Provision = new List<Hl7.Fhir.Model.Consent.provisionComponent>(Provision.DeepCopy());
+        if(Provision.Any()) dest.Provision = new List<Hl7.Fhir.Model.Consent.provisionComponent>(Provision.DeepCopy());
         return dest;
       }
 
@@ -1505,24 +1505,24 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>)StatusElement.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
       if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Grantor != null) dest.Grantor = new List<Hl7.Fhir.Model.ResourceReference>(Grantor.DeepCopy());
-      if(Grantee != null) dest.Grantee = new List<Hl7.Fhir.Model.ResourceReference>(Grantee.DeepCopy());
-      if(Manager != null) dest.Manager = new List<Hl7.Fhir.Model.ResourceReference>(Manager.DeepCopy());
-      if(Controller != null) dest.Controller = new List<Hl7.Fhir.Model.ResourceReference>(Controller.DeepCopy());
-      if(SourceAttachment != null) dest.SourceAttachment = new List<Hl7.Fhir.Model.Attachment>(SourceAttachment.DeepCopy());
-      if(SourceReference != null) dest.SourceReference = new List<Hl7.Fhir.Model.ResourceReference>(SourceReference.DeepCopy());
-      if(RegulatoryBasis != null) dest.RegulatoryBasis = new List<Hl7.Fhir.Model.CodeableConcept>(RegulatoryBasis.DeepCopy());
+      if(Grantor.Any()) dest.Grantor = new List<Hl7.Fhir.Model.ResourceReference>(Grantor.DeepCopy());
+      if(Grantee.Any()) dest.Grantee = new List<Hl7.Fhir.Model.ResourceReference>(Grantee.DeepCopy());
+      if(Manager.Any()) dest.Manager = new List<Hl7.Fhir.Model.ResourceReference>(Manager.DeepCopy());
+      if(Controller.Any()) dest.Controller = new List<Hl7.Fhir.Model.ResourceReference>(Controller.DeepCopy());
+      if(SourceAttachment.Any()) dest.SourceAttachment = new List<Hl7.Fhir.Model.Attachment>(SourceAttachment.DeepCopy());
+      if(SourceReference.Any()) dest.SourceReference = new List<Hl7.Fhir.Model.ResourceReference>(SourceReference.DeepCopy());
+      if(RegulatoryBasis.Any()) dest.RegulatoryBasis = new List<Hl7.Fhir.Model.CodeableConcept>(RegulatoryBasis.DeepCopy());
       if(PolicyBasis != null) dest.PolicyBasis = (Hl7.Fhir.Model.Consent.PolicyBasisComponent)PolicyBasis.DeepCopy();
-      if(PolicyText != null) dest.PolicyText = new List<Hl7.Fhir.Model.ResourceReference>(PolicyText.DeepCopy());
-      if(Verification != null) dest.Verification = new List<Hl7.Fhir.Model.Consent.VerificationComponent>(Verification.DeepCopy());
+      if(PolicyText.Any()) dest.PolicyText = new List<Hl7.Fhir.Model.ResourceReference>(PolicyText.DeepCopy());
+      if(Verification.Any()) dest.Verification = new List<Hl7.Fhir.Model.Consent.VerificationComponent>(Verification.DeepCopy());
       if(DecisionElement != null) dest.DecisionElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)DecisionElement.DeepCopy();
-      if(Provision != null) dest.Provision = new List<Hl7.Fhir.Model.Consent.provisionComponent>(Provision.DeepCopy());
+      if(Provision.Any()) dest.Provision = new List<Hl7.Fhir.Model.Consent.provisionComponent>(Provision.DeepCopy());
       return dest;
     }
 

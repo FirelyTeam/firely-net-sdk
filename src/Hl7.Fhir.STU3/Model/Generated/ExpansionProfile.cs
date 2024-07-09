@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.ExpansionProfile.DesignationIncludeDesignationComponent>(Designation.DeepCopy());
+        if(Designation.Any()) dest.Designation = new List<Hl7.Fhir.Model.ExpansionProfile.DesignationIncludeDesignationComponent>(Designation.DeepCopy());
         return dest;
       }
 
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.ExpansionProfile.DesignationExcludeDesignationComponent>(Designation.DeepCopy());
+        if(Designation.Any()) dest.Designation = new List<Hl7.Fhir.Model.ExpansionProfile.DesignationExcludeDesignationComponent>(Designation.DeepCopy());
         return dest;
       }
 
@@ -1761,11 +1761,11 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-      if(FixedVersion != null) dest.FixedVersion = new List<Hl7.Fhir.Model.ExpansionProfile.FixedVersionComponent>(FixedVersion.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(FixedVersion.Any()) dest.FixedVersion = new List<Hl7.Fhir.Model.ExpansionProfile.FixedVersionComponent>(FixedVersion.DeepCopy());
       if(ExcludedSystem != null) dest.ExcludedSystem = (Hl7.Fhir.Model.ExpansionProfile.ExcludedSystemComponent)ExcludedSystem.DeepCopy();
       if(IncludeDesignationsElement != null) dest.IncludeDesignationsElement = (Hl7.Fhir.Model.FhirBoolean)IncludeDesignationsElement.DeepCopy();
       if(Designation != null) dest.Designation = (Hl7.Fhir.Model.ExpansionProfile.DesignationComponent)Designation.DeepCopy();

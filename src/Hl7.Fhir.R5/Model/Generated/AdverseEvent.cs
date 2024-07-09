@@ -80,13 +80,13 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
-      /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
+      /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be \"stopped\" rather than \"entered-in-error\".).
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
       [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
-      /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
+      /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
       [EnumLiteral("unknown"), Description("Unknown")]
@@ -1468,30 +1468,30 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>)StatusElement.DeepCopy();
       if(ActualityElement != null) dest.ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)ActualityElement.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
       if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
       if(DetectedElement != null) dest.DetectedElement = (Hl7.Fhir.Model.FhirDateTime)DetectedElement.DeepCopy();
       if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
-      if(ResultingEffect != null) dest.ResultingEffect = new List<Hl7.Fhir.Model.ResourceReference>(ResultingEffect.DeepCopy());
+      if(ResultingEffect.Any()) dest.ResultingEffect = new List<Hl7.Fhir.Model.ResourceReference>(ResultingEffect.DeepCopy());
       if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
       if(Seriousness != null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)Seriousness.DeepCopy();
-      if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(Outcome.DeepCopy());
+      if(Outcome.Any()) dest.Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(Outcome.DeepCopy());
       if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
-      if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(Participant.DeepCopy());
-      if(Study != null) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(Study.DeepCopy());
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(Participant.DeepCopy());
+      if(Study.Any()) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(Study.DeepCopy());
       if(ExpectedInResearchStudyElement != null) dest.ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean)ExpectedInResearchStudyElement.DeepCopy();
-      if(SuspectEntity != null) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(SuspectEntity.DeepCopy());
-      if(ContributingFactor != null) dest.ContributingFactor = new List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>(ContributingFactor.DeepCopy());
-      if(PreventiveAction != null) dest.PreventiveAction = new List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>(PreventiveAction.DeepCopy());
-      if(MitigatingAction != null) dest.MitigatingAction = new List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>(MitigatingAction.DeepCopy());
-      if(SupportingInfo != null) dest.SupportingInfo = new List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>(SupportingInfo.DeepCopy());
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(SuspectEntity.Any()) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(SuspectEntity.DeepCopy());
+      if(ContributingFactor.Any()) dest.ContributingFactor = new List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>(ContributingFactor.DeepCopy());
+      if(PreventiveAction.Any()) dest.PreventiveAction = new List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>(PreventiveAction.DeepCopy());
+      if(MitigatingAction.Any()) dest.MitigatingAction = new List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>(MitigatingAction.DeepCopy());
+      if(SupportingInfo.Any()) dest.SupportingInfo = new List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>(SupportingInfo.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       return dest;
     }
 

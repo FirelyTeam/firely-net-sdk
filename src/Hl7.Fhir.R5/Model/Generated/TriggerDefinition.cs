@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(SubscriptionTopicElement != null) dest.SubscriptionTopicElement = (Hl7.Fhir.Model.Canonical)SubscriptionTopicElement.DeepCopy();
       if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
-      if(Data != null) dest.Data = new List<Hl7.Fhir.Model.DataRequirement>(Data.DeepCopy());
+      if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.DataRequirement>(Data.DeepCopy());
       if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Expression)Condition.DeepCopy();
       return dest;
     }

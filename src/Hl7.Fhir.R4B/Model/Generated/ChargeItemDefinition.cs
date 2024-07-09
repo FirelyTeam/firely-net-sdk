@@ -326,8 +326,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Applicability != null) dest.Applicability = new List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent>(Applicability.DeepCopy());
-        if(PriceComponent != null) dest.PriceComponent = new List<Hl7.Fhir.Model.ChargeItemDefinition.PriceComponentComponent>(PriceComponent.DeepCopy());
+        if(Applicability.Any()) dest.Applicability = new List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent>(Applicability.DeepCopy());
+        if(PriceComponent.Any()) dest.PriceComponent = new List<Hl7.Fhir.Model.ChargeItemDefinition.PriceComponentComponent>(PriceComponent.DeepCopy());
         return dest;
       }
 
@@ -1208,28 +1208,28 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(DerivedFromUriElement != null) dest.DerivedFromUriElement = new List<Hl7.Fhir.Model.FhirUri>(DerivedFromUriElement.DeepCopy());
-      if(PartOfElement != null) dest.PartOfElement = new List<Hl7.Fhir.Model.Canonical>(PartOfElement.DeepCopy());
-      if(ReplacesElement != null) dest.ReplacesElement = new List<Hl7.Fhir.Model.Canonical>(ReplacesElement.DeepCopy());
+      if(DerivedFromUriElement.Any()) dest.DerivedFromUriElement = new List<Hl7.Fhir.Model.FhirUri>(DerivedFromUriElement.DeepCopy());
+      if(PartOfElement.Any()) dest.PartOfElement = new List<Hl7.Fhir.Model.Canonical>(PartOfElement.DeepCopy());
+      if(ReplacesElement.Any()) dest.ReplacesElement = new List<Hl7.Fhir.Model.Canonical>(ReplacesElement.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
       if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
       if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
       if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ResourceReference>(Instance.DeepCopy());
-      if(Applicability != null) dest.Applicability = new List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent>(Applicability.DeepCopy());
-      if(PropertyGroup != null) dest.PropertyGroup = new List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent>(PropertyGroup.DeepCopy());
+      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ResourceReference>(Instance.DeepCopy());
+      if(Applicability.Any()) dest.Applicability = new List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent>(Applicability.DeepCopy());
+      if(PropertyGroup.Any()) dest.PropertyGroup = new List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent>(PropertyGroup.DeepCopy());
       return dest;
     }
 

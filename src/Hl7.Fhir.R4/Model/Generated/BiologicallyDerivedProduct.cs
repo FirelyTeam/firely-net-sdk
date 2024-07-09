@@ -1123,17 +1123,17 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(ProductCategoryElement != null) dest.ProductCategoryElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>)ProductCategoryElement.DeepCopy();
       if(ProductCode != null) dest.ProductCode = (Hl7.Fhir.Model.CodeableConcept)ProductCode.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>)StatusElement.DeepCopy();
-      if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
+      if(Request.Any()) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
       if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.Integer)QuantityElement.DeepCopy();
-      if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
+      if(Parent.Any()) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
       if(Collection != null) dest.Collection = (Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent)Collection.DeepCopy();
-      if(Processing != null) dest.Processing = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent>(Processing.DeepCopy());
+      if(Processing.Any()) dest.Processing = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent>(Processing.DeepCopy());
       if(Manipulation != null) dest.Manipulation = (Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent)Manipulation.DeepCopy();
-      if(Storage != null) dest.Storage = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent>(Storage.DeepCopy());
+      if(Storage.Any()) dest.Storage = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent>(Storage.DeepCopy());
       return dest;
     }
 

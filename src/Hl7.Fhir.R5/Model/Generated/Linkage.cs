@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
     public enum LinkageType
     {
       /// <summary>
-      /// The resource represents the "source of truth" (from the perspective of this Linkage resource) for the underlying event/condition/etc.
+      /// The resource represents the \"source of truth\" (from the perspective of this Linkage resource) for the underlying event/condition/etc.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
       [EnumLiteral("source"), Description("Source of Truth")]
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
       if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-      if(Item != null) dest.Item = new List<Hl7.Fhir.Model.Linkage.ItemComponent>(Item.DeepCopy());
+      if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.Linkage.ItemComponent>(Item.DeepCopy());
       return dest;
     }
 

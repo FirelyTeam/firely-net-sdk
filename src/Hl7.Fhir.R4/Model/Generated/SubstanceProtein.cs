@@ -512,8 +512,8 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopy();
       if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopy();
-      if(DisulfideLinkageElement != null) dest.DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(DisulfideLinkageElement.DeepCopy());
-      if(Subunit != null) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(Subunit.DeepCopy());
+      if(DisulfideLinkageElement.Any()) dest.DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(DisulfideLinkageElement.DeepCopy());
+      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(Subunit.DeepCopy());
       return dest;
     }
 

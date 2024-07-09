@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestReport.SetupActionComponent>(Action.DeepCopy());
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.SetupActionComponent>(Action.DeepCopy());
         return dest;
       }
 
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
         if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
         if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
         if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
-        if(Requirement != null) dest.Requirement = new List<Hl7.Fhir.Model.TestReport.RequirementComponent>(Requirement.DeepCopy());
+        if(Requirement.Any()) dest.Requirement = new List<Hl7.Fhir.Model.TestReport.RequirementComponent>(Requirement.DeepCopy());
         return dest;
       }
 
@@ -1323,7 +1323,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestReport.TestActionComponent>(Action.DeepCopy());
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.TestActionComponent>(Action.DeepCopy());
         return dest;
       }
 
@@ -1589,7 +1589,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestReport.TeardownActionComponent>(Action.DeepCopy());
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.TeardownActionComponent>(Action.DeepCopy());
         return dest;
       }
 
@@ -2088,9 +2088,9 @@ namespace Hl7.Fhir.Model
       if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
       if(TesterElement != null) dest.TesterElement = (Hl7.Fhir.Model.FhirString)TesterElement.DeepCopy();
       if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
-      if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.TestReport.ParticipantComponent>(Participant.DeepCopy());
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.TestReport.ParticipantComponent>(Participant.DeepCopy());
       if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestReport.SetupComponent)Setup.DeepCopy();
-      if(Test != null) dest.Test = new List<Hl7.Fhir.Model.TestReport.TestComponent>(Test.DeepCopy());
+      if(Test.Any()) dest.Test = new List<Hl7.Fhir.Model.TestReport.TestComponent>(Test.DeepCopy());
       if(Teardown != null) dest.Teardown = (Hl7.Fhir.Model.TestReport.TeardownComponent)Teardown.DeepCopy();
       return dest;
     }

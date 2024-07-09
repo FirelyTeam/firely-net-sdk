@@ -119,8 +119,7 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("checked-in"), Description("Checked In")]
       CheckedIn,
       /// <summary>
-      /// The appointment has been placed on a waitlist, to be scheduled/confirmed in the future when a slot/service is available.
-      /// A specific time might or might not be pre-allocated.
+      /// The appointment has been placed on a waitlist, to be scheduled/confirmed in the future when a slot/service is available.A specific time might or might not be pre-allocated.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
       [EnumLiteral("waitlist"), Description("Waitlisted")]
@@ -3160,7 +3159,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
         if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
         if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
         if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
@@ -3526,12 +3525,12 @@ namespace Hl7.Fhir.Model
         if(RecurrenceType != null) dest.RecurrenceType = (Hl7.Fhir.Model.CodeableConcept)RecurrenceType.DeepCopy();
         if(LastOccurrenceDateElement != null) dest.LastOccurrenceDateElement = (Hl7.Fhir.Model.Date)LastOccurrenceDateElement.DeepCopy();
         if(OccurrenceCountElement != null) dest.OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt)OccurrenceCountElement.DeepCopy();
-        if(OccurrenceDateElement != null) dest.OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(OccurrenceDateElement.DeepCopy());
+        if(OccurrenceDateElement.Any()) dest.OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(OccurrenceDateElement.DeepCopy());
         if(WeeklyTemplate != null) dest.WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent)WeeklyTemplate.DeepCopy();
         if(MonthlyTemplate != null) dest.MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent)MonthlyTemplate.DeepCopy();
         if(YearlyTemplate != null) dest.YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent)YearlyTemplate.DeepCopy();
-        if(ExcludingDateElement != null) dest.ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(ExcludingDateElement.DeepCopy());
-        if(ExcludingRecurrenceIdElement != null) dest.ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(ExcludingRecurrenceIdElement.DeepCopy());
+        if(ExcludingDateElement.Any()) dest.ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(ExcludingDateElement.DeepCopy());
+        if(ExcludingRecurrenceIdElement.Any()) dest.ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(ExcludingRecurrenceIdElement.DeepCopy());
         return dest;
       }
 
@@ -5062,38 +5061,38 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)StatusElement.DeepCopy();
       if(CancellationReason != null) dest.CancellationReason = (Hl7.Fhir.Model.CodeableConcept)CancellationReason.DeepCopy();
-      if(Class != null) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopy());
-      if(ServiceCategory != null) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopy());
-      if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
-      if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
+      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopy());
+      if(ServiceCategory.Any()) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopy());
+      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
+      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
       if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopy();
-      if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
+      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
       if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
       if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
-      if(VirtualService != null) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopy());
-      if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
+      if(Replaces.Any()) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
+      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopy());
+      if(SupportingInformation.Any()) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
       if(PreviousAppointment != null) dest.PreviousAppointment = (Hl7.Fhir.Model.ResourceReference)PreviousAppointment.DeepCopy();
       if(OriginatingAppointment != null) dest.OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference)OriginatingAppointment.DeepCopy();
       if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
       if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
       if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
-      if(RequestedPeriod != null) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopy());
-      if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
-      if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
+      if(RequestedPeriod.Any()) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopy());
+      if(Slot.Any()) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
+      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
       if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
       if(CancellationDateElement != null) dest.CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime)CancellationDateElement.DeepCopy();
-      if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(PatientInstruction != null) dest.PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(PatientInstruction.DeepCopy());
-      if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      if(PatientInstruction.Any()) dest.PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(PatientInstruction.DeepCopy());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
       if(RecurrenceIdElement != null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)RecurrenceIdElement.DeepCopy();
       if(OccurrenceChangedElement != null) dest.OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean)OccurrenceChangedElement.DeepCopy();
-      if(RecurrenceTemplate != null) dest.RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(RecurrenceTemplate.DeepCopy());
+      if(RecurrenceTemplate.Any()) dest.RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(RecurrenceTemplate.DeepCopy());
       return dest;
     }
 

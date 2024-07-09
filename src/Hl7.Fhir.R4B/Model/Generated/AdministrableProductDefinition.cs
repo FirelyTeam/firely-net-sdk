@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         if(MaxDosePerDay != null) dest.MaxDosePerDay = (Hl7.Fhir.Model.Quantity)MaxDosePerDay.DeepCopy();
         if(MaxDosePerTreatmentPeriod != null) dest.MaxDosePerTreatmentPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerTreatmentPeriod.DeepCopy();
         if(MaxTreatmentPeriod != null) dest.MaxTreatmentPeriod = (Hl7.Fhir.Model.Duration)MaxTreatmentPeriod.DeepCopy();
-        if(TargetSpecies != null) dest.TargetSpecies = new List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent>(TargetSpecies.DeepCopy());
+        if(TargetSpecies.Any()) dest.TargetSpecies = new List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent>(TargetSpecies.DeepCopy());
         return dest;
       }
 
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(WithdrawalPeriod != null) dest.WithdrawalPeriod = new List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent>(WithdrawalPeriod.DeepCopy());
+        if(WithdrawalPeriod.Any()) dest.WithdrawalPeriod = new List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent>(WithdrawalPeriod.DeepCopy());
         return dest;
       }
 
@@ -954,16 +954,16 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
-      if(FormOf != null) dest.FormOf = new List<Hl7.Fhir.Model.ResourceReference>(FormOf.DeepCopy());
+      if(FormOf.Any()) dest.FormOf = new List<Hl7.Fhir.Model.ResourceReference>(FormOf.DeepCopy());
       if(AdministrableDoseForm != null) dest.AdministrableDoseForm = (Hl7.Fhir.Model.CodeableConcept)AdministrableDoseForm.DeepCopy();
       if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
-      if(ProducedFrom != null) dest.ProducedFrom = new List<Hl7.Fhir.Model.ResourceReference>(ProducedFrom.DeepCopy());
-      if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(Ingredient.DeepCopy());
+      if(ProducedFrom.Any()) dest.ProducedFrom = new List<Hl7.Fhir.Model.ResourceReference>(ProducedFrom.DeepCopy());
+      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(Ingredient.DeepCopy());
       if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-      if(Property != null) dest.Property = new List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent>(Property.DeepCopy());
-      if(RouteOfAdministration != null) dest.RouteOfAdministration = new List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent>(RouteOfAdministration.DeepCopy());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent>(Property.DeepCopy());
+      if(RouteOfAdministration.Any()) dest.RouteOfAdministration = new List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent>(RouteOfAdministration.DeepCopy());
       return dest;
     }
 
