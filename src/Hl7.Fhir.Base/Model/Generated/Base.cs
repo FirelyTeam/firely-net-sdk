@@ -44,54 +44,72 @@ using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 namespace Hl7.Fhir.Model
 {
   /// <summary>
-  /// Reuseable Types
+  /// Base for all types and resources
   /// </summary>
   /// <remarks>
-  /// The base class for all re-useable types defined as part of the FHIR Specification.
+  /// Base definition for all types defined in FHIR type system.
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DataType","http://hl7.org/fhir/StructureDefinition/DataType")]
-  public abstract partial class DataType : Hl7.Fhir.Model.Element
+  [FhirType("Base","http://hl7.org/fhir/StructureDefinition/Base")]
+  public abstract partial class Base
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DataType"; } }
+    public virtual string TypeName { get { return "Base"; } }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    public virtual IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      var dest = other as DataType;
+      var dest = other as Base;
 
       if (dest == null)
       {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
+      if (_annotations is not null)
+        dest.annotations.AddRange(annotations);
+
       return dest;
     }
 
+    public virtual IDeepCopyable DeepCopy() =>
+      CopyTo((IDeepCopyable)Activator.CreateInstance(GetType())!);
+
     ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public virtual bool Matches(IDeepComparable other) => other is Base;
+
+    public virtual bool IsExactly(IDeepComparable other) => other is Base;
+
+    /// <summary>
+    /// Enumerate all child nodes.
+    /// Return a sequence of child elements, components and/or properties.
+    /// Child nodes are returned in the order defined by the FHIR specification.
+    /// First returns child nodes inherited from any base class(es), recursively.
+    /// Finally returns child nodes defined by the current class.
+    /// </summary>
+    [IgnoreDataMember]
+    public virtual IEnumerable<Base> Children => Enumerable.Empty<Base>();
+
+    /// <summary>
+    /// Enumerate all child nodes.
+    /// Return a sequence of child elements, components and/or properties.
+    /// Child nodes are returned as tuples with the name and the node itself, in the order defined
+    /// by the FHIR specification.
+    /// First returns child nodes inherited from any base class(es), recursively.
+    /// Finally returns child nodes defined by the current class.
+    /// </summary>
+    [IgnoreDataMember]
+    public virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
+
+    protected virtual bool TryGetValue(string key, out object value)
     {
-      var otherT = other as DataType;
-      if(otherT == null) return false;
-
-      if(!base.Matches(otherT)) return false;
-
-      return true;
+      value = default;
+      return false;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as DataType;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-
-      return true;
-    }
+    protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Enumerable.Empty<KeyValuePair<string, object>>();
 
   }
 

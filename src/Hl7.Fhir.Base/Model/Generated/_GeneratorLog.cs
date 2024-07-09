@@ -329,6 +329,7 @@
 // Attachment.cs
 // BackboneElement.cs
 // BackboneType.cs
+// Base.cs
 // CodeableConcept.cs
 // CodeableReference.cs
 // Coding.cs
@@ -340,6 +341,7 @@
 // Meta.cs
 // Narrative.cs
 // Period.cs
+// PrimitiveType.cs
 // Quantity.cs
 // Range.cs
 // ResourceReference.cs

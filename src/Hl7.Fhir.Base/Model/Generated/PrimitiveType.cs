@@ -44,24 +44,24 @@ using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 namespace Hl7.Fhir.Model
 {
   /// <summary>
-  /// Reuseable Types
+  /// Parent type for DataTypes with a simple value
   /// </summary>
   /// <remarks>
-  /// The base class for all re-useable types defined as part of the FHIR Specification.
+  /// The base type for all re-useable types defined that have a simple property.
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DataType","http://hl7.org/fhir/StructureDefinition/DataType")]
-  public abstract partial class DataType : Hl7.Fhir.Model.Element
+  [FhirType("PrimitiveType","http://hl7.org/fhir/StructureDefinition/PrimitiveType")]
+  public abstract partial class PrimitiveType : Hl7.Fhir.Model.DataType
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DataType"; } }
+    public override string TypeName { get { return "PrimitiveType"; } }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      var dest = other as DataType;
+      var dest = other as PrimitiveType;
 
       if (dest == null)
       {
@@ -69,28 +69,26 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
+      if (ObjectValue != null) dest.ObjectValue = ObjectValue;
       return dest;
     }
 
     ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
-    {
-      var otherT = other as DataType;
-      if(otherT == null) return false;
-
-      if(!base.Matches(otherT)) return false;
-
-      return true;
-    }
+    public override bool Matches(IDeepComparable other) => IsExactly(other);
 
     public override bool IsExactly(IDeepComparable other)
     {
-      var otherT = other as DataType;
+      var otherT = other as PrimitiveType;
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
 
-      return true;
+      var otherValue = otherT.ObjectValue;
+      if (ObjectValue is byte[] bytes && otherValue is byte[] bytesOther)
+        return Enumerable.SequenceEqual(bytes, bytesOther);
+      else
+        return Equals(ObjectValue, otherT.ObjectValue);
+
     }
 
   }
