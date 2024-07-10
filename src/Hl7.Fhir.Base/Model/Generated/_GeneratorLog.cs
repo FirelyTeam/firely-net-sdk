@@ -337,6 +337,7 @@
 // ContactPoint.cs
 // DataType.cs
 // Element.cs
+// Extension.cs
 // Identifier.cs
 // Meta.cs
 // Narrative.cs
