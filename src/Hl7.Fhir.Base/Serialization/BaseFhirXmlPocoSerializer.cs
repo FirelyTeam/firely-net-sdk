@@ -98,25 +98,28 @@ namespace Hl7.Fhir.Serialization
 
         private void serializeElement(IReadOnlyDictionary<string, object> members, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
         {
-            foreach (var member in members)
-            {
-                var propertyMapping = mapping?.FindMappedElementByName(member.Key);
+            // Make sure that elements with attributes are serialized first.
+            var orderedMembers = members
+                .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
+                .OrderBy(p => p.mapping?.SerializationHint != XmlRepresentation.XmlAttr);
 
-                if (filter?.TryEnterMember(member.Key, member.Value, propertyMapping) == false)
+            foreach (var ((mKey, mValue), propertyMapping) in orderedMembers)
+            {
+                if (filter?.TryEnterMember(mKey, mValue, propertyMapping) == false)
                     continue;
 
                 var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
-                            addSuffixToElementName(member.Key, member.Value) : member.Key;
+                            addSuffixToElementName(mKey, mValue) : mKey;
 
-                if (member.Value is ICollection coll && member.Value is not byte[])
+                if (mValue is ICollection coll and not byte[])
                 {
                     foreach (var value in coll)
                         serializeMemberValue(elementName, value, writer, filter);
                 }
                 else
-                    serializeMemberValue(elementName, member.Value, writer, filter);
+                    serializeMemberValue(elementName, mValue, writer, filter);
 
-                filter?.LeaveMember(member.Key, member.Value, propertyMapping);
+                filter?.LeaveMember(mKey, mValue, propertyMapping);
             }
         }
 
@@ -185,5 +188,18 @@ namespace Hl7.Fhir.Serialization
         }
     }
 }
+
+#if NETSTANDARD
+
+file static class KvpExtensions
+{
+    public static void Deconstruct<TKey, TValue>(this KeyValuePair<TKey, TValue> kvp, out TKey key, out TValue value)
+    {
+        key = kvp.Key;
+        value = kvp.Value;
+    }
+}
+
+#endif
 
 #nullable restore
