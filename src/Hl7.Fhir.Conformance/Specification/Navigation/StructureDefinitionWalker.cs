@@ -18,7 +18,7 @@ using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification
         public StructureDefinitionWalker FromCanonical(string canonical, IEnumerable<string>? targetProfiles = null) =>
             TaskHelper.Await(() => FromCanonicalAsync(canonical, targetProfiles));
 
-        public async T.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical, IEnumerable<string>? targetProfiles = null)
+        public async Tasks.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical, IEnumerable<string>? targetProfiles = null)
         {
             var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
             if (sd == null)

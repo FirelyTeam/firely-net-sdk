@@ -24,6 +24,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Test
 {
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Test
     public class RequestMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
         private static readonly IFhirSerializationEngine TESTENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
         private static readonly string TESTVERSION = "3.0.1";
 
@@ -248,7 +249,7 @@ namespace Hl7.Fhir.Test
         [DataRow(true)]
         public async Task TestResourceBody(bool hasLu)
         {
-            var pat = new TestPatient
+            var pat = new Patient
             {
                 Active = true,
             };
@@ -272,7 +273,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Task TestBodyCompression()
         {
-            var pat = new TestPatient
+            var pat = new Patient
             {
                 Active = true,
             };

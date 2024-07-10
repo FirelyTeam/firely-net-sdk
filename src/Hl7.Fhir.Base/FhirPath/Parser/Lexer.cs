@@ -68,7 +68,7 @@ namespace Hl7.FhirPath.Parser
 
         public static readonly Parser<string> DelimitedIdentifier =
 
-            DelimitedContents('"')
+            DelimitedContents('"') // Included for backward compatibility with older versions of fhirpath
             .XOr(DelimitedContents('`'));
 
         // identifier
@@ -172,6 +172,15 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<bool> Bool =
             Parse.String("true").XOr(Parse.String("false")).Text().Select(s => (bool)P.Boolean.Parse(s));
 
+        // COMMENTS: // and /* ... */
+        private static readonly CommentParser CommentParse = new CommentParser("//", "/*", "*/", "\n");
+
+        public static readonly Parser<string> Comment =
+            CommentParse.SingleLineComment.Text();
+
+        public static readonly Parser<string> CommentBlock =
+            CommentParse.MultiLineComment.Text();
+
         //qualifiedIdentifier
         //   : identifier ('.' identifier)*
         //   ;
@@ -183,6 +192,7 @@ namespace Hl7.FhirPath.Parser
             from name in Parse.String("this").XOr(Parse.String("index")).Or(Parse.String("total")).Text()
             select name;
 
+        [Obsolete("This lexer is no longer used by the fhirpath parser as it processes the tokens correctly", false)]
         public static readonly Parser<string> Quantity =
            Parse.Regex(P.Quantity.QUANTITYREGEX);
     }

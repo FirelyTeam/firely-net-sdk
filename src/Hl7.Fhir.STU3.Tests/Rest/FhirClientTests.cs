@@ -23,7 +23,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -238,13 +238,13 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task ReadHttpClient()
+        public async Tasks.Task ReadHttpClient()
         {
             using var client = new FhirClient(testEndpoint);
             await testReadClientAsync(client);
         }
 
-        private async T.Task testReadClientAsync(BaseFhirClient client)
+        private async Tasks.Task testReadClientAsync(BaseFhirClient client)
         {
             var loc = client.Read<Location>("Location/" + locationId);
             Assert.IsNotNull(loc);
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task CreateEditDeleteHttpClient()
+        public async Tasks.Task CreateEditDeleteHttpClient()
         {
             using (var handler = new HttpClientHandler())
             using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        private async T.Task testCreateEditDeleteAsync(BaseFhirClient client)
+        private async Tasks.Task testCreateEditDeleteAsync(BaseFhirClient client)
         {
             // client.CompressRequestBody = true;
 
@@ -768,13 +768,13 @@ namespace Hl7.Fhir.Tests.Rest
         /// and counts them in the WholeSystemHistory
         /// </summary>
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
-        public async T.Task HistoryHttpClient()
+        public async Tasks.Task HistoryHttpClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
             await testHistoryAsync(client);
         }
 
-        private async T.Task testHistoryAsync(BaseFhirClient client)
+        private async Tasks.Task testHistoryAsync(BaseFhirClient client)
         {
             System.Threading.Thread.Sleep(500);
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task CreateDynamicHttpClient()
+        public async Tasks.Task CreateDynamicHttpClient()
         {
             using (FhirClient client = new FhirClient(testEndpoint))
             {
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        private static async T.Task testCreateDynamicHttpClientAsync(BaseFhirClient client)
+        private static async Tasks.Task testCreateDynamicHttpClientAsync(BaseFhirClient client)
         {
             Resource furore = new Organization
             {

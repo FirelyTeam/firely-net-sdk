@@ -4,7 +4,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static IAsyncResourceResolver _source = null;
 
         [TestMethod]
-        public async T.Task WalkIntoTypeMembers()
+        public async Tasks.Task WalkIntoTypeMembers()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkIntoChoice()
+        public async Tasks.Task WalkIntoChoice()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkAcrossReference()
+        public async Tasks.Task WalkAcrossReference()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkAcrossInlineExtension()
+        public async Tasks.Task WalkAcrossInlineExtension()
         {
             var sd = await _source.FindStructureDefinitionAsync("http://unittest.com/StructureDefinition/patient-sliced-complex-extension");
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -133,5 +133,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-
-

@@ -62,9 +62,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void Test()
         {
-            var bundle = new TestPatient{Name = new () {new () {Family = ""}}};
+            var bundle = new Patient{Name = new () {new () {Family = ""}}};
             const string bundleString = """{ "resourceType":"Patient", "name":[{"family":""}] }""";
-            var options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
             
             var shouldThrowOnValidate = () => bundle.Validate(true);
             var shouldThrowOnDeserialize = () => _ = JsonSerializer.Deserialize<Bundle>(bundleString, options);

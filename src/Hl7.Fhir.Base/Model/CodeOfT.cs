@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
         {
             value = default;
 
-            if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is T parsed)
+            if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
             {
                 value = parsed;
                 return true;

@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Snapshot;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotSourceTest
     {
         [TestMethod]
-        public async T.Task TestElementSnapshot()
+        public async Tasks.Task TestElementSnapshot()
         {
             // Request core Element snapshot; verify recursion handling
 

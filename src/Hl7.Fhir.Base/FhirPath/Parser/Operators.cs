@@ -17,8 +17,8 @@ namespace Hl7.FhirPath.Parser
     {
         internal static Parser<string> Operator(params string[] ops )
         {
-            var first = Parse.String(ops.First()).Token();
-            return ops.Skip(1).Aggregate(first, (expr, s) => expr.Or(Parse.String(s).Token()), expr => expr.Text());
+            var first = Parse.String(ops.First());
+            return ops.Skip(1).Aggregate(first, (expr, s) => expr.Or(Parse.String(s)), expr => expr.Text());
         }
 
         internal static readonly Parser<string> PolarityOperator = Lexer.Operator("+", "-");

@@ -8,7 +8,6 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NSubstitute.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +18,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using T = System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Core.Tests.Rest
 {
     [TestClass]
     public class FhirClientMockTest
     {
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
         private static readonly string TESTVERSION = "3.0.1";
 
         private static async Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)
@@ -51,7 +50,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 .Send(patientResponse, h => h.RequestUri == new Uri("http://example.com/Patient/1"))
                 .AsClient(s => s.VerifyFhirVersion = verifyFhirVersion);
 
-            await client.ReadAsync<TestPatient>("Patient/1");
+            await client.ReadAsync<Patient>("Patient/1");
         }
 
         [TestMethod]
@@ -124,14 +123,15 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient?name=henry"),
             };
 
-            response.Headers.Add("Location", "/fhir/*/Bundle/example");
+            response.Headers.Add("Location", "https://example.com/fhir/Bundle/example");
 
             using var client = new SubstituteBuilder()
                 .Send(response, h => h.RequestUri == new Uri("http://example.com/Patient?name=henry"))
                 .AsClient();
-            var patient = await client.SearchAsync<TestPatient>(new string[] { "name=henry" });
+            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
 
-            client.LastResult!.Location.Should().Be("/fhir/*/Bundle/example");
+            client.LastResult!.Location.Should().Be("https://example.com/fhir/Bundle/example");
+            patient!.ResourceBase.Should().Be(new Uri("https://example.com/fhir/"));
         }
 
         [DataTestMethod]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                         findInAcceptHeader(h.Headers.Accept, "fhirVersion", useFhirVersionHeader))
                 .AsClient(s => { s.VerifyFhirVersion = false; s.UseFhirVersionInAcceptHeader = useFhirVersionHeader; });
 
-            var patient = await client.SearchAsync<TestPatient>(new string[] { "name=henry" });
+            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
         }
 
         private static bool findInAcceptHeader(HttpHeaderValueCollection<MediaTypeWithQualityHeaderValue> acceptHeader, string headerName, bool exists)
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 .AsClient();
             client.RequestHeaders!.Authorization = authValue;
 
-            var patient = await client.SearchAsync<TestPatient>(new string[] { "name=henry" });
+            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
         }
 
         [TestMethod]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 .Send(patientResponse, m => m.Method == HttpMethod.Get && m.RequestUri == patientInstanceUri)
                 .AsClient(s => s.ReturnPreference = ReturnPreference.Representation, baseUri: new("http://example.com/fhir/"));
 
-            var pat = await client.CreateAsync(new TestPatient { Id = "example" });
+            var pat = await client.CreateAsync(new Patient { Id = "example" });
             pat!.Id.Should().Be("example");
         }
 
@@ -323,8 +323,8 @@ namespace Hl7.Fhir.Core.Tests.Rest
         public async Task WillThrowWhenUnexpectedResourceTypeReceived()
         {
             using var client = sendBack("Organization");
-            var act = () => client.ReadAsync<TestPatient>("Patient/example");
-            await act.Should().ThrowAsync<FhirOperationException>().WithMessage("*expected a body of type TestPatient*");
+            var act = () => client.ReadAsync<Patient>("Patient/example");
+            await act.Should().ThrowAsync<FhirOperationException>().WithMessage("*expected a body of type Patient*");
         }
 
         [TestMethod]
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         {
             using var client = sendBack("OperationOutcome");
 
-            var oo = await client.ReadAsync<TestPatient>("Patient/example");
+            var oo = await client.ReadAsync<Patient>("Patient/example");
             oo.Should().BeNull();
             client.LastBodyAsResource.Should().BeOfType<OperationOutcome>().Which.Id.Should().Be("example");
             client.LastResult!.Outcome.Should().BeOfType<OperationOutcome>().Which.Id.Should().Be("example");
@@ -411,8 +411,8 @@ namespace Hl7.Fhir.Core.Tests.Rest
         public async Task TestCanMockFhirClient()
         {
             var mock = Substitute.For<BaseFhirClient>(new object[] { new Uri("http://example.org"), TESTINSPECTOR, FhirClientSettings.CreateDefault() });
-            _ = await mock.ReadAsync<TestPatient>("http://example.org/fhir");
-            await mock.Received(1).ReadAsync<TestPatient>(Arg.Any<string>());
+            _ = await mock.ReadAsync<Patient>("http://example.org/fhir");
+            await mock.Received(1).ReadAsync<Patient>(Arg.Any<string>());
         }
 
         [TestMethod]
@@ -499,13 +499,13 @@ namespace Hl7.Fhir.Core.Tests.Rest
             
             var client = new BaseFhirClient(new ("http://example.com/fhir/"), handlerMock, TESTINSPECTOR, new FhirClientSettings { ExplicitFhirVersion = TESTVERSION, VerifyFhirVersion = false });
 
-            _ = await client.PatchAsync<TestPatient>("1", body, ResourceFormat.Json);
+            _ = await client.PatchAsync<Patient>("1", body, ResourceFormat.Json);
 
             await handlerMock.Received(1).SendAsyncPublic(
                 Arg.Is<HttpRequestMessage>(req =>
-                    req.Content.Headers.ContentType.ToString() == "application/json-patch+json" &&
+                    req.Content!.Headers.ContentType!.ToString() == "application/json-patch+json" &&
                     req.Content.ReadAsStringAsync().Result == body &&
-                    req.RequestUri.ToString().Contains("_format=json")
+                    req.RequestUri!.ToString().Contains("_format=json")
                     ),
                 Arg.Any<CancellationToken>());
         }

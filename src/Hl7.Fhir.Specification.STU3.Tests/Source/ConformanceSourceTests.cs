@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 // Use alias to avoid conflict with Hl7.Fhir.Model.Task
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task FindCodeSystem()
+        public async Tasks.Task FindCodeSystem()
         {
             // A Fhir codesystem
             var vs = await source.FindCodeSystemAsync("http://hl7.org/fhir/contact-point-system");
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task FindValueSets()
+        public async Tasks.Task FindValueSets()
         {
             // A Fhir valueset
             var vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/contact-point-system");
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task TestJsonBundleRetrieval()
+        public async Tasks.Task TestJsonBundleRetrieval()
         {
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
         [TestMethod]
-        public async T.Task TestThreadSafety()
+        public async Tasks.Task TestThreadSafety()
         {
             // Verify thread safety by resolving same uri simultaneously from different threads
             // DirectorySource should synchronize access and only call prepare once.
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
-            var tasks = new T.Task[threadCount];
+            var tasks = new Tasks.Task[threadCount];
             var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
 
             var sw = new Stopwatch();
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Specification.Tests
             for (int i = 0; i < threadCount; i++)
             {
                 var idx = i;
-                tasks[i] = T.Task.Run(
+                tasks[i] = Tasks.Task.Run(
                     () =>
                     {
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Specification.Tests
                 );
             }
 
-            await T.Task.WhenAll(tasks);
+            await Tasks.Task.WhenAll(tasks);
             sw.Stop();
 
             var first = results[0];
@@ -451,12 +451,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestRefreshAll() => await TestRefreshAsync(true);
+        public async Tasks.Task TestRefreshAll() => await TestRefreshAsync(true);
 
         [TestMethod]
-        public async T.Task TestRefreshFile() => await TestRefreshAsync(false);
+        public async Tasks.Task TestRefreshFile() => await TestRefreshAsync(false);
 
-        async T.Task TestRefreshAsync(bool refreshAll)
+        async Tasks.Task TestRefreshAsync(bool refreshAll)
         {
             // Create a temporary folder with a single artifact file
             const string srcFileName = "TestPatient.xml";
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestParserSettings()
+        public async Tasks.Task TestParserSettings()
         {
             // Create an invalid patient resource on disk
             var obs = new Observation()
