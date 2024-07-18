@@ -40,37 +40,9 @@ using System.Threading;
 
 namespace Hl7.Fhir.Model
 {
-    [Serializable]
-    [FhirType("Base", "http://hl7.org/fhir/StructureDefinition/Base")]
-    [DataContract]
-    public abstract class Base : IDeepCopyable, IDeepComparable,
+    public abstract partial class Base : IDeepCopyable, IDeepComparable,
         IAnnotated, IAnnotatable, IValidatableObject, INotifyPropertyChanged, IReadOnlyDictionary<string, object>
     {
-        public virtual bool IsExactly(IDeepComparable other) => other is Base;
-
-        public virtual bool Matches(IDeepComparable other) => other is Base;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="other"></param>
-        /// <remarks>Does a deep-copy of all elements, except UserData</remarks>
-        /// <returns></returns>
-        public virtual IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            if (other is Base dest)
-            {
-                if (_annotations is not null)
-                    dest.annotations.AddRange(annotations);
-
-                return dest;
-            }
-            else
-                throw new ArgumentException("Can only copy to an object of the same type", nameof(other));
-        }
-
-        public abstract IDeepCopyable DeepCopy();
-
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) => Enumerable.Empty<ValidationResult>();
 
         #region << Annotations >>
@@ -95,27 +67,6 @@ namespace Hl7.Fhir.Model
 
         #endregion
 
-        public virtual string TypeName => "Base";
-
-        /// <summary>
-        /// Enumerate all child nodes.
-        /// Return a sequence of child elements, components and/or properties.
-        /// Child nodes are returned in the order defined by the FHIR specification.
-        /// First returns child nodes inherited from any base class(es), recursively.
-        /// Finally returns child nodes defined by the current class.
-        /// </summary>
-        public virtual IEnumerable<Base> Children { get { return Enumerable.Empty<Base>(); } }
-
-        /// <summary>
-        /// Enumerate all child nodes.
-        /// Return a sequence of child elements, components and/or properties.
-        /// Child nodes are returned as tuples with the name and the node itself, in the order defined 
-        /// by the FHIR specification.
-        /// First returns child nodes inherited from any base class(es), recursively.
-        /// Finally returns child nodes defined by the current class.
-        /// </summary>
-        public virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
-
         public IReadOnlyDictionary<string, object> AsReadOnlyDictionary() => this;
 
         #region IReadOnlyDictionary
@@ -135,13 +86,5 @@ namespace Hl7.Fhir.Model
 
         bool IReadOnlyDictionary<string, object>.TryGetValue(string key, out object value) => TryGetValue(key, out value);
         #endregion
-
-        protected virtual bool TryGetValue(string key, out object value)
-        {
-            value = default;
-            return false;
-        }
-
-        protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Enumerable.Empty<KeyValuePair<string, object>>();
     }
 }
