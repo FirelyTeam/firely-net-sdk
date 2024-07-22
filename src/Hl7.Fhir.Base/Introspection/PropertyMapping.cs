@@ -179,12 +179,12 @@ namespace Hl7.Fhir.Introspection
             result = default;
 
             // If there is no [FhirElement] on the property, skip it
-            var elementAttr = ClassMapping.GetAttribute<FhirElementAttribute>(prop, release);
+            var elementAttr = ReflectionHelper.GetAttribute<FhirElementAttribute>(prop, release);
             if (elementAttr == null) return false;
 
             // If there is an explicit [NotMapped] on the property, skip it
             // (in combination with `Since` useful to remove a property from the serialization)
-            var notmappedAttr = ClassMapping.GetAttribute<NotMappedAttribute>(prop, release);
+            var notmappedAttr = ReflectionHelper.GetAttribute<NotMappedAttribute>(prop, release);
             if (notmappedAttr != null) return false;
 
             // We broadly use .IsArray here - this means arrays in POCOs cannot be used to represent
@@ -193,17 +193,18 @@ namespace Hl7.Fhir.Introspection
             // This is pretty ugly, so we prefer to not support arrays - you should use lists instead.
             bool isCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
-            var cardinalityAttr = ClassMapping.GetAttribute<CardinalityAttribute>(prop, release);
+            var cardinalityAttr = ReflectionHelper.GetAttribute<CardinalityAttribute>(prop, release);
 
             // Get to the actual (native) type representing this element
             var implementingType = prop.PropertyType;
-            if (isCollection) implementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
+            if (isCollection) implementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType)
+                                                 ?? throw new InvalidOperationException("Should always have a collection item type");
             if (ReflectionHelper.IsNullableType(implementingType)) implementingType = ReflectionHelper.GetNullableArgument(implementingType);
 
             // Determine the .NET type that represents the FHIR type for this element.
             // This is normally just the ImplementingType itself, but can be overridden
             // with the [DeclaredType] attribute.
-            var declaredType = ClassMapping.GetAttribute<DeclaredTypeAttribute>(prop, release);
+            var declaredType = ReflectionHelper.GetAttribute<DeclaredTypeAttribute>(prop, release);
             var fhirType = declaredType?.Type ??
                 (typeof(Enum).GetTypeInfo().IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
 
@@ -214,7 +215,7 @@ namespace Hl7.Fhir.Introspection
             // The [AllowedElements] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
-            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
+            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ReflectionHelper.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
 
             var fhirTypes = allowedTypes?.Types?.Any() == true ?
                 allowedTypes.Types : new[] { fhirType };
@@ -232,9 +233,9 @@ namespace Hl7.Fhir.Introspection
                 IsMandatoryElement = cardinalityAttr?.Min > 0,
                 IsPrimitive = isPrimitive,
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
-                ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
+                ValidationAttributes = ReflectionHelper.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
-                BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
+                BindingName = ReflectionHelper.GetAttribute<BindingAttribute>(prop, release)?.Name
             };
 
             return true;

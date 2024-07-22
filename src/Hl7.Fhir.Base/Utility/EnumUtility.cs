@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Utility
                 DefaultCodeSystem = enumAttr?.DefaultCodeSystem;
                 foreach (var enumValue in ReflectionHelper.FindEnumFields(t))
                 {
-                    var attr = ReflectionHelper.GetAttribute<EnumLiteralAttribute>(enumValue);
+                    var attr = enumValue.GetCustomAttribute<EnumLiteralAttribute>();
                     string literal = attr?.Literal ?? enumValue.Name;
 
                     var value = (TEnum)enumValue.GetValue(null)!;
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Utility
 
                 foreach (var enumValue in ReflectionHelper.FindEnumFields(enumType))
                 {
-                    var attr = ReflectionHelper.GetAttribute<EnumLiteralAttribute>(enumValue);
+                    var attr = enumValue.GetCustomAttribute<EnumLiteralAttribute>();
                     string literal = attr?.Literal ?? enumValue.Name;
                     var value = (Enum)enumValue.GetValue(null)!;
 

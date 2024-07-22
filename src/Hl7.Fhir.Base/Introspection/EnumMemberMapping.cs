@@ -61,11 +61,11 @@ namespace Hl7.Fhir.Introspection
         public static bool TryCreate(FieldInfo member, [NotNullWhen(true)] out EnumMemberMapping? result, FhirRelease release = (FhirRelease)int.MaxValue, string? defaultSystem = null)
         {
             result = null;
-            if (ClassMapping.GetAttribute<EnumLiteralAttribute>(member, release) is not { } ela) return false;
+            if (ReflectionHelper.GetAttribute<EnumLiteralAttribute>(member, release) is not { } ela) return false;
 
             var code = ela.Literal ?? member.Name;
             var value = (Enum)member.GetValue(null)!;
-            var desc = ClassMapping.GetAttribute<DescriptionAttribute>(member, release)?.Description;
+            var desc = ReflectionHelper.GetAttribute<DescriptionAttribute>(member, release)?.Description;
 
             result = new EnumMemberMapping(member, code, ela.System, value, desc, defaultSystem);
             return true;

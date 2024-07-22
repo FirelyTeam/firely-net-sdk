@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Introspection
             result = default;
             if (!type.IsEnum) return false;
 
-            if (ClassMapping.GetAttribute<FhirEnumerationAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
+            if (ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
             result = new EnumMapping(typeAttribute.BindingName, typeAttribute.Valueset, type, release, (typeAttribute.DefaultCodeSystem is not null) ? string.Intern(typeAttribute.DefaultCodeSystem) : null);
             return true;
