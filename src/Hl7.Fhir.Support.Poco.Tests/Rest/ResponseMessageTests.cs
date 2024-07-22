@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Test
             response.Headers.Location = new Uri("http://nu.nl");
             response.Headers.TryAddWithoutValidation("Test-key", "Test-value");
 
-            var extracted = await response.ExtractResponseData(engine, expectBinaryProtocol: false);
+            var extracted = await response.ExtractResponseData(engine, expectBinaryProtocol: false, TESTINSPECTOR.FhirRelease);
 
             extracted.BodyText.Should().Be(DEFAULT_XML);
             engine.SerializeToXml(extracted.BodyResource!).Should().Be(DEFAULT_XML);
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Test
         public async Task GetEmptyResponse()
         {
             var response = new HttpResponseMessage(HttpStatusCode.Conflict);
-            var components = await response.ExtractResponseData(POCOENGINE, expectBinaryProtocol: false);
+            var components = await response.ExtractResponseData(POCOENGINE, expectBinaryProtocol: false, fhirRelease: Specification.FhirRelease.R4);
 
             components.Response.Status.Should().Be("409");
             components.BodyData.Should().BeNull();
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Test
         private static async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
             bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
         {
-            var components = await response.ExtractResponseData(engine, expectBinaryProtocol: false).ConfigureAwait(false);
+            var components = await response.ExtractResponseData(engine, expectBinaryProtocol: false, fhirRelease: Specification.FhirRelease.R4).ConfigureAwait(false);
             await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern);
         }
 
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Test
         public async Task TurnsNewParsingFailureIntoDFE()
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
-            await assertIssue<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, version: "1.0.0");
+            await assertIssue<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, suggestVersionOnParsingError: true, version: "1.0.0");
         }
 
         [TestMethod]
@@ -308,17 +308,17 @@ namespace Hl7.Fhir.Test
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
             await assertIssue<FormatException>(response, "*Cannot locate type information for type 'Unknown'*", engine: ELEMENTENGINE, notmatch: "*with FHIR version 1.0.0*");
             await assertIssue<StructuralTypeException>(response, "*Cannot locate type information for type 'Unknown'*" +
-                "Are you connected to a FHIR server with FHIR version 1.0.0*", version: "1.0.0", engine: ELEMENTENGINE);
+                "Are you connected to a FHIR server with FHIR version 1.0.0*", true, version: "1.0.0", engine: ELEMENTENGINE);
 
             response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
             await assertIssue<StructuralTypeException>(response, "*Encountered unknown element 'activex' at location*", engine: ELEMENTENGINE);
         }
 
-        private static async Task assertIssue<T>(HttpResponseMessage response, string match, string? version = null,
+        private static async Task assertIssue<T>(HttpResponseMessage response, string match, bool suggestVersionOnParsingError = false, string? version = null,
             IFhirSerializationEngine? engine = null, string? notmatch = null)
                 where T : Exception
         {
-            var result = await BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, version, useBinaryProtocol: false);
+            var result = await BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, suggestVersionOnParsingError, (suggestVersionOnParsingError) ? version! : "1.0.0", useBinaryProtocol: false);
             await checkResult(response, result, engine ?? POCOENGINE, hasResource: false, expectedIssue: typeof(T), messagePattern: match, notMessagePattern: notmatch);
         }
 
@@ -336,15 +336,20 @@ namespace Hl7.Fhir.Test
             msg.SetSecurityContext("http://nu.nl");
             msg.SetVersionFromETag("123");
 
-            var b = await msg.ReadBinaryDataFromMessage();
+            var b = await msg.ReadBinaryDataFromMessage(Specification.FhirRelease.R4);
 
-            b.Content.Should().BeEquivalentTo(data);
+            b.Content.Should().BeNull();
             b.Data.Should().BeEquivalentTo(data);
             b.SecurityContext.Reference.Should().Be("http://nu.nl");
             b.ContentType.Should().Be("application/crap");
             b.Meta.VersionId.Should().Be("123");
             b.Meta.LastUpdated.Should().Be(when);
             b.Id.Should().Be("4");
+
+            b = await msg.ReadBinaryDataFromMessage(Specification.FhirRelease.STU3);
+            b.Content.Should().BeEquivalentTo(data);
+            b.Data.Should().BeNull();
+
         }
     }
 }
