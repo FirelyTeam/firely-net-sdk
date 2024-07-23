@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Introspection
         }
 
         private static readonly ConcurrentDictionary<(Type, FhirRelease), ClassMapping?> _mappedClasses = new();
-        
+
         public static void Clear() => _mappedClasses.Clear();
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Introspection
             get
             {
                 LazyInitializer.EnsureInitialized(ref _mappings,
-                    () => new PropertyMappingCollection(_propertyMapper()));
+                    () => new PropertyMappingCollection(this, _propertyMapper()));
 
                 return _mappings!;
             }
