@@ -116,7 +116,6 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
-    [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary ContentElement
     {
