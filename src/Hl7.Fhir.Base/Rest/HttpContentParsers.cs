@@ -11,6 +11,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
@@ -147,7 +148,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>If the status of the response indicates failure, this function will be lenient and return the body data 
         /// instead of throwing an <see cref="UnsupportedBodyTypeException"/> when the content type or content itself is not recognizable as FHIR. This improves
         /// the chances of capturing diagnostic (non-FHIR) bodies returned by the server when an operation fails.</remarks>
-        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser, bool expectBinaryProtocol)
+        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser, bool expectBinaryProtocol, FhirRelease fhirRelease)
         {
             var component = message.ExtractResponseComponent();
             var data = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
@@ -159,14 +160,14 @@ namespace Hl7.Fhir.Rest
             // If this is not binary data, try to capture the body as text
             if (!expectBinaryProtocol)
                 result = result with { BodyText = await message.Content.GetBodyAsString().ConfigureAwait(false) };
-            
+
             var usesFhirFormat = ContentType.GetResourceFormatFromContentType(message.Content.GetContentType()) != ResourceFormat.Unknown;
 
             try
             {
                 var resource = message switch
                 {
-                    { IsSuccessStatusCode: true } when expectBinaryProtocol && !usesFhirFormat => await ReadBinaryDataFromMessage(message).ConfigureAwait(false),
+                    { IsSuccessStatusCode: true } when expectBinaryProtocol && !usesFhirFormat => await ReadBinaryDataFromMessage(message, fhirRelease).ConfigureAwait(false),
                     { IsSuccessStatusCode: true } => await ReadResourceFromMessage(message.Content, ser).ConfigureAwait(false),
                     { IsSuccessStatusCode: false } => await ReadOutcomeFromMessage(message.Content, ser).ConfigureAwait(false),
                 };
@@ -179,7 +180,7 @@ namespace Hl7.Fhir.Rest
             }
 
             // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
-            if (result.BodyResource is not null && (message.Headers.Location?.OriginalString ?? message.GetRequestUri()?.OriginalString) is {} location)
+            if (result.BodyResource is not null && (message.Headers.Location?.OriginalString ?? message.GetRequestUri()?.OriginalString) is { } location)
             {
                 var ri = new ResourceIdentity(location);
                 result.BodyResource.ResourceBase = ri.HasBaseUri && ri.Form == ResourceIdentityForm.AbsoluteRestUrl
@@ -196,11 +197,15 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <returns>A <see cref="Binary"/> resource containing the streamed binary data. The resource's
         /// metadata will be retrieved from the appropriate HTTP headers.</returns>
-        public static async Task<Binary> ReadBinaryDataFromMessage(this HttpResponseMessage message)
+        public static async Task<Binary> ReadBinaryDataFromMessage(this HttpResponseMessage message, FhirRelease fhirRelease)
         {
             var result = new Binary();
 
-            result.Data = result.Content = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            if (fhirRelease == FhirRelease.STU3)
+                result.Content = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            else
+                result.Data = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
             result.ContentType = message.Content.GetContentType();
             result.SecurityContext = message.GetSecurityContext() is { } reference ? new ResourceReference(reference) : null;
             result.Meta ??= new();
