@@ -113,5 +113,123 @@ namespace Hl7.Fhir.Specification.Tests
             var job = async () => await expander.ExpandAsync(vs);
             await job.Should().ThrowAsync<ValueSetUnknownException>().WithMessage("The ValueSet expander cannot find codesystem 'http://www.unknown.org/', so the expansion cannot be completed.");
         }
+
+        [Fact]
+        public async Tasks.Task TestExcludingOnlyParent()
+        {
+            var resolver = new InMemoryResourceResolver();
+            var vs = new ValueSet
+            {
+                Compose = new()
+                {
+                    Include = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Filter = new List<ValueSet.FilterComponent>
+                            {
+                                new()
+                                {
+                                    Property = "concept",
+                                    Op = FilterOperator.IsA,
+                                    Value = "parent"
+                                }
+                            }
+                        }
+                    },
+                    Exclude = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Concept = new List<ValueSet.ConceptReferenceComponent>
+                            {
+                                new()
+                                {
+                                    Code = "parent"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var cs = new CodeSystem
+            {
+                Url = "http://www.unknown.org/",
+                Content = CodeSystemContentMode.Complete,
+                Concept = new List<CodeSystem.ConceptDefinitionComponent>
+                {
+                    new()
+                    {
+                        Code = "parent",
+                        Concept = new List<CodeSystem.ConceptDefinitionComponent>
+                        {
+                            new()
+                            {
+                                Code = "child1"
+                            },
+                            new()
+                            {
+                                Code = "child2"
+                            }
+                        }
+                    }
+                }
+            };
+
+            resolver.Add(cs, vs);
+
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = resolver });
+            await expander.ExpandAsync(vs);
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(["child1", "child2"]);
+
+
+            vs.Compose.Exclude = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Concept = new List<ValueSet.ConceptReferenceComponent>
+                            {
+                                new()
+                                {
+                                    Code = "parent"
+                                },
+                                new()
+                                {
+                                    Code = "child1"
+                                }
+                            }
+                        }
+                    };
+
+            resolver.Reload(cs, vs);
+            await expander.ExpandAsync(vs);
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(["child2"]);
+
+            vs.Compose.Exclude = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Filter = new List<ValueSet.FilterComponent>
+                            {
+                                new()
+                                {
+                                    Property = "concept",
+                                    Op = FilterOperator.IsA,
+                                    Value = "parent"
+                                }
+                            }
+                        }
+                    };
+
+            resolver.Reload(cs, vs);
+            await expander.ExpandAsync(vs);
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEmpty();
+
+        }
     }
 }
