@@ -34,33 +34,36 @@ using System;
 
 namespace Hl7.Fhir.Utility
 {
-    [AttributeUsage(AttributeTargets.Enum, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Enum)]
     public sealed class FhirEnumerationAttribute : Attribute
     {
-        private readonly string _bindingName;
-
-        // This is a positional argument
         public FhirEnumerationAttribute(string bindingName, string? canonical = null, string? defaultCodeSystem = null)
         {
-            this._bindingName = bindingName;
+            this.BindingName = bindingName;
             Valueset = canonical;
             DefaultCodeSystem = defaultCodeSystem;
         }
 
-        public FhirEnumerationAttribute(string bindingName) : this(bindingName, null, null)
+        public FhirEnumerationAttribute(string bindingName) : this(bindingName, null)
         {
             // Nothing
         }
 
-        public string BindingName
-        {
-            get { return _bindingName; }
-        }
+        /// <summary>
+        /// The binding name as used for this valueset in CQL.
+        /// </summary>
+        /// <remarks>This seems to be a mistake, since there is a one-to-many relationship between valueset
+        /// and binding, so this will probably be changed in the future.</remarks>
+        public string BindingName { get; }
 
+        /// <summary>
+        /// The canonical uri for the valueset that this enum represents.
+        /// </summary>
         public string? Valueset { get; }
 
+        /// <summary>
+        /// The default codesystem to use for members of this enumeration that do not have a codesystem specified.
+        /// </summary>
         public string? DefaultCodeSystem { get; }
     }
 }
-
-#nullable restore

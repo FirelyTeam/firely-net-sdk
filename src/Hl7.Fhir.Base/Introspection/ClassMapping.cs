@@ -26,12 +26,48 @@ namespace Hl7.Fhir.Introspection
     /// <summary>
     /// A container for the metadata of a FHIR datatype as present on the (generated) .NET POCO class.
     /// </summary>
-    public class ClassMapping : IStructureDefinitionSummary
+    public class PocoClassMapping : ClassMapping
     {
         /// <summary>
         /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes.
         /// </summary>
-        public ClassMapping(string name, Type nativeType, FhirRelease release)
+        public PocoClassMapping(string name, Type nativeType, FhirRelease release)
+            : base(name, nativeType, release)
+        {
+            // Nothing
+        }
+
+        /// <summary>
+        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes,
+        /// but the properties are provided lazily by the caller.
+        /// </summary>
+        public PocoClassMapping(string name, Type nativeType, FhirRelease release, Func<IEnumerable<PropertyMapping>> propertyMapper)
+            :base(name, nativeType,release, propertyMapper)
+        {
+            // Nothing
+        }
+
+        /// <summary>
+        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes, using the
+        /// properties passed in to the constructor.
+        /// </summary>
+        internal PocoClassMapping(string name, Type nativeType, FhirRelease release, IEnumerable<PropertyMapping> propertyMappings)
+            :base(name, nativeType,release, propertyMappings)
+        {
+            // Nothing
+        }
+    }
+
+
+    /// <summary>
+    /// A container for the metadata of a FHIR datatype.
+    /// </summary>
+    public abstract class ClassMapping : IStructureDefinitionSummary
+    {
+        /// <summary>
+        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes.
+        /// </summary>
+        internal ClassMapping(string name, Type nativeType, FhirRelease release)
         {
             Name = name;
             NativeType = nativeType;
@@ -43,7 +79,7 @@ namespace Hl7.Fhir.Introspection
         /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes,
         /// but the properties are provided lazily by the caller.
         /// </summary>
-        public ClassMapping(string name, Type nativeType, FhirRelease release, Func<IEnumerable<PropertyMapping>> propertyMapper)
+        internal ClassMapping(string name, Type nativeType, FhirRelease release, Func<IEnumerable<PropertyMapping>> propertyMapper)
             :this(name, nativeType,release)
         {
             _propertyMapper = propertyMapper;
@@ -53,7 +89,7 @@ namespace Hl7.Fhir.Introspection
         /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes, using the
         /// properties passed in to the constructor.
         /// </summary>
-        public ClassMapping(string name, Type nativeType, FhirRelease release, IEnumerable<PropertyMapping> propertyMappings)
+        internal ClassMapping(string name, Type nativeType, FhirRelease release, IEnumerable<PropertyMapping> propertyMappings)
             :this(name, nativeType,release)
         {
             _propertyMapper = () => propertyMappings;
@@ -121,7 +157,7 @@ namespace Hl7.Fhir.Introspection
 
             var backboneAttribute = ReflectionHelper.GetAttribute<BackboneTypeAttribute>(type, release);
 
-            result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
+            result = new PocoClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
                 IsBackboneType = typeAttribute.IsNestedType || backboneAttribute is not null,
                 DefinitionPath = backboneAttribute?.DefinitionPath,
@@ -188,12 +224,14 @@ namespace Hl7.Fhir.Introspection
         /// Indicates whether this class represents the nested complex type for a backbone element.
         /// </summary>
         [Obsolete("These types are now generally called Backbone types, so use IsBackboneType instead.")]
-        public bool IsNestedType { get => IsBackboneType; init => IsBackboneType = value; }
+        public bool IsNestedType { get => IsBackboneType; set => _isBackboneType = value; }
 
         /// <summary>
         /// Indicates whether this class represents the nested complex type for a backbone element.
         /// </summary>
-        public bool IsBackboneType { get; init; } = false;
+        public bool IsBackboneType { get => _isBackboneType; init => _isBackboneType = value; }
+
+        private bool _isBackboneType;
 
         /// <summary>
         /// If this is a backbone type (<see cref="IsBackboneType"/>), then this contains the path
@@ -223,16 +261,9 @@ namespace Hl7.Fhir.Introspection
         private PropertyMappingCollection? _mappings;
         private readonly Func<IEnumerable<PropertyMapping>> _propertyMapper;
 
-        private PropertyMappingCollection AllPropertyMappings
-        {
-            get
-            {
+        private PropertyMappingCollection AllPropertyMappings =>
                 LazyInitializer.EnsureInitialized(ref _mappings,
-                    () => new PropertyMappingCollection(this, _propertyMapper()));
-
-                return _mappings!;
-            }
-        }
+                    () => new PropertyMappingCollection(this, _propertyMapper()))!;
 
         // Enumerate this class' properties using reflection and create PropertyMappings.
         // Is used when no external mapping has been passed to the constructor.
@@ -240,7 +271,7 @@ namespace Hl7.Fhir.Introspection
         {
             foreach (var property in ReflectionHelper.FindPublicProperties(NativeType))
             {
-                if (!PropertyMapping.TryCreate(property, out var propMapping, this, Release)) continue;
+                if (!PropertyMapping.TryCreate(property, out var propMapping, this)) continue;
                 yield return propMapping!;
             }
         }
@@ -376,10 +407,10 @@ namespace Hl7.Fhir.Introspection
         ];
 
         private static ClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>
-            new("System." + t.Name, t, release);
+            new PocoClassMapping("System." + t.Name, t, release);
 
         private static ClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
-            new("Net." + t.FullName, t, release) { IsPrimitive = true };
+            new PocoClassMapping("Net." + t.FullName, t, release) { IsPrimitive = true };
     }
 }
 
