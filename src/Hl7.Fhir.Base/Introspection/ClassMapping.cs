@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>See <see cref="Name"></see>.</remarks>
         public bool IsCodeOfT  =>
-            !NativeType.ContainsGenericParameters &&
+            NativeType is { IsGenericType: true, ContainsGenericParameters: false } &&
             NativeType.GetGenericTypeDefinition() == typeof(Code<>);
 
         /// <summary>
