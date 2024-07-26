@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -232,5 +233,38 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(p, true);
         }
 #endif
+
+        [TestMethod]
+        public void TestBinaryContentCardinalityValidation()
+        {
+            var bin = new Binary
+            {
+                ContentType = "text/plain",
+                Content = [0, 1, 2, 3],
+                Data = [0, 1, 2, 3]
+            };
+
+            var validation = () => DotNetAttributeValidation.Validate(bin);
+            validation.Should().NotThrow<ValidationException>();
+
+
+            //We removed  the cardinality validation for the Content property for issue #2821
+            bin = new Binary
+            {
+                ContentType = "text/plain",
+                Data = [0, 1, 2, 3]
+            };
+
+            validation = () => DotNetAttributeValidation.Validate(bin);
+            validation.Should().NotThrow<ValidationException>();
+
+            bin = new Binary
+            {
+                Data = [0, 1, 2, 3]
+            };
+
+            validation = () => DotNetAttributeValidation.Validate(bin);
+            validation.Should().Throw<ValidationException>();
+        }
     }
 }
