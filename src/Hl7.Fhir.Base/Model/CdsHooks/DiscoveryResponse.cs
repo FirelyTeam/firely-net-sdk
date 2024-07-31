@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class DiscoveryResponse
 {
     public List<Service>? Services { get; set; }

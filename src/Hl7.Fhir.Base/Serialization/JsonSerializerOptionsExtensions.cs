@@ -12,6 +12,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.CdsHooks;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -28,6 +30,32 @@ namespace Hl7.Fhir.Serialization
     /// </summary>
     public static class JsonSerializerOptionsExtensions
     {
+        /// <summary>
+        /// Initialize the options to serialize using the CDS Hooks specific (de)serializers. Note that this also adds the FHIR specific converters, since FHIR is expected in the CDS Hooks messages.
+        /// </summary>
+        public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoSerializerSettings? serializerSettings = null, FhirJsonPocoDeserializerSettings? deserializerSettings = null) => 
+            options.ForFhir(inspector, serializerSettings ?? new FhirJsonPocoSerializerSettings(), deserializerSettings ?? new FhirJsonPocoDeserializerSettings()).addCdsHooks();
+
+        /// <inheritdoc cref="ForCdsHooks(JsonSerializerOptions, ModelInspector, FhirJsonPocoSerializerSettings, FhirJsonPocoDeserializerSettings)"/>
+        public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, Assembly modelAssembly, FhirJsonPocoSerializerSettings? serializerSettings = null,
+            FhirJsonPocoDeserializerSettings? deserializerSettings = null) => 
+            options.ForFhir(modelAssembly, serializerSettings ?? new FhirJsonPocoSerializerSettings(), deserializerSettings ?? new FhirJsonPocoDeserializerSettings()).addCdsHooks();
+
+        private static JsonSerializerOptions addCdsHooks(this JsonSerializerOptions options)
+        {
+            options.TypeInfoResolver = (options.TypeInfoResolver ?? new DefaultJsonTypeInfoResolver()).WithAddedModifier(changeCdsHookPropertyNames);
+
+            return options;
+
+            static void changeCdsHookPropertyNames(JsonTypeInfo ti)
+            {
+                if (ti.Type.GetCustomAttribute<CdsHookElementAttribute>() is null) return;
+                
+                foreach (var p in ti.Properties) 
+                    p.Name = char.ToLower(p.Name.First()) + p.Name.Substring(1);
+            }
+        }
+        
         /// <summary>
         /// Initialize the options to serialize using the JsonFhirConverter, producing compact output without whitespace.
         /// </summary>

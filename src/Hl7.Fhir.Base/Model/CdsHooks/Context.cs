@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Context
 {
     public string? UserId { get; set; }

@@ -5,6 +5,7 @@ using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -40,11 +41,11 @@ public class CdsHooksSerializationTests
             }
         };
 
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }.ForFhir().Compact();
+        var options = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }.ForCdsHooks().Compact();
         var json = JsonSerializer.Serialize(request, options);
 
         var expectedJson = """{"hookInstance":"d1577c69-dfbe-44ad-ba6d-3e05e953b2ea","fhirServer":"http://fhir.example.com","hook":"order-sign","context":{"userId":"Practitioner/example","patientId":"1288992"},"prefetch":{"patient":{"resourceType":"Patient","id":"1288992","active":true,"name":[{"family":"Shaw","given":["Amy"]}]}}}""";
 
-        expectedJson.Should().BeEquivalentTo(json);
+        expectedJson.Should().BeOneOf([json]);
     }
 }

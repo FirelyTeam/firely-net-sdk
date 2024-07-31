@@ -4,6 +4,7 @@ using System;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Link
 {
     public string? Label { get; set; }

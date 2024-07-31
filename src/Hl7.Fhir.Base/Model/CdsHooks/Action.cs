@@ -4,6 +4,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Action
 {
     public string? Type { get; set; }

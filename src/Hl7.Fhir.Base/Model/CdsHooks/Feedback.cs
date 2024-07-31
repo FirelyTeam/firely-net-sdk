@@ -4,6 +4,7 @@ namespace Hl7.Fhir.Model.CdsHooks;
 
 #nullable enable
 
+[CdsHookElement]
 public class Feedback
 {
     public string? Card { get; set; }

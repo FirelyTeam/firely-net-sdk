@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Authorization
 {
     [JsonPropertyName("access_token")]

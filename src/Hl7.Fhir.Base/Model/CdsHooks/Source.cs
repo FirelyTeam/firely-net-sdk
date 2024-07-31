@@ -5,6 +5,7 @@ using System;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Source
 {
     public string? Label { get; set; }

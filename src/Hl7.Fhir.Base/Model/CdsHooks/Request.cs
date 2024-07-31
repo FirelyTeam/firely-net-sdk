@@ -6,6 +6,7 @@ using System.Text.Json;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Request
 {
     public string? HookInstance { get; set; }

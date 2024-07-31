@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Model.CdsHooks;
 
+[CdsHookElement]
 public class Suggestion
 {
     public string? Label { get; set; }

@@ -44,7 +44,7 @@ public class CdsHooksDeserializationTests
                      ]
                    }
                    """;
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }.ForFhir();
+        var options = new JsonSerializerOptions().ForCdsHooks();
         var result = JsonSerializer.Deserialize<DiscoveryResponse>(json, options);
         Assert.IsNotNull(result);
         Assert.IsNotNull(result.Services);
@@ -102,7 +102,7 @@ public class CdsHooksDeserializationTests
                      }
                    }
                    """;
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }.ForFhir();
+        var options = new JsonSerializerOptions().ForCdsHooks();
         var result = JsonSerializer.Deserialize<Request>(json, options);
         Assert.IsNotNull(result);
         Assert.AreEqual("d1577c69-dfbe-44ad-ba6d-3e05e953b2ea", result.HookInstance);
@@ -138,7 +138,7 @@ public class CdsHooksDeserializationTests
                      }
                    }
                    """;
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }.ForFhir();
+        var options = new JsonSerializerOptions().ForCdsHooks();
         var result = JsonSerializer.Deserialize<Request>(json, options);
         Assert.IsNotNull(result);
         Assert.IsNotNull(result.FhirAuthorization);
@@ -218,7 +218,7 @@ public class CdsHooksDeserializationTests
                      }
                    }
                    """;
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }.ForFhir();
+        var options = new JsonSerializerOptions().ForCdsHooks();
         var result = JsonSerializer.Deserialize<Request>(json, options);
 
         // Validate hookInstance
@@ -260,7 +260,7 @@ public class CdsHooksDeserializationTests
 
     private Resource getResourceFromJson(string json)
     {
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }.ForFhir();
+        var options = new JsonSerializerOptions().ForFhir();
         return JsonSerializer.Deserialize<Resource>(json, options);
     }
 }
