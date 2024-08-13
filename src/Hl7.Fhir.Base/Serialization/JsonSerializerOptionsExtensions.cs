@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2021, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -33,13 +33,26 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Initialize the options to serialize using the CDS Hooks specific (de)serializers. Note that this also adds the FHIR specific converters, since FHIR is expected in the CDS Hooks messages.
         /// </summary>
-        public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoSerializerSettings? serializerSettings = null, FhirJsonPocoDeserializerSettings? deserializerSettings = null) => 
+#if NET8_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.Experimental(diagnosticId: "ExperimentalApi")]
+#else
+        [System.Obsolete("This function is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.")]
+#endif
+        public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoSerializerSettings? serializerSettings = null,
+            FhirJsonPocoDeserializerSettings? deserializerSettings = null) =>
             options.ForFhir(inspector, serializerSettings ?? new FhirJsonPocoSerializerSettings(), deserializerSettings ?? new FhirJsonPocoDeserializerSettings()).addCdsHooks();
 
+
         /// <inheritdoc cref="ForCdsHooks(JsonSerializerOptions, ModelInspector, FhirJsonPocoSerializerSettings, FhirJsonPocoDeserializerSettings)"/>
+#if NET8_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.Experimental(diagnosticId: "ExperimentalApi")]
+#else
+        [System.Obsolete("This function is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.")]
+#endif
         public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, Assembly modelAssembly, FhirJsonPocoSerializerSettings? serializerSettings = null,
-            FhirJsonPocoDeserializerSettings? deserializerSettings = null) => 
-            options.ForFhir(modelAssembly, serializerSettings ?? new FhirJsonPocoSerializerSettings(), deserializerSettings ?? new FhirJsonPocoDeserializerSettings()).addCdsHooks();
+            FhirJsonPocoDeserializerSettings? deserializerSettings = null) =>
+            options.ForFhir(modelAssembly, serializerSettings ?? new FhirJsonPocoSerializerSettings(), deserializerSettings ?? new FhirJsonPocoDeserializerSettings())
+                .addCdsHooks();
 
         private static JsonSerializerOptions addCdsHooks(this JsonSerializerOptions options)
         {
@@ -50,12 +63,12 @@ namespace Hl7.Fhir.Serialization
             static void changeCdsHookPropertyNames(JsonTypeInfo ti)
             {
                 if (ti.Type.GetCustomAttribute<CdsHookElementAttribute>() is null) return;
-                
-                foreach (var p in ti.Properties) 
+
+                foreach (var p in ti.Properties)
                     p.Name = char.ToLower(p.Name.First()) + p.Name.Substring(1);
             }
         }
-        
+
         /// <summary>
         /// Initialize the options to serialize using the JsonFhirConverter, producing compact output without whitespace.
         /// </summary>
@@ -68,15 +81,15 @@ namespace Hl7.Fhir.Serialization
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, Assembly modelAssembly, FhirJsonPocoDeserializerSettings deserializerSettings) =>
-        options.ForFhir(modelAssembly, new(), deserializerSettings);
+            options.ForFhir(modelAssembly, new(), deserializerSettings);
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(
-                this JsonSerializerOptions options,
-                Assembly modelAssembly,
-                FhirJsonPocoSerializerSettings serializerSettings,
-                FhirJsonPocoDeserializerSettings deserializerSettings
-                )
+            this JsonSerializerOptions options,
+            Assembly modelAssembly,
+            FhirJsonPocoSerializerSettings serializerSettings,
+            FhirJsonPocoDeserializerSettings deserializerSettings
+        )
         {
             var converter = new FhirJsonConverterFactory(modelAssembly, serializerSettings, deserializerSettings);
             return options.ForFhir(converter);
@@ -95,11 +108,11 @@ namespace Hl7.Fhir.Serialization
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
         public static JsonSerializerOptions ForFhir(
-                this JsonSerializerOptions options,
-                ModelInspector inspector,
-                FhirJsonPocoSerializerSettings serializerSettings,
-                FhirJsonPocoDeserializerSettings deserializerSettings
-                )
+            this JsonSerializerOptions options,
+            ModelInspector inspector,
+            FhirJsonPocoSerializerSettings serializerSettings,
+            FhirJsonPocoDeserializerSettings deserializerSettings
+        )
         {
             var converter = new FhirJsonConverterFactory(inspector, serializerSettings, deserializerSettings);
             return options.ForFhir(converter);
@@ -126,7 +139,7 @@ namespace Hl7.Fhir.Serialization
 
             return options;
         }
-        
+
         /// <summary>
         /// Modify the options to use a preset list of errors to ignore by specifying a mode. This can be any member of <see cref="DeserializerModes"/>
         /// </summary>
@@ -205,17 +218,20 @@ namespace Hl7.Fhir.Serialization
         /// Do not ignore any errors (default behaviour for most implementations)
         /// </summary>
         Strict,
+
         /// <summary>
         /// An issue is recoverable if all data present in the parsed data could be retrieved and
         /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
         /// </summary>
         Recoverable,
+
         /// <summary>
         /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
         /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
         /// these newer elements and data, so this means data loss may occur.
         /// </summary>
         BackwardsCompatible,
+
         /// <summary>
         /// Ignore all errors. Useful for debugging and/or when you know the data to be parsed is a correct instance.
         /// </summary>

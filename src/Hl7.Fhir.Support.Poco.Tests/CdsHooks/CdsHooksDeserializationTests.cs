@@ -2,6 +2,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.CdsHooks;
 using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Support.Poco.Tests.CdsHooks;
@@ -9,7 +10,8 @@ namespace Hl7.Fhir.Support.Poco.Tests.CdsHooks;
 [TestClass]
 public class CdsHooksDeserializationTests
 {
-    [TestMethod] 
+    [TestMethod]
+    [Experimental("ExperimentalApi")]
     public void CdsHookList_Deserialize()
     {
         var json = """
@@ -72,6 +74,7 @@ public class CdsHooksDeserializationTests
     }
 
     [TestMethod]
+    [Experimental("ExperimentalApi")]
     public void CdsHookWithResource_Deserialize()
     {
         var json = """
@@ -125,6 +128,7 @@ public class CdsHooksDeserializationTests
     }
 
     [TestMethod]
+    [Experimental("ExperimentalApi")]
     public void CdsHookWithUnderscoreProperties_Deserialize()
     {
         var json = """
@@ -150,6 +154,7 @@ public class CdsHooksDeserializationTests
     }
 
     [TestMethod]
+    [Experimental("ExperimentalApi")]
     public void CdsHookCombined_Deserialize()
     {
         var json = """

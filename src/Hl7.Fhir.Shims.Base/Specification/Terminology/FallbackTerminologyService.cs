@@ -70,7 +70,8 @@ namespace Hl7.Fhir.Specification.Terminology
 
         /// <inheritdoc/>
         public Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>
-            tryFallback((s, p) => s.ValueSetValidateCode(p, id, useGet), parameters);
+            tryFallback((s, p) => s.
+                ValueSetValidateCode(p, id, useGet), parameters);
 
         /// <inheritdoc/>
         public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>

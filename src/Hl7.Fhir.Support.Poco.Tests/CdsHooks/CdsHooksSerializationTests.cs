@@ -5,6 +5,7 @@ using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,6 +16,7 @@ namespace Hl7.Fhir.Support.Poco.Tests.CdsHooks;
 public class CdsHooksSerializationTests
 {
     [TestMethod]
+    [Experimental("ExperimentalApi")]
     public void CdsHookCombined_Serialize()
     {
         var request = new Request
