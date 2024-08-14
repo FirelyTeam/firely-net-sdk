@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -68,6 +69,43 @@ namespace Hl7.Fhir.Specification.Tests
 
             result.Parameter.Should().Contain(p => p.Name == "result")
                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+        }
+        
+        [TestMethod]
+        public async Task CheckErrorBarrier()
+        {
+
+            var valueSet = new ValueSet()
+            {
+                Url = "http://fire.ly/ValueSet/AllOfSnomed",
+                Compose = new ValueSet.ComposeComponent()
+                {
+                    Include = new System.Collections.Generic.List<ValueSet.ConceptSetComponent>()
+                    {
+                        new () {System = "http://snomed.info/sct" }
+                    }
+                }
+            };
+
+            LocalTerminologyService _service = new(
+                new CachedResolver(
+                    new MultiResolver(
+                        ZipSource.CreateValidationSource(),
+                        new InMemoryResourceResolver(valueSet)
+                    )
+                ));
+
+
+            var parameters = new ValidateCodeParameters()
+                .WithValueSet("http://fire.ly/ValueSet/AllOfSnomed")
+                .WithCode("255848005", context: "AllergyIntolerance.code.coding[0].code");
+
+
+
+            var ac = () => _service.ValueSetValidateCode(parameters.Build());
+            
+            var ex = await ac.Should().ThrowAsync<FhirOperationException>();
+            ex.WithMessage("*compositional code system*");
         }
     }
 }
