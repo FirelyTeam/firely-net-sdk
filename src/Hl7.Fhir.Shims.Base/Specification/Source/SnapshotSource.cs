@@ -54,7 +54,9 @@ namespace Hl7.Fhir.Specification.Source
         private static SnapshotGeneratorSettings createSettings(bool regenerate)
         {
             var settings = SnapshotGeneratorSettings.CreateDefault();
+#pragma warning disable CS0618 // Type or member is obsolete
             settings.ForceRegenerateSnapshots = regenerate;
+#pragma warning restore CS0618 // Type or member is obsolete
             return settings;
         }
 
@@ -96,7 +98,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (res is StructureDefinition sd)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (!sd.HasSnapshot || (Generator.Settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     await Generator.UpdateAsync(sd).ConfigureAwait(false);
                 }
