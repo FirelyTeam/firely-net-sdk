@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Utility;
+using System;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -34,7 +35,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
             other.GenerateSnapshotForExternalProfiles = GenerateSnapshotForExternalProfiles;
+#pragma warning disable CS0618 // Type or member is obsolete
             other.ForceRegenerateSnapshots = ForceRegenerateSnapshots;
+#pragma warning restore CS0618 // Type or member is obsolete
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
@@ -55,7 +58,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
         /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
         /// </summary>
-        public bool ForceRegenerateSnapshots { get; set; } = false; // ForceExpandAll
+        [Obsolete("This setting really does not do a lot anymore. We will consider removing it in a future major release. See also https://github.com/FirelyTeam/firely-net-sdk/pull/2803")]
+        public bool ForceRegenerateSnapshots { get; set; } = true; // ForceExpandAll
 
         /// <summary>
         /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
