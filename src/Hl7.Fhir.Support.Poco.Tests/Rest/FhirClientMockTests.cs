@@ -123,14 +123,15 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient?name=henry"),
             };
 
-            response.Headers.Add("Location", "/fhir/*/Bundle/example");
+            response.Headers.Add("Location", "https://example.com/fhir/Bundle/example");
 
             using var client = new SubstituteBuilder()
                 .Send(response, h => h.RequestUri == new Uri("http://example.com/Patient?name=henry"))
                 .AsClient();
             var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
 
-            client.LastResult!.Location.Should().Be("/fhir/*/Bundle/example");
+            client.LastResult!.Location.Should().Be("https://example.com/fhir/Bundle/example");
+            patient!.ResourceBase.Should().Be(new Uri("https://example.com/fhir/"));
         }
 
         [DataTestMethod]

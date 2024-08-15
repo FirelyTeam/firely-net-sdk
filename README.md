@@ -74,6 +74,11 @@ If you want to participate in this project, we're using [Git Flow][nvie] for our
 
 > Note: Since the 5.0 release of the SDK, the branches for STU3 and newer have been combined in a single `develop` branch. This branch now contains the code for all FHIR releases from STU3 and up. We have also refactored all the common code out to projects within that branch, so the separate `common` repository (at https://github.com/FirelyTeam/firely-net-common) is no longer in use. This greatly simplifies management and creating PRs for these projects.
 
+## Binary Compatibility
+Our build pipeline automatically checks for binary compatibilty and fails when we break it. In some cases we can make an exception to break binary compatitibility. 
+To make sure the pipeline doesn't break, you should run ```dotnet pack /p:GenerateCompatibilitySuppressionFile=true``` locally to generate a suppression file. Please commit this file to make sure the build passes.
+
+
 
 [common-repo]: https://github.com/FirelyTeam/firely-net-common
 [netsdk-docu]: https://docs.fire.ly/projects/Firely-NET-SDK/

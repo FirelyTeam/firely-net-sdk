@@ -349,10 +349,10 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static string readXhtml(XmlReader reader)
+        private static XHtml readXhtml(XmlReader reader)
         {
             var xhtml = reader.ReadOuterXml();
-            return xhtml;
+            return new XHtml(xhtml);
         }
 
         //Will create a new list, or adds encountered values to an already existing list (and reports a user error).

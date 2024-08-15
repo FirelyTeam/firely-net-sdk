@@ -290,7 +290,18 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false)
                 ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find codesystem '{uri}', so the expansion cannot be completed.");
-
+            
+            if(importedCs.Compositional is true)
+                throw new ValueSetExpansionTooComplexException($"The ValueSet expander cannot expand compositional code system '{uri}', so the expansion cannot be completed.");
+            
+#if STU3
+            var contentNotPresent = importedCs.Content == CodeSystem.CodeSystemContentMode.NotPresent;
+#else 
+            var contentNotPresent = importedCs.Content == CodeSystemContentMode.NotPresent;
+#endif
+            if(contentNotPresent)
+                throw new ValueSetExpansionTooComplexException($"The ValueSet expander cannot expand code system '{uri}' without content, so the expansion cannot be completed.");
+            
             return importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings));
         }
     }
@@ -322,7 +333,11 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public static void Remove(this List<ValueSet.ContainsComponent> dest, string system, string code)
         {
+            var children = dest.Where(c => c.System == system && c.Code == code).SelectMany(c => c.Contains).ToList();
             dest.RemoveAll(c => c.System == system && c.Code == code);
+
+            //add children back to the list, they do not necessarily need to be removed when the parent is removed.
+            dest.AddRange(children);
 
             // Look for this code in children too
             foreach (var component in dest)
@@ -334,9 +349,15 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public static void Remove(this List<ValueSet.ContainsComponent> dest, List<ValueSet.ContainsComponent> source)
         {
-            //TODO: Pretty unclear what to do with child concepts in the source - they all need to be removed from dest?
             foreach (var sourceConcept in source)
+            {
                 dest.Remove(sourceConcept.System, sourceConcept.Code);
+
+                //check if there are children that need to be removed too.
+                if (sourceConcept.Contains.Any())
+                    dest.Remove(sourceConcept.Contains);
+            }
+
         }
 
         internal static ValueSet.ContainsComponent ToContainsComponent(this CodeSystem.ConceptDefinitionComponent source, CodeSystem system, ValueSetExpanderSettings settings)

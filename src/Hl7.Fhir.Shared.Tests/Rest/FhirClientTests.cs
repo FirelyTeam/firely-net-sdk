@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Tasks = System.Threading.Tasks;
@@ -910,6 +911,47 @@ namespace Hl7.Fhir.Tests.Rest
             
             var read = await client.ReadAsync<Binary>(created.ResourceIdentity());
             read.Should().BeOfType(typeof(Binary));
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Tasks.Task FhirClient_ResourceBase_ResourceIdentity_ShouldBeConsistent()
+        {
+            var client = new FhirClient(TestEndpoint);
+            var patient = new Patient()
+            {
+                BirthDate = "1972-11-30",
+                Name = new List<HumanName>()
+                {
+                    new HumanName()
+                    {
+                        Given = new List<string>() {"test_given"},
+                        Family = "Donald",
+                    }
+                },
+                Identifier = new List<Identifier>()
+                {
+                    new Identifier()
+                    {
+                        System = "urn:oid:1.2.36.146.595.217.0.1",
+                        Value = "12345"
+                    }
+                }
+            };
+
+            Console.WriteLine("Unsaved Patient");
+            patient.ResourceBase.Should().BeNull();
+            patient.ResourceIdentity().Should().BeNull();
+
+            Console.WriteLine("Saved Patient");
+            var newPatient = await client.CreateAsync(patient);
+            newPatient?.ResourceBase.Should().Be(TestEndpoint + "/");
+            newPatient?.ResourceIdentity().ToString().Should().Be(TestEndpoint + "/Patient/" + newPatient.Id + "/_history/" + newPatient.Meta.VersionId);
+
+            Console.WriteLine("Read Patient");
+            var patientGet = await client.ReadAsync<Patient>($"Patient/{newPatient.Id}");
+            patientGet?.ResourceBase.Should().Be(TestEndpoint + "/");
+            patientGet?.ResourceIdentity().ToString().Should().Be(TestEndpoint + "/Patient/" + patientGet.Id + "/_history/" + patientGet.Meta.VersionId);
         }
     }
 

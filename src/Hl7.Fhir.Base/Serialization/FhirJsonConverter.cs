@@ -80,7 +80,6 @@ namespace Hl7.Fhir.Serialization
     public class FhirJsonConverter<F> : JsonConverter<F>
         where F : Base
     {
-        // internal for testing purposes
         private readonly PocoSerializationEngine _engine;
 
         private FhirJsonConverter(IFhirSerializationEngine engine)
@@ -99,6 +98,12 @@ namespace Hl7.Fhir.Serialization
         {
             // nothing
         }
+
+        [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
+        public FhirJsonConverter(
+            Assembly assembly, FhirJsonPocoSerializerSettings? serializerSettings = null, FhirJsonPocoDeserializerSettings? deserializerSettings = null,
+            Predicate<CodedException>? ignoreFilter = null) :
+            this(FhirSerializationEngineFactory.Custom(ModelInspector.ForAssembly(assembly), ignoreFilter ?? (_ => false), deserializerSettings, serializerSettings)){}
 
         /// <summary>
         /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
