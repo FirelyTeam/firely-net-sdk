@@ -39,8 +39,8 @@ namespace Hl7.FhirPath.Expressions
             newContext.SetIndex(ElementNode.CreateList(0));
             newContext.SetOriginalContext(input);
             
-            if (ctx.Resource != null) newContext.SetResource(new[] { ctx.Resource });
-            if (ctx.RootResource != null) newContext.SetRootResource(new[] { ctx.RootResource });
+            if (ctx?.Resource != null) newContext.SetResource(new[] { ctx.Resource });
+            if (ctx?.RootResource != null) newContext.SetRootResource(new[] { ctx.RootResource });
 
             return newContext;
         }
