@@ -166,14 +166,15 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void TestIIf()
         {
-            fixture.IsTrue(@"Patient.name.iif(exists(), 'named', 'unnamed') = 'named'");
-            fixture.IsTrue(@"Patient.name.iif(empty(), 'unnamed', 'named') = 'named'");
-
-            fixture.IsTrue(@"Patient.contained[0].name.iif(exists(), 'named', 'unnamed') = 'named'");
-            fixture.IsTrue(@"Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'");
-
-            fixture.IsTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
-
+            fixture.IsTrue(@"Patient.contained[0].name.iif(exists(), 'named', 'unnamed').join(', ') = 'named, named'");
+            fixture.IsTrue(@"Patient.contained[0].name.iif(empty(), 'unnamed', 'named').join(', ') = 'named, named'");
+            fixture.IsTrue(@"Patient.name.iif({}, 'named', 'unnamed').join(', ') = 'unnamed'");
+            
+            var resultWithSelect = fixture.PatientExample.Select("Patient.name.select(iif(use = 'official', given, 'not official')).join(', ')");
+            var resultWithoutSelect = fixture.PatientExample.Select("Patient.name.iif(use = 'official', given, 'not official').join(', ')");
+            resultWithSelect.Should().BeEquivalentTo(resultWithoutSelect);
+            resultWithSelect.Should().ContainSingle().Subject.Should().BeEquivalentTo(new FhirString("Peter, James, not official"));
+            
             //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 

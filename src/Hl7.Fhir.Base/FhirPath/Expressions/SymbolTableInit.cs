@@ -328,6 +328,12 @@ namespace Hl7.FhirPath.Expressions
         {
             // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
             // note: short-circuit behavior is expected in this function
+            
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            if (focus.Count() > 1)
+            {
+                return runSelect(ctx, [arguments.First(), (closure, _) => runIif(closure, new List<Invokee>{(_, _) => closure.GetThis(), arguments.Skip(1).First(), arguments.Skip(2).First(), arguments.Skip(3).FirstOrDefault()})]);
+            }
 
             var expression = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
             var trueResult = arguments.Skip(2).First();
