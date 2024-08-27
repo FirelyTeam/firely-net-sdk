@@ -28,8 +28,18 @@ namespace Hl7.FhirPath.Expressions
             var newContext = ctx ?? new EvaluationContext();
             
             var node = root as ScopedNode;
-            newContext.Resource ??= node != null ? getResourceFromNode(node) : root; // if the root is a scoped node, use the resource from the node
-            newContext.RootResource ??= node != null ? getRootResourceFromNode(node) : root; // if the root is a scoped node, use the root resource from the node
+            
+            newContext.Resource ??= node != null // if the value has been manually set, we do nothing. Otherwise, if the root is a scoped node:
+                ? getResourceFromNode(node) // we infer the resource from the scoped node
+                : (root?.Definition?.IsResource is true // if we do not have a scoped node, we see if this is even a resource to begin with
+                    ? root // if it is, we use the root as the resource
+                    : null // if not, this breaks the spec in every way (but we will still continue, hopefully we do not need %resource or %rootResource)
+                ); 
+            
+            // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
+            newContext.RootResource ??= node != null 
+                ? getRootResourceFromNode(node) 
+                : newContext.Resource; 
             
             var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 
