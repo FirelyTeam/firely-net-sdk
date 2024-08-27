@@ -28,8 +28,8 @@ namespace Hl7.FhirPath.Expressions
             var newContext = ctx ?? new EvaluationContext();
             
             var node = root as ScopedNode;
-            newContext.Resource ??= node != null ? getResourceFromNode(node) : root;
-            newContext.RootResource ??= node != null ? getRootResourceFromNode(node) : root;
+            newContext.Resource ??= node != null ? getResourceFromNode(node) : root; // if the root is a scoped node, use the resource from the node
+            newContext.RootResource ??= node != null ? getRootResourceFromNode(node) : root; // if the root is a scoped node, use the root resource from the node
             
             var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 

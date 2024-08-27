@@ -25,8 +25,6 @@ public class FhirPathContextTests
     [TestMethod]
     public void TestFhirEvaluationContext()
     {
-        var context = new FhirEvaluationContext(); // create default, should infer from scoped nodes.
-
         _bundle.IsTrue("entry[2].resource.contained[0].select(%resource) = %resource"); // should stay the same
         _bundle.IsTrue("%rootResource = Bundle.entry[2].resource.contained[0].select(%rootResource)"); // should stay the same
 
