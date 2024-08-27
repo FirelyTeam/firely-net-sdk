@@ -25,24 +25,30 @@ namespace Hl7.FhirPath.Expressions
 
         public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
         {
-            var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };
+            var newContext = ctx ?? new EvaluationContext();
+            
+            var node = root as ScopedNode;
+            newContext.Resource ??= node != null ? getResourceFromNode(node) : root;
+            newContext.RootResource ??= node != null ? getRootResourceFromNode(node) : root;
+            
+            var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 
             var input = new[] { root };
 
-            foreach (var assignment in newContext.EvaluationContext.Environment)
+            foreach (var assignment in newClosure.EvaluationContext.Environment)
             {
-                newContext.SetValue(assignment.Key, assignment.Value);
+                newClosure.SetValue(assignment.Key, assignment.Value);
             }
             
-            newContext.SetThis(input);
-            newContext.SetThat(input);
-            newContext.SetIndex(ElementNode.CreateList(0));
-            newContext.SetOriginalContext(input);
+            newClosure.SetThis(input);
+            newClosure.SetThat(input);
+            newClosure.SetIndex(ElementNode.CreateList(0));
+            newClosure.SetOriginalContext(input);
             
-            if (ctx?.Resource != null) newContext.SetResource(new[] { ctx.Resource });
-            if (ctx?.RootResource != null) newContext.SetRootResource(new[] { ctx.RootResource });
+            if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
+            if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });
 
-            return newContext;
+            return newClosure;
         }
 
         private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
@@ -81,6 +87,14 @@ namespace Hl7.FhirPath.Expressions
             }
 
             return null;
+        }
+
+        private static ITypedElement getResourceFromNode(ScopedNode node) => node.AtResource ? node : node.ParentResource;
+        
+        private static ITypedElement getRootResourceFromNode(ScopedNode node)
+        {
+            var resource = (ScopedNode)getResourceFromNode(node);
+            return resource?.ParentResource?.ContainedResources() is {} c && c.Any() ? resource.ParentResource : resource;
         }
     }
 }

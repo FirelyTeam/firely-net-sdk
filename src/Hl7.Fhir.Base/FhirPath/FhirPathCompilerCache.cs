@@ -62,7 +62,7 @@ namespace Hl7.FhirPath
         {
             input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator(input, ctx ?? new EvaluationContext());
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Hl7.FhirPath
         {
             input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.Scalar(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.Scalar(input, ctx ?? new EvaluationContext());
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Hl7.FhirPath
         {
             input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.Predicate(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.Predicate(input, ctx ?? new EvaluationContext());
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Hl7.FhirPath
         {
             input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.IsTrue(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.IsTrue(input, ctx ?? new EvaluationContext());
         }
 
 
@@ -121,7 +121,7 @@ namespace Hl7.FhirPath
             input = input.ToScopedNode();
 
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.IsBoolean(value, input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.IsBoolean(value, input, ctx ?? new EvaluationContext());
         }
 
     }

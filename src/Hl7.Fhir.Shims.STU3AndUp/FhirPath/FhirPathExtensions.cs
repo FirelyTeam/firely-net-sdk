@@ -14,6 +14,7 @@ using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace Hl7.Fhir.FhirPath
 {

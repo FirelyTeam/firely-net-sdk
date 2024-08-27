@@ -1,7 +1,11 @@
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace HL7.FhirPath.Tests.Tests;
 
