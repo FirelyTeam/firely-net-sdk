@@ -290,7 +290,18 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false)
                 ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find codesystem '{uri}', so the expansion cannot be completed.");
-
+            
+            if(importedCs.Compositional is true)
+                throw new ValueSetExpansionTooComplexException($"The ValueSet expander cannot expand compositional code system '{uri}', so the expansion cannot be completed.");
+            
+#if STU3
+            var contentNotPresent = importedCs.Content == CodeSystem.CodeSystemContentMode.NotPresent;
+#else 
+            var contentNotPresent = importedCs.Content == CodeSystemContentMode.NotPresent;
+#endif
+            if(contentNotPresent)
+                throw new ValueSetExpansionTooComplexException($"The ValueSet expander cannot expand code system '{uri}' without content, so the expansion cannot be completed.");
+            
             return importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings));
         }
     }
