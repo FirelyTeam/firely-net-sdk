@@ -328,14 +328,12 @@ namespace Hl7.FhirPath.Expressions
         {
             // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
             // note: short-circuit behavior is expected in this function
-            
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            if (focus.Count() > 1)
-            {
-                return runSelect(ctx, [arguments.First(), (closure, _) => runIif(closure, new List<Invokee>{(_, _) => closure.GetThis(), arguments.Skip(1).First(), arguments.Skip(2).First(), arguments.Skip(3).FirstOrDefault()})]);
-            }
 
-            var expression = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
+            var newContext = ctx.Nest(focus);
+            newContext.SetThis(focus);
+            
+            var expression = arguments.Skip(1).First()(newContext, InvokeeFactory.EmptyArgs);
             var trueResult = arguments.Skip(2).First();
             var otherResult = arguments.Skip(3).FirstOrDefault();
 
@@ -343,8 +341,8 @@ namespace Hl7.FhirPath.Expressions
                 throw Error.InvalidOperation($"Result of {nameof(expression)} is not of type boolean");
 
             return (expression.BooleanEval() ?? false)
-                ? trueResult(ctx, InvokeeFactory.EmptyArgs)
-                : otherResult == null ? ElementNode.EmptyList : otherResult(ctx, InvokeeFactory.EmptyArgs);
+                ? trueResult(newContext, InvokeeFactory.EmptyArgs) // share focus with this function
+                : otherResult == null ? ElementNode.EmptyList : otherResult(newContext, InvokeeFactory.EmptyArgs);
         }
 
         private static IEnumerable<ITypedElement> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
