@@ -9,6 +9,7 @@
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,8 +24,8 @@ namespace Hl7.Fhir.ElementModel
             public readonly object _lock = new();
 
             public string? Id;
-            public IEnumerable<ScopedNode>? ContainedResources;
-            public IEnumerable<BundledResource>? BundledResources;
+            public ReferencedResourceCache? ContainedResources;
+            public ReferencedResourceCache? BundledResources;
 
             public string? InstanceUri;
         }
@@ -160,20 +161,51 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public IEnumerable<ScopedNode> ContainedResources()
         {
-            if (_cache.ContainedResources == null)
+            if (_cache.ContainedResources != null) return _cache.ContainedResources.Resources;
+            
+            if (AtResource)
             {
-                _cache.ContainedResources = AtResource ?
-                    this.Children("contained").Cast<ScopedNode>() :
-                    Enumerable.Empty<ScopedNode>();
+                var referenceEntryPairs = from contained in this.Children("contained")
+                    let id = contained.Children("id").FirstOrDefault()?.Value as string
+                    let resource = contained as ScopedNode
+                    select new KeyValuePair<string, ScopedNode?>(id, resource);
+                _cache.ContainedResources = new ReferencedResourceCache(referenceEntryPairs);
             }
+            else
+                _cache.ContainedResources = new ReferencedResourceCache([]);
+
+            return _cache.ContainedResources.Resources;
+        }
+
+        public IEnumerable<BundledResource> ContainedResourcesWithId()
+        {
+            if (_cache.ContainedResources != null) return _cache.ContainedResources;
+            
+            if (AtResource)
+            {
+                var referenceEntryPairs = from contained in this.Children("contained")
+                    let id = contained.Children("id").FirstOrDefault()?.Value as string
+                    let resource = contained as ScopedNode
+                    select new KeyValuePair<string, ScopedNode?>(id, resource);
+                _cache.ContainedResources = new ReferencedResourceCache(referenceEntryPairs);
+            }
+            else
+                _cache.ContainedResources = new ReferencedResourceCache([]);
+
             return _cache.ContainedResources;
         }
 
         /// <summary>
         /// A tuple of a bundled resource plus its Bundle.entry.fullUrl property.
         /// </summary>
-        public class BundledResource
+        public class BundledResource()
         {
+            public BundledResource(string? fullUrl, ScopedNode? resource) : this()
+            {
+                FullUrl = fullUrl;
+                Resource = resource;
+            }
+            
             public string? FullUrl;
             public ScopedNode? Resource;
         }
@@ -183,20 +215,25 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public IEnumerable<BundledResource> BundledResources()
         {
-            if (_cache.BundledResources == null)
+            if (_cache.BundledResources != null) return _cache.BundledResources;
+            
+            if (InstanceType == "Bundle")
             {
-                if (InstanceType == "Bundle")
-                    _cache.BundledResources = from e in this.Children("entry")
-                                              let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
-                                              let resource = e.Children("resource").FirstOrDefault() as ScopedNode
-                                              select new BundledResource { FullUrl = fullUrl, Resource = resource };
-                else
-                    _cache.BundledResources = Enumerable.Empty<BundledResource>();
+                var referenceEntryPairs = from e in this.Children("entry")
+                    let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
+                    let resource = e.Children("resource").FirstOrDefault() as ScopedNode
+                    select new KeyValuePair<string, ScopedNode>(fullUrl, resource);
+                _cache.BundledResources = new ReferencedResourceCache(referenceEntryPairs);
             }
+                    
+            else
+                _cache.BundledResources = new ReferencedResourceCache([]);
 
             return _cache.BundledResources;
         }
 
+        internal ReferencedResourceCache? getContainedCache() => _cache.ContainedResources;
+        internal ReferencedResourceCache? getBundledCache() => _cache.BundledResources;
 
         private readonly string? _fullUrl = null;
 

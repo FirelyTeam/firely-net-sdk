@@ -110,14 +110,14 @@ namespace Hl7.Fhir.ElementModel
                 {
                     if (parent.InstanceType == FhirTypeConstants.BUNDLE)
                     {
-                        var result = parent.BundledResources().FirstOrDefault(br => br.FullUrl == url)?.Resource;
-                        if (result != null) return result;
+                        if (parent.BundledResources() is ReferencedResourceCache result) return result.resolveReference(url);
+                        return null;
                     }
                     else
                     {
                         if (parent.Id() == url) return parent;
-                        var result = parent.ContainedResources().FirstOrDefault(cr => cr.Id() == url);
-                        if (result != null) return result;
+                        if (parent.ContainedResourcesWithId() is ReferencedResourceCache result) return result.resolveReference(url);
+                        return null;
                     }
                 }
 
