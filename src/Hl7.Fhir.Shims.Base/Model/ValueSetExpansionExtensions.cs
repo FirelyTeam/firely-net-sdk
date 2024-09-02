@@ -67,26 +67,22 @@ namespace Hl7.Fhir.Model
 
         private static ICollection<CSDC> removeCodeByPredicate(this ICollection<CSDC> concepts, Predicate<CSDC> predicate)
         {
-            foreach (var concept in concepts)
+            var itemsToBeRemoved = concepts.Where(c => predicate(c)).ToList();
+
+            //first remove the items that match the predicate (including their children)
+            foreach (var item in itemsToBeRemoved)
             {
-                var result = concept.removeCodeByPredicate(concepts, predicate);
-                if (result != null) return result;
+                concepts.Remove(item);
             }
-            return concepts;
-        }
-        private static ICollection<CSDC>? removeCodeByPredicate(this CSDC concept, ICollection<CSDC> concepts, Predicate<CSDC> predicate)
-        {
-            // Direct hit
-            if (predicate(concept))
-                concepts.Remove(concept);
-            else if (concept.Concept.Any())
+
+            //then check the children of the items that were not removed to see if they match the predicate
+            foreach (var concept in concepts)
             {
                 removeCodeByPredicate(concept.Concept, predicate);
             }
+
             return concepts;
         }
-
-
 
         /// <summary>
         /// Loops through all concepts and descendants and returns a flat list of concepts, without a nested hierarchy
