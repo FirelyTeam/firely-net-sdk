@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
 namespace Hl7.FhirPath.R4.Tests
@@ -164,17 +165,12 @@ namespace Hl7.FhirPath.R4.Tests
 
 
         [TestMethod]
-        public void TestIIf()
+        public void TestIIfContext()
         {
-            fixture.IsTrue(@"Patient.name.iif(exists(), 'named', 'unnamed') = 'named'");
-            fixture.IsTrue(@"Patient.name.iif(empty(), 'unnamed', 'named') = 'named'");
-
-            fixture.IsTrue(@"Patient.contained[0].name.iif(exists(), 'named', 'unnamed') = 'named'");
-            fixture.IsTrue(@"Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'");
-
-            fixture.IsTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
-
-            //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
+            var res = fixture.TestInput.Scalar("Patient.contained[0].name[0].given[0].iif(true, single())");
+            res.Should().BeOfType<string>().Subject.Should().Be("Eve");
+            res = fixture.TestInput.Scalar("Patient.contained[0].name.iif(use = 'official', 'given', given.join(''))"); // comparison between collection and string
+            res.Should().BeOfType<string>().Subject.Should().Be("EveEveline");
         }
 
         [TestMethod]
