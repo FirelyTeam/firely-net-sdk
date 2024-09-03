@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support.Poco;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Linq;
 
@@ -116,8 +117,9 @@ namespace Hl7.Fhir.ElementModel
                     else
                     {
                         if (parent.Id() == url) return parent;
-                        if (parent.ContainedResourcesWithId() is ReferencedResourceCache result) return result.resolveReference(url);
-                        return null;
+                        if (parent.ContainedResourcesWithId() is ReferencedResourceCache result 
+                            && result.resolveReference(url) is { } resource) 
+                            return resource;
                     }
                 }
 

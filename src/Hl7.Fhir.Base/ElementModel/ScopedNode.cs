@@ -184,7 +184,7 @@ namespace Hl7.Fhir.ElementModel
             if (AtResource)
             {
                 var referenceEntryPairs = from contained in this.Children("contained")
-                    let id = contained.Children("id").FirstOrDefault()?.Value as string
+                    let id = $"#{contained.Children("id").FirstOrDefault()?.Value as string}"
                     let resource = contained as ScopedNode
                     select new KeyValuePair<string, ScopedNode?>(id, resource);
                 _cache.ContainedResources = new ReferencedResourceCache(referenceEntryPairs);
