@@ -99,12 +99,12 @@ namespace Hl7.FhirPath.Expressions
             return null;
         }
 
-        private static ITypedElement getResourceFromNode(ScopedNode node) => node.AtResource ? node : node.ParentResource;
+        private static ScopedNode getResourceFromNode(ScopedNode node) => node.AtResource ? node : node.ParentResource;
         
-        private static ITypedElement getRootResourceFromNode(ScopedNode node)
+        private static ScopedNode getRootResourceFromNode(ScopedNode node)
         {
-            var resource = (ScopedNode)getResourceFromNode(node);
-            return resource?.ParentResource?.ContainedResources() is {} c && c.Any() ? resource.ParentResource : resource;
+            var resource = getResourceFromNode(node);
+            return resource?.Name is "contained" ? resource.ParentResource : resource;
         }
     }
 }

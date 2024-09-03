@@ -31,5 +31,9 @@ public class FhirPathContextTests
         var elemInContainedResource = _bundle.Children("entry").Skip(2).First().Children("resource").First().Children("contained").First().Children("id").First().ToScopedNode();
         elemInContainedResource.IsTrue("%rootResource != %resource"); // should be true
         elemInContainedResource.Select("%rootResource").Should().BeEquivalentTo(_bundle.Select("entry[2].resource"));
+
+        var elemInDomainResource = _bundle.Children("entry").Skip(2).First().Children("resource").First().Children("id").First().ToScopedNode();
+        elemInDomainResource.IsTrue("%rootResource = %resource");
+        elemInDomainResource.Select("%rootResource").Should().BeEquivalentTo(_bundle.Select("entry[2].resource"));
     }
 }
