@@ -62,26 +62,19 @@ namespace Hl7.Fhir.Model
 
         internal static List<CSDC> RemoveCode(this ICollection<CSDC> concepts, string code)
         {
-            return concepts.removeCodeByPredicate(c => c.Code == code).ToList();
+            return concepts.getNonMatchingCodes(c => c.Code == code);
         }
 
-        private static ICollection<CSDC> removeCodeByPredicate(this ICollection<CSDC> concepts, Predicate<CSDC> predicate)
+        private static List<CSDC> getNonMatchingCodes(this ICollection<CSDC> concepts, Predicate<CSDC> predicate)
         {
-            var itemsToBeRemoved = concepts.Where(c => predicate(c)).ToList();
-
-            //first remove the items that match the predicate (including their children)
-            foreach (var item in itemsToBeRemoved)
+            var filtered = concepts.Where(c => !predicate(c)).ToList();
+            
+            foreach (var concept in filtered.Where(concept => concept.Concept?.Count is > 0))
             {
-                concepts.Remove(item);
+                concept.Concept = concept.Concept.getNonMatchingCodes(predicate).ToList();
             }
-
-            //then check the children of the items that were not removed to see if they match the predicate
-            foreach (var concept in concepts)
-            {
-                removeCodeByPredicate(concept.Concept, predicate);
-            }
-
-            return concepts;
+            
+            return filtered;
         }
 
         /// <summary>
