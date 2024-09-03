@@ -14,5 +14,19 @@ namespace Hl7.Fhir.Model
     [Bindable(true)]
     public partial class CodeableReference
     {
+        public CodeableReference()
+        {
+            // Nothing
+        }
+
+        public CodeableReference(CodeableConcept concept)
+        {
+            Concept = concept;
+        }
+
+        public CodeableReference(ResourceReference reference)
+        {
+            Reference = reference;
+        }
     }
 }
