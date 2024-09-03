@@ -111,14 +111,13 @@ namespace Hl7.Fhir.ElementModel
                 {
                     if (parent.InstanceType == FhirTypeConstants.BUNDLE)
                     {
-                        if (parent.BundledResources() is ReferencedResourceCache result) return result.resolveReference(url);
-                        return null;
+                        return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(url); // safe cast but we cannot change the signature
                     }
                     else
                     {
-                        if (parent.Id() == url) return parent;
-                        if (parent.ContainedResourcesWithId() is ReferencedResourceCache result 
-                            && result.resolveReference(url) is { } resource) 
+                        if (parent.Id() == url)
+                            return parent;
+                        if (((ReferencedResourceCache)parent.ContainedResourcesWithId()).ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
                             return resource;
                     }
                 }

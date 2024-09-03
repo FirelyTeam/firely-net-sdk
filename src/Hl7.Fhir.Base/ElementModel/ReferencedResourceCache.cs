@@ -19,9 +19,9 @@ internal class ReferencedResourceCache : IEnumerable<ScopedNode.BundledResource>
         }
     }
     
-    public IEnumerable<ScopedNode> Resources => _items.Values.OfType<ScopedNode>();
+    internal IEnumerable<ScopedNode> Resources => _items.Values.OfType<ScopedNode>();
 
-    public ScopedNode? resolveReference(string reference)
+    internal ScopedNode? ResolveReference(string reference)
     {
         return _items.TryGetValue(reference, out var node) ? node : null;
     }

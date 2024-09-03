@@ -232,9 +232,6 @@ namespace Hl7.Fhir.ElementModel
             return _cache.BundledResources;
         }
 
-        internal ReferencedResourceCache? getContainedCache() => _cache.ContainedResources;
-        internal ReferencedResourceCache? getBundledCache() => _cache.BundledResources;
-
         private readonly string? _fullUrl = null;
 
         /// <summary>
