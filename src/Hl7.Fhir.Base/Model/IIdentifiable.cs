@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Hl7.Fhir.Model
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Model
         /// <param name="identifiable">The identifiable containing an identifier to match.</param>
         /// <param name="system">The system to search for (case sensitive).</param>
         /// <param name="identifier">The identifier if it matches the specified system, otherwise <c>null</c>.</param>
-        public static bool TryGetIdentifier(this IIdentifiable<Identifier> identifiable, string system, out Identifier? identifier)
+        public static bool TryGetIdentifier(this IIdentifiable<Identifier> identifiable, string system, [NotNullWhen(true)] out Identifier? identifier)
         {
             identifier = GetIdentifier(identifiable, system);
             return identifier is not null;
