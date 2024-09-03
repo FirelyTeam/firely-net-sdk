@@ -117,7 +117,7 @@ namespace Hl7.Fhir.ElementModel
                     {
                         if (parent.Id() == url)
                             return parent;
-                        if (((ReferencedResourceCache)parent.ContainedResourcesWithId()).ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
+                        if (parent.ContainedResourcesWithId().ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
                             return resource;
                     }
                 }

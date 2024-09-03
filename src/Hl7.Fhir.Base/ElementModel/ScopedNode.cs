@@ -177,7 +177,7 @@ namespace Hl7.Fhir.ElementModel
             return _cache.ContainedResources.Resources;
         }
 
-        public IEnumerable<BundledResource> ContainedResourcesWithId()
+        internal ReferencedResourceCache ContainedResourcesWithId()
         {
             if (_cache.ContainedResources != null) return _cache.ContainedResources;
             
