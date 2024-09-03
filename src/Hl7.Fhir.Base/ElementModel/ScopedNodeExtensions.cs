@@ -113,13 +113,11 @@ namespace Hl7.Fhir.ElementModel
                     {
                         return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(url); // safe cast but we cannot change the signature
                     }
-                    else
-                    {
-                        if (parent.Id() == url)
-                            return parent;
-                        if (parent.ContainedResourcesWithId().ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
-                            return resource;
-                    }
+
+                    if (parent.Id() == url)
+                        return parent;
+                    if (parent.ContainedResourcesWithId().ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
+                        return resource;
                 }
 
                 return null;
