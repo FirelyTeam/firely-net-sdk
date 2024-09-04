@@ -98,9 +98,14 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (res is StructureDefinition sd)
             {
-#pragma warning disable CS0618 // Type or member is obsolete
-                if (!sd.HasSnapshot || Generator.Settings.RegenerationBehaviour == RegenerationBehaviour.FORCE_REGENERATE || (!sd.Snapshot.IsCreatedBySnapshotGenerator() && Generator.Settings.RegenerationBehaviour == RegenerationBehaviour.REGENERATE_ONCE))
-#pragma warning restore CS0618 // Type or member is obsolete
+                if (
+                    !sd.HasSnapshot || 
+                    Generator.Settings.RegenerationBehaviour == RegenerationSettings.FORCE_REGENERATE || 
+                    (
+                        !sd.Snapshot.IsCreatedBySnapshotGenerator() && 
+                        Generator.Settings.RegenerationBehaviour == RegenerationSettings.REGENERATE_ONCE
+                    )
+                )
                 {
                     await Generator.UpdateAsync(sd).ConfigureAwait(false);
                 }

@@ -62,14 +62,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             "This setting does not work as intended. When set to true, it regenerates a snapshot every time (which is not useful), and when set to false, it still regenerates a snapshot once, even if it already exists. We will consider removing it in a future major release. Use the new RegenerationBehaviour setting instead. See also https://github.com/FirelyTeam/firely-net-sdk/pull/2803")]
         public bool ForceRegenerateSnapshots
         {
-            get { return this.RegenerationBehaviour == RegenerationBehaviour.FORCE_REGENERATE; } 
-            set { this.RegenerationBehaviour = value ? RegenerationBehaviour.FORCE_REGENERATE : RegenerationBehaviour.REGENERATE_ONCE; }
+            get { return this.RegenerationBehaviour == RegenerationSettings.FORCE_REGENERATE; } 
+            set { this.RegenerationBehaviour = value ? RegenerationSettings.FORCE_REGENERATE : RegenerationSettings.REGENERATE_ONCE; }
         } // ForceExpandAll
         
         /// <summary>
-        /// Allow the snapshot generator to use an existing snapshot if available. The generator will only attempt to generate a new snapshot if no existing snapshot exists. Note that the existing snapshot is not checked for correctness or completeness.
+        /// Setting for the regeneration behaviour of the snapshot generator. see <see cref="RegenerationSettings"/>.
         /// </summary>
-        public RegenerationBehaviour RegenerationBehaviour { get; set; } // UseExistingSnapshot
+        public RegenerationSettings RegenerationBehaviour { get; set; } // UseExistingSnapshot
 
         /// <summary>
         /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
@@ -99,10 +99,23 @@ namespace Hl7.Fhir.Specification.Snapshot
         // public bool MergeTypeProfiles { get; set; }
     }
 
-    public enum RegenerationBehaviour
+    
+    /// <summary>
+    /// Settings for defining the behaviour of the snapshot generator with respect to regenerating snapshots.
+    /// </summary>
+    public enum RegenerationSettings
     {
+        /// <summary>
+        /// Try to use an existing snapshot, if available.
+        /// </summary>
         TRY_USE_EXISTING,
+        /// <summary>
+        /// Regenerate the snapshot once, to ensure it is up-to-date.
+        /// </summary>
         REGENERATE_ONCE,
+        /// <summary>
+        /// Regenerate the snapshot every time. This is useful for debugging and testing purposes.
+        /// </summary>
         FORCE_REGENERATE,
     }
 }
