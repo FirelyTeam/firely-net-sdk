@@ -12,25 +12,30 @@ using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 
+#nullable enable
+
 namespace Hl7.Fhir.FhirPath
 {
     public class FhirEvaluationContext : EvaluationContext
     {
         /// <summary>Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
+        [Obsolete("This method does not initialize any members and will be removed in a future version. Use the empty constructor instead.")]
         public static new FhirEvaluationContext CreateDefault() => new();
 
         /// <summary>Default constructor. Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
-        public FhirEvaluationContext() : base()
+        public FhirEvaluationContext()
         {
         }
 
         /// <inheritdoc cref="EvaluationContext(ITypedElement)"/>
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ITypedElement resource) : base(resource)
         {
         }
 
         /// <inheritdoc cref="EvaluationContext(ITypedElement, ITypedElement)"/>
-        public FhirEvaluationContext(ITypedElement resource, ITypedElement rootResource) : base(resource, rootResource)
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
+        public FhirEvaluationContext(ITypedElement? resource, ITypedElement? rootResource) : base(resource, rootResource)
         {
         }
 
@@ -39,6 +44,7 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="resource"></param>
         /// <param name="environment"></param>
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ITypedElement resource, IDictionary<string, IEnumerable<ITypedElement>> environment) : base(resource, null, environment)
         {
         }
@@ -47,13 +53,19 @@ namespace Hl7.Fhir.FhirPath
         /// Create a FhirEvaluationContext and also set the variables <c>%resource</c> and <c>%rootResource</c> to their correct values.
         /// </summary>
         /// <param name="node">input for determining the variables <c>%resource</c> and <c>%rootResource</c></param>
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ScopedNode node)
             : this(toNearestResource(node))
         {
             RootResource = Resource is ScopedNode sn ? sn.ResourceContext : node;
         }
 
-        public ITerminologyService TerminologyService { get; set; }
+        /// <summary>
+        /// Explicitly override the values of %resource and %rootResource in the evaluation context.
+        /// </summary>
+        public static new FhirEvaluationContext WithResourceOverrides(ITypedElement? resource, ITypedElement? rootResource = null) =>
+            (FhirEvaluationContext)EvaluationContext.WithResourceOverrides(resource, rootResource);
+        public ITerminologyService? TerminologyService { get; set; }
 
         private static ITypedElement toNearestResource(ScopedNode node)
         {
@@ -67,12 +79,14 @@ namespace Hl7.Fhir.FhirPath
             return scan;
         }
 
-        private Func<string, ITypedElement> _elementResolver;
+        private Func<string, ITypedElement>? _elementResolver;
 
-        public Func<string, ITypedElement> ElementResolver
+        public Func<string, ITypedElement>? ElementResolver
         {
             get { return _elementResolver; }
             set { _elementResolver = value; }
         }
     }
 }
+
+#nullable restore

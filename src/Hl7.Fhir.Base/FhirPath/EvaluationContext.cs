@@ -8,8 +8,10 @@ namespace Hl7.FhirPath;
 
 public class EvaluationContext
 {
+    [Obsolete("This method does not initialize any members and will be removed in a future version. Use the empty constructor instead.")]
     public static EvaluationContext CreateDefault() => new();
 
+    
     public EvaluationContext()
     {
         // no defaults yet
@@ -19,6 +21,7 @@ public class EvaluationContext
     /// Create an EvaluationContext with the given value for <c>%resource</c>.
     /// </summary>
     /// <param name="resource">The data that will be represented by %resource</param>
+    [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method.")]
     public EvaluationContext(ITypedElement? resource) : this(resource, null) { }
 
     /// <summary>
@@ -26,17 +29,25 @@ public class EvaluationContext
     /// </summary>
     /// <param name="resource">The data that will be represented by <c>%resource</c>.</param>
     /// <param name="rootResource">The data that will be represented by <c>%rootResource</c>.</param>
+    [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method.")]
     public EvaluationContext(ITypedElement? resource, ITypedElement? rootResource)
     {
         Resource = resource;
         RootResource = rootResource ?? resource;
     }
         
+    [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method. Environment can be set explicitly after construction of the base context")]
     public EvaluationContext(ITypedElement? resource, ITypedElement? rootResource, IDictionary<string, IEnumerable<ITypedElement>> environment) : this(resource, rootResource)
     {
         Environment = environment;
     }
 
+    /// <summary>
+    /// Explicitly override the values of %resource and %rootResource in the evaluation context.
+    /// </summary>
+    public static EvaluationContext WithResourceOverrides(ITypedElement? resource, ITypedElement? rootResource = null) =>
+        new EvaluationContext { Resource = resource, RootResource = rootResource ?? resource };
+    
     /// <summary>
     /// The data represented by <c>%rootResource</c>.
     /// </summary>
