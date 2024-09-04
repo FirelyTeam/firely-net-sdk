@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Utility;
+using System;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -34,7 +35,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
             other.GenerateSnapshotForExternalProfiles = GenerateSnapshotForExternalProfiles;
+#pragma warning disable CS0618 // Type or member is obsolete
             other.ForceRegenerateSnapshots = ForceRegenerateSnapshots;
+#pragma warning restore CS0618 // Type or member is obsolete
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
@@ -55,14 +58,25 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
         /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
         /// </summary>
-        public bool ForceRegenerateSnapshots { get; set; } = false; // ForceExpandAll
+        [Obsolete(
+            "This setting does not work as intended. When set to true, it regenerates a snapshot every time (which is not useful), and when set to false, it still regenerates a snapshot once, even if it already exists. We will consider removing it in a future major release. Use the new RegenerationBehaviour setting instead. See also https://github.com/FirelyTeam/firely-net-sdk/pull/2803")]
+        public bool ForceRegenerateSnapshots
+        {
+            get { return this.RegenerationBehaviour == RegenerationSettings.FORCE_REGENERATE; } 
+            set { this.RegenerationBehaviour = value ? RegenerationSettings.FORCE_REGENERATE : RegenerationSettings.REGENERATE_ONCE; }
+        } // ForceExpandAll
+        
+        /// <summary>
+        /// Setting for the regeneration behaviour of the snapshot generator. see <see cref="RegenerationSettings"/>.
+        /// </summary>
+        public RegenerationSettings RegenerationBehaviour { get; set; }
 
         /// <summary>
         /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
         /// to elements and properties in the snapshot that are constrained by the differential with respect to the base profile.
         /// <br />
         /// Note that this extension only applies to the containing profile and should NOT be inherited by derived profiles.
-        /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
+        /// The FHIR SDK snapshot generator explicitly removes and re-generates these extensions for each profile.
         /// The <seealso cref="SnapshotGeneratorExtensions"/> class provides utility methods to read and/or remove the generated extensions.
         /// </summary>
         public bool GenerateExtensionsOnConstraints { get; set; } = false; // MarkChanges
@@ -83,5 +97,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         // </summary>
         // <remarks>See GForge #9791</remarks>
         // public bool MergeTypeProfiles { get; set; }
+    }
+    
+    /// <summary>
+    /// Settings for defining the behaviour of the snapshot generator with respect to regenerating snapshots.
+    /// </summary>
+    public enum RegenerationSettings
+    {
+        /// <summary>
+        /// Try to use an existing snapshot, if available.
+        /// </summary>
+        TRY_USE_EXISTING,
+        /// <summary>
+        /// Regenerate the snapshot once, to ensure it is up-to-date.
+        /// </summary>
+        REGENERATE_ONCE,
+        /// <summary>
+        /// Regenerate the snapshot every time. This is useful for debugging and testing purposes.
+        /// </summary>
+        FORCE_REGENERATE,
     }
 }
