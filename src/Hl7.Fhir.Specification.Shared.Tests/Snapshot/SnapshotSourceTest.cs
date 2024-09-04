@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var zipSource = ZipSource.CreateValidationSource();
             var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, regenerate:true);
+            var snapSource = new SnapshotSource(cachedSource, new SnapshotGeneratorSettings{RegenerationBehaviour = RegenerationBehaviour.REGENERATE_ONCE});
             // Request core Element snapshot; verify recursion handling
 
             // Assumption: source provides Element structure

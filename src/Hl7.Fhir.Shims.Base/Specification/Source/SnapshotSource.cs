@@ -72,11 +72,11 @@ namespace Hl7.Fhir.Specification.Source
 
         #region IResourceResolver
 
-        private IAsyncResourceResolver _resolver => Generator.AsyncResolver;
+        private IAsyncResourceResolver Resolver => Generator.AsyncResolver;
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public async Tasks.Task<Resource> ResolveByUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
+        public async Tasks.Task<Resource> ResolveByUriAsync(string uri) => await ensureSnapshot(await Resolver.ResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByUriAsync(string)"/>
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
+        public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await Resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)"/>
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Specification.Source
             if (res is StructureDefinition sd)
             {
 #pragma warning disable CS0618 // Type or member is obsolete
-                if (!sd.HasSnapshot || (Generator.Settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                if (!sd.HasSnapshot || Generator.Settings.RegenerationBehaviour == RegenerationBehaviour.FORCE_REGENERATE || (!sd.Snapshot.IsCreatedBySnapshotGenerator() && Generator.Settings.RegenerationBehaviour == RegenerationBehaviour.REGENERATE_ONCE))
 #pragma warning restore CS0618 // Type or member is obsolete
                 {
                     await Generator.UpdateAsync(sd).ConfigureAwait(false);
@@ -111,6 +111,6 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay => $"{GetType().Name} for {_resolver.DebuggerDisplayString()}";
+        internal protected virtual string DebuggerDisplay => $"{GetType().Name} for {Resolver.DebuggerDisplayString()}";
     }
 }

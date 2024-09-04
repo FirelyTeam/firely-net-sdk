@@ -58,8 +58,18 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
         /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
         /// </summary>
-        [Obsolete("This setting really does not do a lot anymore. We will consider removing it in a future major release. See also https://github.com/FirelyTeam/firely-net-sdk/pull/2803")]
-        public bool ForceRegenerateSnapshots { get; set; } = true; // ForceExpandAll
+        [Obsolete(
+            "This setting does not work as intended. When set to true, it regenerates a snapshot every time (which is not useful), and when set to false, it still regenerates a snapshot once, even if it already exists. We will consider removing it in a future major release. Use the new RegenerationBehaviour setting instead. See also https://github.com/FirelyTeam/firely-net-sdk/pull/2803")]
+        public bool ForceRegenerateSnapshots
+        {
+            get { return this.RegenerationBehaviour == RegenerationBehaviour.FORCE_REGENERATE; } 
+            set { this.RegenerationBehaviour = value ? RegenerationBehaviour.FORCE_REGENERATE : RegenerationBehaviour.REGENERATE_ONCE; }
+        } // ForceExpandAll
+        
+        /// <summary>
+        /// Allow the snapshot generator to use an existing snapshot if available. The generator will only attempt to generate a new snapshot if no existing snapshot exists. Note that the existing snapshot is not checked for correctness or completeness.
+        /// </summary>
+        public RegenerationBehaviour RegenerationBehaviour { get; set; } // UseExistingSnapshot
 
         /// <summary>
         /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
@@ -87,5 +97,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         // </summary>
         // <remarks>See GForge #9791</remarks>
         // public bool MergeTypeProfiles { get; set; }
+    }
+
+    public enum RegenerationBehaviour
+    {
+        TRY_USE_EXISTING,
+        REGENERATE_ONCE,
+        FORCE_REGENERATE,
     }
 }
