@@ -166,6 +166,23 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
+        public async Tasks.Task TestFlatIsNotAFilter()
+        {
+            var resolver = new InMemoryResourceResolver();
+            var codeSystem = TestTerminologyCreator.GetCodeSystem("http://foo.bar/fhir/CodeSystem/example")
+                                       .WithConcept("A")
+                                       .WithConcept("B")
+                                       .WithConcept("C");
+            resolver.Add(codeSystem);
+
+            var filters = TestTerminologyCreator.CreateFilters(new() { (FilterOperator.IsNotA, "C") }).ToList();
+
+            var result = await CodeSystemFilterProcessor.FilterConceptsFromCodeSystem("http://foo.bar/fhir/CodeSystem/example", filters, new ValueSetExpanderSettings { ValueSetSource = resolver });
+
+            result.Should().NotContain(c => c.Code == "C");
+        }
+
+        [TestMethod]
         public async Tasks.Task TestSubsumbedByIsNotAFilter()
         {
             var resolver = new InMemoryResourceResolver();
