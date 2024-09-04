@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support.Poco;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Linq;
 
@@ -110,15 +111,13 @@ namespace Hl7.Fhir.ElementModel
                 {
                     if (parent.InstanceType == FhirTypeConstants.BUNDLE)
                     {
-                        var result = parent.BundledResources().FirstOrDefault(br => br.FullUrl == url)?.Resource;
-                        if (result != null) return result;
+                        return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(url); // safe cast but we cannot change the signature
                     }
-                    else
-                    {
-                        if (parent.Id() == url) return parent;
-                        var result = parent.ContainedResources().FirstOrDefault(cr => cr.Id() == url);
-                        if (result != null) return result;
-                    }
+
+                    if (parent.Id() == url)
+                        return parent;
+                    if (parent.ContainedResourcesWithId().ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
+                        return resource;
                 }
 
                 return null;
