@@ -41,13 +41,13 @@ namespace Hl7.Fhir.Model
         /// Maps a list of FHIR datatypes to a list of <see cref="Coding"/>. See <see cref="ToCodings(DataType)"/> for more details.
         /// </summary>
         /// <exception cref="NotSupportedException">When the datatype is not bindeable, and thus not convertable to a Coding.</exception>
-        public static IEnumerable<Coding> ToCodings(this IEnumerable<DataType> dts) => dts?.SelectMany(dt => dt.ToCodings()) ?? Enumerable.Empty<Coding>();
+        public static IEnumerable<Coding> ToCodings(this IEnumerable<DataType>? dts) => dts?.SelectMany(dt => dt.ToCodings()) ?? [];
 
         /// <summary>
         /// Maps a FHIR datatype to a (list of) Coding, according to https://hl7.org/fhir/terminologies.html#4.1
         /// </summary>
         /// <exception cref="NotSupportedException">When the datatype is not bindeable, and thus not convertable to a Coding.</exception>
-        public static IEnumerable<Coding> ToCodings(this DataType dt) => dt switch
+        public static IEnumerable<Coding> ToCodings(this DataType? dt) => dt switch
         {
             null => Enumerable.Empty<Coding>(),
             Code co => new[] { new Coding(null, co.Value) },
@@ -57,7 +57,8 @@ namespace Hl7.Fhir.Model
             Quantity q => new[] { new Coding(q.System, q.Code) },
             FhirString fs => new[] { new Coding(null, fs.Value) },
             FhirUri u => new[] { new Coding(null, u.Value) },
-            var unk => throw new NotSupportedException($"Don't know how to derive a list of codings from type '{unk.GetType()}'.")
+            CodeableReference { Concept: {} crc } => crc.Coding ?? Enumerable.Empty<Coding>(),
+            _ => []
         };
     }
 }
