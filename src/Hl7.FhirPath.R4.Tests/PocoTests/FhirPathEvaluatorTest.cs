@@ -673,6 +673,5 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.AreEqual("bbb", r.First().ToString());
             // .toStrictEqual(["bbb"]);
         }
-
     }
 }

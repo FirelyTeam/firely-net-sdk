@@ -47,6 +47,7 @@ namespace Hl7.Fhir.ElementModel
             Current = wrapped;
             ExceptionHandler = parentNode.ExceptionHandler;
             ParentResource = parentNode.AtResource ? parentNode : parentResource;
+            Parent = parentNode;
 
             _fullUrl = fullUrl;
 
@@ -66,6 +67,11 @@ namespace Hl7.Fhir.ElementModel
         /// that resource's most direct parent.
         /// </remarks>
         public readonly ScopedNode? ParentResource;
+
+        /// <summary>
+        /// The resource or element which is the direct parent of this node.
+        /// </summary>
+        public readonly ScopedNode? Parent;
 
         /// <summary>
         /// Returns the location of the current element within its most direct parent resource or datatype.
