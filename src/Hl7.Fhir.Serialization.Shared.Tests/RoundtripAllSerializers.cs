@@ -24,18 +24,18 @@ namespace Hl7.Fhir.Serialization.Tests
 
     internal class FhirSerializationEngineRoundtripper(IFhirSerializationEngine engine) : IRoundTripper
     {
-        public string RoundTripXml(string original) => 
+        public string RoundTripXml(string original) =>
             engine.SerializeToXml(
                 engine.DeserializeFromJson(
                     engine.SerializeToJson(
                         engine.DeserializeFromXml(original)!))!);
-        public string RoundTripJson(string original) => 
+        public string RoundTripJson(string original) =>
             engine.SerializeToJson(
                 engine.DeserializeFromXml(
                     engine.SerializeToXml(
                         engine.DeserializeFromJson(original)!))!);
     }
-    
+
     internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider provider) : IRoundTripper
     {
         public string RoundTripXml(string original)
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization.Tests
             return nav2.ToJson();
         }
     }
-    
+
     [TestClass]
     public class RoundtripAllSerializers
     {
@@ -76,13 +76,13 @@ namespace Hl7.Fhir.Serialization.Tests
             new TypedElementBasedRoundtripper(new PocoStructureDefinitionSummaryProvider());
 
         private static readonly IResourceResolver SOURCE = new CachedResolver(ZipSource.CreateValidationSource());
-        
+
         private static readonly IRoundTripper TYPEDELEM_SDPROV =
             new TypedElementBasedRoundtripper(new StructureDefinitionSummaryProvider(SOURCE));
-        
+
         private const string XML_EXAMPLE_ZIP_NAME = "examples.zip";
         private const string JSON_EXAMPLE_ZIP_NAME = "examples-json.zip";
-        
+
         [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
             DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             doRoundTrip(entry, OLD_POCO_ROUNDTRIPPER);
         }
-        
+
         [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
             DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             doRoundTrip(entry, TYPEDELEM_SDPROV);
         }
-        
+
         private static IEnumerable<object[]> prepareExampleZipFiles()
         {
             var xmlExampleArchive = openTestZip(XML_EXAMPLE_ZIP_NAME);
@@ -170,6 +170,43 @@ namespace Hl7.Fhir.Serialization.Tests
             if (file.Contains("subscription-example")) return true;
             if (file.Contains("consent-example-smartonfhir")) return true;
 #endif
+#if R6
+            // These test examples contain invalid testscript.profile values
+            if (file.Contains("testscript-example")) return true;
+            if (file.Contains("testscript-example-history")) return true;
+            if (file.Contains("testscript-readcommon")) return true;
+            if (file.Contains("testscript-readtest")) return true;
+            if (file.Contains("testscript-example-update")) return true;
+
+            // The chargeitem example has an invalid CodeableReference value in it
+            if (file.Contains("chargeitem-example")) return true;
+
+            // Invalid example (productcategory missing `coding` child before `code`)
+            if (file.Contains("biologicallyderivedproduct-example-autologousHCT")) return true;
+
+            // Type change missed in examples
+            if (file.Contains("device-example-udi1")) return true;
+            if (file.Contains("device-example-udi3")) return true;
+            if (file.Contains("device-example-PhilipsThermometer")) return true;
+            if (file.Contains("device-example-ihe-pcd")) return true;
+            if (file.Contains("device-example-AND20601BPMonitor")) return true;
+            if (file.Contains("device-example-pacemaker")) return true;
+            if (file.Contains("device-example-Nonin20601PulseOx")) return true;
+            if (file.Contains("device-example-Bodimetrics")) return true;
+            if (file.Contains("device-example-RocheGlucoseMonitor")) return true;
+            if (file.Contains("device-example-ANDThermometer")) return true;
+            if (file.Contains("device-example-KinsaThermometer")) return true;
+            if (file.Contains("device-example-NoninBlePulseOx")) return true;
+
+            if (file.Contains("devicemetric-example")) return true;
+            if (file.Contains("supplydelivery-example")) return true;
+            if (file.Contains("supplydelivery-example-pumpdelivery")) return true;
+            if (file.Contains("supplydelivery-example-ISBT128")) return true;
+            if (file.Contains("supplydelivery-example-mphodelivery")) return true;
+            if (file.Contains("Device-Triodenovo-SW")) return true;
+            if (file.Contains("Device-NGS-device")) return true;
+            if (file.Contains("subscriptiontopic-example")) return true;
+#endif
             return false;
         }
 
@@ -201,7 +238,7 @@ namespace Hl7.Fhir.Serialization.Tests
         private static string? roundtripFile(string input, string name, IRoundTripper roundtripper, ICollection<string> errors)
         {
             var isXml = name.EndsWith(".xml");
-            
+
             try
             {
                 return isXml ?
@@ -214,7 +251,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 return null;
             }
         }
-        
+
         private static void compare(string expectedData, string actualData, string name, List<string> errors)
         {
             if (name.EndsWith(".xml"))
@@ -233,7 +270,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 JsonAssert.AreSame(name, expectedData, actualData, errors);
             }
         }
-        
+
         [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
             DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]

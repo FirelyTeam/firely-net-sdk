@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2020, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -20,27 +20,31 @@ namespace Hl7.Fhir.Specification
         /// </summary>
         DSTU1 = 100,
         /// <summary>
-        /// FHIR Release DSTU2 
+        /// FHIR Release DSTU2
         /// http://hl7.org/fhir/DSTU2
         /// </summary>
         DSTU2 = 200,
         /// <summary>
-        /// FHIR Release STU3 
+        /// FHIR Release STU3
         /// http://hl7.org/fhir/STU3
         /// </summary>
         STU3 = 300,
         /// <summary>
-        /// FHIR Release 4 
+        /// FHIR Release 4
         /// http://hl7.org/fhir/R4
         /// </summary>
         R4 = 400,
         /// <summary>
-        /// FHIR Release 5 
+        /// FHIR Release 4B
         /// </summary>
-        R5 = 600,
+        R4B = 500, // why this not 430?
         /// <summary>
-        /// FHIR Release 4B 
+        /// FHIR Release 5
         /// </summary>
-        R4B = 500,
+        R5 = 600, // why this not 500?
+        /// <summary>
+        /// FHIR Release 6
+        /// </summary>
+        R6 = 700, // Why this not 600?
     }
 }

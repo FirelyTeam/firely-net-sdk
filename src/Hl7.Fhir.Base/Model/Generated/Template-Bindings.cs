@@ -384,6 +384,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [EnumLiteral("5.0.0-draft-final"), Description("5.0.0-draft-final")]
     N5_0_0DraftFinal,
+    /// <summary>
+    /// R6 Ballot.2
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("6.0.0-ballot2"), Description("6.0.0-ballot2")]
+    N6_0_0Ballot2,
   }
 
   /// <summary>

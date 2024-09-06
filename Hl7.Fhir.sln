@@ -103,6 +103,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.STU3.Tests", "src\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shims.Base", "src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.shproj", "{150A59A2-371D-4747-8B08-C8E6340EC962}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.R6", "src\Hl7.Fhir.R6\Hl7.Fhir.R6.csproj", "{BAD54030-52BA-4CC2-9617-E9E77E28AC39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "R6", "R6", "{96DB9BAB-82C6-4684-A81C-233A9A7BFC3D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Serialization.R6.Tests", "src\Hl7.Fhir.Serialization.R6.Tests\Hl7.Fhir.Serialization.R6.Tests.csproj", "{E4C32D27-4097-4038-8193-18338175828A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Specification.Data.R6", "src\Hl7.Fhir.Specification.Data.R6\Hl7.Fhir.Specification.Data.R6.csproj", "{D333CB3B-4977-4F31-8D3D-8A14015CD82E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -296,6 +304,24 @@ Global
 		{CFF0DDA5-5155-4144-B426-91C7623D08E7}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
 		{CFF0DDA5-5155-4144-B426-91C7623D08E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFF0DDA5-5155-4144-B426-91C7623D08E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD54030-52BA-4CC2-9617-E9E77E28AC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD54030-52BA-4CC2-9617-E9E77E28AC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD54030-52BA-4CC2-9617-E9E77E28AC39}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{BAD54030-52BA-4CC2-9617-E9E77E28AC39}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
+		{BAD54030-52BA-4CC2-9617-E9E77E28AC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD54030-52BA-4CC2-9617-E9E77E28AC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4C32D27-4097-4038-8193-18338175828A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C32D27-4097-4038-8193-18338175828A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C32D27-4097-4038-8193-18338175828A}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C32D27-4097-4038-8193-18338175828A}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C32D27-4097-4038-8193-18338175828A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C32D27-4097-4038-8193-18338175828A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -336,6 +362,9 @@ Global
 		{EB078A3D-56E1-4871-81A2-3C9151A21240} = {7E49044B-D9CA-4BA3-AD7E-97B740A42FA0}
 		{B1BC985C-5102-4F93-84E0-C4E49ADA7FA7} = {7E49044B-D9CA-4BA3-AD7E-97B740A42FA0}
 		{CFF0DDA5-5155-4144-B426-91C7623D08E7} = {7E49044B-D9CA-4BA3-AD7E-97B740A42FA0}
+		{96DB9BAB-82C6-4684-A81C-233A9A7BFC3D} = {70870A2F-BE2C-497A-961D-3E4899D56C69}
+		{E4C32D27-4097-4038-8193-18338175828A} = {96DB9BAB-82C6-4684-A81C-233A9A7BFC3D}
+		{D333CB3B-4977-4F31-8D3D-8A14015CD82E} = {78BEBEA1-9EEB-4B27-9465-8E89556997C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED9066C3-4A35-4308-9669-FFD1F854B829}
@@ -364,9 +393,12 @@ Global
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{a8f33b92-96de-4628-8117-534f1e0e6d62}*SharedItemsImports = 5
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{ab0ebb7a-3db0-4d1b-bc43-a122f4e5b772}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems*{af6bca94-d08a-4e5b-924e-24b07d0dbd19}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{bad54030-52ba-4cc2-9617-e9e77e28ac39}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{bad54030-52ba-4cc2-9617-e9e77e28ac39}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{c1652fe8-b037-4df2-8588-aac5827af7c7}*SharedItemsImports = 13
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{db787709-8943-4ca7-b5f1-83efcbc205a1}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{db787709-8943-4ca7-b5f1-83efcbc205a1}*SharedItemsImports = 5
+		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{e4c32d27-4097-4038-8193-18338175828a}*SharedItemsImports = 5
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{eb078a3d-56e1-4871-81a2-3c9151a21240}*SharedItemsImports = 5
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{f75bd8a0-1741-4756-ba74-920e46a60efa}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.projitems*{fdcba2fe-ed46-4b83-9e5d-a5d48b84b92e}*SharedItemsImports = 5

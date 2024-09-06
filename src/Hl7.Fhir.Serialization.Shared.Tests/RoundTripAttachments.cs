@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests;
 [TestClass]
 public class RoundTripAttachments
 {
-#if R5
+#if R5 || R6
         private readonly string _attachmentJson = "{\"size\":\"12\"}";
 
         private static IEnumerable<object[]> attachmentSource()
