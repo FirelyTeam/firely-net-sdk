@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var zipSource = ZipSource.CreateValidationSource();
             var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, regenerate:true);
+            var snapSource = new SnapshotSource(cachedSource, new SnapshotGeneratorSettings{RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE});
 
             var first =
                 await snapSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
