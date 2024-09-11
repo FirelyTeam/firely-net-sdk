@@ -13,9 +13,12 @@ internal class ReferencedResourceCache : IEnumerable<ScopedNode.BundledResource>
     public ReferencedResourceCache(IEnumerable<KeyValuePair<string, ScopedNode?>> items)
     {
         _items = new Dictionary<string, ScopedNode?>();
+        var it = 0;
         foreach (var item in items)
         {
-            _items.Add(item.Key, item.Value);
+            // default to a generated key because BundledResources.Count should be consistent with the amount of resources in the bundle
+            _items.Add(item.Key ?? $"item[{it}]", item.Value);
+            it++;
         }
     }
     
