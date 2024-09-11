@@ -281,7 +281,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
 
             var enumerate = () => bundle.BundledResources();
-            enumerate.Should().NotThrow().Subject.Should().ContainSingle().Subject.FullUrl.Should().Be("item[0]"); // bundledResources should be empty here
+            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
         }
 
         private class CCDAResourceResolver : IAsyncResourceResolver
