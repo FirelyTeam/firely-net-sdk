@@ -28,13 +28,15 @@ namespace Hl7.Fhir.FhirPath
         }
 
         /// <inheritdoc cref="EvaluationContext(ITypedElement)"/>
-        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. This behaviour is triggered when using the parameterless FhirEvaluationContext() constructor. " +
+                  "If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ITypedElement resource) : base(resource)
         {
         }
 
         /// <inheritdoc cref="EvaluationContext(ITypedElement, ITypedElement)"/>
-        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. This behaviour is triggered when using the parameterless FhirEvaluationContext() constructor. " +
+                  "If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ITypedElement? resource, ITypedElement? rootResource) : base(resource, rootResource)
         {
         }
@@ -44,7 +46,8 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="resource"></param>
         /// <param name="environment"></param>
-        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. This behaviour is triggered when using the parameterless FhirEvaluationContext() constructor. " +
+                  "If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ITypedElement resource, IDictionary<string, IEnumerable<ITypedElement>> environment) : base(resource, null, environment)
         {
         }
@@ -53,7 +56,8 @@ namespace Hl7.Fhir.FhirPath
         /// Create a FhirEvaluationContext and also set the variables <c>%resource</c> and <c>%rootResource</c> to their correct values.
         /// </summary>
         /// <param name="node">input for determining the variables <c>%resource</c> and <c>%rootResource</c></param>
-        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
+        [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. This behaviour is triggered when using the parameterless FhirEvaluationContext() constructor. " +
+                  "If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the FhirEvaluationContext.WithResourceOverrides() method.")]
         public FhirEvaluationContext(ScopedNode node)
             : this(toNearestResource(node))
         {
