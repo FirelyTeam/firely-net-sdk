@@ -1941,7 +1941,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
-                && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                && (!sd.HasSnapshot || (_settings.RegenerationBehaviour == RegenerationSettings.FORCE_REGENERATE && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -2026,7 +2026,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
-            if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceRegenerateSnapshots))
+            if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || _settings.RegenerationBehaviour != RegenerationSettings.FORCE_REGENERATE))
             {
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
                 // No need to save root ElemDef annotation, as the snapshot has already been fully expanded
