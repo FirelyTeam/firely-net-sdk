@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Snapshot;
@@ -272,6 +273,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNotNull(typedElements.First().Value);
 
 
+        }
+        
+        [TestMethod]
+        public void Bundle_WithEntryWithoutFullUrl_ShouldNotThrow()
+        {
+            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
+
+            var enumerate = () => bundle.BundledResources();
+            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
         }
 
         private class CCDAResourceResolver : IAsyncResourceResolver
