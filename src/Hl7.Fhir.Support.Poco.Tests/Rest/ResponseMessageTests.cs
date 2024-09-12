@@ -126,15 +126,15 @@ namespace Hl7.Fhir.Test
         }
 
         private static async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
-            bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
+            bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null, Uri? resourceBase = null)
         {
             var components = await response.ExtractResponseData(engine, expectBinaryProtocol: false, fhirRelease: Specification.FhirRelease.R4).ConfigureAwait(false);
-            await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern);
+            await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern, resourceBase);
         }
 
         private static async Task checkResult(HttpResponseMessage response, HttpContentParsers.ResponseData components,
             IFhirSerializationEngine engine,
-            bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
+            bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null, Uri? resourceBase = null)
         {
             components.Response.Status.Should().Be(((int)response.StatusCode).ToString());
 
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Test
                 else
                     engine.SerializeToJson(components.BodyResource!).Should().Be(components.BodyText);
 
-                components.BodyResource!.ResourceBase.Should().Be(REQUEST_URI);
+                components.BodyResource!.ResourceBase.Should().Be(resourceBase ?? REQUEST_URI);
             }
             else
                 components.BodyResource.Should().BeNull();
@@ -243,6 +243,27 @@ namespace Hl7.Fhir.Test
         {
             var response = makeJsonMessage(HttpStatusCode.Forbidden, "this is not json");
             await check(response, engine);
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithRelativeLocation(IFhirSerializationEngine engine)
+        {
+            var response = makeJsonMessage(HttpStatusCode.Created);
+            var responseLocation = new Uri("/Patient/8facfb16-9db4-4c16-98fd-7caf4a658080/_history/11076", UriKind.Relative);
+            response.Headers.Location = responseLocation;
+            await check(response, engine, hasResource: true, resourceBase: responseLocation);
+        }
+
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithAbsoluteLocation(IFhirSerializationEngine engine)
+        {
+            var response = makeJsonMessage(HttpStatusCode.Created);
+            var responseLocation = new Uri("http://server.nl/fhir/Patient/8facfb16-9db4-4c16-98fd-7caf4a658080/_history/11076", UriKind.Absolute);
+            response.Headers.Location = responseLocation;
+            await check(response, engine, hasResource: true);
         }
 
         [TestMethod]
