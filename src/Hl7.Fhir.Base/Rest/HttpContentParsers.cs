@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Rest
                 var ri = new ResourceIdentity(location);
                 result.BodyResource.ResourceBase = ri.HasBaseUri && ri.Form == ResourceIdentityForm.AbsoluteRestUrl
                     ? ri.BaseUri
-                    : new Uri(location, UriKind.Absolute);
+                    : new Uri(location, UriKind.RelativeOrAbsolute);
             }
 
             return result;
