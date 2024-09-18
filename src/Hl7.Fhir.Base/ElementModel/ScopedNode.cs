@@ -167,23 +167,15 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public IEnumerable<ScopedNode> ContainedResources()
         {
-            if (_cache.ContainedResources != null) return _cache.ContainedResources.Resources;
-            
-            if (AtResource)
-            {
-                var referenceEntryPairs = from contained in this.Children("contained")
-                    let id = contained.Children("id").FirstOrDefault()?.Value as string
-                    let resource = contained as ScopedNode
-                    select new KeyValuePair<string, ScopedNode?>(id, resource);
-                _cache.ContainedResources = new ReferencedResourceCache(referenceEntryPairs);
-            }
-            else
-                _cache.ContainedResources = new ReferencedResourceCache([]);
-
-            return _cache.ContainedResources.Resources;
+            return getOrInitContainedCache().Resources;
+        }
+        
+        internal ReferencedResourceCache ContainedResourcesWithId()
+        {
+            return getOrInitContainedCache();
         }
 
-        internal ReferencedResourceCache ContainedResourcesWithId()
+        private ReferencedResourceCache getOrInitContainedCache()
         {
             if (_cache.ContainedResources != null) return _cache.ContainedResources;
             
