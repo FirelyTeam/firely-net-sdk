@@ -1,3 +1,3 @@
 ## Intro:
- This is a hotfix release that fixes the NullReferenceException when enumerating bundled/contained resources
 
+Hotfix: Fixed inconsistency in contained resource referenceable IDs
