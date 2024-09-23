@@ -14,7 +14,6 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
@@ -32,7 +31,7 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             _inspector = inspector;
-            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType());
+            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType())!;
 
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
@@ -209,11 +208,11 @@ namespace Hl7.Fhir.ElementModel
                 {
                     case Hl7.Fhir.Model.Instant ins when ins.Value.HasValue:
                         return P.DateTime.FromDateTimeOffset(ins.Value.Value);
-                    case Hl7.Fhir.Model.Time time when time.Value is { }:
+                    case Hl7.Fhir.Model.Time { Value: not null } time:
                         return P.Time.Parse(time.Value);
-                    case Hl7.Fhir.Model.Date dt when dt.Value is { }:
+                    case Hl7.Fhir.Model.Date { Value: not null } dt:
                         return P.Date.Parse(dt.Value);
-                    case FhirDateTime fdt when fdt.Value is { }:
+                    case FhirDateTime { Value: not null } fdt:
                         return P.DateTime.Parse(fdt.Value);
                     case Hl7.Fhir.Model.Integer fint:
                         if (!fint.Value.HasValue)
