@@ -2,6 +2,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace HL7.FhirPath.Tests.Tests;
 

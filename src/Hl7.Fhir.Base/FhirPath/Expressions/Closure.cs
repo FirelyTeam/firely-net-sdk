@@ -25,24 +25,40 @@ namespace Hl7.FhirPath.Expressions
 
         public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
         {
-            var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };
+            var newContext = ctx ?? new EvaluationContext();
+            
+            var node = root as ScopedNode;
+            
+            newContext.Resource ??= node != null // if the value has been manually set, we do nothing. Otherwise, if the root is a scoped node:
+                ? getResourceFromNode(node) // we infer the resource from the scoped node
+                : (root?.Definition?.IsResource is true // if we do not have a scoped node, we see if this is even a resource to begin with
+                    ? root // if it is, we use the root as the resource
+                    : null // if not, this breaks the spec in every way (but we will still continue, hopefully we do not need %resource or %rootResource)
+                ); 
+            
+            // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
+            newContext.RootResource ??= node != null 
+                ? getRootResourceFromNode(node) 
+                : newContext.Resource; 
+            
+            var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 
             var input = new[] { root };
 
-            foreach (var assignment in newContext.EvaluationContext.Environment)
+            foreach (var assignment in newClosure.EvaluationContext.Environment)
             {
-                newContext.SetValue(assignment.Key, assignment.Value);
+                newClosure.SetValue(assignment.Key, assignment.Value);
             }
             
-            newContext.SetThis(input);
-            newContext.SetThat(input);
-            newContext.SetIndex(ElementNode.CreateList(0));
-            newContext.SetOriginalContext(input);
+            newClosure.SetThis(input);
+            newClosure.SetThat(input);
+            newClosure.SetIndex(ElementNode.CreateList(0));
+            newClosure.SetOriginalContext(input);
             
-            if (ctx.Resource != null) newContext.SetResource(new[] { ctx.Resource });
-            if (ctx.RootResource != null) newContext.SetRootResource(new[] { ctx.RootResource });
+            if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
+            if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });
 
-            return newContext;
+            return newClosure;
         }
 
         private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
@@ -81,6 +97,14 @@ namespace Hl7.FhirPath.Expressions
             }
 
             return null;
+        }
+
+        private static ScopedNode getResourceFromNode(ScopedNode node) => node.AtResource ? node : node.ParentResource;
+        
+        private static ScopedNode getRootResourceFromNode(ScopedNode node)
+        {
+            var resource = getResourceFromNode(node);
+            return resource?.Name is "contained" ? resource.ParentResource : resource;
         }
     }
 }
