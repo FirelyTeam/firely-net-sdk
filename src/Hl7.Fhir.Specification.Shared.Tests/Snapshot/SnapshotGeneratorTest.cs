@@ -35,7 +35,6 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NSubstitute.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9885,6 +9884,181 @@ namespace Hl7.Fhir.Specification.Tests
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
         }
+
+        [TestMethod]
+        public async Tasks.Task TestNestedComplexExtension()
+        {
+            var sd = createVeryNestedExtension();
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            var elementDefinitions = await _generator.GenerateAsync(sd);
+            elementDefinitions.Should().NotBeEmpty();
+            elementDefinitions.Where(e => e.Path == "Extension.extension.extension.extension.value[x]").Should().HaveCount(2);
+        }
+
+        private StructureDefinition createVeryNestedExtension()
+        {
+            return new StructureDefinition
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = "NestedComplexExtension",
+                Url = "http://fire.ly/StructureDefinition/NestedComplexExtension",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Context =
+                [
+                    new()
+                    {
+                        Type = StructureDefinition.ExtensionContextType.Element,
+                        Expression = "Medication"
+                    }
+                ],
+                Differential = new()
+                {
+                    Element = new() {
+                        new("Extension.extension")
+                        {
+                            Min = 1
+                        },
+                         new ("Extension.extension")
+                        {
+                            SliceName = "medicinalProduct",
+                            Max= "1"
+                        },
+                        new ("Extension.extension.url")
+                        {
+                            Fixed = new FhirUri ("medicinalProduct")
+                        },
+                        new ("Extension.extension.value[x]")
+                        {
+                            Type =
+                            {
+                                new()
+                                {
+                                    Code = "boolean"
+                                }
+                            }
+                        },
+                        new ("Extension.extension")
+                        {
+                            SliceName = "productType",
+                            Max = "1"
+                        },
+                        new ("Extension.extension.url")
+                        {
+                            Fixed = new FhirUri ("producType")
+                        },
+                        new ("Extension.extension.value[x]")
+                        {
+                            Type =
+                            {
+                                new()
+                                {
+                                    Code = "CodeableConcept"
+                                }
+                            }
+                        },
+                        new ("Extension.extension.value[x].coding.system")
+                        {
+                            Fixed = new FhirUri("http://npl.mpa.se/CodeSystem/productclass")
+                        },
+                        new ("Extension.extension.value[x].text")
+                        {
+                            MaxLength = 100
+                        },
+                        new ("Extension.extension")
+                        {
+                            SliceName = "productName",
+                            Min = 1,
+                            Max = "1"
+                        },
+                        new ("Extension.extension.extension")
+                        {
+                            Min = 2
+                        },
+                        new ("Extension.extension.extension")
+                        {
+                            SliceName = "currentProductName",
+                            Min = 1,
+                            Max = "1"
+                        },
+                        new ("Extension.extension.extension.url")
+                        {
+                            Fixed = new FhirUri("currentProductName")
+                        },
+                        new ("Extension.extension.extension.value[x]")
+                        {
+                            Type =
+                            {
+                                new()
+                                {
+                                    Code = "string"
+                                }
+                            }
+                        },
+                        new ("Extension.extension.extension")
+                        {
+                            SliceName = "history"
+                        },
+                        new ("Extension.extension.extension.extension")
+                        {
+                            SliceName = "productName"
+                        },
+                        new ("Extension.extension.extension.extension.url")
+                        {
+                            Fixed = new FhirUri ("productName")
+                        },
+                        new ("Extension.extension.extension.extension.value[x]")
+                        {
+                             Type =
+                            {
+                                new()
+                                {
+                                    Code = "string"
+                                }
+                            }
+                        },
+                        new ("Extension.extension.extension.extension")
+                        {
+                            SliceName = "periodOfUse"
+                        },
+                        new ("Extension.extension.extension.extension.url")
+                        {
+                            Fixed = new FhirUri ("periodOfUse")
+                        },
+                        new ("Extension.extension.extension.extension.value[x]")
+                        {
+                            Type =
+                            {
+                                new()
+                                {
+                                    Code = "Period"
+                                }
+                            }
+                        },
+                        new ("Extension.extension.extension.url")
+                        {
+                            Fixed = new FhirUri ("history")
+                        },
+                        new ("Extension.extension.url")
+                        {
+                            Fixed = new FhirUri ("productName")
+                        },
+                         new ("Extension.url")
+                        {
+                            Fixed = new FhirUri ("http://fire.ly/StructureDefinition/extension-madness")
+                        },
+                          new ("Extension.value[x]")
+                        {
+                            Max = "0"
+                        },
+                    }
+                }
+            };
+        }
+
 
         [TestMethod]
         public async Tasks.Task TestNewR5Elements()
