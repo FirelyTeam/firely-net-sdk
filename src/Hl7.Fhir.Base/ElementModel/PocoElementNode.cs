@@ -32,7 +32,7 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             _inspector = inspector;
-            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType());
+            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType())!;
 
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
@@ -50,9 +50,9 @@ namespace Hl7.Fhir.ElementModel
             var instanceType = definition.Choice != ChoiceType.None
                 ? instance.GetType()
                 : determineInstanceType(definition);
-            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType);
+            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType)!;
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
-            Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
+            Definition = definition;
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.ElementModel
 
         private Type determineInstanceType(PropertyMapping definition)
         {
-            if (!definition.IsPrimitive) return definition.PropertyTypeMapping.NativeType;
+            if (!definition.IsPrimitive) return definition.PropertyTypeMapping.NativType;
 
             // Backwards compat hack: the primitives (since .value is never queried, this
             // means Element.id, Narrative.div and Extension.url) should be returned as FHIR types, not
@@ -76,9 +76,9 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public IElementDefinitionSummary Definition { get; private set; }
+        public IElementDefinitionSummary Definition { get; }
 
-        public string ShortPath { get; private set; }
+        public string ShortPath { get; }
 
         /// <summary>
         /// Elements from the IReadOnlyDictionary can be of type <see cref="Base"/>, IEnumerable&lt;Base&gt; or string.
@@ -247,9 +247,9 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        public string InstanceType { get; private set; }
+        public string InstanceType { get; }
 
-        public string Location { get; private set; }
+        public string Location { get; }
 
         public string ResourceType => Current is Resource ? InstanceType : null;
 

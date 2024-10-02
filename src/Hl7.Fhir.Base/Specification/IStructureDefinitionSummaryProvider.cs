@@ -65,7 +65,6 @@ namespace Hl7.Fhir.Specification
     public interface IStructureDefinitionSummary : ITypeSerializationInfo
     {
         string TypeName { get; }
-        bool IsAbstract { get; }
         bool IsResource { get; }
 
         IReadOnlyCollection<IElementDefinitionSummary> GetElements();

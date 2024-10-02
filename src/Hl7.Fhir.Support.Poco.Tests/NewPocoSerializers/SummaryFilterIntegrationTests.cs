@@ -105,10 +105,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void AllSummaryIndeed()
         {
             var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary());
-            var codeSystemCM = ModelInspector.ForAssembly(typeof(Patient).Assembly).FindClassMapping(typeof(CodeSystem));
+            var codeSystemCm = ModelInspector.ForAssembly(typeof(Patient).Assembly).FindClassMapping(new CodeSystem().TypeName);
 
-            summarized.All(element => codeSystemCM.FindMappedElementByName(element.Key).InSummary).Should().BeTrue();
-            summarized.Count().Should().BeLessThan(codeSystemCM.PropertyMappings.Where(pm => pm.InSummary).Count());
+            summarized.All(element => codeSystemCm.FindMappedElementByName(element.Key).InSummary).Should().BeTrue();
+            summarized.Count().Should().BeLessThan(codeSystemCm.PropertyMappings.Where(pm => pm.InSummary).Count());
         }
 
         [TestMethod]

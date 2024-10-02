@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc />
         public override void EnterObject(object value, ClassMapping? mapping)
         {
-            if (mapping?.IsResource == true)
+            if (mapping?.Kind == DataTypeKind.Resource)
             {
                 if (_nestingDepth == -1) _rootResourceType = mapping.Name;
                 _nestingDepth += 1;
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
             if (!inRootBundle)
                 ChildFilter.LeaveObject(value, mapping);
 
-            if (mapping?.IsResource == true) _nestingDepth -= 1;
+            if (mapping?.Kind == DataTypeKind.Resource) _nestingDepth -= 1;
         }
     }
 }

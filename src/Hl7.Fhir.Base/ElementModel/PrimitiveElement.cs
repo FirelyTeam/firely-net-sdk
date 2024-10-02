@@ -93,8 +93,6 @@ namespace Hl7.Fhir.ElementModel
 
         string IStructureDefinitionSummary.TypeName => InstanceType;
 
-        bool IStructureDefinitionSummary.IsAbstract => false;
-
         bool IStructureDefinitionSummary.IsResource => false;
 
         public override bool Equals(object obj) => obj is ITypedElement ite && Equals(ite.Value, Value);

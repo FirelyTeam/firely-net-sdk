@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Serialization
                     int nErrorCount = state.Errors.Count;
                     deserializeObjectInto(newResource, resourceMapping, ref reader, DeserializedObjectKind.Resource, state, stayOnLastToken);
 
-                    if (!resourceMapping.IsResource)
+                    if (resourceMapping.Kind != DataTypeKind.Resource)
                     {
                         state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(ref reader, state.Path.GetInstancePath(), resourceMapping.Name));
                         return null;
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Serialization
             // (one with, and one without the '_')
             var existingValue = propertyMapping.GetValue(target);
 
-            if (propertyValueMapping.IsFhirPrimitive)
+            if (propertyValueMapping.Kind == DataTypeKind.Primitive)
             {
                 // fix for https://github.com/FirelyTeam/firely-net-sdk/issues/2701 - use the known native type if it is in the list
                 var fhirType = propertyMapping.FhirType.Contains(propertyValueMapping.NativeType)
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Serialization
 
                 // If this is a FhirPrimitive, make sure we delay validation until we had the
                 // chance to encounter both the `name` and `_name` property.
-                if (delayedValidations is not null && propertyValueMapping.IsFhirPrimitive)
+                if (propertyValueMapping.Kind == DataTypeKind.Primitive)
                 {
                     delayedValidations.ScheduleDelayedValidation(
                         propertyMapping.Name + PROPERTY_VALIDATION_KEY_SUFFIX,
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Serialization
         private object? deserializeSingleValue(ref Utf8JsonReader reader, ClassMapping propertyValueMapping, PropertyMapping propertyMapping, FhirJsonPocoDeserializerState state)
         {
             // Resources
-            if (propertyValueMapping.IsResource)
+            if (propertyValueMapping.Kind == DataTypeKind.Resource)
             {
                 return DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
             }
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Serialization
             // needs to handle PrimitiveType.ObjectValue & dual properties.
             else if (propertyValueMapping.IsPrimitive)
             {
-                var (result, error) = DeserializePrimitiveValue(ref reader, propertyValueMapping.NativeType, propertyMapping.FhirType.FirstOrDefault(), state.Path);
+                var (result, error) = DeserializePrimitiveValue(ref reader, propertyValueMapping.NativType, propertyMapping.FhirType.FirstOrDefault(), state.Path);
 
                 if (error is not null && result is not null)
                 {

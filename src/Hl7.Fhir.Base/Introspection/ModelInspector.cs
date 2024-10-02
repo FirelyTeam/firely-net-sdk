@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Introspection
 
         public Canonical? CanonicalUriForFhirCoreType(Type type) => GetFhirTypeNameForType(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;
 
-        public Type? GetTypeForFhirType(string name) => FindClassMapping(name) is { } mapping ? mapping.NativeType : null;
+        public Type? GetTypeForFhirType(string name) => FindClassMapping(name) is { } mapping ? mapping.NativType : null;
 
         public bool IsBindable(string type) => FindClassMapping(type) is { IsBindable: true };
 
@@ -337,9 +337,9 @@ namespace Hl7.Fhir.Introspection
             type == typeof(PrimitiveType) ||
             type == typeof(BackboneType);
 
-        public bool IsDataType(string name) => FindClassMapping(name) is { IsFhirPrimitive: false, IsResource: false };
+        public bool IsDataType(string name) => FindClassMapping(name) is { Kind: DataTypeKind.Complex };
 
-        public bool IsDataType(Type type) => FindClassMapping(type) is { IsFhirPrimitive: false, IsResource: false };
+        public bool IsDataType(Type type) => FindClassMapping(type) is { Kind: DataTypeKind.Complex };
 
         public bool IsInstanceTypeFor(string superclass, string subclass)
         {
@@ -351,13 +351,13 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsInstanceTypeFor(Type superclass, Type subclass) => superclass == subclass || superclass.IsAssignableFrom(subclass);
 
-        public bool IsKnownResource(string name) => FindClassMapping(name) is { IsResource: true };
+        public bool IsKnownResource(string name) => FindClassMapping(name) is { Kind: DataTypeKind.Resource };
 
-        public bool IsKnownResource(Type type) => FindClassMapping(type) is { IsResource: true };
+        public bool IsKnownResource(Type type) => FindClassMapping(type) is { Kind: DataTypeKind.Resource };
 
-        public bool IsPrimitive(string name) => FindClassMapping(name)?.IsFhirPrimitive ?? false;
+        public bool IsPrimitive(string name) => FindClassMapping(name)?.Kind == DataTypeKind.Primitive;
 
-        public bool IsPrimitive(Type type) => FindClassMapping(type)?.IsFhirPrimitive ?? false;
+        public bool IsPrimitive(Type type) => FindClassMapping(type)?.Kind == DataTypeKind.Primitive;
 
         public bool IsReference(string name) => GetTypeForFhirType(name) is { } type && IsReference(type);
 

@@ -23,41 +23,6 @@ using System.Threading;
 
 namespace Hl7.Fhir.Introspection
 {
-    /// <summary>
-    /// A container for the metadata of a FHIR datatype as present on the (generated) .NET POCO class.
-    /// </summary>
-    public class PocoClassMapping : ClassMapping
-    {
-        /// <summary>
-        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes.
-        /// </summary>
-        public PocoClassMapping(string name, Type nativeType, FhirRelease release)
-            : base(name, nativeType, release)
-        {
-            // Nothing
-        }
-
-        /// <summary>
-        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes,
-        /// but the properties are provided lazily by the caller.
-        /// </summary>
-        public PocoClassMapping(string name, Type nativeType, FhirRelease release, Func<IEnumerable<PropertyMapping>> propertyMapper)
-            :base(name, nativeType,release, propertyMapper)
-        {
-            // Nothing
-        }
-
-        /// <summary>
-        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes, using the
-        /// properties passed in to the constructor.
-        /// </summary>
-        internal PocoClassMapping(string name, Type nativeType, FhirRelease release, IEnumerable<PropertyMapping> propertyMappings)
-            :base(name, nativeType,release, propertyMappings)
-        {
-            // Nothing
-        }
-    }
-
 
     /// <summary>
     /// A container for the metadata of a FHIR datatype.
@@ -65,23 +30,18 @@ namespace Hl7.Fhir.Introspection
     public abstract class ClassMapping : IStructureDefinitionSummary
     {
         /// <summary>
-        /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes.
-        /// </summary>
-        internal ClassMapping(string name, Type nativeType, FhirRelease release)
-        {
-            Name = name;
-            NativeType = nativeType;
-            Release = release;
-            _propertyMapper = defaultPropertyMapper;
-        }
-
-        /// <summary>
         /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes,
         /// but the properties are provided lazily by the caller.
         /// </summary>
-        internal ClassMapping(string name, Type nativeType, FhirRelease release, Func<IEnumerable<PropertyMapping>> propertyMapper)
-            :this(name, nativeType,release)
+        //TODO: I think FhirRelease can go out too, as it is an aspect of the reflection (and thus the
+        //ModelInspector/ClassMappingCollection) not, the ClassMapping itself.
+
+        protected ClassMapping(string name, Type nativeType, DataTypeKind kind, FhirRelease release, Func<IEnumerable<PropertyMapping>> propertyMapper)
         {
+            Name = name;
+            Release = release;
+            Kind = kind;
+            NativType = nativeType;
             _propertyMapper = propertyMapper;
         }
 
@@ -89,11 +49,16 @@ namespace Hl7.Fhir.Introspection
         /// Construct a default mapping for a type by reflecting on the FHIR metadata attributes, using the
         /// properties passed in to the constructor.
         /// </summary>
-        internal ClassMapping(string name, Type nativeType, FhirRelease release, IEnumerable<PropertyMapping> propertyMappings)
-            :this(name, nativeType,release)
+        protected ClassMapping(string name, Type nativeType, DataTypeKind kind, FhirRelease release, IEnumerable<PropertyMapping> propertyMappings)
+            :this(name, nativeType, kind, release, () => propertyMappings)
         {
-            _propertyMapper = () => propertyMappings;
+            // TODO: creating a closure for every classmapping (as in the parameter above) is wasteful, and we should actually
+            // just have a member holding all mappings, that is possibly filled delayed with a function.
+            // Nothing
         }
+
+        // TODO: The next fields and functions for caching should not be here: it is a cache for POCO mappings,
+        // and thus an aspect of the reflection code.
 
         private static readonly ConcurrentDictionary<(Type, FhirRelease), ClassMapping?> _mappedClasses = new();
 
@@ -106,7 +71,7 @@ namespace Hl7.Fhir.Introspection
         /// <returns>true if the mapping was found or false if it was not one of the supported and reflectable types.</returns>
         /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract. </remarks>
-        /// <seealso cref="TryCreate(Type, out ClassMapping?, FhirRelease)"/>
+        /// <seealso cref="TryCreate(Type, out PocoClassMapping?, FhirRelease)"/>
         public static bool TryGetMappingForType(Type t, FhirRelease release, [NotNullWhen(true)] out ClassMapping? mapping)
         {
             mapping = _mappedClasses.GetOrAdd((t, release), createMapping);
@@ -121,7 +86,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract.</remarks>
-        public static bool TryCreate(Type type, [NotNullWhen(true)]out ClassMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
+        public static bool TryCreate(Type type, [NotNullWhen(true)]out PocoClassMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
         {
             // Simulate reading the ClassMappings from the primitive types (from http://hl7.org/fhirpath namespace).
             // These are in fact defined as POCOs in Hl7.Fhir.ElementModel.Types,
@@ -157,14 +122,32 @@ namespace Hl7.Fhir.Introspection
 
             var backboneAttribute = ReflectionHelper.GetAttribute<BackboneTypeAttribute>(type, release);
 
-            result = new PocoClassMapping(collectTypeName(typeAttribute, type), type, release)
+            result = new PocoClassMapping(collectTypeName(typeAttribute, backboneAttribute?.DefinitionPath, type), type, release)
             {
                 IsBackboneType = typeAttribute.IsNestedType || backboneAttribute is not null,
-                DefinitionPath = backboneAttribute?.DefinitionPath,
                 IsBindable = ReflectionHelper.GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = ReflectionHelper.GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
+                StructureDefinitionSummaryTypeName = determineSdsTypeName(),
+                Factory = null!,
+                ListFactory = null!,
+                IsPrimitive = false
             };
+
+            string? determineSdsTypeName()
+            {
+                if (backboneAttribute is not null)
+                {
+                    return type.CanBeTreatedAsType(typeof(BackboneElement))
+                        ? "BackboneElement"
+                        : "Element";
+                }
+
+                if (ReflectionHelper.IsCodeOfT(type))
+                    return "code";
+
+                return null;
+            }
 
             return true;
         }
@@ -182,43 +165,44 @@ namespace Hl7.Fhir.Introspection
         /// <remarks>
         /// This is the FHIR name for the type as specified in <see cref="FhirTypeAttribute.Name"/> but not always:
         /// <list type="bullet">
+        /// <item>Backbone elements have the name of the element they are nested in, e.g. <c>Patient.contact</c>.</item>
         /// <item>FHIR <c>code</c> types with required bindings are modelled in the POCO as a <see cref="Code{T}"/>,
         /// the mapping name for these will be <c>code&lt;name of enum&gt;</c></item>
         /// <item>The System/CQL primitives from <see cref="Hl7.Fhir.ElementModel.Types"/> all have their names
-        /// prepended with "System.", e.g. "System.Integer".</item>
-        /// <item>.NET primitive types have their <see cref="Type.FullName"/> name prepended with "Net.", e.g. "Net.System.Int32".</item>
+        /// prepended with "System.", e.g. <c>System.Integer</c>.</item>
+        /// <item>.NET primitive types have their <see cref="Type.FullName"/> name prepended with "Net.", e.g. <c>Net.System.Int32</c>.</item>
         /// </list>
         /// </remarks>
         public string Name { get; }
 
         /// <summary>
+        /// Determines the kind of datatype this class represents.
+        /// </summary>
+        public DataTypeKind Kind { get; }
+
+        /// <summary>
         /// The .NET class that implements the FHIR datatype/resource
         /// </summary>
-        public Type NativeType { get; }
+        public Type NativType { get; }
+
 
         /// <summary>
         /// Is <c>true</c> when this class represents a Resource datatype.
         /// </summary>
-        public bool IsResource => typeof(Resource).IsAssignableFrom(NativeType);
+        [Obsolete("Check the kind of datatype using the Kind property.")]
+        public bool IsResource => Kind == DataTypeKind.Resource;
 
         /// <summary>
         /// Is <c>true</c> when this class represents a FHIR primitive
         /// </summary>
         /// <remarks>This is different from a .NET primitive, as FHIR primitives are complex types with a primitive value.</remarks>
-        public bool IsFhirPrimitive => typeof(PrimitiveType).IsAssignableFrom(NativeType);
+        [Obsolete("Check the kind of datatype using the Kind property.")]
+        public bool IsFhirPrimitive => Kind == DataTypeKind.Primitive;
 
         /// <summary>
         /// The element is of an atomic .NET type, not a FHIR generated POCO.
         /// </summary>
         public bool IsPrimitive { get; init; } = false;
-
-        /// <summary>
-        /// Is <c>true</c> when this class represents a code with a required binding.
-        /// </summary>
-        /// <remarks>See <see cref="Name"></see>.</remarks>
-        public bool IsCodeOfT  =>
-            NativeType is { IsGenericType: true, ContainsGenericParameters: false } &&
-            NativeType.GetGenericTypeDefinition() == typeof(Code<>);
 
         /// <summary>
         /// Indicates whether this class represents the nested complex type for a backbone element.
@@ -237,7 +221,8 @@ namespace Hl7.Fhir.Introspection
         /// If this is a backbone type (<see cref="IsBackboneType"/>), then this contains the path
         /// in the StructureDefinition where the backbone was defined first.
         /// </summary>
-        public string? DefinitionPath { get; init; }
+        [Obsolete("When this is a Backbone type, the <see cref=\"Name\"/> will be the same as the definition path.")]
+        public string? DefinitionPath => IsBackboneType ? Name : null;
 
         /// <summary>
         /// Indicates whether this class can be used for binding.
@@ -245,9 +230,18 @@ namespace Hl7.Fhir.Introspection
         public bool IsBindable { get; init; } = false;
 
         /// <summary>
-        /// The canonical for the StructureDefinition defining this type
+        /// Override for this type's <see cref="Name"/> if it differs from
+        /// <see cref="IStructureDefinitionSummary.TypeName"/>.
         /// </summary>
-        /// <remarks>Will be null for backbone types.</remarks>
+        /// <remarks>This is a highly specialized use case for backbone types and types based on CodeOfT
+        /// and should not normally be set.</remarks>
+        public string? StructureDefinitionSummaryTypeName { get; init; }
+
+        /// <summary>
+        /// The canonical for the StructureDefinition defining this type (if any).
+        /// </summary>
+        /// <remarks>Will be null for backbone types, or when there is no known backing
+        /// StructureDefinition.</remarks>
         public string? Canonical { get; init; }
 
         /// <summary>
@@ -265,17 +259,6 @@ namespace Hl7.Fhir.Introspection
                 LazyInitializer.EnsureInitialized(ref _mappings,
                     () => new PropertyMappingCollection(this, _propertyMapper()))!;
 
-        // Enumerate this class' properties using reflection and create PropertyMappings.
-        // Is used when no external mapping has been passed to the constructor.
-        private IEnumerable<PropertyMapping> defaultPropertyMapper()
-        {
-            foreach (var property in ReflectionHelper.FindPublicProperties(NativeType))
-            {
-                if (!PropertyMapping.TryCreate(property, out var propMapping, this)) continue;
-                yield return propMapping!;
-            }
-        }
-
         /// <summary>
         /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
         /// </summary>
@@ -291,12 +274,7 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// This indicates that this class is representing the Patient data (and implements <see cref="IPatient"/>).
         /// </summary>
-        public bool IsPatientClass => typeof(IPatient).IsAssignableFrom(NativeType);
-
-        /// <summary>
-        /// Whether the reflected type has a member that represent a primitive value.
-        /// </summary>
-        public bool HasPrimitiveValueMember => PropertyMappings.Any(pm => pm.RepresentsValueElement);
+        public bool IsPatientClass => typeof(IPatient).IsAssignableFrom(NativType);
 
         /// <summary>
         /// Returns the mapping for an element of this class by its name.
@@ -340,22 +318,10 @@ namespace Hl7.Fhir.Introspection
 
         #region IStructureDefinitionSummary members
         /// <inheritdoc />
-        string IStructureDefinitionSummary.TypeName =>
-            this switch
-            {
-                { IsCodeOfT: true } => "code",
-                { IsBackboneType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
-                            "BackboneElement"
-                            : "Element",
-                _ => Name
-            };
+        string IStructureDefinitionSummary.TypeName => StructureDefinitionSummaryTypeName ?? Name;
 
         /// <inheritdoc />
-        bool IStructureDefinitionSummary.IsAbstract =>
-           ((IStructureDefinitionSummary)this).TypeName == "BackboneElement" || NativeType.GetTypeInfo().IsAbstract;
-
-        /// <inheritdoc />
-        bool IStructureDefinitionSummary.IsResource => IsResource;
+        bool IStructureDefinitionSummary.IsResource => Kind == DataTypeKind.Resource;
 
         /// <inheritdoc />
         IReadOnlyCollection<IElementDefinitionSummary> IStructureDefinitionSummary.GetElements() =>
@@ -364,24 +330,33 @@ namespace Hl7.Fhir.Introspection
         #endregion
 
         /// <summary>
-        /// Gets a delegate that, when called, creates an instance for the <see cref="NativeType"/> represented by this mapping.
+        /// Gets or sets a delegate that, when called, creates an instance for the <see cref="NativType"/> represented by this mapping.
         /// </summary>
-        public Func<object> Factory => LazyInitializer.EnsureInitialized(ref _factory, NativeType.BuildFactoryMethod)!;
+        /// <remarks>If not set, the default constructor for the <see cref="NativType"/> will be used.</remarks>
+        public Func<object> Factory
+        {
+            get => LazyInitializer.EnsureInitialized(ref _factory, NativType.BuildFactoryMethod)!;
+            set => _factory = value;
+        }
 
         private Func<object>? _factory;
 
 
         /// <summary>
-        /// Gets a delegate that, when called, creates an instance of a List of the <see cref="NativeType"/> represented by this mapping.
+        /// Gets or sets a delegate that, when called, creates an instance of a List of the <see cref="NativType"/> represented by this mapping.
         /// </summary>
-        public Func<IList> ListFactory => LazyInitializer.EnsureInitialized(ref _listFactory, NativeType.BuildListFactoryMethod)!;
+        /// <remarks>If not set, the default List constructor for the <see cref="NativType"/> will be used.</remarks>
+        public Func<IList> ListFactory
+        {
+            get => LazyInitializer.EnsureInitialized(ref _listFactory, NativType.BuildListFactoryMethod)!;
+            set => _listFactory = value;
+        }
 
         private Func<IList>? _listFactory;
 
-
-        private static string collectTypeName(FhirTypeAttribute attr, Type type)
+        private static string collectTypeName(FhirTypeAttribute attr, string? bbDefinitionPath, Type type)
         {
-            var name = attr.Name;
+            var name = bbDefinitionPath ?? attr.Name;
 
             if (ReflectionHelper.IsClosedGenericType(type))
             {
@@ -406,11 +381,11 @@ namespace Hl7.Fhir.Introspection
             typeof(Enum)
         ];
 
-        private static ClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>
-            new PocoClassMapping("System." + t.Name, t, release);
+        private static PocoClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>
+            new("System." + t.Name, t, release);
 
-        private static ClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
-            new PocoClassMapping("Net." + t.FullName, t, release) { IsPrimitive = true };
+        private static PocoClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
+            new("Net." + t.FullName, t, release) { IsPrimitive = true };
     }
 }
 

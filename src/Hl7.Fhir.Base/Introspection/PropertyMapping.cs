@@ -21,6 +21,33 @@ using System.Threading;
 
 namespace Hl7.Fhir.Introspection
 {
+    public class CustomPropertyMapping(
+        string name,
+        ClassMapping declaringClass,
+        Type implementingType,
+        ClassMapping propertyTypeMapping,
+        Type[] fhirTypes,
+        Func<object, object?> getter,
+        Action<object, object?> setter)
+        : PropertyMapping(name, declaringClass, implementingType, propertyTypeMapping, fhirTypes)
+    {
+        /// <summary>
+        /// The function that, when passed an object instance, gets the value of the property represented
+        /// by this mapping. If not set, a "normal" getter will be generated for the property and used instead.
+        /// </summary>
+        public Func<object, object?> Getter { get; init; } = getter;
+
+        /// <summary>
+        /// The function that sets the value of the property represented
+        /// by this mapping. If not set, a "normal" setter will be generated for the property and used instead.
+        /// </summary>
+        public Action<object, object?> Setter { get; init; } = setter;
+
+        public override object? GetValue(object instance) => Getter(instance);
+
+        public override void SetValue(object instance, object? value) => Setter.Invoke(instance, value);
+    }
+
     /// <summary>
     /// A container for the metadata of an element of a FHIR datatype as present on a property of a (generated) .NET POCO class.
     /// </summary>
@@ -36,10 +63,29 @@ namespace Hl7.Fhir.Introspection
             PropertyInfo pi,
             Type implementingType,
             ClassMapping propertyTypeMapping,
-            Type[] fhirTypes) : base(name, declaringClass, pi, implementingType, propertyTypeMapping, fhirTypes)
+            Type[] fhirTypes) : base(name, declaringClass, implementingType, propertyTypeMapping, fhirTypes)
         {
-            // Nothing
+            NativeProperty = pi;
         }
+
+        /// <summary>
+        /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
+        /// </summary>
+        public PropertyInfo NativeProperty { get; }
+
+        public override object? GetValue(object instance)
+        {
+            return LazyInitializer.EnsureInitialized(ref _cachedGetter, NativeProperty.GetValueGetter)!(instance);
+        }
+
+        private Func<object, object?>? _cachedGetter;
+
+        public override void SetValue(object instance, object? value)
+        {
+            LazyInitializer.EnsureInitialized(ref _cachedSetter, NativeProperty.GetValueSetter)!(instance, value);
+        }
+
+        private Action<object, object?>? _cachedSetter;
     }
 
     /// <summary>
@@ -54,13 +100,11 @@ namespace Hl7.Fhir.Introspection
         internal PropertyMapping(
             string name,
             ClassMapping declaringClass,
-            PropertyInfo pi,
             Type implementingType,
             ClassMapping propertyTypeMapping,
             Type[] fhirTypes)
         {
             Name = name;
-            NativeProperty = pi;
             ImplementingType = implementingType;
             FhirType = fhirTypes;
             PropertyTypeMapping = propertyTypeMapping;
@@ -98,10 +142,6 @@ namespace Hl7.Fhir.Introspection
         /// </remark>
         public Type[] FhirType { get; }
 
-        /// <summary>
-        /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
-        /// </summary>
-        public PropertyInfo NativeProperty { get; }
 
         /// <summary>
         /// The <see cref="ClassMapping" /> that represents the type of this property.
@@ -151,7 +191,6 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public bool IsMandatoryElement { get; init; }
 
-
         /// <summary>
         /// The numeric order of the element (relevant for the XML serialization, which
         /// needs to be in order).
@@ -187,18 +226,6 @@ namespace Hl7.Fhir.Introspection
         /// For a bound element, this is the name of the binding.
         /// </summary>
         public string? BindingName { get; init; }
-
-        /// <summary>
-        /// The function that, when passed an object instance, gets the value of the property represented
-        /// by this mapping. If not set, a "normal" getter will be generated for the property and used instead.
-        /// </summary>
-        public Func<object, object?>? Getter { get; init; }
-
-        /// <summary>
-        /// The function that sets the value of the property represented
-        /// by this mapping. If not set, a "normal" setter will be generated for the property and used instead.
-        /// </summary>
-        public Action<object, object?>? Setter { get; init; }
 
         /// <inheritdoc cref="TryCreate(System.Reflection.PropertyInfo,out Hl7.Fhir.Introspection.PropertyMapping?,Hl7.Fhir.Introspection.ClassMapping)"/>
         [Obsolete("The FhirRelease parameter is no longer used as it is derived from the ClassMapping, use the overload without the FhirRelease parameter instead.")]
@@ -259,8 +286,6 @@ namespace Hl7.Fhir.Introspection
             var fhirTypes = allowedTypes?.Types?.Any() == true ?
                 allowedTypes.Types : [fhirType];
 
-            var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
-
             result = new PocoPropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping, fhirTypes)
             {
                 InSummary = elementAttr.InSummary,
@@ -270,8 +295,8 @@ namespace Hl7.Fhir.Introspection
                 Order = elementAttr.Order,
                 IsCollection = isCollection,
                 IsMandatoryElement = cardinalityAttr?.Min > 0,
-                IsPrimitive = isPrimitive,
-                RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
+                IsPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType),
+                RepresentsValueElement = elementAttr.IsPrimitiveValue,
                 ValidationAttributes = ReflectionHelper.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
                 BindingName = ReflectionHelper.GetAttribute<BindingAttribute>(prop, release)?.Name
@@ -297,18 +322,10 @@ namespace Hl7.Fhir.Introspection
             return ImplementingType;
         }
 
-        private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)
-        {
-            var isValueElement = valueElementAttr.IsPrimitiveValue;
 
-            return !isValueElement || isAllowedNativeTypeForDataTypeValue(prop.PropertyType)
-                ? isValueElement
-                : throw Error.Argument(nameof(prop), "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) " +
-                    "is not supported by the serializer.".FormatWith(buildQualifiedPropName(prop), prop.PropertyType.Name));
-        }
 
-        private static string buildQualifiedPropName(PropertyInfo p)
-            => $"{p.DeclaringType?.Name ?? throw Error.ArgumentNull(nameof(p.DeclaringType))}.{p.Name}";
+        private string buildQualifiedPropName()
+            => $"{DeclaringClass.Name}.{Name}";
 
         private static bool isAllowedNativeTypeForDataTypeValue(Type type)
         {
@@ -322,27 +339,12 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// Given an instance of the parent class, gets the value for this property.
         /// </summary>
-        public object? GetValue(object instance)
-        {
-            return Getter is not null
-                ? Getter(instance)
-                : LazyInitializer.EnsureInitialized(ref _defaultGetter, NativeProperty.GetValueGetter)!(instance);
-        }
-
-        private Func<object, object?>? _defaultGetter;
+        public abstract object? GetValue(object instance);
 
         /// <summary>
         /// Given an instance of the parent class, sets the value for this property.
         /// </summary>
-        public void SetValue(object instance, object? value)
-        {
-            if(Setter is not null)
-                Setter(instance,value);
-            else
-                LazyInitializer.EnsureInitialized(ref _defaultSetter, NativeProperty.GetValueSetter)!(instance, value);
-        }
-
-        private Action<object, object?>? _defaultSetter;
+        public abstract void SetValue(object instance, object? value);
 
         #region IElementDefinitionSummary members
         string IElementDefinitionSummary.ElementName => this.Name;
@@ -414,7 +416,7 @@ namespace Hl7.Fhir.Introspection
                 return ClassMapping.TryGetMappingForType(ft, Release, out var tm)
                     ? ((IStructureDefinitionSummary)tm!).TypeName
                     : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
-                        $"'{buildQualifiedPropName(NativeProperty)}', but it does not seem to" +
+                        $"'{buildQualifiedPropName()}', but it does not seem to" +
                         $"be a valid FHIR type POCO.");
             }
         }

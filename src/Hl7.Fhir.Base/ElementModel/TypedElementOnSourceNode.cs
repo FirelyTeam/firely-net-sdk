@@ -61,9 +61,6 @@ namespace Hl7.Fhir.ElementModel
                     return (rootType, null);
             }
 
-            if (elementType.IsAbstract)
-                throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
-
             var rootTypeDefinition = ElementDefinitionSummary.ForRoot(elementType, _source.Name);
             return (rootType, rootTypeDefinition);
         }
@@ -503,4 +500,3 @@ namespace Hl7.Fhir.ElementModel
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
     public delegate object? AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object? state);
 }
-

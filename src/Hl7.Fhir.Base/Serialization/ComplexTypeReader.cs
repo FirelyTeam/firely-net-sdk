@@ -74,16 +74,7 @@ namespace Hl7.Fhir.Serialization
                     RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
             }
 
-            if (existing == null)
-            {
-                var fac = new DefaultModelFactory();
-                existing = (Base)fac.Create(mappingToUse.NativeType);
-            }
-            else
-            {
-                if (mappingToUse.NativeType != existing.GetType())
-                    throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mappingToUse.NativeType.Name));
-            }
+            existing ??= (Base)mappingToUse?.Factory();
 
             // The older code for read() assumes the primitive value member is represented as a separate child element named "value", 
             // while the newer ITypedElement represents this as a special Value property. We simulate the old behaviour here, by

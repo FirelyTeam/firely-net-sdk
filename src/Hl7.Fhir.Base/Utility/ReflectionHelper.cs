@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using System;
 using System.Collections;
@@ -232,5 +233,9 @@ namespace Hl7.Fhir.Utility
 
             return cleanedInformationalVersion;
         }
+
+        public static bool IsCodeOfT(Type nativeType) =>
+            nativeType is { IsGenericType: true, ContainsGenericParameters: false } &&
+            nativeType.GetGenericTypeDefinition() == typeof(Code<>);
     }
 }

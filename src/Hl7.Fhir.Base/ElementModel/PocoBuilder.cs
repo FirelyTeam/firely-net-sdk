@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Serialization
         public Base BuildFrom(ISourceNode source, ClassMapping mapping = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
-            TypedElementSettings typedSettings = new TypedElementSettings
+            TypedElementSettings typedSettings = new()
             {
                 ErrorMode = _settings.IgnoreUnknownMembers ?
                     TypedElementSettings.TypeErrorMode.Ignore
@@ -85,10 +85,8 @@ namespace Hl7.Fhir.Serialization
             };
 
             string dataType;
-            // If dataType is an abstract resource superclass -> ToTypedElement(with type=null) will figure it out;
-            if (mapping == null)
-                dataType = null;
-            else if (mapping.IsResource && mapping.NativeType.GetTypeInfo().IsAbstract)
+            // If dataType is a resource -> ToTypedElement(with type=null) will figure it out;
+            if (mapping == null || mapping.Kind == DataTypeKind.Resource)
                 dataType = null;
             else
                 dataType = mapping.Name;
@@ -130,4 +128,3 @@ namespace Hl7.Fhir.Serialization
         }
     }
 }
-

@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Serialization
                     int nErrorCount = state.Errors.Count;
                     deserializeElementInto(newResource, resourceMapping, reader, state);
 
-                    if (!resourceMapping.IsResource)
+                    if (resourceMapping.Kind != DataTypeKind.Resource)
                     {
                         state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), resourceMapping.Name));
                         return null;

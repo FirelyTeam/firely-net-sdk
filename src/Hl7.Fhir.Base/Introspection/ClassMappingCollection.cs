@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Introspection
             var propKey = mapping.Name;
             _byName[propKey] = mapping;
 
-            _byType[mapping.NativeType] = mapping;
+            _byType[mapping.NativType] = mapping;
 
             var canonical = mapping.Canonical;
             if (canonical is not null)
