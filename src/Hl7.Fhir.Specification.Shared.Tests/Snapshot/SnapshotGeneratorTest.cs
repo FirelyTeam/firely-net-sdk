@@ -37,6 +37,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using NSubstitute.Exceptions;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9556,31 +9557,24 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 // Modify an existing Binding extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding",
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("Test")) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("Test")) }};
 
                 // Adding a new Binding extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding",
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding", new FhirBoolean(true)) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding", new FhirBoolean(true)) }};
 
                 // Adding a new Constraint extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance", "Constraint[Key:dom-2]",
                     Array.Empty<Extension>(),
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)) }};
 
                 // Modifying an existing Constraint extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance", "Constraint[Key:dom-6]",
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)),
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice-explanation", new Markdown("When a resource has no narrative, only systems that fully understand the data can display the resource to a human safely. Including a human readable representation in the resource makes for a much more robust eco-system and cheaper handling of resources by intermediary systems. Some ecosystems restrict distribution of resources to only those systems that do fully understand the resources, and as a consequence implementers may believe that the narrative is superfluous. However experience shows that such eco-systems often open up to new participants over time.")) },
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(false)) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)),
+                            new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice-explanation", new Markdown("When a resource has no narrative, only systems that fully understand the data can display the resource to a human safely. Including a human readable representation in the resource makes for a much more robust eco-system and cheaper handling of resources by intermediary systems. Some ecosystems restrict distribution of resources to only those systems that do fully understand the resources, and as a consequence implementers may believe that the narrative is superfluous. However experience shows that such eco-systems often open up to new participants over time.")) },
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(false)) }};
             }
         }
 
@@ -9672,6 +9666,123 @@ namespace Hl7.Fhir.Specification.Tests
 
             elementProperty.Extension.Should().HaveCount(expectedExtensions.Count);
             elementProperty.Extension.OrderBy(x => x.Url).Should().Equal(expectedExtensions.OrderBy(x => x.Url), (e1, e2) => e1.IsExactly(e2));
+        }
+
+        private void logExtensions(string title, IEnumerable<Extension> extensions, int level = 1)
+        {
+            Debug.WriteLine(title);
+
+            if (!extensions.Any())
+            {
+                Debug.WriteLine($"{new string(' ', level * 3)}none");
+                return;
+            }
+
+            foreach (Extension extension in extensions)
+            {
+                if (extension.Extension != null && extension.Extension.Count > 0)
+                    logExtensions(extension.Url, extension.Extension, level + 1);
+                else
+                    Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
+            }
+        }
+
+        private const string BaseId = "testBaseId";
+        private const string DiffId = "testDiffId";
+
+        public static IEnumerable<object[]> ElementDefinitionPropertyElementIdTestCasesR4
+        {
+            get
+            {
+                // Binding
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", null, null, null };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", null, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", BaseId, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", BaseId, null, BaseId };
+
+                // Primitive element
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", null, null, null };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", null, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", BaseId, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", BaseId, null, BaseId };
+
+                // Type
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", null, null, null };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", null, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", BaseId, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", BaseId, null, BaseId };
+            }
+        }
+
+        /// <summary>
+        /// Tests whether element definition property element id in the differential is properly merged by the snapshot generator.
+        /// </summary>
+        /// <param name="profileType">The profile type under test (e.g. FHIRAllTypes.AllergyIntolerance).</param>
+        /// <param name="elementId">The element id of the profile to check (e.g. "AllergyIntolerance.code")</param>
+        /// <param name="propertyName">The name of the element definition property for which to add or modify the extension in the differential (e.g. "Binding").</param>
+        /// <param name="baseId">The element id that is defined in the base profile for this property.</param>
+        /// <param name="diffId">The element id to define in the differential for this property.</param>
+        /// <returns></returns>
+        [DataTestMethod]
+        [DynamicData(nameof(ElementDefinitionPropertyElementIdTestCasesR4), DynamicDataSourceType.Property)]
+        public async Tasks.Task ElementDefinitionPropertyElementIdTest(FHIRAllTypes profileType, string elementId, string propertyName, string baseId, string diffId, string expectedId)
+        {
+            // Arrange
+            var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
+            // Create derived profile that will be used as base profile for the test. 
+            // This is necessary to create a base profile that has an element id.
+            var myBaseProfile = new StructureDefinition() 
+            {
+                Type = profileType.GetLiteral(),
+                BaseDefinition = uri,
+                Name = "MyBase" + elementId,
+                Url = uri + "BaseTest",
+                Differential = new StructureDefinition.DifferentialComponent()
+            };
+
+            var source = new CachedResolver(new MultiResolver(_standardFhirSource, new InMemoryResourceResolver(myBaseProfile)));
+            var generator = new SnapshotGenerator(source, SnapshotGeneratorSettings.CreateDefault());
+            var propertyProxy = new ElementDefinitionPropertyProxy(propertyName);
+
+            // Get element from core base profile
+            var sd = await source.FindStructureDefinitionAsync(uri); // Find base profile
+            var snapElementDefinition = sd.Snapshot.Element.SingleOrDefault(x => x.ElementId == elementId); // Find specified element in snapshot of base profile
+            snapElementDefinition.Should().NotBeNull();
+            var snapElementDefinitionProperty = propertyProxy.GetValueAsElement(snapElementDefinition); // Get the property from the snapshot element (typed)
+
+            // Create differential for myBaseProfile
+            var baseElementDefinition = new ElementDefinition(elementId) { ElementId = elementId }; // Create element for differential
+            propertyProxy.SetValue(baseElementDefinition, propertyProxy.CreateInstance(snapElementDefinitionProperty)); // Set property for differential element
+            var baseElementDefinitionProperty = propertyProxy.GetValueAsElement(baseElementDefinition); // Get the property from the differential element (typed)
+            baseElementDefinitionProperty.ElementId = baseId;
+            myBaseProfile.Differential.Element = [baseElementDefinition];
+
+            // Create differential for myDerivedProfile
+            var diffElementDefinition = new ElementDefinition(elementId) { ElementId = elementId }; // Create element for differential
+            propertyProxy.SetValue(diffElementDefinition, propertyProxy.CreateInstance(snapElementDefinitionProperty)); // Set property for differential element
+            var diffElementDefinitionProperty = propertyProxy.GetValueAsElement(diffElementDefinition); // Get the property from the differential element (typed)
+            diffElementDefinitionProperty.ElementId = diffId; 
+
+            var myDerivedprofile = new StructureDefinition() // Create derived profile
+            {
+                Type = profileType.GetLiteral(),
+                BaseDefinition = myBaseProfile.Url,
+                Name = "My" + elementId,
+                Url = uri + "Test",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = [diffElementDefinition]
+                }
+            };
+
+            // Act
+            var elements = await generator.GenerateAsync(myDerivedprofile);
+
+            // Assert
+            var element = elements.SingleOrDefault(x => x.ElementId == diffElementDefinition.ElementId);
+            element.Should().NotBeNull();
+            var elementProperty = propertyProxy.GetValueAsElement(element);
+            elementProperty.ElementId.Should().Be(expectedId);
         }
 
         [TestMethod]
@@ -9813,7 +9924,6 @@ namespace Hl7.Fhir.Specification.Tests
             element = elements.Should().ContainSingle(e => e.ElementId == "MedicationRequest.substitution.allowed[x]:allowedCodeableConcept").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
             element.Binding.Should().NotBeNull();
-
         }
 
         [TestMethod]
@@ -9849,25 +9959,6 @@ namespace Hl7.Fhir.Specification.Tests
             var element = snapshot.Should().Contain(e => e.Path == "Observation.subject").Subject;
             var constraint = element.Constraint.Where(c => c.Key == "ref-1").FirstOrDefault();
             constraint.Source.Should().Be("http://hl7.org/fhir/StructureDefinition/Reference");
-        }
-
-        private void logExtensions(string title, IEnumerable<Extension> extensions, int level = 1)
-        {
-            Debug.WriteLine(title);
-
-            if (!extensions.Any())
-            {
-                Debug.WriteLine($"{new string(' ', level * 3)}none");
-                return;
-            }
-
-            foreach (Extension extension in extensions)
-            {
-                if (extension.Extension != null && extension.Extension.Count > 0)
-                    logExtensions(extension.Url, extension.Extension, level + 1);
-                else
-                    Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
-            }
         }
 
         //Tests Github issue #2211, see TestData/Issue-2211 for test artifacts.

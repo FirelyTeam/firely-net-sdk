@@ -246,8 +246,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         result.ObjectValue = diffText;
                     }
-                    // Also merge extensions on primitives
+                    // Also merge element id and extensions on primitives
                     // [Backported from R4] 
+                    result.ElementId = mergeString(snap?.ElementId, diff.ElementId);
                     result.Extension = mergeExtensions(snap?.Extension, diff.Extension);
                     onConstraint(result);
                     return result;
@@ -509,6 +510,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         snap.StrengthElement = mergePrimitiveAttribute(snap.StrengthElement, diff.StrengthElement);
                         snap.DescriptionElement = mergePrimitiveAttribute(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);
+                        snap.ElementId = mergeString(snap.ElementId, diff.ElementId);
                         snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
@@ -549,6 +551,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return null;
                 }
             }
+
+            static string mergeString(string snap, string diff) => diff ?? snap;
 
             // [WMR 20180611] NEW
             static bool isEqualCoding(Coding c, Coding d)
