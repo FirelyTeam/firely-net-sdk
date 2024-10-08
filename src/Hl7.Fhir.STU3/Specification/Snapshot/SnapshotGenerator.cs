@@ -399,7 +399,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
-                snapshot.Element.RemoveAllConstrainedByDiffExtensions();
+                // Also remove core extensions that are not supposed to be inherited by derived profiles
+                snapshot.RemoveAllNonInheritableExtensions();
                 snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
 
                 // Notify observers
