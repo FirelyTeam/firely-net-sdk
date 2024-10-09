@@ -9729,51 +9729,26 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Arrange
             var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
-            // Create derived profile that will be used as base profile for the test. 
+
+            // Create derived profile "myBaseProfile" that will be used as base profile for the test. 
             // This is necessary to create a base profile that has an element id.
-            var myBaseProfile = new StructureDefinition() 
-            {
-                Type = profileType.GetLiteral(),
-                BaseDefinition = uri,
-                Name = "MyBase" + elementId,
-                Url = uri + "BaseTest",
-                Differential = new StructureDefinition.DifferentialComponent()
-            };
+            var myBaseProfile = createStructureDefinition("MyBase", profileType, uri);
+            var myDerivedprofile = createStructureDefinition("MyDerived", profileType, myBaseProfile.Url);
 
             var source = new CachedResolver(new MultiResolver(_standardFhirSource, new InMemoryResourceResolver(myBaseProfile)));
             var generator = new SnapshotGenerator(source, SnapshotGeneratorSettings.CreateDefault());
             var propertyProxy = new ElementDefinitionPropertyProxy(propertyName);
 
             // Get element from core base profile
-            var sd = await source.FindStructureDefinitionAsync(uri); // Find base profile
-            var snapElementDefinition = sd.Snapshot.Element.SingleOrDefault(x => x.ElementId == elementId); // Find specified element in snapshot of base profile
-            snapElementDefinition.Should().NotBeNull();
-            var snapElementDefinitionProperty = propertyProxy.GetValueAsElement(snapElementDefinition); // Get the property from the snapshot element (typed)
+            var coreElement = await getElementFromStructureDefinition(source, uri, elementId, propertyProxy);
 
-            // Create differential for myBaseProfile
-            var baseElementDefinition = new ElementDefinition(elementId) { ElementId = elementId }; // Create element for differential
-            propertyProxy.SetValue(baseElementDefinition, propertyProxy.CreateInstance(snapElementDefinitionProperty)); // Set property for differential element
-            var baseElementDefinitionProperty = propertyProxy.GetValueAsElement(baseElementDefinition); // Get the property from the differential element (typed)
-            baseElementDefinitionProperty.ElementId = baseId;
+            // Add differential to "myBaseProfile"
+            var baseElementDefinition = creatElementDefinition(elementId, baseId, propertyProxy, coreElement);
             myBaseProfile.Differential.Element = [baseElementDefinition];
 
-            // Create differential for myDerivedProfile
-            var diffElementDefinition = new ElementDefinition(elementId) { ElementId = elementId }; // Create element for differential
-            propertyProxy.SetValue(diffElementDefinition, propertyProxy.CreateInstance(snapElementDefinitionProperty)); // Set property for differential element
-            var diffElementDefinitionProperty = propertyProxy.GetValueAsElement(diffElementDefinition); // Get the property from the differential element (typed)
-            diffElementDefinitionProperty.ElementId = diffId; 
-
-            var myDerivedprofile = new StructureDefinition() // Create derived profile
-            {
-                Type = profileType.GetLiteral(),
-                BaseDefinition = myBaseProfile.Url,
-                Name = "My" + elementId,
-                Url = uri + "Test",
-                Differential = new StructureDefinition.DifferentialComponent()
-                {
-                    Element = [diffElementDefinition]
-                }
-            };
+            // Add differential to "myDerivedProfile"
+            var diffElementDefinition = creatElementDefinition(elementId, diffId, propertyProxy, coreElement);
+            myDerivedprofile.Differential.Element = [diffElementDefinition];
 
             // Act
             var elements = await generator.GenerateAsync(myDerivedprofile);
@@ -9781,8 +9756,37 @@ namespace Hl7.Fhir.Specification.Tests
             // Assert
             var element = elements.SingleOrDefault(x => x.ElementId == diffElementDefinition.ElementId);
             element.Should().NotBeNull();
-            var elementProperty = propertyProxy.GetValueAsElement(element);
-            elementProperty.ElementId.Should().Be(expectedId);
+            var property = propertyProxy.GetValueAsElement(element);
+            property.ElementId.Should().Be(expectedId);
+        }
+
+        private static StructureDefinition createStructureDefinition(string name, FHIRAllTypes profileType, string baseDefinition)
+        {
+            return new StructureDefinition()
+            {
+                Type = profileType.GetLiteral(),
+                BaseDefinition = baseDefinition,
+                Name = name,
+                Url = baseDefinition + name,
+                Differential = new StructureDefinition.DifferentialComponent()
+            };
+        }
+
+        private static async Tasks.Task<Element> getElementFromStructureDefinition(IAsyncResourceResolver source, string uri, string elementId, ElementDefinitionPropertyProxy propertyProxy)
+        {
+            var sd = await source.FindStructureDefinitionAsync(uri); // Find base profile
+            var snapElementDefinition = sd.Snapshot.Element.SingleOrDefault(x => x.ElementId == elementId); // Find specified element in snapshot of base profile
+            snapElementDefinition.Should().NotBeNull();
+            return propertyProxy.GetValueAsElement(snapElementDefinition); // Get the Element property from the snapshot element (typed)
+        }
+
+        private static ElementDefinition creatElementDefinition(string elementId, string propertyId, ElementDefinitionPropertyProxy propertyProxy, Element element)
+        {
+            var elementDefinition = new ElementDefinition(elementId) { ElementId = elementId };
+            propertyProxy.SetValue(elementDefinition, propertyProxy.CreateInstance(element)); // Update element definition property value with clone of element
+            var property = propertyProxy.GetValueAsElement(elementDefinition); // Get the element
+            property.ElementId = propertyId; // Update property
+            return elementDefinition;
         }
 
         [TestMethod]
