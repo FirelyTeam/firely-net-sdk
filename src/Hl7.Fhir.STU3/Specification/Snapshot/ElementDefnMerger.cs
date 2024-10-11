@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     // Newly introduced named slices NEVER inherit element id
                     // Must always regenerate new unique identifier for named slices
-                    else if (diff.SliceName != snap.SliceName)
+                    if (diff.SliceName != snap.SliceName)
                     {
                         // Regenerate; don't inherit from snap
                         return null;
@@ -545,11 +545,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Otherwise inherit existing element id from snap
                     return snap.ElementId;
                 }
-                else
-                {
-                    // Don't merge elementId, e.g. for type profiles
-                    return null;
-                }
+
+                // Don't merge elementId, e.g. for type profiles
+                return null;
             }
 
             static string mergeString(string snap, string diff) => diff ?? snap;
