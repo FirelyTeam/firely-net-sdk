@@ -25,11 +25,7 @@ namespace Hl7.Fhir.ElementModel
         private readonly ClassMapping _myClassMapping;
         private readonly ModelInspector _inspector;
 
-        public ExceptionNotificationHandler ExceptionHandler
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         internal PocoElementNode(ModelInspector inspector, Base root, string rootName = null)
         {
@@ -73,7 +69,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 "url" => typeof(FhirUri),
                 "id" => typeof(FhirString),
-                "div" => typeof(XHtml),
+                //"div" => typeof(XHtml),
                 _ => throw new NotSupportedException(
                     $"Encountered unexpected primitive type {Name} in backward compat behaviour for PocoElementNode.InstanceType.")
             };

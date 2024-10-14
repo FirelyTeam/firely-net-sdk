@@ -44,6 +44,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        [Ignore("We stopped supporting ITypedElement.Definition on POCO.ToTypedElement")]
         public void TypedElementHasCorrectInfo()
         {
             var cls = new Signature() { Who = new ResourceReference("http://nu.nl") }.ToTypedElement();

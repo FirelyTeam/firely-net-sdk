@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="rootName"></param>
         /// <returns></returns>
         public static ITypedElement ToTypedElement(this Base @base, ModelInspector modelInspector, string? rootName = null)
-            => @base.ForTypedElement(modelInspector, rootName: rootName);
+            => new PocoElementNode(modelInspector, @base, rootName: rootName);
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements

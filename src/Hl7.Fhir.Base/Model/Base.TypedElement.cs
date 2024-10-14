@@ -9,6 +9,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using P=Hl7.Fhir.ElementModel.Types;
@@ -24,74 +25,64 @@ namespace Hl7.Fhir.Model;
 /// the instance or derived from fully aware of the FHIR definitions and types
 /// </remarks>
 #pragma warning disable CS0618 // Type or member is obsolete
-public interface IScopedNode : IBaseElementNavigator<IScopedNode>
+public interface IScopedNode : ITypedElement, IShortPathGenerator
 #pragma warning restore CS0618 // Type or member is obsolete
 {
     /// <summary>
     /// The parent node of this node, or null if this is the root node.
     /// </summary>
-    IScopedNode? Parent { get; }   // We don't need this probably.
+    IScopedNode? Parent { get; } 
 
-    /// <summary>
-    /// An indication of the location of this node within the data represented by the <c>ITypedElement</c>.
-    /// </summary>
-    /// <remarks>The format of the location is the dotted name of the property, including indices to make
-    /// sure repeated occurrences of an element can be distinguished. It needs to be sufficiently precise to aid
-    /// the user in locating issues in the data.</remarks>
-    string Location { get; }
+    // /// <summary>
+    // /// An indication of the location of this node within the data represented by the <c>ITypedElement</c>.
+    // /// </summary>
+    // /// <remarks>The format of the location is the dotted name of the property, including indices to make
+    // /// sure repeated occurrences of an element can be distinguished. It needs to be sufficiently precise to aid
+    // /// the user in locating issues in the data.</remarks>
+    // string Location { get; }
 }
 
+internal record ScopeInformation(IScopedNode? Parent, string Name, int? Index);
 
 
-public abstract partial class Base : IScopedNode, IShortPathGenerator,
+public abstract partial class Base : IScopedNode,
     IFhirValueProvider, IResourceTypeSupplier
 {
     [NonSerialized]
-    private PocoElementNode? _elementNode = null;
-
-    internal Base ForTypedElement(ModelInspector inspector, string? rootName = null)
+    private ScopeInformation? _scopeInfo;
+    
+    private ScopeInformation ScopeInfo
     {
-        ElementNode = new PocoElementNode(inspector, this, rootName);
+        get => LazyInitializer.EnsureInitialized(ref _scopeInfo, () => BuildRoot())!;
+        set => _scopeInfo = value;
+    } 
+
+    internal ScopeInformation BuildRoot(string? rootName = null) => new(null, rootName ?? TypeName, null);
+    
+    internal Base WithScopeInfo(ScopeInformation info)
+    {
+        this.ScopeInfo = info;
         return this;
     }
 
-    private PocoElementNode buildRootElementNode() => ForTypedElement(
-        ModelInspector.ForType(this.GetType())).ElementNode;
+    IEnumerable<ITypedElement> IBaseElementNavigator<ITypedElement>.Children(string? name) =>
+        this.GetElementPairs()
+            .Where(ep => (name == null || name == ep.Key))
+            .SelectMany<KeyValuePair<string, object>, Base>(ep => 
+                (ep.Key, ep.Value) switch
+                {
+                    (_, Base b) => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    (_, IEnumerable<Base> list) => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
+                    ("url", string s) when this is Extension => [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    ("id", string s) when this is Element => [new Id(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    ("value", _) => [],
+                    _ => throw new InvalidOperationException("Unexpected system primitive in child list")
+                }
+            );
+        
+    IScopedNode? IScopedNode.Parent => ScopeInfo.Parent;
 
-    private PocoElementNode ElementNode
-    {
-        get => LazyInitializer.EnsureInitialized(ref _elementNode, buildRootElementNode)!;
-
-        set => _elementNode = value;
-    }
-
-    IEnumerable<IScopedNode> IBaseElementNavigator<IScopedNode>.Children(string? name)
-    {
-        // TODO:  Base.Children gebruiken om ITypedElement.Children() te implementeren.
-        // ITypedElement stopt bij PrimitiveType, terwijl Children() verder gaat (er is dus ook een kind dat
-        // value heet in IReadOnlyDict, maar dat bestaat niet in ITYpedElement.    ITypedElement.Value vervult deze rol,
-        // dus het "value" kind mogen we nog niet doorgeven.
-        // We're also going to set Name, Parent and Index (as private fields)
-        // var elements = this.GetElementPairs();  Zie verder PocoElementNode, want we moeten ook filteren
-        // op naam.
-        var elements = ElementNode.Children(name).Cast<PocoElementNode>();
-        foreach (var element in elements)
-        {
-            if (element.Current is not null)
-            {
-                element.Current.ElementNode = element;
-                yield return element.Current;
-            }
-            else
-            {
-                // Mmmmm....there is something like a "null" ITypedElement,
-                // but we don't have a "null" POCO.
-                yield return element;
-            }
-        }
-    }
-
-    string IBaseElementNavigator<IScopedNode>.Name => ElementNode.Name;
+    string IBaseElementNavigator<ITypedElement>.Name => ScopeInfo.Name;
 
     // TODO:
     //   Als wij een BackboneElement zijn, dan is onze naam niet this.TypeName maar "BackboneElement" of
@@ -99,10 +90,15 @@ public abstract partial class Base : IScopedNode, IShortPathGenerator,
     //   HEt moet "code" zijn als dit een "Code<T>" is. Dat zijn geloof ik de afwijkingen.
     //   Wellioht is er ook nog iets met de directe properties "Extension.url" en "Element.id" die van een
     //   system type zijn ipv een FHIR type.
-    string? IBaseElementNavigator<IScopedNode>.InstanceType => ElementNode.InstanceType;
+    string? IBaseElementNavigator<ITypedElement>.InstanceType => 
+        ((IStructureDefinitionSummary)
+            ModelInspector
+                .ForType(this.GetType())
+                .FindOrImportClassMapping(this.GetType())!
+        ).TypeName;
 
-    private object? _value = null;
-    private object? _lastCachedValue = null;
+    private object? _value;
+    private object? _lastCachedValue;
 
 
     internal object? ToITypedElementValue()
@@ -131,7 +127,7 @@ public abstract partial class Base : IScopedNode, IShortPathGenerator,
         }
     }
 
-    object? IBaseElementNavigator<IScopedNode>.Value
+    object? IBaseElementNavigator<ITypedElement>.Value
     {
         get
         {
@@ -144,13 +140,40 @@ public abstract partial class Base : IScopedNode, IShortPathGenerator,
         }
     }
 
-    string IScopedNode.Location => ElementNode.Location;
+    string ITypedElement.Location =>
+        (ScopeInfo.Index, ScopeInfo.Parent) switch
+        {
+            // if we have an index, write it
+            ({} idx, {} parent) => $"{parent.Location}.{ScopeInfo.Name}[{idx}]",
+            // if we do not, write 0 as idx
+            (_, {} parent) => $"{parent.Location}.{ScopeInfo.Name}[0]",
+            // if we have neither, we are the root.
+            _ => $"{ScopeInfo.Name}"
+        };
 
-    string IShortPathGenerator.ShortPath => ElementNode.ShortPath;
+    IElementDefinitionSummary? ITypedElement.Definition => null;
 
-    Base IFhirValueProvider.FhirValue => ElementNode.FhirValue;
+    string IShortPathGenerator.ShortPath => 
+        (ScopeInfo.Index, ScopeInfo.Parent) switch
+        {
+            // if we have an index, we have a parent.
+            ({ } idx, {} parent) => $"{parent.ShortPath}.{ScopeInfo.Name}[{idx}]",
+            // Note that we omit indices here.
+            (_, { } parent) => $"{parent.ShortPath}.{ScopeInfo.Name}",
+            // if we have neither, we are the root. Note that we omit indices here.
+            _ => ScopeInfo.Name
+        };
+    
+    public Base FhirValue => this;
 
-    string IResourceTypeSupplier.ResourceType => ElementNode.ResourceType;
+    string? IResourceTypeSupplier.ResourceType =>
+        this is Resource
+            ? ((IStructureDefinitionSummary)
+                ModelInspector
+                    .ForType(this.GetType())
+                    .FindOrImportClassMapping(this.GetType())!
+            ).TypeName
+            : null;
 }
 
 #endif

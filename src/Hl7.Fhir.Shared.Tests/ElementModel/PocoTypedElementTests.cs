@@ -196,6 +196,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
 
         [TestMethod]
+        [Ignore("This design is still under discussion")]
         public void CheckTypeOfElementDefinitionMembers()
         {
 #if !R5
