@@ -25,7 +25,11 @@ namespace Hl7.Fhir.ElementModel
         private readonly ClassMapping _myClassMapping;
         private readonly ModelInspector _inspector;
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        public ExceptionNotificationHandler ExceptionHandler
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
         internal PocoElementNode(ModelInspector inspector, Base root, string rootName = null)
         {
@@ -53,7 +57,7 @@ namespace Hl7.Fhir.ElementModel
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
-            ExceptionHandler = parent.ExceptionHandler;
+        //    ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
         }
@@ -204,39 +208,20 @@ namespace Hl7.Fhir.ElementModel
         {
             try
             {
-                switch (Current)
+                return Current switch
                 {
-                    case Hl7.Fhir.Model.Instant ins when ins.Value.HasValue:
-                        return P.DateTime.FromDateTimeOffset(ins.Value.Value);
-                    case Hl7.Fhir.Model.Time { Value: not null } time:
-                        return P.Time.Parse(time.Value);
-                    case Hl7.Fhir.Model.Date { Value: not null } dt:
-                        return P.Date.Parse(dt.Value);
-                    case FhirDateTime { Value: not null } fdt:
-                        return P.DateTime.Parse(fdt.Value);
-                    case Hl7.Fhir.Model.Integer fint:
-                        if (!fint.Value.HasValue)
-                            return null;
-                        return (int)fint.Value;
-                    case Hl7.Fhir.Model.Integer64 fint64:
-                        if (!fint64.Value.HasValue)
-                            return null;
-                        return (long)fint64.Value;
-                    case Hl7.Fhir.Model.PositiveInt pint:
-                        if (!pint.Value.HasValue)
-                            return null;
-                        return (int)pint.Value;
-                    case Hl7.Fhir.Model.UnsignedInt unsint:
-                        if (!unsint.Value.HasValue)
-                            return null;
-                        return (int)unsint.Value;
-                    case Hl7.Fhir.Model.Base64Binary b64:
-                        return b64.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(b64.Value) : null;
-                    case PrimitiveType prim:
-                        return prim.ObjectValue;
-                    default:
-                        return null;
-                }
+                    Instant { Value: { } ins } => P.DateTime.FromDateTimeOffset(ins),
+                    Time { Value: { } time } => P.Time.Parse(time),
+                    Date { Value: { } dt } => P.Date.Parse(dt),
+                    FhirDateTime { Value: { } fdt } => P.DateTime.Parse(fdt),
+                    Integer fint => fint.Value,
+                    Integer64 fint64 => fint64.Value,
+                    PositiveInt pint => pint.Value,
+                    UnsignedInt unsint => unsint.Value,
+                    Base64Binary { Value: { } b64 } => PrimitiveTypeConverter.ConvertTo<string>(b64),
+                    PrimitiveType prim => prim.ObjectValue,
+                    _ => null
+                };
             }
             catch (FormatException)
             {
@@ -246,25 +231,24 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        public string InstanceType { get; private set; }
+        public string InstanceType { get; }
 
-        public string Location { get; private set; }
+        public string Location { get; }
 
         public string ResourceType => Current is Resource ? InstanceType : null;
 
         public IEnumerable<object> Annotations(Type type)
         {
             if (type == typeof(PocoElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
-                return new[] { this };
+                return [this];
             else if (type == typeof(IFhirValueProvider))
-                return new[] { this };
+                return [this];
             else if (type == typeof(IResourceTypeSupplier))
-                return new[] { this };
+                return [this];
             else if (FhirValue is IAnnotated ia)
                 return ia.Annotations(type);
-
             else
-                return Enumerable.Empty<object>();
+                return [];
         }
     }
 }
