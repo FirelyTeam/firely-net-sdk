@@ -74,7 +74,7 @@ public abstract partial class Base : IScopedNode,
                     (_, Base b) => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                     (_, IEnumerable<Base> list) => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
                     ("url", string s) when this is Extension => [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                    ("id", string s) when this is Element => [new Id(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    ("id", string s) when this is Element => [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                     ("value", _) => [],
                     _ => throw new InvalidOperationException("Unexpected system primitive in child list")
                 }
@@ -168,11 +168,9 @@ public abstract partial class Base : IScopedNode,
 
     string? IResourceTypeSupplier.ResourceType =>
         this is Resource
-            ? ((IStructureDefinitionSummary)
-                ModelInspector
-                    .ForType(this.GetType())
-                    .FindOrImportClassMapping(this.GetType())!
-            ).TypeName
+#pragma warning disable CS0618 // Type or member is obsolete
+            ? ((IBaseElementNavigator<ITypedElement>)this).InstanceType
+#pragma warning restore CS0618 // Type or member is obsolete
             : null;
 }
 
