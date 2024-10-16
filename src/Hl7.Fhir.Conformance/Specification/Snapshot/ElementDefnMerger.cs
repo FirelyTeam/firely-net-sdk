@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
                 // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
                 // profile author can correct the conflicting constraint key.
-                // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
+                // [WMR 20160918] MUST merge identical constraints, otherwise each derived profile accumulates
                 // additional identical constraints inherited from e.g. BackboneElement.
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
                 // [WMR 20190723] R4 NEW: Initialize Constraint.source property
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // TODO: Move logic to MergeTo method on partial class TypeRefComponent
 
                         // TODO: Copy diff annotations...?
-                        if (diff.ElementId != null) { result.ElementId = diff.ElementId; }
+                        result.ElementId = mergeString(snap.ElementId, diff.ElementId);
                         result.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         result.CodeElement = mergePrimitiveElement(snap.CodeElement, diff.CodeElement);
 
@@ -366,6 +366,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         snap.StrengthElement = mergePrimitiveElement(snap.StrengthElement, diff.StrengthElement);
                         snap.DescriptionElement = mergePrimitiveElement(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSetElement = mergeComplexAttribute(snap.ValueSetElement, diff.ValueSetElement);
+                        snap.ElementId = mergeString(snap.ElementId, diff.ElementId);
                         snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         snap.Additional = mergeCollection(snap.Additional, diff.Additional, matchExactly);
                         onConstraint(result);
@@ -670,7 +671,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             result.ObjectValue = diffValue;
                         }
-                        // Also merge extensions on primitives
+                        // Also merge element id and extensions on primitives
+                        result.ElementId = mergeString(snap.ElementId, diff.ElementId);
                         result.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
@@ -692,7 +694,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     // Newly introduced named slices NEVER inherit element id
                     // Must always regenerate new unique identifier for named slices
-                    else if (!IsEqualName(diff.SliceName, snap.SliceName))
+                    if (!IsEqualName(diff.SliceName, snap.SliceName))
                     {
                         // Regenerate; don't inherit from snap
                         return null;
@@ -700,12 +702,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Otherwise inherit existing element id from snap
                     return snap.ElementId;
                 }
-                else
-                {
-                    // Don't merge elementId, e.g. for type profiles
-                    return null;
-                }
+
+                // Don't merge elementId, e.g. for type profiles
+                return null;
             }
+
+            static string mergeString(string snap, string diff) => diff ?? snap;
 
             // Functions to match snap collection items to diff collection items
             // Matching key depends on collection type
