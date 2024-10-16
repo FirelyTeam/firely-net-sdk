@@ -3,6 +3,7 @@ using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using IRO = System.Collections.Generic.IReadOnlyDictionary<string, object>;
 
 namespace Hl7.Fhir.Tests.Model;
 
@@ -37,7 +38,7 @@ public class PocoDictionaryTests
     [TestMethod]
     public void ResourceAcceptsOverflow()
     {
-        var pat = new Patient();
+        var pat = new Patient().AsDictionary();
 
         // setting an existing property to an incorrect type should fail.
         Assert.ThrowsException<InvalidCastException>(() => pat["name"] = "John");
@@ -53,25 +54,30 @@ public class PocoDictionaryTests
 
         pat["name"] = null!;
         pat["weight"] = null!;
-        pat.AsReadOnlyDictionary().Should().BeEmpty();
+        pat.Should().BeEmpty();
     }
 
     [TestMethod]
     public void CanReadSpecialProperties()
     {
-        var pat = new Patient()
+        var patient = new Patient()
         {
             Text = new Narrative { Div = "<div>hello</div>" },
             Active = true,
             Meta = new Meta { ElementId = "4" },
         };
 
-        pat.AddExtension("http://nu.nl", new FhirBoolean(true));
+        patient.AddExtension("http://nu.nl", new FhirBoolean(true));
+        var pat = patient.AsReadOnlyDictionary();
 
-        pat["active"].Should().BeOfType<FhirBoolean>().Which["value"].Should().Be(true);
-        pat["text"].Should().BeOfType<Narrative>().Which["div"].Should().BeOfType<XHtml>().Which["value"].Should().Be("<div>hello</div>");
-        pat["meta"].Should().BeOfType<Meta>().Which["id"].Should().Be("4");
-        var extension = pat["extension"].Should().BeOfType<List<Extension>>().Subject;
-        extension.Should().ContainSingle().Which["url"].Should().Be("http://nu.nl");
+        pat["active"].Should().BeOfType<FhirBoolean>().And
+            .BeAssignableTo<IRO>().Which["value"].Should().Be(true);
+        pat["text"].Should().BeOfType<Narrative>().And
+            .BeAssignableTo<IRO>().Which["div"].Should().BeOfType<XHtml>().And
+            .BeAssignableTo<IRO>().Which["value"].Should().Be("<div>hello</div>");
+        pat["meta"].Should().BeOfType<Meta>().And
+            .BeAssignableTo<IRO>().Which["id"].Should().Be("4");
+        var extension = pat["extension"].Should().BeOfType<List<Extension>>().Which.Should().ContainSingle().Subject;
+        extension.Should().BeAssignableTo<IRO>().Which["url"].Should().Be("http://nu.nl");
     }
 }

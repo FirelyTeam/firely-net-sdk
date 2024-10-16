@@ -110,6 +110,12 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
 public class DynamicDataType : DataType
 {
     public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
+
+    public object this[string key]
+    {
+        get => this.AsReadOnlyDictionary()[key];
+        set => SetValue(key, value);
+    }
 }
 
 
@@ -119,4 +125,10 @@ public class DynamicDataType : DataType
 public class DynamicResource : Resource
 {
     public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
+
+    public object this[string key]
+    {
+        get => this.AsReadOnlyDictionary()[key];
+        set => SetValue(key, value);
+    }
 }
