@@ -160,9 +160,7 @@ public abstract partial class Base : IScopedNode,
 
     string? IResourceTypeSupplier.ResourceType =>
         this is Resource
-#pragma warning disable CS0618 // Type or member is obsolete
             ? ((ITypedElement)this).InstanceType
-#pragma warning restore CS0618 // Type or member is obsolete
             : null;
 }
 
