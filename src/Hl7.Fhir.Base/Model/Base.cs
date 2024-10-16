@@ -27,15 +27,16 @@
   
 */
 
-using Hl7.Fhir.Introspection;
+#nullable enable
+
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading;
 
 namespace Hl7.Fhir.Model
@@ -43,13 +44,27 @@ namespace Hl7.Fhir.Model
     public abstract partial class Base : IDeepCopyable, IDeepComparable,
         IAnnotated, IAnnotatable, IValidatableObject, INotifyPropertyChanged, IReadOnlyDictionary<string, object>
     {
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) => Enumerable.Empty<ValidationResult>();
+        /// <summary>
+        /// FHIR Type Name
+        /// </summary>
+        public virtual string TypeName => GetType().Name;
+
+
+        private Dictionary<string, object>? _overflow = null;
+
+        /// <summary>
+        /// A dictionary containing all elements that are not explicitly defined in the class.
+        /// </summary>
+        protected Dictionary<string, object> Overflow =>
+            LazyInitializer.EnsureInitialized(ref _overflow, () => new Dictionary<string, object>())!;
+
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) => [];
 
         #region << Annotations >>
         [NonSerialized]
-        private AnnotationList _annotations = null;
+        private AnnotationList? _annotations = null;
 
-        private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => new());
+        private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
         public IEnumerable<object> Annotations(Type type) => annotations.OfType(type);
 
@@ -60,9 +75,9 @@ namespace Hl7.Fhir.Model
 
         #region INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged(String property) =>
+        protected virtual void OnPropertyChanged(string property) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion
@@ -76,7 +91,7 @@ namespace Hl7.Fhir.Model
 
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => GetElementPairs().Count();
 
-        object IReadOnlyDictionary<string, object>.this[string key] => TryGetValue(key, out var value) ? value : throw new KeyNotFoundException();
+//        object IReadOnlyDictionary<string, object>.this[string key] => TryGetValue(key, out var value) ? value : throw new KeyNotFoundException();
 
         bool IReadOnlyDictionary<string, object>.ContainsKey(string key) => TryGetValue(key, out _);
 
@@ -84,7 +99,55 @@ namespace Hl7.Fhir.Model
 
         IEnumerator IEnumerable.GetEnumerator() => GetElementPairs().GetEnumerator();
 
-        bool IReadOnlyDictionary<string, object>.TryGetValue(string key, out object value) => TryGetValue(key, out value);
+        bool IReadOnlyDictionary<string, object>.TryGetValue(string key, out object value) => TryGetValue(key, out value!);
         #endregion
+
+
+        protected virtual Base SetValue(string key, object? value)
+        {
+            if (value is null)
+                Overflow.Remove(key);
+            else
+                Overflow[key] = value;
+
+            return this;
+        }
+
+        protected virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) => Overflow.TryGetValue(key, out value);
+
+        protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Overflow;
+
+        // TODO bring Children + NamedChildren over as well.
+
+        // TODO: This should maybe be hidden behind IReadOnlyDictionary or the new IScopedNode.
+        public object this[string key]
+        {
+            get => TryGetValue(key, out var value) ? value : throw new KeyNotFoundException();
+            set => SetValue(key, value);
+        }
+    }
+
+    /// <summary>
+    /// A dynamic data type that can hold any element.
+    /// </summary>
+    public class DynamicDataType : DataType
+    {
+        public void Add(string arg1, object arg2)
+        {
+            this[arg1] = arg2;
+        }
+
+    }
+
+
+    /// <summary>
+    /// A dynamic resource that can hold any element.
+    /// </summary>
+    public class DynamicResource : Resource
+    {
+        public void Add(string arg1, object arg2)
+        {
+            this[arg1] = arg2;
+        }
     }
 }
