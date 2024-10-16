@@ -31,15 +31,7 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     /// <summary>
     /// The parent node of this node, or null if this is the root node.
     /// </summary>
-    IScopedNode? Parent { get; } 
-
-    // /// <summary>
-    // /// An indication of the location of this node within the data represented by the <c>ITypedElement</c>.
-    // /// </summary>
-    // /// <remarks>The format of the location is the dotted name of the property, including indices to make
-    // /// sure repeated occurrences of an element can be distinguished. It needs to be sufficiently precise to aid
-    // /// the user in locating issues in the data.</remarks>
-    // string Location { get; }
+    IScopedNode? Parent { get; }
 }
 
 internal record ScopeInformation(IScopedNode? Parent, string Name, int? Index);
@@ -65,7 +57,7 @@ public abstract partial class Base : IScopedNode,
         return this;
     }
 
-    IEnumerable<ITypedElement> IBaseElementNavigator<ITypedElement>.Children(string? name) =>
+    IEnumerable<ITypedElement> ITypedElement.Children(string? name) =>
         this.GetElementPairs()
             .Where(ep => (name == null || name == ep.Key))
             .SelectMany<KeyValuePair<string, object>, Base>(ep => 
@@ -82,7 +74,7 @@ public abstract partial class Base : IScopedNode,
         
     IScopedNode? IScopedNode.Parent => ScopeInfo.Parent;
 
-    string IBaseElementNavigator<ITypedElement>.Name => ScopeInfo.Name;
+    string ITypedElement.Name => ScopeInfo.Name;
 
     // TODO:
     //   Als wij een BackboneElement zijn, dan is onze naam niet this.TypeName maar "BackboneElement" of
@@ -90,7 +82,7 @@ public abstract partial class Base : IScopedNode,
     //   HEt moet "code" zijn als dit een "Code<T>" is. Dat zijn geloof ik de afwijkingen.
     //   Wellioht is er ook nog iets met de directe properties "Extension.url" en "Element.id" die van een
     //   system type zijn ipv een FHIR type.
-    string? IBaseElementNavigator<ITypedElement>.InstanceType => 
+    string? ITypedElement.InstanceType => 
         ((IStructureDefinitionSummary)
             ModelInspector
                 .ForType(this.GetType())
@@ -127,7 +119,7 @@ public abstract partial class Base : IScopedNode,
         }
     }
 
-    object? IBaseElementNavigator<ITypedElement>.Value
+    object? ITypedElement.Value
     {
         get
         {
@@ -169,7 +161,7 @@ public abstract partial class Base : IScopedNode,
     string? IResourceTypeSupplier.ResourceType =>
         this is Resource
 #pragma warning disable CS0618 // Type or member is obsolete
-            ? ((IBaseElementNavigator<ITypedElement>)this).InstanceType
+            ? ((ITypedElement)this).InstanceType
 #pragma warning restore CS0618 // Type or member is obsolete
             : null;
 }
