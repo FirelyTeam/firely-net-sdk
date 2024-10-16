@@ -21,8 +21,8 @@ using Hl7.Fhir.STU3.Specification.Tests.Snapshot;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using NSubstitute;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -2433,8 +2433,8 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // Also ignore any Changed extensions on base and diff
-            elemClone.RemoveAllConstrainedByDiffExtensions();
-            baseClone.RemoveAllConstrainedByDiffExtensions();
+            elemClone.RemoveAllNonInheritableExtensions();
+            baseClone.RemoveAllNonInheritableExtensions();
             elemClone.RemoveAllConstrainedByDiffAnnotations();
             baseClone.RemoveAllConstrainedByDiffAnnotations();
 
