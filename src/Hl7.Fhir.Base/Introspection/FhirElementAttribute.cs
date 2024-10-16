@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public bool IsModifier { get; set; }
 
-        public string FiveWs { get; set; } = string.Empty;
+        public string? FiveWs { get; set; } = null;
 
         // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
         // FhirElement while validating. This allows us to extend validation into each FhirElement,

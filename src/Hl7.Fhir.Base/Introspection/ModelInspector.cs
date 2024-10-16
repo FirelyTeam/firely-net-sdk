@@ -56,13 +56,15 @@ namespace Hl7.Fhir.Introspection
         /// metadata for the most recent release for those base classes.</remarks>
         public static ModelInspector ForAssembly(Assembly a)
         {
-            return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)), _ => configureInspector(a));
+            // ReSharper disable once HeapView.CanAvoidClosure
+            return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)),
+                _ => configureInspector(a));
 
             // NB: The concurrent dictionary will make sure only one of these initializers will run at the same time,
             // so there is no additional locking done in these nested functions.
             static ModelInspector configureInspector(Assembly a)
             {
-                if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not FhirModelAssemblyAttribute modelAssemblyAttr)
+                if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not { } modelAssemblyAttr)
                     throw new InvalidOperationException($"Assembly {a.FullName} cannot be used to supply FHIR metadata," +
                         $" as it is not marked with a {nameof(FhirModelAssemblyAttribute)} attribute.");
 
@@ -90,7 +92,7 @@ namespace Hl7.Fhir.Introspection
                     imported.Add(a);
 
                     var referencedFhirAssemblies = a.GetReferencedAssemblies()
-                            .Select(an => Assembly.Load(an))
+                            .Select(Assembly.Load)
                             .Where(isFhirModelAssembly);
 
                     foreach (var ra in referencedFhirAssemblies)
@@ -125,11 +127,25 @@ namespace Hl7.Fhir.Introspection
         public static ModelInspector Base => ForType(typeof(ModelInspector));
 
         /// <summary>
+        /// Returns a configured <see cref="ModelInspector"/> with the given predefined mappings.
+        /// </summary>
+        public static ModelInspector ForPredefinedMappings(FhirRelease version,
+            IEnumerable<ClassMapping> classMappings,
+            IEnumerable<EnumMapping> enumMappings) => new(version, classMappings, enumMappings);
+
+        /// <summary>
         /// Constructs a ModelInspector that will reflect the FHIR metadata for the given FHIR release
         /// </summary>
         public ModelInspector(FhirRelease fhirRelease)
         {
             FhirRelease = fhirRelease;
+        }
+
+        private ModelInspector(FhirRelease fhirRelease, IEnumerable<ClassMapping> classMappings,
+            IEnumerable<EnumMapping> enumMappings) : this(fhirRelease)
+        {
+            _classMappings = new ClassMappingCollection(classMappings);
+            _enumMappings = new EnumMappingCollection(enumMappings);
         }
 
         /// <summary>
@@ -159,7 +175,7 @@ namespace Hl7.Fhir.Introspection
         {
             if (assembly == null) throw Error.ArgumentNull(nameof(assembly));
 
-            IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+            List<Type> exportedTypes = assembly.ExportedTypes.ToList();
 
             // Try to derive the literal FHIR version (e.g. 4.0.3) from the ModelInfo. This will only work
             // if the added assembly is the satellite for a FHIR release.
@@ -174,8 +190,8 @@ namespace Hl7.Fhir.Introspection
             extractEnums(exportedEnums);
 
             // Find and extract all ClassMappings
-            var exportedClasses = exportedTypes.Where(et => et.IsClass && !et.IsEnum);
-            return exportedClasses.Select(t => ImportType(t))
+            var exportedClasses = exportedTypes.Where(et => et is { IsClass: true, IsEnum: false });
+            return exportedClasses.Select(ImportType)
                 .Where(cm => cm is not null)
                 .ToList()!;
         }
@@ -196,7 +212,7 @@ namespace Hl7.Fhir.Introspection
             var nestedEnums = nestedTypes.Where(t => t.IsEnum);
             extractEnums(nestedEnums);
 
-            var nestedClasses = nestedTypes.Where(t => t.IsClass && !t.IsEnum);
+            var nestedClasses = nestedTypes.Where(t => t is { IsClass: true, IsEnum: false });
             extractBackbonesFromClasses(nestedClasses);
 
             return mapping;
@@ -232,37 +248,37 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>The search for the mapping by namem is case-insensitive.</remarks>
         public ClassMapping? FindClassMapping(string fhirTypeName) =>
-            _classMappings.ByName.TryGetValue(fhirTypeName, out var entry) ? entry : null;
+            _classMappings.ByName.GetValueOrDefault(fhirTypeName);
 
         /// <summary>
         /// Retrieves an already imported <see cref="ClassMapping" /> given a Type.
         /// </summary>
         public ClassMapping? FindClassMapping(Type t) =>
-            _classMappings.ByType.TryGetValue(t, out var entry) ? entry : null;
+            _classMappings.ByType.GetValueOrDefault(t);
 
         /// <summary>
         /// Retrieves an already imported <see cref="ClassMapping" /> given a canonical.
         /// </summary>
         public ClassMapping? FindClassMappingByCanonical(string canonical) =>
-            _classMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+            _classMappings.ByCanonical.GetValueOrDefault(canonical);
 
         /// <summary>
         /// Retrieves an already imported <see cref="EnumMapping"/>, given the name of the valueset.
         /// </summary>
         public EnumMapping? FindEnumMapping(string valuesetName) =>
-            _enumMappings.ByName.TryGetValue(valuesetName, out var entry) ? entry : null;
+            _enumMappings.ByName.GetValueOrDefault(valuesetName);
 
         /// <summary>
         /// Retrieves an already imported <see cref="EnumMapping" /> given the enum Type.
         /// </summary>
         public EnumMapping? FindEnumMapping(Type t) =>
-            _enumMappings.ByType.TryGetValue(t, out var entry) ? entry : null;
+            _enumMappings.ByType.GetValueOrDefault(t);
 
         /// <summary>
         /// Retrieves an already imported <see cref="EnumMapping" /> given the valueset canonical.
         /// </summary>
         public EnumMapping? FindEnumMappingByCanonical(string canonical) =>
-            _enumMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+            _enumMappings.ByCanonical.GetValueOrDefault(canonical);
 
         /// <summary>
         /// The class mapping representing the Cql Patient type for the inspected model.
@@ -295,7 +311,7 @@ namespace Hl7.Fhir.Introspection
 
         public Type? GetTypeForFhirType(string name) => FindClassMapping(name) is { } mapping ? mapping.NativeType : null;
 
-        public bool IsBindable(string type) => FindClassMapping(type) is { } mapping && mapping.IsBindable;
+        public bool IsBindable(string type) => FindClassMapping(type) is { IsBindable: true };
 
         public bool IsConformanceResource(string name) => GetTypeForFhirType(name) is { } type && IsConformanceResource(type);
 
@@ -305,10 +321,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsCoreModelType(Type type) => FindClassMapping(type) is not null;
 
-        public bool IsCoreModelTypeUri(Uri uri) => uri is not null
-                // [WMR 20181025] Issue #746
-                // Note: FhirCoreProfileBaseUri.IsBaseOf(new Uri("Dummy", UriKind.RelativeOrAbsolute)) = true...?!
-                && uri.IsAbsoluteUri
+        public bool IsCoreModelTypeUri(Uri uri) => uri.IsAbsoluteUri
                 && Canonical.FHIR_CORE_PROFILE_BASE_URI.IsBaseOf(uri)
                 && IsCoreModelType(Canonical.FHIR_CORE_PROFILE_BASE_URI.MakeRelativeUri(uri).ToString());
 
@@ -324,9 +337,9 @@ namespace Hl7.Fhir.Introspection
             type == typeof(PrimitiveType) ||
             type == typeof(BackboneType);
 
-        public bool IsDataType(string name) => FindClassMapping(name) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
+        public bool IsDataType(string name) => FindClassMapping(name) is { IsFhirPrimitive: false, IsResource: false };
 
-        public bool IsDataType(Type type) => FindClassMapping(type) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
+        public bool IsDataType(Type type) => FindClassMapping(type) is { IsFhirPrimitive: false, IsResource: false };
 
         public bool IsInstanceTypeFor(string superclass, string subclass)
         {
@@ -338,9 +351,9 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsInstanceTypeFor(Type superclass, Type subclass) => superclass == subclass || superclass.IsAssignableFrom(subclass);
 
-        public bool IsKnownResource(string name) => FindClassMapping(name) is { } mapping && mapping.IsResource;
+        public bool IsKnownResource(string name) => FindClassMapping(name) is { IsResource: true };
 
-        public bool IsKnownResource(Type type) => FindClassMapping(type) is { } mapping && mapping.IsResource;
+        public bool IsKnownResource(Type type) => FindClassMapping(type) is { IsResource: true };
 
         public bool IsPrimitive(string name) => FindClassMapping(name)?.IsFhirPrimitive ?? false;
 
