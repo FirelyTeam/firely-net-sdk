@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Support.Tests
         {
             // resolve should handle an empty collection as input
             var evaluator = _compiler.Compile("{}.resolve()");
-            var result = evaluator(null, FhirEvaluationContext.CreateDefault());
+            var result = evaluator(null, new FhirEvaluationContext());
 
             Assert.IsFalse(result.Any());
         }
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Tests
         public void HtmlChecks(string xml, bool expected, string because)
         {
             var evaluator = _compiler.Compile("htmlChecks()");
-            evaluator.Predicate(ElementNode.ForPrimitive(xml), FhirEvaluationContext.CreateDefault()).Should().Be(expected, because);
+            evaluator.Predicate(ElementNode.ForPrimitive(xml), new FhirEvaluationContext()).Should().Be(expected, because);
         }
 
         [DataTestMethod]
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Support.Tests
         public void AssertFhirPathTestcases(string expression, bool expected)
         {
             var evaluator = _compiler.Compile(expression);
-            var result = evaluator(null, FhirEvaluationContext.CreateDefault());
+            var result = evaluator(null, new FhirEvaluationContext());
 
             if (result.Any())
             {
