@@ -1,5 +1,7 @@
 using Hl7.Fhir.ElementModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Model;
 
@@ -27,7 +29,7 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     /// <param name="name">If given, specifies the children to return based on this parameter.</param>
     /// <returns>An IEnumerable containing the children of this instance, including scope data.</returns>
     new IEnumerable<IScopedNode> Children(string? name = null);
-    
+
     /// <summary>
     /// Name of the node, e.g. "active", "value".
     /// </summary>
@@ -72,4 +74,16 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     /// sure repeated occurrences of an element can be distinguished. It needs to be sufficiently precise to aid 
     /// the user in locating issues in the data.</remarks>
     new string Location { get; }
+
+    /// <summary>
+    /// Resolve a resource reference within the context of this node given a url (for bundles) or id (for contained).
+    /// </summary>
+    /// <param name="url">The relative URL to resolve.</param>
+    /// <param name="result">Contains the referenced instance, or null if the operation failed</param>
+    /// <remarks>Does not create a copy. The resolved resource will be part of the IScopedNode-tree that was passed to this function</remarks>
+    /// <returns>t</returns>
+    public bool TryResolveReference(string url, [NotNullWhen(true)] out IScopedNode? result)
+    {
+        throw new NotImplementedException();
+    }
 }
