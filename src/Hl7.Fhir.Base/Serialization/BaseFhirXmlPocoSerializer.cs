@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization
         {
             writer.WriteStartDocument();
 
-            var simulateRoot = ((IScopedNode)members).Parent is not null;
+            var simulateRoot = members is not Resource && ((IScopedNode)members).Parent is null;
             if (simulateRoot)
             {
                 // Serialization in XML of non-resources is problematic, since there's no root.
