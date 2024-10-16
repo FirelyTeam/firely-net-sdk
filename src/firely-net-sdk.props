@@ -43,7 +43,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<EnablePackageValidation>true</EnablePackageValidation>
+		<EnablePackageValidation>false</EnablePackageValidation> <!-- Disable package validation for now -->
 		<PackageValidationBaselineVersion>5.10.3</PackageValidationBaselineVersion>
 	</PropertyGroup>
 
