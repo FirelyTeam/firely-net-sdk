@@ -27,7 +27,7 @@
   
 */
 
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -51,7 +51,17 @@ namespace Hl7.Fhir.Model
 
         private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => new());
 
-        public IEnumerable<object> Annotations(Type type) => annotations.OfType(type);
+        public IEnumerable<object> Annotations(Type type)
+        {
+            if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
+                    return new[] { this };
+            else if (type == typeof(IFhirValueProvider))
+                return new[] { this };
+            else if (type == typeof(IResourceTypeSupplier))
+                return new[] { this };
+            else
+                return annotations.OfType(type);
+        }
 
         public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
 

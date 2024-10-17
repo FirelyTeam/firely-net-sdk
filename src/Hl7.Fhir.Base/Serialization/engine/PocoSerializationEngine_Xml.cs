@@ -24,7 +24,7 @@ internal partial class PocoSerializationEngine
         _xmlSerializer ??= new BaseFhirXmlPocoSerializer(_inspector.FhirRelease);
     
     /// <inheritdoc />
-    public Resource DeserializeFromXml(string data)
+    public Base DeserializeFromXml(string data)
     {
         return (Resource)deserializeAndFilterErrors(() =>
         { 
@@ -34,16 +34,16 @@ internal partial class PocoSerializationEngine
     }
     
     /// <inheritdoc />
-    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
+    public string SerializeToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
 
     /// <summary>
     /// Deserializes a resource from an XML reader
     /// </summary>
     /// <param name="reader">The XML reader</param>
     /// <returns>The parsed resource</returns>
-    public Resource DeserializeFromXml(XmlReader reader)
+    public Base DeserializeFromXml(XmlReader reader)
     {
-        return (Resource)deserializeAndFilterErrors(() =>
+        return deserializeAndFilterErrors(() =>
         { 
             _ = getXmlDeserializer().TryDeserializeResource(reader, out var instance, out var issues);
             return (instance, issues);

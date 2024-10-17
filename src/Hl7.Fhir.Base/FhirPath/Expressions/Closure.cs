@@ -8,6 +8,7 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;

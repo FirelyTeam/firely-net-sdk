@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
@@ -48,12 +49,12 @@ namespace Hl7.Fhir.Serialization
         {
             writer.WriteStartDocument();
 
-            var simulateRoot = members is not Resource;
+            var simulateRoot = ((IScopedNode)members).Parent is not null || members is not Resource;
             if (simulateRoot)
             {
                 // Serialization in XML of non-resources is problematic, since there's no root.
                 // It's a common usecase though, so "invent" a root that's the name of the element's type.
-                var rootElementName = members is Base b ? b.TypeName : members.GetType().Name;
+                var rootElementName = members is Base b ? ((ITypedElement)b).Name : members.GetType().Name;
                 writer.WriteStartElement(rootElementName, XmlNs.FHIR);
             }
 
