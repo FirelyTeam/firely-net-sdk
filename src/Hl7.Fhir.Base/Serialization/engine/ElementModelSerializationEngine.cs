@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public Base DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data, settings: _xmlSettings));
+        internal Base DeserializeBaseFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data, settings: _xmlSettings));
+        public Resource DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data, settings: _xmlSettings));
 
         public Resource DeserializeFromJson(string data) => deserialize(() => FhirJsonNode.Parse(data, settings: _jsonSettings));
 

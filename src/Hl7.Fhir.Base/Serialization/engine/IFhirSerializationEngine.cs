@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Xml format.</exception>
         /// <returns>Null if the data did not contain a resource, but another FHIR datatype.</returns>
-        public Base? DeserializeFromXml(string data);
+        public Resource? DeserializeFromXml(string data);
 
         /// <summary>
         /// Serialize a FHIR Resource POCO into a string of Xml.

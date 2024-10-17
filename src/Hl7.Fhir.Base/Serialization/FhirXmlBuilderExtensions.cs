@@ -12,6 +12,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -66,6 +67,7 @@ namespace Hl7.Fhir.Serialization
             => await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
 
         /// <inheritdoc cref="ToXmlAsync(ITypedElement, FhirXmlSerializationSettings)" />
+        [TemporarilyChanged]
         public static string ToXml(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
             if (source is not Base b)
@@ -75,6 +77,7 @@ namespace Hl7.Fhir.Serialization
             return ((PocoSerializationEngine)engine).SerializeToXml(b);
         }
 
+        [TemporarilyChanged]
         public static async Task<string> ToXmlAsync(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
             if (source is not Base b)

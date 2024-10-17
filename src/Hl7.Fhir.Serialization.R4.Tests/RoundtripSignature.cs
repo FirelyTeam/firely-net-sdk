@@ -5,6 +5,7 @@ using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -45,6 +46,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [Ignore("We stopped supporting ITypedElement.Definition on POCO.ToTypedElement")]
+        [TemporarilyChanged]
         public void TypedElementHasCorrectInfo()
         {
             var cls = new Signature() { Who = new ResourceReference("http://nu.nl") }.ToTypedElement();
@@ -57,6 +59,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [Ignore("These should not be exactly equal!")]
+        [TemporarilyChanged]        
         public void WorksWithTypedElementSerializers()
         {
             var sig = new Bundle() { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };

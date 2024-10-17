@@ -6,12 +6,11 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Utility;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using P=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
@@ -42,18 +41,19 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     // string Location { get; }
 }
 
-internal record ScopeInformation(IScopedNode? Parent, string Name, int? Index);
+// name can technically be null when uninitialized, but we never allow it to be null upon accessing it.
+internal record struct ScopeInformation(IScopedNode? Parent, string Name, int? Index);
 
 
 public abstract partial class Base : IScopedNode,
     IFhirValueProvider, IResourceTypeSupplier
 {
-    [NonSerialized]
-    private ScopeInformation? _scopeInfo;
+    // we set name to null by default, but it can never be null upon accessing it, as the setter will initialize it.
+    [NonSerialized] private ScopeInformation _scopeInfo = new (null, null!, null);
     
     private ScopeInformation ScopeInfo
     {
-        get => LazyInitializer.EnsureInitialized(ref _scopeInfo, () => BuildRoot())!;
+        get => _scopeInfo.Name is null ? BuildRoot() : _scopeInfo;
         set => _scopeInfo = value;
     } 
 

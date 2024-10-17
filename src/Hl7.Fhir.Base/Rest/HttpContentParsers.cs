@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Rest
             return ContentType.GetResourceFormatFromContentType(contentType) switch
             {
                 ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsXml(bodyText) =>
-                            ser.DeserializeFromXml(bodyText) as Resource,
+                            ser.DeserializeFromXml(bodyText),
                 ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsJson(bodyText) =>
                             ser.DeserializeFromJson(bodyText),
                 ResourceFormat.Xml or ResourceFormat.Json =>
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Rest
             return ContentType.GetResourceFormatFromContentType(contentType) switch
             {
                 ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsFhirXml(bodyText) =>
-                            ser.DeserializeFromXml(bodyText) as Resource,
+                            ser.DeserializeFromXml(bodyText),
                 ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsFhirJson(bodyText) =>
                             ser.DeserializeFromJson(bodyText),
                 _ => default

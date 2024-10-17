@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
+            if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
                     return new[] { this };
             else if (type == typeof(IFhirValueProvider))
                 return new[] { this };
