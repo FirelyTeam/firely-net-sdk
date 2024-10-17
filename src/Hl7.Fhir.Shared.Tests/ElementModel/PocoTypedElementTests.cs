@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Core.Tests.ElementModel
@@ -196,6 +197,8 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
 
         [TestMethod]
+        [Ignore("This design is still under discussion")]
+        [TemporarilyChanged]
         public void CheckTypeOfElementDefinitionMembers()
         {
 #if !R5

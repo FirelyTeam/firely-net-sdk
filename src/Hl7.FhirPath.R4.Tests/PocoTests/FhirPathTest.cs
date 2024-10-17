@@ -15,6 +15,7 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.Fhir.FhirPath.R4.Tests
 {
     [TestClass]
     public class FhirPathTest

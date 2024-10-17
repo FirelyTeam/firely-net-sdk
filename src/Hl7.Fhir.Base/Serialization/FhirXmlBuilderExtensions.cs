@@ -8,8 +8,11 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -64,11 +67,26 @@ namespace Hl7.Fhir.Serialization
             => await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
 
         /// <inheritdoc cref="ToXmlAsync(ITypedElement, FhirXmlSerializationSettings)" />
+        [TemporarilyChanged]
         public static string ToXml(this ITypedElement source, FhirXmlSerializationSettings settings = null)
-                => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
+        {
+            if (source is not Base b)
+                return SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
+            
+            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(b.GetType()));
+            return ((PocoSerializationEngine)engine).SerializeToXml(b);
+        }
 
+        [TemporarilyChanged]
         public static async Task<string> ToXmlAsync(this ITypedElement source, FhirXmlSerializationSettings settings = null)
-            => await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
+        {
+            if (source is not Base b)
+                return await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false,
+                    settings?.AppendNewLine ?? false).ConfigureAwait(false);
+            
+            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(b.GetType()));
+            return ((PocoSerializationEngine)engine).SerializeToXml(b);
+        }
 
         /// <inheritdoc cref="ToXmlBytesAsync(ITypedElement, FhirXmlSerializationSettings)" />
         public static byte[] ToXmlBytes(this ITypedElement source, FhirXmlSerializationSettings settings = null)

@@ -9,9 +9,6 @@
 
 using Hl7.Fhir.ElementModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Dynamic;
-using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {

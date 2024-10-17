@@ -87,8 +87,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var result = subnavXml.IsEqualTo(subnavJson);
             Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
-            Assert.IsTrue(subnavJson.IsEqualTo(subnavPoco).Success);
-            Assert.IsTrue(subnavPoco.IsEqualTo(subnavXml).Success);
+            result = subnavJson.IsEqualTo(subnavPoco);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
+            result = subnavPoco.IsEqualTo(subnavXml);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
         }
     }
 

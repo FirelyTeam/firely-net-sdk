@@ -14,6 +14,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -26,6 +27,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="modelInspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="rootName"></param>
         /// <returns></returns>
+        [TemporarilyChanged]
         public static ITypedElement ToTypedElement(this Base @base, ModelInspector modelInspector, string? rootName = null)
             => new PocoElementNode(modelInspector, @base, rootName: rootName);
 
@@ -39,7 +41,7 @@ namespace Hl7.Fhir.ElementModel
         /// of the equation.</param>
         /// <returns><c>true</c> when the ITypedElements are equal, <c>false</c> otherwise.</returns>
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static bool IsExactlyEqualTo<T>(this T? left, T? right, bool ignoreOrder = false) where T : IBaseElementNavigator<T>
+        public static bool IsExactlyEqualTo(this ITypedElement? left, ITypedElement? right, bool ignoreOrder = false)
 #pragma warning restore CS0618 // Type or member is obsolete
         {
             if (left == null && right == null) return true;
@@ -102,7 +104,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="pattern"></param>
         /// <returns><c>true</c> when <paramref name="value"/> matches the <paramref name="pattern"/>, <c>false</c> otherwise.</returns>
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static bool Matches<T>(this T value, T pattern) where T : IBaseElementNavigator<T>
+        public static bool Matches(this ITypedElement value, ITypedElement pattern)
 #pragma warning restore CS0618 // Type or member is obsolete
         {
             if (value == null && pattern == null) return true;
