@@ -2225,8 +2225,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
+#pragma warning disable CS0618 // Type or member is obsolete
                 && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     // Automatically expand external profiles on demand
                     // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(ensureSnapshot)}] Recursively generate snapshot for type profile with url: '{sd.Url}' ...");
@@ -2310,7 +2312,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
+#pragma warning disable CS0618 // Type or member is obsolete
             if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceRegenerateSnapshots))
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
                 // No need to save root ElemDef annotation, as the snapshot has already been fully expanded

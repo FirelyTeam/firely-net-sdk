@@ -64,4 +64,11 @@ internal partial class PocoSerializationEngine
             return (instance, issues);
         });
     }
+    
+    /// <summary>
+    /// Serializes an element to the supplied writer
+    /// </summary>
+    /// <param name="instance">An instance of Base or any of its children</param>
+    /// <param name="writer">The XML writer</param>
+    public void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer);
 }
