@@ -7,4 +7,32 @@
     <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
   </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.ContentType.BuildContentType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.ContentType.BuildMediaType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.ContentType.BuildContentType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
+    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.ContentType.BuildMediaType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
+    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
 </Suppressions>

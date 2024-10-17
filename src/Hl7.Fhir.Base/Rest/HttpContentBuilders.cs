@@ -134,8 +134,8 @@ namespace Hl7.Fhir.Rest
             string? contentTypeFhirVersion,
             bool requestCompressedResponse)
         {
-            message.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(
-                    ContentType.BuildContentType(serialization, contentTypeFhirVersion)));
+            message.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(ContentType.BuildContentType(serialization, contentTypeFhirVersion, true)));
+            message.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue(Encoding.UTF8.WebName));
 
             if (requestCompressedResponse)
             {

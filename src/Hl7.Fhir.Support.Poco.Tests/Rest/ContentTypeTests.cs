@@ -45,6 +45,14 @@ namespace Hl7.Fhir.Tests.Rest
             ContentType.BuildContentType(format, fhirVersion).Should().Be(expected);
         }
 
+        [DataTestMethod]
+        [DataRow(ResourceFormat.Json, "", true, "application/fhir+json")]
+        [DataRow(ResourceFormat.Xml, "", true, "application/fhir+xml")]
+        public void TestBuildingContentTypeWithExcludeCharSet(ResourceFormat format, string fhirVersion, bool excludeCharset, string expected)
+        {
+            ContentType.BuildContentType(format, fhirVersion, excludeCharset).Should().Be(expected);
+        }
+
         [TestMethod]
         public void GetResourceFormatSupportsCharset()
         {
