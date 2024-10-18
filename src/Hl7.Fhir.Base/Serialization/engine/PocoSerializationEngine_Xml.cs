@@ -32,9 +32,18 @@ internal partial class PocoSerializationEngine
             return (instance, issues);
         });
     }
+
+    internal Base DeserializeBaseFromXml(string data)
+    {
+        return deserializeAndFilterErrors(() =>
+        { 
+            _ = getXmlDeserializer().TryDeserializeResource(data, out var instance, out var issues);
+            return (instance, issues);
+        });
+    }
     
     /// <inheritdoc />
-    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
+    public string SerializeToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
 
     /// <summary>
     /// Deserializes a resource from an XML reader

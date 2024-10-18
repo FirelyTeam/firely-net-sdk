@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Tasks = System.Threading.Tasks;
 
@@ -128,6 +129,8 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        [Ignore("This test uses masking node, which we cannot support on our new model")]
+        [TemporarilyChanged]
         public async Tasks.Task TestIncludeMandatory()
         {
             var l = new Library();

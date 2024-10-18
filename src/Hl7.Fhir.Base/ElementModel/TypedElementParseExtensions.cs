@@ -44,13 +44,13 @@ namespace Hl7.Fhir.ElementModel
         /// <inheritdoc cref="ParseBindable"/>
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static Element? ParseBindableInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static Element? ParseBindableInternal(this ITypedElement instance) 
         {
             return instance.InstanceType switch
             {
-                FhirTypeConstants.CODE => instance.ParsePrimitiveInternal<Code, T>(),
-                FhirTypeConstants.STRING => new Code(instance.ParsePrimitiveInternal<FhirString, T>().Value),
-                FhirTypeConstants.URI => new Code(instance.ParsePrimitiveInternal<FhirUri, T>().Value),
+                FhirTypeConstants.CODE => instance.ParsePrimitiveInternal<Code>(),
+                FhirTypeConstants.STRING => new Code(instance.ParsePrimitiveInternal<FhirString>().Value),
+                FhirTypeConstants.URI => new Code(instance.ParsePrimitiveInternal<FhirUri>().Value),
                 FhirTypeConstants.CODING => instance.ParseCodingInternal(),
                 FhirTypeConstants.CODEABLE_CONCEPT => instance.ParseCodeableConceptInternal(),
                 FhirTypeConstants.QUANTITY => parseQuantity(),
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static Quantity ParseQuantityInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static Quantity ParseQuantityInternal(this ITypedElement instance) 
         {
             var newQuantity = new Quantity
             {
@@ -111,12 +111,12 @@ namespace Hl7.Fhir.ElementModel
         #region ParsePrimitive
         public static T ParsePrimitive<T>(this ITypedElement instance) where T : PrimitiveType, new()
 #pragma warning disable CS0618 // Type or member is obsolete
-            => ParsePrimitiveInternal<T, ITypedElement>(instance);
+            => ParsePrimitiveInternal<T>(instance);
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static T ParsePrimitiveInternal<T, U>(this IBaseElementNavigator<U> instance) where T : PrimitiveType, new() where U : IBaseElementNavigator<U>
+        public static T ParsePrimitiveInternal<T>(this ITypedElement instance) where T : PrimitiveType, new()
                     => new() { ObjectValue = instance.Value };
 
         #endregion
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static Coding ParseCodingInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static Coding ParseCodingInternal(this ITypedElement instance) 
         {
             return new Coding()
             {
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static ResourceReference ParseResourceReferenceInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static ResourceReference ParseResourceReferenceInternal(this ITypedElement instance) 
         {
             return new ResourceReference()
             {
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static CodeableConcept ParseCodeableConceptInternal<T>(this IBaseElementNavigator<T> instance) where T : IBaseElementNavigator<T>
+        public static CodeableConcept ParseCodeableConceptInternal(this ITypedElement instance) 
         {
             return new CodeableConcept()
             {
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.ElementModel
         #endregion
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static string? GetString<T>(this IEnumerable<T> instance) where T : IBaseElementNavigator<T>
+        public static string? GetString(this IEnumerable<ITypedElement> instance) 
 #pragma warning restore CS0618 // Type or member is obsolete
             => instance.SingleOrDefault()?.Value as string;
     }
