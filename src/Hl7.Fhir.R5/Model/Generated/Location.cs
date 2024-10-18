@@ -118,14 +118,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Location#Position")]
-    [BackboneType("Location.position")]
+    [FhirType("Location.position", IsBackboneType=true)]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Location#Position"; } }
+      public override string TypeName { get { return "Location.position"; } }
 
       /// <summary>
       /// Longitude with WGS84 datum

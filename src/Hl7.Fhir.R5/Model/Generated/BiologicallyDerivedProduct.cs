@@ -66,14 +66,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProduct#Collection")]
-    [BackboneType("BiologicallyDerivedProduct.collection")]
+    [FhirType("BiologicallyDerivedProduct.collection", IsBackboneType=true)]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct#Collection"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProduct.collection"; } }
 
       /// <summary>
       /// Individual performing collection
@@ -248,14 +247,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProduct#Property")]
-    [BackboneType("BiologicallyDerivedProduct.property")]
+    [FhirType("BiologicallyDerivedProduct.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct#Property"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProduct.property"; } }
 
       /// <summary>
       /// Code that specifies the property

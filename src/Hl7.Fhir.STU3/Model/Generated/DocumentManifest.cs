@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentManifest#Content")]
-    [BackboneType("DocumentManifest.content")]
+    [FhirType("DocumentManifest.content", IsBackboneType=true)]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentManifest#Content"; } }
+      public override string TypeName { get { return "DocumentManifest.content"; } }
 
       /// <summary>
       /// Contents of this set of documents
@@ -198,14 +197,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentManifest#Related")]
-    [BackboneType("DocumentManifest.related")]
+    [FhirType("DocumentManifest.related", IsBackboneType=true)]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentManifest#Related"; } }
+      public override string TypeName { get { return "DocumentManifest.related"; } }
 
       /// <summary>
       /// Identifiers of things that are related

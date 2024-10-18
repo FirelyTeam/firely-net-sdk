@@ -97,14 +97,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationStatement#Adherence")]
-    [BackboneType("MedicationStatement.adherence")]
+    [FhirType("MedicationStatement.adherence", IsBackboneType=true)]
     public partial class AdherenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationStatement#Adherence"; } }
+      public override string TypeName { get { return "MedicationStatement.adherence"; } }
 
       /// <summary>
       /// Type of adherence

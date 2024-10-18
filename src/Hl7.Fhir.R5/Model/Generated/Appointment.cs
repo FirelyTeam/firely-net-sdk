@@ -3032,14 +3032,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#Participant")]
-    [BackboneType("Appointment.participant")]
+    [FhirType("Appointment.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment#Participant"; } }
+      public override string TypeName { get { return "Appointment.participant"; } }
 
       /// <summary>
       /// Role of participant in the appointment
@@ -3301,14 +3300,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#RecurrenceTemplate")]
-    [BackboneType("Appointment.recurrenceTemplate")]
+    [FhirType("Appointment.recurrenceTemplate", IsBackboneType=true)]
     public partial class RecurrenceTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment#RecurrenceTemplate"; } }
+      public override string TypeName { get { return "Appointment.recurrenceTemplate"; } }
 
       /// <summary>
       /// The timezone of the occurrences
@@ -3745,14 +3743,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#WeeklyTemplate")]
-    [BackboneType("Appointment.recurrenceTemplate.weeklyTemplate")]
+    [FhirType("Appointment.recurrenceTemplate.weeklyTemplate", IsBackboneType=true)]
     public partial class WeeklyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment#WeeklyTemplate"; } }
+      public override string TypeName { get { return "Appointment.recurrenceTemplate.weeklyTemplate"; } }
 
       /// <summary>
       /// Recurs on Mondays
@@ -4187,14 +4184,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#MonthlyTemplate")]
-    [BackboneType("Appointment.recurrenceTemplate.monthlyTemplate")]
+    [FhirType("Appointment.recurrenceTemplate.monthlyTemplate", IsBackboneType=true)]
     public partial class MonthlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment#MonthlyTemplate"; } }
+      public override string TypeName { get { return "Appointment.recurrenceTemplate.monthlyTemplate"; } }
 
       /// <summary>
       /// Recurs on a specific day of the month
@@ -4424,14 +4420,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#YearlyTemplate")]
-    [BackboneType("Appointment.recurrenceTemplate.yearlyTemplate")]
+    [FhirType("Appointment.recurrenceTemplate.yearlyTemplate", IsBackboneType=true)]
     public partial class YearlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment#YearlyTemplate"; } }
+      public override string TypeName { get { return "Appointment.recurrenceTemplate.yearlyTemplate"; } }
 
       /// <summary>
       /// Recurs every nth year

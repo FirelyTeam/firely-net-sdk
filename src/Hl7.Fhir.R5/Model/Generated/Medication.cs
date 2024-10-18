@@ -96,14 +96,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Medication#Ingredient")]
-    [BackboneType("Medication.ingredient")]
+    [FhirType("Medication.ingredient", IsBackboneType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication#Ingredient"; } }
+      public override string TypeName { get { return "Medication.ingredient"; } }
 
       /// <summary>
       /// The ingredient (substance or medication) that the ingredient.strength relates to
@@ -295,14 +294,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Medication#Batch")]
-    [BackboneType("Medication.batch")]
+    [FhirType("Medication.batch", IsBackboneType=true)]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication#Batch"; } }
+      public override string TypeName { get { return "Medication.batch"; } }
 
       /// <summary>
       /// Identifier assigned to batch

@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("GenomicStudy#Analysis")]
-    [BackboneType("GenomicStudy.analysis")]
+    [FhirType("GenomicStudy.analysis", IsBackboneType=true)]
     public partial class AnalysisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy#Analysis"; } }
+      public override string TypeName { get { return "GenomicStudy.analysis"; } }
 
       /// <summary>
       /// Identifiers for the analysis event
@@ -752,14 +751,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GenomicStudy#Input")]
-    [BackboneType("GenomicStudy.analysis.input")]
+    [FhirType("GenomicStudy.analysis.input", IsBackboneType=true)]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy#Input"; } }
+      public override string TypeName { get { return "GenomicStudy.analysis.input"; } }
 
       /// <summary>
       /// File containing input data
@@ -931,14 +929,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GenomicStudy#Output")]
-    [BackboneType("GenomicStudy.analysis.output")]
+    [FhirType("GenomicStudy.analysis.output", IsBackboneType=true)]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy#Output"; } }
+      public override string TypeName { get { return "GenomicStudy.analysis.output"; } }
 
       /// <summary>
       /// File containing output data
@@ -1082,14 +1079,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GenomicStudy#Performer")]
-    [BackboneType("GenomicStudy.analysis.performer")]
+    [FhirType("GenomicStudy.analysis.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy#Performer"; } }
+      public override string TypeName { get { return "GenomicStudy.analysis.performer"; } }
 
       /// <summary>
       /// The organization, healthcare professional, or others who participated in performing this analysis
@@ -1232,14 +1228,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GenomicStudy#Device")]
-    [BackboneType("GenomicStudy.analysis.device")]
+    [FhirType("GenomicStudy.analysis.device", IsBackboneType=true)]
     public partial class DeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy#Device"; } }
+      public override string TypeName { get { return "GenomicStudy.analysis.device"; } }
 
       /// <summary>
       /// Device used for the analysis

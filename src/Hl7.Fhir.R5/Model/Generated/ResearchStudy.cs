@@ -65,14 +65,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#Label")]
-    [BackboneType("ResearchStudy.label")]
+    [FhirType("ResearchStudy.label", IsBackboneType=true)]
     public partial class LabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#Label"; } }
+      public override string TypeName { get { return "ResearchStudy.label"; } }
 
       /// <summary>
       /// primary | official | scientific | plain-language | subtitle | short-title | acronym | earlier-title | language | auto-translated | human-use | machine-use | duplicate-uid
@@ -235,14 +234,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#AssociatedParty")]
-    [BackboneType("ResearchStudy.associatedParty")]
+    [FhirType("ResearchStudy.associatedParty", IsBackboneType=true)]
     public partial class AssociatedPartyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#AssociatedParty"; } }
+      public override string TypeName { get { return "ResearchStudy.associatedParty"; } }
 
       /// <summary>
       /// Name of associated party
@@ -483,14 +481,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#ProgressStatus")]
-    [BackboneType("ResearchStudy.progressStatus")]
+    [FhirType("ResearchStudy.progressStatus", IsBackboneType=true)]
     public partial class ProgressStatusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#ProgressStatus"; } }
+      public override string TypeName { get { return "ResearchStudy.progressStatus"; } }
 
       /// <summary>
       /// Label for status or state (e.g. recruitment status)
@@ -676,14 +673,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#Recruitment")]
-    [BackboneType("ResearchStudy.recruitment")]
+    [FhirType("ResearchStudy.recruitment", IsBackboneType=true)]
     public partial class RecruitmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#Recruitment"; } }
+      public override string TypeName { get { return "ResearchStudy.recruitment"; } }
 
       /// <summary>
       /// Estimated total number of participants to be enrolled
@@ -918,14 +914,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#ComparisonGroup")]
-    [BackboneType("ResearchStudy.comparisonGroup")]
+    [FhirType("ResearchStudy.comparisonGroup", IsBackboneType=true)]
     public partial class ComparisonGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#ComparisonGroup"; } }
+      public override string TypeName { get { return "ResearchStudy.comparisonGroup"; } }
 
       /// <summary>
       /// Allows the comparisonGroup for the study and the comparisonGroup for the subject to be linked easily
@@ -1230,14 +1225,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#Objective")]
-    [BackboneType("ResearchStudy.objective")]
+    [FhirType("ResearchStudy.objective", IsBackboneType=true)]
     public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#Objective"; } }
+      public override string TypeName { get { return "ResearchStudy.objective"; } }
 
       /// <summary>
       /// Label for the objective
@@ -1444,14 +1438,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#OutcomeMeasure")]
-    [BackboneType("ResearchStudy.outcomeMeasure")]
+    [FhirType("ResearchStudy.outcomeMeasure", IsBackboneType=true)]
     public partial class OutcomeMeasureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#OutcomeMeasure"; } }
+      public override string TypeName { get { return "ResearchStudy.outcomeMeasure"; } }
 
       /// <summary>
       /// Label for the outcome

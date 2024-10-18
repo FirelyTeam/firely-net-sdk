@@ -92,14 +92,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Substance#Ingredient")]
-    [BackboneType("Substance.ingredient")]
+    [FhirType("Substance.ingredient", IsBackboneType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Substance#Ingredient"; } }
+      public override string TypeName { get { return "Substance.ingredient"; } }
 
       /// <summary>
       /// Optional amount (concentration)

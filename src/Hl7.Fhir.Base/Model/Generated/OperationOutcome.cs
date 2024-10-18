@@ -316,14 +316,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationOutcome#Issue")]
-    [BackboneType("OperationOutcome.issue")]
+    [FhirType("OperationOutcome.issue", IsBackboneType=true)]
     public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationOutcome#Issue"; } }
+      public override string TypeName { get { return "OperationOutcome.issue"; } }
 
       /// <summary>
       /// fatal | error | warning | information | success

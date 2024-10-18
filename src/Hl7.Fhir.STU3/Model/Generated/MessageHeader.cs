@@ -96,14 +96,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageHeader#MessageDestination")]
-    [BackboneType("MessageHeader.destination")]
+    [FhirType("MessageHeader.destination", IsBackboneType=true)]
     public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader#MessageDestination"; } }
+      public override string TypeName { get { return "MessageHeader.destination"; } }
 
       /// <summary>
       /// Name of system
@@ -311,14 +310,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageHeader#MessageSource")]
-    [BackboneType("MessageHeader.source")]
+    [FhirType("MessageHeader.source", IsBackboneType=true)]
     public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader#MessageSource"; } }
+      public override string TypeName { get { return "MessageHeader.source"; } }
 
       /// <summary>
       /// Name of system
@@ -610,14 +608,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageHeader#Response")]
-    [BackboneType("MessageHeader.response")]
+    [FhirType("MessageHeader.response", IsBackboneType=true)]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader#Response"; } }
+      public override string TypeName { get { return "MessageHeader.response"; } }
 
       /// <summary>
       /// Id of original message

@@ -177,14 +177,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Transport#Restriction")]
-    [BackboneType("Transport.restriction")]
+    [FhirType("Transport.restriction", IsBackboneType=true)]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Transport#Restriction"; } }
+      public override string TypeName { get { return "Transport.restriction"; } }
 
       /// <summary>
       /// How many times to repeat
@@ -374,14 +373,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Transport#Parameter")]
-    [BackboneType("Transport.input")]
+    [FhirType("Transport.input", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Transport#Parameter"; } }
+      public override string TypeName { get { return "Transport.input"; } }
 
       /// <summary>
       /// Label for the input
@@ -530,14 +528,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Transport#Output")]
-    [BackboneType("Transport.output")]
+    [FhirType("Transport.output", IsBackboneType=true)]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Transport#Output"; } }
+      public override string TypeName { get { return "Transport.output"; } }
 
       /// <summary>
       /// Label for output

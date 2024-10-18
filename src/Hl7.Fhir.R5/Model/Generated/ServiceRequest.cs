@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ServiceRequest#OrderDetail")]
-    [BackboneType("ServiceRequest.orderDetail")]
+    [FhirType("ServiceRequest.orderDetail", IsBackboneType=true)]
     public partial class OrderDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ServiceRequest#OrderDetail"; } }
+      public override string TypeName { get { return "ServiceRequest.orderDetail"; } }
 
       /// <summary>
       /// The context of the order details by reference
@@ -217,14 +216,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ServiceRequest#Parameter")]
-    [BackboneType("ServiceRequest.orderDetail.parameter")]
+    [FhirType("ServiceRequest.orderDetail.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ServiceRequest#Parameter"; } }
+      public override string TypeName { get { return "ServiceRequest.orderDetail.parameter"; } }
 
       /// <summary>
       /// The detail of the order being requested
@@ -373,14 +371,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ServiceRequest#PatientInstruction")]
-    [BackboneType("ServiceRequest.patientInstruction")]
+    [FhirType("ServiceRequest.patientInstruction", IsBackboneType=true)]
     public partial class PatientInstructionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ServiceRequest#PatientInstruction"; } }
+      public override string TypeName { get { return "ServiceRequest.patientInstruction"; } }
 
       /// <summary>
       /// Patient or consumer-oriented instructions

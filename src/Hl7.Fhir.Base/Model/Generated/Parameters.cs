@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Parameters#Parameter")]
-    [BackboneType("Parameters.parameter")]
+    [FhirType("Parameters.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Parameters#Parameter"; } }
+      public override string TypeName { get { return "Parameters.parameter"; } }
 
       /// <summary>
       /// Name from the definition

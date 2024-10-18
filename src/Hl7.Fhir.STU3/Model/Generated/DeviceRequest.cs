@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceRequest#Requester")]
-    [BackboneType("DeviceRequest.requester")]
+    [FhirType("DeviceRequest.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceRequest#Requester"; } }
+      public override string TypeName { get { return "DeviceRequest.requester"; } }
 
       /// <summary>
       /// Individual making the request

@@ -148,14 +148,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Device#UdiCarrier")]
-    [BackboneType("Device.udiCarrier")]
+    [FhirType("Device.udiCarrier", IsBackboneType=true)]
     public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Device#UdiCarrier"; } }
+      public override string TypeName { get { return "Device.udiCarrier"; } }
 
       /// <summary>
       /// Mandatory fixed portion of UDI
@@ -511,14 +510,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Device#Name")]
-    [BackboneType("Device.name")]
+    [FhirType("Device.name", IsBackboneType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Device#Name"; } }
+      public override string TypeName { get { return "Device.name"; } }
 
       /// <summary>
       /// The term that names the device
@@ -742,14 +740,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Device#Version")]
-    [BackboneType("Device.version")]
+    [FhirType("Device.version", IsBackboneType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Device#Version"; } }
+      public override string TypeName { get { return "Device.version"; } }
 
       /// <summary>
       /// The type of the device version, e.g. manufacturer, approved, internal
@@ -981,14 +978,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Device#ConformsTo")]
-    [BackboneType("Device.conformsTo")]
+    [FhirType("Device.conformsTo", IsBackboneType=true)]
     public partial class ConformsToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Device#ConformsTo"; } }
+      public override string TypeName { get { return "Device.conformsTo"; } }
 
       /// <summary>
       /// Describes the common type of the standard, specification, or formal guidance.  communication | performance | measurement
@@ -1179,14 +1175,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Device#Property")]
-    [BackboneType("Device.property")]
+    [FhirType("Device.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Device#Property"; } }
+      public override string TypeName { get { return "Device.property"; } }
 
       /// <summary>
       /// Code that specifies the property being represented

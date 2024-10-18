@@ -144,14 +144,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Permission#Justification")]
-    [BackboneType("Permission.justification")]
+    [FhirType("Permission.justification", IsBackboneType=true)]
     public partial class JustificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission#Justification"; } }
+      public override string TypeName { get { return "Permission.justification"; } }
 
       /// <summary>
       /// The regulatory grounds upon which this Permission builds
@@ -300,14 +299,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Permission#Rule")]
-    [BackboneType("Permission.rule")]
+    [FhirType("Permission.rule", IsBackboneType=true)]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission#Rule"; } }
+      public override string TypeName { get { return "Permission.rule"; } }
 
       /// <summary>
       /// deny | permit
@@ -525,14 +523,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Permission#Data")]
-    [BackboneType("Permission.rule.data")]
+    [FhirType("Permission.rule.data", IsBackboneType=true)]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission#Data"; } }
+      public override string TypeName { get { return "Permission.rule.data"; } }
 
       /// <summary>
       /// Explicit FHIR Resource references
@@ -726,14 +723,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Permission#Resource")]
-    [BackboneType("Permission.rule.data.resource")]
+    [FhirType("Permission.rule.data.resource", IsBackboneType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission#Resource"; } }
+      public override string TypeName { get { return "Permission.rule.data.resource"; } }
 
       /// <summary>
       /// instance | related | dependents | authoredby
@@ -898,14 +894,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Permission#Activity")]
-    [BackboneType("Permission.rule.activity")]
+    [FhirType("Permission.rule.activity", IsBackboneType=true)]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission#Activity"; } }
+      public override string TypeName { get { return "Permission.rule.activity"; } }
 
       /// <summary>
       /// Authorized actor(s)

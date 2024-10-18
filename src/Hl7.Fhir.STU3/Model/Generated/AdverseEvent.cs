@@ -157,14 +157,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#SuspectEntity")]
-    [BackboneType("AdverseEvent.suspectEntity")]
+    [FhirType("AdverseEvent.suspectEntity", IsBackboneType=true)]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#SuspectEntity"; } }
+      public override string TypeName { get { return "AdverseEvent.suspectEntity"; } }
 
       /// <summary>
       /// Refers to the specific entity that caused the adverse event

@@ -172,14 +172,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ObservationDefinition#QualifiedValue")]
-    [BackboneType("ObservationDefinition.qualifiedValue")]
+    [FhirType("ObservationDefinition.qualifiedValue", IsBackboneType=true)]
     public partial class QualifiedValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition#QualifiedValue"; } }
+      public override string TypeName { get { return "ObservationDefinition.qualifiedValue"; } }
 
       /// <summary>
       /// Context qualifier for the set of qualified values
@@ -706,14 +705,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ObservationDefinition#Component")]
-    [BackboneType("ObservationDefinition.component")]
+    [FhirType("ObservationDefinition.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition#Component"; } }
+      public override string TypeName { get { return "ObservationDefinition.component"; } }
 
       /// <summary>
       /// Type of observation

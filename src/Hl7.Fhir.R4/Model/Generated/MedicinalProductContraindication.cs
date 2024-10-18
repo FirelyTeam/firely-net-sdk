@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductContraindication#OtherTherapy")]
-    [BackboneType("MedicinalProductContraindication.otherTherapy")]
+    [FhirType("MedicinalProductContraindication.otherTherapy", IsBackboneType=true)]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductContraindication#OtherTherapy"; } }
+      public override string TypeName { get { return "MedicinalProductContraindication.otherTherapy"; } }
 
       /// <summary>
       /// The type of relationship between the medicinal product indication or contraindication and another therapy

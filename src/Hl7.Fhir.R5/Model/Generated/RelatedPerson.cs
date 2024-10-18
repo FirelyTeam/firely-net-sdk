@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RelatedPerson#Communication")]
-    [BackboneType("RelatedPerson.communication")]
+    [FhirType("RelatedPerson.communication", IsBackboneType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RelatedPerson#Communication"; } }
+      public override string TypeName { get { return "RelatedPerson.communication"; } }
 
       /// <summary>
       /// The language which can be used to communicate with the related person about the patient's health

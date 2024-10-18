@@ -120,14 +120,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Node")]
-    [BackboneType("GraphDefinition.node")]
+    [FhirType("GraphDefinition.node", IsBackboneType=true)]
     public partial class NodeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition#Node"; } }
+      public override string TypeName { get { return "GraphDefinition.node"; } }
 
       /// <summary>
       /// Internal ID - target for link references
@@ -394,14 +393,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Link")]
-    [BackboneType("GraphDefinition.link")]
+    [FhirType("GraphDefinition.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition#Link"; } }
+      public override string TypeName { get { return "GraphDefinition.link"; } }
 
       /// <summary>
       /// Why this link is specified
@@ -864,14 +862,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Compartment")]
-    [BackboneType("GraphDefinition.link.compartment")]
+    [FhirType("GraphDefinition.link.compartment", IsBackboneType=true)]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition#Compartment"; } }
+      public override string TypeName { get { return "GraphDefinition.link.compartment"; } }
 
       /// <summary>
       /// where | requires

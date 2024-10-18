@@ -121,14 +121,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#Characteristic")]
-    [BackboneType("EvidenceVariable.characteristic")]
+    [FhirType("EvidenceVariable.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable#Characteristic"; } }
+      public override string TypeName { get { return "EvidenceVariable.characteristic"; } }
 
       /// <summary>
       /// Label for internal linking
@@ -670,14 +669,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#DefinitionByTypeAndValue")]
-    [BackboneType("EvidenceVariable.characteristic.definitionByTypeAndValue")]
+    [FhirType("EvidenceVariable.characteristic.definitionByTypeAndValue", IsBackboneType=true)]
     public partial class DefinitionByTypeAndValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable#DefinitionByTypeAndValue"; } }
+      public override string TypeName { get { return "EvidenceVariable.characteristic.definitionByTypeAndValue"; } }
 
       /// <summary>
       /// Expresses the type of characteristic
@@ -906,14 +904,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#DefinitionByCombination")]
-    [BackboneType("EvidenceVariable.characteristic.definitionByCombination")]
+    [FhirType("EvidenceVariable.characteristic.definitionByCombination", IsBackboneType=true)]
     public partial class DefinitionByCombinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable#DefinitionByCombination"; } }
+      public override string TypeName { get { return "EvidenceVariable.characteristic.definitionByCombination"; } }
 
       /// <summary>
       /// all-of | any-of | at-least | at-most | statistical | net-effect | dataset
@@ -1119,14 +1116,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#TimeFromEvent")]
-    [BackboneType("EvidenceVariable.characteristic.timeFromEvent")]
+    [FhirType("EvidenceVariable.characteristic.timeFromEvent", IsBackboneType=true)]
     public partial class TimeFromEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable#TimeFromEvent"; } }
+      public override string TypeName { get { return "EvidenceVariable.characteristic.timeFromEvent"; } }
 
       /// <summary>
       /// Human readable description
@@ -1364,14 +1360,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#Category")]
-    [BackboneType("EvidenceVariable.category")]
+    [FhirType("EvidenceVariable.category", IsBackboneType=true)]
     public partial class CategoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable#Category"; } }
+      public override string TypeName { get { return "EvidenceVariable.category"; } }
 
       /// <summary>
       /// Description of the grouping

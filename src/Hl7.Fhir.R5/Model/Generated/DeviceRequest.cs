@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceRequest#Parameter")]
-    [BackboneType("DeviceRequest.parameter")]
+    [FhirType("DeviceRequest.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceRequest#Parameter"; } }
+      public override string TypeName { get { return "DeviceRequest.parameter"; } }
 
       /// <summary>
       /// Device detail

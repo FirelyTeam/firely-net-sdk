@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentManifest#Related")]
-    [BackboneType("DocumentManifest.related")]
+    [FhirType("DocumentManifest.related", IsBackboneType=true)]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentManifest#Related"; } }
+      public override string TypeName { get { return "DocumentManifest.related"; } }
 
       /// <summary>
       /// Identifiers of things that are related

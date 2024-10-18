@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ProcessRequest#Items")]
-    [BackboneType("ProcessRequest.item")]
+    [FhirType("ProcessRequest.item", IsBackboneType=true)]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ProcessRequest#Items"; } }
+      public override string TypeName { get { return "ProcessRequest.item"; } }
 
       /// <summary>
       /// Service instance

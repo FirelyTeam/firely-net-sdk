@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItem#Performer")]
-    [BackboneType("ChargeItem.performer")]
+    [FhirType("ChargeItem.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItem#Performer"; } }
+      public override string TypeName { get { return "ChargeItem.performer"; } }
 
       /// <summary>
       /// What type of performance was done

@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#LegalStatusOfSupply")]
-    [BackboneType("PackagedProductDefinition.legalStatusOfSupply")]
+    [FhirType("PackagedProductDefinition.legalStatusOfSupply", IsBackboneType=true)]
     public partial class LegalStatusOfSupplyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#LegalStatusOfSupply"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.legalStatusOfSupply"; } }
 
       /// <summary>
       /// The actual status of supply. In what situation this package type may be supplied for use
@@ -214,14 +213,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#Packaging")]
-    [BackboneType("PackagedProductDefinition.packaging")]
+    [FhirType("PackagedProductDefinition.packaging", IsBackboneType=true)]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#Packaging"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.packaging"; } }
 
       /// <summary>
       /// An identifier that is specific to this particular part of the packaging. Including possibly a Data Carrier Identifier
@@ -636,14 +634,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#Property")]
-    [BackboneType("PackagedProductDefinition.packaging.property")]
+    [FhirType("PackagedProductDefinition.packaging.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#Property"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.packaging.property"; } }
 
       /// <summary>
       /// A code expressing the type of characteristic
@@ -788,14 +785,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#ContainedItem")]
-    [BackboneType("PackagedProductDefinition.packaging.containedItem")]
+    [FhirType("PackagedProductDefinition.packaging.containedItem", IsBackboneType=true)]
     public partial class ContainedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#ContainedItem"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.packaging.containedItem"; } }
 
       /// <summary>
       /// The actual item(s) of medication, as manufactured, or a device, or other medically related item (food, biologicals, raw materials, medical fluids, gases etc.), as contained in the package

@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#StatusHistory")]
-    [BackboneType("EpisodeOfCare.statusHistory")]
+    [FhirType("EpisodeOfCare.statusHistory", IsBackboneType=true)]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare#StatusHistory"; } }
+      public override string TypeName { get { return "EpisodeOfCare.statusHistory"; } }
 
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -295,14 +294,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#Reason")]
-    [BackboneType("EpisodeOfCare.reason")]
+    [FhirType("EpisodeOfCare.reason", IsBackboneType=true)]
     public partial class ReasonComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare#Reason"; } }
+      public override string TypeName { get { return "EpisodeOfCare.reason"; } }
 
       /// <summary>
       /// What the reason value should be used for/as
@@ -450,14 +448,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#Diagnosis")]
-    [BackboneType("EpisodeOfCare.diagnosis")]
+    [FhirType("EpisodeOfCare.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare#Diagnosis"; } }
+      public override string TypeName { get { return "EpisodeOfCare.diagnosis"; } }
 
       /// <summary>
       /// The medical condition that was addressed during the episode of care

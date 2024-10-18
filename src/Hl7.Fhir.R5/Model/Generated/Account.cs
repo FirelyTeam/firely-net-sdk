@@ -109,14 +109,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Coverage")]
-    [BackboneType("Account.coverage")]
+    [FhirType("Account.coverage", IsBackboneType=true)]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Coverage"; } }
+      public override string TypeName { get { return "Account.coverage"; } }
 
       /// <summary>
       /// The party(s), such as insurances, that may contribute to the payment of this account
@@ -281,14 +280,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Guarantor")]
-    [BackboneType("Account.guarantor")]
+    [FhirType("Account.guarantor", IsBackboneType=true)]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Guarantor"; } }
+      public override string TypeName { get { return "Account.guarantor"; } }
 
       /// <summary>
       /// Responsible entity
@@ -478,14 +476,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Diagnosis")]
-    [BackboneType("Account.diagnosis")]
+    [FhirType("Account.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Diagnosis"; } }
+      public override string TypeName { get { return "Account.diagnosis"; } }
 
       /// <summary>
       /// Ranking of the diagnosis (for each type)
@@ -789,14 +786,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Procedure")]
-    [BackboneType("Account.procedure")]
+    [FhirType("Account.procedure", IsBackboneType=true)]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Procedure"; } }
+      public override string TypeName { get { return "Account.procedure"; } }
 
       /// <summary>
       /// Ranking of the procedure (for each type)
@@ -1081,14 +1077,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Account#RelatedAccount")]
-    [BackboneType("Account.relatedAccount")]
+    [FhirType("Account.relatedAccount", IsBackboneType=true)]
     public partial class RelatedAccountComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#RelatedAccount"; } }
+      public override string TypeName { get { return "Account.relatedAccount"; } }
 
       /// <summary>
       /// Relationship of the associated Account
@@ -1237,14 +1232,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Balance")]
-    [BackboneType("Account.balance")]
+    [FhirType("Account.balance", IsBackboneType=true)]
     public partial class BalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Balance"; } }
+      public override string TypeName { get { return "Account.balance"; } }
 
       /// <summary>
       /// Who is expected to pay this part of the balance

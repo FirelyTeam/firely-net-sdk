@@ -123,14 +123,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("VisionPrescription#Dispense")]
-    [BackboneType("VisionPrescription.dispense")]
+    [FhirType("VisionPrescription.dispense", IsBackboneType=true)]
     public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VisionPrescription#Dispense"; } }
+      public override string TypeName { get { return "VisionPrescription.dispense"; } }
 
       /// <summary>
       /// Product to be supplied

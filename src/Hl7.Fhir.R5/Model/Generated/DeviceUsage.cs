@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceUsage#Adherence")]
-    [BackboneType("DeviceUsage.adherence")]
+    [FhirType("DeviceUsage.adherence", IsBackboneType=true)]
     public partial class AdherenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceUsage#Adherence"; } }
+      public override string TypeName { get { return "DeviceUsage.adherence"; } }
 
       /// <summary>
       /// always | never | sometimes

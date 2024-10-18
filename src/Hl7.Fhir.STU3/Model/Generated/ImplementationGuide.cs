@@ -147,14 +147,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Dependency")]
-    [BackboneType("ImplementationGuide.dependency")]
+    [FhirType("ImplementationGuide.dependency", IsBackboneType=true)]
     public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Dependency"; } }
+      public override string TypeName { get { return "ImplementationGuide.dependency"; } }
 
       /// <summary>
       /// reference | inclusion
@@ -338,14 +337,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Package")]
-    [BackboneType("ImplementationGuide.package")]
+    [FhirType("ImplementationGuide.package", IsBackboneType=true)]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Package"; } }
+      public override string TypeName { get { return "ImplementationGuide.package"; } }
 
       /// <summary>
       /// Name used .page.package
@@ -552,14 +550,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Resource")]
-    [BackboneType("ImplementationGuide.package.resource")]
+    [FhirType("ImplementationGuide.package.resource", IsBackboneType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Resource"; } }
+      public override string TypeName { get { return "ImplementationGuide.package.resource"; } }
 
       /// <summary>
       /// If not an example, has its normal meaning
@@ -883,14 +880,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Global")]
-    [BackboneType("ImplementationGuide.global")]
+    [FhirType("ImplementationGuide.global", IsBackboneType=true)]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Global"; } }
+      public override string TypeName { get { return "ImplementationGuide.global"; } }
 
       /// <summary>
       /// Type this profiles applies to
@@ -1059,14 +1055,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Page")]
-    [BackboneType("ImplementationGuide.page")]
+    [FhirType("ImplementationGuide.page", IsBackboneType=true)]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Page"; } }
+      public override string TypeName { get { return "ImplementationGuide.page"; } }
 
       /// <summary>
       /// Where to find that page

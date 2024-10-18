@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ProcessResponse#ProcessNote")]
-    [BackboneType("ProcessResponse.processNote")]
+    [FhirType("ProcessResponse.processNote", IsBackboneType=true)]
     public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ProcessResponse#ProcessNote"; } }
+      public override string TypeName { get { return "ProcessResponse.processNote"; } }
 
       /// <summary>
       /// display | print | printoper

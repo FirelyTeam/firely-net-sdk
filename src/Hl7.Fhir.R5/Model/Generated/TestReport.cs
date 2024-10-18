@@ -200,14 +200,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Participant")]
-    [BackboneType("TestReport.participant")]
+    [FhirType("TestReport.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Participant"; } }
+      public override string TypeName { get { return "TestReport.participant"; } }
 
       /// <summary>
       /// test-engine | client | server
@@ -431,14 +430,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Setup")]
-    [BackboneType("TestReport.setup")]
+    [FhirType("TestReport.setup", IsBackboneType=true)]
     public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Setup"; } }
+      public override string TypeName { get { return "TestReport.setup"; } }
 
       /// <summary>
       /// A setup operation or assert that was executed
@@ -559,14 +557,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#SetupAction")]
-    [BackboneType("TestReport.setup.action")]
+    [FhirType("TestReport.setup.action", IsBackboneType=true)]
     public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#SetupAction"; } }
+      public override string TypeName { get { return "TestReport.setup.action"; } }
 
       /// <summary>
       /// The operation to perform
@@ -710,14 +707,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Operation")]
-    [BackboneType("TestReport.setup.action.operation")]
+    [FhirType("TestReport.setup.action.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Operation"; } }
+      public override string TypeName { get { return "TestReport.setup.action.operation"; } }
 
       /// <summary>
       /// pass | skip | fail | warning | error
@@ -943,14 +939,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Assert")]
-    [BackboneType("TestReport.setup.action.assert")]
+    [FhirType("TestReport.setup.action.assert", IsBackboneType=true)]
     public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Assert"; } }
+      public override string TypeName { get { return "TestReport.setup.action.assert"; } }
 
       /// <summary>
       /// pass | skip | fail | warning | error
@@ -1203,14 +1198,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Requirement")]
-    [BackboneType("TestReport.setup.action.assert.requirement")]
+    [FhirType("TestReport.setup.action.assert.requirement", IsBackboneType=true)]
     public partial class RequirementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Requirement"; } }
+      public override string TypeName { get { return "TestReport.setup.action.assert.requirement"; } }
 
       /// <summary>
       /// Link or reference to the testing requirement
@@ -1328,14 +1322,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Test")]
-    [BackboneType("TestReport.test")]
+    [FhirType("TestReport.test", IsBackboneType=true)]
     public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Test"; } }
+      public override string TypeName { get { return "TestReport.test"; } }
 
       /// <summary>
       /// Tracking/logging name of this test
@@ -1542,14 +1535,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#TestAction")]
-    [BackboneType("TestReport.test.action")]
+    [FhirType("TestReport.test.action", IsBackboneType=true)]
     public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#TestAction"; } }
+      public override string TypeName { get { return "TestReport.test.action"; } }
 
       /// <summary>
       /// The operation performed
@@ -1693,14 +1685,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#Teardown")]
-    [BackboneType("TestReport.teardown")]
+    [FhirType("TestReport.teardown", IsBackboneType=true)]
     public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#Teardown"; } }
+      public override string TypeName { get { return "TestReport.teardown"; } }
 
       /// <summary>
       /// One or more teardown operations performed
@@ -1821,14 +1812,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestReport#TeardownAction")]
-    [BackboneType("TestReport.teardown.action")]
+    [FhirType("TestReport.teardown.action", IsBackboneType=true)]
     public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport#TeardownAction"; } }
+      public override string TypeName { get { return "TestReport.teardown.action"; } }
 
       /// <summary>
       /// The teardown operation performed

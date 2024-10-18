@@ -207,14 +207,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#ReferenceSeq")]
-    [BackboneType("MolecularSequence.referenceSeq")]
+    [FhirType("MolecularSequence.referenceSeq", IsBackboneType=true)]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#ReferenceSeq"; } }
+      public override string TypeName { get { return "MolecularSequence.referenceSeq"; } }
 
       /// <summary>
       /// Chromosome containing genetic finding
@@ -649,14 +648,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Variant")]
-    [BackboneType("MolecularSequence.variant")]
+    [FhirType("MolecularSequence.variant", IsBackboneType=true)]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Variant"; } }
+      public override string TypeName { get { return "MolecularSequence.variant"; } }
 
       /// <summary>
       /// Start position of the variant on the  reference sequence
@@ -992,14 +990,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Quality")]
-    [BackboneType("MolecularSequence.quality")]
+    [FhirType("MolecularSequence.quality", IsBackboneType=true)]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Quality"; } }
+      public override string TypeName { get { return "MolecularSequence.quality"; } }
 
       /// <summary>
       /// indel | snp | unknown
@@ -1671,14 +1668,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Roc")]
-    [BackboneType("MolecularSequence.quality.roc")]
+    [FhirType("MolecularSequence.quality.roc", IsBackboneType=true)]
     public partial class RocComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Roc"; } }
+      public override string TypeName { get { return "MolecularSequence.quality.roc"; } }
 
       /// <summary>
       /// Genotype quality score
@@ -2080,14 +2076,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Repository")]
-    [BackboneType("MolecularSequence.repository")]
+    [FhirType("MolecularSequence.repository", IsBackboneType=true)]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Repository"; } }
+      public override string TypeName { get { return "MolecularSequence.repository"; } }
 
       /// <summary>
       /// directlink | openapi | login | oauth | other
@@ -2442,14 +2437,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#StructureVariant")]
-    [BackboneType("MolecularSequence.structureVariant")]
+    [FhirType("MolecularSequence.structureVariant", IsBackboneType=true)]
     public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#StructureVariant"; } }
+      public override string TypeName { get { return "MolecularSequence.structureVariant"; } }
 
       /// <summary>
       /// Structural variant change type
@@ -2702,14 +2696,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Outer")]
-    [BackboneType("MolecularSequence.structureVariant.outer")]
+    [FhirType("MolecularSequence.structureVariant.outer", IsBackboneType=true)]
     public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Outer"; } }
+      public override string TypeName { get { return "MolecularSequence.structureVariant.outer"; } }
 
       /// <summary>
       /// Structural variant outer start
@@ -2886,14 +2879,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Inner")]
-    [BackboneType("MolecularSequence.structureVariant.inner")]
+    [FhirType("MolecularSequence.structureVariant.inner", IsBackboneType=true)]
     public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Inner"; } }
+      public override string TypeName { get { return "MolecularSequence.structureVariant.inner"; } }
 
       /// <summary>
       /// Structural variant inner start

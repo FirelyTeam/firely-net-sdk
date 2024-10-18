@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Contact")]
-    [BackboneType("Patient.contact")]
+    [FhirType("Patient.contact", IsBackboneType=true)]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Contact"; } }
+      public override string TypeName { get { return "Patient.contact"; } }
 
       /// <summary>
       /// The kind of relationship
@@ -402,14 +401,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Communication")]
-    [BackboneType("Patient.communication")]
+    [FhirType("Patient.communication", IsBackboneType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Communication"; } }
+      public override string TypeName { get { return "Patient.communication"; } }
 
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health
@@ -573,14 +571,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Link")]
-    [BackboneType("Patient.link")]
+    [FhirType("Patient.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Link"; } }
+      public override string TypeName { get { return "Patient.link"; } }
 
       /// <summary>
       /// The other patient or related person resource that the link refers to

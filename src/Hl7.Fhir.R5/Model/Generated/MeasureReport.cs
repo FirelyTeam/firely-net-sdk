@@ -151,14 +151,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Group")]
-    [BackboneType("MeasureReport.group")]
+    [FhirType("MeasureReport.group", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Group"; } }
+      public override string TypeName { get { return "MeasureReport.group"; } }
 
       /// <summary>
       /// Pointer to specific group from Measure
@@ -427,14 +426,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Population")]
-    [BackboneType("MeasureReport.group.population")]
+    [FhirType("MeasureReport.group.population", IsBackboneType=true)]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Population"; } }
+      public override string TypeName { get { return "MeasureReport.group.population"; } }
 
       /// <summary>
       /// Pointer to specific population from Measure
@@ -722,14 +720,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Stratifier")]
-    [BackboneType("MeasureReport.group.stratifier")]
+    [FhirType("MeasureReport.group.stratifier", IsBackboneType=true)]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Stratifier"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier"; } }
 
       /// <summary>
       /// Pointer to specific stratifier from Measure
@@ -918,14 +915,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#StratifierGroup")]
-    [BackboneType("MeasureReport.group.stratifier.stratum")]
+    [FhirType("MeasureReport.group.stratifier.stratum", IsBackboneType=true)]
     public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#StratifierGroup"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum"; } }
 
       /// <summary>
       /// The stratum value, e.g. male
@@ -1126,14 +1122,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Component")]
-    [BackboneType("MeasureReport.group.stratifier.stratum.component")]
+    [FhirType("MeasureReport.group.stratifier.stratum.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Component"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.component"; } }
 
       /// <summary>
       /// Pointer to specific stratifier component from Measure
@@ -1326,14 +1321,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#StratifierGroupPopulation")]
-    [BackboneType("MeasureReport.group.stratifier.stratum.population")]
+    [FhirType("MeasureReport.group.stratifier.stratum.population", IsBackboneType=true)]
     public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#StratifierGroupPopulation"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.population"; } }
 
       /// <summary>
       /// Pointer to specific population from Measure

@@ -223,14 +223,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ArtifactAssessment#Content")]
-    [BackboneType("ArtifactAssessment.content")]
+    [FhirType("ArtifactAssessment.content", IsBackboneType=true)]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ArtifactAssessment#Content"; } }
+      public override string TypeName { get { return "ArtifactAssessment.content"; } }
 
       /// <summary>
       /// comment | classifier | rating | container | response | change-request

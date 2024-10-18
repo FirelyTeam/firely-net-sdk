@@ -158,14 +158,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchSubject#Progress")]
-    [BackboneType("ResearchSubject.progress")]
+    [FhirType("ResearchSubject.progress", IsBackboneType=true)]
     public partial class ProgressComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchSubject#Progress"; } }
+      public override string TypeName { get { return "ResearchSubject.progress"; } }
 
       /// <summary>
       /// state | milestone

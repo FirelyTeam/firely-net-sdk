@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#Action")]
-    [BackboneType("RequestOrchestration.action")]
+    [FhirType("RequestOrchestration.action", IsBackboneType=true)]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#Action"; } }
+      public override string TypeName { get { return "RequestOrchestration.action"; } }
 
       /// <summary>
       /// Pointer to specific item from the PlanDefinition
@@ -1092,14 +1091,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#Condition")]
-    [BackboneType("RequestOrchestration.action.condition")]
+    [FhirType("RequestOrchestration.action.condition", IsBackboneType=true)]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#Condition"; } }
+      public override string TypeName { get { return "RequestOrchestration.action.condition"; } }
 
       /// <summary>
       /// applicability | start | stop
@@ -1264,14 +1262,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#Input")]
-    [BackboneType("RequestOrchestration.action.input")]
+    [FhirType("RequestOrchestration.action.input", IsBackboneType=true)]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#Input"; } }
+      public override string TypeName { get { return "RequestOrchestration.action.input"; } }
 
       /// <summary>
       /// User-visible title
@@ -1476,14 +1473,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#Output")]
-    [BackboneType("RequestOrchestration.action.output")]
+    [FhirType("RequestOrchestration.action.output", IsBackboneType=true)]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#Output"; } }
+      public override string TypeName { get { return "RequestOrchestration.action.output"; } }
 
       /// <summary>
       /// User-visible title
@@ -1688,14 +1684,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#RelatedAction")]
-    [BackboneType("RequestOrchestration.action.relatedAction")]
+    [FhirType("RequestOrchestration.action.relatedAction", IsBackboneType=true)]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#RelatedAction"; } }
+      public override string TypeName { get { return "RequestOrchestration.action.relatedAction"; } }
 
       /// <summary>
       /// What action this is related to
@@ -1952,14 +1947,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#Participant")]
-    [BackboneType("RequestOrchestration.action.participant")]
+    [FhirType("RequestOrchestration.action.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#Participant"; } }
+      public override string TypeName { get { return "RequestOrchestration.action.participant"; } }
 
       /// <summary>
       /// careteam | device | group | healthcareservice | location | organization | patient | practitioner | practitionerrole | relatedperson
@@ -2249,14 +2243,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestOrchestration#DynamicValue")]
-    [BackboneType("RequestOrchestration.action.dynamicValue")]
+    [FhirType("RequestOrchestration.action.dynamicValue", IsBackboneType=true)]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration#DynamicValue"; } }
+      public override string TypeName { get { return "RequestOrchestration.action.dynamicValue"; } }
 
       /// <summary>
       /// The path to the element to be set dynamically

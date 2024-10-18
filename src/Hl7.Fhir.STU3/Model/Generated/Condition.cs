@@ -153,14 +153,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Condition#Stage")]
-    [BackboneType("Condition.stage")]
+    [FhirType("Condition.stage", IsBackboneType=true)]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Condition#Stage"; } }
+      public override string TypeName { get { return "Condition.stage"; } }
 
       /// <summary>
       /// Simple summary (disease specific)
@@ -309,14 +308,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Condition#Evidence")]
-    [BackboneType("Condition.evidence")]
+    [FhirType("Condition.evidence", IsBackboneType=true)]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Condition#Evidence"; } }
+      public override string TypeName { get { return "Condition.evidence"; } }
 
       /// <summary>
       /// Manifestation/symptom

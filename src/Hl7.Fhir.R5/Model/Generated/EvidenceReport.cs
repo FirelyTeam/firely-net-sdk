@@ -126,14 +126,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Subject")]
-    [BackboneType("EvidenceReport.subject")]
+    [FhirType("EvidenceReport.subject", IsBackboneType=true)]
     public partial class SubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport#Subject"; } }
+      public override string TypeName { get { return "EvidenceReport.subject"; } }
 
       /// <summary>
       /// Characteristic
@@ -276,14 +275,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Characteristic")]
-    [BackboneType("EvidenceReport.subject.characteristic")]
+    [FhirType("EvidenceReport.subject.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport#Characteristic"; } }
+      public override string TypeName { get { return "EvidenceReport.subject.characteristic"; } }
 
       /// <summary>
       /// Characteristic code
@@ -502,14 +500,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#RelatesTo")]
-    [BackboneType("EvidenceReport.relatesTo")]
+    [FhirType("EvidenceReport.relatesTo", IsBackboneType=true)]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport#RelatesTo"; } }
+      public override string TypeName { get { return "EvidenceReport.relatesTo"; } }
 
       /// <summary>
       /// replaces | amends | appends | transforms | replacedWith | amendedWith | appendedWith | transformedWith
@@ -675,14 +672,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Target")]
-    [BackboneType("EvidenceReport.relatesTo.target")]
+    [FhirType("EvidenceReport.relatesTo.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport#Target"; } }
+      public override string TypeName { get { return "EvidenceReport.relatesTo.target"; } }
 
       /// <summary>
       /// Target of the relationship URL
@@ -914,14 +910,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Section")]
-    [BackboneType("EvidenceReport.section")]
+    [FhirType("EvidenceReport.section", IsBackboneType=true)]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport#Section"; } }
+      public override string TypeName { get { return "EvidenceReport.section"; } }
 
       /// <summary>
       /// Label for section (e.g. for ToC)

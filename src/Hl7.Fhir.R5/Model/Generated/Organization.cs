@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Organization#Qualification")]
-    [BackboneType("Organization.qualification")]
+    [FhirType("Organization.qualification", IsBackboneType=true)]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Organization#Qualification"; } }
+      public override string TypeName { get { return "Organization.qualification"; } }
 
       /// <summary>
       /// An identifier for this qualification for the organization

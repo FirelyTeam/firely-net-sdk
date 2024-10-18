@@ -109,14 +109,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Provenance#Agent")]
-    [BackboneType("Provenance.agent")]
+    [FhirType("Provenance.agent", IsBackboneType=true)]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Provenance#Agent"; } }
+      public override string TypeName { get { return "Provenance.agent"; } }
 
       /// <summary>
       /// What the agents role was
@@ -320,14 +319,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Provenance#Entity")]
-    [BackboneType("Provenance.entity")]
+    [FhirType("Provenance.entity", IsBackboneType=true)]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Provenance#Entity"; } }
+      public override string TypeName { get { return "Provenance.entity"; } }
 
       /// <summary>
       /// derivation | revision | quotation | source | removal

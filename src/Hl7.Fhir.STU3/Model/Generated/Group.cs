@@ -114,14 +114,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Group#Characteristic")]
-    [BackboneType("Group.characteristic")]
+    [FhirType("Group.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Group#Characteristic"; } }
+      public override string TypeName { get { return "Group.characteristic"; } }
 
       /// <summary>
       /// Kind of characteristic
@@ -340,14 +339,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Group#Member")]
-    [BackboneType("Group.member")]
+    [FhirType("Group.member", IsBackboneType=true)]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Group#Member"; } }
+      public override string TypeName { get { return "Group.member"; } }
 
       /// <summary>
       /// Reference to the group member

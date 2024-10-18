@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Activity")]
-    [BackboneType("CarePlan.activity")]
+    [FhirType("CarePlan.activity", IsBackboneType=true)]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan#Activity"; } }
+      public override string TypeName { get { return "CarePlan.activity"; } }
 
       /// <summary>
       /// Results of the activity (concept, or Appointment, Encounter, Procedure, etc.)

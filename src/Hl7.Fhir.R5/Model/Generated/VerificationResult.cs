@@ -113,14 +113,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("VerificationResult#PrimarySource")]
-    [BackboneType("VerificationResult.primarySource")]
+    [FhirType("VerificationResult.primarySource", IsBackboneType=true)]
     public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VerificationResult#PrimarySource"; } }
+      public override string TypeName { get { return "VerificationResult.primarySource"; } }
 
       /// <summary>
       /// Reference to the primary source
@@ -414,14 +413,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("VerificationResult#Attestation")]
-    [BackboneType("VerificationResult.attestation")]
+    [FhirType("VerificationResult.attestation", IsBackboneType=true)]
     public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VerificationResult#Attestation"; } }
+      public override string TypeName { get { return "VerificationResult.attestation"; } }
 
       /// <summary>
       /// The individual or organization attesting to information
@@ -771,14 +769,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("VerificationResult#Validator")]
-    [BackboneType("VerificationResult.validator")]
+    [FhirType("VerificationResult.validator", IsBackboneType=true)]
     public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VerificationResult#Validator"; } }
+      public override string TypeName { get { return "VerificationResult.validator"; } }
 
       /// <summary>
       /// Reference to the organization validating information

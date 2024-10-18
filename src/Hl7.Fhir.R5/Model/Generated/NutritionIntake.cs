@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionIntake#ConsumedItem")]
-    [BackboneType("NutritionIntake.consumedItem")]
+    [FhirType("NutritionIntake.consumedItem", IsBackboneType=true)]
     public partial class ConsumedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionIntake#ConsumedItem"; } }
+      public override string TypeName { get { return "NutritionIntake.consumedItem"; } }
 
       /// <summary>
       /// The type of food or fluid product
@@ -364,14 +363,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionIntake#IngredientLabel")]
-    [BackboneType("NutritionIntake.ingredientLabel")]
+    [FhirType("NutritionIntake.ingredientLabel", IsBackboneType=true)]
     public partial class IngredientLabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionIntake#IngredientLabel"; } }
+      public override string TypeName { get { return "NutritionIntake.ingredientLabel"; } }
 
       /// <summary>
       /// Total nutrient consumed
@@ -518,14 +516,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionIntake#Performer")]
-    [BackboneType("NutritionIntake.performer")]
+    [FhirType("NutritionIntake.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionIntake#Performer"; } }
+      public override string TypeName { get { return "NutritionIntake.performer"; } }
 
       /// <summary>
       /// Type of performer

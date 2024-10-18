@@ -141,14 +141,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#Channel")]
-    [BackboneType("Subscription.channel")]
+    [FhirType("Subscription.channel", IsBackboneType=true)]
     public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription#Channel"; } }
+      public override string TypeName { get { return "Subscription.channel"; } }
 
       /// <summary>
       /// rest-hook | websocket | email | sms | message

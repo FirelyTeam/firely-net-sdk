@@ -181,14 +181,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#Filter")]
-    [BackboneType("CodeSystem.filter")]
+    [FhirType("CodeSystem.filter", IsBackboneType=true)]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem#Filter"; } }
+      public override string TypeName { get { return "CodeSystem.filter"; } }
 
       /// <summary>
       /// Code that identifies the filter
@@ -459,14 +458,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#Property")]
-    [BackboneType("CodeSystem.property")]
+    [FhirType("CodeSystem.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem#Property"; } }
+      public override string TypeName { get { return "CodeSystem.property"; } }
 
       /// <summary>
       /// Identifies the property on the concepts, and when referred to in operations
@@ -737,14 +735,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#ConceptDefinition")]
-    [BackboneType("CodeSystem.concept")]
+    [FhirType("CodeSystem.concept", IsBackboneType=true)]
     public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem#ConceptDefinition"; } }
+      public override string TypeName { get { return "CodeSystem.concept"; } }
 
       /// <summary>
       /// Code that identifies concept
@@ -1046,14 +1043,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#Designation")]
-    [BackboneType("CodeSystem.concept.designation")]
+    [FhirType("CodeSystem.concept.designation", IsBackboneType=true)]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem#Designation"; } }
+      public override string TypeName { get { return "CodeSystem.concept.designation"; } }
 
       /// <summary>
       /// Human language of the designation
@@ -1261,14 +1257,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#ConceptProperty")]
-    [BackboneType("CodeSystem.concept.property")]
+    [FhirType("CodeSystem.concept.property", IsBackboneType=true)]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem#ConceptProperty"; } }
+      public override string TypeName { get { return "CodeSystem.concept.property"; } }
 
       /// <summary>
       /// Reference to CodeSystem.property.code

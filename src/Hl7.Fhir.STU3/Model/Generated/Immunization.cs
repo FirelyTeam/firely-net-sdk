@@ -89,14 +89,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#Practitioner")]
-    [BackboneType("Immunization.practitioner")]
+    [FhirType("Immunization.practitioner", IsBackboneType=true)]
     public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization#Practitioner"; } }
+      public override string TypeName { get { return "Immunization.practitioner"; } }
 
       /// <summary>
       /// What type of performance was done
@@ -244,14 +243,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#Explanation")]
-    [BackboneType("Immunization.explanation")]
+    [FhirType("Immunization.explanation", IsBackboneType=true)]
     public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization#Explanation"; } }
+      public override string TypeName { get { return "Immunization.explanation"; } }
 
       /// <summary>
       /// Why immunization occurred
@@ -400,14 +398,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#Reaction")]
-    [BackboneType("Immunization.reaction")]
+    [FhirType("Immunization.reaction", IsBackboneType=true)]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization#Reaction"; } }
+      public override string TypeName { get { return "Immunization.reaction"; } }
 
       /// <summary>
       /// When reaction started
@@ -614,14 +611,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#VaccinationProtocol")]
-    [BackboneType("Immunization.vaccinationProtocol")]
+    [FhirType("Immunization.vaccinationProtocol", IsBackboneType=true)]
     public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization#VaccinationProtocol"; } }
+      public override string TypeName { get { return "Immunization.vaccinationProtocol"; } }
 
       /// <summary>
       /// Dose number within series

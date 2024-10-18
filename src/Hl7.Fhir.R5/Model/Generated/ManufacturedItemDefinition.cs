@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition#Property")]
-    [BackboneType("ManufacturedItemDefinition.property")]
+    [FhirType("ManufacturedItemDefinition.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition#Property"; } }
+      public override string TypeName { get { return "ManufacturedItemDefinition.property"; } }
 
       /// <summary>
       /// A code expressing the type of characteristic
@@ -214,14 +213,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition#Component")]
-    [BackboneType("ManufacturedItemDefinition.component")]
+    [FhirType("ManufacturedItemDefinition.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition#Component"; } }
+      public override string TypeName { get { return "ManufacturedItemDefinition.component"; } }
 
       /// <summary>
       /// Defining type of the component e.g. shell, layer, ink
@@ -468,14 +466,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition#Constituent")]
-    [BackboneType("ManufacturedItemDefinition.component.constituent")]
+    [FhirType("ManufacturedItemDefinition.component.constituent", IsBackboneType=true)]
     public partial class ConstituentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition#Constituent"; } }
+      public override string TypeName { get { return "ManufacturedItemDefinition.component.constituent"; } }
 
       /// <summary>
       /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume)

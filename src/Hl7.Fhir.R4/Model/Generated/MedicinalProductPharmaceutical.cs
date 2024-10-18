@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#Characteristics")]
-    [BackboneType("MedicinalProductPharmaceutical.characteristics")]
+    [FhirType("MedicinalProductPharmaceutical.characteristics", IsBackboneType=true)]
     public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical#Characteristics"; } }
+      public override string TypeName { get { return "MedicinalProductPharmaceutical.characteristics"; } }
 
       /// <summary>
       /// A coded characteristic
@@ -210,14 +209,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#RouteOfAdministration")]
-    [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration")]
+    [FhirType("MedicinalProductPharmaceutical.routeOfAdministration", IsBackboneType=true)]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical#RouteOfAdministration"; } }
+      public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration"; } }
 
       /// <summary>
       /// Coded expression for the route
@@ -485,14 +483,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#TargetSpecies")]
-    [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies")]
+    [FhirType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies", IsBackboneType=true)]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical#TargetSpecies"; } }
+      public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies"; } }
 
       /// <summary>
       /// Coded expression for the species
@@ -635,14 +632,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#WithdrawalPeriod")]
-    [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod")]
+    [FhirType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod", IsBackboneType=true)]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical#WithdrawalPeriod"; } }
+      public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod"; } }
 
       /// <summary>
       /// Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk

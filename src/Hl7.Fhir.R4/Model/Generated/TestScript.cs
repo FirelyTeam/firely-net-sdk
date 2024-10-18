@@ -300,14 +300,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Origin")]
-    [BackboneType("TestScript.origin")]
+    [FhirType("TestScript.origin", IsBackboneType=true)]
     public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Origin"; } }
+      public override string TypeName { get { return "TestScript.origin"; } }
 
       /// <summary>
       /// The index of the abstract origin server starting at 1
@@ -473,14 +472,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Destination")]
-    [BackboneType("TestScript.destination")]
+    [FhirType("TestScript.destination", IsBackboneType=true)]
     public partial class DestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Destination"; } }
+      public override string TypeName { get { return "TestScript.destination"; } }
 
       /// <summary>
       /// The index of the abstract destination server starting at 1
@@ -645,14 +643,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Metadata")]
-    [BackboneType("TestScript.metadata")]
+    [FhirType("TestScript.metadata", IsBackboneType=true)]
     public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Metadata"; } }
+      public override string TypeName { get { return "TestScript.metadata"; } }
 
       /// <summary>
       /// Links to the FHIR specification
@@ -798,14 +795,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Link")]
-    [BackboneType("TestScript.metadata.link")]
+    [FhirType("TestScript.metadata.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Link"; } }
+      public override string TypeName { get { return "TestScript.metadata.link"; } }
 
       /// <summary>
       /// URL to the specification
@@ -987,14 +983,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Capability")]
-    [BackboneType("TestScript.metadata.capability")]
+    [FhirType("TestScript.metadata.capability", IsBackboneType=true)]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Capability"; } }
+      public override string TypeName { get { return "TestScript.metadata.capability"; } }
 
       /// <summary>
       /// Are the capabilities required?
@@ -1394,14 +1389,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Fixture")]
-    [BackboneType("TestScript.fixture")]
+    [FhirType("TestScript.fixture", IsBackboneType=true)]
     public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Fixture"; } }
+      public override string TypeName { get { return "TestScript.fixture"; } }
 
       /// <summary>
       /// Whether or not to implicitly create the fixture during setup
@@ -1611,14 +1605,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Variable")]
-    [BackboneType("TestScript.variable")]
+    [FhirType("TestScript.variable", IsBackboneType=true)]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Variable"; } }
+      public override string TypeName { get { return "TestScript.variable"; } }
 
       /// <summary>
       /// Descriptive name for this variable
@@ -2054,14 +2047,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Setup")]
-    [BackboneType("TestScript.setup")]
+    [FhirType("TestScript.setup", IsBackboneType=true)]
     public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Setup"; } }
+      public override string TypeName { get { return "TestScript.setup"; } }
 
       /// <summary>
       /// A setup operation or assert to perform
@@ -2182,14 +2174,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#SetupAction")]
-    [BackboneType("TestScript.setup.action")]
+    [FhirType("TestScript.setup.action", IsBackboneType=true)]
     public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#SetupAction"; } }
+      public override string TypeName { get { return "TestScript.setup.action"; } }
 
       /// <summary>
       /// The setup operation to perform
@@ -2333,14 +2324,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Operation")]
-    [BackboneType("TestScript.setup.action.operation")]
+    [FhirType("TestScript.setup.action.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Operation"; } }
+      public override string TypeName { get { return "TestScript.setup.action.operation"; } }
 
       /// <summary>
       /// The operation code type that will be executed
@@ -3139,14 +3129,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#RequestHeader")]
-    [BackboneType("TestScript.setup.action.operation.requestHeader")]
+    [FhirType("TestScript.setup.action.operation.requestHeader", IsBackboneType=true)]
     public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#RequestHeader"; } }
+      public override string TypeName { get { return "TestScript.setup.action.operation.requestHeader"; } }
 
       /// <summary>
       /// HTTP header field name
@@ -3329,14 +3318,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Assert")]
-    [BackboneType("TestScript.setup.action.assert")]
+    [FhirType("TestScript.setup.action.assert", IsBackboneType=true)]
     public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Assert"; } }
+      public override string TypeName { get { return "TestScript.setup.action.assert"; } }
 
       /// <summary>
       /// Tracking/logging assertion label
@@ -4385,14 +4373,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Test")]
-    [BackboneType("TestScript.test")]
+    [FhirType("TestScript.test", IsBackboneType=true)]
     public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Test"; } }
+      public override string TypeName { get { return "TestScript.test"; } }
 
       /// <summary>
       /// Tracking/logging name of this test
@@ -4599,14 +4586,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#TestAction")]
-    [BackboneType("TestScript.test.action")]
+    [FhirType("TestScript.test.action", IsBackboneType=true)]
     public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#TestAction"; } }
+      public override string TypeName { get { return "TestScript.test.action"; } }
 
       /// <summary>
       /// The setup operation to perform
@@ -4750,14 +4736,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#Teardown")]
-    [BackboneType("TestScript.teardown")]
+    [FhirType("TestScript.teardown", IsBackboneType=true)]
     public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#Teardown"; } }
+      public override string TypeName { get { return "TestScript.teardown"; } }
 
       /// <summary>
       /// One or more teardown operations to perform
@@ -4878,14 +4863,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestScript#TeardownAction")]
-    [BackboneType("TestScript.teardown.action")]
+    [FhirType("TestScript.teardown.action", IsBackboneType=true)]
     public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript#TeardownAction"; } }
+      public override string TypeName { get { return "TestScript.teardown.action"; } }
 
       /// <summary>
       /// The teardown operation to perform

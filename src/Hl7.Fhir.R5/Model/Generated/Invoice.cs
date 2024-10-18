@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Invoice#Participant")]
-    [BackboneType("Invoice.participant")]
+    [FhirType("Invoice.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice#Participant"; } }
+      public override string TypeName { get { return "Invoice.participant"; } }
 
       /// <summary>
       /// Type of involvement in creation of this Invoice
@@ -261,14 +260,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Invoice#LineItem")]
-    [BackboneType("Invoice.lineItem")]
+    [FhirType("Invoice.lineItem", IsBackboneType=true)]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice#LineItem"; } }
+      public override string TypeName { get { return "Invoice.lineItem"; } }
 
       /// <summary>
       /// Sequence number of line item

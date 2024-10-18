@@ -210,14 +210,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Performer")]
-    [BackboneType("Task.performer")]
+    [FhirType("Task.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Performer"; } }
+      public override string TypeName { get { return "Task.performer"; } }
 
       /// <summary>
       /// Type of performance
@@ -366,14 +365,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Restriction")]
-    [BackboneType("Task.restriction")]
+    [FhirType("Task.restriction", IsBackboneType=true)]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Restriction"; } }
+      public override string TypeName { get { return "Task.restriction"; } }
 
       /// <summary>
       /// How many times to repeat
@@ -563,14 +561,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Input")]
-    [BackboneType("Task.input")]
+    [FhirType("Task.input", IsBackboneType=true)]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Input"; } }
+      public override string TypeName { get { return "Task.input"; } }
 
       /// <summary>
       /// Label for the input
@@ -719,14 +716,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Output")]
-    [BackboneType("Task.output")]
+    [FhirType("Task.output", IsBackboneType=true)]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Output"; } }
+      public override string TypeName { get { return "Task.output"; } }
 
       /// <summary>
       /// Label for output

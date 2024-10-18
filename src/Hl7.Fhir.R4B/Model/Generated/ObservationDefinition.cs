@@ -172,14 +172,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ObservationDefinition#QuantitativeDetails")]
-    [BackboneType("ObservationDefinition.quantitativeDetails")]
+    [FhirType("ObservationDefinition.quantitativeDetails", IsBackboneType=true)]
     public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition#QuantitativeDetails"; } }
+      public override string TypeName { get { return "ObservationDefinition.quantitativeDetails"; } }
 
       /// <summary>
       /// Customary unit for quantitative results
@@ -411,14 +410,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ObservationDefinition#QualifiedInterval")]
-    [BackboneType("ObservationDefinition.qualifiedInterval")]
+    [FhirType("ObservationDefinition.qualifiedInterval", IsBackboneType=true)]
     public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition#QualifiedInterval"; } }
+      public override string TypeName { get { return "ObservationDefinition.qualifiedInterval"; } }
 
       /// <summary>
       /// reference | critical | absolute

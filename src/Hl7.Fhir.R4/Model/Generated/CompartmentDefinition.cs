@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CompartmentDefinition#Resource")]
-    [BackboneType("CompartmentDefinition.resource")]
+    [FhirType("CompartmentDefinition.resource", IsBackboneType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CompartmentDefinition#Resource"; } }
+      public override string TypeName { get { return "CompartmentDefinition.resource"; } }
 
       /// <summary>
       /// Name of resource type

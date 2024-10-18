@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#FilterBy")]
-    [BackboneType("Subscription.filterBy")]
+    [FhirType("Subscription.filterBy", IsBackboneType=true)]
     public partial class FilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription#FilterBy"; } }
+      public override string TypeName { get { return "Subscription.filterBy"; } }
 
       /// <summary>
       /// Allowed Resource (reference to definition) for this Subscription filter
@@ -419,14 +418,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#Parameter")]
-    [BackboneType("Subscription.parameter")]
+    [FhirType("Subscription.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription#Parameter"; } }
+      public override string TypeName { get { return "Subscription.parameter"; } }
 
       /// <summary>
       /// Name (key) of the parameter

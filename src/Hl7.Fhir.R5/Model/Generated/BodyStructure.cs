@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("BodyStructure#IncludedStructure")]
-    [BackboneType("BodyStructure.includedStructure")]
+    [FhirType("BodyStructure.includedStructure", IsBackboneType=true)]
     public partial class IncludedStructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BodyStructure#IncludedStructure"; } }
+      public override string TypeName { get { return "BodyStructure.includedStructure"; } }
 
       /// <summary>
       /// Code that represents the included structure
@@ -302,14 +301,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("BodyStructure#BodyLandmarkOrientation")]
-    [BackboneType("BodyStructure.includedStructure.bodyLandmarkOrientation")]
+    [FhirType("BodyStructure.includedStructure.bodyLandmarkOrientation", IsBackboneType=true)]
     public partial class BodyLandmarkOrientationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BodyStructure#BodyLandmarkOrientation"; } }
+      public override string TypeName { get { return "BodyStructure.includedStructure.bodyLandmarkOrientation"; } }
 
       /// <summary>
       /// Body ]andmark description
@@ -510,14 +508,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("BodyStructure#DistanceFromLandmark")]
-    [BackboneType("BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark")]
+    [FhirType("BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark", IsBackboneType=true)]
     public partial class DistanceFromLandmarkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BodyStructure#DistanceFromLandmark"; } }
+      public override string TypeName { get { return "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark"; } }
 
       /// <summary>
       /// Measurement device

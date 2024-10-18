@@ -181,14 +181,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#Performer")]
-    [BackboneType("ImagingSelection.performer")]
+    [FhirType("ImagingSelection.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#Performer"; } }
+      public override string TypeName { get { return "ImagingSelection.performer"; } }
 
       /// <summary>
       /// Type of performer
@@ -335,14 +334,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#Instance")]
-    [BackboneType("ImagingSelection.instance")]
+    [FhirType("ImagingSelection.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#Instance"; } }
+      public override string TypeName { get { return "ImagingSelection.instance"; } }
 
       /// <summary>
       /// DICOM SOP Instance UID
@@ -646,14 +644,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#ImageRegion2D")]
-    [BackboneType("ImagingSelection.instance.imageRegion2D")]
+    [FhirType("ImagingSelection.instance.imageRegion2D", IsBackboneType=true)]
     public partial class ImageRegion2DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#ImageRegion2D"; } }
+      public override string TypeName { get { return "ImagingSelection.instance.imageRegion2D"; } }
 
       /// <summary>
       /// point | polyline | interpolated | circle | ellipse
@@ -837,14 +834,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#ImageRegion3D")]
-    [BackboneType("ImagingSelection.instance.imageRegion3D")]
+    [FhirType("ImagingSelection.instance.imageRegion3D", IsBackboneType=true)]
     public partial class ImageRegion3DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#ImageRegion3D"; } }
+      public override string TypeName { get { return "ImagingSelection.instance.imageRegion3D"; } }
 
       /// <summary>
       /// point | multipoint | polyline | polygon | ellipse | ellipsoid

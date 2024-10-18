@@ -170,14 +170,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#UdiDeviceIdentifier")]
-    [BackboneType("DeviceDefinition.udiDeviceIdentifier")]
+    [FhirType("DeviceDefinition.udiDeviceIdentifier", IsBackboneType=true)]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#UdiDeviceIdentifier"; } }
+      public override string TypeName { get { return "DeviceDefinition.udiDeviceIdentifier"; } }
 
       /// <summary>
       /// The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdiction provided in the DeviceDefinition.udiDeviceIdentifier
@@ -429,14 +428,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#UdiDeviceIdentifierMarketDistribution")]
-    [BackboneType("DeviceDefinition.udiDeviceIdentifier.marketDistribution")]
+    [FhirType("DeviceDefinition.udiDeviceIdentifier.marketDistribution", IsBackboneType=true)]
     public partial class UdiDeviceIdentifierMarketDistributionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#UdiDeviceIdentifierMarketDistribution"; } }
+      public override string TypeName { get { return "DeviceDefinition.udiDeviceIdentifier.marketDistribution"; } }
 
       /// <summary>
       /// Begin and end dates for the commercial distribution of the device
@@ -601,14 +599,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#RegulatoryIdentifier")]
-    [BackboneType("DeviceDefinition.regulatoryIdentifier")]
+    [FhirType("DeviceDefinition.regulatoryIdentifier", IsBackboneType=true)]
     public partial class RegulatoryIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#RegulatoryIdentifier"; } }
+      public override string TypeName { get { return "DeviceDefinition.regulatoryIdentifier"; } }
 
       /// <summary>
       /// basic | master | license
@@ -877,14 +874,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#DeviceName")]
-    [BackboneType("DeviceDefinition.deviceName")]
+    [FhirType("DeviceDefinition.deviceName", IsBackboneType=true)]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#DeviceName"; } }
+      public override string TypeName { get { return "DeviceDefinition.deviceName"; } }
 
       /// <summary>
       /// A name that is used to refer to the device
@@ -1068,14 +1064,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Classification")]
-    [BackboneType("DeviceDefinition.classification")]
+    [FhirType("DeviceDefinition.classification", IsBackboneType=true)]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Classification"; } }
+      public override string TypeName { get { return "DeviceDefinition.classification"; } }
 
       /// <summary>
       /// A classification or risk class of the device model
@@ -1222,14 +1217,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#ConformsTo")]
-    [BackboneType("DeviceDefinition.conformsTo")]
+    [FhirType("DeviceDefinition.conformsTo", IsBackboneType=true)]
     public partial class ConformsToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#ConformsTo"; } }
+      public override string TypeName { get { return "DeviceDefinition.conformsTo"; } }
 
       /// <summary>
       /// Describes the common type of the standard, specification, or formal guidance
@@ -1446,14 +1440,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#HasPart")]
-    [BackboneType("DeviceDefinition.hasPart")]
+    [FhirType("DeviceDefinition.hasPart", IsBackboneType=true)]
     public partial class HasPartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#HasPart"; } }
+      public override string TypeName { get { return "DeviceDefinition.hasPart"; } }
 
       /// <summary>
       /// Reference to the part
@@ -1615,14 +1608,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Packaging")]
-    [BackboneType("DeviceDefinition.packaging")]
+    [FhirType("DeviceDefinition.packaging", IsBackboneType=true)]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Packaging"; } }
+      public override string TypeName { get { return "DeviceDefinition.packaging"; } }
 
       /// <summary>
       /// Business identifier of the packaged medication
@@ -1884,14 +1876,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#PackagingDistributor")]
-    [BackboneType("DeviceDefinition.packaging.distributor")]
+    [FhirType("DeviceDefinition.packaging.distributor", IsBackboneType=true)]
     public partial class PackagingDistributorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#PackagingDistributor"; } }
+      public override string TypeName { get { return "DeviceDefinition.packaging.distributor"; } }
 
       /// <summary>
       /// Distributor's human-readable name
@@ -2053,14 +2044,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Version")]
-    [BackboneType("DeviceDefinition.version")]
+    [FhirType("DeviceDefinition.version", IsBackboneType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Version"; } }
+      public override string TypeName { get { return "DeviceDefinition.version"; } }
 
       /// <summary>
       /// The type of the device version, e.g. manufacturer, approved, internal
@@ -2249,14 +2239,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Property")]
-    [BackboneType("DeviceDefinition.property")]
+    [FhirType("DeviceDefinition.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Property"; } }
+      public override string TypeName { get { return "DeviceDefinition.property"; } }
 
       /// <summary>
       /// Code that specifies the property being represented
@@ -2402,14 +2391,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Link")]
-    [BackboneType("DeviceDefinition.link")]
+    [FhirType("DeviceDefinition.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Link"; } }
+      public override string TypeName { get { return "DeviceDefinition.link"; } }
 
       /// <summary>
       /// The type indicates the relationship of the related device to the device instance
@@ -2553,14 +2541,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Material")]
-    [BackboneType("DeviceDefinition.material")]
+    [FhirType("DeviceDefinition.material", IsBackboneType=true)]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Material"; } }
+      public override string TypeName { get { return "DeviceDefinition.material"; } }
 
       /// <summary>
       /// A relevant substance that the device contains, may contain, or is made of
@@ -2766,14 +2753,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Guideline")]
-    [BackboneType("DeviceDefinition.guideline")]
+    [FhirType("DeviceDefinition.guideline", IsBackboneType=true)]
     public partial class GuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Guideline"; } }
+      public override string TypeName { get { return "DeviceDefinition.guideline"; } }
 
       /// <summary>
       /// The circumstances that form the setting for using the device
@@ -3080,14 +3066,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#CorrectiveAction")]
-    [BackboneType("DeviceDefinition.correctiveAction")]
+    [FhirType("DeviceDefinition.correctiveAction", IsBackboneType=true)]
     public partial class CorrectiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#CorrectiveAction"; } }
+      public override string TypeName { get { return "DeviceDefinition.correctiveAction"; } }
 
       /// <summary>
       /// Whether the corrective action was a recall
@@ -3293,14 +3278,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#ChargeItem")]
-    [BackboneType("DeviceDefinition.chargeItem")]
+    [FhirType("DeviceDefinition.chargeItem", IsBackboneType=true)]
     public partial class ChargeItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#ChargeItem"; } }
+      public override string TypeName { get { return "DeviceDefinition.chargeItem"; } }
 
       /// <summary>
       /// The code or reference for the charge item

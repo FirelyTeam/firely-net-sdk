@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationAdministration#Performer")]
-    [BackboneType("MedicationAdministration.performer")]
+    [FhirType("MedicationAdministration.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationAdministration#Performer"; } }
+      public override string TypeName { get { return "MedicationAdministration.performer"; } }
 
       /// <summary>
       /// Type of performance
@@ -274,14 +273,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationAdministration#Dosage")]
-    [BackboneType("MedicationAdministration.dosage")]
+    [FhirType("MedicationAdministration.dosage", IsBackboneType=true)]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationAdministration#Dosage"; } }
+      public override string TypeName { get { return "MedicationAdministration.dosage"; } }
 
       /// <summary>
       /// Free text dosage instructions e.g. SIG

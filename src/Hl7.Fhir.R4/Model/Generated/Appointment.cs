@@ -162,14 +162,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#Participant")]
-    [BackboneType("Appointment.participant")]
+    [FhirType("Appointment.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment#Participant"; } }
+      public override string TypeName { get { return "Appointment.participant"; } }
 
       /// <summary>
       /// Role of participant in the appointment

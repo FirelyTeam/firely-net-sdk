@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Linkage#Item")]
-    [BackboneType("Linkage.item")]
+    [FhirType("Linkage.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Linkage#Item"; } }
+      public override string TypeName { get { return "Linkage.item"; } }
 
       /// <summary>
       /// source | alternate | historical

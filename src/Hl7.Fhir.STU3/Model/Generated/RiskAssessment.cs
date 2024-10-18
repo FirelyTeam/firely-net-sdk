@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskAssessment#Prediction")]
-    [BackboneType("RiskAssessment.prediction")]
+    [FhirType("RiskAssessment.prediction", IsBackboneType=true)]
     public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskAssessment#Prediction"; } }
+      public override string TypeName { get { return "RiskAssessment.prediction"; } }
 
       /// <summary>
       /// Possible outcome for the subject

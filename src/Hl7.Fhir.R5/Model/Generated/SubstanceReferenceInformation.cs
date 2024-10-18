@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#Gene")]
-    [BackboneType("SubstanceReferenceInformation.gene")]
+    [FhirType("SubstanceReferenceInformation.gene", IsBackboneType=true)]
     public partial class GeneComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation#Gene"; } }
+      public override string TypeName { get { return "SubstanceReferenceInformation.gene"; } }
 
       /// <summary>
       /// Todo
@@ -237,14 +236,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#GeneElement")]
-    [BackboneType("SubstanceReferenceInformation.geneElement")]
+    [FhirType("SubstanceReferenceInformation.geneElement", IsBackboneType=true)]
     public partial class GeneElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation#GeneElement"; } }
+      public override string TypeName { get { return "SubstanceReferenceInformation.geneElement"; } }
 
       /// <summary>
       /// Todo
@@ -413,14 +411,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#Target")]
-    [BackboneType("SubstanceReferenceInformation.target")]
+    [FhirType("SubstanceReferenceInformation.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation#Target"; } }
+      public override string TypeName { get { return "SubstanceReferenceInformation.target"; } }
 
       /// <summary>
       /// Todo

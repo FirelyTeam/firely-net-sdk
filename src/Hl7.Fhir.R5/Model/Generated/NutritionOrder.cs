@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#OralDiet")]
-    [BackboneType("NutritionOrder.oralDiet")]
+    [FhirType("NutritionOrder.oralDiet", IsBackboneType=true)]
     public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#OralDiet"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet"; } }
 
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally
@@ -343,14 +342,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#OralDietSchedule")]
-    [BackboneType("NutritionOrder.oralDiet.schedule")]
+    [FhirType("NutritionOrder.oralDiet.schedule", IsBackboneType=true)]
     public partial class OralDietScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#OralDietSchedule"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet.schedule"; } }
 
       /// <summary>
       /// Scheduled frequency of diet
@@ -539,14 +537,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Nutrient")]
-    [BackboneType("NutritionOrder.oralDiet.nutrient")]
+    [FhirType("NutritionOrder.oralDiet.nutrient", IsBackboneType=true)]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Nutrient"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet.nutrient"; } }
 
       /// <summary>
       /// Type of nutrient that is being modified
@@ -691,14 +688,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Texture")]
-    [BackboneType("NutritionOrder.oralDiet.texture")]
+    [FhirType("NutritionOrder.oralDiet.texture", IsBackboneType=true)]
     public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Texture"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet.texture"; } }
 
       /// <summary>
       /// Code to indicate how to alter the texture of the foods, e.g. pureed
@@ -844,14 +840,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Supplement")]
-    [BackboneType("NutritionOrder.supplement")]
+    [FhirType("NutritionOrder.supplement", IsBackboneType=true)]
     public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Supplement"; } }
+      public override string TypeName { get { return "NutritionOrder.supplement"; } }
 
       /// <summary>
       /// Type of supplement product requested
@@ -1107,14 +1102,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#SupplementSchedule")]
-    [BackboneType("NutritionOrder.supplement.schedule")]
+    [FhirType("NutritionOrder.supplement.schedule", IsBackboneType=true)]
     public partial class SupplementScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#SupplementSchedule"; } }
+      public override string TypeName { get { return "NutritionOrder.supplement.schedule"; } }
 
       /// <summary>
       /// Scheduled frequency of diet
@@ -1303,14 +1297,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#EnteralFormula")]
-    [BackboneType("NutritionOrder.enteralFormula")]
+    [FhirType("NutritionOrder.enteralFormula", IsBackboneType=true)]
     public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#EnteralFormula"; } }
+      public override string TypeName { get { return "NutritionOrder.enteralFormula"; } }
 
       /// <summary>
       /// Type of enteral or infant formula
@@ -1670,14 +1663,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Additive")]
-    [BackboneType("NutritionOrder.enteralFormula.additive")]
+    [FhirType("NutritionOrder.enteralFormula.additive", IsBackboneType=true)]
     public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Additive"; } }
+      public override string TypeName { get { return "NutritionOrder.enteralFormula.additive"; } }
 
       /// <summary>
       /// Type of modular component to add to the feeding
@@ -1866,14 +1858,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Administration")]
-    [BackboneType("NutritionOrder.enteralFormula.administration")]
+    [FhirType("NutritionOrder.enteralFormula.administration", IsBackboneType=true)]
     public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Administration"; } }
+      public override string TypeName { get { return "NutritionOrder.enteralFormula.administration"; } }
 
       /// <summary>
       /// Scheduling information for enteral formula products
@@ -2044,14 +2035,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#EnteralFormulaSchedule")]
-    [BackboneType("NutritionOrder.enteralFormula.administration.schedule")]
+    [FhirType("NutritionOrder.enteralFormula.administration.schedule", IsBackboneType=true)]
     public partial class EnteralFormulaScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#EnteralFormulaSchedule"; } }
+      public override string TypeName { get { return "NutritionOrder.enteralFormula.administration.schedule"; } }
 
       /// <summary>
       /// Scheduled frequency of enteral formula

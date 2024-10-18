@@ -184,14 +184,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AuditEvent#Agent")]
-    [BackboneType("AuditEvent.agent")]
+    [FhirType("AuditEvent.agent", IsBackboneType=true)]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent#Agent"; } }
+      public override string TypeName { get { return "AuditEvent.agent"; } }
 
       /// <summary>
       /// Agent role in the event
@@ -643,14 +642,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AuditEvent#Network")]
-    [BackboneType("AuditEvent.agent.network")]
+    [FhirType("AuditEvent.agent.network", IsBackboneType=true)]
     public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent#Network"; } }
+      public override string TypeName { get { return "AuditEvent.agent.network"; } }
 
       /// <summary>
       /// Identifier for the network access point of the user device
@@ -833,14 +831,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AuditEvent#Source")]
-    [BackboneType("AuditEvent.source")]
+    [FhirType("AuditEvent.source", IsBackboneType=true)]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent#Source"; } }
+      public override string TypeName { get { return "AuditEvent.source"; } }
 
       /// <summary>
       /// Logical source location within the enterprise
@@ -1031,14 +1028,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AuditEvent#Entity")]
-    [BackboneType("AuditEvent.entity")]
+    [FhirType("AuditEvent.entity", IsBackboneType=true)]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent#Entity"; } }
+      public override string TypeName { get { return "AuditEvent.entity"; } }
 
       /// <summary>
       /// Specific instance of object
@@ -1444,14 +1440,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AuditEvent#Detail")]
-    [BackboneType("AuditEvent.entity.detail")]
+    [FhirType("AuditEvent.entity.detail", IsBackboneType=true)]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent#Detail"; } }
+      public override string TypeName { get { return "AuditEvent.entity.detail"; } }
 
       /// <summary>
       /// Name of the property

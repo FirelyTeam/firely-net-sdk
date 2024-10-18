@@ -259,14 +259,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceMetric#Calibration")]
-    [BackboneType("DeviceMetric.calibration")]
+    [FhirType("DeviceMetric.calibration", IsBackboneType=true)]
     public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceMetric#Calibration"; } }
+      public override string TypeName { get { return "DeviceMetric.calibration"; } }
 
       /// <summary>
       /// unspecified | offset | gain | two-point

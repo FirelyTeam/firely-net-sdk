@@ -267,14 +267,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ContentDefinition")]
-    [BackboneType("Contract.contentDefinition")]
+    [FhirType("Contract.contentDefinition", IsBackboneType=true)]
     public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ContentDefinition"; } }
+      public override string TypeName { get { return "Contract.contentDefinition"; } }
 
       /// <summary>
       /// Content structure and use
@@ -580,14 +579,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Term")]
-    [BackboneType("Contract.term")]
+    [FhirType("Contract.term", IsBackboneType=true)]
     public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Term"; } }
+      public override string TypeName { get { return "Contract.term"; } }
 
       /// <summary>
       /// Contract Term Number
@@ -1029,14 +1027,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#SecurityLabel")]
-    [BackboneType("Contract.term.securityLabel")]
+    [FhirType("Contract.term.securityLabel", IsBackboneType=true)]
     public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#SecurityLabel"; } }
+      public override string TypeName { get { return "Contract.term.securityLabel"; } }
 
       /// <summary>
       /// Link to Security Labels
@@ -1255,14 +1252,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ContractOffer")]
-    [BackboneType("Contract.term.offer")]
+    [FhirType("Contract.term.offer", IsBackboneType=true)]
     public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ContractOffer"; } }
+      public override string TypeName { get { return "Contract.term.offer"; } }
 
       /// <summary>
       /// Offer business ID
@@ -1668,14 +1664,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ContractParty")]
-    [BackboneType("Contract.term.offer.party")]
+    [FhirType("Contract.term.offer.party", IsBackboneType=true)]
     public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ContractParty"; } }
+      public override string TypeName { get { return "Contract.term.offer.party"; } }
 
       /// <summary>
       /// Referenced entity
@@ -1821,14 +1816,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Answer")]
-    [BackboneType("Contract.term.offer.answer")]
+    [FhirType("Contract.term.offer.answer", IsBackboneType=true)]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Answer"; } }
+      public override string TypeName { get { return "Contract.term.offer.answer"; } }
 
       /// <summary>
       /// The actual answer response
@@ -1948,14 +1942,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ContractAsset")]
-    [BackboneType("Contract.term.asset")]
+    [FhirType("Contract.term.asset", IsBackboneType=true)]
     public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ContractAsset"; } }
+      public override string TypeName { get { return "Contract.term.asset"; } }
 
       /// <summary>
       /// Range of asset
@@ -2511,14 +2504,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#AssetContext")]
-    [BackboneType("Contract.term.asset.context")]
+    [FhirType("Contract.term.asset.context", IsBackboneType=true)]
     public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#AssetContext"; } }
+      public override string TypeName { get { return "Contract.term.asset.context"; } }
 
       /// <summary>
       /// Creator,custodian or owner
@@ -2706,14 +2698,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ValuedItem")]
-    [BackboneType("Contract.term.asset.valuedItem")]
+    [FhirType("Contract.term.asset.valuedItem", IsBackboneType=true)]
     public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ValuedItem"; } }
+      public override string TypeName { get { return "Contract.term.asset.valuedItem"; } }
 
       /// <summary>
       /// Contract Valued Item Type
@@ -3294,14 +3285,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Action")]
-    [BackboneType("Contract.term.action")]
+    [FhirType("Contract.term.action", IsBackboneType=true)]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Action"; } }
+      public override string TypeName { get { return "Contract.term.action"; } }
 
       /// <summary>
       /// True if the term prohibits the  action
@@ -4021,14 +4011,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ActionSubject")]
-    [BackboneType("Contract.term.action.subject")]
+    [FhirType("Contract.term.action.subject", IsBackboneType=true)]
     public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ActionSubject"; } }
+      public override string TypeName { get { return "Contract.term.action.subject"; } }
 
       /// <summary>
       /// Entity of the action
@@ -4178,14 +4167,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Signatory")]
-    [BackboneType("Contract.signer")]
+    [FhirType("Contract.signer", IsBackboneType=true)]
     public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Signatory"; } }
+      public override string TypeName { get { return "Contract.signer"; } }
 
       /// <summary>
       /// Contract Signatory Role
@@ -4360,14 +4348,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#FriendlyLanguage")]
-    [BackboneType("Contract.friendly")]
+    [FhirType("Contract.friendly", IsBackboneType=true)]
     public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#FriendlyLanguage"; } }
+      public override string TypeName { get { return "Contract.friendly"; } }
 
       /// <summary>
       /// Easily comprehended representation of this Contract
@@ -4490,14 +4477,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#LegalLanguage")]
-    [BackboneType("Contract.legal")]
+    [FhirType("Contract.legal", IsBackboneType=true)]
     public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#LegalLanguage"; } }
+      public override string TypeName { get { return "Contract.legal"; } }
 
       /// <summary>
       /// Contract Legal Text
@@ -4620,14 +4606,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ComputableLanguage")]
-    [BackboneType("Contract.rule")]
+    [FhirType("Contract.rule", IsBackboneType=true)]
     public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ComputableLanguage"; } }
+      public override string TypeName { get { return "Contract.rule"; } }
 
       /// <summary>
       /// Computable Contract Rules

@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalImpression#Investigation")]
-    [BackboneType("ClinicalImpression.investigation")]
+    [FhirType("ClinicalImpression.investigation", IsBackboneType=true)]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalImpression#Investigation"; } }
+      public override string TypeName { get { return "ClinicalImpression.investigation"; } }
 
       /// <summary>
       /// A name/code for the set
@@ -251,14 +250,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalImpression#Finding")]
-    [BackboneType("ClinicalImpression.finding")]
+    [FhirType("ClinicalImpression.finding", IsBackboneType=true)]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalImpression#Finding"; } }
+      public override string TypeName { get { return "ClinicalImpression.finding"; } }
 
       /// <summary>
       /// What was found

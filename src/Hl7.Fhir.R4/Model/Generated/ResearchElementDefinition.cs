@@ -97,14 +97,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchElementDefinition#Characteristic")]
-    [BackboneType("ResearchElementDefinition.characteristic")]
+    [FhirType("ResearchElementDefinition.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchElementDefinition#Characteristic"; } }
+      public override string TypeName { get { return "ResearchElementDefinition.characteristic"; } }
 
       /// <summary>
       /// What code or expression defines members?

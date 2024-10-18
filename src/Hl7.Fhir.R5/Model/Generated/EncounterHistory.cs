@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EncounterHistory#Location")]
-    [BackboneType("EncounterHistory.location")]
+    [FhirType("EncounterHistory.location", IsBackboneType=true)]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EncounterHistory#Location"; } }
+      public override string TypeName { get { return "EncounterHistory.location"; } }
 
       /// <summary>
       /// Location the encounter takes place

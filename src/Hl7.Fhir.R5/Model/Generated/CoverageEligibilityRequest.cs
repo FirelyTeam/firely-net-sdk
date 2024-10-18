@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Event")]
-    [BackboneType("CoverageEligibilityRequest.event")]
+    [FhirType("CoverageEligibilityRequest.event", IsBackboneType=true)]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Event"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.event"; } }
 
       /// <summary>
       /// Specific event
@@ -258,14 +257,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#SupportingInformation")]
-    [BackboneType("CoverageEligibilityRequest.supportingInfo")]
+    [FhirType("CoverageEligibilityRequest.supportingInfo", IsBackboneType=true)]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#SupportingInformation"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.supportingInfo"; } }
 
       /// <summary>
       /// Information instance identifier
@@ -475,14 +473,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Insurance")]
-    [BackboneType("CoverageEligibilityRequest.insurance")]
+    [FhirType("CoverageEligibilityRequest.insurance", IsBackboneType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Insurance"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.insurance"; } }
 
       /// <summary>
       /// Applicable coverage
@@ -690,14 +687,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Details")]
-    [BackboneType("CoverageEligibilityRequest.item")]
+    [FhirType("CoverageEligibilityRequest.item", IsBackboneType=true)]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Details"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.item"; } }
 
       /// <summary>
       /// Applicable exception or supporting information
@@ -1072,14 +1068,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Diagnosis")]
-    [BackboneType("CoverageEligibilityRequest.item.diagnosis")]
+    [FhirType("CoverageEligibilityRequest.item.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Diagnosis"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.item.diagnosis"; } }
 
       /// <summary>
       /// Nature of illness or problem

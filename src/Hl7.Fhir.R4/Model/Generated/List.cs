@@ -93,14 +93,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("List#Entry")]
-    [BackboneType("List.entry")]
+    [FhirType("List.entry", IsBackboneType=true)]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "List#Entry"; } }
+      public override string TypeName { get { return "List.entry"; } }
 
       /// <summary>
       /// Status/Workflow information about this item

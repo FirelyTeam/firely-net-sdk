@@ -228,14 +228,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#Property")]
-    [BackboneType("ConceptMap.property")]
+    [FhirType("ConceptMap.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#Property"; } }
+      public override string TypeName { get { return "ConceptMap.property"; } }
 
       /// <summary>
       /// Identifies the property on the mappings, and when referred to in the $translate operation
@@ -549,14 +548,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#AdditionalAttribute")]
-    [BackboneType("ConceptMap.additionalAttribute")]
+    [FhirType("ConceptMap.additionalAttribute", IsBackboneType=true)]
     public partial class AdditionalAttributeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#AdditionalAttribute"; } }
+      public override string TypeName { get { return "ConceptMap.additionalAttribute"; } }
 
       /// <summary>
       /// Identifies this additional attribute through this resource
@@ -826,14 +824,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#Group")]
-    [BackboneType("ConceptMap.group")]
+    [FhirType("ConceptMap.group", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#Group"; } }
+      public override string TypeName { get { return "ConceptMap.group"; } }
 
       /// <summary>
       /// Source system where concepts to be mapped are defined
@@ -1065,14 +1062,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#SourceElement")]
-    [BackboneType("ConceptMap.group.element")]
+    [FhirType("ConceptMap.group.element", IsBackboneType=true)]
     public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#SourceElement"; } }
+      public override string TypeName { get { return "ConceptMap.group.element"; } }
 
       /// <summary>
       /// Identifies element being mapped
@@ -1365,14 +1361,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#TargetElement")]
-    [BackboneType("ConceptMap.group.element.target")]
+    [FhirType("ConceptMap.group.element.target", IsBackboneType=true)]
     public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#TargetElement"; } }
+      public override string TypeName { get { return "ConceptMap.group.element.target"; } }
 
       /// <summary>
       /// Code that identifies the target element
@@ -1762,14 +1757,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#MappingProperty")]
-    [BackboneType("ConceptMap.group.element.target.property")]
+    [FhirType("ConceptMap.group.element.target.property", IsBackboneType=true)]
     public partial class MappingPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#MappingProperty"; } }
+      public override string TypeName { get { return "ConceptMap.group.element.target.property"; } }
 
       /// <summary>
       /// Reference to ConceptMap.property.code
@@ -1935,14 +1929,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#OtherElement")]
-    [BackboneType("ConceptMap.group.element.target.dependsOn")]
+    [FhirType("ConceptMap.group.element.target.dependsOn", IsBackboneType=true)]
     public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#OtherElement"; } }
+      public override string TypeName { get { return "ConceptMap.group.element.target.dependsOn"; } }
 
       /// <summary>
       /// A reference to a mapping attribute defined in ConceptMap.additionalAttribute
@@ -2151,14 +2144,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConceptMap#Unmapped")]
-    [BackboneType("ConceptMap.group.unmapped")]
+    [FhirType("ConceptMap.group.unmapped", IsBackboneType=true)]
     public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap#Unmapped"; } }
+      public override string TypeName { get { return "ConceptMap.group.unmapped"; } }
 
       /// <summary>
       /// use-source-code | fixed | other-map

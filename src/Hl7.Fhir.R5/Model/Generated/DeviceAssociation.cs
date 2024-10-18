@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceAssociation#Operation")]
-    [BackboneType("DeviceAssociation.operation")]
+    [FhirType("DeviceAssociation.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceAssociation#Operation"; } }
+      public override string TypeName { get { return "DeviceAssociation.operation"; } }
 
       /// <summary>
       /// Device operational condition

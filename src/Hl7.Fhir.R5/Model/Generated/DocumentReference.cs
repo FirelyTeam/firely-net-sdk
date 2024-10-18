@@ -97,14 +97,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentReference#Attester")]
-    [BackboneType("DocumentReference.attester")]
+    [FhirType("DocumentReference.attester", IsBackboneType=true)]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference#Attester"; } }
+      public override string TypeName { get { return "DocumentReference.attester"; } }
 
       /// <summary>
       /// personal | professional | legal | official
@@ -296,14 +295,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentReference#RelatesTo")]
-    [BackboneType("DocumentReference.relatesTo")]
+    [FhirType("DocumentReference.relatesTo", IsBackboneType=true)]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference#RelatesTo"; } }
+      public override string TypeName { get { return "DocumentReference.relatesTo"; } }
 
       /// <summary>
       /// The relationship type with another document
@@ -453,14 +451,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentReference#Content")]
-    [BackboneType("DocumentReference.content")]
+    [FhirType("DocumentReference.content", IsBackboneType=true)]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference#Content"; } }
+      public override string TypeName { get { return "DocumentReference.content"; } }
 
       /// <summary>
       /// Where to access the document
@@ -608,14 +605,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentReference#Profile")]
-    [BackboneType("DocumentReference.content.profile")]
+    [FhirType("DocumentReference.content.profile", IsBackboneType=true)]
     public partial class ProfileComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference#Profile"; } }
+      public override string TypeName { get { return "DocumentReference.content.profile"; } }
 
       /// <summary>
       /// Code|uri|canonical

@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#Dependency")]
-    [BackboneType("TestPlan.dependency")]
+    [FhirType("TestPlan.dependency", IsBackboneType=true)]
     public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#Dependency"; } }
+      public override string TypeName { get { return "TestPlan.dependency"; } }
 
       /// <summary>
       /// Description of the dependency criterium
@@ -236,14 +235,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#TestCase")]
-    [BackboneType("TestPlan.testCase")]
+    [FhirType("TestPlan.testCase", IsBackboneType=true)]
     public partial class TestCaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#TestCase"; } }
+      public override string TypeName { get { return "TestPlan.testCase"; } }
 
       /// <summary>
       /// Sequence of test case in the test plan
@@ -510,14 +508,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#TestCaseDependency")]
-    [BackboneType("TestPlan.testCase.dependency")]
+    [FhirType("TestPlan.testCase.dependency", IsBackboneType=true)]
     public partial class TestCaseDependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#TestCaseDependency"; } }
+      public override string TypeName { get { return "TestPlan.testCase.dependency"; } }
 
       /// <summary>
       /// Description of the criteria
@@ -676,14 +673,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#TestRun")]
-    [BackboneType("TestPlan.testCase.testRun")]
+    [FhirType("TestPlan.testCase.testRun", IsBackboneType=true)]
     public partial class TestRunComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#TestRun"; } }
+      public override string TypeName { get { return "TestPlan.testCase.testRun"; } }
 
       /// <summary>
       /// The narrative description of the tests
@@ -842,14 +838,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#Script")]
-    [BackboneType("TestPlan.testCase.testRun.script")]
+    [FhirType("TestPlan.testCase.testRun.script", IsBackboneType=true)]
     public partial class ScriptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#Script"; } }
+      public override string TypeName { get { return "TestPlan.testCase.testRun.script"; } }
 
       /// <summary>
       /// The language for the test cases e.g. 'gherkin', 'testscript'
@@ -992,14 +987,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#TestData")]
-    [BackboneType("TestPlan.testCase.testData")]
+    [FhirType("TestPlan.testCase.testData", IsBackboneType=true)]
     public partial class TestDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#TestData"; } }
+      public override string TypeName { get { return "TestPlan.testCase.testData"; } }
 
       /// <summary>
       /// The type of test data description, e.g. 'synthea'
@@ -1171,14 +1165,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#Assertion")]
-    [BackboneType("TestPlan.testCase.assertion")]
+    [FhirType("TestPlan.testCase.assertion", IsBackboneType=true)]
     public partial class AssertionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#Assertion"; } }
+      public override string TypeName { get { return "TestPlan.testCase.assertion"; } }
 
       /// <summary>
       /// Assertion type - for example 'informative' or 'required'

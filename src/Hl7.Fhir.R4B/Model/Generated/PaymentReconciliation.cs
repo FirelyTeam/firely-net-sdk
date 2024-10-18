@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PaymentReconciliation#Details")]
-    [BackboneType("PaymentReconciliation.detail")]
+    [FhirType("PaymentReconciliation.detail", IsBackboneType=true)]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PaymentReconciliation#Details"; } }
+      public override string TypeName { get { return "PaymentReconciliation.detail"; } }
 
       /// <summary>
       /// Business identifier of the payment detail
@@ -448,14 +447,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PaymentReconciliation#Notes")]
-    [BackboneType("PaymentReconciliation.processNote")]
+    [FhirType("PaymentReconciliation.processNote", IsBackboneType=true)]
     public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PaymentReconciliation#Notes"; } }
+      public override string TypeName { get { return "PaymentReconciliation.processNote"; } }
 
       /// <summary>
       /// display | print | printoper

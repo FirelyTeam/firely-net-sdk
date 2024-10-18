@@ -144,14 +144,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceComponent#ProductionSpecification")]
-    [BackboneType("DeviceComponent.productionSpecification")]
+    [FhirType("DeviceComponent.productionSpecification", IsBackboneType=true)]
     public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceComponent#ProductionSpecification"; } }
+      public override string TypeName { get { return "DeviceComponent.productionSpecification"; } }
 
       /// <summary>
       /// Type or kind of production specification, for example serial number or software revision

@@ -99,14 +99,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Person#Link")]
-    [BackboneType("Person.link")]
+    [FhirType("Person.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Person#Link"; } }
+      public override string TypeName { get { return "Person.link"; } }
 
       /// <summary>
       /// The resource to which this actual person is associated

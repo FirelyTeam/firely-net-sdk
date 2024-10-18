@@ -223,14 +223,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Activity")]
-    [BackboneType("CarePlan.activity")]
+    [FhirType("CarePlan.activity", IsBackboneType=true)]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan#Activity"; } }
+      public override string TypeName { get { return "CarePlan.activity"; } }
 
       /// <summary>
       /// Results of the activity
@@ -457,14 +456,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Detail")]
-    [BackboneType("CarePlan.activity.detail")]
+    [FhirType("CarePlan.activity.detail", IsBackboneType=true)]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan#Detail"; } }
+      public override string TypeName { get { return "CarePlan.activity.detail"; } }
 
       /// <summary>
       /// Appointment | CommunicationRequest | DeviceRequest | MedicationRequest | NutritionOrder | Task | ServiceRequest | VisionPrescription

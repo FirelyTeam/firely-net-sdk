@@ -114,14 +114,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ConditionDefinition#Observation")]
-    [BackboneType("ConditionDefinition.observation")]
+    [FhirType("ConditionDefinition.observation", IsBackboneType=true)]
     public partial class ObservationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition#Observation"; } }
+      public override string TypeName { get { return "ConditionDefinition.observation"; } }
 
       /// <summary>
       /// Category that is relevant
@@ -264,14 +263,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ConditionDefinition#Medication")]
-    [BackboneType("ConditionDefinition.medication")]
+    [FhirType("ConditionDefinition.medication", IsBackboneType=true)]
     public partial class MedicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition#Medication"; } }
+      public override string TypeName { get { return "ConditionDefinition.medication"; } }
 
       /// <summary>
       /// Category that is relevant
@@ -417,14 +415,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ConditionDefinition#Precondition")]
-    [BackboneType("ConditionDefinition.precondition")]
+    [FhirType("ConditionDefinition.precondition", IsBackboneType=true)]
     public partial class PreconditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition#Precondition"; } }
+      public override string TypeName { get { return "ConditionDefinition.precondition"; } }
 
       /// <summary>
       /// sensitive | specific
@@ -615,14 +612,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ConditionDefinition#Questionnaire")]
-    [BackboneType("ConditionDefinition.questionnaire")]
+    [FhirType("ConditionDefinition.questionnaire", IsBackboneType=true)]
     public partial class QuestionnaireComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition#Questionnaire"; } }
+      public override string TypeName { get { return "ConditionDefinition.questionnaire"; } }
 
       /// <summary>
       /// preadmit | diff-diagnosis | outcome
@@ -787,14 +783,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ConditionDefinition#Plan")]
-    [BackboneType("ConditionDefinition.plan")]
+    [FhirType("ConditionDefinition.plan", IsBackboneType=true)]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition#Plan"; } }
+      public override string TypeName { get { return "ConditionDefinition.plan"; } }
 
       /// <summary>
       /// Use for the plan

@@ -102,14 +102,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("FamilyMemberHistory#Condition")]
-    [BackboneType("FamilyMemberHistory.condition")]
+    [FhirType("FamilyMemberHistory.condition", IsBackboneType=true)]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "FamilyMemberHistory#Condition"; } }
+      public override string TypeName { get { return "FamilyMemberHistory.condition"; } }
 
       /// <summary>
       /// Condition suffered by relation

@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ReferralRequest#Requester")]
-    [BackboneType("ReferralRequest.requester")]
+    [FhirType("ReferralRequest.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ReferralRequest#Requester"; } }
+      public override string TypeName { get { return "ReferralRequest.requester"; } }
 
       /// <summary>
       /// Individual making the request

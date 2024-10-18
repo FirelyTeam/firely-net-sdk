@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Requirements#Statement")]
-    [BackboneType("Requirements.statement")]
+    [FhirType("Requirements.statement", IsBackboneType=true)]
     public partial class StatementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Requirements#Statement"; } }
+      public override string TypeName { get { return "Requirements.statement"; } }
 
       /// <summary>
       /// Key that identifies this statement

@@ -69,14 +69,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#Characteristic")]
-    [BackboneType("EvidenceVariable.characteristic")]
+    [FhirType("EvidenceVariable.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable#Characteristic"; } }
+      public override string TypeName { get { return "EvidenceVariable.characteristic"; } }
 
       /// <summary>
       /// Natural language description of the characteristic

@@ -98,14 +98,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryItem#Name")]
-    [BackboneType("InventoryItem.name")]
+    [FhirType("InventoryItem.name", IsBackboneType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem#Name"; } }
+      public override string TypeName { get { return "InventoryItem.name"; } }
 
       /// <summary>
       /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'
@@ -313,14 +312,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryItem#ResponsibleOrganization")]
-    [BackboneType("InventoryItem.responsibleOrganization")]
+    [FhirType("InventoryItem.responsibleOrganization", IsBackboneType=true)]
     public partial class ResponsibleOrganizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem#ResponsibleOrganization"; } }
+      public override string TypeName { get { return "InventoryItem.responsibleOrganization"; } }
 
       /// <summary>
       /// The role of the organization e.g. manufacturer, distributor, or other
@@ -468,14 +466,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryItem#Description")]
-    [BackboneType("InventoryItem.description")]
+    [FhirType("InventoryItem.description", IsBackboneType=true)]
     public partial class DescriptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem#Description"; } }
+      public override string TypeName { get { return "InventoryItem.description"; } }
 
       /// <summary>
       /// The language that is used in the item description
@@ -654,14 +651,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryItem#Association")]
-    [BackboneType("InventoryItem.association")]
+    [FhirType("InventoryItem.association", IsBackboneType=true)]
     public partial class AssociationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem#Association"; } }
+      public override string TypeName { get { return "InventoryItem.association"; } }
 
       /// <summary>
       /// The type of association between the device and the other item
@@ -835,14 +831,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryItem#Characteristic")]
-    [BackboneType("InventoryItem.characteristic")]
+    [FhirType("InventoryItem.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem#Characteristic"; } }
+      public override string TypeName { get { return "InventoryItem.characteristic"; } }
 
       /// <summary>
       /// The characteristic that is being defined
@@ -987,14 +982,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryItem#Instance")]
-    [BackboneType("InventoryItem.instance")]
+    [FhirType("InventoryItem.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem#Instance"; } }
+      public override string TypeName { get { return "InventoryItem.instance"; } }
 
       /// <summary>
       /// The identifier for the physical instance, typically a serial number

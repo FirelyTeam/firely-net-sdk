@@ -117,14 +117,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryReport#InventoryListing")]
-    [BackboneType("InventoryReport.inventoryListing")]
+    [FhirType("InventoryReport.inventoryListing", IsBackboneType=true)]
     public partial class InventoryListingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryReport#InventoryListing"; } }
+      public override string TypeName { get { return "InventoryReport.inventoryListing"; } }
 
       /// <summary>
       /// Location of the inventory items
@@ -336,14 +335,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryReport#Item")]
-    [BackboneType("InventoryReport.inventoryListing.item")]
+    [FhirType("InventoryReport.inventoryListing.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryReport#Item"; } }
+      public override string TypeName { get { return "InventoryReport.inventoryListing.item"; } }
 
       /// <summary>
       /// The inventory category or classification of the items being reported

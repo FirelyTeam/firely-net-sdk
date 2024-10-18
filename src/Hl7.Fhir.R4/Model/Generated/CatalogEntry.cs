@@ -89,14 +89,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CatalogEntry#RelatedEntry")]
-    [BackboneType("CatalogEntry.relatedEntry")]
+    [FhirType("CatalogEntry.relatedEntry", IsBackboneType=true)]
     public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CatalogEntry#RelatedEntry"; } }
+      public override string TypeName { get { return "CatalogEntry.relatedEntry"; } }
 
       /// <summary>
       /// triggers | is-replaced-by

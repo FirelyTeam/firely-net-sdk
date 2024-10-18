@@ -170,14 +170,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Policy")]
-    [BackboneType("Consent.policy")]
+    [FhirType("Consent.policy", IsBackboneType=true)]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#Policy"; } }
+      public override string TypeName { get { return "Consent.policy"; } }
 
       /// <summary>
       /// Enforcement source for policy
@@ -357,14 +356,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Verification")]
-    [BackboneType("Consent.verification")]
+    [FhirType("Consent.verification", IsBackboneType=true)]
     public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#Verification"; } }
+      public override string TypeName { get { return "Consent.verification"; } }
 
       /// <summary>
       /// Has been verified
@@ -572,14 +570,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#provision")]
-    [BackboneType("Consent.provision")]
+    [FhirType("Consent.provision", IsBackboneType=true)]
     public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#provision"; } }
+      public override string TypeName { get { return "Consent.provision"; } }
 
       /// <summary>
       /// deny | permit
@@ -981,14 +978,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#provisionActor")]
-    [BackboneType("Consent.provision.actor")]
+    [FhirType("Consent.provision.actor", IsBackboneType=true)]
     public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#provisionActor"; } }
+      public override string TypeName { get { return "Consent.provision.actor"; } }
 
       /// <summary>
       /// How the actor is involved
@@ -1137,14 +1133,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#provisionData")]
-    [BackboneType("Consent.provision.data")]
+    [FhirType("Consent.provision.data", IsBackboneType=true)]
     public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#provisionData"; } }
+      public override string TypeName { get { return "Consent.provision.data"; } }
 
       /// <summary>
       /// instance | related | dependents | authoredby

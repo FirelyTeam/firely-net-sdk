@@ -131,14 +131,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDispense#Performer")]
-    [BackboneType("DeviceDispense.performer")]
+    [FhirType("DeviceDispense.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDispense#Performer"; } }
+      public override string TypeName { get { return "DeviceDispense.performer"; } }
 
       /// <summary>
       /// Who performed the dispense and what they did

@@ -144,14 +144,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#Arm")]
-    [BackboneType("ResearchStudy.arm")]
+    [FhirType("ResearchStudy.arm", IsBackboneType=true)]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#Arm"; } }
+      public override string TypeName { get { return "ResearchStudy.arm"; } }
 
       /// <summary>
       /// Label for study arm
@@ -357,14 +356,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#Objective")]
-    [BackboneType("ResearchStudy.objective")]
+    [FhirType("ResearchStudy.objective", IsBackboneType=true)]
     public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#Objective"; } }
+      public override string TypeName { get { return "ResearchStudy.objective"; } }
 
       /// <summary>
       /// Label for the objective

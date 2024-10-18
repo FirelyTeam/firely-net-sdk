@@ -133,14 +133,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Relative")]
-    [BackboneType("MolecularSequence.relative")]
+    [FhirType("MolecularSequence.relative", IsBackboneType=true)]
     public partial class RelativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Relative"; } }
+      public override string TypeName { get { return "MolecularSequence.relative"; } }
 
       /// <summary>
       /// Ways of identifying nucleotides or amino acids within a sequence
@@ -380,14 +379,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#StartingSequence")]
-    [BackboneType("MolecularSequence.relative.startingSequence")]
+    [FhirType("MolecularSequence.relative.startingSequence", IsBackboneType=true)]
     public partial class StartingSequenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#StartingSequence"; } }
+      public override string TypeName { get { return "MolecularSequence.relative.startingSequence"; } }
 
       /// <summary>
       /// The genome assembly used for starting sequence, e.g. GRCh38
@@ -735,14 +733,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularSequence#Edit")]
-    [BackboneType("MolecularSequence.relative.edit")]
+    [FhirType("MolecularSequence.relative.edit", IsBackboneType=true)]
     public partial class EditComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence#Edit"; } }
+      public override string TypeName { get { return "MolecularSequence.relative.edit"; } }
 
       /// <summary>
       /// Start position of the edit on the starting sequence

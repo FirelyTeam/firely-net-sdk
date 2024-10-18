@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Actor")]
-    [BackboneType("ExampleScenario.actor")]
+    [FhirType("ExampleScenario.actor", IsBackboneType=true)]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Actor"; } }
+      public override string TypeName { get { return "ExampleScenario.actor"; } }
 
       /// <summary>
       /// ID or acronym of the actor
@@ -342,14 +341,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Instance")]
-    [BackboneType("ExampleScenario.instance")]
+    [FhirType("ExampleScenario.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Instance"; } }
+      public override string TypeName { get { return "ExampleScenario.instance"; } }
 
       /// <summary>
       /// ID or acronym of the instance
@@ -749,14 +747,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Version")]
-    [BackboneType("ExampleScenario.instance.version")]
+    [FhirType("ExampleScenario.instance.version", IsBackboneType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Version"; } }
+      public override string TypeName { get { return "ExampleScenario.instance.version"; } }
 
       /// <summary>
       /// ID or acronym of the version
@@ -1006,14 +1003,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#ContainedInstance")]
-    [BackboneType("ExampleScenario.instance.containedInstance")]
+    [FhirType("ExampleScenario.instance.containedInstance", IsBackboneType=true)]
     public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#ContainedInstance"; } }
+      public override string TypeName { get { return "ExampleScenario.instance.containedInstance"; } }
 
       /// <summary>
       /// Key of contained instance
@@ -1195,14 +1191,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Process")]
-    [BackboneType("ExampleScenario.process")]
+    [FhirType("ExampleScenario.process", IsBackboneType=true)]
     public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Process"; } }
+      public override string TypeName { get { return "ExampleScenario.process"; } }
 
       /// <summary>
       /// Label for procss
@@ -1495,14 +1490,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Step")]
-    [BackboneType("ExampleScenario.process.step")]
+    [FhirType("ExampleScenario.process.step", IsBackboneType=true)]
     public partial class StepComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Step"; } }
+      public override string TypeName { get { return "ExampleScenario.process.step"; } }
 
       /// <summary>
       /// Sequential number of the step
@@ -1801,14 +1795,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Operation")]
-    [BackboneType("ExampleScenario.process.step.operation")]
+    [FhirType("ExampleScenario.process.step.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Operation"; } }
+      public override string TypeName { get { return "ExampleScenario.process.step.operation"; } }
 
       /// <summary>
       /// Kind of action
@@ -2236,14 +2229,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Alternative")]
-    [BackboneType("ExampleScenario.process.step.alternative")]
+    [FhirType("ExampleScenario.process.step.alternative", IsBackboneType=true)]
     public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Alternative"; } }
+      public override string TypeName { get { return "ExampleScenario.process.step.alternative"; } }
 
       /// <summary>
       /// Label for alternative

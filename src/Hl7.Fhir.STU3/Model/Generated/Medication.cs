@@ -96,14 +96,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Medication#Ingredient")]
-    [BackboneType("Medication.ingredient")]
+    [FhirType("Medication.ingredient", IsBackboneType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication#Ingredient"; } }
+      public override string TypeName { get { return "Medication.ingredient"; } }
 
       /// <summary>
       /// The product contained
@@ -294,14 +293,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Medication#Package")]
-    [BackboneType("Medication.package")]
+    [FhirType("Medication.package", IsBackboneType=true)]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication#Package"; } }
+      public override string TypeName { get { return "Medication.package"; } }
 
       /// <summary>
       /// E.g. box, vial, blister-pack
@@ -473,14 +471,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Medication#Content")]
-    [BackboneType("Medication.package.content")]
+    [FhirType("Medication.package.content", IsBackboneType=true)]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication#Content"; } }
+      public override string TypeName { get { return "Medication.package.content"; } }
 
       /// <summary>
       /// The item in the package
@@ -628,14 +625,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Medication#Batch")]
-    [BackboneType("Medication.package.batch")]
+    [FhirType("Medication.package.batch", IsBackboneType=true)]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication#Batch"; } }
+      public override string TypeName { get { return "Medication.package.batch"; } }
 
       /// <summary>
       /// Identifier assigned to batch

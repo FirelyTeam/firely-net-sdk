@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#RelatedMedicationKnowledge")]
-    [BackboneType("MedicationKnowledge.relatedMedicationKnowledge")]
+    [FhirType("MedicationKnowledge.relatedMedicationKnowledge", IsBackboneType=true)]
     public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#RelatedMedicationKnowledge"; } }
+      public override string TypeName { get { return "MedicationKnowledge.relatedMedicationKnowledge"; } }
 
       /// <summary>
       /// Category of medicationKnowledge
@@ -247,14 +246,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Monograph")]
-    [BackboneType("MedicationKnowledge.monograph")]
+    [FhirType("MedicationKnowledge.monograph", IsBackboneType=true)]
     public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Monograph"; } }
+      public override string TypeName { get { return "MedicationKnowledge.monograph"; } }
 
       /// <summary>
       /// The category of medication document
@@ -400,14 +398,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Cost")]
-    [BackboneType("MedicationKnowledge.cost")]
+    [FhirType("MedicationKnowledge.cost", IsBackboneType=true)]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Cost"; } }
+      public override string TypeName { get { return "MedicationKnowledge.cost"; } }
 
       /// <summary>
       /// The date range for which the cost is effective
@@ -625,14 +622,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#MonitoringProgram")]
-    [BackboneType("MedicationKnowledge.monitoringProgram")]
+    [FhirType("MedicationKnowledge.monitoringProgram", IsBackboneType=true)]
     public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#MonitoringProgram"; } }
+      public override string TypeName { get { return "MedicationKnowledge.monitoringProgram"; } }
 
       /// <summary>
       /// Type of program under which the medication is monitored
@@ -794,14 +790,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#IndicationGuideline")]
-    [BackboneType("MedicationKnowledge.indicationGuideline")]
+    [FhirType("MedicationKnowledge.indicationGuideline", IsBackboneType=true)]
     public partial class IndicationGuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#IndicationGuideline"; } }
+      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline"; } }
 
       /// <summary>
       /// Indication for use that applies to the specific administration guideline
@@ -947,14 +942,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#DosingGuideline")]
-    [BackboneType("MedicationKnowledge.indicationGuideline.dosingGuideline")]
+    [FhirType("MedicationKnowledge.indicationGuideline.dosingGuideline", IsBackboneType=true)]
     public partial class DosingGuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#DosingGuideline"; } }
+      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline.dosingGuideline"; } }
 
       /// <summary>
       /// Intention of the treatment
@@ -1147,14 +1141,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Dosage")]
-    [BackboneType("MedicationKnowledge.indicationGuideline.dosingGuideline.dosage")]
+    [FhirType("MedicationKnowledge.indicationGuideline.dosingGuideline.dosage", IsBackboneType=true)]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Dosage"; } }
+      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage"; } }
 
       /// <summary>
       /// Category of dosage for a medication
@@ -1300,14 +1293,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#PatientCharacteristic")]
-    [BackboneType("MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic")]
+    [FhirType("MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic", IsBackboneType=true)]
     public partial class PatientCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#PatientCharacteristic"; } }
+      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic"; } }
 
       /// <summary>
       /// Categorization of specific characteristic that is relevant to the administration guideline
@@ -1451,14 +1443,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#MedicineClassification")]
-    [BackboneType("MedicationKnowledge.medicineClassification")]
+    [FhirType("MedicationKnowledge.medicineClassification", IsBackboneType=true)]
     public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#MedicineClassification"; } }
+      public override string TypeName { get { return "MedicationKnowledge.medicineClassification"; } }
 
       /// <summary>
       /// The type of category for the medication (for example, therapeutic classification, therapeutic sub-classification)
@@ -1631,14 +1622,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Packaging")]
-    [BackboneType("MedicationKnowledge.packaging")]
+    [FhirType("MedicationKnowledge.packaging", IsBackboneType=true)]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Packaging"; } }
+      public override string TypeName { get { return "MedicationKnowledge.packaging"; } }
 
       /// <summary>
       /// Cost of the packaged medication
@@ -1785,14 +1775,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#StorageGuideline")]
-    [BackboneType("MedicationKnowledge.storageGuideline")]
+    [FhirType("MedicationKnowledge.storageGuideline", IsBackboneType=true)]
     public partial class StorageGuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#StorageGuideline"; } }
+      public override string TypeName { get { return "MedicationKnowledge.storageGuideline"; } }
 
       /// <summary>
       /// Reference to additional information
@@ -2006,14 +1995,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#EnvironmentalSetting")]
-    [BackboneType("MedicationKnowledge.storageGuideline.environmentalSetting")]
+    [FhirType("MedicationKnowledge.storageGuideline.environmentalSetting", IsBackboneType=true)]
     public partial class EnvironmentalSettingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#EnvironmentalSetting"; } }
+      public override string TypeName { get { return "MedicationKnowledge.storageGuideline.environmentalSetting"; } }
 
       /// <summary>
       /// Categorization of the setting
@@ -2158,14 +2146,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Regulatory")]
-    [BackboneType("MedicationKnowledge.regulatory")]
+    [FhirType("MedicationKnowledge.regulatory", IsBackboneType=true)]
     public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Regulatory"; } }
+      public override string TypeName { get { return "MedicationKnowledge.regulatory"; } }
 
       /// <summary>
       /// Specifies the authority of the regulation
@@ -2361,14 +2348,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Substitution")]
-    [BackboneType("MedicationKnowledge.regulatory.substitution")]
+    [FhirType("MedicationKnowledge.regulatory.substitution", IsBackboneType=true)]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Substitution"; } }
+      public override string TypeName { get { return "MedicationKnowledge.regulatory.substitution"; } }
 
       /// <summary>
       /// Specifies the type of substitution allowed
@@ -2529,14 +2515,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#MaxDispense")]
-    [BackboneType("MedicationKnowledge.regulatory.maxDispense")]
+    [FhirType("MedicationKnowledge.regulatory.maxDispense", IsBackboneType=true)]
     public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#MaxDispense"; } }
+      public override string TypeName { get { return "MedicationKnowledge.regulatory.maxDispense"; } }
 
       /// <summary>
       /// The maximum number of units of the medication that can be dispensed
@@ -2681,14 +2666,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Definitional")]
-    [BackboneType("MedicationKnowledge.definitional")]
+    [FhirType("MedicationKnowledge.definitional", IsBackboneType=true)]
     public partial class DefinitionalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Definitional"; } }
+      public override string TypeName { get { return "MedicationKnowledge.definitional"; } }
 
       /// <summary>
       /// Definitional resources that provide more information about this medication
@@ -2915,14 +2899,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Ingredient")]
-    [BackboneType("MedicationKnowledge.definitional.ingredient")]
+    [FhirType("MedicationKnowledge.definitional.ingredient", IsBackboneType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#Ingredient"; } }
+      public override string TypeName { get { return "MedicationKnowledge.definitional.ingredient"; } }
 
       /// <summary>
       /// Substances contained in the medication
@@ -3096,14 +3079,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#DrugCharacteristic")]
-    [BackboneType("MedicationKnowledge.definitional.drugCharacteristic")]
+    [FhirType("MedicationKnowledge.definitional.drugCharacteristic", IsBackboneType=true)]
     public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge#DrugCharacteristic"; } }
+      public override string TypeName { get { return "MedicationKnowledge.definitional.drugCharacteristic"; } }
 
       /// <summary>
       /// Code specifying the type of characteristic of medication

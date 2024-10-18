@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestGroup#Action")]
-    [BackboneType("RequestGroup.action")]
+    [FhirType("RequestGroup.action", IsBackboneType=true)]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestGroup#Action"; } }
+      public override string TypeName { get { return "RequestGroup.action"; } }
 
       /// <summary>
       /// User-visible label for the action (e.g. 1. or A.)
@@ -803,14 +802,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestGroup#Condition")]
-    [BackboneType("RequestGroup.action.condition")]
+    [FhirType("RequestGroup.action.condition", IsBackboneType=true)]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestGroup#Condition"; } }
+      public override string TypeName { get { return "RequestGroup.action.condition"; } }
 
       /// <summary>
       /// applicability | start | stop
@@ -1079,14 +1077,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestGroup#RelatedAction")]
-    [BackboneType("RequestGroup.action.relatedAction")]
+    [FhirType("RequestGroup.action.relatedAction", IsBackboneType=true)]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestGroup#RelatedAction"; } }
+      public override string TypeName { get { return "RequestGroup.action.relatedAction"; } }
 
       /// <summary>
       /// What action this is related to

@@ -102,14 +102,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityResponse#Insurance")]
-    [BackboneType("CoverageEligibilityResponse.insurance")]
+    [FhirType("CoverageEligibilityResponse.insurance", IsBackboneType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse#Insurance"; } }
+      public override string TypeName { get { return "CoverageEligibilityResponse.insurance"; } }
 
       /// <summary>
       /// Insurance information
@@ -325,14 +324,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityResponse#Items")]
-    [BackboneType("CoverageEligibilityResponse.insurance.item")]
+    [FhirType("CoverageEligibilityResponse.insurance.item", IsBackboneType=true)]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse#Items"; } }
+      public override string TypeName { get { return "CoverageEligibilityResponse.insurance.item"; } }
 
       /// <summary>
       /// Benefit classification
@@ -878,14 +876,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityResponse#Benefit")]
-    [BackboneType("CoverageEligibilityResponse.insurance.item.benefit")]
+    [FhirType("CoverageEligibilityResponse.insurance.item.benefit", IsBackboneType=true)]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse#Benefit"; } }
+      public override string TypeName { get { return "CoverageEligibilityResponse.insurance.item.benefit"; } }
 
       /// <summary>
       /// Benefit classification
@@ -1060,14 +1057,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityResponse#Errors")]
-    [BackboneType("CoverageEligibilityResponse.error")]
+    [FhirType("CoverageEligibilityResponse.error", IsBackboneType=true)]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse#Errors"; } }
+      public override string TypeName { get { return "CoverageEligibilityResponse.error"; } }
 
       /// <summary>
       /// Error code detailing processing issues

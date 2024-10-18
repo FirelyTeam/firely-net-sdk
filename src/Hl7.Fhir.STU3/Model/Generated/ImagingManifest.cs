@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingManifest#Study")]
-    [BackboneType("ImagingManifest.study")]
+    [FhirType("ImagingManifest.study", IsBackboneType=true)]
     public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingManifest#Study"; } }
+      public override string TypeName { get { return "ImagingManifest.study"; } }
 
       /// <summary>
       /// Study instance UID
@@ -295,14 +294,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingManifest#Series")]
-    [BackboneType("ImagingManifest.study.series")]
+    [FhirType("ImagingManifest.study.series", IsBackboneType=true)]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingManifest#Series"; } }
+      public override string TypeName { get { return "ImagingManifest.study.series"; } }
 
       /// <summary>
       /// Series instance UID
@@ -495,14 +493,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingManifest#Instance")]
-    [BackboneType("ImagingManifest.study.series.instance")]
+    [FhirType("ImagingManifest.study.series.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingManifest#Instance"; } }
+      public override string TypeName { get { return "ImagingManifest.study.series.instance"; } }
 
       /// <summary>
       /// SOP class UID of instance

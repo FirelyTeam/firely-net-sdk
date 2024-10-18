@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("HealthcareService#Eligibility")]
-    [BackboneType("HealthcareService.eligibility")]
+    [FhirType("HealthcareService.eligibility", IsBackboneType=true)]
     public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "HealthcareService#Eligibility"; } }
+      public override string TypeName { get { return "HealthcareService.eligibility"; } }
 
       /// <summary>
       /// Coded value for the eligibility

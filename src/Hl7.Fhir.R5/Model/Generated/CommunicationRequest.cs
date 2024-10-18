@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CommunicationRequest#Payload")]
-    [BackboneType("CommunicationRequest.payload")]
+    [FhirType("CommunicationRequest.payload", IsBackboneType=true)]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CommunicationRequest#Payload"; } }
+      public override string TypeName { get { return "CommunicationRequest.payload"; } }
 
       /// <summary>
       /// Message part content

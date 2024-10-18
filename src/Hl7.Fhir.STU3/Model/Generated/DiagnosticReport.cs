@@ -138,14 +138,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#Performer")]
-    [BackboneType("DiagnosticReport.performer")]
+    [FhirType("DiagnosticReport.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport#Performer"; } }
+      public override string TypeName { get { return "DiagnosticReport.performer"; } }
 
       /// <summary>
       /// Type of performer
@@ -293,14 +292,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#Image")]
-    [BackboneType("DiagnosticReport.image")]
+    [FhirType("DiagnosticReport.image", IsBackboneType=true)]
     public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport#Image"; } }
+      public override string TypeName { get { return "DiagnosticReport.image"; } }
 
       /// <summary>
       /// Comment about the image (e.g. explanation)

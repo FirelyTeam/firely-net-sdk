@@ -141,14 +141,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataRequirement#CodeFilter")]
-    [BackboneType("DataRequirement.codeFilter")]
+    [FhirType("DataRequirement.codeFilter", IsBackboneType=true)]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement#CodeFilter"; } }
+      public override string TypeName { get { return "DataRequirement.codeFilter"; } }
 
       /// <summary>
       /// A code-valued attribute to filter on
@@ -397,14 +396,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataRequirement#DateFilter")]
-    [BackboneType("DataRequirement.dateFilter")]
+    [FhirType("DataRequirement.dateFilter", IsBackboneType=true)]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement#DateFilter"; } }
+      public override string TypeName { get { return "DataRequirement.dateFilter"; } }
 
       /// <summary>
       /// A date-valued attribute to filter on
@@ -611,14 +609,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataRequirement#ValueFilter")]
-    [BackboneType("DataRequirement.valueFilter")]
+    [FhirType("DataRequirement.valueFilter", IsBackboneType=true)]
     public partial class ValueFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement#ValueFilter"; } }
+      public override string TypeName { get { return "DataRequirement.valueFilter"; } }
 
       /// <summary>
       /// An attribute to filter on
@@ -871,14 +868,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataRequirement#Sort")]
-    [BackboneType("DataRequirement.sort")]
+    [FhirType("DataRequirement.sort", IsBackboneType=true)]
     public partial class SortComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement#Sort"; } }
+      public override string TypeName { get { return "DataRequirement.sort"; } }
 
       /// <summary>
       /// The name of the attribute to perform the sort

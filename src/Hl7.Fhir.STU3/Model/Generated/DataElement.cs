@@ -114,14 +114,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataElement#Mapping")]
-    [BackboneType("DataElement.mapping")]
+    [FhirType("DataElement.mapping", IsBackboneType=true)]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataElement#Mapping"; } }
+      public override string TypeName { get { return "DataElement.mapping"; } }
 
       /// <summary>
       /// Internal id when this mapping is used

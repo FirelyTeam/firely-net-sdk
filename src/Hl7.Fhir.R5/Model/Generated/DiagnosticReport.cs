@@ -144,14 +144,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#SupportingInfo")]
-    [BackboneType("DiagnosticReport.supportingInfo")]
+    [FhirType("DiagnosticReport.supportingInfo", IsBackboneType=true)]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport#SupportingInfo"; } }
+      public override string TypeName { get { return "DiagnosticReport.supportingInfo"; } }
 
       /// <summary>
       /// Supporting information role code
@@ -300,14 +299,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#Media")]
-    [BackboneType("DiagnosticReport.media")]
+    [FhirType("DiagnosticReport.media", IsBackboneType=true)]
     public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport#Media"; } }
+      public override string TypeName { get { return "DiagnosticReport.media"; } }
 
       /// <summary>
       /// Comment about the image or data (e.g. explanation)

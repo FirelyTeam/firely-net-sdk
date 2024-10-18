@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionStatus#NotificationEvent")]
-    [BackboneType("SubscriptionStatus.notificationEvent")]
+    [FhirType("SubscriptionStatus.notificationEvent", IsBackboneType=true)]
     public partial class NotificationEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionStatus#NotificationEvent"; } }
+      public override string TypeName { get { return "SubscriptionStatus.notificationEvent"; } }
 
       /// <summary>
       /// Sequencing index of this event

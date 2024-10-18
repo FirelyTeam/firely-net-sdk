@@ -122,14 +122,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProductDispense#Performer")]
-    [BackboneType("BiologicallyDerivedProductDispense.performer")]
+    [FhirType("BiologicallyDerivedProductDispense.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProductDispense#Performer"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProductDispense.performer"; } }
 
       /// <summary>
       /// Identifies the function of the performer during the dispense

@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Practitioner#Qualification")]
-    [BackboneType("Practitioner.qualification")]
+    [FhirType("Practitioner.qualification", IsBackboneType=true)]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Practitioner#Qualification"; } }
+      public override string TypeName { get { return "Practitioner.qualification"; } }
 
       /// <summary>
       /// An identifier for this qualification for the practitioner

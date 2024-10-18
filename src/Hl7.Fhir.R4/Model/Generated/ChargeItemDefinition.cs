@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItemDefinition#Applicability")]
-    [BackboneType("ChargeItemDefinition.applicability")]
+    [FhirType("ChargeItemDefinition.applicability", IsBackboneType=true)]
     public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItemDefinition#Applicability"; } }
+      public override string TypeName { get { return "ChargeItemDefinition.applicability"; } }
 
       /// <summary>
       /// Natural language description of the condition
@@ -298,14 +297,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItemDefinition#PropertyGroup")]
-    [BackboneType("ChargeItemDefinition.propertyGroup")]
+    [FhirType("ChargeItemDefinition.propertyGroup", IsBackboneType=true)]
     public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItemDefinition#PropertyGroup"; } }
+      public override string TypeName { get { return "ChargeItemDefinition.propertyGroup"; } }
 
       /// <summary>
       /// Conditions under which the priceComponent is applicable
@@ -451,14 +449,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItemDefinition#PriceComponent")]
-    [BackboneType("ChargeItemDefinition.propertyGroup.priceComponent")]
+    [FhirType("ChargeItemDefinition.propertyGroup.priceComponent", IsBackboneType=true)]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItemDefinition#PriceComponent"; } }
+      public override string TypeName { get { return "ChargeItemDefinition.propertyGroup.priceComponent"; } }
 
       /// <summary>
       /// base | surcharge | deduction | discount | tax | informational

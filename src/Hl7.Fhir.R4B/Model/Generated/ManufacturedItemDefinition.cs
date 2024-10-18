@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition#Property")]
-    [BackboneType("ManufacturedItemDefinition.property")]
+    [FhirType("ManufacturedItemDefinition.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition#Property"; } }
+      public override string TypeName { get { return "ManufacturedItemDefinition.property"; } }
 
       /// <summary>
       /// A code expressing the type of characteristic

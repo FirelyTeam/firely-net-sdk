@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EligibilityResponse#Insurance")]
-    [BackboneType("EligibilityResponse.insurance")]
+    [FhirType("EligibilityResponse.insurance", IsBackboneType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse#Insurance"; } }
+      public override string TypeName { get { return "EligibilityResponse.insurance"; } }
 
       /// <summary>
       /// Updated Coverage details
@@ -248,14 +247,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EligibilityResponse#Benefits")]
-    [BackboneType("EligibilityResponse.insurance.benefitBalance")]
+    [FhirType("EligibilityResponse.insurance.benefitBalance", IsBackboneType=true)]
     public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse#Benefits"; } }
+      public override string TypeName { get { return "EligibilityResponse.insurance.benefitBalance"; } }
 
       /// <summary>
       /// Type of services covered
@@ -635,14 +633,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EligibilityResponse#Benefit")]
-    [BackboneType("EligibilityResponse.insurance.benefitBalance.financial")]
+    [FhirType("EligibilityResponse.insurance.benefitBalance.financial", IsBackboneType=true)]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse#Benefit"; } }
+      public override string TypeName { get { return "EligibilityResponse.insurance.benefitBalance.financial"; } }
 
       /// <summary>
       /// Deductable, visits, benefit amount
@@ -817,14 +814,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EligibilityResponse#Errors")]
-    [BackboneType("EligibilityResponse.error")]
+    [FhirType("EligibilityResponse.error", IsBackboneType=true)]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse#Errors"; } }
+      public override string TypeName { get { return "EligibilityResponse.error"; } }
 
       /// <summary>
       /// Error code detailing processing issues

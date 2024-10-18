@@ -103,14 +103,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Person#Communication")]
-    [BackboneType("Person.communication")]
+    [FhirType("Person.communication", IsBackboneType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Person#Communication"; } }
+      public override string TypeName { get { return "Person.communication"; } }
 
       /// <summary>
       /// The language which can be used to communicate with the person about his or her health
@@ -271,14 +270,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Person#Link")]
-    [BackboneType("Person.link")]
+    [FhirType("Person.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Person#Link"; } }
+      public override string TypeName { get { return "Person.link"; } }
 
       /// <summary>
       /// The resource to which this actual person is associated

@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("FamilyMemberHistory#Participant")]
-    [BackboneType("FamilyMemberHistory.participant")]
+    [FhirType("FamilyMemberHistory.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "FamilyMemberHistory#Participant"; } }
+      public override string TypeName { get { return "FamilyMemberHistory.participant"; } }
 
       /// <summary>
       /// Type of involvement
@@ -256,14 +255,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("FamilyMemberHistory#Condition")]
-    [BackboneType("FamilyMemberHistory.condition")]
+    [FhirType("FamilyMemberHistory.condition", IsBackboneType=true)]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "FamilyMemberHistory#Condition"; } }
+      public override string TypeName { get { return "FamilyMemberHistory.condition"; } }
 
       /// <summary>
       /// Condition suffered by relation
@@ -506,14 +504,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("FamilyMemberHistory#Procedure")]
-    [BackboneType("FamilyMemberHistory.procedure")]
+    [FhirType("FamilyMemberHistory.procedure", IsBackboneType=true)]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "FamilyMemberHistory#Procedure"; } }
+      public override string TypeName { get { return "FamilyMemberHistory.procedure"; } }
 
       /// <summary>
       /// Procedures performed on the related person

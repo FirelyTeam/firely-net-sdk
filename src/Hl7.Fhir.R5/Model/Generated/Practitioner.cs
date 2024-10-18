@@ -69,14 +69,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Practitioner#Qualification")]
-    [BackboneType("Practitioner.qualification")]
+    [FhirType("Practitioner.qualification", IsBackboneType=true)]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Practitioner#Qualification"; } }
+      public override string TypeName { get { return "Practitioner.qualification"; } }
 
       /// <summary>
       /// An identifier for this qualification for the practitioner
@@ -278,14 +277,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Practitioner#Communication")]
-    [BackboneType("Practitioner.communication")]
+    [FhirType("Practitioner.communication", IsBackboneType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Practitioner#Communication"; } }
+      public override string TypeName { get { return "Practitioner.communication"; } }
 
       /// <summary>
       /// The language code used to communicate with the practitioner

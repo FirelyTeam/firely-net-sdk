@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#Group")]
-    [BackboneType("Coverage.grouping")]
+    [FhirType("Coverage.grouping", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage#Group"; } }
+      public override string TypeName { get { return "Coverage.grouping"; } }
 
       /// <summary>
       /// An identifier for the group

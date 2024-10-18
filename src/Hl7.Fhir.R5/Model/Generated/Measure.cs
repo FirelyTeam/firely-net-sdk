@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Term")]
-    [BackboneType("Measure.term")]
+    [FhirType("Measure.term", IsBackboneType=true)]
     public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Term"; } }
+      public override string TypeName { get { return "Measure.term"; } }
 
       /// <summary>
       /// What term?
@@ -237,14 +236,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Group")]
-    [BackboneType("Measure.group")]
+    [FhirType("Measure.group", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Group"; } }
+      public override string TypeName { get { return "Measure.group"; } }
 
       /// <summary>
       /// Unique id for group in measure
@@ -768,14 +766,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Population")]
-    [BackboneType("Measure.group.population")]
+    [FhirType("Measure.group.population", IsBackboneType=true)]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Population"; } }
+      public override string TypeName { get { return "Measure.group.population"; } }
 
       /// <summary>
       /// Unique id for population in measure
@@ -1102,14 +1099,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Stratifier")]
-    [BackboneType("Measure.group.stratifier")]
+    [FhirType("Measure.group.stratifier", IsBackboneType=true)]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Stratifier"; } }
+      public override string TypeName { get { return "Measure.group.stratifier"; } }
 
       /// <summary>
       /// Unique id for stratifier in measure
@@ -1394,14 +1390,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Component")]
-    [BackboneType("Measure.group.stratifier.component")]
+    [FhirType("Measure.group.stratifier.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Component"; } }
+      public override string TypeName { get { return "Measure.group.stratifier.component"; } }
 
       /// <summary>
       /// Unique id for stratifier component in measure
@@ -1660,14 +1655,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#SupplementalData")]
-    [BackboneType("Measure.supplementalData")]
+    [FhirType("Measure.supplementalData", IsBackboneType=true)]
     public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#SupplementalData"; } }
+      public override string TypeName { get { return "Measure.supplementalData"; } }
 
       /// <summary>
       /// Unique id for supplementalData in measure

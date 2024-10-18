@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ActivityDefinition#Participant")]
-    [BackboneType("ActivityDefinition.participant")]
+    [FhirType("ActivityDefinition.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ActivityDefinition#Participant"; } }
+      public override string TypeName { get { return "ActivityDefinition.participant"; } }
 
       /// <summary>
       /// patient | practitioner | related-person
@@ -240,14 +239,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ActivityDefinition#DynamicValue")]
-    [BackboneType("ActivityDefinition.dynamicValue")]
+    [FhirType("ActivityDefinition.dynamicValue", IsBackboneType=true)]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ActivityDefinition#DynamicValue"; } }
+      public override string TypeName { get { return "ActivityDefinition.dynamicValue"; } }
 
       /// <summary>
       /// Natural language description of the dynamic value

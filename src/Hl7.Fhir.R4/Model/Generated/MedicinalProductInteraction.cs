@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductInteraction#Interactant")]
-    [BackboneType("MedicinalProductInteraction.interactant")]
+    [FhirType("MedicinalProductInteraction.interactant", IsBackboneType=true)]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductInteraction#Interactant"; } }
+      public override string TypeName { get { return "MedicinalProductInteraction.interactant"; } }
 
       /// <summary>
       /// The specific medication, food or laboratory test that interacts

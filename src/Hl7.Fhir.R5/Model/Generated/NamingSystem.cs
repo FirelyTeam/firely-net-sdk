@@ -142,14 +142,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NamingSystem#UniqueId")]
-    [BackboneType("NamingSystem.uniqueId")]
+    [FhirType("NamingSystem.uniqueId", IsBackboneType=true)]
     public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NamingSystem#UniqueId"; } }
+      public override string TypeName { get { return "NamingSystem.uniqueId"; } }
 
       /// <summary>
       /// oid | uuid | uri | iri-stem | v2csmnemonic | other

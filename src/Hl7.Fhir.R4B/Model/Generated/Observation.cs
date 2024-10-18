@@ -69,14 +69,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Observation#ReferenceRange")]
-    [BackboneType("Observation.referenceRange")]
+    [FhirType("Observation.referenceRange", IsBackboneType=true)]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Observation#ReferenceRange"; } }
+      public override string TypeName { get { return "Observation.referenceRange"; } }
 
       /// <summary>
       /// Low Range, if relevant
@@ -342,14 +341,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Observation#Component")]
-    [BackboneType("Observation.component")]
+    [FhirType("Observation.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Observation#Component"; } }
+      public override string TypeName { get { return "Observation.component"; } }
 
       /// <summary>
       /// Type of component observation (code / type)

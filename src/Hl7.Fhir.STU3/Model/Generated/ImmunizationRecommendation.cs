@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ImmunizationRecommendation#Recommendation")]
-    [BackboneType("ImmunizationRecommendation.recommendation")]
+    [FhirType("ImmunizationRecommendation.recommendation", IsBackboneType=true)]
     public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation#Recommendation"; } }
+      public override string TypeName { get { return "ImmunizationRecommendation.recommendation"; } }
 
       /// <summary>
       /// Date recommendation created
@@ -438,14 +437,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImmunizationRecommendation#DateCriterion")]
-    [BackboneType("ImmunizationRecommendation.recommendation.dateCriterion")]
+    [FhirType("ImmunizationRecommendation.recommendation.dateCriterion", IsBackboneType=true)]
     public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation#DateCriterion"; } }
+      public override string TypeName { get { return "ImmunizationRecommendation.recommendation.dateCriterion"; } }
 
       /// <summary>
       /// Type of date
@@ -610,14 +608,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImmunizationRecommendation#Protocol")]
-    [BackboneType("ImmunizationRecommendation.recommendation.protocol")]
+    [FhirType("ImmunizationRecommendation.recommendation.protocol", IsBackboneType=true)]
     public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation#Protocol"; } }
+      public override string TypeName { get { return "ImmunizationRecommendation.recommendation.protocol"; } }
 
       /// <summary>
       /// Dose number within sequence

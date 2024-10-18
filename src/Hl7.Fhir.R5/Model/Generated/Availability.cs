@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Availability#AvailableTime")]
-    [BackboneType("Availability.availableTime")]
+    [FhirType("Availability.availableTime", IsBackboneType=true)]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Availability#AvailableTime"; } }
+      public override string TypeName { get { return "Availability.availableTime"; } }
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
@@ -334,14 +333,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Availability#NotAvailableTime")]
-    [BackboneType("Availability.notAvailableTime")]
+    [FhirType("Availability.notAvailableTime", IsBackboneType=true)]
     public partial class NotAvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Availability#NotAvailableTime"; } }
+      public override string TypeName { get { return "Availability.notAvailableTime"; } }
 
       /// <summary>
       /// Reason presented to the user explaining why time not available

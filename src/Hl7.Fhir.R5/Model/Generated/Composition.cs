@@ -69,14 +69,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Attester")]
-    [BackboneType("Composition.attester")]
+    [FhirType("Composition.attester", IsBackboneType=true)]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#Attester"; } }
+      public override string TypeName { get { return "Composition.attester"; } }
 
       /// <summary>
       /// personal | professional | legal | official
@@ -268,14 +267,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Event")]
-    [BackboneType("Composition.event")]
+    [FhirType("Composition.event", IsBackboneType=true)]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#Event"; } }
+      public override string TypeName { get { return "Composition.event"; } }
 
       /// <summary>
       /// The period covered by the documentation
@@ -421,14 +419,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Section")]
-    [BackboneType("Composition.section")]
+    [FhirType("Composition.section", IsBackboneType=true)]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#Section"; } }
+      public override string TypeName { get { return "Composition.section"; } }
 
       /// <summary>
       /// Label for section (e.g. for ToC)

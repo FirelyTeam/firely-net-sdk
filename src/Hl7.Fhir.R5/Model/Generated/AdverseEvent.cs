@@ -123,14 +123,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#Participant")]
-    [BackboneType("AdverseEvent.participant")]
+    [FhirType("AdverseEvent.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#Participant"; } }
+      public override string TypeName { get { return "AdverseEvent.participant"; } }
 
       /// <summary>
       /// Type of involvement
@@ -278,14 +277,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#SuspectEntity")]
-    [BackboneType("AdverseEvent.suspectEntity")]
+    [FhirType("AdverseEvent.suspectEntity", IsBackboneType=true)]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#SuspectEntity"; } }
+      public override string TypeName { get { return "AdverseEvent.suspectEntity"; } }
 
       /// <summary>
       /// Refers to the specific entity that caused the adverse event
@@ -430,14 +428,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#Causality")]
-    [BackboneType("AdverseEvent.suspectEntity.causality")]
+    [FhirType("AdverseEvent.suspectEntity.causality", IsBackboneType=true)]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#Causality"; } }
+      public override string TypeName { get { return "AdverseEvent.suspectEntity.causality"; } }
 
       /// <summary>
       /// Method of evaluating the relatedness of the suspected entity to the event
@@ -610,14 +607,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#ContributingFactor")]
-    [BackboneType("AdverseEvent.contributingFactor")]
+    [FhirType("AdverseEvent.contributingFactor", IsBackboneType=true)]
     public partial class ContributingFactorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#ContributingFactor"; } }
+      public override string TypeName { get { return "AdverseEvent.contributingFactor"; } }
 
       /// <summary>
       /// Item suspected to have increased the probability or severity of the adverse event
@@ -738,14 +734,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#PreventiveAction")]
-    [BackboneType("AdverseEvent.preventiveAction")]
+    [FhirType("AdverseEvent.preventiveAction", IsBackboneType=true)]
     public partial class PreventiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#PreventiveAction"; } }
+      public override string TypeName { get { return "AdverseEvent.preventiveAction"; } }
 
       /// <summary>
       /// Action that contributed to avoiding the adverse event
@@ -869,14 +864,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#MitigatingAction")]
-    [BackboneType("AdverseEvent.mitigatingAction")]
+    [FhirType("AdverseEvent.mitigatingAction", IsBackboneType=true)]
     public partial class MitigatingActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#MitigatingAction"; } }
+      public override string TypeName { get { return "AdverseEvent.mitigatingAction"; } }
 
       /// <summary>
       /// Ameliorating action taken after the adverse event occured in order to reduce the extent of harm
@@ -997,14 +991,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#SupportingInfo")]
-    [BackboneType("AdverseEvent.supportingInfo")]
+    [FhirType("AdverseEvent.supportingInfo", IsBackboneType=true)]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent#SupportingInfo"; } }
+      public override string TypeName { get { return "AdverseEvent.supportingInfo"; } }
 
       /// <summary>
       /// Subject medical history or document relevant to this adverse event

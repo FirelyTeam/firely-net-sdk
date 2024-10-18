@@ -108,14 +108,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Endpoint#Payload")]
-    [BackboneType("Endpoint.payload")]
+    [FhirType("Endpoint.payload", IsBackboneType=true)]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Endpoint#Payload"; } }
+      public override string TypeName { get { return "Endpoint.payload"; } }
 
       /// <summary>
       /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)

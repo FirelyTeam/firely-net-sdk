@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#Name")]
-    [BackboneType("MedicinalProduct.name")]
+    [FhirType("MedicinalProduct.name", IsBackboneType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct#Name"; } }
+      public override string TypeName { get { return "MedicinalProduct.name"; } }
 
       /// <summary>
       /// The full product name
@@ -255,14 +254,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#NamePart")]
-    [BackboneType("MedicinalProduct.name.namePart")]
+    [FhirType("MedicinalProduct.name.namePart", IsBackboneType=true)]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct#NamePart"; } }
+      public override string TypeName { get { return "MedicinalProduct.name.namePart"; } }
 
       /// <summary>
       /// A fragment of a product name
@@ -423,14 +421,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#CountryLanguage")]
-    [BackboneType("MedicinalProduct.name.countryLanguage")]
+    [FhirType("MedicinalProduct.name.countryLanguage", IsBackboneType=true)]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct#CountryLanguage"; } }
+      public override string TypeName { get { return "MedicinalProduct.name.countryLanguage"; } }
 
       /// <summary>
       /// Country code for where this name applies
@@ -598,14 +595,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#ManufacturingBusinessOperation")]
-    [BackboneType("MedicinalProduct.manufacturingBusinessOperation")]
+    [FhirType("MedicinalProduct.manufacturingBusinessOperation", IsBackboneType=true)]
     public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct#ManufacturingBusinessOperation"; } }
+      public override string TypeName { get { return "MedicinalProduct.manufacturingBusinessOperation"; } }
 
       /// <summary>
       /// The type of manufacturing operation
@@ -869,14 +865,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#SpecialDesignation")]
-    [BackboneType("MedicinalProduct.specialDesignation")]
+    [FhirType("MedicinalProduct.specialDesignation", IsBackboneType=true)]
     public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct#SpecialDesignation"; } }
+      public override string TypeName { get { return "MedicinalProduct.specialDesignation"; } }
 
       /// <summary>
       /// Identifier for the designation, or procedure number

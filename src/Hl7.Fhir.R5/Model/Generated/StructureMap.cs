@@ -329,14 +329,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Structure")]
-    [BackboneType("StructureMap.structure")]
+    [FhirType("StructureMap.structure", IsBackboneType=true)]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Structure"; } }
+      public override string TypeName { get { return "StructureMap.structure"; } }
 
       /// <summary>
       /// Canonical reference to structure definition
@@ -606,14 +605,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Const")]
-    [BackboneType("StructureMap.const")]
+    [FhirType("StructureMap.const", IsBackboneType=true)]
     public partial class ConstComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Const"; } }
+      public override string TypeName { get { return "StructureMap.const"; } }
 
       /// <summary>
       /// Constant name
@@ -793,14 +791,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Group")]
-    [BackboneType("StructureMap.group")]
+    [FhirType("StructureMap.group", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Group"; } }
+      public override string TypeName { get { return "StructureMap.group"; } }
 
       /// <summary>
       /// Human-readable label
@@ -1122,14 +1119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Input")]
-    [BackboneType("StructureMap.group.input")]
+    [FhirType("StructureMap.group.input", IsBackboneType=true)]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Input"; } }
+      public override string TypeName { get { return "StructureMap.group.input"; } }
 
       /// <summary>
       /// Name for this instance of data
@@ -1396,14 +1392,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Rule")]
-    [BackboneType("StructureMap.group.rule")]
+    [FhirType("StructureMap.group.rule", IsBackboneType=true)]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Rule"; } }
+      public override string TypeName { get { return "StructureMap.group.rule"; } }
 
       /// <summary>
       /// Name of the rule for internal references
@@ -1684,14 +1679,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Source")]
-    [BackboneType("StructureMap.group.rule.source")]
+    [FhirType("StructureMap.group.rule.source", IsBackboneType=true)]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Source"; } }
+      public override string TypeName { get { return "StructureMap.group.rule.source"; } }
 
       /// <summary>
       /// Type or variable this rule applies to
@@ -2258,14 +2252,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Target")]
-    [BackboneType("StructureMap.group.rule.target")]
+    [FhirType("StructureMap.group.rule.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Target"; } }
+      public override string TypeName { get { return "StructureMap.group.rule.target"; } }
 
       /// <summary>
       /// Variable this rule applies to
@@ -2645,14 +2638,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Parameter")]
-    [BackboneType("StructureMap.group.rule.target.parameter")]
+    [FhirType("StructureMap.group.rule.target.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Parameter"; } }
+      public override string TypeName { get { return "StructureMap.group.rule.target.parameter"; } }
 
       /// <summary>
       /// Parameter value - variable or literal
@@ -2771,14 +2763,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("StructureMap#Dependent")]
-    [BackboneType("StructureMap.group.rule.dependent")]
+    [FhirType("StructureMap.group.rule.dependent", IsBackboneType=true)]
     public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap#Dependent"; } }
+      public override string TypeName { get { return "StructureMap.group.rule.dependent"; } }
 
       /// <summary>
       /// Name of a rule or group to apply

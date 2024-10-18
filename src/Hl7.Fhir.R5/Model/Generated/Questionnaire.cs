@@ -298,14 +298,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#Item")]
-    [BackboneType("Questionnaire.item")]
+    [FhirType("Questionnaire.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#Item"; } }
+      public override string TypeName { get { return "Questionnaire.item"; } }
 
       /// <summary>
       /// Unique id for item in questionnaire
@@ -1100,14 +1099,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#EnableWhen")]
-    [BackboneType("Questionnaire.item.enableWhen")]
+    [FhirType("Questionnaire.item.enableWhen", IsBackboneType=true)]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#EnableWhen"; } }
+      public override string TypeName { get { return "Questionnaire.item.enableWhen"; } }
 
       /// <summary>
       /// The linkId of question that determines whether item is enabled/disabled
@@ -1322,14 +1320,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#AnswerOption")]
-    [BackboneType("Questionnaire.item.answerOption")]
+    [FhirType("Questionnaire.item.answerOption", IsBackboneType=true)]
     public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#AnswerOption"; } }
+      public override string TypeName { get { return "Questionnaire.item.answerOption"; } }
 
       /// <summary>
       /// Answer value
@@ -1497,14 +1494,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#Initial")]
-    [BackboneType("Questionnaire.item.initial")]
+    [FhirType("Questionnaire.item.initial", IsBackboneType=true)]
     public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#Initial"; } }
+      public override string TypeName { get { return "Questionnaire.item.initial"; } }
 
       /// <summary>
       /// Actual value for initializing the question

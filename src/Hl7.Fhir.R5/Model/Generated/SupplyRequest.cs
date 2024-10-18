@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyRequest#Parameter")]
-    [BackboneType("SupplyRequest.parameter")]
+    [FhirType("SupplyRequest.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest#Parameter"; } }
+      public override string TypeName { get { return "SupplyRequest.parameter"; } }
 
       /// <summary>
       /// Item detail

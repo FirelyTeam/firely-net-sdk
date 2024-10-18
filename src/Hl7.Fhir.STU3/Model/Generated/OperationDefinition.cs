@@ -90,14 +90,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#Parameter")]
-    [BackboneType("OperationDefinition.parameter")]
+    [FhirType("OperationDefinition.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition#Parameter"; } }
+      public override string TypeName { get { return "OperationDefinition.parameter"; } }
 
       /// <summary>
       /// Name in Parameters.parameter.name or in URL
@@ -580,14 +579,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#Binding")]
-    [BackboneType("OperationDefinition.parameter.binding")]
+    [FhirType("OperationDefinition.parameter.binding", IsBackboneType=true)]
     public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition#Binding"; } }
+      public override string TypeName { get { return "OperationDefinition.parameter.binding"; } }
 
       /// <summary>
       /// required | extensible | preferred | example
@@ -757,14 +755,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#Overload")]
-    [BackboneType("OperationDefinition.overload")]
+    [FhirType("OperationDefinition.overload", IsBackboneType=true)]
     public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition#Overload"; } }
+      public override string TypeName { get { return "OperationDefinition.overload"; } }
 
       /// <summary>
       /// Name of parameter to include in overload

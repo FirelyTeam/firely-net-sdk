@@ -60,5 +60,10 @@ namespace Hl7.Fhir.Introspection
         /// The canonical of the StructureDefinition defining this type.
         /// </summary>
         public string? Canonical { get; set; }
+
+        /// <summary>
+        /// Indicates whether this class represents the nested complex type for a (backbone) element.
+        /// </summary>
+        public bool IsBackboneType { get; set; }
     }
 }

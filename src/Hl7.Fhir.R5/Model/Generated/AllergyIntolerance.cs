@@ -226,14 +226,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AllergyIntolerance#Participant")]
-    [BackboneType("AllergyIntolerance.participant")]
+    [FhirType("AllergyIntolerance.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AllergyIntolerance#Participant"; } }
+      public override string TypeName { get { return "AllergyIntolerance.participant"; } }
 
       /// <summary>
       /// Type of involvement
@@ -381,14 +380,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AllergyIntolerance#Reaction")]
-    [BackboneType("AllergyIntolerance.reaction")]
+    [FhirType("AllergyIntolerance.reaction", IsBackboneType=true)]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AllergyIntolerance#Reaction"; } }
+      public override string TypeName { get { return "AllergyIntolerance.reaction"; } }
 
       /// <summary>
       /// Specific substance or pharmaceutical product considered to be responsible for event

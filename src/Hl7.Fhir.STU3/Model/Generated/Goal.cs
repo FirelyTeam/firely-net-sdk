@@ -156,14 +156,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Goal#Target")]
-    [BackboneType("Goal.target")]
+    [FhirType("Goal.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Goal#Target"; } }
+      public override string TypeName { get { return "Goal.target"; } }
 
       /// <summary>
       /// The parameter whose value is being tracked
