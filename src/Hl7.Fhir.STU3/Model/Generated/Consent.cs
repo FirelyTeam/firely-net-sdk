@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
+  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent")]
   public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Actor", IsNestedType=true)]
+    [FhirType("Consent#Actor")]
     [BackboneType("Consent.actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Policy", IsNestedType=true)]
+    [FhirType("Consent#Policy")]
     [BackboneType("Consent.policy")]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Data", IsNestedType=true)]
+    [FhirType("Consent#Data")]
     [BackboneType("Consent.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Except", IsNestedType=true)]
+    [FhirType("Consent#Except")]
     [BackboneType("Consent.except")]
     public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#ExceptActor", IsNestedType=true)]
+    [FhirType("Consent#ExceptActor")]
     [BackboneType("Consent.except.actor")]
     public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1228,7 +1228,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#ExceptData", IsNestedType=true)]
+    [FhirType("Consent#ExceptData")]
     [BackboneType("Consent.except.data")]
     public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
     {

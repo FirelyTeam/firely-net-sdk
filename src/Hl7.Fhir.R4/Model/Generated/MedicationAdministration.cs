@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationAdministration","http://hl7.org/fhir/StructureDefinition/MedicationAdministration", IsResource=true)]
+  [FhirType("MedicationAdministration","http://hl7.org/fhir/StructureDefinition/MedicationAdministration")]
   public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationAdministration#Performer", IsNestedType=true)]
+    [FhirType("MedicationAdministration#Performer")]
     [BackboneType("MedicationAdministration.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationAdministration#Dosage", IsNestedType=true)]
+    [FhirType("MedicationAdministration#Dosage")]
     [BackboneType("MedicationAdministration.dosage")]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest", IsResource=true)]
+  [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest")]
   public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
+    [FhirType("MedicationRequest#DispenseRequest")]
     [BackboneType("MedicationRequest.dispenseRequest")]
     public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationRequest#InitialFill", IsNestedType=true)]
+    [FhirType("MedicationRequest#InitialFill")]
     [BackboneType("MedicationRequest.dispenseRequest.initialFill")]
     public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
+    [FhirType("MedicationRequest#Substitution")]
     [BackboneType("MedicationRequest.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {

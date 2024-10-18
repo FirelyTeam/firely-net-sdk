@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EvidenceReport","http://hl7.org/fhir/StructureDefinition/EvidenceReport", IsResource=true)]
+  [FhirType("EvidenceReport","http://hl7.org/fhir/StructureDefinition/EvidenceReport")]
   public partial class EvidenceReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Subject", IsNestedType=true)]
+    [FhirType("EvidenceReport#Subject")]
     [BackboneType("EvidenceReport.subject")]
     public partial class SubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Characteristic", IsNestedType=true)]
+    [FhirType("EvidenceReport#Characteristic")]
     [BackboneType("EvidenceReport.subject.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#RelatesTo", IsNestedType=true)]
+    [FhirType("EvidenceReport#RelatesTo")]
     [BackboneType("EvidenceReport.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceReport#Section", IsNestedType=true)]
+    [FhirType("EvidenceReport#Section")]
     [BackboneType("EvidenceReport.section")]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {

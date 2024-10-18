@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest", IsResource=true)]
+  [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest")]
   public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyRequest#OrderedItem", IsNestedType=true)]
+    [FhirType("SupplyRequest#OrderedItem")]
     [BackboneType("SupplyRequest.orderedItem")]
     public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyRequest#Requester", IsNestedType=true)]
+    [FhirType("SupplyRequest#Requester")]
     [BackboneType("SupplyRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {

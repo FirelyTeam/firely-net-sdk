@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("OperationDefinition","http://hl7.org/fhir/StructureDefinition/OperationDefinition", IsResource=true)]
+  [FhirType("OperationDefinition","http://hl7.org/fhir/StructureDefinition/OperationDefinition")]
   public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, ICoded<Hl7.Fhir.Model.Code>
   {
     /// <summary>
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#Parameter", IsNestedType=true)]
+    [FhirType("OperationDefinition#Parameter")]
     [BackboneType("OperationDefinition.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#Binding", IsNestedType=true)]
+    [FhirType("OperationDefinition#Binding")]
     [BackboneType("OperationDefinition.parameter.binding")]
     public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#ReferencedFrom", IsNestedType=true)]
+    [FhirType("OperationDefinition#ReferencedFrom")]
     [BackboneType("OperationDefinition.parameter.referencedFrom")]
     public partial class ReferencedFromComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1004,7 +1004,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("OperationDefinition#Overload", IsNestedType=true)]
+    [FhirType("OperationDefinition#Overload")]
     [BackboneType("OperationDefinition.overload")]
     public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
     {

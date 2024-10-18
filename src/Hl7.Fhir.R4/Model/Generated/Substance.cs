@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance", IsResource=true)]
+  [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance")]
   public partial class Substance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Substance#Instance", IsNestedType=true)]
+    [FhirType("Substance#Instance")]
     [BackboneType("Substance.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Substance#Ingredient", IsNestedType=true)]
+    [FhirType("Substance#Ingredient")]
     [BackboneType("Substance.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {

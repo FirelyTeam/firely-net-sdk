@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductPharmaceutical","http://hl7.org/fhir/StructureDefinition/MedicinalProductPharmaceutical", IsResource=true)]
+  [FhirType("MedicinalProductPharmaceutical","http://hl7.org/fhir/StructureDefinition/MedicinalProductPharmaceutical")]
   public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#Characteristics", IsNestedType=true)]
+    [FhirType("MedicinalProductPharmaceutical#Characteristics")]
     [BackboneType("MedicinalProductPharmaceutical.characteristics")]
     public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#RouteOfAdministration", IsNestedType=true)]
+    [FhirType("MedicinalProductPharmaceutical#RouteOfAdministration")]
     [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration")]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#TargetSpecies", IsNestedType=true)]
+    [FhirType("MedicinalProductPharmaceutical#TargetSpecies")]
     [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies")]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductPharmaceutical#WithdrawalPeriod", IsNestedType=true)]
+    [FhirType("MedicinalProductPharmaceutical#WithdrawalPeriod")]
     [BackboneType("MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod")]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {

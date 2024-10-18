@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire", IsResource=true)]
+  [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire")]
   public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#Item", IsNestedType=true)]
+    [FhirType("Questionnaire#Item")]
     [BackboneType("Questionnaire.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
+    [FhirType("Questionnaire#EnableWhen")]
     [BackboneType("Questionnaire.item.enableWhen")]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1188,7 +1188,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#AnswerOption", IsNestedType=true)]
+    [FhirType("Questionnaire#AnswerOption")]
     [BackboneType("Questionnaire.item.answerOption")]
     public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1363,7 +1363,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#Initial", IsNestedType=true)]
+    [FhirType("Questionnaire#Initial")]
     [BackboneType("Questionnaire.item.initial")]
     public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
     {

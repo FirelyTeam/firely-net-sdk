@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition", IsResource=true)]
+  [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition")]
   public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageDefinition#Focus", IsNestedType=true)]
+    [FhirType("MessageDefinition#Focus")]
     [BackboneType("MessageDefinition.focus")]
     public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
+    [FhirType("MessageDefinition#AllowedResponse")]
     [BackboneType("MessageDefinition.allowedResponse")]
     public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
     {

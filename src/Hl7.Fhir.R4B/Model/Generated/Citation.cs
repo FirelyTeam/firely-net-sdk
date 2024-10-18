@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
+  [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation")]
   public partial class Citation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#Summary", IsNestedType=true)]
+    [FhirType("Citation#Summary")]
     [BackboneType("Citation.summary")]
     public partial class SummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#Classification", IsNestedType=true)]
+    [FhirType("Citation#Classification")]
     [BackboneType("Citation.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#StatusDate", IsNestedType=true)]
+    [FhirType("Citation#StatusDate")]
     [BackboneType("Citation.statusDate")]
     public partial class StatusDateComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#RelatesTo", IsNestedType=true)]
+    [FhirType("Citation#RelatesTo")]
     [BackboneType("Citation.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -758,7 +758,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifact", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifact")]
     [BackboneType("Citation.citedArtifact")]
     public partial class CitedArtifactComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1261,7 +1261,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactVersion", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactVersion")]
     [BackboneType("Citation.citedArtifact.version")]
     public partial class CitedArtifactVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1430,7 +1430,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactStatusDate", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactStatusDate")]
     [BackboneType("Citation.citedArtifact.statusDate")]
     public partial class CitedArtifactStatusDateComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1624,7 +1624,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactTitle", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactTitle")]
     [BackboneType("Citation.citedArtifact.title")]
     public partial class CitedArtifactTitleComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1819,7 +1819,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactAbstract", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactAbstract")]
     [BackboneType("Citation.citedArtifact.abstract")]
     public partial class CitedArtifactAbstractComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2056,7 +2056,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactPart", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactPart")]
     [BackboneType("Citation.citedArtifact.part")]
     public partial class CitedArtifactPartComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2250,7 +2250,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactRelatesTo", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactRelatesTo")]
     [BackboneType("Citation.citedArtifact.relatesTo")]
     public partial class CitedArtifactRelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2434,7 +2434,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactPublicationForm", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactPublicationForm")]
     [BackboneType("Citation.citedArtifact.publicationForm")]
     public partial class CitedArtifactPublicationFormComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2953,7 +2953,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactPublicationFormPublishedIn", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactPublicationFormPublishedIn")]
     [BackboneType("Citation.citedArtifact.publicationForm.publishedIn")]
     public partial class CitedArtifactPublicationFormPublishedInComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3216,7 +3216,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactPublicationFormPeriodicRelease", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactPublicationFormPeriodicRelease")]
     [BackboneType("Citation.citedArtifact.publicationForm.periodicRelease")]
     public partial class CitedArtifactPublicationFormPeriodicReleaseComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3451,7 +3451,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactPublicationFormPeriodicReleaseDateOfPublication", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactPublicationFormPeriodicReleaseDateOfPublication")]
     [BackboneType("Citation.citedArtifact.publicationForm.periodicRelease.dateOfPublication")]
     public partial class CitedArtifactPublicationFormPeriodicReleaseDateOfPublicationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3807,7 +3807,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactWebLocation", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactWebLocation")]
     [BackboneType("Citation.citedArtifact.webLocation")]
     public partial class CitedArtifactWebLocationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3974,7 +3974,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactClassification", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactClassification")]
     [BackboneType("Citation.citedArtifact.classification")]
     public partial class CitedArtifactClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -4150,7 +4150,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactClassificationWhoClassified", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactClassificationWhoClassified")]
     [BackboneType("Citation.citedArtifact.classification.whoClassified")]
     public partial class CitedArtifactClassificationWhoClassifiedComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -4418,7 +4418,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactContributorship", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactContributorship")]
     [BackboneType("Citation.citedArtifact.contributorship")]
     public partial class CitedArtifactContributorshipComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -4615,7 +4615,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactContributorshipEntry", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactContributorshipEntry")]
     [BackboneType("Citation.citedArtifact.contributorship.entry")]
     public partial class CitedArtifactContributorshipEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -5096,7 +5096,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactContributorshipEntryAffiliationInfo", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactContributorshipEntryAffiliationInfo")]
     [BackboneType("Citation.citedArtifact.contributorship.entry.affiliationInfo")]
     public partial class CitedArtifactContributorshipEntryAffiliationInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -5306,7 +5306,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactContributorshipEntryContributionInstance", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactContributorshipEntryContributionInstance")]
     [BackboneType("Citation.citedArtifact.contributorship.entry.contributionInstance")]
     public partial class CitedArtifactContributorshipEntryContributionInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -5474,7 +5474,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#CitedArtifactContributorshipSummary", IsNestedType=true)]
+    [FhirType("Citation#CitedArtifactContributorshipSummary")]
     [BackboneType("Citation.citedArtifact.contributorship.summary")]
     public partial class CitedArtifactContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
     {

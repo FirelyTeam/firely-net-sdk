@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceSourceMaterial","http://hl7.org/fhir/StructureDefinition/SubstanceSourceMaterial", IsResource=true)]
+  [FhirType("SubstanceSourceMaterial","http://hl7.org/fhir/StructureDefinition/SubstanceSourceMaterial")]
   public partial class SubstanceSourceMaterial : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceSourceMaterial#FractionDescription", IsNestedType=true)]
+    [FhirType("SubstanceSourceMaterial#FractionDescription")]
     [BackboneType("SubstanceSourceMaterial.fractionDescription")]
     public partial class FractionDescriptionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceSourceMaterial#Organism", IsNestedType=true)]
+    [FhirType("SubstanceSourceMaterial#Organism")]
     [BackboneType("SubstanceSourceMaterial.organism")]
     public partial class OrganismComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceSourceMaterial#Author", IsNestedType=true)]
+    [FhirType("SubstanceSourceMaterial#Author")]
     [BackboneType("SubstanceSourceMaterial.organism.author")]
     public partial class AuthorComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceSourceMaterial#Hybrid", IsNestedType=true)]
+    [FhirType("SubstanceSourceMaterial#Hybrid")]
     [BackboneType("SubstanceSourceMaterial.organism.hybrid")]
     public partial class HybridComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceSourceMaterial#OrganismGeneral", IsNestedType=true)]
+    [FhirType("SubstanceSourceMaterial#OrganismGeneral")]
     [BackboneType("SubstanceSourceMaterial.organism.organismGeneral")]
     public partial class OrganismGeneralComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1203,7 +1203,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceSourceMaterial#PartDescription", IsNestedType=true)]
+    [FhirType("SubstanceSourceMaterial#PartDescription")]
     [BackboneType("SubstanceSourceMaterial.partDescription")]
     public partial class PartDescriptionComponent : Hl7.Fhir.Model.BackboneElement
     {

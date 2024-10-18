@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Observation","http://hl7.org/fhir/StructureDefinition/Observation", IsResource=true)]
+  [FhirType("Observation","http://hl7.org/fhir/StructureDefinition/Observation")]
   public partial class Observation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Observation#ReferenceRange", IsNestedType=true)]
+    [FhirType("Observation#ReferenceRange")]
     [BackboneType("Observation.referenceRange")]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Observation#Component", IsNestedType=true)]
+    [FhirType("Observation#Component")]
     [BackboneType("Observation.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {

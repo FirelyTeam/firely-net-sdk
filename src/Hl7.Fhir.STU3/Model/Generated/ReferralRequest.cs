@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ReferralRequest","http://hl7.org/fhir/StructureDefinition/ReferralRequest", IsResource=true)]
+  [FhirType("ReferralRequest","http://hl7.org/fhir/StructureDefinition/ReferralRequest")]
   public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ReferralRequest#Requester", IsNestedType=true)]
+    [FhirType("ReferralRequest#Requester")]
     [BackboneType("ReferralRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {

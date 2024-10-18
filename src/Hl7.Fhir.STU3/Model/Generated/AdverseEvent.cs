@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
+  [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent")]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [FhirType("AdverseEvent#SuspectEntity")]
     [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {

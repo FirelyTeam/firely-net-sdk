@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RelatedPerson","http://hl7.org/fhir/StructureDefinition/RelatedPerson", IsResource=true)]
+  [FhirType("RelatedPerson","http://hl7.org/fhir/StructureDefinition/RelatedPerson")]
   public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RelatedPerson#Communication", IsNestedType=true)]
+    [FhirType("RelatedPerson#Communication")]
     [BackboneType("RelatedPerson.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {

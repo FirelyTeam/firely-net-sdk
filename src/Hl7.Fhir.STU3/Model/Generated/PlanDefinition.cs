@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition", IsResource=true)]
+  [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition")]
   public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Goal", IsNestedType=true)]
+    [FhirType("PlanDefinition#Goal")]
     [BackboneType("PlanDefinition.goal")]
     public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Target", IsNestedType=true)]
+    [FhirType("PlanDefinition#Target")]
     [BackboneType("PlanDefinition.goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Action", IsNestedType=true)]
+    [FhirType("PlanDefinition#Action")]
     [BackboneType("PlanDefinition.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1466,7 +1466,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Condition", IsNestedType=true)]
+    [FhirType("PlanDefinition#Condition")]
     [BackboneType("PlanDefinition.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1743,7 +1743,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#RelatedAction", IsNestedType=true)]
+    [FhirType("PlanDefinition#RelatedAction")]
     [BackboneType("PlanDefinition.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1961,7 +1961,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Participant", IsNestedType=true)]
+    [FhirType("PlanDefinition#Participant")]
     [BackboneType("PlanDefinition.action.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2134,7 +2134,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#DynamicValue", IsNestedType=true)]
+    [FhirType("PlanDefinition#DynamicValue")]
     [BackboneType("PlanDefinition.action.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {

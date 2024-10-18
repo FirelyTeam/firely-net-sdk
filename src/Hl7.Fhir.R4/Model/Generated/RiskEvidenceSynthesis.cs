@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RiskEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/RiskEvidenceSynthesis", IsResource=true)]
+  [FhirType("RiskEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/RiskEvidenceSynthesis")]
   public partial class RiskEvidenceSynthesis : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#SampleSize", IsNestedType=true)]
+    [FhirType("RiskEvidenceSynthesis#SampleSize")]
     [BackboneType("RiskEvidenceSynthesis.sampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#RiskEstimate", IsNestedType=true)]
+    [FhirType("RiskEvidenceSynthesis#RiskEstimate")]
     [BackboneType("RiskEvidenceSynthesis.riskEstimate")]
     public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
+    [FhirType("RiskEvidenceSynthesis#PrecisionEstimate")]
     [BackboneType("RiskEvidenceSynthesis.riskEstimate.precisionEstimate")]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -904,7 +904,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#Certainty", IsNestedType=true)]
+    [FhirType("RiskEvidenceSynthesis#Certainty")]
     [BackboneType("RiskEvidenceSynthesis.certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
+    [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent")]
     [BackboneType("RiskEvidenceSynthesis.certainty.certaintySubcomponent")]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {

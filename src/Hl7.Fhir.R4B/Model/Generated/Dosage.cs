@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Dosage#DoseAndRate", IsNestedType=true)]
+    [FhirType("Dosage#DoseAndRate")]
     [BackboneType("Dosage.doseAndRate")]
     public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element
     {

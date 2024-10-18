@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide", IsResource=true)]
+  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide")]
   public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Dependency", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Dependency")]
     [BackboneType("ImplementationGuide.dependency")]
     public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Package", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Package")]
     [BackboneType("ImplementationGuide.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Resource")]
     [BackboneType("ImplementationGuide.package.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Global", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Global")]
     [BackboneType("ImplementationGuide.global")]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1059,7 +1059,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Page", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Page")]
     [BackboneType("ImplementationGuide.page")]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DiagnosticReport","http://hl7.org/fhir/StructureDefinition/DiagnosticReport", IsResource=true)]
+  [FhirType("DiagnosticReport","http://hl7.org/fhir/StructureDefinition/DiagnosticReport")]
   public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
+    [FhirType("DiagnosticReport#Performer")]
     [BackboneType("DiagnosticReport.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#Image", IsNestedType=true)]
+    [FhirType("DiagnosticReport#Image")]
     [BackboneType("DiagnosticReport.image")]
     public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ChargeItemDefinition","http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition", IsResource=true)]
+  [FhirType("ChargeItemDefinition","http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition")]
   public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
+    [FhirType("ChargeItemDefinition#Applicability")]
     [BackboneType("ChargeItemDefinition.applicability")]
     public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
+    [FhirType("ChargeItemDefinition#PropertyGroup")]
     [BackboneType("ChargeItemDefinition.propertyGroup")]
     public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
+    [FhirType("ChargeItemDefinition#PriceComponent")]
     [BackboneType("ChargeItemDefinition.propertyGroup.priceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {

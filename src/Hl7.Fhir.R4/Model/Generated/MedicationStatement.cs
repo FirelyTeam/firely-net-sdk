@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationStatement","http://hl7.org/fhir/StructureDefinition/MedicationStatement", IsResource=true)]
+  [FhirType("MedicationStatement","http://hl7.org/fhir/StructureDefinition/MedicationStatement")]
   public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>

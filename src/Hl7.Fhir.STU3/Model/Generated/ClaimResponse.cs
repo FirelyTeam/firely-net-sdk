@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ClaimResponse","http://hl7.org/fhir/StructureDefinition/ClaimResponse", IsResource=true)]
+  [FhirType("ClaimResponse","http://hl7.org/fhir/StructureDefinition/ClaimResponse")]
   public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#Item", IsNestedType=true)]
+    [FhirType("ClaimResponse#Item")]
     [BackboneType("ClaimResponse.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#Adjudication", IsNestedType=true)]
+    [FhirType("ClaimResponse#Adjudication")]
     [BackboneType("ClaimResponse.item.adjudication")]
     public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#ItemDetail", IsNestedType=true)]
+    [FhirType("ClaimResponse#ItemDetail")]
     [BackboneType("ClaimResponse.item.detail")]
     public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#SubDetail", IsNestedType=true)]
+    [FhirType("ClaimResponse#SubDetail")]
     [BackboneType("ClaimResponse.item.detail.subDetail")]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#AddedItem", IsNestedType=true)]
+    [FhirType("ClaimResponse#AddedItem")]
     [BackboneType("ClaimResponse.addItem")]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#AddedItemsDetail", IsNestedType=true)]
+    [FhirType("ClaimResponse#AddedItemsDetail")]
     [BackboneType("ClaimResponse.addItem.detail")]
     public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1658,7 +1658,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#Error", IsNestedType=true)]
+    [FhirType("ClaimResponse#Error")]
     [BackboneType("ClaimResponse.error")]
     public partial class ErrorComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1915,7 +1915,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#Payment", IsNestedType=true)]
+    [FhirType("ClaimResponse#Payment")]
     [BackboneType("ClaimResponse.payment")]
     public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2186,7 +2186,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#Note", IsNestedType=true)]
+    [FhirType("ClaimResponse#Note")]
     [BackboneType("ClaimResponse.processNote")]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2425,7 +2425,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClaimResponse#Insurance", IsNestedType=true)]
+    [FhirType("ClaimResponse#Insurance")]
     [BackboneType("ClaimResponse.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {

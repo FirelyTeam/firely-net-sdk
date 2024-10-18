@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RequestGroup","http://hl7.org/fhir/StructureDefinition/RequestGroup", IsResource=true)]
+  [FhirType("RequestGroup","http://hl7.org/fhir/StructureDefinition/RequestGroup")]
   public partial class RequestGroup : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestGroup#Action", IsNestedType=true)]
+    [FhirType("RequestGroup#Action")]
     [BackboneType("RequestGroup.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestGroup#Condition", IsNestedType=true)]
+    [FhirType("RequestGroup#Condition")]
     [BackboneType("RequestGroup.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1079,7 +1079,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RequestGroup#RelatedAction", IsNestedType=true)]
+    [FhirType("RequestGroup#RelatedAction")]
     [BackboneType("RequestGroup.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {

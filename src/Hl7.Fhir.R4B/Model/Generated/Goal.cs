@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Goal","http://hl7.org/fhir/StructureDefinition/Goal", IsResource=true)]
+  [FhirType("Goal","http://hl7.org/fhir/StructureDefinition/Goal")]
   public partial class Goal : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Goal#Target", IsNestedType=true)]
+    [FhirType("Goal#Target")]
     [BackboneType("Goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CatalogEntry","http://hl7.org/fhir/StructureDefinition/CatalogEntry", IsResource=true)]
+  [FhirType("CatalogEntry","http://hl7.org/fhir/StructureDefinition/CatalogEntry")]
   public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CatalogEntry#RelatedEntry", IsNestedType=true)]
+    [FhirType("CatalogEntry#RelatedEntry")]
     [BackboneType("CatalogEntry.relatedEntry")]
     public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
     {

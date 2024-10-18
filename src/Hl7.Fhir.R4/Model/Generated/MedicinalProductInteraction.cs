@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductInteraction","http://hl7.org/fhir/StructureDefinition/MedicinalProductInteraction", IsResource=true)]
+  [FhirType("MedicinalProductInteraction","http://hl7.org/fhir/StructureDefinition/MedicinalProductInteraction")]
   public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
+    [FhirType("MedicinalProductInteraction#Interactant")]
     [BackboneType("MedicinalProductInteraction.interactant")]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {

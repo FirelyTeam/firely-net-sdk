@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EvidenceVariable","http://hl7.org/fhir/StructureDefinition/EvidenceVariable", IsResource=true)]
+  [FhirType("EvidenceVariable","http://hl7.org/fhir/StructureDefinition/EvidenceVariable")]
   public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [FhirType("EvidenceVariable#Characteristic")]
     [BackboneType("EvidenceVariable.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {

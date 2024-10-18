@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense", IsResource=true)]
+  [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense")]
   public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [FhirType("MedicationDispense#Performer")]
     [BackboneType("MedicationDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [FhirType("MedicationDispense#Substitution")]
     [BackboneType("MedicationDispense.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {

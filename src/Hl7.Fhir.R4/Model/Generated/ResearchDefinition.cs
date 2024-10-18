@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ResearchDefinition","http://hl7.org/fhir/StructureDefinition/ResearchDefinition", IsResource=true)]
+  [FhirType("ResearchDefinition","http://hl7.org/fhir/StructureDefinition/ResearchDefinition")]
   public partial class ResearchDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Parameters","http://hl7.org/fhir/StructureDefinition/Parameters", IsResource=true)]
+  [FhirType("Parameters","http://hl7.org/fhir/StructureDefinition/Parameters")]
   public partial class Parameters : Hl7.Fhir.Model.Resource
   {
     /// <summary>
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Parameters#Parameter", IsNestedType=true)]
+    [FhirType("Parameters#Parameter")]
     [BackboneType("Parameters.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("VisionPrescription","http://hl7.org/fhir/StructureDefinition/VisionPrescription", IsResource=true)]
+  [FhirType("VisionPrescription","http://hl7.org/fhir/StructureDefinition/VisionPrescription")]
   public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("VisionPrescription#Dispense", IsNestedType=true)]
+    [FhirType("VisionPrescription#Dispense")]
     [BackboneType("VisionPrescription.dispense")]
     public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
     {

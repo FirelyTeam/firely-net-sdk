@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic", IsResource=true)]
+  [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic")]
   public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
+    [FhirType("SubscriptionTopic#ResourceTrigger")]
     [BackboneType("SubscriptionTopic.resourceTrigger")]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
+    [FhirType("SubscriptionTopic#QueryCriteria")]
     [BackboneType("SubscriptionTopic.resourceTrigger.queryCriteria")]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#EventTrigger", IsNestedType=true)]
+    [FhirType("SubscriptionTopic#EventTrigger")]
     [BackboneType("SubscriptionTopic.eventTrigger")]
     public partial class EventTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
+    [FhirType("SubscriptionTopic#CanFilterBy")]
     [BackboneType("SubscriptionTopic.canFilterBy")]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1377,7 +1377,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#NotificationShape", IsNestedType=true)]
+    [FhirType("SubscriptionTopic#NotificationShape")]
     [BackboneType("SubscriptionTopic.notificationShape")]
     public partial class NotificationShapeComponent : Hl7.Fhir.Model.BackboneElement
     {

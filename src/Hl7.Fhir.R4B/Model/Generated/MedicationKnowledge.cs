@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationKnowledge","http://hl7.org/fhir/StructureDefinition/MedicationKnowledge", IsResource=true)]
+  [FhirType("MedicationKnowledge","http://hl7.org/fhir/StructureDefinition/MedicationKnowledge")]
   public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#RelatedMedicationKnowledge", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#RelatedMedicationKnowledge")]
     [BackboneType("MedicationKnowledge.relatedMedicationKnowledge")]
     public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Monograph", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Monograph")]
     [BackboneType("MedicationKnowledge.monograph")]
     public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Ingredient", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Ingredient")]
     [BackboneType("MedicationKnowledge.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Cost", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Cost")]
     [BackboneType("MedicationKnowledge.cost")]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#MonitoringProgram", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#MonitoringProgram")]
     [BackboneType("MedicationKnowledge.monitoringProgram")]
     public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#AdministrationGuidelines", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#AdministrationGuidelines")]
     [BackboneType("MedicationKnowledge.administrationGuidelines")]
     public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1141,7 +1141,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Dosage", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Dosage")]
     [BackboneType("MedicationKnowledge.administrationGuidelines.dosage")]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1294,7 +1294,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#PatientCharacteristics", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#PatientCharacteristics")]
     [BackboneType("MedicationKnowledge.administrationGuidelines.patientCharacteristics")]
     public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1464,7 +1464,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#MedicineClassification", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#MedicineClassification")]
     [BackboneType("MedicationKnowledge.medicineClassification")]
     public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1617,7 +1617,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Packaging", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Packaging")]
     [BackboneType("MedicationKnowledge.packaging")]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1769,7 +1769,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#DrugCharacteristic", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#DrugCharacteristic")]
     [BackboneType("MedicationKnowledge.drugCharacteristic")]
     public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1920,7 +1920,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Regulatory", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Regulatory")]
     [BackboneType("MedicationKnowledge.regulatory")]
     public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2123,7 +2123,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Substitution", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Substitution")]
     [BackboneType("MedicationKnowledge.regulatory.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2291,7 +2291,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Schedule", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Schedule")]
     [BackboneType("MedicationKnowledge.regulatory.schedule")]
     public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2415,7 +2415,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#MaxDispense", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#MaxDispense")]
     [BackboneType("MedicationKnowledge.regulatory.maxDispense")]
     public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2564,7 +2564,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationKnowledge#Kinetics", IsNestedType=true)]
+    [FhirType("MedicationKnowledge#Kinetics")]
     [BackboneType("MedicationKnowledge.kinetics")]
     public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement
     {

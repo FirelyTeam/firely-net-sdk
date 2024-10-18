@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CodeSystem","http://hl7.org/fhir/StructureDefinition/CodeSystem", IsResource=true)]
+  [FhirType("CodeSystem","http://hl7.org/fhir/StructureDefinition/CodeSystem")]
   public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#Filter", IsNestedType=true)]
+    [FhirType("CodeSystem#Filter")]
     [BackboneType("CodeSystem.filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#Property", IsNestedType=true)]
+    [FhirType("CodeSystem#Property")]
     [BackboneType("CodeSystem.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
+    [FhirType("CodeSystem#ConceptDefinition")]
     [BackboneType("CodeSystem.concept")]
     public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#Designation", IsNestedType=true)]
+    [FhirType("CodeSystem#Designation")]
     [BackboneType("CodeSystem.concept.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
+    [FhirType("CodeSystem#ConceptProperty")]
     [BackboneType("CodeSystem.concept.property")]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {

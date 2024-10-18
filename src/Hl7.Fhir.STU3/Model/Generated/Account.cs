@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account", IsResource=true)]
+  [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account")]
   public partial class Account : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Coverage", IsNestedType=true)]
+    [FhirType("Account#Coverage")]
     [BackboneType("Account.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Guarantor", IsNestedType=true)]
+    [FhirType("Account#Guarantor")]
     [BackboneType("Account.guarantor")]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {

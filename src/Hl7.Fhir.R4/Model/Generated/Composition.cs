@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition", IsResource=true)]
+  [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition")]
   public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Attester", IsNestedType=true)]
+    [FhirType("Composition#Attester")]
     [BackboneType("Composition.attester")]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#RelatesTo", IsNestedType=true)]
+    [FhirType("Composition#RelatesTo")]
     [BackboneType("Composition.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Event", IsNestedType=true)]
+    [FhirType("Composition#Event")]
     [BackboneType("Composition.event")]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Section", IsNestedType=true)]
+    [FhirType("Composition#Section")]
     [BackboneType("Composition.section")]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device", IsResource=true)]
+  [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device")]
   public partial class Device : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Device#Udi", IsNestedType=true)]
+    [FhirType("Device#Udi")]
     [BackboneType("Device.udi")]
     public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
     {

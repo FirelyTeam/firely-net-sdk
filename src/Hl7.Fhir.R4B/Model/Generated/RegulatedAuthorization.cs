@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RegulatedAuthorization","http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization", IsResource=true)]
+  [FhirType("RegulatedAuthorization","http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization")]
   public partial class RegulatedAuthorization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RegulatedAuthorization#Case", IsNestedType=true)]
+    [FhirType("RegulatedAuthorization#Case")]
     [BackboneType("RegulatedAuthorization.case")]
     public partial class CaseComponent : Hl7.Fhir.Model.BackboneElement
     {

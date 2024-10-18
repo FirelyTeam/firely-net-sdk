@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CarePlan","http://hl7.org/fhir/StructureDefinition/CarePlan", IsResource=true)]
+  [FhirType("CarePlan","http://hl7.org/fhir/StructureDefinition/CarePlan")]
   public partial class CarePlan : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Activity", IsNestedType=true)]
+    [FhirType("CarePlan#Activity")]
     [BackboneType("CarePlan.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Detail", IsNestedType=true)]
+    [FhirType("CarePlan#Detail")]
     [BackboneType("CarePlan.activity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {

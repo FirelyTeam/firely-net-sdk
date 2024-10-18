@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Provenance","http://hl7.org/fhir/StructureDefinition/Provenance", IsResource=true)]
+  [FhirType("Provenance","http://hl7.org/fhir/StructureDefinition/Provenance")]
   public partial class Provenance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Provenance#Agent", IsNestedType=true)]
+    [FhirType("Provenance#Agent")]
     [BackboneType("Provenance.agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Provenance#Entity", IsNestedType=true)]
+    [FhirType("Provenance#Entity")]
     [BackboneType("Provenance.entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -92,11 +92,11 @@ namespace Hl7.Fhir.Introspection
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
-                IsResource = typeAttribute.IsResource || type.CanBeTreatedAsType(typeof(Resource)),
+                IsResource = type.CanBeTreatedAsType(typeof(Resource)),
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                 ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
-                IsBackboneType = typeAttribute.IsNestedType || backboneAttribute is not null,
+                IsBackboneType = backboneAttribute is not null,
                 DefinitionPath = backboneAttribute?.DefinitionPath,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,

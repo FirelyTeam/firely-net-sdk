@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
+  [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient")]
   public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Contact", IsNestedType=true)]
+    [FhirType("Patient#Contact")]
     [BackboneType("Patient.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Communication", IsNestedType=true)]
+    [FhirType("Patient#Communication")]
     [BackboneType("Patient.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Link", IsNestedType=true)]
+    [FhirType("Patient#Link")]
     [BackboneType("Patient.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {

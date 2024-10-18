@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
+    [FhirType("ElementDefinition#Slicing")]
     [BackboneType("ElementDefinition.slicing")]
     public partial class SlicingComponent : Hl7.Fhir.Model.Element
     {
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
+    [FhirType("ElementDefinition#Discriminator")]
     [BackboneType("ElementDefinition.slicing.discriminator")]
     public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
     {
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Base", IsNestedType=true)]
+    [FhirType("ElementDefinition#Base")]
     [BackboneType("ElementDefinition.base")]
     public partial class BaseComponent : Hl7.Fhir.Model.Element
     {
@@ -940,7 +940,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
+    [FhirType("ElementDefinition#TypeRef")]
     [BackboneType("ElementDefinition.type")]
     public partial class TypeRefComponent : Hl7.Fhir.Model.Element
     {
@@ -1264,7 +1264,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Example", IsNestedType=true)]
+    [FhirType("ElementDefinition#Example")]
     [BackboneType("ElementDefinition.example")]
     public partial class ExampleComponent : Hl7.Fhir.Model.Element
     {
@@ -1438,7 +1438,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
+    [FhirType("ElementDefinition#Constraint")]
     [BackboneType("ElementDefinition.constraint")]
     public partial class ConstraintComponent : Hl7.Fhir.Model.Element
     {
@@ -1850,7 +1850,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
+    [FhirType("ElementDefinition#ElementDefinitionBinding")]
     [BackboneType("ElementDefinition.binding")]
     public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
     {
@@ -2071,7 +2071,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
+    [FhirType("ElementDefinition#Mapping")]
     [BackboneType("ElementDefinition.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.Element
     {

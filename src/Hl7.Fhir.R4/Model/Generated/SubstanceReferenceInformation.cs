@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceReferenceInformation","http://hl7.org/fhir/StructureDefinition/SubstanceReferenceInformation", IsResource=true)]
+  [FhirType("SubstanceReferenceInformation","http://hl7.org/fhir/StructureDefinition/SubstanceReferenceInformation")]
   public partial class SubstanceReferenceInformation : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#Gene", IsNestedType=true)]
+    [FhirType("SubstanceReferenceInformation#Gene")]
     [BackboneType("SubstanceReferenceInformation.gene")]
     public partial class GeneComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#GeneElement", IsNestedType=true)]
+    [FhirType("SubstanceReferenceInformation#GeneElement")]
     [BackboneType("SubstanceReferenceInformation.geneElement")]
     public partial class GeneElementComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#Classification", IsNestedType=true)]
+    [FhirType("SubstanceReferenceInformation#Classification")]
     [BackboneType("SubstanceReferenceInformation.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceReferenceInformation#Target", IsNestedType=true)]
+    [FhirType("SubstanceReferenceInformation#Target")]
     [BackboneType("SubstanceReferenceInformation.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {

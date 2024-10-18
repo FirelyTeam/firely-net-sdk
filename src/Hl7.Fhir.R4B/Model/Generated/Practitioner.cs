@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Practitioner","http://hl7.org/fhir/StructureDefinition/Practitioner", IsResource=true)]
+  [FhirType("Practitioner","http://hl7.org/fhir/StructureDefinition/Practitioner")]
   public partial class Practitioner : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Practitioner#Qualification", IsNestedType=true)]
+    [FhirType("Practitioner#Qualification")]
     [BackboneType("Practitioner.qualification")]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
+  [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression")]
   public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
+    [FhirType("ClinicalImpression#Investigation")]
     [BackboneType("ClinicalImpression.investigation")]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
+    [FhirType("ClinicalImpression#Finding")]
     [BackboneType("ClinicalImpression.finding")]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {

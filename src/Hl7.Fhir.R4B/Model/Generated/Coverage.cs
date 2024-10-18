@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage", IsResource=true)]
+  [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage")]
   public partial class Coverage : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#Class", IsNestedType=true)]
+    [FhirType("Coverage#Class")]
     [BackboneType("Coverage.class")]
     public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
+    [FhirType("Coverage#CostToBeneficiary")]
     [BackboneType("Coverage.costToBeneficiary")]
     public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#Exemption", IsNestedType=true)]
+    [FhirType("Coverage#Exemption")]
     [BackboneType("Coverage.costToBeneficiary.exception")]
     public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
     {

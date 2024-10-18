@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task", IsResource=true)]
+  [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task")]
   public partial class Task : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Requester", IsNestedType=true)]
+    [FhirType("Task#Requester")]
     [BackboneType("Task.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Restriction", IsNestedType=true)]
+    [FhirType("Task#Restriction")]
     [BackboneType("Task.restriction")]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Parameter", IsNestedType=true)]
+    [FhirType("Task#Parameter")]
     [BackboneType("Task.input")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Output", IsNestedType=true)]
+    [FhirType("Task#Output")]
     [BackboneType("Task.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {

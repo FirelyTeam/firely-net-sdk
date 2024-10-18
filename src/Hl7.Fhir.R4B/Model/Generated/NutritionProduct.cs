@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionProduct","http://hl7.org/fhir/StructureDefinition/NutritionProduct", IsResource=true)]
+  [FhirType("NutritionProduct","http://hl7.org/fhir/StructureDefinition/NutritionProduct")]
   public partial class NutritionProduct : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#Nutrient", IsNestedType=true)]
+    [FhirType("NutritionProduct#Nutrient")]
     [BackboneType("NutritionProduct.nutrient")]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#Ingredient", IsNestedType=true)]
+    [FhirType("NutritionProduct#Ingredient")]
     [BackboneType("NutritionProduct.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#ProductCharacteristic", IsNestedType=true)]
+    [FhirType("NutritionProduct#ProductCharacteristic")]
     [BackboneType("NutritionProduct.productCharacteristic")]
     public partial class ProductCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#Instance", IsNestedType=true)]
+    [FhirType("NutritionProduct#Instance")]
     [BackboneType("NutritionProduct.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {

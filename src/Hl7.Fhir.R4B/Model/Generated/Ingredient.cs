@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Ingredient","http://hl7.org/fhir/StructureDefinition/Ingredient", IsResource=true)]
+  [FhirType("Ingredient","http://hl7.org/fhir/StructureDefinition/Ingredient")]
   public partial class Ingredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#Manufacturer", IsNestedType=true)]
+    [FhirType("Ingredient#Manufacturer")]
     [BackboneType("Ingredient.manufacturer")]
     public partial class ManufacturerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#Substance", IsNestedType=true)]
+    [FhirType("Ingredient#Substance")]
     [BackboneType("Ingredient.substance")]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#Strength", IsNestedType=true)]
+    [FhirType("Ingredient#Strength")]
     [BackboneType("Ingredient.substance.strength")]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#ReferenceStrength", IsNestedType=true)]
+    [FhirType("Ingredient#ReferenceStrength")]
     [BackboneType("Ingredient.substance.strength.referenceStrength")]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {

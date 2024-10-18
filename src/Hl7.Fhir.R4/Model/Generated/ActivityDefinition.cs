@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ActivityDefinition","http://hl7.org/fhir/StructureDefinition/ActivityDefinition", IsResource=true)]
+  [FhirType("ActivityDefinition","http://hl7.org/fhir/StructureDefinition/ActivityDefinition")]
   public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
+    [FhirType("ActivityDefinition#Participant")]
     [BackboneType("ActivityDefinition.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
+    [FhirType("ActivityDefinition#DynamicValue")]
     [BackboneType("ActivityDefinition.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {

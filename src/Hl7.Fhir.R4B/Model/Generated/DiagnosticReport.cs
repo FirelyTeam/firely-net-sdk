@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DiagnosticReport","http://hl7.org/fhir/StructureDefinition/DiagnosticReport", IsResource=true)]
+  [FhirType("DiagnosticReport","http://hl7.org/fhir/StructureDefinition/DiagnosticReport")]
   public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DiagnosticReport#Media", IsNestedType=true)]
+    [FhirType("DiagnosticReport#Media")]
     [BackboneType("DiagnosticReport.media")]
     public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
     {

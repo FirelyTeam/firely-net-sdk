@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceRequest","http://hl7.org/fhir/StructureDefinition/DeviceRequest", IsResource=true)]
+  [FhirType("DeviceRequest","http://hl7.org/fhir/StructureDefinition/DeviceRequest")]
   public partial class DeviceRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceRequest#Parameter", IsNestedType=true)]
+    [FhirType("DeviceRequest#Parameter")]
     [BackboneType("DeviceRequest.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {

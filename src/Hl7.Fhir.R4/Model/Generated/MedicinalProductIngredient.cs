@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient", IsResource=true)]
+  [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient")]
   public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
+    [FhirType("MedicinalProductIngredient#SpecifiedSubstance")]
     [BackboneType("MedicinalProductIngredient.specifiedSubstance")]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
+    [FhirType("MedicinalProductIngredient#Strength")]
     [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength")]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
+    [FhirType("MedicinalProductIngredient#ReferenceStrength")]
     [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength")]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -799,7 +799,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
+    [FhirType("MedicinalProductIngredient#Substance")]
     [BackboneType("MedicinalProductIngredient.substance")]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {

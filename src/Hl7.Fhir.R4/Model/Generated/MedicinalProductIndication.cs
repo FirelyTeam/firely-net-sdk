@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductIndication","http://hl7.org/fhir/StructureDefinition/MedicinalProductIndication", IsResource=true)]
+  [FhirType("MedicinalProductIndication","http://hl7.org/fhir/StructureDefinition/MedicinalProductIndication")]
   public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIndication#OtherTherapy", IsNestedType=true)]
+    [FhirType("MedicinalProductIndication#OtherTherapy")]
     [BackboneType("MedicinalProductIndication.otherTherapy")]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {

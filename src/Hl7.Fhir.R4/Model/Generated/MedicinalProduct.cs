@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProduct","http://hl7.org/fhir/StructureDefinition/MedicinalProduct", IsResource=true)]
+  [FhirType("MedicinalProduct","http://hl7.org/fhir/StructureDefinition/MedicinalProduct")]
   public partial class MedicinalProduct : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#Name", IsNestedType=true)]
+    [FhirType("MedicinalProduct#Name")]
     [BackboneType("MedicinalProduct.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#NamePart", IsNestedType=true)]
+    [FhirType("MedicinalProduct#NamePart")]
     [BackboneType("MedicinalProduct.name.namePart")]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#CountryLanguage", IsNestedType=true)]
+    [FhirType("MedicinalProduct#CountryLanguage")]
     [BackboneType("MedicinalProduct.name.countryLanguage")]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#ManufacturingBusinessOperation", IsNestedType=true)]
+    [FhirType("MedicinalProduct#ManufacturingBusinessOperation")]
     [BackboneType("MedicinalProduct.manufacturingBusinessOperation")]
     public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProduct#SpecialDesignation", IsNestedType=true)]
+    [FhirType("MedicinalProduct#SpecialDesignation")]
     [BackboneType("MedicinalProduct.specialDesignation")]
     public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {

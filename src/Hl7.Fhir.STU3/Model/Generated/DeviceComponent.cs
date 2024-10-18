@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent", IsResource=true)]
+  [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent")]
   public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceComponent#ProductionSpecification", IsNestedType=true)]
+    [FhirType("DeviceComponent#ProductionSpecification")]
     [BackboneType("DeviceComponent.productionSpecification")]
     public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {

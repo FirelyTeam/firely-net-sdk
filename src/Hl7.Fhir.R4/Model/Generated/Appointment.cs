@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Appointment","http://hl7.org/fhir/StructureDefinition/Appointment", IsResource=true)]
+  [FhirType("Appointment","http://hl7.org/fhir/StructureDefinition/Appointment")]
   public partial class Appointment : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Appointment#Participant", IsNestedType=true)]
+    [FhirType("Appointment#Participant")]
     [BackboneType("Appointment.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Condition","http://hl7.org/fhir/StructureDefinition/Condition", IsResource=true)]
+  [FhirType("Condition","http://hl7.org/fhir/StructureDefinition/Condition")]
   public partial class Condition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Condition#Stage", IsNestedType=true)]
+    [FhirType("Condition#Stage")]
     [BackboneType("Condition.stage")]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Condition#Evidence", IsNestedType=true)]
+    [FhirType("Condition#Evidence")]
     [BackboneType("Condition.evidence")]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SupplyDelivery","http://hl7.org/fhir/StructureDefinition/SupplyDelivery", IsResource=true)]
+  [FhirType("SupplyDelivery","http://hl7.org/fhir/StructureDefinition/SupplyDelivery")]
   public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyDelivery#SuppliedItem", IsNestedType=true)]
+    [FhirType("SupplyDelivery#SuppliedItem")]
     [BackboneType("SupplyDelivery.suppliedItem")]
     public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
     {

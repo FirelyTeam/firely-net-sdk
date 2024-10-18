@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SearchParameter","http://hl7.org/fhir/StructureDefinition/SearchParameter", IsResource=true)]
+  [FhirType("SearchParameter","http://hl7.org/fhir/StructureDefinition/SearchParameter")]
   public partial class SearchParameter : Hl7.Fhir.Model.DomainResource, ICoded<List<Code<Hl7.Fhir.Model.ResourceType>>>
   {
     /// <summary>
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SearchParameter#Component", IsNestedType=true)]
+    [FhirType("SearchParameter#Component")]
     [BackboneType("SearchParameter.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {

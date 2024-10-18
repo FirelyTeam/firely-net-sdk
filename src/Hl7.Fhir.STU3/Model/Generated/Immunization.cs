@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Immunization","http://hl7.org/fhir/StructureDefinition/Immunization", IsResource=true)]
+  [FhirType("Immunization","http://hl7.org/fhir/StructureDefinition/Immunization")]
   public partial class Immunization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#Practitioner", IsNestedType=true)]
+    [FhirType("Immunization#Practitioner")]
     [BackboneType("Immunization.practitioner")]
     public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#Explanation", IsNestedType=true)]
+    [FhirType("Immunization#Explanation")]
     [BackboneType("Immunization.explanation")]
     public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#Reaction", IsNestedType=true)]
+    [FhirType("Immunization#Reaction")]
     [BackboneType("Immunization.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Immunization#VaccinationProtocol", IsNestedType=true)]
+    [FhirType("Immunization#VaccinationProtocol")]
     [BackboneType("Immunization.vaccinationProtocol")]
     public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement
     {

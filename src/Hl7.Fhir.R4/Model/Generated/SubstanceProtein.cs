@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceProtein","http://hl7.org/fhir/StructureDefinition/SubstanceProtein", IsResource=true)]
+  [FhirType("SubstanceProtein","http://hl7.org/fhir/StructureDefinition/SubstanceProtein")]
   public partial class SubstanceProtein : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceProtein#Subunit", IsNestedType=true)]
+    [FhirType("SubstanceProtein#Subunit")]
     [BackboneType("SubstanceProtein.subunit")]
     public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
     {

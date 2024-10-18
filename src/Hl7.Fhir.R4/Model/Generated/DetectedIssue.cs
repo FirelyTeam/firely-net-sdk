@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue", IsResource=true)]
+  [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue")]
   public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DetectedIssue#Evidence", IsNestedType=true)]
+    [FhirType("DetectedIssue#Evidence")]
     [BackboneType("DetectedIssue.evidence")]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
+    [FhirType("DetectedIssue#Mitigation")]
     [BackboneType("DetectedIssue.mitigation")]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {

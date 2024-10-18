@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition", IsResource=true)]
+  [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition")]
   public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#Property", IsNestedType=true)]
+    [FhirType("AdministrableProductDefinition#Property")]
     [BackboneType("AdministrableProductDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#RouteOfAdministration", IsNestedType=true)]
+    [FhirType("AdministrableProductDefinition#RouteOfAdministration")]
     [BackboneType("AdministrableProductDefinition.routeOfAdministration")]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#TargetSpecies", IsNestedType=true)]
+    [FhirType("AdministrableProductDefinition#TargetSpecies")]
     [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies")]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#WithdrawalPeriod", IsNestedType=true)]
+    [FhirType("AdministrableProductDefinition#WithdrawalPeriod")]
     [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod")]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {

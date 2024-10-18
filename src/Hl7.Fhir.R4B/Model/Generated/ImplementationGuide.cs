@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide", IsResource=true)]
+  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide")]
   public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -2257,7 +2257,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#DependsOn", IsNestedType=true)]
+    [FhirType("ImplementationGuide#DependsOn")]
     [BackboneType("ImplementationGuide.dependsOn")]
     public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2489,7 +2489,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Global", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Global")]
     [BackboneType("ImplementationGuide.global")]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2681,7 +2681,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Definition", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Definition")]
     [BackboneType("ImplementationGuide.definition")]
     public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -2912,7 +2912,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Grouping", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Grouping")]
     [BackboneType("ImplementationGuide.definition.grouping")]
     public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3100,7 +3100,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Resource")]
     [BackboneType("ImplementationGuide.definition.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3432,7 +3432,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Page", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Page")]
     [BackboneType("ImplementationGuide.definition.page")]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3675,7 +3675,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Parameter", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Parameter")]
     [BackboneType("ImplementationGuide.definition.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -3863,7 +3863,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Template", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Template")]
     [BackboneType("ImplementationGuide.definition.template")]
     public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -4095,7 +4095,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Manifest", IsNestedType=true)]
+    [FhirType("ImplementationGuide#Manifest")]
     [BackboneType("ImplementationGuide.manifest")]
     public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -4379,7 +4379,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
+    [FhirType("ImplementationGuide#ManifestResource")]
     [BackboneType("ImplementationGuide.manifest.resource")]
     public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -4578,7 +4578,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
+    [FhirType("ImplementationGuide#ManifestPage")]
     [BackboneType("ImplementationGuide.manifest.page")]
     public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
     {

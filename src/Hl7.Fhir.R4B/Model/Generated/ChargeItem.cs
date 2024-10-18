@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ChargeItem","http://hl7.org/fhir/StructureDefinition/ChargeItem", IsResource=true)]
+  [FhirType("ChargeItem","http://hl7.org/fhir/StructureDefinition/ChargeItem")]
   public partial class ChargeItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ChargeItem#Performer", IsNestedType=true)]
+    [FhirType("ChargeItem#Performer")]
     [BackboneType("ChargeItem.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {

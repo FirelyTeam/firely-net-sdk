@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter", IsResource=true)]
+  [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter")]
   public partial class Encounter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#StatusHistory", IsNestedType=true)]
+    [FhirType("Encounter#StatusHistory")]
     [BackboneType("Encounter.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#ClassHistory", IsNestedType=true)]
+    [FhirType("Encounter#ClassHistory")]
     [BackboneType("Encounter.classHistory")]
     public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Participant", IsNestedType=true)]
+    [FhirType("Encounter#Participant")]
     [BackboneType("Encounter.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Diagnosis", IsNestedType=true)]
+    [FhirType("Encounter#Diagnosis")]
     [BackboneType("Encounter.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -871,7 +871,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Hospitalization", IsNestedType=true)]
+    [FhirType("Encounter#Hospitalization")]
     [BackboneType("Encounter.hospitalization")]
     public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1211,7 +1211,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Location", IsNestedType=true)]
+    [FhirType("Encounter#Location")]
     [BackboneType("Encounter.location")]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {

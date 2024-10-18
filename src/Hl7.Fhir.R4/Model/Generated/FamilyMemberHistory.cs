@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("FamilyMemberHistory","http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory", IsResource=true)]
+  [FhirType("FamilyMemberHistory","http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory")]
   public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
+    [FhirType("FamilyMemberHistory#Condition")]
     [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {

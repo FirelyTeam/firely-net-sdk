@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Measure","http://hl7.org/fhir/StructureDefinition/Measure", IsResource=true)]
+  [FhirType("Measure","http://hl7.org/fhir/StructureDefinition/Measure")]
   public partial class Measure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Group", IsNestedType=true)]
+    [FhirType("Measure#Group")]
     [BackboneType("Measure.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Population", IsNestedType=true)]
+    [FhirType("Measure#Population")]
     [BackboneType("Measure.group.population")]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Stratifier", IsNestedType=true)]
+    [FhirType("Measure#Stratifier")]
     [BackboneType("Measure.group.stratifier")]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#SupplementalData", IsNestedType=true)]
+    [FhirType("Measure#SupplementalData")]
     [BackboneType("Measure.supplementalData")]
     public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
     {

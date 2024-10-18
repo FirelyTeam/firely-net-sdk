@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Schedule","http://hl7.org/fhir/StructureDefinition/Schedule", IsResource=true)]
+  [FhirType("Schedule","http://hl7.org/fhir/StructureDefinition/Schedule")]
   public partial class Schedule : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

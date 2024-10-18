@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure", IsResource=true)]
+  [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure")]
   public partial class Procedure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Procedure#Performer", IsNestedType=true)]
+    [FhirType("Procedure#Performer")]
     [BackboneType("Procedure.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Procedure#FocalDevice", IsNestedType=true)]
+    [FhirType("Procedure#FocalDevice")]
     [BackboneType("Procedure.focalDevice")]
     public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
     {

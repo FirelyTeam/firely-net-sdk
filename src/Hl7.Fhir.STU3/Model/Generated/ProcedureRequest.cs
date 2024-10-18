@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ProcedureRequest","http://hl7.org/fhir/StructureDefinition/ProcedureRequest", IsResource=true)]
+  [FhirType("ProcedureRequest","http://hl7.org/fhir/StructureDefinition/ProcedureRequest")]
   public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ProcedureRequest#Requester", IsNestedType=true)]
+    [FhirType("ProcedureRequest#Requester")]
     [BackboneType("ProcedureRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {

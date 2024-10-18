@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location", IsResource=true)]
+  [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location")]
   public partial class Location : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Location#Position", IsNestedType=true)]
+    [FhirType("Location#Position")]
     [BackboneType("Location.position")]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Location#HoursOfOperation", IsNestedType=true)]
+    [FhirType("Location#HoursOfOperation")]
     [BackboneType("Location.hoursOfOperation")]
     public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
     {

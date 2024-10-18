@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest", IsResource=true)]
+  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest")]
   public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CommunicationRequest#Payload", IsNestedType=true)]
+    [FhirType("CommunicationRequest#Payload")]
     [BackboneType("CommunicationRequest.payload")]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {

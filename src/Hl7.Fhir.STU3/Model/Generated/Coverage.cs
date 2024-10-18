@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage", IsResource=true)]
+  [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage")]
   public partial class Coverage : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#Group", IsNestedType=true)]
+    [FhirType("Coverage#Group")]
     [BackboneType("Coverage.grouping")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {

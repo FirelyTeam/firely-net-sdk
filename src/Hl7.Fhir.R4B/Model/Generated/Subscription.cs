@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
+  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription")]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#Channel", IsNestedType=true)]
+    [FhirType("Subscription#Channel")]
     [BackboneType("Subscription.channel")]
     public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
     {

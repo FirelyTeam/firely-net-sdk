@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceAmount#ReferenceRange", IsNestedType=true)]
+    [FhirType("SubstanceAmount#ReferenceRange")]
     [BackboneType("SubstanceAmount.referenceRange")]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element
     {

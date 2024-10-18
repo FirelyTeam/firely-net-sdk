@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Linkage","http://hl7.org/fhir/StructureDefinition/Linkage", IsResource=true)]
+  [FhirType("Linkage","http://hl7.org/fhir/StructureDefinition/Linkage")]
   public partial class Linkage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Linkage#Item", IsNestedType=true)]
+    [FhirType("Linkage#Item")]
     [BackboneType("Linkage.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("GraphDefinition","http://hl7.org/fhir/StructureDefinition/GraphDefinition", IsResource=true)]
+  [FhirType("GraphDefinition","http://hl7.org/fhir/StructureDefinition/GraphDefinition")]
   public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Link", IsNestedType=true)]
+    [FhirType("GraphDefinition#Link")]
     [BackboneType("GraphDefinition.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Target", IsNestedType=true)]
+    [FhirType("GraphDefinition#Target")]
     [BackboneType("GraphDefinition.link.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
+    [FhirType("GraphDefinition#Compartment")]
     [BackboneType("GraphDefinition.link.target.compartment")]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
+  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent")]
   public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Policy", IsNestedType=true)]
+    [FhirType("Consent#Policy")]
     [BackboneType("Consent.policy")]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Verification", IsNestedType=true)]
+    [FhirType("Consent#Verification")]
     [BackboneType("Consent.verification")]
     public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#provision", IsNestedType=true)]
+    [FhirType("Consent#provision")]
     [BackboneType("Consent.provision")]
     public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -981,7 +981,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#provisionActor", IsNestedType=true)]
+    [FhirType("Consent#provisionActor")]
     [BackboneType("Consent.provision.actor")]
     public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1137,7 +1137,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#provisionData", IsNestedType=true)]
+    [FhirType("Consent#provisionData")]
     [BackboneType("Consent.provision.data")]
     public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
     {

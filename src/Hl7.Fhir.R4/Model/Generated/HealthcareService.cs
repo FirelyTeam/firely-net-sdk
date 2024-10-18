@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("HealthcareService","http://hl7.org/fhir/StructureDefinition/HealthcareService", IsResource=true)]
+  [FhirType("HealthcareService","http://hl7.org/fhir/StructureDefinition/HealthcareService")]
   public partial class HealthcareService : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("HealthcareService#Eligibility", IsNestedType=true)]
+    [FhirType("HealthcareService#Eligibility")]
     [BackboneType("HealthcareService.eligibility")]
     public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("HealthcareService#AvailableTime", IsNestedType=true)]
+    [FhirType("HealthcareService#AvailableTime")]
     [BackboneType("HealthcareService.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("HealthcareService#NotAvailable", IsNestedType=true)]
+    [FhirType("HealthcareService#NotAvailable")]
     [BackboneType("HealthcareService.notAvailable")]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {

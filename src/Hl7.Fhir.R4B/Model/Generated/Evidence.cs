@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Evidence","http://hl7.org/fhir/StructureDefinition/Evidence", IsResource=true)]
+  [FhirType("Evidence","http://hl7.org/fhir/StructureDefinition/Evidence")]
   public partial class Evidence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#VariableDefinition", IsNestedType=true)]
+    [FhirType("Evidence#VariableDefinition")]
     [BackboneType("Evidence.variableDefinition")]
     public partial class VariableDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#Statistic", IsNestedType=true)]
+    [FhirType("Evidence#Statistic")]
     [BackboneType("Evidence.statistic")]
     public partial class StatisticComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#SampleSize", IsNestedType=true)]
+    [FhirType("Evidence#SampleSize")]
     [BackboneType("Evidence.statistic.sampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#AttributeEstimate", IsNestedType=true)]
+    [FhirType("Evidence#AttributeEstimate")]
     [BackboneType("Evidence.statistic.attributeEstimate")]
     public partial class AttributeEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1358,7 +1358,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#ModelCharacteristic", IsNestedType=true)]
+    [FhirType("Evidence#ModelCharacteristic")]
     [BackboneType("Evidence.statistic.modelCharacteristic")]
     public partial class ModelCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1560,7 +1560,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#Variable", IsNestedType=true)]
+    [FhirType("Evidence#Variable")]
     [BackboneType("Evidence.statistic.modelCharacteristic.variable")]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -1812,7 +1812,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#Certainty", IsNestedType=true)]
+    [FhirType("Evidence#Certainty")]
     [BackboneType("Evidence.certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {

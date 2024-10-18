@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Organization","http://hl7.org/fhir/StructureDefinition/Organization", IsResource=true)]
+  [FhirType("Organization","http://hl7.org/fhir/StructureDefinition/Organization")]
   public partial class Organization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Organization#Contact", IsNestedType=true)]
+    [FhirType("Organization#Contact")]
     [BackboneType("Organization.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {

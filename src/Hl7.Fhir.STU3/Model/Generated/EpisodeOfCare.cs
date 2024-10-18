@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EpisodeOfCare","http://hl7.org/fhir/StructureDefinition/EpisodeOfCare", IsResource=true)]
+  [FhirType("EpisodeOfCare","http://hl7.org/fhir/StructureDefinition/EpisodeOfCare")]
   public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#StatusHistory", IsNestedType=true)]
+    [FhirType("EpisodeOfCare#StatusHistory")]
     [BackboneType("EpisodeOfCare.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#Diagnosis", IsNestedType=true)]
+    [FhirType("EpisodeOfCare#Diagnosis")]
     [BackboneType("EpisodeOfCare.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {

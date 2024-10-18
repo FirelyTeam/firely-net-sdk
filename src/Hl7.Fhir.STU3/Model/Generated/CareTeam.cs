@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CareTeam","http://hl7.org/fhir/StructureDefinition/CareTeam", IsResource=true)]
+  [FhirType("CareTeam","http://hl7.org/fhir/StructureDefinition/CareTeam")]
   public partial class CareTeam : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CareTeam#Participant", IsNestedType=true)]
+    [FhirType("CareTeam#Participant")]
     [BackboneType("CareTeam.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SpecimenDefinition","http://hl7.org/fhir/StructureDefinition/SpecimenDefinition", IsResource=true)]
+  [FhirType("SpecimenDefinition","http://hl7.org/fhir/StructureDefinition/SpecimenDefinition")]
   public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SpecimenDefinition#TypeTested", IsNestedType=true)]
+    [FhirType("SpecimenDefinition#TypeTested")]
     [BackboneType("SpecimenDefinition.typeTested")]
     public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SpecimenDefinition#Container", IsNestedType=true)]
+    [FhirType("SpecimenDefinition#Container")]
     [BackboneType("SpecimenDefinition.typeTested.container")]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SpecimenDefinition#Additive", IsNestedType=true)]
+    [FhirType("SpecimenDefinition#Additive")]
     [BackboneType("SpecimenDefinition.typeTested.container.additive")]
     public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SpecimenDefinition#Handling", IsNestedType=true)]
+    [FhirType("SpecimenDefinition#Handling")]
     [BackboneType("SpecimenDefinition.typeTested.handling")]
     public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
     {

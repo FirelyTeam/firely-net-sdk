@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DataElement","http://hl7.org/fhir/StructureDefinition/DataElement", IsResource=true)]
+  [FhirType("DataElement","http://hl7.org/fhir/StructureDefinition/DataElement")]
   public partial class DataElement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataElement#Mapping", IsNestedType=true)]
+    [FhirType("DataElement#Mapping")]
     [BackboneType("DataElement.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {

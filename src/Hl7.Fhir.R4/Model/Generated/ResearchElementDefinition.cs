@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ResearchElementDefinition","http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition", IsResource=true)]
+  [FhirType("ResearchElementDefinition","http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition")]
   public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
+    [FhirType("ResearchElementDefinition#Characteristic")]
     [BackboneType("ResearchElementDefinition.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {

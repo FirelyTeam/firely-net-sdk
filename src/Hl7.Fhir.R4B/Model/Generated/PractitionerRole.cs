@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("PractitionerRole","http://hl7.org/fhir/StructureDefinition/PractitionerRole", IsResource=true)]
+  [FhirType("PractitionerRole","http://hl7.org/fhir/StructureDefinition/PractitionerRole")]
   public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PractitionerRole#AvailableTime", IsNestedType=true)]
+    [FhirType("PractitionerRole#AvailableTime")]
     [BackboneType("PractitionerRole.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PractitionerRole#NotAvailable", IsNestedType=true)]
+    [FhirType("PractitionerRole#NotAvailable")]
     [BackboneType("PractitionerRole.notAvailable")]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {

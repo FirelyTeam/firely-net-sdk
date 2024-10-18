@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Person","http://hl7.org/fhir/StructureDefinition/Person", IsResource=true)]
+  [FhirType("Person","http://hl7.org/fhir/StructureDefinition/Person")]
   public partial class Person : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Person#Link", IsNestedType=true)]
+    [FhirType("Person#Link")]
     [BackboneType("Person.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {

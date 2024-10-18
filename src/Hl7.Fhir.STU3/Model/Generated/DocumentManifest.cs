@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DocumentManifest","http://hl7.org/fhir/StructureDefinition/DocumentManifest", IsResource=true)]
+  [FhirType("DocumentManifest","http://hl7.org/fhir/StructureDefinition/DocumentManifest")]
   public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentManifest#Content", IsNestedType=true)]
+    [FhirType("DocumentManifest#Content")]
     [BackboneType("DocumentManifest.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentManifest#Related", IsNestedType=true)]
+    [FhirType("DocumentManifest#Related")]
     [BackboneType("DocumentManifest.related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {

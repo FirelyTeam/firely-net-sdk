@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceMetric","http://hl7.org/fhir/StructureDefinition/DeviceMetric", IsResource=true)]
+  [FhirType("DeviceMetric","http://hl7.org/fhir/StructureDefinition/DeviceMetric")]
   public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceMetric#Calibration", IsNestedType=true)]
+    [FhirType("DeviceMetric#Calibration")]
     [BackboneType("DeviceMetric.calibration")]
     public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement
     {
