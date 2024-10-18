@@ -8,6 +8,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -136,6 +137,18 @@ public abstract partial class Base : IScopedNode,
             _ => $"{ScopeInfo.Name}"
         };
 
+    bool IScopedNode.TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
+    {
+        result = this is Bundle b ? b.Entry.FirstOrDefault(entry => entry.FullUrl == fullUrl) : null;
+        return result is not null;
+    }
+
+    bool IScopedNode.TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
+    {
+        result = this is DomainResource dr ? dr.Contained.FirstOrDefault(contained => contained.Id == id) : null;
+        return result is not null;
+    }
+
     IElementDefinitionSummary? ITypedElement.Definition => null;
 
     #endregion
@@ -144,13 +157,17 @@ public abstract partial class Base : IScopedNode,
 
     string IScopedNode.Name => ScopeInfo.Name;
 
-    string IScopedNode.InstanceType =>
-        ((IStructureDefinitionSummary)
-            ModelInspector
-                .ForType(this.GetType())
-                .FindOrImportClassMapping(this.GetType())!
-        ).TypeName;
-
+    NodeType IScopedNode.Type =>
+        this switch
+        {
+            Bundle => NodeType.Bundle | NodeType.Resource,
+            PrimitiveType => NodeType.Primitive,
+            DomainResource => NodeType.DomainResource | NodeType.Resource,
+            Resource => NodeType.Resource,
+            ResourceReference => NodeType.Reference,
+            _ => 0
+        };
+    
     object? IScopedNode.Value
     {
         get
