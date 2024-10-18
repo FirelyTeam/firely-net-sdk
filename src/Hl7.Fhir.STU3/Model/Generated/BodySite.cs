@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("BodySite","http://hl7.org/fhir/StructureDefinition/BodySite", IsResource=true)]
+  [FhirType("BodySite","http://hl7.org/fhir/StructureDefinition/BodySite")]
   public partial class BodySite : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Slot","http://hl7.org/fhir/StructureDefinition/Slot", IsResource=true)]
+  [FhirType("Slot","http://hl7.org/fhir/StructureDefinition/Slot")]
   public partial class Slot : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

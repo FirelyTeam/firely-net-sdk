@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("AllergyIntolerance","http://hl7.org/fhir/StructureDefinition/AllergyIntolerance", IsResource=true)]
+  [FhirType("AllergyIntolerance","http://hl7.org/fhir/StructureDefinition/AllergyIntolerance")]
   public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -242,14 +242,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
-    [BackboneType("AllergyIntolerance.reaction")]
+    [FhirType("AllergyIntolerance.reaction", IsBackboneType=true)]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AllergyIntolerance#Reaction"; } }
+      public override string TypeName { get { return "AllergyIntolerance.reaction"; } }
 
       /// <summary>
       /// Specific substance or pharmaceutical product considered to be responsible for event

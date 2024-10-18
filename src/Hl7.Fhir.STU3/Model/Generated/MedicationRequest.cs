@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest", IsResource=true)]
+  [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest")]
   public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -193,14 +193,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationRequest#Requester", IsNestedType=true)]
-    [BackboneType("MedicationRequest.requester")]
+    [FhirType("MedicationRequest.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationRequest#Requester"; } }
+      public override string TypeName { get { return "MedicationRequest.requester"; } }
 
       /// <summary>
       /// Who ordered the initial medication(s)
@@ -349,14 +348,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
-    [BackboneType("MedicationRequest.dispenseRequest")]
+    [FhirType("MedicationRequest.dispenseRequest", IsBackboneType=true)]
     public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationRequest#DispenseRequest"; } }
+      public override string TypeName { get { return "MedicationRequest.dispenseRequest"; } }
 
       /// <summary>
       /// Time period supply is authorized for
@@ -595,14 +593,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
-    [BackboneType("MedicationRequest.substitution")]
+    [FhirType("MedicationRequest.substitution", IsBackboneType=true)]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationRequest#Substitution"; } }
+      public override string TypeName { get { return "MedicationRequest.substitution"; } }
 
       /// <summary>
       /// Whether substitution is allowed or not

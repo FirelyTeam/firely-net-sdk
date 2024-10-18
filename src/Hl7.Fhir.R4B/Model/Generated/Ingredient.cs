@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Ingredient","http://hl7.org/fhir/StructureDefinition/Ingredient", IsResource=true)]
+  [FhirType("Ingredient","http://hl7.org/fhir/StructureDefinition/Ingredient")]
   public partial class Ingredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -92,14 +92,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#Manufacturer", IsNestedType=true)]
-    [BackboneType("Ingredient.manufacturer")]
+    [FhirType("Ingredient.manufacturer", IsBackboneType=true)]
     public partial class ManufacturerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient#Manufacturer"; } }
+      public override string TypeName { get { return "Ingredient.manufacturer"; } }
 
       /// <summary>
       /// allowed | possible | actual
@@ -263,14 +262,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#Substance", IsNestedType=true)]
-    [BackboneType("Ingredient.substance")]
+    [FhirType("Ingredient.substance", IsBackboneType=true)]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient#Substance"; } }
+      public override string TypeName { get { return "Ingredient.substance"; } }
 
       /// <summary>
       /// A code or full resource that represents the ingredient substance
@@ -417,14 +415,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#Strength", IsNestedType=true)]
-    [BackboneType("Ingredient.substance.strength")]
+    [FhirType("Ingredient.substance.strength", IsBackboneType=true)]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient#Strength"; } }
+      public override string TypeName { get { return "Ingredient.substance.strength"; } }
 
       /// <summary>
       /// The quantity of substance in the unit of presentation
@@ -754,14 +751,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Ingredient#ReferenceStrength", IsNestedType=true)]
-    [BackboneType("Ingredient.substance.strength.referenceStrength")]
+    [FhirType("Ingredient.substance.strength.referenceStrength", IsBackboneType=true)]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient#ReferenceStrength"; } }
+      public override string TypeName { get { return "Ingredient.substance.strength.referenceStrength"; } }
 
       /// <summary>
       /// Relevant reference substance

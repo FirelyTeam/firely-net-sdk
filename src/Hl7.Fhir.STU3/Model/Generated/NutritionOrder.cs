@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionOrder","http://hl7.org/fhir/StructureDefinition/NutritionOrder", IsResource=true)]
+  [FhirType("NutritionOrder","http://hl7.org/fhir/StructureDefinition/NutritionOrder")]
   public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -132,14 +132,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#OralDiet", IsNestedType=true)]
-    [BackboneType("NutritionOrder.oralDiet")]
+    [FhirType("NutritionOrder.oralDiet", IsBackboneType=true)]
     public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#OralDiet"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet"; } }
 
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally
@@ -408,14 +407,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Nutrient", IsNestedType=true)]
-    [BackboneType("NutritionOrder.oralDiet.nutrient")]
+    [FhirType("NutritionOrder.oralDiet.nutrient", IsBackboneType=true)]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Nutrient"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet.nutrient"; } }
 
       /// <summary>
       /// Type of nutrient that is being modified
@@ -560,14 +558,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Texture", IsNestedType=true)]
-    [BackboneType("NutritionOrder.oralDiet.texture")]
+    [FhirType("NutritionOrder.oralDiet.texture", IsBackboneType=true)]
     public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Texture"; } }
+      public override string TypeName { get { return "NutritionOrder.oralDiet.texture"; } }
 
       /// <summary>
       /// Code to indicate how to alter the texture of the foods, e.g. pureed
@@ -713,14 +710,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Supplement", IsNestedType=true)]
-    [BackboneType("NutritionOrder.supplement")]
+    [FhirType("NutritionOrder.supplement", IsBackboneType=true)]
     public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Supplement"; } }
+      public override string TypeName { get { return "NutritionOrder.supplement"; } }
 
       /// <summary>
       /// Type of supplement product requested
@@ -977,14 +973,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#EnteralFormula", IsNestedType=true)]
-    [BackboneType("NutritionOrder.enteralFormula")]
+    [FhirType("NutritionOrder.enteralFormula", IsBackboneType=true)]
     public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#EnteralFormula"; } }
+      public override string TypeName { get { return "NutritionOrder.enteralFormula"; } }
 
       /// <summary>
       /// Type of enteral or infant formula
@@ -1362,14 +1357,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionOrder#Administration", IsNestedType=true)]
-    [BackboneType("NutritionOrder.enteralFormula.administration")]
+    [FhirType("NutritionOrder.enteralFormula.administration", IsBackboneType=true)]
     public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder#Administration"; } }
+      public override string TypeName { get { return "NutritionOrder.enteralFormula.administration"; } }
 
       /// <summary>
       /// Scheduled frequency of enteral feeding

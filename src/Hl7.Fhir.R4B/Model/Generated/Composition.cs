@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition", IsResource=true)]
+  [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition")]
   public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -149,14 +149,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Attester", IsNestedType=true)]
-    [BackboneType("Composition.attester")]
+    [FhirType("Composition.attester", IsBackboneType=true)]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#Attester"; } }
+      public override string TypeName { get { return "Composition.attester"; } }
 
       /// <summary>
       /// personal | professional | legal | official
@@ -367,14 +366,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#RelatesTo", IsNestedType=true)]
-    [BackboneType("Composition.relatesTo")]
+    [FhirType("Composition.relatesTo", IsBackboneType=true)]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#RelatesTo"; } }
+      public override string TypeName { get { return "Composition.relatesTo"; } }
 
       /// <summary>
       /// replaces | transforms | signs | appends
@@ -544,14 +542,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Event", IsNestedType=true)]
-    [BackboneType("Composition.event")]
+    [FhirType("Composition.event", IsBackboneType=true)]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#Event"; } }
+      public override string TypeName { get { return "Composition.event"; } }
 
       /// <summary>
       /// Code(s) that apply to the event being documented
@@ -725,14 +722,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Composition#Section", IsNestedType=true)]
-    [BackboneType("Composition.section")]
+    [FhirType("Composition.section", IsBackboneType=true)]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition#Section"; } }
+      public override string TypeName { get { return "Composition.section"; } }
 
       /// <summary>
       /// Label for section (e.g. for ToC)

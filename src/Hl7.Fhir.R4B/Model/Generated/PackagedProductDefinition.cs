@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("PackagedProductDefinition","http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition", IsResource=true)]
+  [FhirType("PackagedProductDefinition","http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition")]
   public partial class PackagedProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#LegalStatusOfSupply", IsNestedType=true)]
-    [BackboneType("PackagedProductDefinition.legalStatusOfSupply")]
+    [FhirType("PackagedProductDefinition.legalStatusOfSupply", IsBackboneType=true)]
     public partial class LegalStatusOfSupplyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#LegalStatusOfSupply"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.legalStatusOfSupply"; } }
 
       /// <summary>
       /// The actual status of supply. In what situation this package type may be supplied for use
@@ -214,14 +213,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#Package", IsNestedType=true)]
-    [BackboneType("PackagedProductDefinition.package")]
+    [FhirType("PackagedProductDefinition.package", IsBackboneType=true)]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#Package"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.package"; } }
 
       /// <summary>
       /// An identifier that is specific to this particular part of the packaging. Including possibly a Data Carrier Identifier
@@ -593,14 +591,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#ShelfLifeStorage", IsNestedType=true)]
-    [BackboneType("PackagedProductDefinition.package.shelfLifeStorage")]
+    [FhirType("PackagedProductDefinition.package.shelfLifeStorage", IsBackboneType=true)]
     public partial class ShelfLifeStorageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#ShelfLifeStorage"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.package.shelfLifeStorage"; } }
 
       /// <summary>
       /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
@@ -769,14 +766,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#Property", IsNestedType=true)]
-    [BackboneType("PackagedProductDefinition.package.property")]
+    [FhirType("PackagedProductDefinition.package.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#Property"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.package.property"; } }
 
       /// <summary>
       /// A code expressing the type of characteristic
@@ -921,14 +917,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("PackagedProductDefinition#ContainedItem", IsNestedType=true)]
-    [BackboneType("PackagedProductDefinition.package.containedItem")]
+    [FhirType("PackagedProductDefinition.package.containedItem", IsBackboneType=true)]
     public partial class ContainedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition#ContainedItem"; } }
+      public override string TypeName { get { return "PackagedProductDefinition.package.containedItem"; } }
 
       /// <summary>
       /// The actual item(s) of medication, as manufactured, or a device, or other medically related item (food, biologicals, raw materials, medical fluids, gases etc.), as contained in the package

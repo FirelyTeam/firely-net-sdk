@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Flag","http://hl7.org/fhir/StructureDefinition/Flag", IsResource=true)]
+  [FhirType("Flag","http://hl7.org/fhir/StructureDefinition/Flag")]
   public partial class Flag : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire", IsResource=true)]
+  [FhirType("Questionnaire","http://hl7.org/fhir/StructureDefinition/Questionnaire")]
   public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -174,14 +174,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#Item", IsNestedType=true)]
-    [BackboneType("Questionnaire.item")]
+    [FhirType("Questionnaire.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#Item"; } }
+      public override string TypeName { get { return "Questionnaire.item"; } }
 
       /// <summary>
       /// Unique id for item in questionnaire
@@ -829,14 +828,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
-    [BackboneType("Questionnaire.item.enableWhen")]
+    [FhirType("Questionnaire.item.enableWhen", IsBackboneType=true)]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#EnableWhen"; } }
+      public override string TypeName { get { return "Questionnaire.item.enableWhen"; } }
 
       /// <summary>
       /// Question that determines whether item is enabled
@@ -1047,14 +1045,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Questionnaire#Option", IsNestedType=true)]
-    [BackboneType("Questionnaire.item.option")]
+    [FhirType("Questionnaire.item.option", IsBackboneType=true)]
     public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire#Option"; } }
+      public override string TypeName { get { return "Questionnaire.item.option"; } }
 
       /// <summary>
       /// Answer value

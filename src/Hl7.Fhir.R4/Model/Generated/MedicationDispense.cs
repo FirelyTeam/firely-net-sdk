@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense", IsResource=true)]
+  [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense")]
   public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.DataType>
   {
     /// <summary>
@@ -131,14 +131,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationDispense#Performer", IsNestedType=true)]
-    [BackboneType("MedicationDispense.performer")]
+    [FhirType("MedicationDispense.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationDispense#Performer"; } }
+      public override string TypeName { get { return "MedicationDispense.performer"; } }
 
       /// <summary>
       /// Who performed the dispense and what they did
@@ -286,14 +285,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
-    [BackboneType("MedicationDispense.substitution")]
+    [FhirType("MedicationDispense.substitution", IsBackboneType=true)]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationDispense#Substitution"; } }
+      public override string TypeName { get { return "MedicationDispense.substitution"; } }
 
       /// <summary>
       /// Whether a substitution was or was not performed on the dispense

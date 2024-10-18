@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CarePlan","http://hl7.org/fhir/StructureDefinition/CarePlan", IsResource=true)]
+  [FhirType("CarePlan","http://hl7.org/fhir/StructureDefinition/CarePlan")]
   public partial class CarePlan : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -205,14 +205,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Activity", IsNestedType=true)]
-    [BackboneType("CarePlan.activity")]
+    [FhirType("CarePlan.activity", IsBackboneType=true)]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan#Activity"; } }
+      public override string TypeName { get { return "CarePlan.activity"; } }
 
       /// <summary>
       /// Results of the activity
@@ -439,14 +438,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CarePlan#Detail", IsNestedType=true)]
-    [BackboneType("CarePlan.activity.detail")]
+    [FhirType("CarePlan.activity.detail", IsBackboneType=true)]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan#Detail"; } }
+      public override string TypeName { get { return "CarePlan.activity.detail"; } }
 
       /// <summary>
       /// diet | drug | encounter | observation | procedure | supply | other

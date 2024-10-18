@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("BiologicallyDerivedProduct","http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct", IsResource=true)]
+  [FhirType("BiologicallyDerivedProduct","http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct")]
   public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -156,14 +156,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProduct#Collection", IsNestedType=true)]
-    [BackboneType("BiologicallyDerivedProduct.collection")]
+    [FhirType("BiologicallyDerivedProduct.collection", IsBackboneType=true)]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct#Collection"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProduct.collection"; } }
 
       /// <summary>
       /// Individual performing collection
@@ -338,14 +337,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProduct#Processing", IsNestedType=true)]
-    [BackboneType("BiologicallyDerivedProduct.processing")]
+    [FhirType("BiologicallyDerivedProduct.processing", IsBackboneType=true)]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct#Processing"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProduct.processing"; } }
 
       /// <summary>
       /// Description of of processing
@@ -562,14 +560,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProduct#Manipulation", IsNestedType=true)]
-    [BackboneType("BiologicallyDerivedProduct.manipulation")]
+    [FhirType("BiologicallyDerivedProduct.manipulation", IsBackboneType=true)]
     public partial class ManipulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct#Manipulation"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProduct.manipulation"; } }
 
       /// <summary>
       /// Description of manipulation
@@ -730,14 +727,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("BiologicallyDerivedProduct#Storage", IsNestedType=true)]
-    [BackboneType("BiologicallyDerivedProduct.storage")]
+    [FhirType("BiologicallyDerivedProduct.storage", IsBackboneType=true)]
     public partial class StorageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct#Storage"; } }
+      public override string TypeName { get { return "BiologicallyDerivedProduct.storage"; } }
 
       /// <summary>
       /// Description of storage

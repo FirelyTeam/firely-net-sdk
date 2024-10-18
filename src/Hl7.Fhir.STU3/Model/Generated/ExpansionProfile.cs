@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ExpansionProfile","http://hl7.org/fhir/StructureDefinition/ExpansionProfile", IsResource=true)]
+  [FhirType("ExpansionProfile","http://hl7.org/fhir/StructureDefinition/ExpansionProfile")]
   public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.fixedVersion")]
+    [FhirType("ExpansionProfile.fixedVersion", IsBackboneType=true)]
     public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#FixedVersion"; } }
+      public override string TypeName { get { return "ExpansionProfile.fixedVersion"; } }
 
       /// <summary>
       /// System to have its version fixed
@@ -331,14 +330,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.excludedSystem")]
+    [FhirType("ExpansionProfile.excludedSystem", IsBackboneType=true)]
     public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#ExcludedSystem"; } }
+      public override string TypeName { get { return "ExpansionProfile.excludedSystem"; } }
 
       /// <summary>
       /// The specific code system to be excluded
@@ -519,14 +517,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.designation")]
+    [FhirType("ExpansionProfile.designation", IsBackboneType=true)]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#Designation"; } }
+      public override string TypeName { get { return "ExpansionProfile.designation"; } }
 
       /// <summary>
       /// Designations to be included
@@ -667,14 +664,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.designation.include")]
+    [FhirType("ExpansionProfile.designation.include", IsBackboneType=true)]
     public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#DesignationInclude"; } }
+      public override string TypeName { get { return "ExpansionProfile.designation.include"; } }
 
       /// <summary>
       /// The designation to be included
@@ -795,14 +791,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.designation.include.designation")]
+    [FhirType("ExpansionProfile.designation.include.designation", IsBackboneType=true)]
     public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#DesignationIncludeDesignation"; } }
+      public override string TypeName { get { return "ExpansionProfile.designation.include.designation"; } }
 
       /// <summary>
       /// Human language of the designation to be included
@@ -963,14 +958,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.designation.exclude")]
+    [FhirType("ExpansionProfile.designation.exclude", IsBackboneType=true)]
     public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#DesignationExclude"; } }
+      public override string TypeName { get { return "ExpansionProfile.designation.exclude"; } }
 
       /// <summary>
       /// The designation to be excluded
@@ -1091,14 +1085,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
-    [BackboneType("ExpansionProfile.designation.exclude.designation")]
+    [FhirType("ExpansionProfile.designation.exclude.designation", IsBackboneType=true)]
     public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile#DesignationExcludeDesignation"; } }
+      public override string TypeName { get { return "ExpansionProfile.designation.exclude.designation"; } }
 
       /// <summary>
       /// Human language of the designation to be excluded

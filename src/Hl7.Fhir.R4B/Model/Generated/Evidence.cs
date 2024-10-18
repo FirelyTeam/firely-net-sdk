@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Evidence","http://hl7.org/fhir/StructureDefinition/Evidence", IsResource=true)]
+  [FhirType("Evidence","http://hl7.org/fhir/StructureDefinition/Evidence")]
   public partial class Evidence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#VariableDefinition", IsNestedType=true)]
-    [BackboneType("Evidence.variableDefinition")]
+    [FhirType("Evidence.variableDefinition", IsBackboneType=true)]
     public partial class VariableDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#VariableDefinition"; } }
+      public override string TypeName { get { return "Evidence.variableDefinition"; } }
 
       /// <summary>
       /// A text description or summary of the variable
@@ -338,14 +337,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#Statistic", IsNestedType=true)]
-    [BackboneType("Evidence.statistic")]
+    [FhirType("Evidence.statistic", IsBackboneType=true)]
     public partial class StatisticComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#Statistic"; } }
+      public override string TypeName { get { return "Evidence.statistic"; } }
 
       /// <summary>
       /// Description of content
@@ -744,14 +742,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#SampleSize", IsNestedType=true)]
-    [BackboneType("Evidence.statistic.sampleSize")]
+    [FhirType("Evidence.statistic.sampleSize", IsBackboneType=true)]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#SampleSize"; } }
+      public override string TypeName { get { return "Evidence.statistic.sampleSize"; } }
 
       /// <summary>
       /// Textual description of sample size for statistic
@@ -1043,14 +1040,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#AttributeEstimate", IsNestedType=true)]
-    [BackboneType("Evidence.statistic.attributeEstimate")]
+    [FhirType("Evidence.statistic.attributeEstimate", IsBackboneType=true)]
     public partial class AttributeEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#AttributeEstimate"; } }
+      public override string TypeName { get { return "Evidence.statistic.attributeEstimate"; } }
 
       /// <summary>
       /// Textual description of the attribute estimate
@@ -1358,14 +1354,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#ModelCharacteristic", IsNestedType=true)]
-    [BackboneType("Evidence.statistic.modelCharacteristic")]
+    [FhirType("Evidence.statistic.modelCharacteristic", IsBackboneType=true)]
     public partial class ModelCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#ModelCharacteristic"; } }
+      public override string TypeName { get { return "Evidence.statistic.modelCharacteristic"; } }
 
       /// <summary>
       /// Model specification
@@ -1560,14 +1555,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#Variable", IsNestedType=true)]
-    [BackboneType("Evidence.statistic.modelCharacteristic.variable")]
+    [FhirType("Evidence.statistic.modelCharacteristic.variable", IsBackboneType=true)]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#Variable"; } }
+      public override string TypeName { get { return "Evidence.statistic.modelCharacteristic.variable"; } }
 
       /// <summary>
       /// Description of the variable
@@ -1812,14 +1806,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Evidence#Certainty", IsNestedType=true)]
-    [BackboneType("Evidence.certainty")]
+    [FhirType("Evidence.certainty", IsBackboneType=true)]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence#Certainty"; } }
+      public override string TypeName { get { return "Evidence.certainty"; } }
 
       /// <summary>
       /// Textual description of certainty

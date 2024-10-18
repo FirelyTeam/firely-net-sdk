@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionProduct","http://hl7.org/fhir/StructureDefinition/NutritionProduct", IsResource=true)]
+  [FhirType("NutritionProduct","http://hl7.org/fhir/StructureDefinition/NutritionProduct")]
   public partial class NutritionProduct : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#Nutrient", IsNestedType=true)]
-    [BackboneType("NutritionProduct.nutrient")]
+    [FhirType("NutritionProduct.nutrient", IsBackboneType=true)]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct#Nutrient"; } }
+      public override string TypeName { get { return "NutritionProduct.nutrient"; } }
 
       /// <summary>
       /// The (relevant) nutrients in the product
@@ -245,14 +244,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#Ingredient", IsNestedType=true)]
-    [BackboneType("NutritionProduct.ingredient")]
+    [FhirType("NutritionProduct.ingredient", IsBackboneType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct#Ingredient"; } }
+      public override string TypeName { get { return "NutritionProduct.ingredient"; } }
 
       /// <summary>
       /// The ingredient contained in the product
@@ -395,14 +393,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#ProductCharacteristic", IsNestedType=true)]
-    [BackboneType("NutritionProduct.productCharacteristic")]
+    [FhirType("NutritionProduct.productCharacteristic", IsBackboneType=true)]
     public partial class ProductCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct#ProductCharacteristic"; } }
+      public override string TypeName { get { return "NutritionProduct.productCharacteristic"; } }
 
       /// <summary>
       /// Code specifying the type of characteristic
@@ -551,14 +548,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NutritionProduct#Instance", IsNestedType=true)]
-    [BackboneType("NutritionProduct.instance")]
+    [FhirType("NutritionProduct.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct#Instance"; } }
+      public override string TypeName { get { return "NutritionProduct.instance"; } }
 
       /// <summary>
       /// The amount of items or instances

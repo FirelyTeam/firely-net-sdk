@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ResearchStudy","http://hl7.org/fhir/StructureDefinition/ResearchStudy", IsResource=true)]
+  [FhirType("ResearchStudy","http://hl7.org/fhir/StructureDefinition/ResearchStudy")]
   public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -114,14 +114,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchStudy#Arm", IsNestedType=true)]
-    [BackboneType("ResearchStudy.arm")]
+    [FhirType("ResearchStudy.arm", IsBackboneType=true)]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy#Arm"; } }
+      public override string TypeName { get { return "ResearchStudy.arm"; } }
 
       /// <summary>
       /// Label for study arm

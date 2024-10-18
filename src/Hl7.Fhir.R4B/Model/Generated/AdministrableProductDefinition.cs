@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition", IsResource=true)]
+  [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition")]
   public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#Property", IsNestedType=true)]
-    [BackboneType("AdministrableProductDefinition.property")]
+    [FhirType("AdministrableProductDefinition.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition#Property"; } }
+      public override string TypeName { get { return "AdministrableProductDefinition.property"; } }
 
       /// <summary>
       /// A code expressing the type of characteristic
@@ -245,14 +244,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#RouteOfAdministration", IsNestedType=true)]
-    [BackboneType("AdministrableProductDefinition.routeOfAdministration")]
+    [FhirType("AdministrableProductDefinition.routeOfAdministration", IsBackboneType=true)]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition#RouteOfAdministration"; } }
+      public override string TypeName { get { return "AdministrableProductDefinition.routeOfAdministration"; } }
 
       /// <summary>
       /// Coded expression for the route
@@ -521,14 +519,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#TargetSpecies", IsNestedType=true)]
-    [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies")]
+    [FhirType("AdministrableProductDefinition.routeOfAdministration.targetSpecies", IsBackboneType=true)]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition#TargetSpecies"; } }
+      public override string TypeName { get { return "AdministrableProductDefinition.routeOfAdministration.targetSpecies"; } }
 
       /// <summary>
       /// Coded expression for the species
@@ -672,14 +669,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdministrableProductDefinition#WithdrawalPeriod", IsNestedType=true)]
-    [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod")]
+    [FhirType("AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod", IsBackboneType=true)]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition#WithdrawalPeriod"; } }
+      public override string TypeName { get { return "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod"; } }
 
       /// <summary>
       /// The type of tissue for which the withdrawal period applies, e.g. meat, milk

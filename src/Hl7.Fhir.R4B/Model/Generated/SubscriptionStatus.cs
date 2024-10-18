@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SubscriptionStatus","http://hl7.org/fhir/StructureDefinition/SubscriptionStatus", IsResource=true)]
+  [FhirType("SubscriptionStatus","http://hl7.org/fhir/StructureDefinition/SubscriptionStatus")]
   public partial class SubscriptionStatus : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionStatus#NotificationEvent", IsNestedType=true)]
-    [BackboneType("SubscriptionStatus.notificationEvent")]
+    [FhirType("SubscriptionStatus.notificationEvent", IsBackboneType=true)]
     public partial class NotificationEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionStatus#NotificationEvent"; } }
+      public override string TypeName { get { return "SubscriptionStatus.notificationEvent"; } }
 
       /// <summary>
       /// Event number

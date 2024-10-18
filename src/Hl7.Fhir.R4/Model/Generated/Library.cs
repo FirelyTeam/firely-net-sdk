@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Library","http://hl7.org/fhir/StructureDefinition/Library", IsResource=true)]
+  [FhirType("Library","http://hl7.org/fhir/StructureDefinition/Library")]
   public partial class Library : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>

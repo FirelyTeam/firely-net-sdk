@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue", IsResource=true)]
+  [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue")]
   public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DetectedIssue#Evidence", IsNestedType=true)]
-    [BackboneType("DetectedIssue.evidence")]
+    [FhirType("DetectedIssue.evidence", IsBackboneType=true)]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DetectedIssue#Evidence"; } }
+      public override string TypeName { get { return "DetectedIssue.evidence"; } }
 
       /// <summary>
       /// Manifestation
@@ -251,14 +250,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
-    [BackboneType("DetectedIssue.mitigation")]
+    [FhirType("DetectedIssue.mitigation", IsBackboneType=true)]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DetectedIssue#Mitigation"; } }
+      public override string TypeName { get { return "DetectedIssue.mitigation"; } }
 
       /// <summary>
       /// What mitigation?

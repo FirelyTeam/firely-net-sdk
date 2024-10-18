@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductDefinition","http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition", IsResource=true)]
+  [FhirType("MedicinalProductDefinition","http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition")]
   public partial class MedicinalProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#Contact", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.contact")]
+    [FhirType("MedicinalProductDefinition.contact", IsBackboneType=true)]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#Contact"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.contact"; } }
 
       /// <summary>
       /// Allows the contact to be classified, for example QPPV, Pharmacovigilance Enquiry Information
@@ -216,14 +215,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#Name", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.name")]
+    [FhirType("MedicinalProductDefinition.name", IsBackboneType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#Name"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.name"; } }
 
       /// <summary>
       /// The full product name
@@ -436,14 +434,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#NamePart", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.name.namePart")]
+    [FhirType("MedicinalProductDefinition.name.namePart", IsBackboneType=true)]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#NamePart"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.name.namePart"; } }
 
       /// <summary>
       /// A fragment of a product name
@@ -608,14 +605,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#CountryLanguage", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.name.countryLanguage")]
+    [FhirType("MedicinalProductDefinition.name.countryLanguage", IsBackboneType=true)]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#CountryLanguage"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.name.countryLanguage"; } }
 
       /// <summary>
       /// Country code for where this name applies
@@ -789,14 +785,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#CrossReference", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.crossReference")]
+    [FhirType("MedicinalProductDefinition.crossReference", IsBackboneType=true)]
     public partial class CrossReferenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#CrossReference"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.crossReference"; } }
 
       /// <summary>
       /// Reference to another product, e.g. for linking authorised to investigational product
@@ -942,14 +937,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#Operation", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.operation")]
+    [FhirType("MedicinalProductDefinition.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#Operation"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.operation"; } }
 
       /// <summary>
       /// The type of manufacturing operation e.g. manufacturing itself, re-packaging
@@ -1147,14 +1141,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductDefinition#Characteristic", IsNestedType=true)]
-    [BackboneType("MedicinalProductDefinition.characteristic")]
+    [FhirType("MedicinalProductDefinition.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition#Characteristic"; } }
+      public override string TypeName { get { return "MedicinalProductDefinition.characteristic"; } }
 
       /// <summary>
       /// A code expressing the type of characteristic

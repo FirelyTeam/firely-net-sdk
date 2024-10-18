@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic", IsResource=true)]
+  [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic")]
   public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -217,14 +217,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
-    [BackboneType("SubscriptionTopic.resourceTrigger")]
+    [FhirType("SubscriptionTopic.resourceTrigger", IsBackboneType=true)]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic#ResourceTrigger"; } }
+      public override string TypeName { get { return "SubscriptionTopic.resourceTrigger"; } }
 
       /// <summary>
       /// Text representation of the resource trigger
@@ -520,14 +519,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
-    [BackboneType("SubscriptionTopic.resourceTrigger.queryCriteria")]
+    [FhirType("SubscriptionTopic.resourceTrigger.queryCriteria", IsBackboneType=true)]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic#QueryCriteria"; } }
+      public override string TypeName { get { return "SubscriptionTopic.resourceTrigger.queryCriteria"; } }
 
       /// <summary>
       /// Rule applied to previous resource state
@@ -840,14 +838,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#EventTrigger", IsNestedType=true)]
-    [BackboneType("SubscriptionTopic.eventTrigger")]
+    [FhirType("SubscriptionTopic.eventTrigger", IsBackboneType=true)]
     public partial class EventTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic#EventTrigger"; } }
+      public override string TypeName { get { return "SubscriptionTopic.eventTrigger"; } }
 
       /// <summary>
       /// Text representation of the event trigger
@@ -1056,14 +1053,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
-    [BackboneType("SubscriptionTopic.canFilterBy")]
+    [FhirType("SubscriptionTopic.canFilterBy", IsBackboneType=true)]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic#CanFilterBy"; } }
+      public override string TypeName { get { return "SubscriptionTopic.canFilterBy"; } }
 
       /// <summary>
       /// Description of this filter parameter
@@ -1377,14 +1373,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubscriptionTopic#NotificationShape", IsNestedType=true)]
-    [BackboneType("SubscriptionTopic.notificationShape")]
+    [FhirType("SubscriptionTopic.notificationShape", IsBackboneType=true)]
     public partial class NotificationShapeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic#NotificationShape"; } }
+      public override string TypeName { get { return "SubscriptionTopic.notificationShape"; } }
 
       /// <summary>
       /// URL of the Resource that is the focus (main) resource in a notification shape

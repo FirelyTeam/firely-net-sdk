@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Group","http://hl7.org/fhir/StructureDefinition/Group", IsResource=true)]
+  [FhirType("Group","http://hl7.org/fhir/StructureDefinition/Group")]
   public partial class Group : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -115,14 +115,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Group#Characteristic", IsNestedType=true)]
-    [BackboneType("Group.characteristic")]
+    [FhirType("Group.characteristic", IsBackboneType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Group#Characteristic"; } }
+      public override string TypeName { get { return "Group.characteristic"; } }
 
       /// <summary>
       /// Kind of characteristic
@@ -341,14 +340,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Group#Member", IsNestedType=true)]
-    [BackboneType("Group.member")]
+    [FhirType("Group.member", IsBackboneType=true)]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Group#Member"; } }
+      public override string TypeName { get { return "Group.member"; } }
 
       /// <summary>
       /// Reference to the group member

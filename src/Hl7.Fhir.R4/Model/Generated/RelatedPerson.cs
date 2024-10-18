@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RelatedPerson","http://hl7.org/fhir/StructureDefinition/RelatedPerson", IsResource=true)]
+  [FhirType("RelatedPerson","http://hl7.org/fhir/StructureDefinition/RelatedPerson")]
   public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<List<Hl7.Fhir.Model.CodeableConcept>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RelatedPerson#Communication", IsNestedType=true)]
-    [BackboneType("RelatedPerson.communication")]
+    [FhirType("RelatedPerson.communication", IsBackboneType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RelatedPerson#Communication"; } }
+      public override string TypeName { get { return "RelatedPerson.communication"; } }
 
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest", IsResource=true)]
+  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest")]
   public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CommunicationRequest#Payload", IsNestedType=true)]
-    [BackboneType("CommunicationRequest.payload")]
+    [FhirType("CommunicationRequest.payload", IsBackboneType=true)]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CommunicationRequest#Payload"; } }
+      public override string TypeName { get { return "CommunicationRequest.payload"; } }
 
       /// <summary>
       /// Message part content
@@ -197,14 +196,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CommunicationRequest#Requester", IsNestedType=true)]
-    [BackboneType("CommunicationRequest.requester")]
+    [FhirType("CommunicationRequest.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CommunicationRequest#Requester"; } }
+      public override string TypeName { get { return "CommunicationRequest.requester"; } }
 
       /// <summary>
       /// Individual making the request

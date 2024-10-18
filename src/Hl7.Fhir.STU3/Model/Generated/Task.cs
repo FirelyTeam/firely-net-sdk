@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task", IsResource=true)]
+  [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task")]
   public partial class Task : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -146,14 +146,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Requester", IsNestedType=true)]
-    [BackboneType("Task.requester")]
+    [FhirType("Task.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Requester"; } }
+      public override string TypeName { get { return "Task.requester"; } }
 
       /// <summary>
       /// Individual asking for task
@@ -302,14 +301,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Restriction", IsNestedType=true)]
-    [BackboneType("Task.restriction")]
+    [FhirType("Task.restriction", IsBackboneType=true)]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Restriction"; } }
+      public override string TypeName { get { return "Task.restriction"; } }
 
       /// <summary>
       /// How many times to repeat
@@ -499,14 +497,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Parameter", IsNestedType=true)]
-    [BackboneType("Task.input")]
+    [FhirType("Task.input", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Parameter"; } }
+      public override string TypeName { get { return "Task.input"; } }
 
       /// <summary>
       /// Label for the input
@@ -655,14 +652,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Task#Output", IsNestedType=true)]
-    [BackboneType("Task.output")]
+    [FhirType("Task.output", IsBackboneType=true)]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task#Output"; } }
+      public override string TypeName { get { return "Task.output"; } }
 
       /// <summary>
       /// Label for output

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ValueSet","http://hl7.org/fhir/StructureDefinition/ValueSet", IsResource=true)]
+  [FhirType("ValueSet","http://hl7.org/fhir/StructureDefinition/ValueSet")]
   public partial class ValueSet : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Compose", IsNestedType=true)]
-    [BackboneType("ValueSet.compose")]
+    [FhirType("ValueSet.compose", IsBackboneType=true)]
     public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Compose"; } }
+      public override string TypeName { get { return "ValueSet.compose"; } }
 
       /// <summary>
       /// Fixed date for references with no specified version (transitive)
@@ -350,14 +349,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#ConceptSet", IsNestedType=true)]
-    [BackboneType("ValueSet.compose.include")]
+    [FhirType("ValueSet.compose.include", IsBackboneType=true)]
     public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#ConceptSet"; } }
+      public override string TypeName { get { return "ValueSet.compose.include"; } }
 
       /// <summary>
       /// The system the codes come from
@@ -677,14 +675,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#ConceptReference", IsNestedType=true)]
-    [BackboneType("ValueSet.compose.include.concept")]
+    [FhirType("ValueSet.compose.include.concept", IsBackboneType=true)]
     public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#ConceptReference"; } }
+      public override string TypeName { get { return "ValueSet.compose.include.concept"; } }
 
       /// <summary>
       /// Code or expression from system
@@ -892,14 +889,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Designation", IsNestedType=true)]
-    [BackboneType("ValueSet.compose.include.concept.designation")]
+    [FhirType("ValueSet.compose.include.concept.designation", IsBackboneType=true)]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Designation"; } }
+      public override string TypeName { get { return "ValueSet.compose.include.concept.designation"; } }
 
       /// <summary>
       /// Human language of the designation
@@ -1135,14 +1131,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Filter", IsNestedType=true)]
-    [BackboneType("ValueSet.compose.include.filter")]
+    [FhirType("ValueSet.compose.include.filter", IsBackboneType=true)]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Filter"; } }
+      public override string TypeName { get { return "ValueSet.compose.include.filter"; } }
 
       /// <summary>
       /// A property/filter defined by the code system
@@ -1372,14 +1367,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Expansion", IsNestedType=true)]
-    [BackboneType("ValueSet.expansion")]
+    [FhirType("ValueSet.expansion", IsBackboneType=true)]
     public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Expansion"; } }
+      public override string TypeName { get { return "ValueSet.expansion"; } }
 
       /// <summary>
       /// Identifies the value set expansion (business identifier)
@@ -1768,14 +1762,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Parameter", IsNestedType=true)]
-    [BackboneType("ValueSet.expansion.parameter")]
+    [FhirType("ValueSet.expansion.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Parameter"; } }
+      public override string TypeName { get { return "ValueSet.expansion.parameter"; } }
 
       /// <summary>
       /// Name as assigned by the client or server
@@ -1940,14 +1933,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Property", IsNestedType=true)]
-    [BackboneType("ValueSet.expansion.property")]
+    [FhirType("ValueSet.expansion.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Property"; } }
+      public override string TypeName { get { return "ValueSet.expansion.property"; } }
 
       /// <summary>
       /// Identifies the property on the concepts, and when referred to in operations
@@ -2128,14 +2120,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Contains", IsNestedType=true)]
-    [BackboneType("ValueSet.expansion.contains")]
+    [FhirType("ValueSet.expansion.contains", IsBackboneType=true)]
     public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Contains"; } }
+      public override string TypeName { get { return "ValueSet.expansion.contains"; } }
 
       /// <summary>
       /// System value for the code
@@ -2565,14 +2556,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#ConceptProperty", IsNestedType=true)]
-    [BackboneType("ValueSet.expansion.contains.property")]
+    [FhirType("ValueSet.expansion.contains.property", IsBackboneType=true)]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#ConceptProperty"; } }
+      public override string TypeName { get { return "ValueSet.expansion.contains.property"; } }
 
       /// <summary>
       /// Reference to ValueSet.expansion.property.code
@@ -2764,14 +2754,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#ConceptSubProperty", IsNestedType=true)]
-    [BackboneType("ValueSet.expansion.contains.property.subProperty")]
+    [FhirType("ValueSet.expansion.contains.property.subProperty", IsBackboneType=true)]
     public partial class ConceptSubPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#ConceptSubProperty"; } }
+      public override string TypeName { get { return "ValueSet.expansion.contains.property.subProperty"; } }
 
       /// <summary>
       /// Reference to ValueSet.expansion.property.code. Note: Element was introduced in R5, do not use when working with older releases.
@@ -2934,14 +2923,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ValueSet#Scope", IsNestedType=true)]
-    [BackboneType("ValueSet.scope")]
+    [FhirType("ValueSet.scope", IsBackboneType=true)]
     public partial class ScopeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet#Scope"; } }
+      public override string TypeName { get { return "ValueSet.scope"; } }
 
       /// <summary>
       /// Criteria describing which concepts or codes should be included and why

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductInteraction","http://hl7.org/fhir/StructureDefinition/MedicinalProductInteraction", IsResource=true)]
+  [FhirType("MedicinalProductInteraction","http://hl7.org/fhir/StructureDefinition/MedicinalProductInteraction")]
   public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
-    [BackboneType("MedicinalProductInteraction.interactant")]
+    [FhirType("MedicinalProductInteraction.interactant", IsBackboneType=true)]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductInteraction#Interactant"; } }
+      public override string TypeName { get { return "MedicinalProductInteraction.interactant"; } }
 
       /// <summary>
       /// The specific medication, food or laboratory test that interacts

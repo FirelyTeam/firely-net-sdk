@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Goal","http://hl7.org/fhir/StructureDefinition/Goal", IsResource=true)]
+  [FhirType("Goal","http://hl7.org/fhir/StructureDefinition/Goal")]
   public partial class Goal : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -156,14 +156,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Goal#Target", IsNestedType=true)]
-    [BackboneType("Goal.target")]
+    [FhirType("Goal.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Goal#Target"; } }
+      public override string TypeName { get { return "Goal.target"; } }
 
       /// <summary>
       /// The parameter whose value is being tracked

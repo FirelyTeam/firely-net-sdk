@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
+  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent")]
   public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -170,14 +170,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Actor", IsNestedType=true)]
-    [BackboneType("Consent.actor")]
+    [FhirType("Consent.actor", IsBackboneType=true)]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#Actor"; } }
+      public override string TypeName { get { return "Consent.actor"; } }
 
       /// <summary>
       /// How the actor is involved
@@ -326,14 +325,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Policy", IsNestedType=true)]
-    [BackboneType("Consent.policy")]
+    [FhirType("Consent.policy", IsBackboneType=true)]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#Policy"; } }
+      public override string TypeName { get { return "Consent.policy"; } }
 
       /// <summary>
       /// Enforcement source for policy
@@ -513,14 +511,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Data", IsNestedType=true)]
-    [BackboneType("Consent.data")]
+    [FhirType("Consent.data", IsBackboneType=true)]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#Data"; } }
+      public override string TypeName { get { return "Consent.data"; } }
 
       /// <summary>
       /// instance | related | dependents | authoredby
@@ -688,14 +685,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#Except", IsNestedType=true)]
-    [BackboneType("Consent.except")]
+    [FhirType("Consent.except", IsBackboneType=true)]
     public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#Except"; } }
+      public override string TypeName { get { return "Consent.except"; } }
 
       /// <summary>
       /// deny | permit
@@ -1072,14 +1068,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#ExceptActor", IsNestedType=true)]
-    [BackboneType("Consent.except.actor")]
+    [FhirType("Consent.except.actor", IsBackboneType=true)]
     public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#ExceptActor"; } }
+      public override string TypeName { get { return "Consent.except.actor"; } }
 
       /// <summary>
       /// How the actor is involved
@@ -1228,14 +1223,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Consent#ExceptData", IsNestedType=true)]
-    [BackboneType("Consent.except.data")]
+    [FhirType("Consent.except.data", IsBackboneType=true)]
     public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent#ExceptData"; } }
+      public override string TypeName { get { return "Consent.except.data"; } }
 
       /// <summary>
       /// instance | related | dependents | authoredby

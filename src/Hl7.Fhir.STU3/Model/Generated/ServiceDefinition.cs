@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ServiceDefinition","http://hl7.org/fhir/StructureDefinition/ServiceDefinition", IsResource=true)]
+  [FhirType("ServiceDefinition","http://hl7.org/fhir/StructureDefinition/ServiceDefinition")]
   public partial class ServiceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

@@ -130,7 +130,7 @@ namespace Vonk.FhirPath.R4.Tests
         public static IEnumerable<ITypedElement> Select(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = GetCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator(input, ctx ?? new EvaluationContext());
         }
 
     }

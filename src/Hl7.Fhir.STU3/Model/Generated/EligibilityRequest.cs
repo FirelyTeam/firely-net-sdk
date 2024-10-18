@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EligibilityRequest","http://hl7.org/fhir/StructureDefinition/EligibilityRequest", IsResource=true)]
+  [FhirType("EligibilityRequest","http://hl7.org/fhir/StructureDefinition/EligibilityRequest")]
   public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest", IsResource=true)]
+  [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest")]
   public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -116,14 +116,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyRequest#OrderedItem", IsNestedType=true)]
-    [BackboneType("SupplyRequest.orderedItem")]
+    [FhirType("SupplyRequest.orderedItem", IsBackboneType=true)]
     public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest#OrderedItem"; } }
+      public override string TypeName { get { return "SupplyRequest.orderedItem"; } }
 
       /// <summary>
       /// The requested amount of the item indicated
@@ -272,14 +271,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyRequest#Requester", IsNestedType=true)]
-    [BackboneType("SupplyRequest.requester")]
+    [FhirType("SupplyRequest.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest#Requester"; } }
+      public override string TypeName { get { return "SupplyRequest.requester"; } }
 
       /// <summary>
       /// Individual making the request

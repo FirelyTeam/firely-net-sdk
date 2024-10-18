@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition", IsResource=true)]
+  [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition")]
   public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Goal", IsNestedType=true)]
-    [BackboneType("PlanDefinition.goal")]
+    [FhirType("PlanDefinition.goal", IsBackboneType=true)]
     public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#Goal"; } }
+      public override string TypeName { get { return "PlanDefinition.goal"; } }
 
       /// <summary>
       /// E.g. Treatment, dietary, behavioral, etc
@@ -352,14 +351,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Target", IsNestedType=true)]
-    [BackboneType("PlanDefinition.goal.target")]
+    [FhirType("PlanDefinition.goal.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#Target"; } }
+      public override string TypeName { get { return "PlanDefinition.goal.target"; } }
 
       /// <summary>
       /// The parameter whose value is to be tracked
@@ -531,14 +529,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Action", IsNestedType=true)]
-    [BackboneType("PlanDefinition.action")]
+    [FhirType("PlanDefinition.action", IsBackboneType=true)]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#Action"; } }
+      public override string TypeName { get { return "PlanDefinition.action"; } }
 
       /// <summary>
       /// User-visible label for the action (e.g. 1. or A.)
@@ -1466,14 +1463,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Condition", IsNestedType=true)]
-    [BackboneType("PlanDefinition.action.condition")]
+    [FhirType("PlanDefinition.action.condition", IsBackboneType=true)]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#Condition"; } }
+      public override string TypeName { get { return "PlanDefinition.action.condition"; } }
 
       /// <summary>
       /// applicability | start | stop
@@ -1743,14 +1739,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#RelatedAction", IsNestedType=true)]
-    [BackboneType("PlanDefinition.action.relatedAction")]
+    [FhirType("PlanDefinition.action.relatedAction", IsBackboneType=true)]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#RelatedAction"; } }
+      public override string TypeName { get { return "PlanDefinition.action.relatedAction"; } }
 
       /// <summary>
       /// What action is this related to
@@ -1961,14 +1956,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#Participant", IsNestedType=true)]
-    [BackboneType("PlanDefinition.action.participant")]
+    [FhirType("PlanDefinition.action.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#Participant"; } }
+      public override string TypeName { get { return "PlanDefinition.action.participant"; } }
 
       /// <summary>
       /// patient | practitioner | related-person
@@ -2134,14 +2128,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PlanDefinition#DynamicValue", IsNestedType=true)]
-    [BackboneType("PlanDefinition.action.dynamicValue")]
+    [FhirType("PlanDefinition.action.dynamicValue", IsBackboneType=true)]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition#DynamicValue"; } }
+      public override string TypeName { get { return "PlanDefinition.action.dynamicValue"; } }
 
       /// <summary>
       /// Natural language description of the dynamic value

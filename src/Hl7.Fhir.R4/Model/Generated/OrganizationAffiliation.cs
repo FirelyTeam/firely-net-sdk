@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("OrganizationAffiliation","http://hl7.org/fhir/StructureDefinition/OrganizationAffiliation", IsResource=true)]
+  [FhirType("OrganizationAffiliation","http://hl7.org/fhir/StructureDefinition/OrganizationAffiliation")]
   public partial class OrganizationAffiliation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

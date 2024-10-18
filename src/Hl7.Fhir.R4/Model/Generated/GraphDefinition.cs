@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("GraphDefinition","http://hl7.org/fhir/StructureDefinition/GraphDefinition", IsResource=true)]
+  [FhirType("GraphDefinition","http://hl7.org/fhir/StructureDefinition/GraphDefinition")]
   public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -120,14 +120,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Link", IsNestedType=true)]
-    [BackboneType("GraphDefinition.link")]
+    [FhirType("GraphDefinition.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition#Link"; } }
+      public override string TypeName { get { return "GraphDefinition.link"; } }
 
       /// <summary>
       /// Path in the resource that contains the link
@@ -459,14 +458,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Target", IsNestedType=true)]
-    [BackboneType("GraphDefinition.link.target")]
+    [FhirType("GraphDefinition.link.target", IsBackboneType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition#Target"; } }
+      public override string TypeName { get { return "GraphDefinition.link.target"; } }
 
       /// <summary>
       /// Type of resource this link refers to
@@ -741,14 +739,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
-    [BackboneType("GraphDefinition.link.target.compartment")]
+    [FhirType("GraphDefinition.link.target.compartment", IsBackboneType=true)]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition#Compartment"; } }
+      public override string TypeName { get { return "GraphDefinition.link.target.compartment"; } }
 
       /// <summary>
       /// condition | requirement

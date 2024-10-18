@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient", IsResource=true)]
+  [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient")]
   public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
-    [BackboneType("MedicinalProductIngredient.specifiedSubstance")]
+    [FhirType("MedicinalProductIngredient.specifiedSubstance", IsBackboneType=true)]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient#SpecifiedSubstance"; } }
+      public override string TypeName { get { return "MedicinalProductIngredient.specifiedSubstance"; } }
 
       /// <summary>
       /// The specified substance
@@ -262,14 +261,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
-    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength")]
+    [FhirType("MedicinalProductIngredient.specifiedSubstance.strength", IsBackboneType=true)]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient#Strength"; } }
+      public override string TypeName { get { return "MedicinalProductIngredient.specifiedSubstance.strength"; } }
 
       /// <summary>
       /// The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item
@@ -556,14 +554,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
-    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength")]
+    [FhirType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength", IsBackboneType=true)]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient#ReferenceStrength"; } }
+      public override string TypeName { get { return "MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength"; } }
 
       /// <summary>
       /// Relevant reference substance
@@ -799,14 +796,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
-    [BackboneType("MedicinalProductIngredient.substance")]
+    [FhirType("MedicinalProductIngredient.substance", IsBackboneType=true)]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient#Substance"; } }
+      public override string TypeName { get { return "MedicinalProductIngredient.substance"; } }
 
       /// <summary>
       /// The ingredient substance

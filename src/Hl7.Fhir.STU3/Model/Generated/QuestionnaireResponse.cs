@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("QuestionnaireResponse","http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse", IsResource=true)]
+  [FhirType("QuestionnaireResponse","http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse")]
   public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -109,14 +109,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("QuestionnaireResponse#Item", IsNestedType=true)]
-    [BackboneType("QuestionnaireResponse.item")]
+    [FhirType("QuestionnaireResponse.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "QuestionnaireResponse#Item"; } }
+      public override string TypeName { get { return "QuestionnaireResponse.item"; } }
 
       /// <summary>
       /// Pointer to specific item from Questionnaire
@@ -420,14 +419,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("QuestionnaireResponse#Answer", IsNestedType=true)]
-    [BackboneType("QuestionnaireResponse.item.answer")]
+    [FhirType("QuestionnaireResponse.item.answer", IsBackboneType=true)]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "QuestionnaireResponse#Answer"; } }
+      public override string TypeName { get { return "QuestionnaireResponse.item.answer"; } }
 
       /// <summary>
       /// Single-valued answer to the question

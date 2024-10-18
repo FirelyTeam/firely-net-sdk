@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account", IsResource=true)]
+  [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account")]
   public partial class Account : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -109,14 +109,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Coverage", IsNestedType=true)]
-    [BackboneType("Account.coverage")]
+    [FhirType("Account.coverage", IsBackboneType=true)]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Coverage"; } }
+      public override string TypeName { get { return "Account.coverage"; } }
 
       /// <summary>
       /// The party(s), such as insurances, that may contribute to the payment of this account
@@ -281,14 +280,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Account#Guarantor", IsNestedType=true)]
-    [BackboneType("Account.guarantor")]
+    [FhirType("Account.guarantor", IsBackboneType=true)]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account#Guarantor"; } }
+      public override string TypeName { get { return "Account.guarantor"; } }
 
       /// <summary>
       /// Responsible entity

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
+  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription")]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#Channel", IsNestedType=true)]
-    [BackboneType("Subscription.channel")]
+    [FhirType("Subscription.channel", IsBackboneType=true)]
     public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription#Channel"; } }
+      public override string TypeName { get { return "Subscription.channel"; } }
 
       /// <summary>
       /// rest-hook | websocket | email | sms | message

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RiskEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/RiskEvidenceSynthesis", IsResource=true)]
+  [FhirType("RiskEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/RiskEvidenceSynthesis")]
   public partial class RiskEvidenceSynthesis : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#SampleSize", IsNestedType=true)]
-    [BackboneType("RiskEvidenceSynthesis.sampleSize")]
+    [FhirType("RiskEvidenceSynthesis.sampleSize", IsBackboneType=true)]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis#SampleSize"; } }
+      public override string TypeName { get { return "RiskEvidenceSynthesis.sampleSize"; } }
 
       /// <summary>
       /// Description of sample size
@@ -297,14 +296,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#RiskEstimate", IsNestedType=true)]
-    [BackboneType("RiskEvidenceSynthesis.riskEstimate")]
+    [FhirType("RiskEvidenceSynthesis.riskEstimate", IsBackboneType=true)]
     public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis#RiskEstimate"; } }
+      public override string TypeName { get { return "RiskEvidenceSynthesis.riskEstimate"; } }
 
       /// <summary>
       /// Description of risk estimate
@@ -648,14 +646,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
-    [BackboneType("RiskEvidenceSynthesis.riskEstimate.precisionEstimate")]
+    [FhirType("RiskEvidenceSynthesis.riskEstimate.precisionEstimate", IsBackboneType=true)]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis#PrecisionEstimate"; } }
+      public override string TypeName { get { return "RiskEvidenceSynthesis.riskEstimate.precisionEstimate"; } }
 
       /// <summary>
       /// Type of precision estimate
@@ -904,14 +901,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#Certainty", IsNestedType=true)]
-    [BackboneType("RiskEvidenceSynthesis.certainty")]
+    [FhirType("RiskEvidenceSynthesis.certainty", IsBackboneType=true)]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis#Certainty"; } }
+      public override string TypeName { get { return "RiskEvidenceSynthesis.certainty"; } }
 
       /// <summary>
       /// Certainty rating
@@ -1084,14 +1080,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
-    [BackboneType("RiskEvidenceSynthesis.certainty.certaintySubcomponent")]
+    [FhirType("RiskEvidenceSynthesis.certainty.certaintySubcomponent", IsBackboneType=true)]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis#CertaintySubcomponent"; } }
+      public override string TypeName { get { return "RiskEvidenceSynthesis.certainty.certaintySubcomponent"; } }
 
       /// <summary>
       /// Type of subcomponent of certainty rating

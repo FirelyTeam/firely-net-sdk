@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CoverageEligibilityRequest","http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest", IsResource=true)]
+  [FhirType("CoverageEligibilityRequest","http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest")]
   public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -102,14 +102,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#SupportingInformation", IsNestedType=true)]
-    [BackboneType("CoverageEligibilityRequest.supportingInfo")]
+    [FhirType("CoverageEligibilityRequest.supportingInfo", IsBackboneType=true)]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#SupportingInformation"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.supportingInfo"; } }
 
       /// <summary>
       /// Information instance identifier
@@ -319,14 +318,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Insurance", IsNestedType=true)]
-    [BackboneType("CoverageEligibilityRequest.insurance")]
+    [FhirType("CoverageEligibilityRequest.insurance", IsBackboneType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Insurance"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.insurance"; } }
 
       /// <summary>
       /// Applicable coverage
@@ -534,14 +532,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Details", IsNestedType=true)]
-    [BackboneType("CoverageEligibilityRequest.item")]
+    [FhirType("CoverageEligibilityRequest.item", IsBackboneType=true)]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Details"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.item"; } }
 
       /// <summary>
       /// Applicable exception or supporting information
@@ -916,14 +913,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CoverageEligibilityRequest#Diagnosis", IsNestedType=true)]
-    [BackboneType("CoverageEligibilityRequest.item.diagnosis")]
+    [FhirType("CoverageEligibilityRequest.item.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest#Diagnosis"; } }
+      public override string TypeName { get { return "CoverageEligibilityRequest.item.diagnosis"; } }
 
       /// <summary>
       /// Nature of illness or problem

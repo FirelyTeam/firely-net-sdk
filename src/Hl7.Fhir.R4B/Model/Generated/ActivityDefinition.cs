@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ActivityDefinition","http://hl7.org/fhir/StructureDefinition/ActivityDefinition", IsResource=true)]
+  [FhirType("ActivityDefinition","http://hl7.org/fhir/StructureDefinition/ActivityDefinition")]
   public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -167,14 +167,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
-    [BackboneType("ActivityDefinition.participant")]
+    [FhirType("ActivityDefinition.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ActivityDefinition#Participant"; } }
+      public override string TypeName { get { return "ActivityDefinition.participant"; } }
 
       /// <summary>
       /// patient | practitioner | related-person | device
@@ -341,14 +340,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
-    [BackboneType("ActivityDefinition.dynamicValue")]
+    [FhirType("ActivityDefinition.dynamicValue", IsBackboneType=true)]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ActivityDefinition#DynamicValue"; } }
+      public override string TypeName { get { return "ActivityDefinition.dynamicValue"; } }
 
       /// <summary>
       /// The path to the element to be set dynamically

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
+  [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression")]
   public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -95,14 +95,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
-    [BackboneType("ClinicalImpression.investigation")]
+    [FhirType("ClinicalImpression.investigation", IsBackboneType=true)]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalImpression#Investigation"; } }
+      public override string TypeName { get { return "ClinicalImpression.investigation"; } }
 
       /// <summary>
       /// A name/code for the set
@@ -251,14 +250,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
-    [BackboneType("ClinicalImpression.finding")]
+    [FhirType("ClinicalImpression.finding", IsBackboneType=true)]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalImpression#Finding"; } }
+      public override string TypeName { get { return "ClinicalImpression.finding"; } }
 
       /// <summary>
       /// What was found

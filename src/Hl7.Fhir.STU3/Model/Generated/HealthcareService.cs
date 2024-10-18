@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("HealthcareService","http://hl7.org/fhir/StructureDefinition/HealthcareService", IsResource=true)]
+  [FhirType("HealthcareService","http://hl7.org/fhir/StructureDefinition/HealthcareService")]
   public partial class HealthcareService : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -65,14 +65,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("HealthcareService#AvailableTime", IsNestedType=true)]
-    [BackboneType("HealthcareService.availableTime")]
+    [FhirType("HealthcareService.availableTime", IsBackboneType=true)]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "HealthcareService#AvailableTime"; } }
+      public override string TypeName { get { return "HealthcareService.availableTime"; } }
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
@@ -341,14 +340,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("HealthcareService#NotAvailable", IsNestedType=true)]
-    [BackboneType("HealthcareService.notAvailable")]
+    [FhirType("HealthcareService.notAvailable", IsBackboneType=true)]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "HealthcareService#NotAvailable"; } }
+      public override string TypeName { get { return "HealthcareService.notAvailable"; } }
 
       /// <summary>
       /// Reason presented to the user explaining why time not available

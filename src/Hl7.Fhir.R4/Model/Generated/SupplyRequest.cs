@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest", IsResource=true)]
+  [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest")]
   public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SupplyRequest#Parameter", IsNestedType=true)]
-    [BackboneType("SupplyRequest.parameter")]
+    [FhirType("SupplyRequest.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest#Parameter"; } }
+      public override string TypeName { get { return "SupplyRequest.parameter"; } }
 
       /// <summary>
       /// Item detail

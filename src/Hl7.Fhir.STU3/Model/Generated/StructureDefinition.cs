@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("StructureDefinition","http://hl7.org/fhir/StructureDefinition/StructureDefinition", IsResource=true)]
+  [FhirType("StructureDefinition","http://hl7.org/fhir/StructureDefinition/StructureDefinition")]
   public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -151,14 +151,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureDefinition#Mapping", IsNestedType=true)]
-    [BackboneType("StructureDefinition.mapping")]
+    [FhirType("StructureDefinition.mapping", IsBackboneType=true)]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition#Mapping"; } }
+      public override string TypeName { get { return "StructureDefinition.mapping"; } }
 
       /// <summary>
       /// Internal id when this mapping is used
@@ -425,14 +424,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureDefinition#Snapshot", IsNestedType=true)]
-    [BackboneType("StructureDefinition.snapshot")]
+    [FhirType("StructureDefinition.snapshot", IsBackboneType=true)]
     public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition#Snapshot"; } }
+      public override string TypeName { get { return "StructureDefinition.snapshot"; } }
 
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition)
@@ -552,14 +550,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("StructureDefinition#Differential", IsNestedType=true)]
-    [BackboneType("StructureDefinition.differential")]
+    [FhirType("StructureDefinition.differential", IsBackboneType=true)]
     public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition#Differential"; } }
+      public override string TypeName { get { return "StructureDefinition.differential"; } }
 
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition)

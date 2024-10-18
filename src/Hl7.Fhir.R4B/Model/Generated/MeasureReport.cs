@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport", IsResource=true)]
+  [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport")]
   public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -129,14 +129,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Group", IsNestedType=true)]
-    [BackboneType("MeasureReport.group")]
+    [FhirType("MeasureReport.group", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Group"; } }
+      public override string TypeName { get { return "MeasureReport.group"; } }
 
       /// <summary>
       /// Meaning of the group
@@ -333,14 +332,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Population", IsNestedType=true)]
-    [BackboneType("MeasureReport.group.population")]
+    [FhirType("MeasureReport.group.population", IsBackboneType=true)]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Population"; } }
+      public override string TypeName { get { return "MeasureReport.group.population"; } }
 
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
@@ -530,14 +528,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Stratifier", IsNestedType=true)]
-    [BackboneType("MeasureReport.group.stratifier")]
+    [FhirType("MeasureReport.group.stratifier", IsBackboneType=true)]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Stratifier"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier"; } }
 
       /// <summary>
       /// What stratifier of the group
@@ -684,14 +681,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#StratifierGroup", IsNestedType=true)]
-    [BackboneType("MeasureReport.group.stratifier.stratum")]
+    [FhirType("MeasureReport.group.stratifier.stratum", IsBackboneType=true)]
     public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#StratifierGroup"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum"; } }
 
       /// <summary>
       /// The stratum value, e.g. male
@@ -888,14 +884,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#Component", IsNestedType=true)]
-    [BackboneType("MeasureReport.group.stratifier.stratum.component")]
+    [FhirType("MeasureReport.group.stratifier.stratum.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#Component"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.component"; } }
 
       /// <summary>
       /// What stratifier component of the group
@@ -1043,14 +1038,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MeasureReport#StratifierGroupPopulation", IsNestedType=true)]
-    [BackboneType("MeasureReport.group.stratifier.stratum.population")]
+    [FhirType("MeasureReport.group.stratifier.stratum.population", IsBackboneType=true)]
     public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport#StratifierGroupPopulation"; } }
+      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.population"; } }
 
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation

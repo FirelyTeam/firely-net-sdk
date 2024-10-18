@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("PractitionerRole","http://hl7.org/fhir/StructureDefinition/PractitionerRole", IsResource=true)]
+  [FhirType("PractitionerRole","http://hl7.org/fhir/StructureDefinition/PractitionerRole")]
   public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PractitionerRole#AvailableTime", IsNestedType=true)]
-    [BackboneType("PractitionerRole.availableTime")]
+    [FhirType("PractitionerRole.availableTime", IsBackboneType=true)]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PractitionerRole#AvailableTime"; } }
+      public override string TypeName { get { return "PractitionerRole.availableTime"; } }
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
@@ -344,14 +343,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PractitionerRole#NotAvailable", IsNestedType=true)]
-    [BackboneType("PractitionerRole.notAvailable")]
+    [FhirType("PractitionerRole.notAvailable", IsBackboneType=true)]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PractitionerRole#NotAvailable"; } }
+      public override string TypeName { get { return "PractitionerRole.notAvailable"; } }
 
       /// <summary>
       /// Reason presented to the user explaining why time not available

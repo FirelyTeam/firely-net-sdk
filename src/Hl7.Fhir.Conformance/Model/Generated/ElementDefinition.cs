@@ -309,14 +309,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
-    [BackboneType("ElementDefinition.slicing")]
+    [FhirType("ElementDefinition.slicing", IsBackboneType=true)]
     public partial class SlicingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Slicing"; } }
+      public override string TypeName { get { return "ElementDefinition.slicing"; } }
 
       /// <summary>
       /// Element values that are used to distinguish the slices
@@ -569,14 +568,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
-    [BackboneType("ElementDefinition.slicing.discriminator")]
+    [FhirType("ElementDefinition.slicing.discriminator", IsBackboneType=true)]
     public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Discriminator"; } }
+      public override string TypeName { get { return "ElementDefinition.slicing.discriminator"; } }
 
       /// <summary>
       /// value | exists | type | profile | position
@@ -761,14 +759,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Base", IsNestedType=true)]
-    [BackboneType("ElementDefinition.base")]
+    [FhirType("ElementDefinition.base", IsBackboneType=true)]
     public partial class BaseComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Base"; } }
+      public override string TypeName { get { return "ElementDefinition.base"; } }
 
       /// <summary>
       /// Path that identifies the base element
@@ -995,14 +992,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
-    [BackboneType("ElementDefinition.type")]
+    [FhirType("ElementDefinition.type", IsBackboneType=true)]
     public partial class TypeRefComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#TypeRef"; } }
+      public override string TypeName { get { return "ElementDefinition.type"; } }
 
       /// <summary>
       /// Data type or Resource (reference to definition)
@@ -1321,14 +1317,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Example", IsNestedType=true)]
-    [BackboneType("ElementDefinition.example")]
+    [FhirType("ElementDefinition.example", IsBackboneType=true)]
     public partial class ExampleComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Example"; } }
+      public override string TypeName { get { return "ElementDefinition.example"; } }
 
       /// <summary>
       /// Describes the purpose of this example
@@ -1493,14 +1488,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
-    [BackboneType("ElementDefinition.constraint")]
+    [FhirType("ElementDefinition.constraint", IsBackboneType=true)]
     public partial class ConstraintComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Constraint"; } }
+      public override string TypeName { get { return "ElementDefinition.constraint"; } }
 
       /// <summary>
       /// Target of 'condition' reference above
@@ -1947,14 +1941,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
-    [BackboneType("ElementDefinition.binding")]
+    [FhirType("ElementDefinition.binding", IsBackboneType=true)]
     public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#ElementDefinitionBinding"; } }
+      public override string TypeName { get { return "ElementDefinition.binding"; } }
 
       /// <summary>
       /// required | extensible | preferred | example
@@ -2208,14 +2201,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Additional", IsNestedType=true)]
-    [BackboneType("ElementDefinition.binding.additional")]
+    [FhirType("ElementDefinition.binding.additional", IsBackboneType=true)]
     public partial class AdditionalComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Additional"; } }
+      public override string TypeName { get { return "ElementDefinition.binding.additional"; } }
 
       /// <summary>
       /// maximum | minimum | required | extensible | candidate | current | preferred | ui | starter | component. Note: Element was introduced in R5, do not use when working with older releases.
@@ -2555,14 +2547,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
-    [BackboneType("ElementDefinition.mapping")]
+    [FhirType("ElementDefinition.mapping", IsBackboneType=true)]
     public partial class MappingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition#Mapping"; } }
+      public override string TypeName { get { return "ElementDefinition.mapping"; } }
 
       /// <summary>
       /// Reference to mapping declaration

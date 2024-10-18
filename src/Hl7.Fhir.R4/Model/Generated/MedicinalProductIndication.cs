@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductIndication","http://hl7.org/fhir/StructureDefinition/MedicinalProductIndication", IsResource=true)]
+  [FhirType("MedicinalProductIndication","http://hl7.org/fhir/StructureDefinition/MedicinalProductIndication")]
   public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -64,14 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIndication#OtherTherapy", IsNestedType=true)]
-    [BackboneType("MedicinalProductIndication.otherTherapy")]
+    [FhirType("MedicinalProductIndication.otherTherapy", IsBackboneType=true)]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIndication#OtherTherapy"; } }
+      public override string TypeName { get { return "MedicinalProductIndication.otherTherapy"; } }
 
       /// <summary>
       /// The type of relationship between the medicinal product indication or contraindication and another therapy
