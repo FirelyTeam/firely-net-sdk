@@ -33,19 +33,18 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     IScopedNode? Parent { get; }
 }
 
-// name can technically be null when uninitialized, but we never allow it to be null upon accessing it.
-internal record struct ScopeInformation(IScopedNode? Parent, string Name, int? Index);
+internal record ScopeInformation(IScopedNode? Parent, string Name, int? Index);
 
 
 public abstract partial class Base : IScopedNode,
     IFhirValueProvider, IResourceTypeSupplier
 {
     // we set name to null by default, but it can never be null upon accessing it, as the setter will initialize it.
-    [NonSerialized] private ScopeInformation _scopeInfo = new (null, null!, null);
+    [NonSerialized] private ScopeInformation? _scopeInfo;
     
     private ScopeInformation ScopeInfo
     {
-        get => _scopeInfo.Name is null ? BuildRoot() : _scopeInfo;
+        get => _scopeInfo ?? BuildRoot();
         set => _scopeInfo = value;
     } 
 
