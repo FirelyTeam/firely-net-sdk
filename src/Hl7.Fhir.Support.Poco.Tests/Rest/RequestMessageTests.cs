@@ -204,12 +204,12 @@ namespace Hl7.Fhir.Test
         {
             var settings = new FhirClientSettings { PreferredFormat = fmt, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             var request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
-            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
+            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION, true));
             request.Headers.AcceptEncoding.Should().BeEmpty();
 
             settings.PreferCompressedResponses = true;
             request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
-            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
+            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION, true));
             request.Headers.AcceptEncoding.Select(h => h.Value).Should().BeEquivalentTo("gzip", "deflate");
         }
 
