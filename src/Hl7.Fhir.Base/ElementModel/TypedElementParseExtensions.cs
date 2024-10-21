@@ -44,7 +44,7 @@ namespace Hl7.Fhir.ElementModel
         /// <inheritdoc cref="ParseBindable"/>
         [Obsolete("WARNING! Intended for internal API usage exclusively, interface IBaseElementNavigator can be changed in " +
             "the near future.")]
-        public static Element? ParseBindableInternal(this ITypedElement instance) 
+        internal static Element? ParseBindableInternal(this ITypedElement instance) 
         {
             return instance.InstanceType switch
             {

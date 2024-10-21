@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Xml;
 
@@ -43,6 +44,7 @@ internal partial class PocoSerializationEngine
     }
     
     /// <inheritdoc />
+    [TemporarilyChanged]
     public string SerializeToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
 
     /// <summary>
@@ -79,5 +81,6 @@ internal partial class PocoSerializationEngine
     /// </summary>
     /// <param name="instance">An instance of Base or any of its children</param>
     /// <param name="writer">The XML writer</param>
+    [TemporarilyChanged]
     public void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer);
 }

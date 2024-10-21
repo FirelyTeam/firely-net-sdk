@@ -17,6 +17,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
+        [TemporarilyChanged]
         public string SerializeToXml(Base instance) => new CommonFhirXmlSerializer(_inspector).SerializeToString(instance);
 
         public string SerializeToJson(Resource instance) => new CommonFhirJsonSerializer(_inspector).SerializeToString(instance);
