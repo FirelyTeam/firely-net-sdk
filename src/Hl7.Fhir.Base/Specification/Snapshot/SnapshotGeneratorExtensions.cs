@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     // This extension indicates snapshot elements with associated differential constraints in the profile.
     // Note: extensions are persisted to XML/JSON, whereas annotations are ephemeral (in-memory only)
 
-    /// <summary>Helper methods for the <see cref="SnapshotGenerator"/> class to generate and inspect custom extensions.</summary>
+    /// <summary>Helper methods for the SnapshotGenerator class to generate and inspect custom extensions.</summary>
     public static class SnapshotGeneratorExtensions
     {
         /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
