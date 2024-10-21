@@ -1310,7 +1310,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var elem = elems[pos];
 
                     // [WMR 20160826] Never inherit Changed extension from base profile!
-                    elem.RemoveAllConstrainedByDiffExtensions();
+                    elem.RemoveAllNonInheritableExtensions();
                     elem.RemoveAllConstrainedByDiffAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary

@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,6 +54,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Recursively removes all instances of the <see cref="CONSTRAINED_BY_DIFF_EXT"/> extension from the specified element definition and all it's child objects.</summary>
+        [Obsolete("Use RemoveAllConstrainedByDiffExtensions(this Element element) instead.")]
         public static void RemoveAllConstrainedByDiffExtensions(this Element element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
@@ -64,6 +66,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Recursively removes all instances of the <see cref="CONSTRAINED_BY_DIFF_EXT"/> extension from all the elements and their respective child objects.</summary>
+        [Obsolete("Use RemoveAllConstrainedByDiffExtensions(this Element element) instead.")]
         public static void RemoveAllConstrainedByDiffExtensions<T>(this IEnumerable<T> elements) where T : Element
         {
             if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
