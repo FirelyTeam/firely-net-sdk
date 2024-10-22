@@ -2035,7 +2035,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var hasValidRoot = _settings.RegenerationBehaviour switch
             {
                 RegenerationSettings.TRY_USE_EXISTING => sd.HasSnapshot,
-                RegenerationSettings.REGENERATE_ONCE => sd.HasSnapshot,
+                RegenerationSettings.REGENERATE_ONCE => sd.HasSnapshot && sd.Snapshot.IsCreatedBySnapshotGenerator(),
 #pragma warning disable CS0618 // Type or member is obsolete
                 RegenerationSettings.FORCE_REGENERATE => false,
 #pragma warning restore CS0618 // Type or member is obsolete
