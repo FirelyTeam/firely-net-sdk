@@ -194,4 +194,18 @@
     <DiagnosticId>PKV006</DiagnosticId>
     <Target>.NETStandard,Version=v2.0</Target>
   </Suppression>
+    <Suppression>
+        <DiagnosticId>CP0002</DiagnosticId>
+        <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.get_TerminologyService</Target>
+        <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+        <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+        <IsBaselineSuppression>true</IsBaselineSuppression>
+    </Suppression>
+    <Suppression>
+        <DiagnosticId>CP0002</DiagnosticId>
+        <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.get_TerminologyService</Target>
+        <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
+        <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
+        <IsBaselineSuppression>true</IsBaselineSuppression>
+    </Suppression>
 </Suppressions>
