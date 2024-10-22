@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
 
-                WithResourceOverrides(Generated);
+                this.WithResourceOverrides(Generated);
             }
 
             void Trace(string msg, IEnumerable<ITypedElement> elems)
