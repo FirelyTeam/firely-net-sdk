@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>
         /// Regenerate the snapshot every time. This is useful for debugging and testing purposes.
         /// </summary>
+        [Obsolete("Watch out when using this setting! it could lead to infinite recursion and is mainly meant for debugging and testing purposes. If you previously had ForceRegenerateSnapshots set to true, consider using REGENERATE_ONCE instead.")]
         FORCE_REGENERATE,
     }
 }
