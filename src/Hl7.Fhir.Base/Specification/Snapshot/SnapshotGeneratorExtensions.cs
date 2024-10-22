@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Recursively removes all instances of the <see cref="CONSTRAINED_BY_DIFF_EXT"/> extension from the specified element definition and all it's child objects.</summary>
-        [Obsolete("Use RemoveAllConstrainedByDiffExtensions(this Element element) instead.")]
+        [Obsolete("Use RemoveAllNonInheritableExtensions(this Element element) instead.")]
         public static void RemoveAllConstrainedByDiffExtensions(this Element element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
