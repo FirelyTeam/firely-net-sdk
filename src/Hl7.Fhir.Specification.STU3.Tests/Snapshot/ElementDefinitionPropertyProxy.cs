@@ -12,14 +12,18 @@ namespace Hl7.Fhir.Specification.Tests
     /// The property can also be a specific item from a property list.
     /// The property name is specified in the constructor.
     /// 
-    /// The name is either the name of the property (e.g. "Binding") or the name of the property list
-    /// with a item selector (e.g. "Constraint[Key:dom-2]").
+    /// The name can be
+    /// - the name of the property (e.g. "Binding")
+    /// - the name of the property list with an index (e.g. "Type[0]").
+    /// - the name of the property list with an item selector (e.g. "Constraint[Key:dom-2]").
     /// </summary>
     internal class ElementDefinitionPropertyProxy
     {
+        private bool _isList;
         private string _propertyName;
-        private string _selectorPropertyName;
-        private string _selectorValue;
+        private string _listSelectorPropertyName;
+        private string _listSelectorValue;
+        private int? _listIndex;
         private PropertyInfo _propertyInfo;
         private PropertyInfo _selectorPropertyInfo;
 
@@ -38,7 +42,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var instance = Activator.CreateInstance(_propertyInfo.PropertyType);
 
-            if (_selectorPropertyInfo == null)
+            if (!_isList)
                 return instance; // Primitive property
 
             // Create item for property list
@@ -47,8 +51,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Initialize with specified element
             element?.CopyTo(item);
 
-            // Set key value
-            _selectorPropertyInfo.SetValue(item, _selectorValue);
+            if (_selectorPropertyInfo != null)
+                _selectorPropertyInfo.SetValue(item, _listSelectorValue); // Set key value
 
             // Add item to property list
             if (instance is IList items)
@@ -74,18 +78,29 @@ namespace Hl7.Fhir.Specification.Tests
         /// <returns>The property value as an Element type.</returns>
         public Element GetValueAsElement(object instance)
         {
-            if (_selectorPropertyInfo == null)
+            if (!_isList)
                 return (Element)_propertyInfo.GetValue(instance);
 
             if (_propertyInfo.GetValue(instance, null) is not IList items)
                 return null;
 
-            foreach (var item in items)
+            if (_selectorPropertyInfo != null)
             {
-                var value = _selectorPropertyInfo.GetValue(item)?.ToString();
+                foreach (var item in items)
+                {
+                    var value = _selectorPropertyInfo.GetValue(item)?.ToString();
 
-                if (_selectorValue.Equals(value))
-                    return (Element)item;
+                    if (_listSelectorValue.Equals(value))
+                        return (Element)item;
+                }
+
+                return null;
+            }
+
+            if (_listIndex.HasValue)
+            {
+                _listIndex.Value.Should().BeInRange(0, items.Count - 1);
+                return (Element)items[_listIndex.Value];
             }
 
             return null;
@@ -98,8 +113,9 @@ namespace Hl7.Fhir.Specification.Tests
             _propertyInfo = typeof(ElementDefinition).GetProperty(_propertyName);
             _propertyInfo.Should().NotBeNull(); // Check property exists
 
-            // ReSharper disable once PossibleNullReferenceException
-            if (!isList(_propertyInfo.PropertyType))
+            _isList = isList(_propertyInfo.PropertyType);
+
+            if (!_isList)
             {
                 _propertyInfo.PropertyType.IsAssignableTo(typeof(Element)).Should().BeTrue(); // Property type should be derived from Element
                 return;
@@ -107,7 +123,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             _propertyInfo.PropertyType.GenericTypeArguments[0].IsAssignableTo(typeof(Element)).Should().BeTrue(); // Property type should be derived from Element
 
-            _selectorPropertyInfo = _propertyInfo.PropertyType.GenericTypeArguments[0].GetProperty(_selectorPropertyName);
+            if (_listSelectorPropertyName == null)
+                return;
+
+            _selectorPropertyInfo = _propertyInfo.PropertyType.GenericTypeArguments[0].GetProperty(_listSelectorPropertyName);
             _selectorPropertyInfo.Should().NotBeNull(); // Check property exists
         }
 
@@ -115,17 +134,39 @@ namespace Hl7.Fhir.Specification.Tests
         {
             _propertyName = propertyName;
 
-            var regex = new Regex("(.*)\\[(.*):(.*)\\]|(.*)");
-            var result = regex.Match(propertyName);
-
-            if (!result.Success || result.Groups[4].Success)
-                return;
-
-            _propertyName = result.Groups[1].Value;
-            _selectorPropertyName = result.Groups[2].Value;
-            _selectorValue = result.Groups[3].Value;
+            if (!tryParseListKey(propertyName))
+                tryParseListIndex(propertyName);
         }
 
         private static bool isList(Type type) => typeof(IList).IsAssignableFrom(type);
+
+        private bool tryParseListKey(string propertyName)
+        {
+            var regex = new Regex("(.+)\\[(.+):(.+)\\]");
+            var result = regex.Match(propertyName);
+
+            if (!result.Success)
+                return false;
+
+            _propertyName = result.Groups[1].Value;
+            _listSelectorPropertyName = result.Groups[2].Value;
+            _listSelectorValue = result.Groups[3].Value;
+
+            return true;
+        }
+
+        private bool tryParseListIndex(string propertyName)
+        {
+            var regex = new Regex("(.+)\\[(\\d+)\\]");
+            var result = regex.Match(propertyName);
+
+            if (!result.Success)
+                return false;
+
+            _propertyName = result.Groups[1].Value;
+            _listIndex = int.Parse(result.Groups[2].Value);
+
+            return true;
+        }
     }
 }
