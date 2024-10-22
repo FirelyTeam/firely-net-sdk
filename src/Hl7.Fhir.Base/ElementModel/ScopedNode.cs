@@ -11,7 +11,6 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Poco;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -92,10 +91,10 @@ namespace Hl7.Fhir.ElementModel
         public NodeType Type => this switch
         {
             { AtResource: true } when Current.Children("contained").Any() => NodeType.DomainResource | NodeType.Resource,
-            { AtResource: true } => NodeType.Resource,
-            { Value: not null } => NodeType.Primitive,
             { InstanceType: FhirTypeConstants.BUNDLE } => NodeType.Bundle | NodeType.Resource,
+            { AtResource: true } => NodeType.Resource,
             { InstanceType: FhirTypeConstants.REFERENCE or FhirTypeConstants.CANONICAL } => NodeType.Reference,
+            { Value: not null } => NodeType.Primitive,
             _ => 0
         };
 

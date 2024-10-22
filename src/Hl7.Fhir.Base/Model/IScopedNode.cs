@@ -115,7 +115,7 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     /// <returns>t</returns>
     public bool TryResolveLocalReference(string url, [NotNullWhen(true)] out IScopedNode? result)
     {
-        for(var scan = this; scan != null; scan = scan.Parent)
+        for(var scan = this; scan is not null; scan = scan.Parent)
         {
             if (scan.Type.HasFlag(NodeType.Bundle)) // if we do not find it in the closest bundle, the reference is invalid
             {
@@ -129,7 +129,7 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
                 return true;
             }
 
-            if (scan.Children("id").FirstOrDefault()?.Value as string == url)
+            if (scan.Children("id").FirstOrDefault()?.Value as string == url[1..])
             {
                 // if we encounter a resource with the correct id, return it
                 result = scan;
@@ -147,7 +147,7 @@ internal static class ScopedNodeHelpers
     private static IScopedNode? getContainer(this IScopedNode node)
     {
         var scan = node;
-        while(scan is not null or { Name: "contained" })
+        while(scan is not (null or { Name: "contained" }))
         {
             scan = scan.Parent; // navigate up to "contained"
         }
