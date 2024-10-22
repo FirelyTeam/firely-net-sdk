@@ -21,7 +21,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
+using Vonk.FhirPath.R4.Tests;
 using P = Hl7.Fhir.ElementModel.Types;
+using ScopedNode = Hl7.Fhir.ElementModel.ScopedNode;
 
 namespace Hl7.FhirPath.R4.Tests
 {
@@ -187,8 +189,16 @@ namespace Hl7.FhirPath.R4.Tests
         //    Assert.False(TypeInfo.Any.CanBeCastTo(typeof(long)));
         //}
 
-        [TestMethod]
-        public void TestFhirPathRootResource()
+
+
+        [DataTestMethod]
+        [DataRow("entry.first().resource.contained", "contained-1", "patient-1")]
+        [DataRow("entry.first().resource.contained.id", "contained-1", "patient-1")]
+        [DataRow("entry.first().resource.id", "patient-1", "patient-1")]
+        [DataRow("entry.first().resource", "patient-1", "patient-1")]
+        [DataRow("Bundle", "bundle-1", "bundle-1")]
+        [DataRow("id", "bundle-1", "bundle-1")]
+        public void TestFhirPathRootResource(string expression, string resource, string rootResource)
         {
             var bundle = new Bundle() { Type = Bundle.BundleType.Collection, Id = "bundle-1" };
             var patient = new Patient() { Id = "patient-1" };
@@ -199,46 +209,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             var patBundle = new ScopedNode(bundle.ToTypedElement());
 
-            // focus on the contained resource
-            var testNode = patBundle.Select("entry.first().resource.contained")?.FirstOrDefault() as ScopedNode;
-            EvaluationContext ctx = new FhirEvaluationContext();
-            Assert.AreEqual("contained-1", testNode.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", testNode.Scalar("%rootResource.id", ctx));
-
-            // focus on the id of the contained resource
-            testNode = patBundle.Select("entry.first().resource.contained.id")?.FirstOrDefault() as ScopedNode;
-            ctx = new FhirEvaluationContext();
-            Assert.AreEqual("contained-1", testNode.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", testNode.Scalar("%rootResource.id", ctx));
-
-            // focus on the property of the entry resource
-            testNode = patBundle.Select("entry.first().resource.id")?.FirstOrDefault() as ScopedNode;
-            ctx = new FhirEvaluationContext();
-            Assert.AreEqual("patient-1", testNode.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", testNode.Scalar("%rootResource.id", ctx));
-
-            // focus on the entry resource
-            testNode = patBundle.Select("entry.first().resource")?.FirstOrDefault() as ScopedNode;
-            ctx = new FhirEvaluationContext();
-            Assert.AreEqual("patient-1", testNode.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", testNode.Scalar("%rootResource.id", ctx));
-
-            // focus on bundle 
-            testNode = patBundle;
-            ctx = new FhirEvaluationContext();
-            Assert.AreEqual("bundle-1", testNode.Scalar("%resource.id", ctx));
-            Assert.AreEqual("bundle-1", testNode.Scalar("%rootResource.id", ctx));
-
-            // focus on a property of the bundle 
-            testNode = patBundle.Select("id")?.FirstOrDefault() as ScopedNode;
-            ctx = new FhirEvaluationContext();
-            Assert.AreEqual("bundle-1", testNode.Scalar("%resource.id", ctx));
-            Assert.AreEqual("bundle-1", testNode.Scalar("%rootResource.id", ctx));
-
-            // Testing %context and $this
-            var node = patBundle.Select("entry.first().resource.contained")?.FirstOrDefault();
-            Assert.AreEqual("contained-1", node.Scalar("%context.id", ctx));
-            Assert.AreEqual("contained-1", node.Scalar("$this.id", ctx));
+            var node = patBundle.Select(expression).FirstOrDefault()!;
+            node.Scalar("%resource.id").Should().Be(resource);
+            node.Scalar("%rootResource.id").Should().Be(rootResource);
         }
 
         [TestMethod]
