@@ -29,7 +29,7 @@
 
 #nullable enable
 
-using Hl7.Fhir.Model;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -37,9 +37,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
-using DataType = System.ComponentModel.DataAnnotations.DataType;
 
 namespace Hl7.Fhir.Model;
 
@@ -68,7 +66,17 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
 
     private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
-    public IEnumerable<object> Annotations(Type type) => annotations.OfType(type);
+        public IEnumerable<object> Annotations(Type type)
+        {
+            if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
+                    return new[] { this };
+            else if (type == typeof(IFhirValueProvider))
+                return new[] { this };
+            else if (type == typeof(IResourceTypeSupplier))
+                return new[] { this };
+            else
+                return annotations.OfType(type);
+        }
 
     public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
 

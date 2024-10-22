@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Test.Validation
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
+            string examplesZip = @"TestData/examples.zip";
 
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
