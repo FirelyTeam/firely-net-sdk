@@ -53,7 +53,7 @@ namespace Hl7.Fhir.ElementModel
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
-        //    ExceptionHandler = parent.ExceptionHandler;
+            ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
         }

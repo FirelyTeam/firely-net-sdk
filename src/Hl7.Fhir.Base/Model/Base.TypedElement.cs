@@ -9,8 +9,10 @@ using Hl7.Fhir.Specification;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using System.Runtime.CompilerServices;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
@@ -75,10 +77,10 @@ public abstract partial class Base : IScopedNode,
     {
         get => LazyInitializer.EnsureInitialized(ref _scopeInfo, () => BuildRoot())!;
         set => _scopeInfo = value;
-    }
+    } 
 
     internal ScopeInformation BuildRoot(string? rootName = null) => new(null, rootName ?? TypeName, null);
-
+    
     internal Base WithScopeInfo(ScopeInformation info)
     {
         this.ScopeInfo = info;
@@ -92,10 +94,10 @@ public abstract partial class Base : IScopedNode,
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) =>
         this.GetElementPairs()
             .Where(ep => (name == null || name == ep.Key))
-            .SelectMany<KeyValuePair<string, object>, Base>(ep =>
+            .SelectMany<KeyValuePair<string, object>, Base>(ep => 
                 (ep.Key, ep.Value) switch
                 {
-                    (_, Base b) => (IEnumerable<Base>) [b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    (_, Base b) => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                     (_, IEnumerable<Base> list) => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
                     ("url", string s) when this is Extension => [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                     ("id", string s) when this is Element => [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
@@ -105,8 +107,9 @@ public abstract partial class Base : IScopedNode,
             );
 
     string ITypedElement.Name => ScopeInfo.Name;
-
-    string ITypedElement.InstanceType =>
+    
+    [TemporarilyChanged] // TODO: This is a temporary change to make the tests pass. This should be removed. We are not planning to implement ITE.
+    string? ITypedElement.InstanceType => 
         ((IStructureDefinitionSummary)
             ModelInspector
                 .ForType(this.GetType())
@@ -199,7 +202,7 @@ public abstract partial class Base : IScopedNode,
         .SelectMany<KeyValuePair<string, object>, Base>(ep =>
             (ep.Key, ep.Value) switch
             {
-                (_, Base b) => (IEnumerable<Base>) [b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                (_, Base b) => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                 (_, IEnumerable<Base> list) => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
                 ("url", string s) when this is Extension => [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                 ("id", string s) when this is Element => [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],

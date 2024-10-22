@@ -1,7 +1,6 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using System.Collections.Generic;
 using System.Linq;

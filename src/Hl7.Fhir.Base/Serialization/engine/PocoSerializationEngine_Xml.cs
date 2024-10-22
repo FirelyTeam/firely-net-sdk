@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Xml;
 
@@ -24,7 +25,7 @@ internal partial class PocoSerializationEngine
         _xmlSerializer ??= new BaseFhirXmlPocoSerializer(_inspector.FhirRelease);
     
     /// <inheritdoc />
-    public Base DeserializeFromXml(string data)
+    public Resource DeserializeFromXml(string data)
     {
         return (Resource)deserializeAndFilterErrors(() =>
         { 
@@ -32,8 +33,18 @@ internal partial class PocoSerializationEngine
             return (instance, issues);
         });
     }
+
+    internal Base DeserializeBaseFromXml(string data)
+    {
+        return deserializeAndFilterErrors(() =>
+        { 
+            _ = getXmlDeserializer().TryDeserializeResource(data, out var instance, out var issues);
+            return (instance, issues);
+        });
+    }
     
     /// <inheritdoc />
+    [TemporarilyChanged]
     public string SerializeToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
 
     /// <summary>
@@ -41,9 +52,9 @@ internal partial class PocoSerializationEngine
     /// </summary>
     /// <param name="reader">The XML reader</param>
     /// <returns>The parsed resource</returns>
-    public Base DeserializeFromXml(XmlReader reader)
+    public Resource DeserializeFromXml(XmlReader reader)
     {
-        return deserializeAndFilterErrors(() =>
+        return (Resource)deserializeAndFilterErrors(() =>
         { 
             _ = getXmlDeserializer().TryDeserializeResource(reader, out var instance, out var issues);
             return (instance, issues);
@@ -70,5 +81,6 @@ internal partial class PocoSerializationEngine
     /// </summary>
     /// <param name="instance">An instance of Base or any of its children</param>
     /// <param name="writer">The XML writer</param>
+    [TemporarilyChanged]
     public void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer);
 }

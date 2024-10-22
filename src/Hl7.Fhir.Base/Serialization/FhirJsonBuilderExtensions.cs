@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization
@@ -54,6 +55,7 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonBuilder(settings).Build(source);
 
         /// <inheritdoc cref="ToJsonAsync(ITypedElement, FhirJsonSerializationSettings)" />
+        [TemporarilyChanged]
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
             if (source is not Resource resource)
@@ -63,6 +65,7 @@ namespace Hl7.Fhir.Serialization
             return engine.SerializeToJson(resource);
         }
 
+        [TemporarilyChanged]
         public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
             if (source is not Resource resource)

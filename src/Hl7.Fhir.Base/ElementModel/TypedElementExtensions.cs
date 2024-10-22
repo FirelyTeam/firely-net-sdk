@@ -14,6 +14,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -26,6 +27,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="modelInspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="rootName"></param>
         /// <returns></returns>
+        [TemporarilyChanged]
         public static ITypedElement ToTypedElement(this Base @base, ModelInspector modelInspector, string? rootName = null)
             => new PocoElementNode(modelInspector, @base, rootName: rootName);
 
