@@ -145,8 +145,6 @@ namespace Hl7.Fhir.Model
             return Get(name, matchPrefix).SingleOrDefault();
         }
 
-        public ParameterComponent this[string name] => GetSingle(name);
-
         /// <summary>
         /// Returns the Value property of the requested parameter casted to the requested type
         /// </summary>

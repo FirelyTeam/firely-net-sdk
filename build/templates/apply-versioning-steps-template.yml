@@ -18,7 +18,7 @@ steps:
         }
         else
         {
-          $suffix = $Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER
+          $suffix = "$Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER"
         }
         
         Write-Host "##vso[task.setvariable variable=CurrentSuffix]$suffix"

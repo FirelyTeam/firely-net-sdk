@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Introspection
     /// <summary>
     /// This attribute is applied to classes that represent FHIR datatypes and resources.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class FhirTypeAttribute : VersionedAttribute
     {
         public FhirTypeAttribute(string name)
@@ -57,20 +57,13 @@ namespace Hl7.Fhir.Introspection
         public string Name { get; private set; }
 
         /// <summary>
-        /// Indicates whether this class represents the nested complex type for a (backbone) element.
-        /// </summary>
-        public bool IsNestedType { get; set; }
-
-        /// <summary>
-        /// Indicates whether this class represents a Resource
-        /// </summary>
-        public bool IsResource { get; set; }
-
-        /// <summary>
         /// The canonical of the StructureDefinition defining this type.
         /// </summary>
         public string? Canonical { get; set; }
+
+        /// <summary>
+        /// Indicates whether this class represents the nested complex type for a (backbone) element.
+        /// </summary>
+        public bool IsBackboneType { get; set; }
     }
 }
-
-#nullable restore
