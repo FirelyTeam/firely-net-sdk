@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using P=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
@@ -81,6 +82,8 @@ public abstract partial class Base : IScopedNode,
     //   HEt moet "code" zijn als dit een "Code<T>" is. Dat zijn geloof ik de afwijkingen.
     //   Wellioht is er ook nog iets met de directe properties "Extension.url" en "Element.id" die van een
     //   system type zijn ipv een FHIR type.
+    
+    [TemporarilyChanged] // TODO: This is a temporary change to make the tests pass. This should be removed. We are not planning to implement ITE.
     string? ITypedElement.InstanceType => 
         ((IStructureDefinitionSummary)
             ModelInspector
