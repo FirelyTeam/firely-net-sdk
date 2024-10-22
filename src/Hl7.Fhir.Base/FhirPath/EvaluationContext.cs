@@ -41,12 +41,6 @@ public class EvaluationContext
     {
         Environment = environment;
     }
-
-    /// <summary>
-    /// Explicitly override the values of %resource and %rootResource in the evaluation context.
-    /// </summary>
-    public static EvaluationContext WithResourceOverrides(ITypedElement? resource, ITypedElement? rootResource = null) =>
-        new EvaluationContext { Resource = resource, RootResource = rootResource ?? resource };
     
     /// <summary>
     /// The data represented by <c>%rootResource</c>.
@@ -67,4 +61,14 @@ public class EvaluationContext
     /// A delegate that handles the output for the <c>trace()</c> function.
     /// </summary>
     public Action<string, IEnumerable<ITypedElement>>? Tracer { get; set; }
+}
+
+public static class EvaluationContextExtensions
+{
+    public static T WithResourceOverrides<T>(this T context, ITypedElement? resource, ITypedElement? rootResource = null) where T : EvaluationContext
+    {
+        context.Resource = resource;
+        context.RootResource = rootResource ?? resource;
+        return context;
+    }
 }

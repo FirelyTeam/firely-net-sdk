@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
         {
-            ForceRegenerateSnapshots = true,
+            RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE,
             GenerateSnapshotForExternalProfiles = true
         };
 
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             public SnapshotEvaluationContext(
                 string testPath, IResourceResolver resolver, string id,
-                StructureDefinition input, StructureDefinition generated) : base(generated.ToTypedElement())
+                StructureDefinition input, StructureDefinition generated)
             {
                 _testPath = testPath ?? throw new ArgumentNullException(nameof(testPath));
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
@@ -799,6 +799,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
+
+                this.WithResourceOverrides(Generated);
             }
 
             void Trace(string msg, IEnumerable<ITypedElement> elems)
