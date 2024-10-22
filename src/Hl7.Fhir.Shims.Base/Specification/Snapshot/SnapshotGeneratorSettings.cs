@@ -35,9 +35,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
             other.GenerateSnapshotForExternalProfiles = GenerateSnapshotForExternalProfiles;
-#pragma warning disable CS0618 // Type or member is obsolete
-            other.ForceRegenerateSnapshots = ForceRegenerateSnapshots;
-#pragma warning restore CS0618 // Type or member is obsolete
+            other.RegenerationBehaviour = RegenerationBehaviour;
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
