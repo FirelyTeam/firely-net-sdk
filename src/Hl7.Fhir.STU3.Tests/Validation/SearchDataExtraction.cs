@@ -20,6 +20,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
+using FhirEvaluationContext = Hl7.Fhir.FhirPath.FhirEvaluationContext;
 
 namespace Hl7.Fhir.Test.Validation
 {
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Test.Validation
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
+            string examplesZip = @"TestData/examples.zip";
 
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
@@ -130,7 +131,7 @@ namespace Hl7.Fhir.Test.Validation
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var results = resource.Select(index.Expression, new FhirEvaluationContext(resource.ToTypedElement()));
+            var results = resource.Select(index.Expression, new FhirEvaluationContext());
             if (results.Any())
             {
                 // we perform the Select on a Poco, because then we get the FHIR dialect of FhirPath as well.
