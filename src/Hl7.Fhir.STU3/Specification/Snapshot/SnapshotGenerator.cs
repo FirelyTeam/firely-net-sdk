@@ -1944,7 +1944,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     RegenerationSettings.TRY_USE_EXISTING => !sd.HasSnapshot,
                     RegenerationSettings.REGENERATE_ONCE => !sd.HasSnapshot || !sd.Snapshot.IsCreatedBySnapshotGenerator(),
-                    RegenerationSettings.FORCE_REGENERATE => true,
+                    RegenerationSettings.FORCE_REGENERATE => !sd.HasSnapshot || !sd.Snapshot.IsCreatedBySnapshotGenerator(), // cannot put true here, infinite recursion!
                     _ => throw new InvalidOperationException($"Invalid RegenerationSettings value {_settings.RegenerationBehaviour}")
                 };
                 
