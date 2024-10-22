@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Rest
 
             return new ValidateCodeResult
             {
-                Result = p["result"]?.Value as FhirBoolean,
+                Result = p.GetSingle("result")?.Value as FhirBoolean,
                 Message = p.Get("message").FirstOrDefault()?.Value as FhirString,
                 Display = p.Get("display").FirstOrDefault()?.Value as FhirString
             };

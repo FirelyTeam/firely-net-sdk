@@ -89,11 +89,11 @@ namespace Hl7.Fhir.Utility
                 : throw Error.Argument("type", "Type {0} is not a Nullable<T>".FormatWith(type.Name));
 
         /// <summary>
-        /// Returns true if the given type is a .NET2.0+ typed collection.
+        /// Returns true if the given type is a .NET2.0+ typed list.
         /// </summary>
-        public static bool IsTypedCollection(Type type)
+        public static bool IsTypedList(Type type)
         {
-            return type.IsArray || ImplementsGenericDefinition(type, typeof(ICollection<>));
+            return type.IsArray || ImplementsGenericDefinition(type, typeof(IList<>));
         }
 
 
