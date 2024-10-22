@@ -164,7 +164,7 @@ public abstract partial class Base : IScopedNode,
             PrimitiveType => NodeType.Primitive,
             DomainResource => NodeType.DomainResource | NodeType.Resource,
             Resource => NodeType.Resource,
-            ResourceReference => NodeType.Reference,
+            ResourceReference or Canonical or CodeableReference => NodeType.Reference,
             _ => 0
         };
     

@@ -142,7 +142,7 @@ public interface IScopedNode : ITypedElement, IShortPathGenerator
     }
 }
 
-internal static class ScopedNodeHelpers
+public static class ScopedNodeHelpers
 {
     private static IScopedNode? getContainer(this IScopedNode node)
     {
