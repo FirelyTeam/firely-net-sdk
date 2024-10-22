@@ -7979,7 +7979,6 @@ namespace Hl7.Fhir.Specification.Tests
             var element = snapshot.Should().Contain(e => e.Path == "Observation.subject").Subject;
             var constraint = element.Constraint.Where(c => c.Key == "ref-1").FirstOrDefault();
             constraint.Source.Should().Be("http://hl7.org/fhir/StructureDefinition/Reference");
-
         }
 
 

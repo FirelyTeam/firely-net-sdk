@@ -53,7 +53,7 @@ namespace Vonk.FhirPath.R4.Tests
             var processor = new ActionBlock<ValueSet>(r =>
                 {
                     var typedElement = r.ToTypedElement();
-                    var evalContext = new EvaluationContext(typedElement);
+                    var evalContext = new EvaluationContext();
                     var canonical = selector(typedElement, "url", evalContext).Single().Value.ToString();
                     actual.Add((canonical, r));
                 }

@@ -20,6 +20,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
+using FhirEvaluationContext = Hl7.Fhir.FhirPath.FhirEvaluationContext;
 
 namespace Hl7.Fhir.Test.Validation
 {
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Test.Validation
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
+            string examplesZip = @"TestData/examples.zip";
 
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
