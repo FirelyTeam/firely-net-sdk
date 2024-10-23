@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Tests.Model
 
             try
             {
-                var results = resourceModel.Select(index.Expression, new EvaluationContext(resourceModel));
+                var results = resourceModel.Select(index.Expression, new EvaluationContext());
                 if (results.Count() > 0)
                 {
                     foreach (var t2 in results)

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductAuthorization","http://hl7.org/fhir/StructureDefinition/MedicinalProductAuthorization", IsResource=true)]
+  [FhirType("MedicinalProductAuthorization","http://hl7.org/fhir/StructureDefinition/MedicinalProductAuthorization")]
   public partial class MedicinalProductAuthorization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductAuthorization#JurisdictionalAuthorization", IsNestedType=true)]
-    [BackboneType("MedicinalProductAuthorization.jurisdictionalAuthorization")]
+    [FhirType("MedicinalProductAuthorization.jurisdictionalAuthorization", IsBackboneType=true)]
     public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductAuthorization#JurisdictionalAuthorization"; } }
+      public override string TypeName { get { return "MedicinalProductAuthorization.jurisdictionalAuthorization"; } }
 
       /// <summary>
       /// The assigned number for the marketing authorization
@@ -286,14 +285,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductAuthorization#Procedure", IsNestedType=true)]
-    [BackboneType("MedicinalProductAuthorization.procedure")]
+    [FhirType("MedicinalProductAuthorization.procedure", IsBackboneType=true)]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductAuthorization#Procedure"; } }
+      public override string TypeName { get { return "MedicinalProductAuthorization.procedure"; } }
 
       /// <summary>
       /// Identifier for this procedure

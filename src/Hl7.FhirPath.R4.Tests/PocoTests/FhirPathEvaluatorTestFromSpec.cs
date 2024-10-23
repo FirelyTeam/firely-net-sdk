@@ -69,7 +69,7 @@ namespace Hl7.FhirPath.R4.Tests
             var input = focus.ToTypedElement();
             var container = resource?.ToTypedElement();
 
-            Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext(container)));
+            Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext()));
         }
 
         private enum ErrorType

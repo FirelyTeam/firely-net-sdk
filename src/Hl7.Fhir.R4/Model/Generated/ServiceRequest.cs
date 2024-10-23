@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ServiceRequest","http://hl7.org/fhir/StructureDefinition/ServiceRequest", IsResource=true)]
+  [FhirType("ServiceRequest","http://hl7.org/fhir/StructureDefinition/ServiceRequest")]
   public partial class ServiceRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>

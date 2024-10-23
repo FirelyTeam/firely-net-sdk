@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide", IsResource=true)]
+  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide")]
   public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -2257,14 +2257,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#DependsOn", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.dependsOn")]
+    [FhirType("ImplementationGuide.dependsOn", IsBackboneType=true)]
     public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#DependsOn"; } }
+      public override string TypeName { get { return "ImplementationGuide.dependsOn"; } }
 
       /// <summary>
       /// Identity of the IG that this depends on
@@ -2489,14 +2488,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Global", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.global")]
+    [FhirType("ImplementationGuide.global", IsBackboneType=true)]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Global"; } }
+      public override string TypeName { get { return "ImplementationGuide.global"; } }
 
       /// <summary>
       /// Type this profile applies to
@@ -2681,14 +2679,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Definition", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.definition")]
+    [FhirType("ImplementationGuide.definition", IsBackboneType=true)]
     public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Definition"; } }
+      public override string TypeName { get { return "ImplementationGuide.definition"; } }
 
       /// <summary>
       /// Grouping used to present related resources in the IG
@@ -2912,14 +2909,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Grouping", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.definition.grouping")]
+    [FhirType("ImplementationGuide.definition.grouping", IsBackboneType=true)]
     public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Grouping"; } }
+      public override string TypeName { get { return "ImplementationGuide.definition.grouping"; } }
 
       /// <summary>
       /// Descriptive name for the package
@@ -3100,14 +3096,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.definition.resource")]
+    [FhirType("ImplementationGuide.definition.resource", IsBackboneType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Resource"; } }
+      public override string TypeName { get { return "ImplementationGuide.definition.resource"; } }
 
       /// <summary>
       /// Location of the resource
@@ -3432,14 +3427,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Page", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.definition.page")]
+    [FhirType("ImplementationGuide.definition.page", IsBackboneType=true)]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Page"; } }
+      public override string TypeName { get { return "ImplementationGuide.definition.page"; } }
 
       /// <summary>
       /// Where to find that page
@@ -3675,14 +3669,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Parameter", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.definition.parameter")]
+    [FhirType("ImplementationGuide.definition.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Parameter"; } }
+      public override string TypeName { get { return "ImplementationGuide.definition.parameter"; } }
 
       /// <summary>
       /// apply | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
@@ -3863,14 +3856,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Template", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.definition.template")]
+    [FhirType("ImplementationGuide.definition.template", IsBackboneType=true)]
     public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Template"; } }
+      public override string TypeName { get { return "ImplementationGuide.definition.template"; } }
 
       /// <summary>
       /// Type of template specified
@@ -4095,14 +4087,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#Manifest", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.manifest")]
+    [FhirType("ImplementationGuide.manifest", IsBackboneType=true)]
     public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#Manifest"; } }
+      public override string TypeName { get { return "ImplementationGuide.manifest"; } }
 
       /// <summary>
       /// Location of rendered implementation guide
@@ -4379,14 +4370,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.manifest.resource")]
+    [FhirType("ImplementationGuide.manifest.resource", IsBackboneType=true)]
     public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#ManifestResource"; } }
+      public override string TypeName { get { return "ImplementationGuide.manifest.resource"; } }
 
       /// <summary>
       /// Location of the resource
@@ -4578,14 +4568,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
-    [BackboneType("ImplementationGuide.manifest.page")]
+    [FhirType("ImplementationGuide.manifest.page", IsBackboneType=true)]
     public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide#ManifestPage"; } }
+      public override string TypeName { get { return "ImplementationGuide.manifest.page"; } }
 
       /// <summary>
       /// HTML page name

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ExampleScenario","http://hl7.org/fhir/StructureDefinition/ExampleScenario", IsResource=true)]
+  [FhirType("ExampleScenario","http://hl7.org/fhir/StructureDefinition/ExampleScenario")]
   public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -83,14 +83,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Actor", IsNestedType=true)]
-    [BackboneType("ExampleScenario.actor")]
+    [FhirType("ExampleScenario.actor", IsBackboneType=true)]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Actor"; } }
+      public override string TypeName { get { return "ExampleScenario.actor"; } }
 
       /// <summary>
       /// ID or acronym of the actor
@@ -357,14 +356,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Instance", IsNestedType=true)]
-    [BackboneType("ExampleScenario.instance")]
+    [FhirType("ExampleScenario.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Instance"; } }
+      public override string TypeName { get { return "ExampleScenario.instance"; } }
 
       /// <summary>
       /// The id of the resource for referencing
@@ -683,14 +681,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Version", IsNestedType=true)]
-    [BackboneType("ExampleScenario.instance.version")]
+    [FhirType("ExampleScenario.instance.version", IsBackboneType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Version"; } }
+      public override string TypeName { get { return "ExampleScenario.instance.version"; } }
 
       /// <summary>
       /// The identifier of a specific version of a resource
@@ -872,14 +869,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#ContainedInstance", IsNestedType=true)]
-    [BackboneType("ExampleScenario.instance.containedInstance")]
+    [FhirType("ExampleScenario.instance.containedInstance", IsBackboneType=true)]
     public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#ContainedInstance"; } }
+      public override string TypeName { get { return "ExampleScenario.instance.containedInstance"; } }
 
       /// <summary>
       /// Each resource contained in the instance
@@ -1057,14 +1053,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Process", IsNestedType=true)]
-    [BackboneType("ExampleScenario.process")]
+    [FhirType("ExampleScenario.process", IsBackboneType=true)]
     public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Process"; } }
+      public override string TypeName { get { return "ExampleScenario.process"; } }
 
       /// <summary>
       /// The diagram title of the group of operations
@@ -1354,14 +1349,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Step", IsNestedType=true)]
-    [BackboneType("ExampleScenario.process.step")]
+    [FhirType("ExampleScenario.process.step", IsBackboneType=true)]
     public partial class StepComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Step"; } }
+      public override string TypeName { get { return "ExampleScenario.process.step"; } }
 
       /// <summary>
       /// Nested process
@@ -1572,14 +1566,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Operation", IsNestedType=true)]
-    [BackboneType("ExampleScenario.process.step.operation")]
+    [FhirType("ExampleScenario.process.step.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Operation"; } }
+      public override string TypeName { get { return "ExampleScenario.process.step.operation"; } }
 
       /// <summary>
       /// The sequential number of the interaction
@@ -2068,14 +2061,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExampleScenario#Alternative", IsNestedType=true)]
-    [BackboneType("ExampleScenario.process.step.alternative")]
+    [FhirType("ExampleScenario.process.step.alternative", IsBackboneType=true)]
     public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario#Alternative"; } }
+      public override string TypeName { get { return "ExampleScenario.process.step.alternative"; } }
 
       /// <summary>
       /// Label for alternative

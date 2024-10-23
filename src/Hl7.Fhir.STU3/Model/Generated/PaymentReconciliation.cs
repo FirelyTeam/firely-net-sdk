@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("PaymentReconciliation","http://hl7.org/fhir/StructureDefinition/PaymentReconciliation", IsResource=true)]
+  [FhirType("PaymentReconciliation","http://hl7.org/fhir/StructureDefinition/PaymentReconciliation")]
   public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PaymentReconciliation#Details", IsNestedType=true)]
-    [BackboneType("PaymentReconciliation.detail")]
+    [FhirType("PaymentReconciliation.detail", IsBackboneType=true)]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PaymentReconciliation#Details"; } }
+      public override string TypeName { get { return "PaymentReconciliation.detail"; } }
 
       /// <summary>
       /// Type code
@@ -371,14 +370,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("PaymentReconciliation#Notes", IsNestedType=true)]
-    [BackboneType("PaymentReconciliation.processNote")]
+    [FhirType("PaymentReconciliation.processNote", IsBackboneType=true)]
     public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PaymentReconciliation#Notes"; } }
+      public override string TypeName { get { return "PaymentReconciliation.processNote"; } }
 
       /// <summary>
       /// display | print | printoper

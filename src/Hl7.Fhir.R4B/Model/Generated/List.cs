@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("List","http://hl7.org/fhir/StructureDefinition/List", IsResource=true)]
+  [FhirType("List","http://hl7.org/fhir/StructureDefinition/List")]
   public partial class List : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -93,14 +93,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("List#Entry", IsNestedType=true)]
-    [BackboneType("List.entry")]
+    [FhirType("List.entry", IsBackboneType=true)]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "List#Entry"; } }
+      public override string TypeName { get { return "List.entry"; } }
 
       /// <summary>
       /// Status/Workflow information about this item
