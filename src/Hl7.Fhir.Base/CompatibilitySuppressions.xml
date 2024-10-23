@@ -9,19 +9,6 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:System.Runtime.CompilerServices.CollectionBuilderAttribute</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Hl7.Fhir.ElementModel.IBaseElementNavigator`1</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.ElementModel.TypedElementExtensions.IsExactlyEqualTo``1(``0,``0,System.Boolean)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
@@ -86,6 +73,41 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.get_TerminologyService</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.WithResourceOverrides(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.ElementModel.ITypedElement)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.Parameters.get_Item(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.ContentType.BuildContentType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.ContentType.BuildMediaType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.IFhirSerializationEngine.SerializeToXml(Hl7.Fhir.Model.Resource)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -107,86 +129,16 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementExtensions.IsExactlyEqualTo``1(``0,``0,System.Boolean)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
+    <Target>M:Hl7.Fhir.Utility.ReflectionHelper.IsTypedCollection(System.Type)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementExtensions.Matches``1(``0,``0)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.GetString``1(System.Collections.Generic.IEnumerable{``0})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.ParseBindableInternal``1(Hl7.Fhir.ElementModel.IBaseElementNavigator{``0})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.ParseCodeableConceptInternal``1(Hl7.Fhir.ElementModel.IBaseElementNavigator{``0})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.ParseCodingInternal``1(Hl7.Fhir.ElementModel.IBaseElementNavigator{``0})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.ParsePrimitiveInternal``2(Hl7.Fhir.ElementModel.IBaseElementNavigator{``1})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.ParseQuantityInternal``1(Hl7.Fhir.ElementModel.IBaseElementNavigator{``0})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.TypedElementParseExtensions.ParseResourceReferenceInternal``1(Hl7.Fhir.ElementModel.IBaseElementNavigator{``0})</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.IFhirSerializationEngine.SerializeToXml(Hl7.Fhir.Model.Resource)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.SerializationEngineExtensions.SerializeReaderToXml(Hl7.Fhir.Serialization.IFhirSerializationEngine,System.Xml.XmlReader)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.SerializationEngineExtensions.SerializeToXmlWriter(Hl7.Fhir.Serialization.IFhirSerializationEngine,Hl7.Fhir.Model.Resource,System.Xml.XmlWriter)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
+    <Target>M:Hl7.FhirPath.EvaluationContext.WithResourceOverrides(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.ElementModel.ITypedElement)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
@@ -225,41 +177,6 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>M:Hl7.Fhir.ElementModel.ITypedElement.Children(System.String)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.IFhirSerializationEngine.SerializeToXml(Hl7.Fhir.Model.Base)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>P:Hl7.Fhir.ElementModel.ITypedElement.InstanceType</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>P:Hl7.Fhir.ElementModel.ITypedElement.Name</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>P:Hl7.Fhir.ElementModel.ITypedElement.Value</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
     <DiagnosticId>CP0008</DiagnosticId>
     <Target>T:Hl7.Fhir.ElementModel.ElementNode</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
@@ -295,80 +212,7 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0008</DiagnosticId>
-    <Target>T:Hl7.Fhir.ElementModel.ElementNode</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
+    <DiagnosticId>PKV006</DiagnosticId>
+    <Target>.NETStandard,Version=v2.0</Target>
   </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0008</DiagnosticId>
-    <Target>T:Hl7.Fhir.ElementModel.ITypedElement</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0008</DiagnosticId>
-    <Target>T:Hl7.Fhir.ElementModel.MaskingNode</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0008</DiagnosticId>
-    <Target>T:Hl7.Fhir.ElementModel.ScopedNode</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0008</DiagnosticId>
-    <Target>T:Hl7.Fhir.Serialization.BaseTypedElement</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Model.Parameters.get_Item(System.String)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Utility.ReflectionHelper.IsTypedCollection(System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Model.Parameters.get_Item(System.String)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Utility.ReflectionHelper.IsTypedCollection(System.Type)</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-    <Suppression>
-        <DiagnosticId>CP0002</DiagnosticId>
-        <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.get_TerminologyService</Target>
-        <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-        <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-        <IsBaselineSuppression>true</IsBaselineSuppression>
-    </Suppression>
-    <Suppression>
-        <DiagnosticId>CP0002</DiagnosticId>
-        <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.get_TerminologyService</Target>
-        <Left>lib/netstandard2.0/Hl7.Fhir.Base.dll</Left>
-        <Right>lib/netstandard2.0/Hl7.Fhir.Base.dll</Right>
-        <IsBaselineSuppression>true</IsBaselineSuppression>
-    </Suppression>
 </Suppressions>

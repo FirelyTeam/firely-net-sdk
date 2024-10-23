@@ -399,7 +399,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
-                snapshot.Element.RemoveAllConstrainedByDiffExtensions();
+                // Also remove core extensions that are not supposed to be inherited by derived profiles
+                snapshot.RemoveAllNonInheritableExtensions();
                 snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
 
                 // Notify observers
@@ -1309,7 +1310,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var elem = elems[pos];
 
                     // [WMR 20160826] Never inherit Changed extension from base profile!
-                    elem.RemoveAllConstrainedByDiffExtensions();
+                    elem.RemoveAllNonInheritableExtensions();
                     elem.RemoveAllConstrainedByDiffAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
@@ -1940,9 +1941,17 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             try
             {
-                if (_settings.GenerateSnapshotForExternalProfiles
-                && (!sd.HasSnapshot || (_settings.RegenerationBehaviour == RegenerationSettings.FORCE_REGENERATE && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
-                )
+                var shouldGenerate = _settings.RegenerationBehaviour switch
+                {
+                    RegenerationSettings.TRY_USE_EXISTING => !sd.HasSnapshot,
+                    RegenerationSettings.REGENERATE_ONCE => !sd.HasSnapshot || !sd.Snapshot.IsCreatedBySnapshotGenerator(),
+#pragma warning disable CS0618 // Type or member is obsolete
+                    RegenerationSettings.FORCE_REGENERATE => true,
+#pragma warning restore CS0618 // Type or member is obsolete
+                    _ => throw new InvalidOperationException($"Invalid RegenerationSettings value {_settings.RegenerationBehaviour}")
+                };
+                
+                if (_settings.GenerateSnapshotForExternalProfiles && shouldGenerate)
                 {
                     // Automatically expand external profiles on demand
                     // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(ensureSnapshot)}] Recursively generate snapshot for type profile with url: '{sd.Url}' ...");
@@ -2024,9 +2033,18 @@ namespace Hl7.Fhir.Specification.Snapshot
             var cachedRoot = sd.GetSnapshotRootElementAnnotation();
             if (cachedRoot != null) { return cachedRoot; }
 #endif
-
+            var hasValidRoot = _settings.RegenerationBehaviour switch
+            {
+                RegenerationSettings.TRY_USE_EXISTING => sd.HasSnapshot,
+                RegenerationSettings.REGENERATE_ONCE => sd.HasSnapshot && sd.Snapshot.IsCreatedBySnapshotGenerator(),
+#pragma warning disable CS0618 // Type or member is obsolete
+                RegenerationSettings.FORCE_REGENERATE => false,
+#pragma warning restore CS0618 // Type or member is obsolete
+                _ => throw new InvalidOperationException($"Invalid RegenerationSettings value {_settings.RegenerationBehaviour}")
+            };
+            
             // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
-            if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || _settings.RegenerationBehaviour != RegenerationSettings.FORCE_REGENERATE))
+            if (hasValidRoot)
             {
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
                 // No need to save root ElemDef annotation, as the snapshot has already been fully expanded
