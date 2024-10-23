@@ -2562,8 +2562,8 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // Also ignore any Changed extensions on base and diff
-            elemClone.RemoveAllConstrainedByDiffExtensions();
-            baseClone.RemoveAllConstrainedByDiffExtensions();
+            elemClone.RemoveAllNonInheritableExtensions();
+            baseClone.RemoveAllNonInheritableExtensions();
             elemClone.RemoveAllConstrainedByDiffAnnotations();
             baseClone.RemoveAllConstrainedByDiffAnnotations();
 
@@ -10152,6 +10152,37 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
+        }
+
+
+        [TestMethod]
+        public void RemoveNonInhertitableSnapshotsTest()
+        {
+            var profile = new StructureDefinition
+            {
+                Url = "http://fire.ly/StructureDefinition/example",
+                Snapshot = new()
+                {
+                    Element = new() {
+                        new("Example")
+                        {
+                            Binding = new()
+                            {
+                                Strength = BindingStrength.Required,
+                                ValueSet = "http://fire.ly/ValueSet/example"
+                            }
+                        },
+                    }
+                }
+            };
+
+            profile.Snapshot.Element[0].AddExtension(ResourceIdentity.CORE_BASE_URL + "structuredefinition-hierarchy", new FhirString("foo"));
+            profile.Snapshot.Element[0].Binding.AddExtension(ResourceIdentity.CORE_BASE_URL + "elementdefinition-isCommonBinding", new FhirBoolean(true));
+
+            profile.Snapshot.RemoveAllNonInheritableExtensions();
+
+            profile.Snapshot.Element[0].Extension.Should().BeEmpty();
+            profile.Snapshot.Element[0].Binding.Extension.Should().BeEmpty();
         }
 
 
