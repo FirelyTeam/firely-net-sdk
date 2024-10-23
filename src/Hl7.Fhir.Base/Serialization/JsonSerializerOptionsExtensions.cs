@@ -8,12 +8,9 @@
 
 #nullable enable
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
-
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.CdsHooks;
-using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -239,5 +236,4 @@ namespace Hl7.Fhir.Serialization
     }
 }
 
-#endif
 #nullable restore
