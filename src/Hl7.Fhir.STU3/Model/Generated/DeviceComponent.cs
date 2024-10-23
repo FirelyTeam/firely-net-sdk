@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent", IsResource=true)]
+  [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent")]
   public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -144,14 +144,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceComponent#ProductionSpecification", IsNestedType=true)]
-    [BackboneType("DeviceComponent.productionSpecification")]
+    [FhirType("DeviceComponent.productionSpecification", IsBackboneType=true)]
     public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceComponent#ProductionSpecification"; } }
+      public override string TypeName { get { return "DeviceComponent.productionSpecification"; } }
 
       /// <summary>
       /// Type or kind of production specification, for example serial number or software revision

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Specimen","http://hl7.org/fhir/StructureDefinition/Specimen", IsResource=true)]
+  [FhirType("Specimen","http://hl7.org/fhir/StructureDefinition/Specimen")]
   public partial class Specimen : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Specimen#Collection", IsNestedType=true)]
-    [BackboneType("Specimen.collection")]
+    [FhirType("Specimen.collection", IsBackboneType=true)]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Specimen#Collection"; } }
+      public override string TypeName { get { return "Specimen.collection"; } }
 
       /// <summary>
       /// Who collected the specimen
@@ -333,14 +332,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Specimen#Processing", IsNestedType=true)]
-    [BackboneType("Specimen.processing")]
+    [FhirType("Specimen.processing", IsBackboneType=true)]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Specimen#Processing"; } }
+      public override string TypeName { get { return "Specimen.processing"; } }
 
       /// <summary>
       /// Textual description of procedure
@@ -558,14 +556,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Specimen#Container", IsNestedType=true)]
-    [BackboneType("Specimen.container")]
+    [FhirType("Specimen.container", IsBackboneType=true)]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Specimen#Container"; } }
+      public override string TypeName { get { return "Specimen.container"; } }
 
       /// <summary>
       /// Id for the container

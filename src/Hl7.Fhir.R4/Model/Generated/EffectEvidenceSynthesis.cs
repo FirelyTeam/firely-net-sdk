@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EffectEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/EffectEvidenceSynthesis", IsResource=true)]
+  [FhirType("EffectEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/EffectEvidenceSynthesis")]
   public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -89,14 +89,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EffectEvidenceSynthesis#SampleSize", IsNestedType=true)]
-    [BackboneType("EffectEvidenceSynthesis.sampleSize")]
+    [FhirType("EffectEvidenceSynthesis.sampleSize", IsBackboneType=true)]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EffectEvidenceSynthesis#SampleSize"; } }
+      public override string TypeName { get { return "EffectEvidenceSynthesis.sampleSize"; } }
 
       /// <summary>
       /// Description of sample size
@@ -319,14 +318,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EffectEvidenceSynthesis#ResultsByExposure", IsNestedType=true)]
-    [BackboneType("EffectEvidenceSynthesis.resultsByExposure")]
+    [FhirType("EffectEvidenceSynthesis.resultsByExposure", IsBackboneType=true)]
     public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EffectEvidenceSynthesis#ResultsByExposure"; } }
+      public override string TypeName { get { return "EffectEvidenceSynthesis.resultsByExposure"; } }
 
       /// <summary>
       /// Description of results by exposure
@@ -562,14 +560,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EffectEvidenceSynthesis#EffectEstimate", IsNestedType=true)]
-    [BackboneType("EffectEvidenceSynthesis.effectEstimate")]
+    [FhirType("EffectEvidenceSynthesis.effectEstimate", IsBackboneType=true)]
     public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EffectEvidenceSynthesis#EffectEstimate"; } }
+      public override string TypeName { get { return "EffectEvidenceSynthesis.effectEstimate"; } }
 
       /// <summary>
       /// Description of effect estimate
@@ -853,14 +850,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EffectEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
-    [BackboneType("EffectEvidenceSynthesis.effectEstimate.precisionEstimate")]
+    [FhirType("EffectEvidenceSynthesis.effectEstimate.precisionEstimate", IsBackboneType=true)]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EffectEvidenceSynthesis#PrecisionEstimate"; } }
+      public override string TypeName { get { return "EffectEvidenceSynthesis.effectEstimate.precisionEstimate"; } }
 
       /// <summary>
       /// Type of precision estimate
@@ -1109,14 +1105,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EffectEvidenceSynthesis#Certainty", IsNestedType=true)]
-    [BackboneType("EffectEvidenceSynthesis.certainty")]
+    [FhirType("EffectEvidenceSynthesis.certainty", IsBackboneType=true)]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EffectEvidenceSynthesis#Certainty"; } }
+      public override string TypeName { get { return "EffectEvidenceSynthesis.certainty"; } }
 
       /// <summary>
       /// Certainty rating
@@ -1289,14 +1284,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EffectEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
-    [BackboneType("EffectEvidenceSynthesis.certainty.certaintySubcomponent")]
+    [FhirType("EffectEvidenceSynthesis.certainty.certaintySubcomponent", IsBackboneType=true)]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EffectEvidenceSynthesis#CertaintySubcomponent"; } }
+      public override string TypeName { get { return "EffectEvidenceSynthesis.certainty.certaintySubcomponent"; } }
 
       /// <summary>
       /// Type of subcomponent of certainty rating

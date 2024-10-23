@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
+  [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient")]
   public partial class Patient : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Contact", IsNestedType=true)]
-    [BackboneType("Patient.contact")]
+    [FhirType("Patient.contact", IsBackboneType=true)]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Contact"; } }
+      public override string TypeName { get { return "Patient.contact"; } }
 
       /// <summary>
       /// The kind of relationship
@@ -403,14 +402,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Animal", IsNestedType=true)]
-    [BackboneType("Patient.animal")]
+    [FhirType("Patient.animal", IsBackboneType=true)]
     public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Animal"; } }
+      public override string TypeName { get { return "Patient.animal"; } }
 
       /// <summary>
       /// E.g. Dog, Cow
@@ -584,14 +582,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Communication", IsNestedType=true)]
-    [BackboneType("Patient.communication")]
+    [FhirType("Patient.communication", IsBackboneType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Communication"; } }
+      public override string TypeName { get { return "Patient.communication"; } }
 
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health
@@ -757,14 +754,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Patient#Link", IsNestedType=true)]
-    [BackboneType("Patient.link")]
+    [FhirType("Patient.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient#Link"; } }
+      public override string TypeName { get { return "Patient.link"; } }
 
       /// <summary>
       /// The other patient or related person resource that the link refers to

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Invoice","http://hl7.org/fhir/StructureDefinition/Invoice", IsResource=true)]
+  [FhirType("Invoice","http://hl7.org/fhir/StructureDefinition/Invoice")]
   public partial class Invoice : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -107,14 +107,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Invoice#Participant", IsNestedType=true)]
-    [BackboneType("Invoice.participant")]
+    [FhirType("Invoice.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice#Participant"; } }
+      public override string TypeName { get { return "Invoice.participant"; } }
 
       /// <summary>
       /// Type of involvement in creation of this Invoice
@@ -261,14 +260,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Invoice#LineItem", IsNestedType=true)]
-    [BackboneType("Invoice.lineItem")]
+    [FhirType("Invoice.lineItem", IsBackboneType=true)]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice#LineItem"; } }
+      public override string TypeName { get { return "Invoice.lineItem"; } }
 
       /// <summary>
       /// Sequence number of line item
@@ -460,14 +458,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Invoice#PriceComponent", IsNestedType=true)]
-    [BackboneType("Invoice.lineItem.priceComponent")]
+    [FhirType("Invoice.lineItem.priceComponent", IsBackboneType=true)]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice#PriceComponent"; } }
+      public override string TypeName { get { return "Invoice.lineItem.priceComponent"; } }
 
       /// <summary>
       /// base | surcharge | deduction | discount | tax | informational

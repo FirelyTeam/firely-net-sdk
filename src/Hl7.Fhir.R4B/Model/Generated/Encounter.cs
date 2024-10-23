@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter", IsResource=true)]
+  [FhirType("Encounter","http://hl7.org/fhir/StructureDefinition/Encounter")]
   public partial class Encounter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -168,14 +168,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#StatusHistory", IsNestedType=true)]
-    [BackboneType("Encounter.statusHistory")]
+    [FhirType("Encounter.statusHistory", IsBackboneType=true)]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter#StatusHistory"; } }
+      public override string TypeName { get { return "Encounter.statusHistory"; } }
 
       /// <summary>
       /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
@@ -341,14 +340,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#ClassHistory", IsNestedType=true)]
-    [BackboneType("Encounter.classHistory")]
+    [FhirType("Encounter.classHistory", IsBackboneType=true)]
     public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter#ClassHistory"; } }
+      public override string TypeName { get { return "Encounter.classHistory"; } }
 
       /// <summary>
       /// inpatient | outpatient | ambulatory | emergency +
@@ -495,14 +493,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Participant", IsNestedType=true)]
-    [BackboneType("Encounter.participant")]
+    [FhirType("Encounter.participant", IsBackboneType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter#Participant"; } }
+      public override string TypeName { get { return "Encounter.participant"; } }
 
       /// <summary>
       /// Role of participant in encounter
@@ -672,14 +669,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Diagnosis", IsNestedType=true)]
-    [BackboneType("Encounter.diagnosis")]
+    [FhirType("Encounter.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter#Diagnosis"; } }
+      public override string TypeName { get { return "Encounter.diagnosis"; } }
 
       /// <summary>
       /// The diagnosis or procedure relevant to the encounter
@@ -871,14 +867,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Hospitalization", IsNestedType=true)]
-    [BackboneType("Encounter.hospitalization")]
+    [FhirType("Encounter.hospitalization", IsBackboneType=true)]
     public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter#Hospitalization"; } }
+      public override string TypeName { get { return "Encounter.hospitalization"; } }
 
       /// <summary>
       /// Pre-admission identifier
@@ -1211,14 +1206,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Encounter#Location", IsNestedType=true)]
-    [BackboneType("Encounter.location")]
+    [FhirType("Encounter.location", IsBackboneType=true)]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter#Location"; } }
+      public override string TypeName { get { return "Encounter.location"; } }
 
       /// <summary>
       /// Location the encounter takes place

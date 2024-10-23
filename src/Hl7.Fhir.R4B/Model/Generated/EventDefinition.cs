@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EventDefinition","http://hl7.org/fhir/StructureDefinition/EventDefinition", IsResource=true)]
+  [FhirType("EventDefinition","http://hl7.org/fhir/StructureDefinition/EventDefinition")]
   public partial class EventDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>

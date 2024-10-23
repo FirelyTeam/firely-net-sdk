@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EpisodeOfCare","http://hl7.org/fhir/StructureDefinition/EpisodeOfCare", IsResource=true)]
+  [FhirType("EpisodeOfCare","http://hl7.org/fhir/StructureDefinition/EpisodeOfCare")]
   public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -119,14 +119,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#StatusHistory", IsNestedType=true)]
-    [BackboneType("EpisodeOfCare.statusHistory")]
+    [FhirType("EpisodeOfCare.statusHistory", IsBackboneType=true)]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare#StatusHistory"; } }
+      public override string TypeName { get { return "EpisodeOfCare.statusHistory"; } }
 
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -289,14 +288,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("EpisodeOfCare#Diagnosis", IsNestedType=true)]
-    [BackboneType("EpisodeOfCare.diagnosis")]
+    [FhirType("EpisodeOfCare.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare#Diagnosis"; } }
+      public override string TypeName { get { return "EpisodeOfCare.diagnosis"; } }
 
       /// <summary>
       /// Conditions/problems/diagnoses this episode of care is for

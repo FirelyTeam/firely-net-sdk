@@ -88,16 +88,13 @@ namespace Hl7.Fhir.Introspection
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
             if (GetAttribute<FhirTypeAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
-            var backboneAttribute = GetAttribute<BackboneTypeAttribute>(type, release);
-
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
-                IsResource = typeAttribute.IsResource || type.CanBeTreatedAsType(typeof(Resource)),
+                IsResource = type.CanBeTreatedAsType(typeof(Resource)),
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                 ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
-                IsBackboneType = typeAttribute.IsNestedType || backboneAttribute is not null,
-                DefinitionPath = backboneAttribute?.DefinitionPath,
+                IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
@@ -172,13 +169,6 @@ namespace Hl7.Fhir.Introspection
         /// Indicates whether this class represents the nested complex type for a backbone element.
         /// </summary>
         public bool IsBackboneType { get; private set; } = false;
-
-
-        /// <summary>
-        /// If this is a backbone type (<see cref="IsBackboneType"/>), then this contains the path
-        /// in the StructureDefinition where the backbone was defined first.
-        /// </summary>
-        public string? DefinitionPath { get; private set; }
 
         /// <summary>
         /// Indicates whether this class can be used for binding.

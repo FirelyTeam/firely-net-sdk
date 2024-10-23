@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Basic","http://hl7.org/fhir/StructureDefinition/Basic", IsResource=true)]
+  [FhirType("Basic","http://hl7.org/fhir/StructureDefinition/Basic")]
   public partial class Basic : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceDefinition","http://hl7.org/fhir/StructureDefinition/SubstanceDefinition", IsResource=true)]
+  [FhirType("SubstanceDefinition","http://hl7.org/fhir/StructureDefinition/SubstanceDefinition")]
   public partial class SubstanceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -61,14 +61,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Moiety", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.moiety")]
+    [FhirType("SubstanceDefinition.moiety", IsBackboneType=true)]
     public partial class MoietyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Moiety"; } }
+      public override string TypeName { get { return "SubstanceDefinition.moiety"; } }
 
       /// <summary>
       /// Role that the moiety is playing
@@ -400,14 +399,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Property", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.property")]
+    [FhirType("SubstanceDefinition.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Property"; } }
+      public override string TypeName { get { return "SubstanceDefinition.property"; } }
 
       /// <summary>
       /// A code expressing the type of property
@@ -555,14 +553,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#MolecularWeight", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.molecularWeight")]
+    [FhirType("SubstanceDefinition.molecularWeight", IsBackboneType=true)]
     public partial class MolecularWeightComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#MolecularWeight"; } }
+      public override string TypeName { get { return "SubstanceDefinition.molecularWeight"; } }
 
       /// <summary>
       /// The method by which the weight was determined
@@ -731,14 +728,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Structure", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.structure")]
+    [FhirType("SubstanceDefinition.structure", IsBackboneType=true)]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Structure"; } }
+      public override string TypeName { get { return "SubstanceDefinition.structure"; } }
 
       /// <summary>
       /// Stereochemistry type
@@ -1073,14 +1069,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Representation", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.structure.representation")]
+    [FhirType("SubstanceDefinition.structure.representation", IsBackboneType=true)]
     public partial class RepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Representation"; } }
+      public override string TypeName { get { return "SubstanceDefinition.structure.representation"; } }
 
       /// <summary>
       /// The kind of structural representation (e.g. full, partial)
@@ -1293,14 +1288,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Code", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.code")]
+    [FhirType("SubstanceDefinition.code", IsBackboneType=true)]
     public partial class CodeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Code"; } }
+      public override string TypeName { get { return "SubstanceDefinition.code"; } }
 
       /// <summary>
       /// The specific code
@@ -1539,14 +1533,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Name", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.name")]
+    [FhirType("SubstanceDefinition.name", IsBackboneType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Name"; } }
+      public override string TypeName { get { return "SubstanceDefinition.name"; } }
 
       /// <summary>
       /// The actual name
@@ -1963,14 +1956,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Official", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.name.official")]
+    [FhirType("SubstanceDefinition.name.official", IsBackboneType=true)]
     public partial class OfficialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Official"; } }
+      public override string TypeName { get { return "SubstanceDefinition.name.official"; } }
 
       /// <summary>
       /// Which authority uses this official name
@@ -2159,14 +2151,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#Relationship", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.relationship")]
+    [FhirType("SubstanceDefinition.relationship", IsBackboneType=true)]
     public partial class RelationshipComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#Relationship"; } }
+      public override string TypeName { get { return "SubstanceDefinition.relationship"; } }
 
       /// <summary>
       /// A pointer to another substance, as a resource or a representational code
@@ -2464,14 +2455,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceDefinition#SourceMaterial", IsNestedType=true)]
-    [BackboneType("SubstanceDefinition.sourceMaterial")]
+    [FhirType("SubstanceDefinition.sourceMaterial", IsBackboneType=true)]
     public partial class SourceMaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceDefinition#SourceMaterial"; } }
+      public override string TypeName { get { return "SubstanceDefinition.sourceMaterial"; } }
 
       /// <summary>
       /// Classification of the origin of the raw material. e.g. cat hair is an Animal source type

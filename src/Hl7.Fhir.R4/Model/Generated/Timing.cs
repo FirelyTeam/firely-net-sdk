@@ -291,14 +291,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Timing#Repeat", IsNestedType=true)]
-    [BackboneType("Timing.repeat")]
+    [FhirType("Timing.repeat", IsBackboneType=true)]
     public partial class RepeatComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Timing#Repeat"; } }
+      public override string TypeName { get { return "Timing.repeat"; } }
 
       /// <summary>
       /// Length/Range of lengths, or (Start and/or end) limits

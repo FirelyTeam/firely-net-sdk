@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Measure","http://hl7.org/fhir/StructureDefinition/Measure", IsResource=true)]
+  [FhirType("Measure","http://hl7.org/fhir/StructureDefinition/Measure")]
   public partial class Measure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Group", IsNestedType=true)]
-    [BackboneType("Measure.group")]
+    [FhirType("Measure.group", IsBackboneType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Group"; } }
+      public override string TypeName { get { return "Measure.group"; } }
 
       /// <summary>
       /// Unique identifier
@@ -332,14 +331,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Population", IsNestedType=true)]
-    [BackboneType("Measure.group.population")]
+    [FhirType("Measure.group.population", IsBackboneType=true)]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Population"; } }
+      public override string TypeName { get { return "Measure.group.population"; } }
 
       /// <summary>
       /// Unique identifier
@@ -614,14 +612,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#Stratifier", IsNestedType=true)]
-    [BackboneType("Measure.group.stratifier")]
+    [FhirType("Measure.group.stratifier", IsBackboneType=true)]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#Stratifier"; } }
+      public override string TypeName { get { return "Measure.group.stratifier"; } }
 
       /// <summary>
       /// The identifier for the stratifier used to coordinate the reported data back to this stratifier
@@ -827,14 +824,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Measure#SupplementalData", IsNestedType=true)]
-    [BackboneType("Measure.supplementalData")]
+    [FhirType("Measure.supplementalData", IsBackboneType=true)]
     public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure#SupplementalData"; } }
+      public override string TypeName { get { return "Measure.supplementalData"; } }
 
       /// <summary>
       /// Identifier, unique within the measure
