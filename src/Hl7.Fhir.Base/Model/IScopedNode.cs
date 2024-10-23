@@ -162,31 +162,41 @@ public static class ScopedNodeHelpers
     /// <param name="externalResolver">An external resolver</param>
     /// <returns></returns>
     /// TODO: This method should not be generic! It should work on IScopedNode ONLY! this is just for testing
-    public static T? Resolve<T>(this T maybeScopedNode, Func<string, T?>? externalResolver = null) where T : ITypedElement
+    public static T? Resolve<T>(this T? maybeScopedNode, Func<string, T?>? externalResolver = null) where T : ITypedElement
     {
-        if(maybeScopedNode is not IScopedNode node) throw new ArgumentException("Error occurred during reference resolution: Parameter is not a scoped node.");
+        if (maybeScopedNode is null) return (T?)(object?)null;
         
-        string? url = node switch
+        if (maybeScopedNode is IScopedNode node)
         {
-            { Value: string s } => s, // canonicals can be references
-            { Type: NodeType.Reference } => node.ParseResourceReference().Reference,
-            _ => throw new ArgumentException($"Error occurred during reference resolution: Parameter {nameof(node)} is not a reference.")
-        };
+            string? url = node switch
+            {
+                { Value: string s } => s, // canonicals can be references
+                { Type: NodeType.Reference } => node.ParseResourceReference().Reference,
+                _ => throw new ArgumentException($"Error occurred during reference resolution: Parameter {nameof(node)} is not a reference.")
+            };
 
-        return Resolve(maybeScopedNode, url, externalResolver);
+            if (url is null) return (T?)(object?)null;
+            
+            return Resolve(maybeScopedNode, url, externalResolver);
+        }
+        
+        return externalResolver is null ? (T?)(object?)null : externalResolver((maybeScopedNode.Value as string)!);
     }
     
-    public static T? Resolve<T>(this T maybeScopedNode, string url, Func<string, T?>? externalResolver = null) where T : ITypedElement
+    public static T? Resolve<T>(this T? maybeScopedNode, string url, Func<string, T?>? externalResolver = null) where T : ITypedElement
     {
-        if(maybeScopedNode is not IScopedNode node) throw new ArgumentException("Error occurred during reference resolution: Parameter is not a scoped node.");
+        if (maybeScopedNode is null) return (T?)(object?)null;
         
-        if(url == "#") return (T?)node.getContainer();
-        
-        var identity = node.MakeAbsolute(new ResourceIdentity(url));
-        
-        return node.TryResolveLocalReference(identity.ToString(), out var localResult) 
-            ? (T?)localResult 
-            : externalResolver is null ? (T?)(object?)null : externalResolver(url);
+        if (maybeScopedNode is IScopedNode node)
+        {
+            if(url == "#") return (T?)node.getContainer();
+                    
+            var identity = node.MakeAbsolute(new ResourceIdentity(url));
+
+            if (node.TryResolveLocalReference(identity.ToString(), out var localResult)) return (T?)localResult;
+        }
+
+        return externalResolver is null ? (T?)(object?)null : externalResolver(url);
     }
     
     /// <summary>
