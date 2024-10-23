@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("InsurancePlan","http://hl7.org/fhir/StructureDefinition/InsurancePlan", IsResource=true)]
+  [FhirType("InsurancePlan","http://hl7.org/fhir/StructureDefinition/InsurancePlan")]
   public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -93,14 +93,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#Contact", IsNestedType=true)]
-    [BackboneType("InsurancePlan.contact")]
+    [FhirType("InsurancePlan.contact", IsBackboneType=true)]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#Contact"; } }
+      public override string TypeName { get { return "InsurancePlan.contact"; } }
 
       /// <summary>
       /// The type of contact
@@ -296,14 +295,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#Coverage", IsNestedType=true)]
-    [BackboneType("InsurancePlan.coverage")]
+    [FhirType("InsurancePlan.coverage", IsBackboneType=true)]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#Coverage"; } }
+      public override string TypeName { get { return "InsurancePlan.coverage"; } }
 
       /// <summary>
       /// Type of coverage
@@ -477,14 +475,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#CoverageBenefit", IsNestedType=true)]
-    [BackboneType("InsurancePlan.coverage.benefit")]
+    [FhirType("InsurancePlan.coverage.benefit", IsBackboneType=true)]
     public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#CoverageBenefit"; } }
+      public override string TypeName { get { return "InsurancePlan.coverage.benefit"; } }
 
       /// <summary>
       /// Type of benefit
@@ -673,14 +670,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#Limit", IsNestedType=true)]
-    [BackboneType("InsurancePlan.coverage.benefit.limit")]
+    [FhirType("InsurancePlan.coverage.benefit.limit", IsBackboneType=true)]
     public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#Limit"; } }
+      public override string TypeName { get { return "InsurancePlan.coverage.benefit.limit"; } }
 
       /// <summary>
       /// Maximum value allowed
@@ -824,14 +820,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#Plan", IsNestedType=true)]
-    [BackboneType("InsurancePlan.plan")]
+    [FhirType("InsurancePlan.plan", IsBackboneType=true)]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#Plan"; } }
+      public override string TypeName { get { return "InsurancePlan.plan"; } }
 
       /// <summary>
       /// Business Identifier for Product
@@ -1084,14 +1079,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#GeneralCost", IsNestedType=true)]
-    [BackboneType("InsurancePlan.plan.generalCost")]
+    [FhirType("InsurancePlan.plan.generalCost", IsBackboneType=true)]
     public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#GeneralCost"; } }
+      public override string TypeName { get { return "InsurancePlan.plan.generalCost"; } }
 
       /// <summary>
       /// Type of cost
@@ -1321,14 +1315,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#SpecificCost", IsNestedType=true)]
-    [BackboneType("InsurancePlan.plan.specificCost")]
+    [FhirType("InsurancePlan.plan.specificCost", IsBackboneType=true)]
     public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#SpecificCost"; } }
+      public override string TypeName { get { return "InsurancePlan.plan.specificCost"; } }
 
       /// <summary>
       /// General category of benefit
@@ -1474,14 +1467,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#PlanBenefit", IsNestedType=true)]
-    [BackboneType("InsurancePlan.plan.specificCost.benefit")]
+    [FhirType("InsurancePlan.plan.specificCost.benefit", IsBackboneType=true)]
     public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#PlanBenefit"; } }
+      public override string TypeName { get { return "InsurancePlan.plan.specificCost.benefit"; } }
 
       /// <summary>
       /// Type of specific benefit
@@ -1627,14 +1619,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("InsurancePlan#Cost", IsNestedType=true)]
-    [BackboneType("InsurancePlan.plan.specificCost.benefit.cost")]
+    [FhirType("InsurancePlan.plan.specificCost.benefit.cost", IsBackboneType=true)]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan#Cost"; } }
+      public override string TypeName { get { return "InsurancePlan.plan.specificCost.benefit.cost"; } }
 
       /// <summary>
       /// Type of cost

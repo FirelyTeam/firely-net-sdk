@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Condition","http://hl7.org/fhir/StructureDefinition/Condition", IsResource=true)]
+  [FhirType("Condition","http://hl7.org/fhir/StructureDefinition/Condition")]
   public partial class Condition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -159,14 +159,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Condition#Stage", IsNestedType=true)]
-    [BackboneType("Condition.stage")]
+    [FhirType("Condition.stage", IsBackboneType=true)]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Condition#Stage"; } }
+      public override string TypeName { get { return "Condition.stage"; } }
 
       /// <summary>
       /// Simple summary (disease specific)
@@ -341,14 +340,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Condition#Evidence", IsNestedType=true)]
-    [BackboneType("Condition.evidence")]
+    [FhirType("Condition.evidence", IsBackboneType=true)]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Condition#Evidence"; } }
+      public override string TypeName { get { return "Condition.evidence"; } }
 
       /// <summary>
       /// Manifestation/symptom

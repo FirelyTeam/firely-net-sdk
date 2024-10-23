@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Observation","http://hl7.org/fhir/StructureDefinition/Observation", IsResource=true)]
+  [FhirType("Observation","http://hl7.org/fhir/StructureDefinition/Observation")]
   public partial class Observation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -69,14 +69,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Observation#ReferenceRange", IsNestedType=true)]
-    [BackboneType("Observation.referenceRange")]
+    [FhirType("Observation.referenceRange", IsBackboneType=true)]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Observation#ReferenceRange"; } }
+      public override string TypeName { get { return "Observation.referenceRange"; } }
 
       /// <summary>
       /// Low Range, if relevant
@@ -342,14 +341,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Observation#Component", IsNestedType=true)]
-    [BackboneType("Observation.component")]
+    [FhirType("Observation.component", IsBackboneType=true)]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Observation#Component"; } }
+      public override string TypeName { get { return "Observation.component"; } }
 
       /// <summary>
       /// Type of component observation (code / type)

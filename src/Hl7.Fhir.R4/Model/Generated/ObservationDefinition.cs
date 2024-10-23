@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
+  [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition")]
   public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -172,14 +172,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ObservationDefinition#QuantitativeDetails", IsNestedType=true)]
-    [BackboneType("ObservationDefinition.quantitativeDetails")]
+    [FhirType("ObservationDefinition.quantitativeDetails", IsBackboneType=true)]
     public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition#QuantitativeDetails"; } }
+      public override string TypeName { get { return "ObservationDefinition.quantitativeDetails"; } }
 
       /// <summary>
       /// Customary unit for quantitative results
@@ -411,14 +410,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ObservationDefinition#QualifiedInterval", IsNestedType=true)]
-    [BackboneType("ObservationDefinition.qualifiedInterval")]
+    [FhirType("ObservationDefinition.qualifiedInterval", IsBackboneType=true)]
     public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition#QualifiedInterval"; } }
+      public override string TypeName { get { return "ObservationDefinition.qualifiedInterval"; } }
 
       /// <summary>
       /// reference | critical | absolute

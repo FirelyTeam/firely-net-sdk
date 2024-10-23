@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure", IsResource=true)]
+  [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure")]
   public partial class Procedure : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Procedure#Performer", IsNestedType=true)]
-    [BackboneType("Procedure.performer")]
+    [FhirType("Procedure.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Procedure#Performer"; } }
+      public override string TypeName { get { return "Procedure.performer"; } }
 
       /// <summary>
       /// Type of performance
@@ -249,14 +248,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Procedure#FocalDevice", IsNestedType=true)]
-    [BackboneType("Procedure.focalDevice")]
+    [FhirType("Procedure.focalDevice", IsBackboneType=true)]
     public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Procedure#FocalDevice"; } }
+      public override string TypeName { get { return "Procedure.focalDevice"; } }
 
       /// <summary>
       /// Kind of change to device

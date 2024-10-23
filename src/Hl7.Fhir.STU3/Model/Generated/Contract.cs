@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Contract","http://hl7.org/fhir/StructureDefinition/Contract", IsResource=true)]
+  [FhirType("Contract","http://hl7.org/fhir/StructureDefinition/Contract")]
   public partial class Contract : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -169,14 +169,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Agent", IsNestedType=true)]
-    [BackboneType("Contract.agent")]
+    [FhirType("Contract.agent", IsBackboneType=true)]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Agent"; } }
+      public override string TypeName { get { return "Contract.agent"; } }
 
       /// <summary>
       /// Contract Agent Type
@@ -327,14 +326,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Signatory", IsNestedType=true)]
-    [BackboneType("Contract.signer")]
+    [FhirType("Contract.signer", IsBackboneType=true)]
     public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Signatory"; } }
+      public override string TypeName { get { return "Contract.signer"; } }
 
       /// <summary>
       /// Contract Signatory Role
@@ -506,14 +504,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ValuedItem", IsNestedType=true)]
-    [BackboneType("Contract.valuedItem")]
+    [FhirType("Contract.valuedItem", IsBackboneType=true)]
     public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ValuedItem"; } }
+      public override string TypeName { get { return "Contract.valuedItem"; } }
 
       /// <summary>
       /// Contract Valued Item Type
@@ -864,14 +861,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#Term", IsNestedType=true)]
-    [BackboneType("Contract.term")]
+    [FhirType("Contract.term", IsBackboneType=true)]
     public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#Term"; } }
+      public override string TypeName { get { return "Contract.term"; } }
 
       /// <summary>
       /// Contract Term Number
@@ -1342,14 +1338,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#TermAgent", IsNestedType=true)]
-    [BackboneType("Contract.term.agent")]
+    [FhirType("Contract.term.agent", IsBackboneType=true)]
     public partial class TermAgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#TermAgent"; } }
+      public override string TypeName { get { return "Contract.term.agent"; } }
 
       /// <summary>
       /// Contract Term Agent Subject
@@ -1498,14 +1493,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#TermValuedItem", IsNestedType=true)]
-    [BackboneType("Contract.term.valuedItem")]
+    [FhirType("Contract.term.valuedItem", IsBackboneType=true)]
     public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#TermValuedItem"; } }
+      public override string TypeName { get { return "Contract.term.valuedItem"; } }
 
       /// <summary>
       /// Contract Term Valued Item Type
@@ -1856,14 +1850,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#FriendlyLanguage", IsNestedType=true)]
-    [BackboneType("Contract.friendly")]
+    [FhirType("Contract.friendly", IsBackboneType=true)]
     public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#FriendlyLanguage"; } }
+      public override string TypeName { get { return "Contract.friendly"; } }
 
       /// <summary>
       /// Easily comprehended representation of this Contract
@@ -1986,14 +1979,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#LegalLanguage", IsNestedType=true)]
-    [BackboneType("Contract.legal")]
+    [FhirType("Contract.legal", IsBackboneType=true)]
     public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#LegalLanguage"; } }
+      public override string TypeName { get { return "Contract.legal"; } }
 
       /// <summary>
       /// Contract Legal Text
@@ -2116,14 +2108,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Contract#ComputableLanguage", IsNestedType=true)]
-    [BackboneType("Contract.rule")]
+    [FhirType("Contract.rule", IsBackboneType=true)]
     public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract#ComputableLanguage"; } }
+      public override string TypeName { get { return "Contract.rule"; } }
 
       /// <summary>
       /// Computable Contract Rules

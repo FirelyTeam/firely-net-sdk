@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Bundle","http://hl7.org/fhir/StructureDefinition/Bundle", IsResource=true)]
+  [FhirType("Bundle","http://hl7.org/fhir/StructureDefinition/Bundle")]
   public partial class Bundle : Hl7.Fhir.Model.Resource, IIdentifiable<Identifier>
   {
     /// <summary>
@@ -945,14 +945,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Bundle#Link", IsNestedType=true)]
-    [BackboneType("Bundle.link")]
+    [FhirType("Bundle.link", IsBackboneType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle#Link"; } }
+      public override string TypeName { get { return "Bundle.link"; } }
 
       /// <summary>
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
@@ -1135,14 +1134,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Bundle#Entry", IsNestedType=true)]
-    [BackboneType("Bundle.entry")]
+    [FhirType("Bundle.entry", IsBackboneType=true)]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle#Entry"; } }
+      public override string TypeName { get { return "Bundle.entry"; } }
 
       /// <summary>
       /// Links related to this entry
@@ -1407,14 +1405,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Bundle#Search", IsNestedType=true)]
-    [BackboneType("Bundle.entry.search")]
+    [FhirType("Bundle.entry.search", IsBackboneType=true)]
     public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle#Search"; } }
+      public override string TypeName { get { return "Bundle.entry.search"; } }
 
       /// <summary>
       /// match | include - why this is in the result set
@@ -1596,14 +1593,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Bundle#Request", IsNestedType=true)]
-    [BackboneType("Bundle.entry.request")]
+    [FhirType("Bundle.entry.request", IsBackboneType=true)]
     public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle#Request"; } }
+      public override string TypeName { get { return "Bundle.entry.request"; } }
 
       /// <summary>
       /// GET | HEAD | POST | PUT | DELETE | PATCH
@@ -1959,14 +1955,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Bundle#Response", IsNestedType=true)]
-    [BackboneType("Bundle.entry.response")]
+    [FhirType("Bundle.entry.response", IsBackboneType=true)]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle#Response"; } }
+      public override string TypeName { get { return "Bundle.entry.response"; } }
 
       /// <summary>
       /// Status response code (text optional)

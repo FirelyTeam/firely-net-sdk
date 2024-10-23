@@ -67,14 +67,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
-    [BackboneType("DataRequirement.codeFilter")]
+    [FhirType("DataRequirement.codeFilter", IsBackboneType=true)]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement#CodeFilter"; } }
+      public override string TypeName { get { return "DataRequirement.codeFilter"; } }
 
       /// <summary>
       /// The code-valued attribute of the filter
@@ -336,14 +335,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
-    [BackboneType("DataRequirement.dateFilter")]
+    [FhirType("DataRequirement.dateFilter", IsBackboneType=true)]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement#DateFilter"; } }
+      public override string TypeName { get { return "DataRequirement.dateFilter"; } }
 
       /// <summary>
       /// The date-valued attribute of the filter

@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceDefinition","http://hl7.org/fhir/StructureDefinition/DeviceDefinition", IsResource=true)]
+  [FhirType("DeviceDefinition","http://hl7.org/fhir/StructureDefinition/DeviceDefinition")]
   public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
-    [BackboneType("DeviceDefinition.udiDeviceIdentifier")]
+    [FhirType("DeviceDefinition.udiDeviceIdentifier", IsBackboneType=true)]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#UdiDeviceIdentifier"; } }
+      public override string TypeName { get { return "DeviceDefinition.udiDeviceIdentifier"; } }
 
       /// <summary>
       /// The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdication porvided in the DeviceDefinition.udiDeviceIdentifier
@@ -298,14 +297,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
-    [BackboneType("DeviceDefinition.deviceName")]
+    [FhirType("DeviceDefinition.deviceName", IsBackboneType=true)]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#DeviceName"; } }
+      public override string TypeName { get { return "DeviceDefinition.deviceName"; } }
 
       /// <summary>
       /// The name of the device
@@ -486,14 +484,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Specialization", IsNestedType=true)]
-    [BackboneType("DeviceDefinition.specialization")]
+    [FhirType("DeviceDefinition.specialization", IsBackboneType=true)]
     public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Specialization"; } }
+      public override string TypeName { get { return "DeviceDefinition.specialization"; } }
 
       /// <summary>
       /// The standard that is used to operate and communicate
@@ -671,14 +668,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Capability", IsNestedType=true)]
-    [BackboneType("DeviceDefinition.capability")]
+    [FhirType("DeviceDefinition.capability", IsBackboneType=true)]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Capability"; } }
+      public override string TypeName { get { return "DeviceDefinition.capability"; } }
 
       /// <summary>
       /// Type of capability
@@ -821,14 +817,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Property", IsNestedType=true)]
-    [BackboneType("DeviceDefinition.property")]
+    [FhirType("DeviceDefinition.property", IsBackboneType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Property"; } }
+      public override string TypeName { get { return "DeviceDefinition.property"; } }
 
       /// <summary>
       /// Code that specifies the property DeviceDefinitionPropetyCode (Extensible)
@@ -997,14 +992,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceDefinition#Material", IsNestedType=true)]
-    [BackboneType("DeviceDefinition.material")]
+    [FhirType("DeviceDefinition.material", IsBackboneType=true)]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition#Material"; } }
+      public override string TypeName { get { return "DeviceDefinition.material"; } }
 
       /// <summary>
       /// The substance

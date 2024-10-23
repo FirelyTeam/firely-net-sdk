@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DocumentManifest","http://hl7.org/fhir/StructureDefinition/DocumentManifest", IsResource=true)]
+  [FhirType("DocumentManifest","http://hl7.org/fhir/StructureDefinition/DocumentManifest")]
   public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("DocumentManifest#Related", IsNestedType=true)]
-    [BackboneType("DocumentManifest.related")]
+    [FhirType("DocumentManifest.related", IsBackboneType=true)]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentManifest#Related"; } }
+      public override string TypeName { get { return "DocumentManifest.related"; } }
 
       /// <summary>
       /// Identifiers of things that are related
