@@ -12,7 +12,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
-using System.Linq;
 using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
@@ -36,16 +35,16 @@ namespace Hl7.Fhir.Rest
             var serialization = settings.PreferredFormat;
 
             var uri = getRequestUrl(baseUrl, request.Url);
-            
+
             var message = new HttpRequestMessage(method, uri);
 
             if (!(binaryEndpoint && settings.BinaryReceivePreference == BinaryTransferBehaviour.UseData))
             {
-                message = settings.UseFormatParameter 
+                message = settings.UseFormatParameter
                     ? message.WithFormatParameter(serialization)
                     : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
             }
-            
+
             message = setBody(message)
                 .WithDefaultAgent()
                 .WithPreconditions(request.IfMatch, request.IfNoneMatch, request.IfModifiedSince, request.IfNoneExist);
@@ -95,11 +94,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-#if NETSTANDARD
-        private readonly static HttpMethod HTTP_PATCH = new("PATCH");
-#else
+
         private readonly static HttpMethod HTTP_PATCH = HttpMethod.Patch;
-#endif
+
 
         /// <summary>
         /// Converts the <see cref="Bundle.HTTPVerb" /> (e.g. from a <see cref="Bundle.RequestComponent.Method"/>) to a <see cref="HttpMethod"/>. />

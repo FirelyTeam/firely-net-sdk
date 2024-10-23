@@ -8,7 +8,6 @@
 
 #nullable enable
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 
 using Hl7.Fhir.Model;
 using System.Text.Json;
@@ -60,5 +59,4 @@ namespace Hl7.Fhir.Serialization
     }
 }
 
-#endif
 #nullable restore
