@@ -214,7 +214,7 @@ dotnet_naming_symbols.constants.applicable_accessibilities = *
 dotnet_naming_symbols.constants.required_modifiers = const
 
 dotnet_naming_symbols.static_readonly.applicable_kinds = field
-dotnet_naming_symbols.static_readonly.applicable_accessibilities = *
+dotnet_naming_symbols.static_readonly.applicable_accessibilities = public
 dotnet_naming_symbols.static_readonly.required_modifiers = readonly, static
 
 # Naming styles

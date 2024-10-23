@@ -200,7 +200,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static bool IsNullable(this Type t)
         {
-            if (!t.IsAValueType()) return true; // ref-type
+            if (!t.IsValueType) return true; // ref-type
             if (Nullable.GetUnderlyingType(t) != null) return true; // Nullable<T>
             return false; // value-type
         }

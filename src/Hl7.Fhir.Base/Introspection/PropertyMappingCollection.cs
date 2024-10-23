@@ -17,12 +17,15 @@ namespace Hl7.Fhir.Introspection
 {
     internal class PropertyMappingCollection
     {
-        public PropertyMappingCollection(IEnumerable<PropertyMapping> mappings)
+        internal PropertyMappingCollection(ClassMapping parent, IEnumerable<PropertyMapping> mappings)
         {
             var byName = new Dictionary<string, PropertyMapping>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var mapping in mappings)
             {
+                if(mapping.DeclaringClass != parent)
+                    throw new InvalidOperationException("This property already belongs to another parent ClassMapping.");
+
                 var propKey = mapping.Name;
                 if (byName.ContainsKey(propKey))
                     throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique.");
