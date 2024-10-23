@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Sequence","http://hl7.org/fhir/StructureDefinition/Sequence", IsResource=true)]
+  [FhirType("Sequence","http://hl7.org/fhir/StructureDefinition/Sequence")]
   public partial class Sequence : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -135,14 +135,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Sequence#ReferenceSeq", IsNestedType=true)]
-    [BackboneType("Sequence.referenceSeq")]
+    [FhirType("Sequence.referenceSeq", IsBackboneType=true)]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence#ReferenceSeq"; } }
+      public override string TypeName { get { return "Sequence.referenceSeq"; } }
 
       /// <summary>
       /// Chromosome containing genetic finding
@@ -532,14 +531,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Sequence#Variant", IsNestedType=true)]
-    [BackboneType("Sequence.variant")]
+    [FhirType("Sequence.variant", IsBackboneType=true)]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence#Variant"; } }
+      public override string TypeName { get { return "Sequence.variant"; } }
 
       /// <summary>
       /// Start position of the variant on the  reference sequence
@@ -875,14 +873,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Sequence#Quality", IsNestedType=true)]
-    [BackboneType("Sequence.quality")]
+    [FhirType("Sequence.quality", IsBackboneType=true)]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence#Quality"; } }
+      public override string TypeName { get { return "Sequence.quality"; } }
 
       /// <summary>
       /// indel | snp | unknown
@@ -1529,14 +1526,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Sequence#Repository", IsNestedType=true)]
-    [BackboneType("Sequence.repository")]
+    [FhirType("Sequence.repository", IsBackboneType=true)]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence#Repository"; } }
+      public override string TypeName { get { return "Sequence.repository"; } }
 
       /// <summary>
       /// directlink | openapi | login | oauth | other

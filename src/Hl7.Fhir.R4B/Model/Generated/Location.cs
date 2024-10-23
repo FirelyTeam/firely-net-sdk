@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location", IsResource=true)]
+  [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location")]
   public partial class Location : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -117,14 +117,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Location#Position", IsNestedType=true)]
-    [BackboneType("Location.position")]
+    [FhirType("Location.position", IsBackboneType=true)]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Location#Position"; } }
+      public override string TypeName { get { return "Location.position"; } }
 
       /// <summary>
       /// Longitude with WGS84 datum
@@ -350,14 +349,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Location#HoursOfOperation", IsNestedType=true)]
-    [BackboneType("Location.hoursOfOperation")]
+    [FhirType("Location.hoursOfOperation", IsBackboneType=true)]
     public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Location#HoursOfOperation"; } }
+      public override string TypeName { get { return "Location.hoursOfOperation"; } }
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun

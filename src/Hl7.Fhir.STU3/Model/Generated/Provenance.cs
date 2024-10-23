@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Provenance","http://hl7.org/fhir/StructureDefinition/Provenance", IsResource=true)]
+  [FhirType("Provenance","http://hl7.org/fhir/StructureDefinition/Provenance")]
   public partial class Provenance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -109,14 +109,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Provenance#Agent", IsNestedType=true)]
-    [BackboneType("Provenance.agent")]
+    [FhirType("Provenance.agent", IsBackboneType=true)]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Provenance#Agent"; } }
+      public override string TypeName { get { return "Provenance.agent"; } }
 
       /// <summary>
       /// What the agents role was
@@ -320,14 +319,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Provenance#Entity", IsNestedType=true)]
-    [BackboneType("Provenance.entity")]
+    [FhirType("Provenance.entity", IsBackboneType=true)]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Provenance#Entity"; } }
+      public override string TypeName { get { return "Provenance.entity"; } }
 
       /// <summary>
       /// derivation | revision | quotation | source | removal

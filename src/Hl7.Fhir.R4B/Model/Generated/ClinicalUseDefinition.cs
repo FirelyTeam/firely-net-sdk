@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ClinicalUseDefinition","http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition", IsResource=true)]
+  [FhirType("ClinicalUseDefinition","http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition")]
   public partial class ClinicalUseDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#Contraindication", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.contraindication")]
+    [FhirType("ClinicalUseDefinition.contraindication", IsBackboneType=true)]
     public partial class ContraindicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#Contraindication"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.contraindication"; } }
 
       /// <summary>
       /// The situation that is being documented as contraindicating against this item
@@ -335,14 +334,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#OtherTherapy", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.contraindication.otherTherapy")]
+    [FhirType("ClinicalUseDefinition.contraindication.otherTherapy", IsBackboneType=true)]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#OtherTherapy"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.contraindication.otherTherapy"; } }
 
       /// <summary>
       /// The type of relationship between the product indication/contraindication and another therapy
@@ -487,14 +485,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#Indication", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.indication")]
+    [FhirType("ClinicalUseDefinition.indication", IsBackboneType=true)]
     public partial class IndicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#Indication"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.indication"; } }
 
       /// <summary>
       /// The situation that is being documented as an indicaton for this item
@@ -771,14 +768,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#Interaction", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.interaction")]
+    [FhirType("ClinicalUseDefinition.interaction", IsBackboneType=true)]
     public partial class InteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#Interaction"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.interaction"; } }
 
       /// <summary>
       /// The specific medication, food, substance or laboratory test that interacts
@@ -1000,14 +996,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#Interactant", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.interaction.interactant")]
+    [FhirType("ClinicalUseDefinition.interaction.interactant", IsBackboneType=true)]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#Interactant"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.interaction.interactant"; } }
 
       /// <summary>
       /// The specific medication, food or laboratory test that interacts
@@ -1131,14 +1126,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#UndesirableEffect", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.undesirableEffect")]
+    [FhirType("ClinicalUseDefinition.undesirableEffect", IsBackboneType=true)]
     public partial class UndesirableEffectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#UndesirableEffect"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.undesirableEffect"; } }
 
       /// <summary>
       /// The situation in which the undesirable effect may manifest
@@ -1310,14 +1304,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ClinicalUseDefinition#Warning", IsNestedType=true)]
-    [BackboneType("ClinicalUseDefinition.warning")]
+    [FhirType("ClinicalUseDefinition.warning", IsBackboneType=true)]
     public partial class WarningComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition#Warning"; } }
+      public override string TypeName { get { return "ClinicalUseDefinition.warning"; } }
 
       /// <summary>
       /// A textual definition of this warning, with formatting

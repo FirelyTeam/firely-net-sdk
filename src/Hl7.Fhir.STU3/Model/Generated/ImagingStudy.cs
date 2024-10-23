@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ImagingStudy","http://hl7.org/fhir/StructureDefinition/ImagingStudy", IsResource=true)]
+  [FhirType("ImagingStudy","http://hl7.org/fhir/StructureDefinition/ImagingStudy")]
   public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -101,14 +101,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingStudy#Series", IsNestedType=true)]
-    [BackboneType("ImagingStudy.series")]
+    [FhirType("ImagingStudy.series", IsBackboneType=true)]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingStudy#Series"; } }
+      public override string TypeName { get { return "ImagingStudy.series"; } }
 
       /// <summary>
       /// Formal DICOM identifier for this series
@@ -624,14 +623,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingStudy#Instance", IsNestedType=true)]
-    [BackboneType("ImagingStudy.series.instance")]
+    [FhirType("ImagingStudy.series.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingStudy#Instance"; } }
+      public override string TypeName { get { return "ImagingStudy.series.instance"; } }
 
       /// <summary>
       /// Formal DICOM identifier for this instance

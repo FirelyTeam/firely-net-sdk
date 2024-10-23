@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance", IsResource=true)]
+  [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance")]
   public partial class Substance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -92,14 +92,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Substance#Instance", IsNestedType=true)]
-    [BackboneType("Substance.instance")]
+    [FhirType("Substance.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Substance#Instance"; } }
+      public override string TypeName { get { return "Substance.instance"; } }
 
       /// <summary>
       /// Identifier of the package/container
@@ -286,14 +285,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Substance#Ingredient", IsNestedType=true)]
-    [BackboneType("Substance.ingredient")]
+    [FhirType("Substance.ingredient", IsBackboneType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Substance#Ingredient"; } }
+      public override string TypeName { get { return "Substance.ingredient"; } }
 
       /// <summary>
       /// Optional amount (concentration)

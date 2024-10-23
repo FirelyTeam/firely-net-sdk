@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MessageHeader","http://hl7.org/fhir/StructureDefinition/MessageHeader", IsResource=true)]
+  [FhirType("MessageHeader","http://hl7.org/fhir/StructureDefinition/MessageHeader")]
   public partial class MessageHeader : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -96,14 +96,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageHeader#MessageDestination", IsNestedType=true)]
-    [BackboneType("MessageHeader.destination")]
+    [FhirType("MessageHeader.destination", IsBackboneType=true)]
     public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader#MessageDestination"; } }
+      public override string TypeName { get { return "MessageHeader.destination"; } }
 
       /// <summary>
       /// Name of system
@@ -338,14 +337,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageHeader#MessageSource", IsNestedType=true)]
-    [BackboneType("MessageHeader.source")]
+    [FhirType("MessageHeader.source", IsBackboneType=true)]
     public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader#MessageSource"; } }
+      public override string TypeName { get { return "MessageHeader.source"; } }
 
       /// <summary>
       /// Name of system
@@ -637,14 +635,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MessageHeader#Response", IsNestedType=true)]
-    [BackboneType("MessageHeader.response")]
+    [FhirType("MessageHeader.response", IsBackboneType=true)]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader#Response"; } }
+      public override string TypeName { get { return "MessageHeader.response"; } }
 
       /// <summary>
       /// Id of original message

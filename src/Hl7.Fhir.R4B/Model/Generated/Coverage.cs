@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage", IsResource=true)]
+  [FhirType("Coverage","http://hl7.org/fhir/StructureDefinition/Coverage")]
   public partial class Coverage : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -69,14 +69,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#Class", IsNestedType=true)]
-    [BackboneType("Coverage.class")]
+    [FhirType("Coverage.class", IsBackboneType=true)]
     public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage#Class"; } }
+      public override string TypeName { get { return "Coverage.class"; } }
 
       /// <summary>
       /// Type of class such as 'group' or 'plan'
@@ -285,14 +284,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
-    [BackboneType("Coverage.costToBeneficiary")]
+    [FhirType("Coverage.costToBeneficiary", IsBackboneType=true)]
     public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage#CostToBeneficiary"; } }
+      public override string TypeName { get { return "Coverage.costToBeneficiary"; } }
 
       /// <summary>
       /// Cost category
@@ -466,14 +464,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Coverage#Exemption", IsNestedType=true)]
-    [BackboneType("Coverage.costToBeneficiary.exception")]
+    [FhirType("Coverage.costToBeneficiary.exception", IsBackboneType=true)]
     public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage#Exemption"; } }
+      public override string TypeName { get { return "Coverage.costToBeneficiary.exception"; } }
 
       /// <summary>
       /// Exception category

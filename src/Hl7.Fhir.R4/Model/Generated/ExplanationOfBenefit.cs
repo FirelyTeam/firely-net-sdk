@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ExplanationOfBenefit","http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit", IsResource=true)]
+  [FhirType("ExplanationOfBenefit","http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit")]
   public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>, ICoded<Hl7.Fhir.Model.CodeableConcept>
   {
     /// <summary>
@@ -102,14 +102,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#RelatedClaim", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.related")]
+    [FhirType("ExplanationOfBenefit.related", IsBackboneType=true)]
     public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#RelatedClaim"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.related"; } }
 
       /// <summary>
       /// Reference to the related claim
@@ -282,14 +281,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Payee", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.payee")]
+    [FhirType("ExplanationOfBenefit.payee", IsBackboneType=true)]
     public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Payee"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.payee"; } }
 
       /// <summary>
       /// Category of recipient
@@ -436,14 +434,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#CareTeam", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.careTeam")]
+    [FhirType("ExplanationOfBenefit.careTeam", IsBackboneType=true)]
     public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#CareTeam"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.careTeam"; } }
 
       /// <summary>
       /// Order of care team
@@ -705,14 +702,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#SupportingInformation", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.supportingInfo")]
+    [FhirType("ExplanationOfBenefit.supportingInfo", IsBackboneType=true)]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#SupportingInformation"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.supportingInfo"; } }
 
       /// <summary>
       /// Information instance identifier
@@ -984,14 +980,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Diagnosis", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.diagnosis")]
+    [FhirType("ExplanationOfBenefit.diagnosis", IsBackboneType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Diagnosis"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.diagnosis"; } }
 
       /// <summary>
       /// Diagnosis instance identifier
@@ -1238,14 +1233,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Procedure", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.procedure")]
+    [FhirType("ExplanationOfBenefit.procedure", IsBackboneType=true)]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Procedure"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.procedure"; } }
 
       /// <summary>
       /// Procedure instance identifier
@@ -1512,14 +1506,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Insurance", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.insurance")]
+    [FhirType("ExplanationOfBenefit.insurance", IsBackboneType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Insurance"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.insurance"; } }
 
       /// <summary>
       /// Coverage to be used for adjudication
@@ -1729,14 +1722,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Accident", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.accident")]
+    [FhirType("ExplanationOfBenefit.accident", IsBackboneType=true)]
     public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Accident"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.accident"; } }
 
       /// <summary>
       /// When the incident occurred
@@ -1927,14 +1919,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Item", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.item")]
+    [FhirType("ExplanationOfBenefit.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Item"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.item"; } }
 
       /// <summary>
       /// Item instance identifier
@@ -2760,14 +2751,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Adjudication", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.item.adjudication")]
+    [FhirType("ExplanationOfBenefit.item.adjudication", IsBackboneType=true)]
     public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Adjudication"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.item.adjudication"; } }
 
       /// <summary>
       /// Type of adjudication information
@@ -2982,14 +2972,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Detail", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.item.detail")]
+    [FhirType("ExplanationOfBenefit.item.detail", IsBackboneType=true)]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Detail"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.item.detail"; } }
 
       /// <summary>
       /// Product or service provided
@@ -3502,14 +3491,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#SubDetail", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.item.detail.subDetail")]
+    [FhirType("ExplanationOfBenefit.item.detail.subDetail", IsBackboneType=true)]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#SubDetail"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.item.detail.subDetail"; } }
 
       /// <summary>
       /// Product or service provided
@@ -3996,14 +3984,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#AddedItem", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.addItem")]
+    [FhirType("ExplanationOfBenefit.addItem", IsBackboneType=true)]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#AddedItem"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.addItem"; } }
 
       /// <summary>
       /// Item sequence number
@@ -4661,14 +4648,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#AddedItemDetail", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.addItem.detail")]
+    [FhirType("ExplanationOfBenefit.addItem.detail", IsBackboneType=true)]
     public partial class AddedItemDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#AddedItemDetail"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.addItem.detail"; } }
 
       /// <summary>
       /// Billing, service, product, or drug code
@@ -5030,14 +5016,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#AddedItemDetailSubDetail", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.addItem.detail.subDetail")]
+    [FhirType("ExplanationOfBenefit.addItem.detail.subDetail", IsBackboneType=true)]
     public partial class AddedItemDetailSubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#AddedItemDetailSubDetail"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.addItem.detail.subDetail"; } }
 
       /// <summary>
       /// Billing, service, product, or drug code
@@ -5374,14 +5359,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Total", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.total")]
+    [FhirType("ExplanationOfBenefit.total", IsBackboneType=true)]
     public partial class TotalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Total"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.total"; } }
 
       /// <summary>
       /// Type of adjudication information
@@ -5528,14 +5512,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Payment", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.payment")]
+    [FhirType("ExplanationOfBenefit.payment", IsBackboneType=true)]
     public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Payment"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.payment"; } }
 
       /// <summary>
       /// Partial or complete payment
@@ -5799,14 +5782,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Note", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.processNote")]
+    [FhirType("ExplanationOfBenefit.processNote", IsBackboneType=true)]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Note"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.processNote"; } }
 
       /// <summary>
       /// Note instance identifier
@@ -6054,14 +6036,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#BenefitBalance", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.benefitBalance")]
+    [FhirType("ExplanationOfBenefit.benefitBalance", IsBackboneType=true)]
     public partial class BenefitBalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#BenefitBalance"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.benefitBalance"; } }
 
       /// <summary>
       /// Benefit classification
@@ -6415,14 +6396,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ExplanationOfBenefit#Benefit", IsNestedType=true)]
-    [BackboneType("ExplanationOfBenefit.benefitBalance.financial")]
+    [FhirType("ExplanationOfBenefit.benefitBalance.financial", IsBackboneType=true)]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExplanationOfBenefit#Benefit"; } }
+      public override string TypeName { get { return "ExplanationOfBenefit.benefitBalance.financial"; } }
 
       /// <summary>
       /// Benefit classification

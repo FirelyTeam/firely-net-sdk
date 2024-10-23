@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment", IsResource=true)]
+  [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment")]
   public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -68,14 +68,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RiskAssessment#Prediction", IsNestedType=true)]
-    [BackboneType("RiskAssessment.prediction")]
+    [FhirType("RiskAssessment.prediction", IsBackboneType=true)]
     public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskAssessment#Prediction"; } }
+      public override string TypeName { get { return "RiskAssessment.prediction"; } }
 
       /// <summary>
       /// Possible outcome for the subject

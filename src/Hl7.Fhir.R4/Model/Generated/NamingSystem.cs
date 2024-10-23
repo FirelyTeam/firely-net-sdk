@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("NamingSystem","http://hl7.org/fhir/StructureDefinition/NamingSystem", IsResource=true)]
+  [FhirType("NamingSystem","http://hl7.org/fhir/StructureDefinition/NamingSystem")]
   public partial class NamingSystem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -130,14 +130,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("NamingSystem#UniqueId", IsNestedType=true)]
-    [BackboneType("NamingSystem.uniqueId")]
+    [FhirType("NamingSystem.uniqueId", IsBackboneType=true)]
     public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NamingSystem#UniqueId"; } }
+      public override string TypeName { get { return "NamingSystem.uniqueId"; } }
 
       /// <summary>
       /// oid | uuid | uri | other

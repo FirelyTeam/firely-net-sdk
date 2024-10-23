@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CapabilityStatement","http://hl7.org/fhir/StructureDefinition/CapabilityStatement", IsResource=true)]
+  [FhirType("CapabilityStatement","http://hl7.org/fhir/StructureDefinition/CapabilityStatement")]
   public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
@@ -362,14 +362,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Software", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.software")]
+    [FhirType("CapabilityStatement.software", IsBackboneType=true)]
     public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Software"; } }
+      public override string TypeName { get { return "CapabilityStatement.software"; } }
 
       /// <summary>
       /// A name the software is known by
@@ -593,14 +592,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Implementation", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.implementation")]
+    [FhirType("CapabilityStatement.implementation", IsBackboneType=true)]
     public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Implementation"; } }
+      public override string TypeName { get { return "CapabilityStatement.implementation"; } }
 
       /// <summary>
       /// Describes this specific instance
@@ -811,14 +809,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Rest", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest")]
+    [FhirType("CapabilityStatement.rest", IsBackboneType=true)]
     public partial class RestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Rest"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest"; } }
 
       /// <summary>
       /// client | server
@@ -1174,14 +1171,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Security", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest.security")]
+    [FhirType("CapabilityStatement.rest.security", IsBackboneType=true)]
     public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Security"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest.security"; } }
 
       /// <summary>
       /// Adds CORS Headers (http://enable-cors.org/)
@@ -1389,14 +1385,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Resource", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest.resource")]
+    [FhirType("CapabilityStatement.rest.resource", IsBackboneType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Resource"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest.resource"; } }
 
       /// <summary>
       /// A resource type that is supported
@@ -2228,14 +2223,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#ResourceInteraction", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest.resource.interaction")]
+    [FhirType("CapabilityStatement.rest.resource.interaction", IsBackboneType=true)]
     public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#ResourceInteraction"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest.resource.interaction"; } }
 
       /// <summary>
       /// read | vread | update | patch | delete | history-instance | history-type | create | search-type
@@ -2419,14 +2413,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#SearchParam", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest.resource.searchParam")]
+    [FhirType("CapabilityStatement.rest.resource.searchParam", IsBackboneType=true)]
     public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#SearchParam"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest.resource.searchParam"; } }
 
       /// <summary>
       /// Name for parameter in search url
@@ -2698,14 +2691,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Operation", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest.resource.operation")]
+    [FhirType("CapabilityStatement.rest.resource.operation", IsBackboneType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Operation"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest.resource.operation"; } }
 
       /// <summary>
       /// Name by which the operation/query is invoked
@@ -2930,14 +2922,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#SystemInteraction", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.rest.interaction")]
+    [FhirType("CapabilityStatement.rest.interaction", IsBackboneType=true)]
     public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#SystemInteraction"; } }
+      public override string TypeName { get { return "CapabilityStatement.rest.interaction"; } }
 
       /// <summary>
       /// transaction | batch | search-system | history-system
@@ -3121,14 +3112,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Messaging", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.messaging")]
+    [FhirType("CapabilityStatement.messaging", IsBackboneType=true)]
     public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Messaging"; } }
+      public override string TypeName { get { return "CapabilityStatement.messaging"; } }
 
       /// <summary>
       /// Where messages should be sent
@@ -3360,14 +3350,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Endpoint", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.messaging.endpoint")]
+    [FhirType("CapabilityStatement.messaging.endpoint", IsBackboneType=true)]
     public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Endpoint"; } }
+      public override string TypeName { get { return "CapabilityStatement.messaging.endpoint"; } }
 
       /// <summary>
       /// http | ftp | mllp +
@@ -3533,14 +3522,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#SupportedMessage", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.messaging.supportedMessage")]
+    [FhirType("CapabilityStatement.messaging.supportedMessage", IsBackboneType=true)]
     public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#SupportedMessage"; } }
+      public override string TypeName { get { return "CapabilityStatement.messaging.supportedMessage"; } }
 
       /// <summary>
       /// sender | receiver
@@ -3724,14 +3712,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CapabilityStatement#Document", IsNestedType=true)]
-    [BackboneType("CapabilityStatement.document")]
+    [FhirType("CapabilityStatement.document", IsBackboneType=true)]
     public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement#Document"; } }
+      public override string TypeName { get { return "CapabilityStatement.document"; } }
 
       /// <summary>
       /// producer | consumer
