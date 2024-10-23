@@ -71,10 +71,14 @@ namespace Hl7.Fhir.Serialization
         public static string ToXml(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
             if (source is not Base b)
-                return SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
-            
-            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(b.GetType()));
-            return ((PocoSerializationEngine)engine).SerializeToXml(b);
+                return SerializationUtil.WriteXmlToString(source, (s,w) => s.WriteTo(w, settings),
+                    settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
+
+            // Note that this code is temporary, as we the above code will be re-instated here. It's therefore
+            // allowed to instantiate the serializer with a ModelInspector.ForType here, while we know this has
+            // problems (e.g. if the type is from Base or Conformance, it will not deduce the correct FHIR version).
+            var serializer = new BaseFhirXmlPocoSerializer(ModelInspector.ForType(b.GetType()).FhirRelease);
+            return serializer.SerializeToString(b);
         }
 
         [TemporarilyChanged]
@@ -84,8 +88,11 @@ namespace Hl7.Fhir.Serialization
                 return await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false,
                     settings?.AppendNewLine ?? false).ConfigureAwait(false);
             
-            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(b.GetType()));
-            return ((PocoSerializationEngine)engine).SerializeToXml(b);
+            // Note that this code is temporary, as we the above code will be re-instated here. It's therefore
+            // allowed to instantiate the serializer with a ModelInspector.ForType here, while we know this has
+            // problems (e.g. if the type is from Base or Conformance, it will not deduce the correct FHIR version).
+            var serializer = new BaseFhirXmlPocoSerializer(ModelInspector.ForType(b.GetType()).FhirRelease);
+            return serializer.SerializeToString(b);
         }
 
         /// <inheritdoc cref="ToXmlBytesAsync(ITypedElement, FhirXmlSerializationSettings)" />
