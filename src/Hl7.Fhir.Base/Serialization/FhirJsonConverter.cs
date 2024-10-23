@@ -86,49 +86,6 @@ namespace Hl7.Fhir.Serialization
         {
             this._engine = (PocoSerializationEngine)engine;
         }
-        
-        /// <summary>
-        /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
-        /// POCOs in a given assembly.
-        /// </summary>
-        /// <param name="assembly">The assembly containing classes to be used for deserialization.</param>
-        [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
-        public FhirJsonConverter(
-            Assembly assembly): this(ModelInspector.ForAssembly(assembly))
-        {
-            // nothing
-        }
-
-        [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
-        public FhirJsonConverter(
-            Assembly assembly, FhirJsonPocoSerializerSettings? serializerSettings = null, FhirJsonPocoDeserializerSettings? deserializerSettings = null,
-            Predicate<CodedException>? ignoreFilter = null) :
-            this(FhirSerializationEngineFactory.Custom(ModelInspector.ForAssembly(assembly), ignoreFilter ?? (_ => false), deserializerSettings, serializerSettings)){}
-
-        /// <summary>
-        /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
-        /// POCOs in a given assembly.
-        /// </summary>
-        /// <param name="inspector">The <see cref="ModelInspector" /> containing classes to be used for deserialization.</param>
-        [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
-        public FhirJsonConverter(
-            ModelInspector inspector) : this(FhirSerializationEngineFactory.Strict(inspector))
-        {
-        }
-
-        /// <summary>
-        /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
-        /// POCOs in a given assembly.
-        /// </summary>
-        /// <param name="deserializer">A custom deserializer to be used by the json converter.</param>
-        /// <param name="serializer">A customer serializer to be used by the json converter.</param>
-        /// <remarks>Since the standard serializer/deserializer will allow you to override its behaviour to produce
-        /// custom behaviour, this constructor will allow the developer to use such custom serializers/deserializers instead
-        /// of the defaults.</remarks>
-        [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
-        public FhirJsonConverter(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonPocoSerializer serializer) : this(FhirSerializationEngineFactory.WithCustomJsonSerializers(deserializer, serializer))
-        {
-        }
 
         /// <summary>
         /// Determines whether the specified type can be converted.

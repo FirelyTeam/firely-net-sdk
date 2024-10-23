@@ -197,7 +197,8 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
 
         [TestMethod]
-        [Ignore("This design is still under discussion")]
+        [Ignore("We implemented ITypedElement on top of Base, but that does not track which version of FHIR the element is from," +
+                "so we cannot select the right type of the elements here since they diverge between versions.")]
         [TemporarilyChanged]
         public void CheckTypeOfElementDefinitionMembers()
         {

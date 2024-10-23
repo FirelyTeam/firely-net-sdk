@@ -22,10 +22,9 @@ using System.Xml;
 namespace Hl7.Fhir.Serialization;
 
 /// <summary>
-/// Serializes the contents of an IReadOnlyDictionary[string,object] according to the rules of FHIR Xml serialization.
+/// Serializes the contents of a POCO according to the rules of FHIR Xml serialization.
 /// </summary>
-/// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html. Since all POCOs included
-/// in the SDK implement IReadOnlyDictionary, these methods can be used to serialize POCOs to Xml.
+/// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html.
 /// </remarks>
 public class BaseFhirXmlPocoSerializer
 {
@@ -48,33 +47,34 @@ public class BaseFhirXmlPocoSerializer
     public void Serialize(
         Base element,
         XmlWriter writer,
-        SerializationFilter? summary = default,
-        string? rootName = null)
+        SerializationFilter? summary = default)
     {
         writer.WriteStartDocument();
 
-        // Here, validation starts on a type that is not a resource. Serialization of such subtrees is
-        // unspecified, but we can do it, we just have to invent a root, which is the name of the type
-        // (unless specifically given by the user).
-        var simulateRoot = element is not Resource;
-        if (simulateRoot)
+        // If we are serializing a non-resource, or we are serializing a nested resource,
+        // we need to pick a name for the root element.
+        var pickElementName = element is not Resource or IScopedNode { Parent: not null };
+        if (pickElementName)
         {
-            // Serialization in XML of non-resources is problematic, since there's no root.
-            // It's a common usecase though, so "invent" a root that's the name of the element's type.
-            writer.WriteStartElement(rootName ?? element.TypeName, XmlNs.FHIR);
+            // If we are an element with a name, pick that, otherwise us the name of the type.
+            var nodeName = element is ITypedElement ite ? ite.Name : element.TypeName;
+
+            writer.WriteStartElement(nodeName, XmlNs.FHIR);
         }
 
         serializeInternal(element, writer, summary);
 
-        if (simulateRoot) writer.WriteEndElement();
+        if (pickElementName) writer.WriteEndElement();
         writer.WriteEndDocument();
     }
 
     /// <summary>
     /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
     /// </summary>
-    public string SerializeToString(Base element, SerializationFilter? summary = default) =>
-        SerializationUtil.WriteXmlToString(w => Serialize(element, w, summary));
+    public string SerializeToString(
+        Base element,
+        SerializationFilter? summary = default) =>
+        SerializationUtil.WriteXmlToString(element, (o,w) => Serialize(o, w, summary));
 
     /// <summary>
     /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
@@ -172,8 +172,6 @@ public class BaseFhirXmlPocoSerializer
     /// </remarks>
     protected virtual void SerializePrimitiveValue(string elementName, object value, XmlWriter writer)
     {
-        if (value is null) return;  // Don't write a null property
-
         var literal = value switch
         {
             int i32 => XmlConvert.ToString(i32),

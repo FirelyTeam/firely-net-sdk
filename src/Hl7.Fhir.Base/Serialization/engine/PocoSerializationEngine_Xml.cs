@@ -37,6 +37,9 @@ internal partial class PocoSerializationEngine
     /// <inheritdoc />
     public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
 
+
+    internal string SerializeElementToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
+
     /// <summary>
     /// Deserializes a resource from an XML reader
     /// </summary>
