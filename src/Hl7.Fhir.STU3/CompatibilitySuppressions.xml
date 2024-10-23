@@ -9,13 +9,6 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Hl7.Fhir.Specification.Snapshot.SnapshotGeneratorExtensions</Target>
-    <Left>lib/netstandard2.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>F:Hl7.Fhir.Model.ExplanationOfBenefit.ActInvoiceGroupCode.ActInvoiceInterGroupCode</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
