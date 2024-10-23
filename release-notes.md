@@ -1,3 +1,3 @@
-## Intro:
+## Breaking changes:
 
-Hotfix: Fixed an incorrect string concatenation and subsequent argument exception when the Id of a contained resource was not set.
+- EvaluationContext.WithResourceOverrides() introduced in 5.10 is refactored to now be an extension method instead of a static construction method. It should now be called on an instance of EvaluationContext, and will mutate and return that instance.
