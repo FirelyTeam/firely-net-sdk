@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Test.Validation
             try
             {
                 // we perform the Select on a Poco, because then we get the FHIR dialect of FhirPath as well.
-                results = resource.Select(index.Expression, new FhirEvaluationContext(resource.ToTypedElement()) { ElementResolver = mockResolver });
+                results = resource.Select(index.Expression!, new FhirEvaluationContext { ElementResolver = mockResolver });
             }
             catch (Exception)
             {
