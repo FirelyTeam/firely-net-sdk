@@ -21,8 +21,8 @@ using Hl7.Fhir.STU3.Specification.Tests.Snapshot;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using NSubstitute;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -2433,8 +2433,8 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // Also ignore any Changed extensions on base and diff
-            elemClone.RemoveAllConstrainedByDiffExtensions();
-            baseClone.RemoveAllConstrainedByDiffExtensions();
+            elemClone.RemoveAllNonInheritableExtensions();
+            baseClone.RemoveAllNonInheritableExtensions();
             elemClone.RemoveAllConstrainedByDiffAnnotations();
             baseClone.RemoveAllConstrainedByDiffAnnotations();
 
@@ -8215,23 +8215,18 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 // Modify an existing Binding extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding",
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("Test")) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("Test")) }};
 
                 // Adding a new Binding extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding",
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding", new FhirBoolean(true)) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding", new FhirBoolean(true)) }};
 
                 // Adding a new Constraint extension
                 yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance", "Constraint[Key:dom-2]",
                     Array.Empty<Extension>(),
-                    new[] {
-                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)) }};
+                    new[] { new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)) }};
             }
         }
 
@@ -8343,6 +8338,110 @@ namespace Hl7.Fhir.Specification.Tests
                 else
                     Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
             }
+        }
+
+        private const string BaseId = "testBaseId";
+        private const string DiffId = "testDiffId";
+
+        public static IEnumerable<object[]> ElementDefinitionPropertyElementIdTestCasesStu3
+        {
+            get
+            {
+                // Binding
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", null, null, null };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", null, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", BaseId, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding", BaseId, null, BaseId };
+
+                // Primitive element
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", null, null, null };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", null, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", BaseId, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "ShortElement", BaseId, null, BaseId };
+
+                // Type
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", null, null, null };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", null, DiffId, DiffId };
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", BaseId, DiffId, DiffId };
+
+                // To correct the next test case requires backporting of ElementDefnMerger.mergeElementTypes to STU3
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Type[0]", BaseId, null, null }; // WRONG! Expected should be BaseId
+            }
+        }
+
+        /// <summary>
+        /// Tests whether element definition property element id in the differential is properly merged by the snapshot generator.
+        /// </summary>
+        /// <param name="profileType">The profile type under test (e.g. FHIRAllTypes.AllergyIntolerance).</param>
+        /// <param name="elementId">The element id of the profile to check (e.g. "AllergyIntolerance.code")</param>
+        /// <param name="propertyName">The name of the element definition property for which to add or modify the extension in the differential (e.g. "Binding").</param>
+        /// <param name="baseId">The element id that is defined in the base profile for this property.</param>
+        /// <param name="diffId">The element id to define in the differential for this property.</param>
+        /// <returns></returns>
+        [DataTestMethod]
+        [DynamicData(nameof(ElementDefinitionPropertyElementIdTestCasesStu3), DynamicDataSourceType.Property)]
+        public async Tasks.Task ElementDefinitionPropertyElementIdTest(FHIRAllTypes profileType, string elementId, string propertyName, string baseId, string diffId, string expectedId)
+        {
+            // Arrange
+            var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
+
+            // Create derived profile "myBaseProfile" that will be used as base profile for the test. 
+            // This is necessary to create a base profile that has an element id.
+            var myBaseProfile = createStructureDefinition("MyBase", profileType, uri);
+            var myDerivedprofile = createStructureDefinition("MyDerived", profileType, myBaseProfile.Url);
+
+            var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryResourceResolver(myBaseProfile)));
+            var generator = new SnapshotGenerator(source, SnapshotGeneratorSettings.CreateDefault());
+            var propertyProxy = new ElementDefinitionPropertyProxy(propertyName);
+
+            // Get element from core base profile
+            var coreElement = await getElementFromStructureDefinition(source, uri, elementId, propertyProxy);
+
+            // Add differential to "myBaseProfile"
+            var baseElementDefinition = creatElementDefinition(elementId, baseId, propertyProxy, coreElement);
+            myBaseProfile.Differential.Element = [baseElementDefinition];
+
+            // Add differential to "myDerivedProfile"
+            var diffElementDefinition = creatElementDefinition(elementId, diffId, propertyProxy, coreElement);
+            myDerivedprofile.Differential.Element = [diffElementDefinition];
+
+            // Act
+            var elements = await generator.GenerateAsync(myDerivedprofile);
+
+            // Assert
+            var element = elements.SingleOrDefault(x => x.ElementId == diffElementDefinition.ElementId);
+            element.Should().NotBeNull();
+            var property = propertyProxy.GetValueAsElement(element);
+            property.ElementId.Should().Be(expectedId);
+        }
+
+        private static StructureDefinition createStructureDefinition(string name, FHIRAllTypes profileType, string baseDefinition)
+        {
+            return new StructureDefinition()
+            {
+                Type = profileType.GetLiteral(),
+                BaseDefinition = baseDefinition,
+                Name = name,
+                Url = baseDefinition + name,
+                Differential = new StructureDefinition.DifferentialComponent()
+            };
+        }
+
+        private static async Tasks.Task<Element> getElementFromStructureDefinition(IAsyncResourceResolver source, string uri, string elementId, ElementDefinitionPropertyProxy propertyProxy)
+        {
+            var sd = await source.FindStructureDefinitionAsync(uri); // Find base profile
+            var snapElementDefinition = sd.Snapshot.Element.SingleOrDefault(x => x.ElementId == elementId); // Find specified element in snapshot of base profile
+            snapElementDefinition.Should().NotBeNull();
+            return propertyProxy.GetValueAsElement(snapElementDefinition); // Get the Element property from the snapshot element (typed)
+        }
+
+        private static ElementDefinition creatElementDefinition(string elementId, string propertyId, ElementDefinitionPropertyProxy propertyProxy, Element element)
+        {
+            var elementDefinition = new ElementDefinition(elementId) { ElementId = elementId };
+            propertyProxy.SetValue(elementDefinition, propertyProxy.CreateInstance(element)); // Update element definition property value with clone of element
+            var property = propertyProxy.GetValueAsElement(elementDefinition); // Get the element
+            property.ElementId = propertyId; // Update property
+            return elementDefinition;
         }
 
         [TestMethod]

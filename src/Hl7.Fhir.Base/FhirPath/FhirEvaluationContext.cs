@@ -63,8 +63,8 @@ namespace Hl7.Fhir.FhirPath
         {
             RootResource = Resource is ScopedNode sn ? sn.ResourceContext : node;
         }
-        
-        public ITerminologyService? TerminologyService { get; set; }
+
+        public ICodeValidationTerminologyService? TerminologyService { get; set; }
 
         private static ITypedElement toNearestResource(ScopedNode node)
         {
