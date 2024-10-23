@@ -8,8 +8,6 @@
 
 #nullable enable
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
-
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
@@ -42,13 +40,13 @@ namespace Hl7.Fhir.Serialization
         internal void SetEnforcedErrors(IEnumerable<string> toEnforce)
         {
             Engine ??= createDefaultEngine();
-            Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());            
+            Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());
         }
 
         internal void SetIgnoredErrors(IEnumerable<string> toIgnore)
         {
             Engine ??= createDefaultEngine();
-            Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate()); 
+            Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate());
         }
 
         internal void SetMode(DeserializerModes mode)
@@ -69,7 +67,7 @@ namespace Hl7.Fhir.Serialization
             Engine ??= createDefaultEngine();
             return (JsonConverter?)Activator.CreateInstance(
                 typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert), BindingFlags.NonPublic | BindingFlags.Instance, null,
-                [ Engine ], null, null);
+                [Engine], null, null);
         }
     }
 
@@ -86,7 +84,7 @@ namespace Hl7.Fhir.Serialization
         {
             this._engine = (PocoSerializationEngine)engine;
         }
-        
+
         /// <summary>
         /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
         /// POCOs in a given assembly.
@@ -94,7 +92,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="assembly">The assembly containing classes to be used for deserialization.</param>
         [Obsolete("Using this directly is not recommended. Instead, try creating a converter using the .ForFhir static method of the JsonSerializerOptions class")]
         public FhirJsonConverter(
-            Assembly assembly): this(ModelInspector.ForAssembly(assembly))
+            Assembly assembly) : this(ModelInspector.ForAssembly(assembly))
         {
             // nothing
         }
@@ -103,7 +101,8 @@ namespace Hl7.Fhir.Serialization
         public FhirJsonConverter(
             Assembly assembly, FhirJsonPocoSerializerSettings? serializerSettings = null, FhirJsonPocoDeserializerSettings? deserializerSettings = null,
             Predicate<CodedException>? ignoreFilter = null) :
-            this(FhirSerializationEngineFactory.Custom(ModelInspector.ForAssembly(assembly), ignoreFilter ?? (_ => false), deserializerSettings, serializerSettings)){}
+            this(FhirSerializationEngineFactory.Custom(ModelInspector.ForAssembly(assembly), ignoreFilter ?? (_ => false), deserializerSettings, serializerSettings))
+        { }
 
         /// <summary>
         /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
@@ -160,5 +159,4 @@ namespace Hl7.Fhir.Serialization
     }
 }
 
-#endif
 #nullable restore

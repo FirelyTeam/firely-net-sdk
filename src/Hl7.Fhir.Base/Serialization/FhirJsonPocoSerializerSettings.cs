@@ -7,15 +7,9 @@
  */
 
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
+
 
 #nullable enable
-
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Validation;
-using System;
-using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -32,4 +26,3 @@ namespace Hl7.Fhir.Serialization
 }
 
 #nullable restore
-#endif

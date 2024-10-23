@@ -32,7 +32,12 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <summary>
         /// Unit is taken from the set of calendar units (year or month)
         /// </summary>
-        CalendarDuration
+        CalendarDuration,
+        
+        /// <summary>
+        /// Unit is not specified to be part of any coding system.
+        /// </summary>
+        Unknown
     }
 
 
@@ -73,16 +78,16 @@ namespace Hl7.Fhir.ElementModel.Types
         }
 
         private static readonly string QUANTITY_BASE_REGEX =
-           @"(?'value'(\+|-)?\d+(\.\d+)?)\s*(('(?'unit'[^\']+)')|(?'time'[a-zA-Z]+))";
+            @"(?'value'(\+|-)?\d+(\.\d+)?)\s*(('(?'unit'[^\']+)')|(?'time'[a-zA-Z]+))";
 
         public static readonly Regex QUANTITYREGEX =
-           new(QUANTITY_BASE_REGEX, RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+            new(QUANTITY_BASE_REGEX, RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         internal static readonly Regex QUANTITYREGEX_FOR_PARSE =
             new($"^{QUANTITY_BASE_REGEX}?$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         public static Quantity Parse(string representation) =>
-                TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid quantity.");
+            TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid quantity.");
 
         public static bool TryParse(string representation, [NotNullWhen(true)] out Quantity? quantity)
         {
@@ -105,7 +110,8 @@ namespace Hl7.Fhir.ElementModel.Types
             {
                 if (TryParseTimeUnit(result.Groups["time"].Value, out var tv, out var isCalendarUnit))
                 {
-                    quantity = isCalendarUnit ? ForCalendarDuration(value, tv)
+                    quantity = isCalendarUnit
+                        ? ForCalendarDuration(value, tv)
                         : new Quantity(value, tv);
                     return true;
                 }
@@ -200,18 +206,16 @@ namespace Hl7.Fhir.ElementModel.Types
         /// </summary>
         /// <remarks>For time-valued quantities, the comparison of
         /// calendar durations and definite quantity durations above seconds is determined by the <paramref name="comparisonType"/></remarks>
-        public Result<bool> TryEquals(Any other, QuantityComparison comparisonType) => other is Quantity ?
-            TryCompareTo(other, comparisonType).Select(i => i == 0) : false;
+        public Result<bool> TryEquals(Any other, QuantityComparison comparisonType) => other is Quantity ? TryCompareTo(other, comparisonType).Select(i => i == 0) : false;
 
-        public static bool operator ==(Quantity a, Quantity b) => Equals(a, b);
-        public static bool operator !=(Quantity a, Quantity b) => !Equals(a, b);
+        public static bool operator ==(Quantity a, Quantity b) => a.CompareTo(b) == 0;
+        public static bool operator !=(Quantity a, Quantity b) => a.CompareTo(b) != 0;
 
         /// <summary>
         /// Compare two datetimes based on CQL equivalence rules
         /// </summary>
         /// <remarks>See <see cref="TryCompareTo(Any)"/> for more details.</remarks>
-        public int CompareTo(object? obj) => obj is Quantity q ?
-            TryCompareTo(q, CQL_EQUIVALENCE_COMPARISON).ValueOrThrow() : throw NotSameTypeComparison(this, obj);
+        public int CompareTo(object? obj) => obj is Quantity q ? TryCompareTo(q, CQL_EQUIVALENCE_COMPARISON).ValueOrThrow() : throw NotSameTypeComparison(this, obj);
 
         public static bool operator <(Quantity a, Quantity b) => a.CompareTo(b) < 0;
         public static bool operator <=(Quantity a, Quantity b) => a.CompareTo(b) <= 0;
@@ -236,24 +240,17 @@ namespace Hl7.Fhir.ElementModel.Types
 
             if (IsDuration && otherQ.IsDuration) return doDurationComparison(otherQ, comparisonType);
 
-            if (System != QuantityUnitSystem.UCUM || otherQ.System != QuantityUnitSystem.UCUM)
+            if (System != otherQ.System)
             {
-                return Fail<int>(Error.NotSupported("Comparing quantities with system other than UCUM is not supported"));
+                return Fail<int>(Error.NotSupported("Comparing a UCUM quantity with a non-UCUM quantity is not supported."));
             }
 
-            Quantity? left = this;
-            Quantity? right = otherQ;
-
-            if (Unit != otherQ.Unit)
-            {
-                // align units with each other
-                if (!this.TryCanonicalize(out left)) left = this;
-                if (!otherQ.TryCanonicalize(out right)) right = otherQ;
-            }
+            Quantity left = this;
+            Quantity right = otherQ;
 
             return (left.Unit == right.Unit)
-                ? decimal.Compare(Math.Round(left.Value, 8), Math.Round(right.Value, 8))   // aligns with Decimal
-                : Fail<int>(Error.InvalidOperation($"UCUM quanties with unit '{left.Unit}' and '{right.Unit}' cannot be compared."));
+                ? decimal.Compare(Math.Round(left.Value, 8), Math.Round(right.Value, 8)) // aligns with Decimal
+                : Fail<int>(Error.InvalidOperation($"Quantities with differing units '{left.Unit}' and '{right.Unit}' cannot be compared."));
         }
 
         private Result<int> doDurationComparison(Quantity other, QuantityComparison comparisonType)
@@ -264,7 +261,7 @@ namespace Hl7.Fhir.ElementModel.Types
             if (l.Unit != r.Unit)
                 return Fail<int>(Error.InvalidOperation($"Durations of {l.Unit} and {r.Unit} cannot be compared,"));
             else
-                return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8));   // aligns with Decimal
+                return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
 
             Quantity normalizeToUcum(Quantity orig)
             {
@@ -305,27 +302,6 @@ namespace Hl7.Fhir.ElementModel.Types
         /// to specify comparison behaviour for date comparisons.</remarks>
         public Result<int> TryCompareTo(Any other) => TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON);
 
-
-        private static (Quantity, Quantity) alignQuantityUnits(Quantity a, Quantity b)
-        {
-            if (a.System != QuantityUnitSystem.UCUM || b.System != QuantityUnitSystem.UCUM)
-            {
-                Error.NotSupported("Arithmetic operations on quantities using systems other than UCUM are not supported.");
-            }
-
-            Quantity? left = a;
-            Quantity? right = b;
-
-            if (a.Unit != b.Unit)
-            {
-                // align units with each other
-                if (!a.TryCanonicalize(out left)) left = a;
-                if (!b.TryCanonicalize(out right)) right = b;
-            }
-
-            return (left, right);
-        }
-
         public static Quantity? operator +(Quantity a, Quantity b) =>
             Add(a, b).ValueOrDefault();
 
@@ -338,48 +314,30 @@ namespace Hl7.Fhir.ElementModel.Types
         public static Quantity? operator /(Quantity a, Quantity b) =>
             Divide(a, b).ValueOrDefault();
 
-        internal static Result<Quantity> Add(Quantity a, Quantity b)
+        internal static Result<Quantity> Add(Quantity left, Quantity right)
         {
-            var (left, right) = alignQuantityUnits(a, b);
-
             return (left.Unit == right.Unit)
                 ? Ok<Quantity>(new(left.Value + right.Value, left.Unit))
-                : Fail<Quantity>(Error.InvalidOperation($"The add operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
+                : Fail<Quantity>(Error.InvalidOperation($"The add operation cannot be performed on quantities with differing units '{left.Unit}' and '{right.Unit}'."));
         }
 
-        internal static Result<Quantity> Substract(Quantity a, Quantity b)
+        internal static Result<Quantity> Substract(Quantity left, Quantity right)
         {
-            var (left, right) = alignQuantityUnits(a, b);
-
             return (left.Unit == right.Unit)
                 ? Ok<Quantity>(new(left.Value - right.Value, left.Unit))
-                : Fail<Quantity>(Error.InvalidOperation($"The substract operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
+                : Fail<Quantity>(Error.InvalidOperation($"The substract operation cannot be performed on quantities with differing units '{left.Unit}' and '{right.Unit}'."));
         }
 
-        internal static Result<Quantity> Multiply(Quantity a, Quantity b)
+        internal static Result<Quantity> Multiply(Quantity left, Quantity right)
         {
-            var (left, right) = alignQuantityUnits(a, b);
-
-            if (!left.TryMultiply(right, out var result))
-            {
-                return Fail<Quantity>(Error.InvalidOperation($"The multiply operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
-            }
-            
-            return Ok(result);
+            return Ok<Quantity>(new(left.Value * right.Value, $"({left.Unit}).({right.Unit})"));
         }
 
-        internal static Result<Quantity> Divide(Quantity a, Quantity b)
+        internal static Result<Quantity> Divide(Quantity left, Quantity right)
         {
-            if (b.Value == 0) return Fail<Quantity>(Error.InvalidOperation("Cannot divide by zero."));
+            if (right.Value == 0) return Fail<Quantity>(Error.InvalidOperation("Cannot divide by zero."));
 
-            var (left, right) = alignQuantityUnits(a, b);
-
-            if (!left.TryDivide(right, out var result))
-            {
-                return Fail<Quantity>(Error.InvalidOperation($"The divide operation cannot be performed on quantities with units '{left.Unit}' and '{right.Unit}'."));
-            }
-            
-            return Ok(result);
+            return Ok<Quantity>(new(left.Value / right.Value, $"({left.Unit})/({right.Unit})"));
         }
 
         public override int GetHashCode() => (Unit, Value).GetHashCode();

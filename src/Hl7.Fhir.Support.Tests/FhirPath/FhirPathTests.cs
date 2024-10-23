@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Support.Tests
         public static IEnumerable<object[]> ComparableTestCases() =>
            new (string expression, bool expected)[]
                {
-                    ("1 'cm'.comparable(1 '[in_i]')", true),
+                    ("1 'cm'.comparable(1 '[in_i]')", false),
                     ("1 week.comparable(1 'wk')", true),
                     ("1 'cm'.comparable(1 's')", false),
                 }.Select(t => new object[] { t.expression, t.expected });
