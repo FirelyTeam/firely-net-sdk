@@ -246,8 +246,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         result.ObjectValue = diffText;
                     }
-                    // Also merge extensions on primitives
+                    // Also merge element id and extensions on primitives
                     // [Backported from R4] 
+                    result.ElementId = mergeString(snap?.ElementId, diff.ElementId);
                     result.Extension = mergeExtensions(snap?.Extension, diff.Extension);
                     onConstraint(result);
                     return result;
@@ -509,6 +510,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         snap.StrengthElement = mergePrimitiveAttribute(snap.StrengthElement, diff.StrengthElement);
                         snap.DescriptionElement = mergePrimitiveAttribute(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);
+                        snap.ElementId = mergeString(snap.ElementId, diff.ElementId);
                         snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
@@ -535,7 +537,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     // Newly introduced named slices NEVER inherit element id
                     // Must always regenerate new unique identifier for named slices
-                    else if (diff.SliceName != snap.SliceName)
+                    if (diff.SliceName != snap.SliceName)
                     {
                         // Regenerate; don't inherit from snap
                         return null;
@@ -543,12 +545,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Otherwise inherit existing element id from snap
                     return snap.ElementId;
                 }
-                else
-                {
-                    // Don't merge elementId, e.g. for type profiles
-                    return null;
-                }
+
+                // Don't merge elementId, e.g. for type profiles
+                return null;
             }
+
+            static string mergeString(string snap, string diff) => diff ?? snap;
 
             // [WMR 20180611] NEW
             static bool isEqualCoding(Coding c, Coding d)

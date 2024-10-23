@@ -605,7 +605,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var expr = "defineVariable('root', 'r1-').select(defineVariable('v1', 'v1').defineVariable('v2', 'v2').select(%v1 | %v2)).select(%root & $this)";
             var compiler = new FhirPathCompiler();
             var exprCompiled = compiler.Compile(expr);
-            var r = exprCompiled(fixture.PatientExample.ToTypedElement(), FhirEvaluationContext.CreateDefault());
+            var r = exprCompiled(fixture.PatientExample.ToTypedElement(), new FhirEvaluationContext());
             Assert.AreEqual(2, r.Count());
             Assert.AreEqual("r1-v1", r.First().ToString());
             Assert.AreEqual("r1-v2", r.Skip(1).First().ToString());
