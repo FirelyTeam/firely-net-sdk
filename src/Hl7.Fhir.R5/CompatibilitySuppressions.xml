@@ -2,13 +2,6 @@
 <!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Hl7.Fhir.Specification.Snapshot.SnapshotGeneratorExtensions</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
     <DiagnosticId>PKV006</DiagnosticId>
     <Target>.NETStandard,Version=v2.0</Target>
   </Suppression>

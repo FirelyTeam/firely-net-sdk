@@ -189,7 +189,6 @@ namespace Hl7.Fhir.Utility
         /// </summary>
         public static Action<object, object?> GetValueSetter(this PropertyInfo propertyInfo) => GetValueSetter<object>(propertyInfo);
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 
         public static Func<C, T> GetField<C, T>(string fieldName)
         {
@@ -218,7 +217,6 @@ namespace Hl7.Fhir.Utility
 
             T getField(C instance) => (T)field.GetValue(instance)!;
         }
-#endif
     }
 }
 
