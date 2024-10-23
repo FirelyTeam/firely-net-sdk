@@ -8,8 +8,6 @@
 
 #nullable enable
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
-
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
@@ -42,13 +40,13 @@ namespace Hl7.Fhir.Serialization
         internal void SetEnforcedErrors(IEnumerable<string> toEnforce)
         {
             Engine ??= createDefaultEngine();
-            Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());            
+            Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());
         }
 
         internal void SetIgnoredErrors(IEnumerable<string> toIgnore)
         {
             Engine ??= createDefaultEngine();
-            Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate()); 
+            Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate());
         }
 
         internal void SetMode(DeserializerModes mode)
@@ -69,7 +67,7 @@ namespace Hl7.Fhir.Serialization
             Engine ??= createDefaultEngine();
             return (JsonConverter?)Activator.CreateInstance(
                 typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert), BindingFlags.NonPublic | BindingFlags.Instance, null,
-                [ Engine ], null, null);
+                [Engine], null, null);
         }
     }
 
@@ -117,5 +115,4 @@ namespace Hl7.Fhir.Serialization
     }
 }
 
-#endif
 #nullable restore

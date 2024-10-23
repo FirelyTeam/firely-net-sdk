@@ -7,7 +7,6 @@
  */
 
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
@@ -368,7 +367,7 @@ namespace Hl7.Fhir.Serialization
                 // This is not a FHIR primitive, so we should not be dealing with these weird _name members.
                 if (propertyName[0] == '_')
                     state.Errors.Add(ERR.USE_OF_UNDERSCORE_ILLEGAL(ref reader, state.Path.GetInstancePath(), propertyMapping.Name, propertyName));
-                
+
                 // Note that repeating simple elements (like Extension.url) do not currently exist in the FHIR serialization
                 if (propertyMapping.IsCollection)
                 {
@@ -380,8 +379,8 @@ namespace Hl7.Fhir.Serialization
                         state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
                     }
                     result = deserializeNormalList(l, propertyValueMapping, ref reader, propertyMapping, state);
-                } 
-                else 
+                }
+                else
                 {
                     // if the property already has a value, its key must have been encountered before
                     if (existingValue is not null)
@@ -981,4 +980,3 @@ namespace Hl7.Fhir.Serialization
 }
 
 #nullable restore
-#endif

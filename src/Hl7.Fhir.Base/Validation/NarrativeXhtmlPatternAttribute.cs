@@ -55,12 +55,8 @@ namespace Hl7.Fhir.Validation
             try
             {
                 var doc = SerializationUtil.XDocumentFromXmlText(text);
-
-#if NETSTANDARD1_6
-                var errors = new string[0];
-#else
                 var errors = SerializationUtil.RunFhirXhtmlSchemaValidation(doc);
-#endif
+
                 return errors.Any() ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Join(", ", errors)).AsResult(context) : ValidationResult.Success!;
             }
             catch (FormatException fe)
