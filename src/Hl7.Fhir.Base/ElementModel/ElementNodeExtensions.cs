@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel.Adapters;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -110,8 +111,8 @@ namespace Hl7.Fhir.ElementModel
             return new List<IElementDefinitionSummary>();
         }
 
-        public static ScopedNode ToScopedNode(this ITypedElement node) =>
-            node as ScopedNode ?? new ScopedNode(node);
+        public static IScopedNode ToScopedNode(this ITypedElement node) =>
+            node as IScopedNode ?? new ScopedNode(node);
     }
 }
 

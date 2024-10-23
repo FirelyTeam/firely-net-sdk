@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Parser;
 using Hl7.FhirPath.Sprache;
@@ -52,9 +53,9 @@ namespace Hl7.FhirPath
         {
             Invokee inv = expression.ToEvaluator(Symbols);
 
-            return (ITypedElement focus, EvaluationContext ctx) =>
+            return (focus, ctx) =>
                 {
-                    var closure = Closure.Root(focus, ctx);
+                    var closure = Closure.Root((IScopedNode)focus, ctx);
                     return inv(closure, InvokeeFactory.EmptyArgs);
                 };
         }

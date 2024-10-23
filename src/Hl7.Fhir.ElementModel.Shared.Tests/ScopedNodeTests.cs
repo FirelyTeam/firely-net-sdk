@@ -271,8 +271,6 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("xhtml", typedElements.First().InstanceType);
             Assert.AreEqual("Section.text[0]", typedElements.First().Location);
             Assert.IsNotNull(typedElements.First().Value);
-
-
         }
         
         [TestMethod]
@@ -280,8 +278,8 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
 
-            var enumerate = () => bundle.BundledResources();
-            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
+            var enumerate = () => bundle.Children("entry");
+            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => !c.Children("fullUrl").Any());
         }
 
         private class CCDAResourceResolver : IAsyncResourceResolver

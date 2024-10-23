@@ -8,6 +8,7 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System.Collections.Generic;
 
 namespace Hl7.FhirPath.Expressions
@@ -20,23 +21,14 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
+        public static Closure Root(IScopedNode root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
-            
-            var node = root as ScopedNode;
-            
-            newContext.Resource ??= node != null // if the value has been manually set, we do nothing. Otherwise, if the root is a scoped node:
-                ? getResourceFromNode(node) // we infer the resource from the scoped node
-                : (root?.Definition?.IsResource is true // if we do not have a scoped node, we see if this is even a resource to begin with
-                    ? root // if it is, we use the root as the resource
-                    : null // if not, this breaks the spec in every way (but we will still continue, hopefully we do not need %resource or %rootResource)
-                ); 
+
+            newContext.Resource ??= root.GetResourceContext();
             
             // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
-            newContext.RootResource ??= node != null 
-                ? getRootResourceFromNode(node) 
-                : newContext.Resource; 
+            newContext.RootResource ??= root.GetRootResourceContext();
             
             var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 
