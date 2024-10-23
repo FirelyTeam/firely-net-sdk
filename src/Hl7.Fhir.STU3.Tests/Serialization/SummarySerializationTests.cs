@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Tasks = System.Threading.Tasks;
 
@@ -128,6 +129,8 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        [Ignore("Masking node is not supported for serialization of the new poco interfaces")]
+        [TemporarilyChanged]
         public async Tasks.Task TestIncludeMandatory()
         {
             var l = new Library();

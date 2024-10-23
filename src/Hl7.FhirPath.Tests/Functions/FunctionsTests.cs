@@ -517,8 +517,7 @@ namespace HL7.FhirPath.Tests
         public void TraceTest()
         {
             ITypedElement dummy = ElementNode.ForPrimitive(true);
-            var ctx = EvaluationContext.CreateDefault();
-            ctx.Tracer = tracer;
+            var ctx = new EvaluationContext { Tracer = tracer };
             dummy.IsBoolean("(1 | 2).trace('test').empty()", true, ctx);
 
             static void tracer(string name, IEnumerable<ITypedElement> list)

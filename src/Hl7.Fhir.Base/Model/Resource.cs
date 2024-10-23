@@ -65,14 +65,14 @@ namespace Hl7.Fhir.Model
         /// <remarks>
         /// As a consumer of this API, please do not use this object.
         /// </remarks>
-        public readonly object SyncLock = new object();
+        public readonly object SyncLock = new();
 
         public string VersionId
         {
-            get => HasVersionId ? Meta.VersionId : null;
+            get => Meta?.VersionId;
             set
             {
-                if (Meta == null) Meta = new Meta();
+                Meta ??= new Meta();
                 Meta.VersionId = value;
             }
         }

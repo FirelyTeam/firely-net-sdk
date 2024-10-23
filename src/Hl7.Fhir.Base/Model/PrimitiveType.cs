@@ -69,6 +69,17 @@ namespace Hl7.Fhir.Model
                 return base.TryGetValue(key, out value);
         }
 
+        protected override Base SetValue(string key, object? value)
+        {
+            switch (key)
+            {
+                case "value":
+                    ObjectValue = value;
+                    return this;
+                default:
+                    return base.SetValue(key, value);
+            }
+        }
         /// <inheritdoc/>
         protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
         {

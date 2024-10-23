@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// Searches for a parameter with the given name, and returns the matching parameter(s)
         /// </summary>
         /// <param name="name">The name of the parameter</param>
-        /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
+        /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
         public IEnumerable<ParameterComponent> Get(string name, bool matchPrefix = false)
         {
             if (name == null) throw new ArgumentNullException("name");
@@ -137,15 +137,13 @@ namespace Hl7.Fhir.Model
         /// Searches for a parameter with the given name, and returns the matching parameter(s)
         /// </summary>
         /// <param name="name">The name of the parameter</param>
-        /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
+        /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
         public ParameterComponent GetSingle(string name, bool matchPrefix = false)
         {
             if (name == null) throw new ArgumentNullException("name");
 
             return Get(name, matchPrefix).SingleOrDefault();
         }
-
-        public ParameterComponent this[string name] => GetSingle(name);
 
         /// <summary>
         /// Returns the Value property of the requested parameter casted to the requested type

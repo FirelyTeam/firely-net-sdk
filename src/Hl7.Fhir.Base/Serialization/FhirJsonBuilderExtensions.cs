@@ -8,10 +8,13 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization
@@ -52,11 +55,25 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonBuilder(settings).Build(source);
 
         /// <inheritdoc cref="ToJsonAsync(ITypedElement, FhirJsonSerializationSettings)" />
+        [TemporarilyChanged]
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
+        {
+            if (source is not Resource resource)
+                return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
+            
+            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
+            return engine.SerializeToJson(resource);
+        }
 
+        [TemporarilyChanged]
         public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-            => await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
+        {
+            if (source is not Resource resource)
+                return await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
+            
+            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
+            return engine.SerializeToJson(resource);
+        }
 
         /// <inheritdoc cref="ToJsonAsync(ISourceNode, FhirJsonSerializationSettings)" />
         public static string ToJson(this ISourceNode source, FhirJsonSerializationSettings settings = null)

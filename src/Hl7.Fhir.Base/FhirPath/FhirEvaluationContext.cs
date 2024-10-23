@@ -64,12 +64,7 @@ namespace Hl7.Fhir.FhirPath
             RootResource = Resource is ScopedNode sn ? sn.ResourceContext : node;
         }
 
-        /// <summary>
-        /// Explicitly override the values of %resource and %rootResource in the evaluation context.
-        /// </summary>
-        public static new FhirEvaluationContext WithResourceOverrides(ITypedElement? resource, ITypedElement? rootResource = null) =>
-            (FhirEvaluationContext)EvaluationContext.WithResourceOverrides(resource, rootResource);
-        public ITerminologyService? TerminologyService { get; set; }
+        public ICodeValidationTerminologyService? TerminologyService { get; set; }
 
         private static ITypedElement toNearestResource(ScopedNode node)
         {

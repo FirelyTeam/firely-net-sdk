@@ -28,12 +28,12 @@ namespace Hl7.Fhir.Serialization.Tests
             engine.SerializeToXml(
                 engine.DeserializeFromJson(
                     engine.SerializeToJson(
-                        engine.DeserializeFromXml(original)!))!);
+                        (engine.DeserializeFromXml(original))!))!);
         public string RoundTripJson(string original) => 
             engine.SerializeToJson(
-                engine.DeserializeFromXml(
+                (engine.DeserializeFromXml(
                     engine.SerializeToXml(
-                        engine.DeserializeFromJson(original)!))!);
+                        engine.DeserializeFromJson(original)!)))!);
     }
     
     internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider provider) : IRoundTripper

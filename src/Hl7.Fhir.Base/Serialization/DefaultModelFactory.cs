@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
 
             // Can create any type, as long as a public default constructor is present
             var canCreate = ReflectionHelper.HasDefaultPublicConstructor(type) ||
-                        (ReflectionHelper.IsTypedCollection(type) && !type.IsArray);
+                        (ReflectionHelper.IsTypedList(type) && !type.IsArray);
 
             return canCreate;
         }

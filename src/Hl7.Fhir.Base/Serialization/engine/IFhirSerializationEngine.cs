@@ -12,6 +12,7 @@
 using Hl7.Fhir.Model;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Xml;
 
@@ -44,7 +45,8 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Serialize a FHIR Resource POCO into a string of Xml.
         /// </summary>
-        public string SerializeToXml(Resource instance);
+        [TemporarilyChanged]
+        public string SerializeToXml(Base instance);
     }
     
     /// <summary>
@@ -73,7 +75,8 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the underlying engine is a legacy engine</exception>
         /// <exception cref="DeserializationFailedException">Thrown if a FHIR error was encountered in the data</exception>
-        public static Resource? SerializeReaderToXml(this IFhirSerializationEngine engine, XmlReader reader)
+        [TemporarilyChanged]
+        public static Base? SerializeReaderToXml(this IFhirSerializationEngine engine, XmlReader reader)
         {
             if (engine is not PocoSerializationEngine pse)
             {
@@ -101,7 +104,8 @@ namespace Hl7.Fhir.Serialization
         /// Serialize a FHIR Resource to an XML writer.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the underlying engine is a legacy engine</exception>
-        public static void SerializeToXmlWriter(this IFhirSerializationEngine engine, Resource instance, XmlWriter writer)
+        [TemporarilyChanged]
+        public static void SerializeToXmlWriter(this IFhirSerializationEngine engine, Base instance, XmlWriter writer)
         {
             if (engine is not PocoSerializationEngine pse)
             {

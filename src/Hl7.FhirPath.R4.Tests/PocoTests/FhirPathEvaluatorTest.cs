@@ -11,10 +11,10 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,10 +22,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.Fhir.FhirPath.R4.Tests
 {
     public class PatientFixture : IDisposable
     {
@@ -606,7 +605,7 @@ namespace Hl7.FhirPath.R4.Tests
             var expr = "defineVariable('root', 'r1-').select(defineVariable('v1', 'v1').defineVariable('v2', 'v2').select(%v1 | %v2)).select(%root & $this)";
             var compiler = new FhirPathCompiler();
             var exprCompiled = compiler.Compile(expr);
-            var r = exprCompiled(fixture.PatientExample.ToTypedElement(), FhirEvaluationContext.CreateDefault());
+            var r = exprCompiled(fixture.PatientExample.ToTypedElement(), new FhirEvaluationContext());
             Assert.AreEqual(2, r.Count());
             Assert.AreEqual("r1-v1", r.First().ToString());
             Assert.AreEqual("r1-v2", r.Skip(1).First().ToString());

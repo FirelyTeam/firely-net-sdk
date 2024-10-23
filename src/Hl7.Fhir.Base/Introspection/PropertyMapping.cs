@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Introspection
             // FHIR repeating elements. If we would allow this, we'd also have stuff like `string` and binary
             // data as repeating element, and would need to exclude these exceptions on a case by case basis.
             // This is pretty ugly, so we prefer to not support arrays - you should use lists instead.
-            bool isCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
+            bool isCollection = ReflectionHelper.IsTypedList(prop.PropertyType) && !prop.PropertyType.IsArray;
 
             var cardinalityAttr = ClassMapping.GetAttribute<CardinalityAttribute>(prop, release);
 

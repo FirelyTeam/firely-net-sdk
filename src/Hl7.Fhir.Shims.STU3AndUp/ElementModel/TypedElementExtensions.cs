@@ -15,7 +15,7 @@ namespace Hl7.Fhir.ElementModel
     public static class TypedElementExtensions
     {
         public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
-            => @base.ToTypedElement(ModelInfo.ModelInspector, rootName);
+            => @base.WithScopeInfo(@base.BuildRoot(rootName));
     }
 }
 #nullable restore
