@@ -40,8 +40,8 @@ namespace Hl7.Fhir.FhirPath
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
             t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
-            t.Add("resolve", (ITypedElement f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
-            t.Add("resolve", (IEnumerable<ITypedElement> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
+            t.Add("resolve", (IScopedNode f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
+            t.Add("resolve", (IEnumerable<IScopedNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
 
             t.Add("memberOf", (ITypedElement input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.FhirPath
 
             return t;
 
-            static ITypedElement? resolver(ITypedElement f, EvaluationContext ctx)
+            static IScopedNode? resolver(IScopedNode f, EvaluationContext ctx)
             {
                 return ctx is FhirEvaluationContext fctx ? f.Resolve(fctx.ElementResolver) : f.Resolve();
             }
