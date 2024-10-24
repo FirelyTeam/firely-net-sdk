@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2021, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -66,7 +66,7 @@ public class BaseFhirJsonPocoSerializer
     /// <summary>
     /// Serializes the given dictionary with FHIR data into a Json string.
     /// </summary>
-    public string SerializeToString(Resource element)
+    public string SerializeToString(Base element)
     {
         var stream = new MemoryStream();
         var writer = new Utf8JsonWriter(stream);
@@ -81,24 +81,24 @@ public class BaseFhirJsonPocoSerializer
     /// <remarks>Not serializing the "value" element is useful when serializing FHIR primitives into two properties, one
     /// with just the value, and one with the id/extensions.</remarks>
     private void serializeInternal(
-        Base members,
+        Base element,
         Utf8JsonWriter writer,
         bool skipValue)
     {
         writer.WriteStartObject();
         var filter = Settings.SummaryFilter;
 
-        if (members is Resource r)
+        if (element is Resource r)
             writer.WriteString("resourceType", r.TypeName);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
-        if (!ClassMapping.TryGetMappingForType(members.GetType(), Release, out var mapping))
-            throw new InvalidOperationException($"Encountered type {members.GetType()}, which is a support POCO for FHIR, but does not " +
+        if (!ClassMapping.TryGetMappingForType(element.GetType(), Release, out var mapping))
+            throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 
-        filter?.EnterObject(members, mapping);
+        filter?.EnterObject(element, mapping);
 
-        foreach (var member in members)
+        foreach (var member in element)
         {
             if (skipValue && member.Key == "value") continue;
 
@@ -140,7 +140,7 @@ public class BaseFhirJsonPocoSerializer
             filter?.LeaveMember(member.Key, member.Value, propertyMapping);
         }
 
-        filter?.LeaveObject(members, mapping);
+        filter?.LeaveObject(element, mapping);
         writer.WriteEndObject();
     }
 
