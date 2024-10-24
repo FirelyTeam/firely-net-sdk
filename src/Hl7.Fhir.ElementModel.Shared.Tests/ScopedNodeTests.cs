@@ -182,7 +182,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             Assert.IsNull(_bundleNode!.Resolve("#"));
 
-            var patient = _bundleNode!.Children("entry").Skip(6).Children("resource").First();
+            var patient = _bundleNode!.Children("entry").Skip(6).First().Children("resource").First();
             Assert.IsNull(patient.Resolve("#"));
 
             var containedOrg = patient.Children("contained").First();
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
             Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
 
-            ITypedElement? externalResolve(string url)
+            IScopedNode? externalResolve(string url)
             {
                 lastUrlResolved = url;
                 return null;

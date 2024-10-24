@@ -284,11 +284,11 @@ namespace Hl7.Fhir.ElementModel
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
 
         /// <inheritdoc />
-        public IEnumerable<ITypedElement> Children(string? name = null) =>
+        IEnumerable<ITypedElement> ITypedElement.Children(string? name) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
         
         /// <inheritdoc />
-        IEnumerable<IScopedNode> IScopedNode.Children(string? name) =>
+        public IEnumerable<IScopedNode> Children(string? name = null) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
 
         public string ShortPath => Current is ElementNode en ? en.ShortPath : Current.Location;

@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Test.Validation
             }
         }
 
-        private static ITypedElement mockResolver(string url)
+        private static IScopedNode mockResolver(string url)
         {
             ResourceIdentity ri = new ResourceIdentity(url);
             if (!string.IsNullOrEmpty(ri.ResourceType))
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Test.Validation
                 var type = ModelInfo.GetTypeForFhirType(ri.ResourceType);
                 DomainResource res = fac.Create(type) as DomainResource;
                 res.Id = ri.Id;
-                return res.ToTypedElement();
+                return res.ToScopedNode();
             }
             return null;
         }
