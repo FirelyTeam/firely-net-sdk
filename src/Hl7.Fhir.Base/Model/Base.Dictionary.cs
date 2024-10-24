@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace Hl7.Fhir.Model;
 
 public abstract partial class Base: IReadOnlyDictionary<string,object>, IDictionary<string, object>
