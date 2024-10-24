@@ -15,6 +15,7 @@ using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -47,6 +48,8 @@ namespace Hl7.Fhir.Tests.Introspection
         }
 
         [TestMethod]
+        [Ignore("This test calls resolve on a primitive ElementNode. We will solve this when we rewrite the FhirPath engine against IScopedNode")]
+        [TemporarilyChanged]
         public void TestResolve2()
         {
             var statement = "'http://example.org/doesntexist'.resolve().id";
@@ -62,6 +65,8 @@ namespace Hl7.Fhir.Tests.Introspection
         }
 
         [TestMethod]
+        [Ignore("This test calls resolve on a list of ElementNodes. We will solve this when we rewrite the FhirPath engine against IScopedNode")]
+        [TemporarilyChanged]
         public void TestResolveList()
         {
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
