@@ -27,6 +27,16 @@ namespace Hl7.Fhir.Specification.Tests
 
                 AssertEqual(pocoSummary, sdSummary);
             }
+
+            foreach (var item in ModelInfo.OpenTypes)
+            {
+                if (item == typeof(Canonical) || item == typeof(DataRequirement) || item == typeof(Signature) || item == typeof(Timing) || item == typeof(FhirUrl) || item == typeof(UsageContext)) continue;
+                var canonicalResource = ModelInfo.CanonicalUriForFhirCoreType(item);
+                var pocoSummary = pocoSdProvider.Provide(canonicalResource);
+                var sdSummary = sdProvide.Provide(canonicalResource);
+
+                AssertEqual(pocoSummary, sdSummary);
+            }
         }
 
 
