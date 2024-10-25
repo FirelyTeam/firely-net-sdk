@@ -155,9 +155,11 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    /// <summary>
-    /// Uri where the data can be found
-    /// </summary>
+        /// <summary>
+        /// Uri where the data can be found
+        /// </summary>
+    [DeclaredType(Type = typeof(FhirUrl), Since = FhirRelease.R4)]
+    [DeclaredType(Type = typeof(FhirUri), Since = FhirRelease.STU3)]
     [FhirElement("url", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUrl UrlElement
