@@ -115,10 +115,43 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
 /// <summary>
 /// A dynamic data type that can hold any element.
 /// </summary>
-public class DynamicDataType : DataType
+public class DynamicDataType : DataType, IDynamicType
 {
+    public string? DynamicTypeName { get; set; }
+
+    public override string TypeName => DynamicTypeName ?? base.TypeName;
+
     public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
 
+    // TODO: One may wonder whether normal resources should have this as well.
+    public object this[string key]
+    {
+        get => this.AsReadOnlyDictionary()[key];
+        set => SetValue(key, value);
+    }
+}
+
+
+public interface IDynamicType
+{
+    public string? DynamicTypeName { get; set; }
+
+    public object this[string key] { get; set; }
+}
+
+
+/// <summary>
+/// A dynamic resource that can hold any element.
+/// </summary>
+public class DynamicResource : Resource, IDynamicType
+{
+    public string? DynamicTypeName { get; set; }
+
+    public override string TypeName => DynamicTypeName ?? base.TypeName;
+
+    public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
+
+    // TODO: One may wonder whether normal resources should have this as well.
     public object this[string key]
     {
         get => this.AsReadOnlyDictionary()[key];
@@ -128,12 +161,17 @@ public class DynamicDataType : DataType
 
 
 /// <summary>
-/// A dynamic resource that can hold any element.
+/// A dynamic primitive that can hold any element.
 /// </summary>
-public class DynamicResource : Resource
+public class DynamicPrimitive : PrimitiveType, IDynamicType
 {
+    public string? DynamicTypeName { get; set; }
+
+    public override string TypeName => DynamicTypeName ?? base.TypeName;
+
     public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
 
+    // TODO: One may wonder whether normal resources should have this as well.
     public object this[string key]
     {
         get => this.AsReadOnlyDictionary()[key];

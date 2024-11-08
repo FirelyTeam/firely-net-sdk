@@ -49,24 +49,80 @@ namespace Hl7.Fhir.ElementModel
         /// <remarks>
         /// FHIR primitives are mapped to underlying C# types as follows:
         ///
-        /// instant         Hl7.Fhir.ElementModel.Types.DateTime
-        /// time            Hl7.Fhir.ElementModel.Types.Time
-        /// date            Hl7.Fhir.ElementModel.Types.Date
-        /// dateTime        Hl7.Fhir.ElementModel.Types.DateTime
-        /// decimal         decimal
-        /// boolean         bool
-        /// integer         int
-        /// unsignedInt     int
-        /// positiveInt     int
-        /// long/integer64  long (name will be finalized in R5)
-        /// string          string
-        /// code            string
-        /// id              string
-        /// uri, oid, uuid, 
-        /// canonical, url  string
-        /// markdown        string
-        /// base64Binary    string (uuencoded)
-        /// xhtml           string
+        /// <list type="table">
+        ///   <listheader>
+        ///      <term>InstanceType</term>
+        ///      <description>Value</description>
+        ///   </listheader>
+        ///   <item>
+        ///      <term>instant</term>
+        ///      <description>Hl7.Fhir.ElementModel.Types.DateTime</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>time</term>
+        ///      <description>Hl7.Fhir.ElementModel.Types.Time</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>date</term>
+        ///      <description>Hl7.Fhir.ElementModel.Types.Date</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>dateTime</term>
+        ///      <description>Hl7.Fhir.ElementModel.Types.DateTime</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>decimal</term>
+        ///      <description>decimal</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>boolean</term>
+        ///      <description>bool</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>integer</term>
+        ///      <description>int</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>unsignedInt</term>
+        ///      <description>int</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>positiveInt</term>
+        ///      <description>int</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>integer64</term>
+        ///      <description>long</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>string</term>
+        ///      <description>string</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>code</term>
+        ///      <description>string</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>id</term>
+        ///      <description>string</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>uri, oid, uuid, canonical, url</term>
+        ///      <description>string</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>markdown</term>
+        ///      <description>string</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>base64Binary</term>
+        ///      <description>string (uuencoded)</description>
+        ///   </item>
+        ///   <item>
+        ///      <term>xhtml</term>
+        ///      <description>string</description>
+        ///   </item>
+        /// </list>
         /// </remarks>
         object? Value { get; }
 

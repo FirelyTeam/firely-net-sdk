@@ -15,7 +15,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using ET = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Serialization;
 
@@ -33,7 +33,7 @@ internal class PocoBuilderNew(ModelInspector inspector)
 
     private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
     private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
-    private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicDataType().TypeName;
+    private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
 
     private Base readFromElement(ITypedElement node, ClassMapping? backboneClass=null)
     {
@@ -51,29 +51,11 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // If the node's InstanceType is a backbone, we're getting the classMapping for that backbone passed in
         // by our caller, so use that instead.
         var classMapping = backboneClass ?? getClassMappingForInstanceType(node);
-
-        // Now, create an instance from this mapping.
-        // Note: There may be ClassMappings for .NET and CQL types, but we really cannot handle those and they
-        // will not normally appear on InstanceType for us.
-        var newInstance = classMapping.Factory() switch
-        {
-            Base b => b.AsDictionary(),
-            _ => throw Error.InvalidOperation($"Can only handle Base-derived POCOs, which '{classMapping.NativeType.Name}' is not.")
-        };
+        IDictionary<string, object> newInstance = buildNewInstance(classMapping, node.InstanceType);
 
         // Value is a kind of pseudo-property, so we need to handle it separately.
-        // Note: this will set the underlying ObjectValue property on the PrimitiveType instance at this moment,
-        // which might not be exactly the expected type. Certainly, it is not expecting the CQL types used
-        // on node.Value, so we still have some mapping work to do here.
-        // If the ITypedElement.InstanceType does not agree with the type of the element in the poco, all use of
-        // the indexers/list.Add below will throw. This is highly unlikely (assuming the source of metadata in the
-        // TypedElement is the same as the reflected data on the POCO - but this is not guaranteed). If we want,
-        // we can turn it into an error annotation.
-        // This will also go wrong where the [DeclaredType] (which is what InstanceType is) is different from
-        // the property type in the POCO - but I hope all declared types are assignable to the property types.
-        // Need to check this. There is no guarantee in any case.
         if (node.Value is { } value)
-            newInstance["value"] = value;
+            newInstance["value"] = convertTypedElementValue(value, node.InstanceType);
 
         // Now, read the children
         foreach (var child in node.Children())
@@ -88,26 +70,105 @@ internal class PocoBuilderNew(ModelInspector inspector)
                 _ => readFromElement(child)
             };
 
-            // Note the `Definition?` here. So if this ITypedElement is untyped (we have lost
-            // track of the types since we encountered an unknown type), we will never detect
-            // lists. If such an element would repeat, we would overwrite the previous occurrence,
-            // which is nasty. We should try to detect that an element repeats after all, and swap the
-            // existing instance out for a list, to make sure we don't lose data.
-            if (node.Definition?.IsCollection == true)
+            try
             {
-                var list = newInstance.TryGetValue(child.Name, out var existing)
-                    ? (IList)existing
-                    : classMapping.ListFactory();
-
-                list.Add(convertedValue);
+                setOrAddProperty(child, newInstance, convertedValue, classMapping);
             }
-            else
+            catch (InvalidCastException e)
             {
-                newInstance[child.Name] = convertedValue;
+                // In case the InstanceType does not agree with the actual POCO type of the property, the
+                // setOrAddProperty method will throw an InvalidCastException. In this case, we should salvage
+                // the data we have so far, and put it in an annotation.
+                Console.WriteLine(e);
+                throw;
             }
         }
 
         return (Base)newInstance;
+    }
+
+    private static IDictionary<string, object> buildNewInstance(ClassMapping classMapping, string? instanceType)
+    {
+        var newInstance = classMapping.Factory() switch
+        {
+            IDictionary<string,object> b => b,
+            _ => throw Error.InvalidOperation($"Class Factory for '{classMapping.Name}' did not return a dictionary, which is required for " +
+                        $"building up POCO's dynamically.")
+        };
+
+        if(newInstance is IDynamicType dt)
+            dt.DynamicTypeName = instanceType;
+
+        return newInstance;
+    }
+
+    private static void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
+        Base convertedValue, ClassMapping parentClassMapping)
+    {
+        // If this element *could* be repeating (either we don't know the definition, or it really is defined
+        // to be a collection, then check to see if there are already items present.
+        var couldBeCollection = node.Definition is null || node.Definition.IsCollection;
+        var existing = couldBeCollection && target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
+
+        // If there are, just add this new value.
+        if (existing is IList list)
+        {
+            list.Add(convertedValue);
+        }
+
+        // If we already have a value, but it's not a list, we're encountering a second element for the
+        // same element. Create a list, and add both the existing and the new value.
+        else if(existing is not null)
+        {
+            var newList = listFactory();
+            newList.Add(existing);
+            newList.Add(convertedValue);
+            target[node.Name] = newList;
+        }
+
+        // No existing value, but we know it's a collection, so create a list and add the element.
+        else if (node.Definition?.IsCollection == true)
+        {
+            var newList = listFactory();
+            newList.Add(convertedValue);
+            target[node.Name] = newList;
+        }
+
+        // No existing value, and not a list, just set the element.
+        else
+        {
+            target[node.Name] = convertedValue;
+        }
+    }
+
+    private static void safeSet(string key, object source)
+    {
+        target = source;
+    }
+
+    /// <summary>
+    /// Convert the value of a typed element to a value that can be set on a POCO property.
+    /// </summary>
+    private static object convertTypedElementValue(object value, string? instanceType)
+    {
+        return value switch
+        {
+            // Instants are converted to DateTimeOffset, and should by definition have a timezone in their
+            // serialization, but if it does not, we'll use UTC.
+            ET.DateTime inst when instanceType == "instant" => inst.ToDateTimeOffset(TimeSpan.Zero),
+
+            // all "other" date/time types are just strings, since that is how the POCO's represent the
+            // partial date/time types in ObjectValue.
+            ET.DateTime => value.ToString()!,
+            ET.Time => value.ToString()!,
+            ET.Date => value.ToString()!,
+
+            // Base64Binary is a string of base64 encoded data, and the POCO's use byte[] for this.
+            string uuenc when instanceType == "base64Binary" => Convert.FromBase64String(uuenc),
+
+            // All other primitives are one-on-one convertible to their .NET counterparts.
+            _ => value
+        };
     }
 
     private ClassMapping getClassMappingForInstanceType(ITypedElement node)
@@ -119,8 +180,6 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // of the applicable dynamic types. If the node has a resource name (but it was unknown),
         // we'll create a DynamicResource. If the node has a Value, it's a DynamicPrimitive,
         // otherwise it's a DynamicDataType.
-        // TODO: if InstanceType has a value, but that type is unknown, we should still set the
-        // TypeName of the created Dynamic below to that string.
         // Design question: there might be a "strict" option, where we will not create Dynamic types
         // for unknown types, but throw an error instead.
         if(node.Value is not null)
