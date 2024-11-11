@@ -19,6 +19,11 @@ using ET = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Serialization;
 
+/// <summary>
+/// Traverses an <see cref="ITypedElement"/> tree and constructs a POCO from it.
+/// </summary>
+/// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes
+/// used in the construction.</param>
 internal class PocoBuilderNew(ModelInspector inspector)
 {
     /// <summary>
@@ -28,30 +33,21 @@ internal class PocoBuilderNew(ModelInspector inspector)
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
-        return readFromElement(source);
+        var rootMapping = getClassMappingForElement(source, null);
+        return readFromElement(source, rootMapping);
     }
 
     private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
     private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
     private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
 
-    private Base readFromElement(ITypedElement node, ClassMapping? backboneClass=null)
+    private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
-        // The classMapping we need to use is either the one provided by the node, or the default Dynamic one.
-        // Design note: This means that the type must be known by name through the inspector, so all types need
-        // to have been loaded in advance.
-        // We are currently not requiring this (although it is already good practice), but since
-        // the old code used `FindOrImport`, and used the element's type in the PropertyMapping, we would create
-        // mappings for types we didn't know about. This gave subtle error, e.g. where the type you are parsing
-        // is in Base, but contains elements from Conformance (like Bundle.entry). In this case, we would create the
-        // mapping for such types, but we would not know the correct FHIR version (since we're dealing with Base, which
-        // is shared), so if the loaded types contained `Since` attributes, we would get the wrong version.
-        // Forcing the user to load the correct FHIR version into our inspector would do away with this incorrect
-        // behaviour.
-        // If the node's InstanceType is a backbone, we're getting the classMapping for that backbone passed in
-        // by our caller, so use that instead.
-        var classMapping = backboneClass ?? getClassMappingForInstanceType(node);
-        IDictionary<string, object> newInstance = buildNewInstance(classMapping, node.InstanceType);
+        IDictionary<string, object> newInstance = buildNewInstance(classMapping);
+
+        // Capture the instance type if this is a dynamic type.
+        if(newInstance is IDynamicType dt)
+            dt.DynamicTypeName = node.InstanceType;
 
         // Value is a kind of pseudo-property, so we need to handle it separately.
         if (node.Value is { } value)
@@ -60,25 +56,20 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // Now, read the children
         foreach (var child in node.Children())
         {
-            // Although InstanceType suggests this is a run-time type, we have misdesigned this property
-            // to also return abstract types, in this case, Backbones. Would love to fix this in SDK6.0,
-            // but it would be one of the bigger breaking behavioural changes.
-            var convertedValue = child.InstanceType switch
-            {
-                "BackboneElement" or "Element" =>
-                    readFromElement(child, classMapping.FindMappedElementByName(child.Name)?.PropertyTypeMapping),
-                _ => readFromElement(child)
-            };
+            var childMapping = getClassMappingForElement(child, classMapping);
+            var convertedValue = readFromElement(child, childMapping);
 
             try
             {
-                setOrAddProperty(child, newInstance, convertedValue, classMapping);
+                setOrAddProperty(child, newInstance, convertedValue, childMapping.ListFactory);
             }
             catch (InvalidCastException e)
             {
                 // In case the InstanceType does not agree with the actual POCO type of the property, the
                 // setOrAddProperty method will throw an InvalidCastException. In this case, we should salvage
                 // the data we have so far, and put it in an annotation.
+                // This will be fixed in https://github.com/FirelyTeam/firely-net-sdk/issues/2908.
+                // For now, just throw.
                 Console.WriteLine(e);
                 throw;
             }
@@ -87,23 +78,18 @@ internal class PocoBuilderNew(ModelInspector inspector)
         return (Base)newInstance;
     }
 
-    private static IDictionary<string, object> buildNewInstance(ClassMapping classMapping, string? instanceType)
+    private static IDictionary<string, object> buildNewInstance(ClassMapping classMapping)
     {
-        var newInstance = classMapping.Factory() switch
+        return classMapping.Factory() switch
         {
             IDictionary<string,object> b => b,
             _ => throw Error.InvalidOperation($"Class Factory for '{classMapping.Name}' did not return a dictionary, which is required for " +
                         $"building up POCO's dynamically.")
         };
-
-        if(newInstance is IDynamicType dt)
-            dt.DynamicTypeName = instanceType;
-
-        return newInstance;
     }
 
     private static void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
-        Base convertedValue, ClassMapping parentClassMapping)
+        Base convertedValue, Func<IList> listFactory)
     {
         // If this element *could* be repeating (either we don't know the definition, or it really is defined
         // to be a collection, then check to see if there are already items present.
@@ -116,8 +102,10 @@ internal class PocoBuilderNew(ModelInspector inspector)
             list.Add(convertedValue);
         }
 
-        // If we already have a value, but it's not a list, we're encountering a second element for the
-        // same element. Create a list, and add both the existing and the new value.
+        // If we already have a value, but it's not a list, we know we are now dealing with a list.
+        // So, create a list, and add both the existing and the new value. Note that assigning a list to
+        // that same property only works if this element is in the overflow and we did not know it was a list
+        // before. In all other cases, the indexed assignment will fail.
         else if(existing is not null)
         {
             var newList = listFactory();
@@ -139,11 +127,6 @@ internal class PocoBuilderNew(ModelInspector inspector)
         {
             target[node.Name] = convertedValue;
         }
-    }
-
-    private static void safeSet(string key, object source)
-    {
-        target = source;
     }
 
     /// <summary>
@@ -171,10 +154,33 @@ internal class PocoBuilderNew(ModelInspector inspector)
         };
     }
 
-    private ClassMapping getClassMappingForInstanceType(ITypedElement node)
+    private ClassMapping getClassMappingForElement(ITypedElement node, ClassMapping? parentMapping)
     {
-        if(node.InstanceType is {} instanceType && inspector.FindClassMapping(instanceType) is { } mapping)
+        // Although InstanceType suggests this is a run-time type, we have misdesigned this property
+        // to also return abstract types, in this case, Backbones. Would love to fix this in SDK6.0,
+        // but it would be one of the bigger breaking behavioural changes.
+        // In any case, try to derive the actual type from the POCO, since the InstanceType won't help here.
+        if(node.InstanceType is "BackboneElement" or "Element")
+        {
+            var childMapping = parentMapping?.FindMappedElementByName(node.Name)?.PropertyTypeMapping;
+
+            return childMapping ?? getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+        };
+
+        // Resolve the instance type through the inspector. This means that the type must be known by name by the
+        // inspector, so all types need to have been loaded in advance.
+        // We are currently not requiring this (although it is already good practice), but since
+        // the old code used `FindOrImport`, and used the element's type in the PropertyMapping, we would create
+        // mappings for types we didn't know about. This gave subtle error, e.g. where the type you are parsing
+        // is in Base, but contains elements from Conformance (like Bundle.entry). In this case, we would create the
+        // mapping for such types, but we would not know the correct FHIR version (since we're dealing with Base, which
+        // is shared), so if the loaded types contained `Since` attributes, we would get the wrong version.
+        // Forcing the user to load the correct FHIR version into our inspector would do away with this incorrect
+        // behaviour.
+        if (node.InstanceType is { } instanceType && inspector.FindClassMapping(instanceType) is { } mapping)
+        {
             return mapping;
+        }
 
         // Ok, so the node does not have a type, or the type is not known. So, let's use one
         // of the applicable dynamic types. If the node has a resource name (but it was unknown),
