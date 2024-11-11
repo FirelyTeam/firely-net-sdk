@@ -55,7 +55,7 @@ namespace Hl7.FhirPath
 
             return (focus, ctx) =>
                 {
-                    var closure = Closure.Root((IScopedNode)focus, ctx);
+                    var closure = Closure.Root(focus, ctx);
                     return inv(closure, InvokeeFactory.EmptyArgs);
                 };
         }

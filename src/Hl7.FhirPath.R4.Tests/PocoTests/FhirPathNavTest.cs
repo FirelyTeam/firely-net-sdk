@@ -10,21 +10,25 @@
 // extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
 using System.Linq;
+using System.Text.Json;
+using System.Xml.Serialization;
 using Xunit;
 
 namespace Hl7.FhirPath.R4.Tests
 {
     public class FhirPathNavTest
     {
-        public ITypedElement getTestData()
+        public IScopedNode getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            return FhirXmlNode.Parse(tpXml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+            var engine = FhirSerializationEngineFactory.Strict(ModelInfo.ModelInspector);
+            return engine.DeserializeFromXml(tpXml);
         }
 
         [Fact]

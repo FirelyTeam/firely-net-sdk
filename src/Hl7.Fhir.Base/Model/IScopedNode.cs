@@ -20,6 +20,7 @@ public enum NodeType
     DomainResource = 1 << 2,
     Primitive = 1 << 3,
     Reference = 1 << 4,
+    Quantity = 1 << 5,
 }
 
 /// <summary>

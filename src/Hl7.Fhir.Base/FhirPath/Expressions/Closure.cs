@@ -41,7 +41,7 @@ namespace Hl7.FhirPath.Expressions
             
             newClosure.SetThis(input);
             newClosure.SetThat(input);
-            newClosure.SetIndex(ElementNode.CreateList(0));
+            newClosure.SetIndex([new Integer(0)]);
             newClosure.SetOriginalContext(input);
             
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
@@ -50,9 +50,9 @@ namespace Hl7.FhirPath.Expressions
             return newClosure;
         }
 
-        private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
+        private Dictionary<string, IEnumerable<IScopedNode>> _namedValues = new ();
 
-        public virtual void SetValue(string name, IEnumerable<ITypedElement> value)
+        public virtual void SetValue(string name, IEnumerable<IScopedNode> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -71,10 +71,10 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        public virtual IEnumerable<ITypedElement> ResolveValue(string name)
+        public virtual IEnumerable<IScopedNode> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            _namedValues.TryGetValue(name, out IEnumerable<ITypedElement> result);
+            _namedValues.TryGetValue(name, out IEnumerable<IScopedNode> result);
 
             if (result != null) return result;
 

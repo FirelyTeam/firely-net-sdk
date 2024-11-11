@@ -1,13 +1,14 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.FhirPath
 {
-    public delegate IEnumerable<ITypedElement> CompiledExpression(ITypedElement root, EvaluationContext ctx);
+    public delegate IEnumerable<IScopedNode> CompiledExpression(IScopedNode root, EvaluationContext ctx);
 
     public static class CompiledExpressionExtensions
     {
@@ -18,7 +19,7 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>The single result of an expression</returns>
-        public static object? Scalar(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
+        public static object? Scalar(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).Take(2).ToArray();
             return result.Any() ? result.Single().Value : null;
@@ -31,7 +32,7 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if expression returns true of empty, otheriwse false</returns>
-        public static bool Predicate(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
+        public static bool Predicate(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
             return result is null || result.Value;
@@ -44,7 +45,7 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if expression returns true , and false if expression returns empty of false.</returns>
-        public static bool IsTrue(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
+        public static bool IsTrue(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
             return result is not null && result.Value;
@@ -59,7 +60,7 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if the result of an expression is equal to a given boolean, otherwise false</returns>
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, ITypedElement input, EvaluationContext ctx)
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IScopedNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
             return result is not null && result.Value == value;

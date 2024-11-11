@@ -6,14 +6,18 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using P = Hl7.Fhir.ElementModel.Types;
+#pragma warning disable CS0612 // Type or member is obsolete
 
 namespace Hl7.FhirPath.Expressions
 {
+    [TemporarilyChanged] // Disabled pragmas until we have figured out an alternative to InstanceType
     internal static class Typecasts
     {
         public delegate object Cast(object source);
@@ -23,15 +27,15 @@ namespace Hl7.FhirPath.Expressions
         private static Cast makeNativeCast(Type to) =>
             source => Convert.ChangeType(source, to);
 
-        private static ITypedElement any2primitiveTypedElement(object source) => ElementNode.ForPrimitive(source);
+        private static IScopedNode any2primitiveTypedElement(object source) => ElementNode.ForPrimitive(source).ToScopedNode();
 
-        private static IEnumerable<ITypedElement> any2List(object source) => ElementNode.CreateList(source);
+        private static IEnumerable<IScopedNode> any2List(object source) => ElementNode.CreateList(source).ToScopedNodes();
 
         private static P.Quantity tryQuantity(object source)
         {
-            if (source is ITypedElement element)
+            if (source is IScopedNode element)
             {
-                if (element.InstanceType == "Quantity")
+                if (element.Type.HasFlag(NodeType.Quantity))
                 {
                     // Need to downcast from a FHIR Quantity to a System.Quantity
                     return ParseQuantity(element);
@@ -44,7 +48,7 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        internal static P.Quantity ParseQuantity(ITypedElement qe)
+        internal static P.Quantity ParseQuantity(IScopedNode qe)
         {
             var value = qe.Children("value").SingleOrDefault()?.Value as decimal?;
             if (value == null) return null;
@@ -60,10 +64,10 @@ namespace Hl7.FhirPath.Expressions
             if (to == typeof(object)) return id;
             if (from.CanBeTreatedAsType(to)) return id;
 
-            bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>));
-            if (to == typeof(P.Quantity) && from.CanBeTreatedAsType(typeof(ITypedElement))) return tryQuantity;
-            if (to == typeof(ITypedElement) && (!fromElemList)) return any2primitiveTypedElement;
-            if (to == typeof(IEnumerable<ITypedElement>)) return any2List;
+            bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<IScopedNode>));
+            if (to == typeof(P.Quantity) && from.CanBeTreatedAsType(typeof(IScopedNode))) return tryQuantity;
+            if (to == typeof(IScopedNode) && (!fromElemList)) return any2primitiveTypedElement;
+            if (to == typeof(IEnumerable<IScopedNode>)) return any2List;
 
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
             if (from == typeof(long?) && to == typeof(decimal?)) return makeNativeCast(typeof(decimal?));
@@ -77,7 +81,7 @@ namespace Hl7.FhirPath.Expressions
 
             if (typeof(P.Any).IsAssignableFrom(to) && !fromElemList)
             {
-                if (f is ITypedElement te && te.InstanceType == "Quantity") return o => ParseQuantity((ITypedElement)o);
+                if (f is IScopedNode te && te.InstanceType == "Quantity") return o => ParseQuantity((IScopedNode)o);
                 return o => P.Any.Convert(o);
             }
 
@@ -101,26 +105,26 @@ namespace Hl7.FhirPath.Expressions
         /// <param name="to">The level to unbox to.</param>
         /// <returns></returns>
         /// <remarks>The level of unboxing is specified using a type. The highest level
-        /// being an <see cref="IEnumerable{ITypedElement}"/> followed by 
-        /// <see cref="ITypedElement"/> followed by a primitive runtime type.
+        /// being an <see cref="IEnumerable{IScopedNode}"/> followed by 
+        /// <see cref="IScopedNode"/> followed by a primitive runtime type.
         /// </remarks>
         internal static object UnboxTo(object instance, Type to)
         {
             if (instance == null) return null;
 
-            if (instance is IEnumerable<ITypedElement> list)
+            if (instance is IEnumerable<IScopedNode> list)
             {
                 var cachedEnum = CachedEnumerable.Create(list);
-                if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return cachedEnum;
+                if (to.CanBeTreatedAsType(typeof(IEnumerable<IScopedNode>))) return cachedEnum;
 
                 if (!cachedEnum.Any()) return null;
                 if (cachedEnum.Count() == 1)
                     instance = cachedEnum.Single();
             }
 
-            if (instance is ITypedElement element)
+            if (instance is IScopedNode element)
             {
-                if (to.CanBeTreatedAsType(typeof(ITypedElement))) return instance;
+                if (to.CanBeTreatedAsType(typeof(IScopedNode))) return instance;
                 if (to == typeof(object)) return instance;
 
                 // HACK - We assume the primitives
@@ -190,8 +194,8 @@ namespace Hl7.FhirPath.Expressions
             }
 
             //if source == null, or unboxed source == null....
-            if (to == typeof(IEnumerable<ITypedElement>))
-                return ElementNode.EmptyList;
+            if (to == typeof(IEnumerable<IScopedNode>))
+                return Array.Empty<IScopedNode>();
             if (to.IsNullable())
                 return null;
             else
@@ -209,14 +213,14 @@ namespace Hl7.FhirPath.Expressions
 
         public static string ReadableFhirPathName(object value)
         {
-            if (value is IEnumerable<ITypedElement> ete)
+            if (value is IEnumerable<IScopedNode> ete)
             {
                 var values = ete.ToList();
                 var types = ete.Select(te => ReadableFhirPathName(te)).Distinct();
 
                 return values.Count > 1 ? "collection of " + String.Join("/", types) : types.Single();
             }
-            else if (value is ITypedElement te)
+            else if (value is IScopedNode te)
                 return te.InstanceType;
             else
                 return value.GetType().Name;
@@ -224,9 +228,9 @@ namespace Hl7.FhirPath.Expressions
 
         public static string ReadableTypeName(Type t)
         {
-            if (t.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))
+            if (t.CanBeTreatedAsType(typeof(IEnumerable<IScopedNode>)))
                 return "collection";
-            else if (t.CanBeTreatedAsType(typeof(ITypedElement)))
+            else if (t.CanBeTreatedAsType(typeof(IScopedNode)))
                 return "any type";
             else if (t.CanBeTreatedAsType(typeof(P.Any)))
                 return "FhirPath type " + t.Name;

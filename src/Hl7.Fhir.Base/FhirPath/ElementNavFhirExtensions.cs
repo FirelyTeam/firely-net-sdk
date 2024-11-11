@@ -47,8 +47,8 @@ namespace Hl7.Fhir.FhirPath
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
-            t.Add("htmlchecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false);
-            t.Add("htmlChecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlchecks", (IScopedNode f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlChecks", (IScopedNode f) => f.HtmlChecks(), doNullProp: false);
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HtmlChecks(this ITypedElement focus)
+        public static bool HtmlChecks(this IScopedNode focus)
         {
             if (focus?.Value is null) return false;
 

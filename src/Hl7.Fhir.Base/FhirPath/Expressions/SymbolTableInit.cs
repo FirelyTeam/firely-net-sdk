@@ -7,12 +7,14 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.FhirPath.Functions;
 using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -30,24 +32,24 @@ namespace Hl7.FhirPath.Expressions
             t.Add("exists", (IEnumerable<object> f) => f.Any());
 
             t.Add("count", (IEnumerable<object> f) => f.Count());
-            t.Add("trace", (IEnumerable<ITypedElement> f, string name, EvaluationContext ctx)
+            t.Add("trace", (IEnumerable<IScopedNode> f, string name, EvaluationContext ctx)
                     => f.Trace(name, ctx));
 
-            t.Add("allTrue", (IEnumerable<ITypedElement> f) => f.All(e => e.Value as bool? == true));
-            t.Add("anyTrue", (IEnumerable<ITypedElement> f) => f.Any(e => e.Value as bool? == true));
-            t.Add("allFalse", (IEnumerable<ITypedElement> f) => f.All(e => e.Value as bool? == false));
-            t.Add("anyFalse", (IEnumerable<ITypedElement> f) => f.Any(e => e.Value as bool? == false));
-            t.Add("combine", (IEnumerable<ITypedElement> l, IEnumerable<ITypedElement> r) => l.Concat(r));
-            t.Add("binary.|", (object _, IEnumerable<ITypedElement> l, IEnumerable<ITypedElement> r) => l.DistinctUnion(r));
-            t.Add("union", (IEnumerable<ITypedElement> l, IEnumerable<ITypedElement> r) => l.DistinctUnion(r));
-            t.Add("binary.contains", (object _, IEnumerable<ITypedElement> a, ITypedElement b) => a.Contains(b));
-            t.Add("binary.in", (object _, ITypedElement a, IEnumerable<ITypedElement> b) => b.Contains(a));
-            t.Add("distinct", (IEnumerable<ITypedElement> f) => f.Distinct());
-            t.Add("isDistinct", (IEnumerable<ITypedElement> f) => f.IsDistinct());
-            t.Add("subsetOf", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => f.SubsetOf(a));
-            t.Add("supersetOf", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => a.SubsetOf(f));
-            t.Add("intersect", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => f.Intersect(a));
-            t.Add("exclude", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => f.Exclude(a));
+            t.Add("allTrue", (IEnumerable<IScopedNode> f) => f.All(e => e.Value as bool? == true));
+            t.Add("anyTrue", (IEnumerable<IScopedNode> f) => f.Any(e => e.Value as bool? == true));
+            t.Add("allFalse", (IEnumerable<IScopedNode> f) => f.All(e => e.Value as bool? == false));
+            t.Add("anyFalse", (IEnumerable<IScopedNode> f) => f.Any(e => e.Value as bool? == false));
+            t.Add("combine", (IEnumerable<IScopedNode> l, IEnumerable<IScopedNode> r) => l.Concat(r));
+            t.Add("binary.|", (object _, IEnumerable<IScopedNode> l, IEnumerable<IScopedNode> r) => l.DistinctUnion(r));
+            t.Add("union", (IEnumerable<IScopedNode> l, IEnumerable<IScopedNode> r) => l.DistinctUnion(r));
+            t.Add("binary.contains", (object _, IEnumerable<IScopedNode> a, IScopedNode b) => a.Contains(b));
+            t.Add("binary.in", (object _, IScopedNode a, IEnumerable<IScopedNode> b) => b.Contains(a));
+            t.Add("distinct", (IEnumerable<IScopedNode> f) => f.Distinct());
+            t.Add("isDistinct", (IEnumerable<IScopedNode> f) => f.IsDistinct());
+            t.Add("subsetOf", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => f.SubsetOf(a));
+            t.Add("supersetOf", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => a.SubsetOf(f));
+            t.Add("intersect", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => f.Intersect(a));
+            t.Add("exclude", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => f.Exclude(a));
 
             t.Add("today", (object _) => P.Date.Today());
             t.Add("now", (object _) => P.DateTime.Now());
@@ -55,21 +57,21 @@ namespace Hl7.FhirPath.Expressions
 
             t.Add("binary.&", (object _, string a, string b) => (a ?? "") + (b ?? ""));
 
-            t.Add(new CallSignature("iif", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(bool?), typeof(Invokee), typeof(Invokee)), runIif);
-            t.Add(new CallSignature("iif", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(bool?), typeof(Invokee)), runIif);
+            t.Add(new CallSignature("iif", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(bool?), typeof(Invokee), typeof(Invokee)), runIif);
+            t.Add(new CallSignature("iif", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(bool?), typeof(Invokee)), runIif);
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
-            t.Add("not", (IEnumerable<ITypedElement> f) => f.Not(), doNullProp: true);
-            // t.Add("builtin.children", (IEnumerable<ITypedElement> f, string a) => f.Navigate(a), doNullProp: true);
+            t.Add("not", (IEnumerable<IScopedNode> f) => f.Not(), doNullProp: true);
+            // t.Add("builtin.children", (IEnumerable<IScopedNode> f, string a) => f.Navigate(a), doNullProp: true);
             t.AddBuiltinChildren();
 
-            t.Add("children", (IEnumerable<ITypedElement> f) => f.Children(), doNullProp: true);
-            t.Add("descendants", (IEnumerable<ITypedElement> f) => f.Descendants(), doNullProp: true);
+            t.Add("children", (IEnumerable<IScopedNode> f) => f.Children(), doNullProp: true);
+            t.Add("descendants", (IEnumerable<IScopedNode> f) => f.Descendants(), doNullProp: true);
 
-            t.Add("binary.=", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => a.IsEqualTo(b), doNullProp: true);
-            t.Add("binary.!=", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => !a.IsEqualTo(b), doNullProp: true);
-            t.Add("binary.~", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => a.IsEquivalentTo(b), doNullProp: false);
-            t.Add("binary.!~", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => !a.IsEquivalentTo(b), doNullProp: false);
+            t.Add("binary.=", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => a.IsEqualTo(b), doNullProp: true);
+            t.Add("binary.!=", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => !a.IsEqualTo(b), doNullProp: true);
+            t.Add("binary.~", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => a.IsEquivalentTo(b), doNullProp: false);
+            t.Add("binary.!~", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => !a.IsEquivalentTo(b), doNullProp: false);
 
             t.Add("unary.-", (object f, int a) => -a, doNullProp: true);
             t.Add("unary.-", (object f, long a) => -a, doNullProp: true);
@@ -116,13 +118,13 @@ namespace Hl7.FhirPath.Expressions
             t.Add("binary.<=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, "<="), doNullProp: true);
             t.Add("binary.>=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, ">="), doNullProp: true);
 
-            t.Add("single", (IEnumerable<ITypedElement> f) => f.Single(), doNullProp: true);
-            t.Add("skip", (IEnumerable<ITypedElement> f, long a) => f.Skip((int)a), doNullProp: true);
-            t.Add("first", (IEnumerable<ITypedElement> f) => f.First(), doNullProp: true);
-            t.Add("last", (IEnumerable<ITypedElement> f) => f.Last(), doNullProp: true);
-            t.Add("tail", (IEnumerable<ITypedElement> f) => f.Tail(), doNullProp: true);
-            t.Add("take", (IEnumerable<ITypedElement> f, long a) => f.Take((int)a), doNullProp: true);
-            t.Add("builtin.item", (IEnumerable<ITypedElement> f, long a) => f.Item((int)a), doNullProp: true);
+            t.Add("single", (IEnumerable<IScopedNode> f) => f.Single(), doNullProp: true);
+            t.Add("skip", (IEnumerable<IScopedNode> f, long a) => f.Skip((int)a), doNullProp: true);
+            t.Add("first", (IEnumerable<IScopedNode> f) => f.First(), doNullProp: true);
+            t.Add("last", (IEnumerable<IScopedNode> f) => f.Last(), doNullProp: true);
+            t.Add("tail", (IEnumerable<IScopedNode> f) => f.Tail(), doNullProp: true);
+            t.Add("take", (IEnumerable<IScopedNode> f, long a) => f.Take((int)a), doNullProp: true);
+            t.Add("builtin.item", (IEnumerable<IScopedNode> f, long a) => f.Item((int)a), doNullProp: true);
 
             t.Add("toBoolean", (P.Any f) => f.ToBoolean(), doNullProp: true);
             t.Add("convertsToBoolean", (P.Any f) => f.ConvertsToBoolean(), doNullProp: true);
@@ -165,12 +167,12 @@ namespace Hl7.FhirPath.Expressions
             t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
             t.Add("length", (string f) => f.Length, doNullProp: true);
             t.Add("split", (string f, string seperator) => f.FpSplit(seperator), doNullProp: true);
-            t.Add("join", (IEnumerable<ITypedElement> f, string separator) => f.FpJoin(separator), doNullProp: true);
-            t.Add("join", (IEnumerable<ITypedElement> f) => f.FpJoin(), doNullProp: true);
-            t.Add("indexOf", (IEnumerable<ITypedElement> f, ITypedElement elem, int start) => f.IndexOf(elem, start), doNullProp: true);
-            t.Add("indexOf", (IEnumerable<ITypedElement> f, ITypedElement elem) => f.IndexOf(elem), doNullProp: true);
-            t.Add("lastIndexOf", (IEnumerable<ITypedElement> f, ITypedElement elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
-            t.Add("lastIndexOf", (IEnumerable<ITypedElement> f, ITypedElement elem) => f.LastIndexOf(elem), doNullProp: true);
+            t.Add("join", (IEnumerable<IScopedNode> f, string separator) => f.FpJoin(separator), doNullProp: true);
+            t.Add("join", (IEnumerable<IScopedNode> f) => f.FpJoin(), doNullProp: true);
+            t.Add("indexOf", (IEnumerable<IScopedNode> f, IScopedNode elem, int start) => f.IndexOf(elem, start), doNullProp: true);
+            t.Add("indexOf", (IEnumerable<IScopedNode> f, IScopedNode elem) => f.IndexOf(elem), doNullProp: true);
+            t.Add("lastIndexOf", (IEnumerable<IScopedNode> f, IScopedNode elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
+            t.Add("lastIndexOf", (IEnumerable<IScopedNode> f, IScopedNode elem) => f.LastIndexOf(elem), doNullProp: true);
 
             // Math functions
             t.Add("abs", (decimal f) => Math.Abs(f), doNullProp: true);
@@ -187,17 +189,17 @@ namespace Hl7.FhirPath.Expressions
             t.Add("truncate", (decimal f) => Math.Truncate((double)f), doNullProp: true);
 
             // The next two functions existed pre-normative, so we have kept them.
-            t.Add("is", (ITypedElement f, string name) => f.Is(name), doNullProp: true);
-            t.Add("as", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
+            t.Add("is", (IScopedNode f, string name) => f.Is(name), doNullProp: true);
+            t.Add("as", (IEnumerable<IScopedNode> f, string name) => f.FilterType(name), doNullProp: true);
 
-            t.Add("ofType", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
-            t.Add("binary.is", (object f, ITypedElement left, string name) => left.Is(name), doNullProp: true);
-            t.Add("binary.as", (object f, IEnumerable<ITypedElement> left, string name) => left.FilterType(name), doNullProp: true);
+            t.Add("ofType", (IEnumerable<IScopedNode> f, string name) => f.FilterType(name), doNullProp: true);
+            t.Add("binary.is", (object f, IScopedNode left, string name) => left.Is(name), doNullProp: true);
+            t.Add("binary.as", (object f, IEnumerable<IScopedNode> left, string name) => left.FilterType(name), doNullProp: true);
 
             // Kept for backwards compatibility, but no longer part of the spec
-            t.Add("binary.as", (object f, IEnumerable<ITypedElement> left, string name) => left.FilterType(name), doNullProp: true);
+            t.Add("binary.as", (object f, IEnumerable<IScopedNode> left, string name) => left.FilterType(name), doNullProp: true);
 
-            t.Add("extension", (IEnumerable<ITypedElement> f, string url) => f.Extension(url), doNullProp: true);
+            t.Add("extension", (IEnumerable<IScopedNode> f, string url) => f.Extension(url), doNullProp: true);
 
             // Logic operators do not use null propagation and may do short-cut eval
             t.AddLogic("binary.and", (a, b) => a.And(b));
@@ -206,18 +208,18 @@ namespace Hl7.FhirPath.Expressions
             t.AddLogic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            t.Add(new CallSignature("where", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runWhere);
-            t.Add(new CallSignature("select", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runSelect);
+            t.Add(new CallSignature("where", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(Invokee)), runWhere);
+            t.Add(new CallSignature("select", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(Invokee)), runSelect);
             t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
             t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.Add(new CallSignature("exists", typeof(bool), typeof(object), typeof(Invokee)), runAny);
-            t.Add(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
-            t.Add(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
-            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string)), DefineVariable);
-            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
+            t.Add(new CallSignature("repeat", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(Invokee)), runRepeat);
+            t.Add(new CallSignature("trace", typeof(IEnumerable<IScopedNode>), typeof(string), typeof(object), typeof(Invokee)), Trace);
+            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(string)), DefineVariable);
+            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
 
-            t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee)), runAggregate);
-            t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
+            t.Add(new CallSignature("aggregate", typeof(IEnumerable<IScopedNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
+            t.Add(new CallSignature("aggregate", typeof(IEnumerable<IScopedNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
 
             t.AddVar("sct", "http://snomed.info/sct");
             t.AddVar("loinc", "http://loinc.org");
@@ -230,7 +232,7 @@ namespace Hl7.FhirPath.Expressions
         }
 
         /// <summary>
-        /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;ITypedElement&gt;.
+        /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;IScopedNode&gt;.
         /// For 'builtin.children' we know that the focus and the result are already of the correct type,
         /// so we created an optimized implementation avoiding the Wrap.
         /// </summary>
@@ -238,8 +240,8 @@ namespace Hl7.FhirPath.Expressions
         internal static void AddBuiltinChildren(this SymbolTable table)
         {
             table.Add(new CallSignature("builtin.children",
-                typeof(IEnumerable<ITypedElement>),
-                typeof(IEnumerable<ITypedElement>),
+                typeof(IEnumerable<IScopedNode>),
+                typeof(IEnumerable<IScopedNode>),
                 typeof(string)), (
                 ctx, invokees) =>
             {
@@ -262,11 +264,11 @@ namespace Hl7.FhirPath.Expressions
             return "http://hl7.org/fhir/ValueSet/" + id;
         }
 
-        private static IEnumerable<ITypedElement> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var incrExpre = arguments.Skip(1).First();
-            IEnumerable<ITypedElement> initialValue = ElementNode.EmptyList;
+            IEnumerable<IScopedNode> initialValue = [];
             if (arguments.Count() > 2)
             {
                 var initialValueExpr = arguments.Skip(2).First();
@@ -276,9 +278,9 @@ namespace Hl7.FhirPath.Expressions
             var totalContext = ctx.Nest();
             totalContext.SetTotal(initialValue);
 
-            foreach (ITypedElement element in focus)
+            foreach (IScopedNode element in focus)
             {
-                var newFocus = ElementNode.CreateList(element);
+                IEnumerable<IScopedNode> newFocus = [element];
                 var newContext = totalContext.Nest(newFocus);
                 newContext.SetThis(newFocus);
                 newContext.SetTotal(totalContext.GetTotal());
@@ -289,7 +291,7 @@ namespace Hl7.FhirPath.Expressions
             return totalContext.GetTotal();
         }
 
-        private static IEnumerable<ITypedElement> Trace(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> Trace(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
@@ -301,7 +303,7 @@ namespace Hl7.FhirPath.Expressions
             return focus;
         }
         
-        private static IEnumerable<ITypedElement> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
         {
             Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
             var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
@@ -324,7 +326,7 @@ namespace Hl7.FhirPath.Expressions
             return focus;
         }
 
-        private static IEnumerable<ITypedElement> runIif(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> runIif(Closure ctx, IEnumerable<Invokee> arguments)
         {
             // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
             // note: short-circuit behavior is expected in this function
@@ -342,26 +344,26 @@ namespace Hl7.FhirPath.Expressions
 
             return (expression.BooleanEval() ?? false)
                 ? trueResult(newContext, InvokeeFactory.EmptyArgs) // share focus with this function
-                : otherResult == null ? ElementNode.EmptyList : otherResult(newContext, InvokeeFactory.EmptyArgs);
+                : otherResult == null ? [] : otherResult(newContext, InvokeeFactory.EmptyArgs);
         }
 
-        private static IEnumerable<ITypedElement> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             return CachedEnumerable.Create(runForeach());
 
-            IEnumerable<ITypedElement> runForeach()
+            IEnumerable<IScopedNode> runForeach()
             {
                 var index = 0;
 
-                foreach (ITypedElement element in focus)
+                foreach (IScopedNode element in focus)
                 {
-                    var newFocus = ElementNode.CreateList(element);
+                    IEnumerable<IScopedNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex(ElementNode.CreateList(index));
+                    newContext.SetIndex([new Integer(index)]);
                     index++;
 
                     if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
@@ -370,23 +372,23 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
-        private static IEnumerable<ITypedElement> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             return CachedEnumerable.Create(runForeach());
 
-            IEnumerable<ITypedElement> runForeach()
+            IEnumerable<IScopedNode> runForeach()
             {
                 var index = 0;
 
-                foreach (ITypedElement element in focus)
+                foreach (IScopedNode element in focus)
                 {
-                    var newFocus = ElementNode.CreateList(element);
+                    IEnumerable<IScopedNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex(ElementNode.CreateList(index));
+                    newContext.SetIndex([new Integer(index)]);
                     index++;
 
                     var result = lambda(newContext, InvokeeFactory.EmptyArgs);
@@ -396,12 +398,13 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
-        private static IEnumerable<ITypedElement> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
+        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode]
+        private static IEnumerable<IScopedNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
             var lambda = arguments.Skip(1).First();
 
-            var fullResult = new List<ITypedElement>();
+            var fullResult = new List<IScopedNode>();
 
             while (newNodes.Any())
             {
@@ -409,16 +412,16 @@ namespace Hl7.FhirPath.Expressions
                 var current = newNodes;
                 newNodes = [];
 
-                foreach (ITypedElement element in current)
+                foreach (IScopedNode element in current)
                 {
-                    var newFocus = ElementNode.CreateList(element);
+                    IEnumerable<IScopedNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex(ElementNode.CreateList(index));
+                    newContext.SetIndex([new Integer(index)]);
                     index++;
 
                     var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
-                    var uniqeNewNodes = candidates.Except(fullResult, EqualityOperators.TypedElementEqualityComparer);
+                    var uniqeNewNodes = candidates.Except(fullResult, EqualityOperators.TypedElementEqualityComparer).Select(ite => ite.ToScopedNode());
 
                     newNodes.AddRange(uniqeNewNodes);
                 }
@@ -429,47 +432,47 @@ namespace Hl7.FhirPath.Expressions
             return fullResult;
         }
 
-        private static IEnumerable<ITypedElement> runAll(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> runAll(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
             var index = 0;
 
-            foreach (ITypedElement element in focus)
+            foreach (IScopedNode element in focus)
             {
-                var newFocus = ElementNode.CreateList(element);
+                IEnumerable<IScopedNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(ElementNode.CreateList(index));
+                newContext.SetIndex([new Integer(index)]);
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-                if (result == null) return ElementNode.EmptyList;
-                if (result == false) return ElementNode.CreateList(false);
+                if (result == null) return [];
+                if (result == false) return [new FhirBoolean(false)];
             }
 
-            return ElementNode.CreateList(true);
+            return [new FhirBoolean(true)];
         }
 
-        private static IEnumerable<ITypedElement> runAny(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IScopedNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
             var index = 0;
 
-            foreach (ITypedElement element in focus)
+            foreach (IScopedNode element in focus)
             {
-                var newFocus = ElementNode.CreateList(element);
+                IEnumerable<IScopedNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(ElementNode.CreateList(index));
+                newContext.SetIndex([new Integer(index)]);
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-                if (result == true) return ElementNode.CreateList(true);
+                if (result == false) return [new FhirBoolean(false)];
             }
 
-            return ElementNode.CreateList(false);
+            return [new FhirBoolean(true)];
         }
     }
 }

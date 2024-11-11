@@ -10,9 +10,11 @@
 //extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.FhirPath.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,24 +23,24 @@ namespace Hl7.FhirPath.Tests
     [TestClass]
     public class CastTests
     {
-        private static readonly ITypedElement complex = new ComplexValue();
-        private static readonly IEnumerable<ITypedElement> collection = ElementNode.CreateList(4, 5, complex);
-        private static readonly IEnumerable<ITypedElement> singleV = ElementNode.CreateList(4L);
-        private static readonly IEnumerable<ITypedElement> singleC = ElementNode.CreateList(complex);
-        private static readonly IEnumerable<ITypedElement> emptyColl = ElementNode.EmptyList;
+        private static readonly IScopedNode complex = new ComplexValue().ToScopedNode();
+        private static readonly IEnumerable<IScopedNode> collection = ElementNode.CreateList(4, 5, complex).ToScopedNodes();
+        private static readonly IEnumerable<IScopedNode> singleV = ElementNode.CreateList(4L).ToScopedNodes();
+        private static readonly IEnumerable<IScopedNode> singleC = ElementNode.CreateList(complex).ToScopedNodes();
+        private static readonly IEnumerable<IScopedNode> emptyColl = [];
 
         [TestMethod]
         public void TestUnbox()
         {
 
             Assert.IsNull(Typecasts.UnboxTo(emptyColl, typeof(string)));
-            collection.SequenceEqual(Typecasts.UnboxTo(collection, typeof(IEnumerable<ITypedElement>)) as IEnumerable<ITypedElement>);
-            Assert.AreEqual(complex, Typecasts.UnboxTo(singleC, typeof(ITypedElement)));
+            collection.SequenceEqual(Typecasts.UnboxTo(collection, typeof(IEnumerable<IScopedNode>)) as IEnumerable<IScopedNode>);
+            Assert.AreEqual(complex, Typecasts.UnboxTo(singleC, typeof(IScopedNode)));
 
             Assert.AreEqual(4L, Typecasts.UnboxTo(singleV, typeof(long)));
-            Assert.AreEqual(4L, Typecasts.UnboxTo(ElementNode.ForPrimitive(4L), typeof(long)));
+            Assert.AreEqual(4L, Typecasts.UnboxTo(new Integer64(4L), typeof(long)));
 
-            Assert.AreEqual(complex, Typecasts.UnboxTo(complex, typeof(ITypedElement)));
+            Assert.AreEqual(complex, Typecasts.UnboxTo(complex, typeof(IScopedNode)));
             Assert.IsNull(Typecasts.UnboxTo(null, typeof(string)));
             Assert.AreEqual(4L, Typecasts.UnboxTo(4L, typeof(long)));
             Assert.AreEqual("hi!", Typecasts.UnboxTo("hi!", typeof(string)));
@@ -48,8 +50,8 @@ namespace Hl7.FhirPath.Tests
         public void CastFromNull()
         {
             checkCast<object>(null, null);
-            checkCast<IEnumerable<ITypedElement>>(null, ElementNode.EmptyList);
-            checkCast<ITypedElement>(null, null);
+            checkCast<IEnumerable<IScopedNode>>(null, []);
+            checkCast<IScopedNode>(null, null);
             Assert.IsFalse(Typecasts.CanCastTo(null, typeof(bool)));
             checkCast<bool?>(null, null);
             checkCast<string>(null, null);
@@ -59,8 +61,8 @@ namespace Hl7.FhirPath.Tests
         public void CastCollection()
         {
             checkCast<object>(collection, collection);
-            checkCast<IEnumerable<ITypedElement>>(collection, collection);
-            Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(ITypedElement)));
+            checkCast<IEnumerable<IScopedNode>>(collection, collection);
+            Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(IScopedNode)));
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(bool)));
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(bool?)));
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(string)));
@@ -71,10 +73,10 @@ namespace Hl7.FhirPath.Tests
         {
             checkCast<object>(complex, complex);
 
-            Assert.IsTrue(Typecasts.CanCastTo(complex, typeof(IEnumerable<ITypedElement>)));
-            var result = (IEnumerable<ITypedElement>)Typecasts.CastTo(complex, typeof(IEnumerable<ITypedElement>));
+            Assert.IsTrue(Typecasts.CanCastTo(complex, typeof(IEnumerable<IScopedNode>)));
+            var result = (IEnumerable<IScopedNode>)Typecasts.CastTo(complex, typeof(IEnumerable<IScopedNode>));
             Assert.AreEqual(complex, result.Single());
-            checkCast<ITypedElement>(complex, complex);
+            checkCast<IScopedNode>(complex, complex);
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(bool)));
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(bool?)));
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(string)));
@@ -85,12 +87,12 @@ namespace Hl7.FhirPath.Tests
         {
             checkCast<object>(4L, 4L);
 
-            Assert.IsTrue(Typecasts.CanCastTo(4, typeof(IEnumerable<ITypedElement>)));
-            var result = (IEnumerable<ITypedElement>)Typecasts.CastTo(4L, typeof(IEnumerable<ITypedElement>));
+            Assert.IsTrue(Typecasts.CanCastTo(4, typeof(IEnumerable<IScopedNode>)));
+            var result = (IEnumerable<IScopedNode>)Typecasts.CastTo(4L, typeof(IEnumerable<IScopedNode>));
             Assert.AreEqual(4L, result.Single().Value);
 
-            Assert.IsTrue(Typecasts.CanCastTo(4L, typeof(ITypedElement)));
-            var result2 = (ITypedElement)Typecasts.CastTo(4L, typeof(ITypedElement));
+            Assert.IsTrue(Typecasts.CanCastTo(4L, typeof(IScopedNode)));
+            var result2 = (IScopedNode)Typecasts.CastTo(4L, typeof(IScopedNode));
             Assert.AreEqual(4L, result2.Value);
 
             checkCast<bool>(true, true);
@@ -110,12 +112,12 @@ namespace Hl7.FhirPath.Tests
         {
             checkCast<object>("hi", "hi");
 
-            Assert.IsTrue(Typecasts.CanCastTo("hi", typeof(IEnumerable<ITypedElement>)));
-            var result = (IEnumerable<ITypedElement>)Typecasts.CastTo("hi", typeof(IEnumerable<ITypedElement>));
+            Assert.IsTrue(Typecasts.CanCastTo("hi", typeof(IEnumerable<IScopedNode>)));
+            var result = (IEnumerable<IScopedNode>)Typecasts.CastTo("hi", typeof(IEnumerable<IScopedNode>));
             Assert.AreEqual("hi", result.Single().Value);
 
-            Assert.IsTrue(Typecasts.CanCastTo("hi", typeof(ITypedElement)));
-            var result2 = (ITypedElement)Typecasts.CastTo("hi", typeof(ITypedElement));
+            Assert.IsTrue(Typecasts.CanCastTo("hi", typeof(IScopedNode)));
+            var result2 = (IScopedNode)Typecasts.CastTo("hi", typeof(IScopedNode));
             Assert.AreEqual("hi", result2.Value);
 
             checkCast<bool?>(true, true);
@@ -173,6 +175,6 @@ namespace Hl7.FhirPath.Tests
 
         public IElementDefinitionSummary Definition => null;
 
-        public IEnumerable<ITypedElement> Children(string name = null) => new ITypedElement[0];
+        public IEnumerable<ITypedElement> Children(string name = null) => Array.Empty<IScopedNode>();
     }
 }

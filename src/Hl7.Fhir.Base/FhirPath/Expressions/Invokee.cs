@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
@@ -14,43 +15,42 @@ using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
-    internal delegate IEnumerable<ITypedElement> Invokee(Closure context, IEnumerable<Invokee> arguments);
+    internal delegate IEnumerable<IScopedNode> Invokee(Closure context, IEnumerable<Invokee> arguments);
 
     internal static class InvokeeFactory
     {
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
 
-
-        public static IEnumerable<ITypedElement> GetThis(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<IScopedNode> GetThis(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetThis();
         }
 
-        public static IEnumerable<ITypedElement> GetTotal(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<IScopedNode> GetTotal(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetTotal();
         }
 
-        public static IEnumerable<ITypedElement> GetContext(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<IScopedNode> GetContext(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetOriginalContext();
         }
 
-        public static IEnumerable<ITypedElement> GetResource(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<IScopedNode> GetResource(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetResource();
         }
-        public static IEnumerable<ITypedElement> GetRootResource(Closure context, IEnumerable<Invokee> arguments)
+        public static IEnumerable<IScopedNode> GetRootResource(Closure context, IEnumerable<Invokee> arguments)
         {
             return context.GetRootResource();
         }
 
-        public static IEnumerable<ITypedElement> GetThat(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<IScopedNode> GetThat(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetThat();
         }
 
-        public static IEnumerable<ITypedElement> GetIndex(Closure context, IEnumerable<Invokee> args)
+        public static IEnumerable<IScopedNode> GetIndex(Closure context, IEnumerable<Invokee> args)
         {
 
             return context.GetIndex();
@@ -61,7 +61,7 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                return Typecasts.CastTo<IEnumerable<ITypedElement>>(func());
+                return Typecasts.CastTo<IEnumerable<IScopedNode>>(func());
             };
         }
 
@@ -72,14 +72,14 @@ namespace Hl7.FhirPath.Expressions
                 if (typeof(A) != typeof(EvaluationContext))
                 {
                     var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !focus.Any()) return ElementNode.EmptyList;
+                    if (propNull && !focus.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus)));
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus)));
                 }
                 else
                 {
                     A lastPar = (A)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(lastPar));
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(lastPar));
                 }
             };
         }
@@ -90,7 +90,7 @@ namespace Hl7.FhirPath.Expressions
             {
                 // propagate only null for focus
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                if (!focus.Any()) return ElementNode.EmptyList;
+                if (!focus.Any()) return[];
 
                 return Wrap(func, false)(ctx, args);
             };
@@ -101,19 +101,19 @@ namespace Hl7.FhirPath.Expressions
             return (ctx, args) =>
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return ElementNode.EmptyList;
+                if (propNull && !focus.Any()) return [];
 
                 if (typeof(B) != typeof(EvaluationContext))
                 {
                     var argA = args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !argA.Any()) return ElementNode.EmptyList;
+                    if (propNull && !argA.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
                 }
                 else
                 {
                     B lastPar = (B)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), lastPar));
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus), lastPar));
                 }
             };
         }
@@ -123,23 +123,23 @@ namespace Hl7.FhirPath.Expressions
             return (ctx, args) =>
             {
                 var focus = args.First()((Closure)ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return ElementNode.EmptyList;
+                if (propNull && !focus.Any()) return [];
 
                 var argA = args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return ElementNode.EmptyList;
+                if (propNull && !argA.Any()) return [];
 
                 if (typeof(C) != typeof(EvaluationContext))
                 {
                     var argB = args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !argB.Any()) return ElementNode.EmptyList;
+                    if (propNull && !argB.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
                         Typecasts.CastTo<C>(argB)));
                 }
                 else
                 {
                     C lastPar = (C)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus),
                         Typecasts.CastTo<B>(argA), lastPar));
                 }
             };
@@ -150,26 +150,26 @@ namespace Hl7.FhirPath.Expressions
             return (ctx, args) =>
             {
                 var focus = args.First()((Closure)ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return ElementNode.EmptyList;
+                if (propNull && !focus.Any()) return [];
 
                 var argA = args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return ElementNode.EmptyList;
+                if (propNull && !argA.Any()) return [];
                 var argB = args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argB.Any()) return ElementNode.EmptyList;
+                if (propNull && !argB.Any()) return [];
 
                 if (typeof(D) != typeof(EvaluationContext))
                 {
                     var argC = args.Skip(3).First()(ctx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !argC.Any()) return ElementNode.EmptyList;
+                    if (propNull && !argC.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus),
                                  Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
                 }
                 else
                 {
                     D lastPar = (D)(object)ctx.EvaluationContext;
 
-                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus),
                                 Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), lastPar));
 
                 }
@@ -186,16 +186,16 @@ namespace Hl7.FhirPath.Expressions
                 var right = args.Skip(2).First();
 
                 // Return function that actually executes the Invokee at the last moment
-                return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
             };
         }
 
-        public static Invokee Return(ITypedElement value)
+        public static Invokee Return(IScopedNode value)
         {
-            return (_, __) => (new[] { (ITypedElement)value });
+            return (_, _) => [value];
         }
 
-        public static Invokee Return(IEnumerable<ITypedElement> value)
+        public static Invokee Return(IEnumerable<IScopedNode> value)
         {
             return (_, __) => value;
         }
@@ -207,7 +207,7 @@ namespace Hl7.FhirPath.Expressions
                 try
                 {
                     var wrappedArguments = arguments.Skip(1).Select(wrapWithNextContext);
-                    return invokee(ctx, [arguments.First(),.. wrappedArguments]);
+                    return invokee(ctx, [arguments.First(), ..wrappedArguments]);
                 }
                 catch (Exception e)
                 {

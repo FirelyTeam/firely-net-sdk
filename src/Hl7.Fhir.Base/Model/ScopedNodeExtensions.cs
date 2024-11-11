@@ -60,21 +60,22 @@ public static class ScopedNodeExtensions
     /// <summary>
     /// Extract the %resource variable from this IScopedNode
     /// </summary> 
-    internal static IScopedNode GetResourceContext(this IScopedNode node) => node switch
+    internal static IScopedNode? GetResourceContext(this IScopedNode node) => node switch
     {
         { Parent: null } => node, // if parent is null, do not go further
         { Parent: { } p } when p.Type.HasFlag(NodeType.Bundle) => node, // if parent is bundle, do not go further
         { Type: var type } when type.HasFlag(NodeType.Resource) => node, // if resource, return itself
-        _ => node.Parent!.GetResourceContext() // otherwise, go to parent
+        _ => node?.Parent?.GetResourceContext() // otherwise, go to parent
     };
     
     /// <summary>
     /// Extract the %rootResource variable from this IScopedNode
     /// </summary>
-    internal static IScopedNode GetRootResourceContext(this IScopedNode node) => node.GetResourceContext() switch
+    internal static IScopedNode? GetRootResourceContext(this IScopedNode node) => node.GetResourceContext() switch
     {
         { Name : "contained" } containedResource => containedResource.Parent!, // if contained, return container
-        { } resource => resource // otherwise return %resource
+        { } resource => resource, // otherwise return %resource
+        _ => null
     };
 
     internal static string? FindFullUrl(this IScopedNode node)
