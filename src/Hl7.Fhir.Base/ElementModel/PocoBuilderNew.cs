@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ET = Hl7.Fhir.ElementModel.Types;
+using ElementMappingInfo = (Hl7.Fhir.Introspection.ClassMapping Class, Hl7.Fhir.Introspection.PropertyMapping? Property);
 
 namespace Hl7.Fhir.Serialization;
 
@@ -33,17 +34,17 @@ internal class PocoBuilderNew(ModelInspector inspector)
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
-        var rootMapping = getClassMappingForElement(source, null);
-        return readFromElement(source, rootMapping);
+        var mappings = getMappingInfoForElement(source, null);
+        return readFromElement(source, mappings);
     }
 
     private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
     private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
     private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
 
-    private Base readFromElement(ITypedElement node, ClassMapping classMapping)
+    private Base readFromElement(ITypedElement node, ElementMappingInfo mappingInfo)
     {
-        IDictionary<string, object> newInstance = buildNewInstance(classMapping);
+        IDictionary<string, object> newInstance = buildNewInstance(mappingInfo.Class);
 
         // Capture the instance type if this is a dynamic type.
         if(newInstance is IDynamicType dt)
@@ -56,12 +57,12 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // Now, read the children
         foreach (var child in node.Children())
         {
-            var childMapping = getClassMappingForElement(child, classMapping);
-            var convertedValue = readFromElement(child, childMapping);
+            var mappings = getMappingInfoForElement(child, mappingInfo.Class);
+            var convertedValue = readFromElement(child, mappings);
 
             try
             {
-                setOrAddProperty(child, newInstance, convertedValue, childMapping.ListFactory);
+                setOrAddProperty(child, newInstance, convertedValue, mappings);
             }
             catch (InvalidCastException e)
             {
@@ -89,11 +90,13 @@ internal class PocoBuilderNew(ModelInspector inspector)
     }
 
     private static void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
-        Base convertedValue, Func<IList> listFactory)
+        Base convertedValue, ElementMappingInfo childMappingInfo)
     {
         // If this element *could* be repeating (either we don't know the definition, or it really is defined
         // to be a collection, then check to see if there are already items present.
-        var couldBeCollection = node.Definition is null || node.Definition.IsCollection;
+        var couldBeCollection = (node.Definition is null && childMappingInfo.Property is null)
+                                || node.Definition?.IsCollection == true
+                                || childMappingInfo.Property?.IsCollection == true;
         var existing = couldBeCollection && target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
 
         // If there are, just add this new value.
@@ -108,16 +111,16 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // before. In all other cases, the indexed assignment will fail.
         else if(existing is not null)
         {
-            var newList = listFactory();
+            var newList = childMappingInfo.Class.ListFactory();
             newList.Add(existing);
             newList.Add(convertedValue);
             target[node.Name] = newList;
         }
 
         // No existing value, but we know it's a collection, so create a list and add the element.
-        else if (node.Definition?.IsCollection == true)
+        else if (node.Definition?.IsCollection == true || childMappingInfo.Property?.IsCollection == true)
         {
-            var newList = listFactory();
+            var newList = childMappingInfo.Class.ListFactory();
             newList.Add(convertedValue);
             target[node.Name] = newList;
         }
@@ -125,7 +128,12 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // No existing value, and not a list, just set the element.
         else
         {
-            target[node.Name] = convertedValue;
+            // Note that some exceptional primitive properties (like Extension.url and Element.id) are
+            // represented in the POCO as .NET primitives, not as FHIR datatypes, so we need to get the value out.
+            if (childMappingInfo.Property?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
+                target[node.Name] = value;
+            else
+                target[node.Name] = convertedValue;
         }
     }
 
@@ -154,17 +162,17 @@ internal class PocoBuilderNew(ModelInspector inspector)
         };
     }
 
-    private ClassMapping getClassMappingForElement(ITypedElement node, ClassMapping? parentMapping)
+    private ElementMappingInfo getMappingInfoForElement(ITypedElement node, ClassMapping? parentMapping)
     {
+        var elementMapping = parentMapping?.FindMappedElementByName(node.Name);
+
         // Although InstanceType suggests this is a run-time type, we have misdesigned this property
         // to also return abstract types, in this case, Backbones. Would love to fix this in SDK6.0,
         // but it would be one of the bigger breaking behavioural changes.
         // In any case, try to derive the actual type from the POCO, since the InstanceType won't help here.
         if(node.InstanceType is "BackboneElement" or "Element")
         {
-            var childMapping = parentMapping?.FindMappedElementByName(node.Name)?.PropertyTypeMapping;
-
-            return childMapping ?? getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+            return (elementMapping?.PropertyTypeMapping ?? getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME), elementMapping);
         };
 
         // Resolve the instance type through the inspector. This means that the type must be known by name by the
@@ -179,7 +187,7 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // behaviour.
         if (node.InstanceType is { } instanceType && inspector.FindClassMapping(instanceType) is { } mapping)
         {
-            return mapping;
+            return (mapping, elementMapping);
         }
 
         // Ok, so the node does not have a type, or the type is not known. So, let's use one
@@ -189,12 +197,12 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // Design question: there might be a "strict" option, where we will not create Dynamic types
         // for unknown types, but throw an error instead.
         if(node.Value is not null)
-            return getDefaultMapping(DYNAMIC_PRIMITIVE_TYPE_NAME);
+            return (getDefaultMapping(DYNAMIC_PRIMITIVE_TYPE_NAME), elementMapping);
 
         if (node.Annotation<IResourceTypeSupplier>() is not null)
-            return getDefaultMapping(DYNAMIC_RESOURCE_TYPE_NAME);
+            return (getDefaultMapping(DYNAMIC_RESOURCE_TYPE_NAME), elementMapping);
 
-        return getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+        return (getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME), elementMapping);
 
         ClassMapping getDefaultMapping(string dynTypeName) =>
             inspector.FindClassMapping(dynTypeName) ??

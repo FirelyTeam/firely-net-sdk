@@ -30,9 +30,6 @@ namespace Hl7.Fhir.Serialization
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
                 IgnoreUnknownMembers = ps.AcceptUnknownMembers,
                 ExceptionHandler = ps.ExceptionHandler,
-#pragma warning disable CS0618 // Type or member is obsolete
-                TruncateDateTimeToDate = ps.TruncateDateTimeToDate
-#pragma warning restore CS0618 // Type or member is obsolete
             };
 
         internal static FhirXmlParsingSettings BuildXmlParsingSettings(ParserSettings settings) =>

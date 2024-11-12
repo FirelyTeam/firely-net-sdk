@@ -88,9 +88,6 @@ namespace Hl7.Fhir.Serialization
 
             settings.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
             settings.IgnoreUnknownMembers = AcceptUnknownMembers;
-#pragma warning disable CS0618 // Type or member is obsolete
-            settings.TruncateDateTimeToDate = TruncateDateTimeToDate;
-#pragma warning restore CS0618 // Type or member is obsolete
             settings.ExceptionHandler = ExceptionHandler;
         }
 

@@ -27,16 +27,6 @@ namespace Hl7.Fhir.Serialization
         public bool IgnoreUnknownMembers { get; set; } // = false
 
         /// <summary>
-        /// Allow to parse a FHIR dateTime values into an element of type date.
-        /// </summary>
-        /// <remarks>
-        /// Needed for backward compatibility with old parser for resources which were saved and considered valid in the past.
-        /// </remarks>>
-        [Obsolete("Needed for backward compatibility with old parser for resources which were saved and considered valid in the past. " +
-            "Should not be used in new code.")]
-        public bool TruncateDateTimeToDate { get; set; }
-
-        /// <summary>
         /// A Handler to permit intercepting Exceptions during parsing
         /// </summary>
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
@@ -62,7 +52,6 @@ namespace Hl7.Fhir.Serialization
             other.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
             other.IgnoreUnknownMembers = IgnoreUnknownMembers;
 #pragma warning disable CS0618 // Type or member is obsolete
-            other.TruncateDateTimeToDate = TruncateDateTimeToDate;
 #pragma warning restore CS0618 // Type or member is obsolete
             other.ExceptionHandler = ExceptionHandler;
         }
