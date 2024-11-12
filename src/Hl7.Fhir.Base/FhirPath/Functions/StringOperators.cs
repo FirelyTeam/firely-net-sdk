@@ -47,7 +47,8 @@ namespace Hl7.FhirPath.Functions
             if (find == String.Empty)
             {
                 // weird, but as specified:  "abc".replace("","x") = "xaxbxcx"
-                return replace + String.Join(replace, me) + replace;
+                // I wonder why adding toCharArray was necessary here...
+                return replace + String.Join(replace, me.ToCharArray()) + replace;
             }
             else
                 return me.Replace(find, replace);
