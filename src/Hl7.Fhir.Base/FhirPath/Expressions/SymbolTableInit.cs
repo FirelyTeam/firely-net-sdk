@@ -66,7 +66,7 @@ namespace Hl7.FhirPath.Expressions
             t.AddBuiltinChildren();
 
             t.Add("children", (IEnumerable<IScopedNode> f) => f.Children(), doNullProp: true);
-            t.Add("descendants", (IEnumerable<IScopedNode> f) => f.Descendants(), doNullProp: true);
+            t.Add("descendants", (IEnumerable<IScopedNode> f) => f.Descendants().ToScopedNodes(), doNullProp: true);
 
             t.Add("binary.=", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => a.IsEqualTo(b), doNullProp: true);
             t.Add("binary.!=", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => !a.IsEqualTo(b), doNullProp: true);

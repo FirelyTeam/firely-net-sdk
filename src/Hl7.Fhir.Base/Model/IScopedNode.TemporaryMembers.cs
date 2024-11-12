@@ -10,6 +10,5 @@ public partial interface IScopedNode
     [Obsolete]
     new IElementDefinitionSummary? Definition => throw new NotImplementedException();
 
-    [Obsolete]
-    new string? InstanceType => throw new NotImplementedException();
+    // [Obsolete] new string? InstanceType => throw new NotImplementedException(); Commented this out to avoid compilation error
 }

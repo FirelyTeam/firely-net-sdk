@@ -27,7 +27,7 @@ namespace Hl7.FhirPath.R4.Tests
         public IScopedNode getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            var engine = FhirSerializationEngineFactory.Strict(ModelInfo.ModelInspector);
+            var engine = FhirSerializationEngineFactory.Ostrich(ModelInfo.ModelInspector);
             return engine.DeserializeFromXml(tpXml);
         }
 
