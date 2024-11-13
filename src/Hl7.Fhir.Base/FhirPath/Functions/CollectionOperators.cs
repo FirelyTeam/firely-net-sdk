@@ -109,7 +109,7 @@ namespace Hl7.FhirPath.Functions
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
                 // Also we do some poor polymorphism here: Resource.meta.lastUpdated is also allowed.
 #pragma warning disable CS0612 // Type or member is obsolete
-                if (element.InstanceType == name || element.Type.HasFlag(NodeType.Resource)) // TODO why is this an OR?
+                if (element.InstanceType == name && element.Type.HasFlag(NodeType.Resource))
 #pragma warning restore CS0612 // Type or member is obsolete
                 {
                     return new List<IScopedNode>() { element };

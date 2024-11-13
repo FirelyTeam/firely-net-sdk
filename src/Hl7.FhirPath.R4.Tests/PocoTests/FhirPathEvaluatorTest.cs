@@ -255,7 +255,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public void TestAny()
         {
             fixture.IsTrue(@"Patient.identifier.any(use = 'official')");
-            fixture.IsTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() aways returns true
+            fixture.IsTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() always returns false
             fixture.IsTrue(@"Patient.contained.skip(1).item.any(code.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 

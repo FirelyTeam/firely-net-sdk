@@ -469,10 +469,10 @@ namespace Hl7.FhirPath.Expressions
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-                if (result == false) return [new FhirBoolean(false)];
+                if (result == true) return [new FhirBoolean(true)];
             }
 
-            return [new FhirBoolean(true)];
+            return [new FhirBoolean(false)];
         }
     }
 }
