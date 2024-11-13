@@ -34,18 +34,11 @@ internal partial class PocoSerializationEngine
         });
     }
 
-    internal Base DeserializeBaseFromXml(string data)
-    {
-        return deserializeAndFilterErrors(() =>
-        { 
-            _ = getXmlDeserializer().TryDeserializeResource(data, out var instance, out var issues);
-            return (instance, issues);
-        });
-    }
-    
     /// <inheritdoc />
-    [TemporarilyChanged]
-    public string SerializeToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
+    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
+
+
+    internal string SerializeElementToXml(Base instance) => getXmlSerializer().SerializeToString(instance);
 
     /// <summary>
     /// Deserializes a resource from an XML reader
@@ -61,26 +54,11 @@ internal partial class PocoSerializationEngine
         });
     }
 
-    /// <summary>
-    /// Deserializes an element from an XML reader
-    /// </summary>
-    /// <param name="targetType">The target type of the object</param>
-    /// <param name="reader">The XML reader</param>
-    /// <returns>A POCO representation of the input read by the reader</returns>
-    public Base DeserializeElementFromXml(Type targetType, XmlReader reader)
-    {
-        return deserializeAndFilterErrors(() =>
-        {
-            _ = getXmlDeserializer().TryDeserializeElement(targetType, reader, out var instance, out var issues);
-            return (instance, issues);
-        });
-    }
-    
+
     /// <summary>
     /// Serializes an element to the supplied writer
     /// </summary>
     /// <param name="instance">An instance of Base or any of its children</param>
     /// <param name="writer">The XML writer</param>
-    [TemporarilyChanged]
-    public void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer);
+    internal void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer);
 }

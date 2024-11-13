@@ -16,48 +16,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+/// <summary>
+/// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
+/// new Poco-based parser and serializer, initialized with the default settings.
+/// </summary>
+internal partial class PocoSerializationEngine : IFhirSerializationEngine
 {
-    /// <summary>
-    /// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
-    /// new Poco-based parser and serializer, initialized with the default settings.
-    /// </summary>
-    internal partial class PocoSerializationEngine : IFhirSerializationEngine
+    private delegate (Base?, IEnumerable<CodedException>) TryDeserializer();
+
+    private readonly ModelInspector _inspector;
+    internal Predicate<CodedException> IgnoreFilter { get; set; }
+        
+    internal PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null, FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null, FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSettings = null)
     {
-        private delegate (Base?, IEnumerable<CodedException>) TryDeserializer();
+        _inspector = inspector;
+        IgnoreFilter = ignoreFilter ?? (_ => false);
+        _jsonDeserializerSettings = jsonDeserializerSettings ?? new FhirJsonPocoDeserializerSettings();
+        _jsonSerializerSettings = jsonSerializerSettings ?? new FhirJsonPocoSerializerSettings();
+        _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
+    }
 
-        private readonly ModelInspector _inspector;
-        internal Predicate<CodedException> IgnoreFilter { get; set; }
+    internal PocoSerializationEngine(BaseFhirJsonPocoDeserializer deserializer,
+        BaseFhirJsonPocoSerializer serializer)
+    {
+        _jsonDeserializer = deserializer;
+        _jsonSerializer = serializer;
+        // dirty, but this constructor is really not supposed to be supported for much longer
+        var inspectorfield =
+            typeof(BaseFhirJsonPocoDeserializer).GetField("_inspector", BindingFlags.NonPublic | BindingFlags.Instance);
+        _inspector = (inspectorfield!.GetValue(_jsonDeserializer) as ModelInspector)!;
+        IgnoreFilter = _ => false;
+        _xmlSettings = new FhirXmlPocoDeserializerSettings();
+    }
         
-        internal PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null, FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null, FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSettings = null)
-        {
-            _inspector = inspector;
-            IgnoreFilter = ignoreFilter ?? (_ => false);
-            _jsonDeserializerSettings = jsonDeserializerSettings ?? new FhirJsonPocoDeserializerSettings();
-            _jsonSerializerSettings = jsonSerializerSettings ?? new FhirJsonPocoSerializerSettings();
-            _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
-        }
+    private Base deserializeAndFilterErrors(TryDeserializer deserializer)
+    {
+        var (instance, issues) = deserializer();
+        var relevantIssues = issues.Where(i => !IgnoreFilter(i)).ToList();
 
-        internal PocoSerializationEngine(BaseFhirJsonPocoDeserializer deserializer,
-            BaseFhirJsonPocoSerializer serializer)
-        {
-            _jsonDeserializer = deserializer;
-            _jsonSerializer = serializer;
-            // dirty, but this constructor is really not supposed to be supported for much longer
-            var inspectorfield =
-                typeof(BaseFhirJsonPocoDeserializer).GetField("_inspector", BindingFlags.NonPublic | BindingFlags.Instance); 
-            _inspector = (inspectorfield!.GetValue(_jsonDeserializer) as ModelInspector)!;
-            IgnoreFilter = _ => false;
-            _xmlSettings = new FhirXmlPocoDeserializerSettings();
-        }
-        
-        private Base deserializeAndFilterErrors(TryDeserializer deserializer)
-        {
-            var (instance, issues) = deserializer();
-            var relevantIssues = issues.Where(i => !IgnoreFilter(i)).ToList();
-
-            return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
-        }
+        return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
     }
 }
 
