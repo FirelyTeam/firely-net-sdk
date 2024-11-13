@@ -64,8 +64,6 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        [Ignore]
-        [TemporarilyChanged] // we will not implement this polymorphism properly for now, since we are moving to base soon.
         public void TestFpNavigate()
         {
             var patient = ElementNode.Root(_provider, "Patient");

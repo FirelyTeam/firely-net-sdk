@@ -59,10 +59,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static Invokee Wrap<R>(Func<R> func)
         {
-            return (ctx, args) =>
-            {
-                return Typecasts.CastTo<IEnumerable<IScopedNode>>(func());
-            };
+            return (_, _) => Typecasts.CastTo<IEnumerable<IScopedNode>>(func());
         }
 
         public static Invokee Wrap<A, R>(Func<A, R> func, bool propNull)
@@ -197,7 +194,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static Invokee Return(IEnumerable<IScopedNode> value)
         {
-            return (_, __) => value;
+            return (_, _) => value;
         }
 
         public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)

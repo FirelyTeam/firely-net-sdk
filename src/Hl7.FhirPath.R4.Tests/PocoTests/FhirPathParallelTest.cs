@@ -51,7 +51,7 @@ namespace Vonk.FhirPath.R4.Tests
             var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
             var buffer = new BufferBlock<ValueSet>();
             var processor = new ActionBlock<ValueSet>(r =>
-                { ;
+                {
                     var evalContext = new EvaluationContext();
                     var canonical = selector(r, "url", evalContext).Single().Value.ToString();
                     actual.Add((canonical, r));

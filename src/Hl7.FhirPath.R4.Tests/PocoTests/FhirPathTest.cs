@@ -36,8 +36,6 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public TestContext TestContext { get; set; }
 
         [TestMethod]
-        [Ignore]
-        [TemporarilyChanged] // We will come back to polymorphism when we refactor against base
         public void TestFhirPathPolymporphism()
         {
             var patient = new Patient() { Active = false };
@@ -50,8 +48,6 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        [Ignore]
-        [TemporarilyChanged] // We will come back to polymorphism when we refactor against base
         public void TestFhirPathTrace()
         {
             var patient = new Hl7.Fhir.Model.Patient() { Id = "pat45", Active = false };

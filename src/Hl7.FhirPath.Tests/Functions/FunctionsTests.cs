@@ -541,7 +541,7 @@ namespace HL7.FhirPath.Tests
             {
                 iterations++;
 
-                return ElementNode.CreateList(iterations).ToScopedNodes();
+                return new Integer(iterations);
             });
 
             var expression = new FhirPathCompiler(symbols).Compile("once()");

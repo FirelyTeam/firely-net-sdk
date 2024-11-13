@@ -81,7 +81,7 @@ namespace Hl7.FhirPath.Expressions
 
             if (typeof(P.Any).IsAssignableFrom(to) && !fromElemList)
             {
-                if (f is IScopedNode te && te.InstanceType == "Quantity") return o => ParseQuantity((IScopedNode)o);
+                if (f is IScopedNode te && te.Type.HasFlag(NodeType.Quantity)) return o => ParseQuantity((IScopedNode)o);
                 return o => P.Any.Convert(o);
             }
 

@@ -39,7 +39,7 @@ namespace Hl7.FhirPath.Functions
 
         [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
         public static IEnumerable<IScopedNode> DistinctUnion(this IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b)
-            => a.Union(b, EqualityOperators.TypedElementEqualityComparer).Select(ite => ite.ToScopedNode());
+            => a.Union(b, EqualityOperators.TypedElementEqualityComparer);
 
         public static IEnumerable<IScopedNode> Item(this IEnumerable<IScopedNode> focus, int index)
             => focus.Skip(index).Take(1);
@@ -55,7 +55,7 @@ namespace Hl7.FhirPath.Functions
 
         [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
         public static IEnumerable<IScopedNode> Distinct(this IEnumerable<IScopedNode> focus)
-            => focus.Distinct(EqualityOperators.TypedElementEqualityComparer).Select(ite => ite.ToScopedNode());
+            => focus.Distinct(EqualityOperators.TypedElementEqualityComparer);
 
         public static bool IsDistinct(this IEnumerable<IScopedNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer).Count() == focus.Count();
@@ -65,7 +65,7 @@ namespace Hl7.FhirPath.Functions
 
         [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
         public static IEnumerable<IScopedNode> Intersect(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
-            => focus.Intersect(other, EqualityOperators.TypedElementEqualityComparer).Select(ite => ite.ToScopedNode());
+            => focus.Intersect(other, EqualityOperators.TypedElementEqualityComparer);
 
         public static IEnumerable<IScopedNode> Exclude(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
             => focus.Where(f => !other.Contains(f));
@@ -107,10 +107,8 @@ namespace Hl7.FhirPath.Functions
             {
                 // If we are at a resource, we should match a path that is possibly not rooted in the resource
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
-                // Also we do some poor polymorphism here: Resource.meta.lastUpdated is also allowed.
-#pragma warning disable CS0612 // Type or member is obsolete
-                if (element.InstanceType == name && element.Type.HasFlag(NodeType.Resource))
-#pragma warning restore CS0612 // Type or member is obsolete
+                var baseClasses = new[] { "Resource", "DomainResource" };
+                if (element.InstanceType == name || baseClasses.Contains(name))
                 {
                     return new List<IScopedNode>() { element };
                 }

@@ -276,9 +276,9 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void Bundle_WithEntryWithoutFullUrl_ShouldNotThrow()
         {
-            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
+            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]};
 
-            var enumerate = () => bundle.Children("entry");
+            var enumerate = () => bundle.BundledResources();
             enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => !c.Children("fullUrl").Any());
         }
 
