@@ -43,19 +43,7 @@ public class TypedElementToPocoTests
             };
 
         var poco = toPoco(subject);
-
-        poco.Active.Should().Be(true);
-        poco.BirthDate.Should().Be("2000-01-01");
-        poco.Name.Should().HaveCount(1);
-        poco.Name[0].Family.Should().Be("Doe");
-        poco.Name[0].Given.Should().HaveCount(1).And.Contain("John");
-        poco.Contact.Should().HaveCount(1);
-        poco.Contact[0].Name.Family.Should().Be("Doe");
-        poco.Contact[0].Name.Given.Should().HaveCount(1).And.Contain("Jane");
-        poco.Contact[0].Relationship.Should().HaveCount(1);
-        poco.Contact[0].Relationship[0].Coding.Should().HaveCount(1);
-        poco.Contact[0].Relationship[0].Coding[0].System.Should().Be("http://nu.nl");
-        poco.Contact[0].Relationship[0].Coding[0].Code.Should().Be("relation");
+        poco.IsExactly(subject).Should().BeTrue();
     }
 
 
@@ -81,14 +69,7 @@ public class TypedElementToPocoTests
             [new FhirString("hi1"), new FhirString("hi2")]);
     }
 
-
     private T toPoco<T>(T source) where T : Base, new()
-    {
-        var te = source.ToTypedElement();
-        return toPoco<T>(te);
-    }
-
-    private static T toPoco<T>(ITypedElement source) where T : Base, new()
     {
         // Construct a demo STU3 model inspector
         var builder = new PocoBuilderNew(ModelInfo.ModelInspector);
@@ -96,6 +77,6 @@ public class TypedElementToPocoTests
 
         built.Should().BeOfType<T>();
 
-        return (T)built;
+        return built;
     }
 }

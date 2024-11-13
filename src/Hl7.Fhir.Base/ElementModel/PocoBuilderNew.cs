@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using ET = Hl7.Fhir.ElementModel.Types;
 using ElementMappingInfo = (Hl7.Fhir.Introspection.ClassMapping Class, Hl7.Fhir.Introspection.PropertyMapping? Property);
 
-namespace Hl7.Fhir.Serialization;
+namespace Hl7.Fhir.ElementModel;
 
 /// <summary>
 /// Traverses an <see cref="ITypedElement"/> tree and constructs a POCO from it.
@@ -196,7 +196,7 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // otherwise it's a DynamicDataType.
         // Design question: there might be a "strict" option, where we will not create Dynamic types
         // for unknown types, but throw an error instead.
-        if(node.Value is not null)
+        if(node.Value is not null || (node.InstanceType is {} it && char.IsLower(it[0])))
             return (getDefaultMapping(DYNAMIC_PRIMITIVE_TYPE_NAME), elementMapping);
 
         if (node.Annotation<IResourceTypeSupplier>() is not null)
