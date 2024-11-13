@@ -58,13 +58,37 @@ public class TypedElementToPocoTests
         poco.Contact[0].Relationship[0].Coding[0].Code.Should().Be("relation");
     }
 
+
+    [TestMethod]
+    public void ParsesResourceWithOverflow()
+    {
+        var subject = new Patient();
+
+        var subjectDict = subject.AsDictionary();
+        subjectDict.Add("newField", new FhirString("hi"));
+        subjectDict.Add("newDynamicField", new DynamicPrimitive() { ObjectValue = "hi3" });
+        subjectDict.Add("newListField", new List<FhirString> { new("hi1"), new("hi2") });
+
+        var dict = toPoco(subject).AsDictionary();
+        dict.TryGetValue("newField", out var newField).Should().BeTrue();
+        newField.Should().BeOfType<FhirString>().Which.Value.Should().Be("hi");
+
+        dict.TryGetValue("newDynamicField", out var newDynamicField).Should().BeTrue();
+        newDynamicField.Should().BeOfType<DynamicPrimitive>().Which.ObjectValue.Should().Be("hi3");
+
+        dict.TryGetValue("newListField", out var newListField).Should().BeTrue();
+        newListField.Should().BeOfType<List<FhirString>>().Which.Should().BeEquivalentTo(
+            [new FhirString("hi1"), new FhirString("hi2")]);
+    }
+
+
     private T toPoco<T>(T source) where T : Base, new()
     {
         var te = source.ToTypedElement();
         return toPoco<T>(te);
     }
 
-    private T toPoco<T>(ITypedElement source) where T : Base, new()
+    private static T toPoco<T>(ITypedElement source) where T : Base, new()
     {
         // Construct a demo STU3 model inspector
         var builder = new PocoBuilderNew(ModelInfo.ModelInspector);

@@ -30,6 +30,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -37,6 +38,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -111,10 +113,12 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
     // TODO bring Children + NamedChildren over as well.
 }
 
-
 /// <summary>
 /// A dynamic data type that can hold any element.
 /// </summary>
+[Serializable]
+[DataContract]
+[FhirType("DynamicDataType","http://fire.ly/fhir/StructureDefinition/DynamicDataType")]
 public class DynamicDataType : DataType, IDynamicType
 {
     public string? DynamicTypeName { get; set; }
@@ -143,6 +147,9 @@ public interface IDynamicType
 /// <summary>
 /// A dynamic resource that can hold any element.
 /// </summary>
+[Serializable]
+[DataContract]
+[FhirType("DynamicDataType","http://fire.ly/fhir/StructureDefinition/DynamicResource")]
 public class DynamicResource : Resource, IDynamicType
 {
     public string? DynamicTypeName { get; set; }
@@ -163,6 +170,9 @@ public class DynamicResource : Resource, IDynamicType
 /// <summary>
 /// A dynamic primitive that can hold any element.
 /// </summary>
+[Serializable]
+[DataContract]
+[FhirType("DynamicPrimitive","http://fire.ly/fhir/StructureDefinition/DynamicPrimitive")]
 public class DynamicPrimitive : PrimitiveType, IDynamicType
 {
     public string? DynamicTypeName { get; set; }
