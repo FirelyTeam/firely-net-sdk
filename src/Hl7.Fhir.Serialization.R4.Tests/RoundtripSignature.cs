@@ -58,11 +58,11 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [Ignore("These should not be exactly equal!")]
-        [TemporarilyChanged]        
+        [Ignore("Doesn't work for our ModelInspector.ForType() hack")]
+        [TemporarilyChanged]
         public void WorksWithTypedElementSerializers()
         {
-            var sig = new Bundle() { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
+            var sig = new Bundle { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
             var json =  sig.ToTypedElement().ToJson();
             //json.Should().Contain("\"who\"");
             var sig2 = FhirJsonNode.Parse(json).ToPoco();

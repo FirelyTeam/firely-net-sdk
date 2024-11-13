@@ -506,22 +506,24 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void TestNewXmlParserNarrativeParsing()
         {
-            var patient = new Patient { Id = "example" };
-            patient.Text = new Narrative() { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">some test data</div>" };
-            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
-            var actual = SerializationUtil.WriteXmlToString(patient, (o, w) => serializer.Serialize(o, w));
+            var patient = new Patient
+            {
+                Id = "example",
+                Text = new Narrative()
+                {
+                    Status = Narrative.NarrativeStatus.Generated,
+                    Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">some test data</div>"
+                }
+            };
 
-            //// now parse this back out with the old parser
-            //var op = new Hl7.Fhir.Serialization.FhirXmlParser().Parse<Patient>(patientXML);
-            //Assert.AreEqual(patient.Text.Div, op.Text.Div, "Old narrative should be the same");
+            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+            var actual = serializer.SerializeToString(patient);
 
             // now parse this back out with the new parser
-            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new());
-            using (var reader = SerializationUtil.XmlReaderFromXmlText(actual))
-            {
-                var np = ds.DeserializeResource(reader) as Patient;
-                Assert.AreEqual(patient.Text.Div, np.Text.Div, "New narrative should be the same");
-            }
+            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new FhirXmlPocoDeserializerSettings());
+
+            var np = ds.DeserializeResource(actual).Should().BeOfType<Patient>().Subject;
+            Assert.AreEqual(patient.Text.Div, np.Text.Div, "New narrative should be the same");
         }
 
         [TestMethod]

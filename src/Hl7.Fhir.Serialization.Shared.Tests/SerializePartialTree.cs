@@ -52,12 +52,6 @@ namespace Hl7.Fhir.Serialization.Tests
             var subnavPoco = navPoco.Children("photo").First();
             await testSubtree(subnavXml, subnavJson, subnavPoco);
 
-            // And on a child that's a primitive datatype
-            //subnavXml = navXml.Children("id").First();
-            //subnavJson = navJson.Children("id").First();
-            //subnavPoco = navPoco.Children("id").First();
-            //testSubtree(subnavXml, subnavJson, subnavPoco);
-
             // And on a contained resource
             subnavXml = navXml.Children("contained").First();
             subnavJson = navJson.Children("contained").First();
