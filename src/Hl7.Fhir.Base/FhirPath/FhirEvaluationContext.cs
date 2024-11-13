@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.FhirPath;
 using System;
@@ -78,9 +79,9 @@ namespace Hl7.Fhir.FhirPath
             return scan;
         }
 
-        private Func<string, ITypedElement>? _elementResolver;
+        private Func<string, IScopedNode>? _elementResolver;
 
-        public Func<string, ITypedElement>? ElementResolver
+        public Func<string, IScopedNode>? ElementResolver
         {
             get { return _elementResolver; }
             set { _elementResolver = value; }
