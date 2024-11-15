@@ -120,13 +120,8 @@ namespace Hl7.Fhir.Serialization
 
             Base build()
             {
-                var settings = new ParserSettings
-                {
-                    AcceptUnknownMembers = _settings.IgnoreUnknownMembers,
-                    AllowUnrecognizedEnums = _settings.AllowUnrecognizedEnums
-                };
-
-                return new ComplexTypeReader(_inspector, source, settings).Deserialize(null);
+                var newBuilder = new PocoBuilderNew(_inspector, new PocoBuilderSettings());
+                return newBuilder.BuildFrom(source);
             }
         }
     }

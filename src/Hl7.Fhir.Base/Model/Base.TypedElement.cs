@@ -3,14 +3,11 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Runtime.CompilerServices;
@@ -112,8 +109,6 @@ public abstract partial class Base : IScopedNode,
 
     string ITypedElement.Name => ScopeInfo.Name;
 
-    [TemporarilyChanged] // TODO: This needs unit-testing! Can we avoid FindOrImport, and use Find instead?
-    // Maybe make sure we import the backbone types then too!
     string ITypedElement.InstanceType
     {
         get
