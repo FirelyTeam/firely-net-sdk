@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     /// <remarks>Is probably going to be used by the (future)XmlDynamicDeserializer too.</remarks>
     internal class ExceptionAggregator : IEnumerable<CodedException>
     {
-        public List<CodedException> _aggregated = new();
+        private List<CodedException> _aggregated = new();
 
         public void Add(CodedException? e)
         {

@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Introspection
             {
                 IsResource = type.CanBeTreatedAsType(typeof(Resource)),
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
-                                ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
+                            ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
                 IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Introspection
         /// Is <c>true</c> when this class represents a code with a required binding.
         /// </summary>
         /// <remarks>See <see cref="Name"></see>.</remarks>
-        public bool IsCodeOfT { get; private set; } = false;
+        public bool IsCodeOfT { get; private init; } = false;
 
         /// <summary>
         /// Indicates whether this class represents the nested complex type for a backbone element.

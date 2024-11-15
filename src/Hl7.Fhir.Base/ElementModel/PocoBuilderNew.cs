@@ -8,15 +8,14 @@
 
 #nullable enable
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using ET = Hl7.Fhir.ElementModel.Types;
-using ElementMappingInfo = (Hl7.Fhir.Introspection.ClassMapping Class, Hl7.Fhir.Introspection.PropertyMapping? Property);
 
 namespace Hl7.Fhir.ElementModel;
 
@@ -24,9 +23,12 @@ namespace Hl7.Fhir.ElementModel;
 /// Traverses an <see cref="ITypedElement"/> tree and constructs a POCO from it.
 /// </summary>
 /// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes
+/// <param name="settings">Configuration for building the POCO.</param>
 /// used in the construction.</param>
-internal class PocoBuilderNew(ModelInspector inspector)
+internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? settings = null)
 {
+    public PocoBuilderSettings? Settings { get; } = settings;
+
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
     /// </summary>
@@ -34,17 +36,13 @@ internal class PocoBuilderNew(ModelInspector inspector)
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
-        var mappings = getMappingInfoForElement(source, null);
+        var mappings = ElementFactory.ForElement(source, null, inspector);
         return readFromElement(source, mappings);
     }
 
-    private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
-    private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
-    private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
-
-    private Base readFromElement(ITypedElement node, ElementMappingInfo mappingInfo)
+    private Base readFromElement(ITypedElement node, ElementFactory factory)
     {
-        IDictionary<string, object> newInstance = buildNewInstance(mappingInfo.Class);
+        IDictionary<string, object> newInstance = buildNewInstance(factory);
 
         // Capture the instance type if this is a dynamic type.
         if(newInstance is IDynamicType dt)
@@ -57,12 +55,12 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // Now, read the children
         foreach (var child in node.Children())
         {
-            var mappings = getMappingInfoForElement(child, mappingInfo.Class);
-            var convertedValue = readFromElement(child, mappings);
+            var childFactory = ElementFactory.ForElement(child, factory.ClassMapping, inspector);
+            var convertedValue = readFromElement(child, childFactory);
 
             try
             {
-                setOrAddProperty(child, newInstance, convertedValue, mappings);
+                setOrAddProperty(child, newInstance, convertedValue, childFactory);
             }
             catch (InvalidCastException e)
             {
@@ -79,24 +77,24 @@ internal class PocoBuilderNew(ModelInspector inspector)
         return (Base)newInstance;
     }
 
-    private static IDictionary<string, object> buildNewInstance(ClassMapping classMapping)
+    private static IDictionary<string, object> buildNewInstance(ElementFactory factory)
     {
-        return classMapping.Factory() switch
+        return factory.MakeInstance() switch
         {
             IDictionary<string,object> b => b,
-            _ => throw Error.InvalidOperation($"Class Factory for '{classMapping.Name}' did not return a dictionary, which is required for " +
+            _ => throw Error.InvalidOperation($"Class Factory for '{factory.ClassMapping.Name}' did not return a dictionary, which is required for " +
                         $"building up POCO's dynamically.")
         };
     }
 
-    private static void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
-        Base convertedValue, ElementMappingInfo childMappingInfo)
+    private void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
+        Base convertedValue, ElementFactory factory)
     {
         // If this element *could* be repeating (either we don't know the definition, or it really is defined
         // to be a collection, then check to see if there are already items present.
-        var couldBeCollection = (node.Definition is null && childMappingInfo.Property is null)
+        var couldBeCollection = (node.Definition is null && factory.ElementMapping is null)
                                 || node.Definition?.IsCollection == true
-                                || childMappingInfo.Property?.IsCollection == true;
+                                || factory.ElementMapping?.IsCollection == true;
         var existing = couldBeCollection && target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
 
         // If there are, just add this new value.
@@ -111,16 +109,22 @@ internal class PocoBuilderNew(ModelInspector inspector)
         // before. In all other cases, the indexed assignment will fail.
         else if(existing is not null)
         {
-            var newList = childMappingInfo.Class.ListFactory();
+            // Due to List<T> being invariant, we need to create a new list of the type of the property,
+            // not of the instance.
+            var newList =  factory.MakeList();
             newList.Add(existing);
             newList.Add(convertedValue);
             target[node.Name] = newList;
         }
 
         // No existing value, but we know it's a collection, so create a list and add the element.
-        else if (node.Definition?.IsCollection == true || childMappingInfo.Property?.IsCollection == true)
+        else if (node.Definition?.IsCollection == true || factory.ElementMapping?.IsCollection == true)
         {
-            var newList = childMappingInfo.Class.ListFactory();
+            // Due to List<T> being invariant, we need to create a new list of the type of the property,
+            // not of the instance.
+            // Due to List<T> being invariant, we need to create a new list of the type of the property,
+            // not of the instance.
+            var newList = factory.MakeList();
             newList.Add(convertedValue);
             target[node.Name] = newList;
         }
@@ -130,7 +134,7 @@ internal class PocoBuilderNew(ModelInspector inspector)
         {
             // Note that some exceptional primitive properties (like Extension.url and Element.id) are
             // represented in the POCO as .NET primitives, not as FHIR datatypes, so we need to get the value out.
-            if (childMappingInfo.Property?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
+            if (factory.ElementMapping?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
                 target[node.Name] = value;
             else
                 target[node.Name] = convertedValue;
@@ -162,50 +166,90 @@ internal class PocoBuilderNew(ModelInspector inspector)
         };
     }
 
-    private ElementMappingInfo getMappingInfoForElement(ITypedElement node, ClassMapping? parentMapping)
+
+    private class ElementFactory
     {
-        var elementMapping = parentMapping?.FindMappedElementByName(node.Name);
+        private readonly Func<IList> _listFactory;
+        private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
+        private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
+        private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
 
-        // Although InstanceType suggests this is a run-time type, we have misdesigned this property
-        // to also return abstract types, in this case, Backbones. Would love to fix this in SDK6.0,
-        // but it would be one of the bigger breaking behavioural changes.
-        // In any case, try to derive the actual type from the POCO, since the InstanceType won't help here.
-        if(node.InstanceType is "BackboneElement" or "Element")
+        private ElementFactory(ClassMapping classMapping, PropertyMapping? elementMapping, Func<IList> listFactory)
         {
-            return (elementMapping?.PropertyTypeMapping ?? getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME), elementMapping);
-        };
-
-        // Resolve the instance type through the inspector. This means that the type must be known by name by the
-        // inspector, so all types need to have been loaded in advance.
-        // We are currently not requiring this (although it is already good practice), but since
-        // the old code used `FindOrImport`, and used the element's type in the PropertyMapping, we would create
-        // mappings for types we didn't know about. This gave subtle error, e.g. where the type you are parsing
-        // is in Base, but contains elements from Conformance (like Bundle.entry). In this case, we would create the
-        // mapping for such types, but we would not know the correct FHIR version (since we're dealing with Base, which
-        // is shared), so if the loaded types contained `Since` attributes, we would get the wrong version.
-        // Forcing the user to load the correct FHIR version into our inspector would do away with this incorrect
-        // behaviour.
-        if (node.InstanceType is { } instanceType && inspector.FindClassMapping(instanceType) is { } mapping)
-        {
-            return (mapping, elementMapping);
+            _listFactory = listFactory;
+            ElementMapping = elementMapping;
+            ClassMapping = classMapping;
         }
 
-        // Ok, so the node does not have a type, or the type is not known. So, let's use one
-        // of the applicable dynamic types. If the node has a resource name (but it was unknown),
-        // we'll create a DynamicResource. If the node has a Value, it's a DynamicPrimitive,
-        // otherwise it's a DynamicDataType.
-        // Design question: there might be a "strict" option, where we will not create Dynamic types
-        // for unknown types, but throw an error instead.
-        if(node.Value is not null || (node.InstanceType is {} it && char.IsLower(it[0])))
-            return (getDefaultMapping(DYNAMIC_PRIMITIVE_TYPE_NAME), elementMapping);
+        private ElementFactory(ClassMapping classMapping, PropertyMapping? elementMapping)
+        {
+            _listFactory = classMapping.ListFactory;
+            ElementMapping = elementMapping;
+            ClassMapping = classMapping;
+        }
 
-        if (node.Annotation<IResourceTypeSupplier>() is not null)
-            return (getDefaultMapping(DYNAMIC_RESOURCE_TYPE_NAME), elementMapping);
 
-        return (getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME), elementMapping);
+        public object MakeInstance() => ClassMapping.Factory();
+        public IList MakeList() => _listFactory();
 
-        ClassMapping getDefaultMapping(string dynTypeName) =>
-            inspector.FindClassMapping(dynTypeName) ??
-            throw Error.InvalidOperation($"Cannot find ClassMapping for dynamic type '{dynTypeName}'.");
+        public PropertyMapping? ElementMapping { get; }
+        public ClassMapping ClassMapping { get; }
+
+        public static ElementFactory ForElement(ITypedElement node, ClassMapping? parentMapping, ModelInspector inspector)
+        {
+            var propertyMapping = parentMapping?.FindMappedElementByName(node.Name);
+            var elementClassMapping = propertyMapping is not null
+                ? (inspector.FindOrImportClassMapping(propertyMapping.ImplementingType) ?? throw new InvalidOperationException($"Cannot find ClassMapping for {propertyMapping.ImplementingType}."))
+                : null;
+
+            // If the node is a code, we need to check if the POCO has a more specific
+            // Code<T>, and use that instead.
+            if (node.InstanceType == "code" && propertyMapping?.NativeProperty.PropertyType.IsConstructedGenericType == true)
+                return new ElementFactory(elementClassMapping!, propertyMapping);
+
+            // Although InstanceType suggests this is a run-time type, we have misdesigned this property
+            // to also return abstract types, in this case, Backbones. Would love to fix this in SDK6.0,
+            // but it would be one of the bigger breaking behavioural changes.
+            // In any case, try to derive the actual type from the POCO, since the InstanceType won't help here.
+            if (node.InstanceType is "BackboneElement" or "Element")
+            {
+                var backboneMapping = elementClassMapping ?? getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+                return new ElementFactory(backboneMapping, propertyMapping);
+            }
+
+            // Resolve the instance type through the inspector. This means that the type must be known by name by the
+            // inspector, so all types need to have been loaded in advance.
+            // We are currently not requiring this (although it is already good practice), but since
+            // the old code used `FindOrImport`, and used the element's type in the PropertyMapping, we would create
+            // mappings for types we didn't know about. This gave subtle error, e.g. where the type you are parsing
+            // is in Base, but contains elements from Conformance (like Bundle.entry). In this case, we would create the
+            // mapping for such types, but we would not know the correct FHIR version (since we're dealing with Base, which
+            // is shared), so if the loaded types contained `Since` attributes, we would get the wrong version.
+            // Forcing the user to load the correct FHIR version into our inspector would do away with this incorrect
+            // behaviour.
+            if (node.InstanceType is { } instanceType && inspector.FindClassMapping(instanceType) is { } mapping)
+            {
+                return new ElementFactory(mapping, propertyMapping, elementClassMapping?.ListFactory ?? mapping.ListFactory);
+            }
+
+            // Ok, so the node does not have a type, or the type is not known. So, let's use one
+            // of the applicable dynamic types. If the node has a resource name (but it was unknown),
+            // we'll create a DynamicResource. If the node has a Value, it's a DynamicPrimitive,
+            // otherwise it's a DynamicDataType.
+            // Design question: there might be a "strict" option, where we will not create Dynamic types
+            // for unknown types, but throw an error instead.
+            if(node.Value is not null || (node.InstanceType is {} it && char.IsLower(it[0])))
+                return new ElementFactory(getDefaultMapping(DYNAMIC_PRIMITIVE_TYPE_NAME), propertyMapping);
+
+            if (node.Annotation<IResourceTypeSupplier>() is not null)
+                return new ElementFactory(getDefaultMapping(DYNAMIC_RESOURCE_TYPE_NAME), propertyMapping);
+
+            return new ElementFactory(getDefaultMapping(DYNAMIC_DATATYPE_TYPE_NAME), propertyMapping);
+
+            ClassMapping getDefaultMapping(string dynTypeName) =>
+                inspector.FindClassMapping(dynTypeName) ??
+                throw Error.InvalidOperation($"Cannot find ClassMapping for dynamic type '{dynTypeName}'.");
+        }
     }
+
 }

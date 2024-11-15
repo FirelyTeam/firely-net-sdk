@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -25,6 +24,45 @@ public class TypedElementToPocoTests
         poco.Extension.Should().HaveCount(2);
         poco.Extension[0].Url.Should().Be("http://nu.nl");
         poco.Extension[0].Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("hoi");
+    }
+
+    [TestMethod]
+    public void ParsesCodeOfT()
+    {
+        var subject = new Narrative() { Status = Narrative.NarrativeStatus.Generated };
+        var poco = toPoco(subject);
+
+        poco.Status.Should().Be(Narrative.NarrativeStatus.Generated);
+    }
+
+
+    [TestMethod]
+    public void ParsesChoiceType()
+    {
+        var subject = new Patient { Deceased = new FhirBoolean(true) };
+        var poco = toPoco(subject);
+
+        poco.Deceased.Should().BeOfType<FhirBoolean>().Which.Value.Should().Be(true);
+    }
+
+    [TestMethod]
+    public void ParsesCovariantList()
+    {
+        var subject = new Patient { Contained = [new Observation()]};
+        var poco = toPoco(subject);
+
+        poco.Contained.Should().HaveCount(1);
+        poco.Contained[0].Should().BeOfType<Observation>();
+    }
+
+    [TestMethod]
+    public void ParsesCovariantCodedList()
+    {
+        var subject = new Questionnaire { SubjectTypeElement = [new Code<ResourceType>(ResourceType.Binary)] };
+        var poco = toPoco(subject);
+
+        poco.SubjectTypeElement.Should().HaveCount(1);
+        poco.SubjectTypeElement[0].Should().BeOfType<Code<ResourceType>>().Which.Value.Should().Be(ResourceType.Binary);
     }
 
     [TestMethod]

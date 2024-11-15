@@ -6,6 +6,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -77,10 +78,10 @@ public abstract partial class Base : IScopedNode,
     {
         get => LazyInitializer.EnsureInitialized(ref _scopeInfo, () => BuildRoot())!;
         set => _scopeInfo = value;
-    } 
+    }
 
     internal ScopeInformation BuildRoot(string? rootName = null) => new(null, rootName ?? TypeName, null);
-    
+
     internal Base WithScopeInfo(ScopeInformation info)
     {
         this.ScopeInfo = info;
@@ -94,27 +95,46 @@ public abstract partial class Base : IScopedNode,
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) =>
         this.GetElementPairs()
             .Where(ep => (name == null || name == ep.Key))
-            .SelectMany<KeyValuePair<string, object>, Base>(ep => 
+            .SelectMany<KeyValuePair<string, object>, Base>(ep =>
                 (ep.Key, ep.Value) switch
                 {
-                    (_, Base b) => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                    (_, IEnumerable<Base> list) => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
-                    ("url", string s) when this is Extension => [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                    ("id", string s) when this is Element => [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    (_, Base b) => (IEnumerable<Base>) [b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    (_, IEnumerable<Base> list) => list.Select((item, idx) =>
+                        item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
+                    ("url", string s) when this is Extension =>
+                        [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    ("id", string s) when this is Element =>
+                        [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
                     ("value", _) => [],
                     _ => throw new InvalidOperationException("Unexpected system primitive in child list")
                 }
             );
 
     string ITypedElement.Name => ScopeInfo.Name;
-    
-    [TemporarilyChanged] // TODO: This is a temporary change to make the tests pass. This should be removed. We are not planning to implement ITE.
-    string? ITypedElement.InstanceType => 
-        ((IStructureDefinitionSummary)
-            ModelInspector
-                .ForType(this.GetType())
-                .FindOrImportClassMapping(this.GetType())!
-        ).TypeName;
+
+    [TemporarilyChanged] // TODO: This needs unit-testing! Can we avoid FindOrImport, and use Find instead?
+    // Maybe make sure we import the backbone types then too!
+    string? ITypedElement.InstanceType
+    {
+        get
+        {
+            var thisType = this.GetType();
+
+            if (thisType.IsConstructedGenericType && thisType.Name.StartsWith("Code"))
+                return "code";
+
+            return ScopeInfo switch
+            {
+                { Parent: Extension, Name: "url" } => "uri",
+                { Parent: Element, Name: "id" } => "string",
+                _ => findSds(thisType).TypeName
+            };
+
+            static IStructureDefinitionSummary findSds(Type t) =>
+                ModelInspector.ForType(t).FindOrImportClassMapping(t)
+                ?? throw Error.InvalidOperation($"Cannot find ClassMapping for type {t.Name}.");
+        }
+    }
 
     object? ITypedElement.Value
     {
