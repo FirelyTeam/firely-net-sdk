@@ -212,25 +212,44 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
             if (node.InstanceType == "code" && propertyMapping?.NativeProperty.PropertyType.IsConstructedGenericType == true)
                 return new ElementFactory(elementClassMapping!, propertyMapping);
 
-            // If the node is a BackboneElement, derive the actual type from the POCO since this will be the
-            // actual concrete subclass of BackboneElement. As a fallback, just us a DynamicElement (uncommon).
-            if (node.InstanceType is "BackboneElement" or "Element")
-            {
-                var backboneMapping = elementClassMapping ?? determineDynamicMapping(node, inspector);
-                return new ElementFactory(backboneMapping, propertyMapping);
-            }
-
             // Normal case: Resolve the instance type through the inspector.
             // For creating a list, normally we should use the ListFactory of the POCO property's class mapping,
             // but if that is unknown, use the ListFactory of the instance type instead.
             // The reason we need to do this is that the property may be a List of a more generic type than the instance,
             // and since List<T> is invariant, we need to create a List with the correct base class, as specified
             // in the POCO.
-            if (node.InstanceType is { } instanceType && inspector.FindClassMapping(instanceType) is { } mapping)
-                return new ElementFactory(mapping, propertyMapping, elementClassMapping?.ListFactory ?? mapping.ListFactory);
+            if (node.InstanceType is { } instanceType &&
+                inspector.FindClassMapping(instanceType) is { NativeType.IsAbstract: false } mapping)
+            {
+                return new ElementFactory(mapping, propertyMapping,
+                    elementClassMapping?.ListFactory ?? mapping.ListFactory);
+            }
 
-            // No instance type, guess what the best dynamic type is.
+            // No instance type, or we're dealing with an abstract type (e.g. Backbone).
+            // Try to figure out the best concrete type based on the property's type, if available.
+            if (elementClassMapping is not null)
+            {
+                return !elementClassMapping.NativeType.IsAbstract
+                    ? new ElementFactory(elementClassMapping, propertyMapping)
+                    : new ElementFactory(
+                        determineDynamicMappingForAbstractElement(elementClassMapping.NativeType, inspector),
+                        propertyMapping);
+            }
+
+            // Failing all that, guess what the best dynamic type is based on the instance data.
             return new ElementFactory(determineDynamicMapping(node, inspector), propertyMapping);
+        }
+
+        private static ClassMapping determineDynamicMappingForAbstractElement(Type elementType, ModelInspector inspector)
+        {
+            if(typeof(Resource).IsAssignableFrom(elementType))
+                return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME, inspector);
+            if(typeof(PrimitiveType).IsAssignableFrom(elementType))
+                return getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME, inspector);
+            if(typeof(DataType).IsAssignableFrom(elementType))
+                return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME, inspector);
+
+            throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
         }
 
         private static ClassMapping determineDynamicMapping(ITypedElement node, ModelInspector inspector)

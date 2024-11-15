@@ -114,13 +114,10 @@ public abstract partial class Base : IScopedNode,
 
     [TemporarilyChanged] // TODO: This needs unit-testing! Can we avoid FindOrImport, and use Find instead?
     // Maybe make sure we import the backbone types then too!
-    string? ITypedElement.InstanceType
+    string ITypedElement.InstanceType
     {
         get
         {
-            if (this is ISystemAndCode)
-                return "code";
-
             if (this is BackboneElement)
                 return "BackboneElement";
 
@@ -133,10 +130,6 @@ public abstract partial class Base : IScopedNode,
                 { Parent: Element, Name: "id" } => "string",
                 _ => TypeName
             };
-
-            // static IStructureDefinitionSummary findSds(Type t) =>
-            //     ModelInspector.ForType(t).FindOrImportClassMapping(t)
-            //     ?? throw Error.InvalidOperation($"Cannot find ClassMapping for type {t.Name}.");
         }
     }
 
