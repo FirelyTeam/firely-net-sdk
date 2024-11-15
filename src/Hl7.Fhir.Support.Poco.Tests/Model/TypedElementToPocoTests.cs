@@ -2,7 +2,9 @@ using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using ET=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Tests.Model;
 
@@ -26,10 +28,43 @@ public class TypedElementToPocoTests
         poco.Extension[0].Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("hoi");
     }
 
+    public static IEnumerable<object[]> PrimitiveTestData
+    {
+        get
+        {
+            var dtNow = ET.DateTime.Now();
+            var timeNow = ET.Time.Now();
+            var dateToday = ET.Date.Today();
+
+            return
+            [
+                [typeof(FhirString), "hi!", null],
+                [typeof(Integer), 42, null],
+                [typeof(Integer64), 42L, null],
+                [typeof(FhirBoolean), true, null],
+                [typeof(FhirDecimal), 3.14m, null],
+                [typeof(DynamicPrimitive), 3.14, null],
+                [typeof(FhirDateTime), dtNow, dtNow.ToString()],
+                [typeof(Time), timeNow, timeNow.ToString()],
+                [typeof(Date), dateToday, dateToday.ToString()],
+            ];
+        }
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(PrimitiveTestData))]
+    public void GuessesCorrectPrimitive(Type t, object dynamicValue, string objectValue)
+    {
+        ITypedElement subject = new DynamicPrimitive { DynamicTypeName = "DoesNotExist", ObjectValue = dynamicValue };
+        var poco = toPoco(subject);
+        poco.Should().BeOfType(t);
+        (poco as PrimitiveType)!.ObjectValue.Should().Be(objectValue ?? dynamicValue);
+    }
+
     [TestMethod]
     public void ParsesCodeOfT()
     {
-        var subject = new Narrative() { Status = Narrative.NarrativeStatus.Generated };
+        var subject = new Narrative { Status = Narrative.NarrativeStatus.Generated };
         var poco = toPoco(subject);
 
         poco.Status.Should().Be(Narrative.NarrativeStatus.Generated);
@@ -109,12 +144,14 @@ public class TypedElementToPocoTests
 
     private T toPoco<T>(T source) where T : Base, new()
     {
+        var poco = toPoco((ITypedElement)source);
+        return poco.Should().BeOfType<T>().Subject;
+    }
+
+    private Base toPoco(ITypedElement source)
+    {
         // Construct a demo STU3 model inspector
         var builder = new PocoBuilderNew(ModelInfo.ModelInspector);
-        var built = (T)builder.BuildFrom(source);
-
-        built.Should().BeOfType<T>();
-
-        return built;
+        return builder.BuildFrom(source);
     }
 }

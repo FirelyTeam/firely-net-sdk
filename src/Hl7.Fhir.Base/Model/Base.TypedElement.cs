@@ -118,21 +118,25 @@ public abstract partial class Base : IScopedNode,
     {
         get
         {
-            var thisType = this.GetType();
-
-            if (thisType.IsConstructedGenericType && thisType.Name.StartsWith("Code"))
+            if (this is ISystemAndCode)
                 return "code";
+
+            if (this is BackboneElement)
+                return "BackboneElement";
+
+            if (this is Element && TypeName.Contains('.'))
+                return "Element";
 
             return ScopeInfo switch
             {
                 { Parent: Extension, Name: "url" } => "uri",
                 { Parent: Element, Name: "id" } => "string",
-                _ => findSds(thisType).TypeName
+                _ => TypeName
             };
 
-            static IStructureDefinitionSummary findSds(Type t) =>
-                ModelInspector.ForType(t).FindOrImportClassMapping(t)
-                ?? throw Error.InvalidOperation($"Cannot find ClassMapping for type {t.Name}.");
+            // static IStructureDefinitionSummary findSds(Type t) =>
+            //     ModelInspector.ForType(t).FindOrImportClassMapping(t)
+            //     ?? throw Error.InvalidOperation($"Cannot find ClassMapping for type {t.Name}.");
         }
     }
 
