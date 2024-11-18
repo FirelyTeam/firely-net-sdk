@@ -278,7 +278,7 @@ namespace Hl7.Fhir.FhirPath
 
             inParams = input.InstanceType switch
             {
-                "code" when input is ScopedNode sn => inParams.WithCode(code: sn.Value as string, context: sn.LocalLocation),
+                "code" when input is ScopedNode sn => inParams.WithCode(code: sn.Value as string, context: sn.LocalLocation, inferSystem: true),
                 "Coding" => inParams.WithCoding(input.ParseCoding()),
                 "CodeableConcept" => inParams.WithCodeableConcept(input.ParseCodeableConcept()),
                 "string" or "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),

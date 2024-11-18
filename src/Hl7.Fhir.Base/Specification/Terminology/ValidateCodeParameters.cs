@@ -25,6 +25,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private readonly string _dateAttribute = "date";
         private readonly string _abstractAttribute = "abstract";
         private readonly string _displayLanguageAttribute = "displayLanguage";
+        private readonly string _inferSystemAttribute = "inferSystem";
 
         public ValidateCodeParameters(Parameters parameters)
         {
@@ -41,6 +42,7 @@ namespace Hl7.Fhir.Specification.Terminology
             Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
             Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
             DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);
+            InferSystem = parameters.GetSingleValue<FhirBoolean>(_inferSystemAttribute);
         }
 
 
@@ -58,7 +60,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return this;
         }
 
-        public ValidateCodeParameters WithCode(string code = null, string system = null, string systemVersion = null, string display = null, string displayLanguage = null, string context = null)
+        public ValidateCodeParameters WithCode(string code = null, string system = null, string systemVersion = null, string display = null, string displayLanguage = null, string context = null, bool? inferSystem = null)
         {
             if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
             if (!string.IsNullOrWhiteSpace(system)) System = new FhirUri(system);
@@ -66,6 +68,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (!string.IsNullOrWhiteSpace(display)) Display = new FhirString(display);
             if (!string.IsNullOrWhiteSpace(displayLanguage)) DisplayLanguage = new Code(displayLanguage);
             if (!string.IsNullOrWhiteSpace(context)) Context = new FhirUri(context);
+            if (inferSystem is { }) InferSystem = new FhirBoolean(inferSystem);
             return this;
         }
 
@@ -151,6 +154,8 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         public Code DisplayLanguage { get; private set; }
 
+        public FhirBoolean InferSystem { get; private set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -159,9 +164,9 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             var result = new Parameters();
 
-            if (Url is { }) result.Add(_urlAttribute, Url);
-            if (Context is { }) result.Add(_contextAttribute, Context);
-            if (ValueSet is { }) result.Add(_valueSetAttribute, ValueSet);
+            if (Url is { }) result.Add(_urlAttribute, Url); //Either Url, ValueSet or Context is allowed. So try Url first.
+            if (ValueSet is { } && Url is not { }) result.Add(_valueSetAttribute, ValueSet);
+            if (Context is { } && ValueSet is not { } && Url is not { }) result.Add(_contextAttribute, Context); //And then context as last resort.            
             if (ValueSetVersion is { }) result.Add(_valueSetVersionAttribute, ValueSetVersion);
             if (Code is { }) result.Add(_codeAttribute, Code);
             if (System is { }) result.Add(_systemAttribute, System);
@@ -172,7 +177,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (Date is { }) result.Add(_dateAttribute, Date);
             if (Abstract is { }) result.Add(_abstractAttribute, Abstract);
             if (DisplayLanguage is { }) result.Add(_displayAttribute, DisplayLanguage);
-
+            if (InferSystem is { }) result.Add(_inferSystemAttribute, InferSystem);
             return result;
         }
     }
