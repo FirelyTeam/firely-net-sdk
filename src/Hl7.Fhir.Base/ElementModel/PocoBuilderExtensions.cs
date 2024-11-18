@@ -17,16 +17,16 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoBuilderExtensions
     {
         public static Base ToPoco(this ISourceNode source, ModelInspector inspector, Type pocoType = null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(inspector, settings).BuildFrom(source, pocoType);
+            new LegacyPocoBuilder(inspector, settings).BuildFrom(source, pocoType);
 
         public static T ToPoco<T>(this ISourceNode source, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
                (T)source.ToPoco(inspector, typeof(T), settings);
 
         public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
-               (T)new PocoBuilderNew(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
+               (T)new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
 
         public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) =>
-               new PocoBuilderNew(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
+               new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
 
         public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null) =>
                 @base.ToTypedElement(inspector, rootName).ToSourceNode();

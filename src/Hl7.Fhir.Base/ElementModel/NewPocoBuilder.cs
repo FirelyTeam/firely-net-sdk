@@ -25,7 +25,7 @@ namespace Hl7.Fhir.ElementModel;
 /// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes
 /// <param name="settings">Configuration for building the POCO.</param>
 /// used in the construction.</param>
-internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? settings = null)
+internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
 {
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
@@ -79,20 +79,12 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
             var childClassMapping = classMappingForElement(child, propertyMapping);
             var convertedValue = readFromElement(child, childClassMapping);
 
-            try
-            {
-                setOrAddProperty(child, newInstance, convertedValue, propertyMapping);
-            }
-            catch (InvalidCastException e)
-            {
-                // In case the InstanceType does not agree with the actual POCO type of the property, the
-                // setOrAddProperty method will throw an InvalidCastException. In this case, we should salvage
-                // the data we have so far, and put it in an annotation.
-                // This will be fixed in https://github.com/FirelyTeam/firely-net-sdk/issues/2908.
-                // For now, just throw.
-                Console.WriteLine(e);
-                throw;
-            }
+
+            // In case the convertedValue does not agree with the actual POCO type of the property, this
+            // method will throw an InvalidCastException. Later, we could salvage
+            // the data we have so far, and put it in an annotation.
+            // This will be fixed in https://github.com/FirelyTeam/firely-net-sdk/issues/2908.
+            setOrAddProperty(child, newInstance, convertedValue, propertyMapping);
         }
 
         return (Base)newInstance;
@@ -233,8 +225,16 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
         // If there are, just add this new value.
         if (existing is IList list)
         {
-            list.Add(convertedValue);
-            return;
+            try
+            {
+                list.Add(convertedValue);
+                return;
+            }
+            catch (ArgumentException)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot add element of type '{convertedValue.GetType()}' to property '{node.Name}' of type '{list.GetType()}'.");
+            }
         }
 
         // If we already have a value, but it's not a list, we know we are now dealing with a list.
@@ -247,7 +247,17 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
             var newList = buildNewList(propertyMapping, dynamicTypeHint);
             newList.Add(existing);
             newList.Add(convertedValue);
-            target[node.Name] = newList;
+
+            try
+            {
+                target[node.Name] = newList;
+            }
+            catch (InvalidCastException)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot assign list of type '{newList.GetType()}' to property '{node.Name}' of type '{target.GetType()}'.");
+            }
+
             return;
         }
 
@@ -256,6 +266,8 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
         {
             var newList = buildNewList(propertyMapping, convertedValue.GetType());
             newList.Add(convertedValue);
+
+            // This should always work, so I am not catching InvalidCastException here.
             target[node.Name] = newList;
             return;
         }
@@ -263,10 +275,17 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
         // No existing value, and not a list, just set the element.
         // Note that some exceptional primitive properties (like Extension.url and Element.id) are
         // represented in the POCO as .NET primitives, not as FHIR datatypes, so we need to get the value out.
-        if (propertyMapping?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
-            target[node.Name] = value;
-        else
-            target[node.Name] = convertedValue;
+        try
+        {
+            if (propertyMapping?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
+                target[node.Name] = value;
+            else
+                target[node.Name] = convertedValue;
+        }
+        catch (InvalidCastException)
+        {
+            throw Error.InvalidOperation($"Cannot assign data of type {convertedValue.GetType()} to to property '{node.Name}'.");
+        }
     }
 
     /// <summary>

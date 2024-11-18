@@ -16,9 +16,9 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class PocoBuilder : IExceptionSource
+    internal class LegacyPocoBuilder : IExceptionSource
     {
-        public PocoBuilder(ModelInspector inspector, PocoBuilderSettings settings = null)
+        public LegacyPocoBuilder(ModelInspector inspector, PocoBuilderSettings settings = null)
         {
             _settings = settings?.Clone() ?? new PocoBuilderSettings();
             _inspector = inspector ?? throw new ArgumentNullException(nameof(inspector));
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Serialization
 
             Base build()
             {
-                var newBuilder = new PocoBuilderNew(_inspector, _settings);
+                var newBuilder = new NewPocoBuilder(_inspector, _settings);
                 return newBuilder.BuildFrom(source);
             }
         }

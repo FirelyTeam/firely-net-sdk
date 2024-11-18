@@ -151,7 +151,7 @@ public class TypedElementToPocoTests
     private Base toPoco(ITypedElement source)
     {
         // Construct a demo STU3 model inspector
-        var builder = new PocoBuilderNew(ModelInfo.ModelInspector);
+        var builder = new NewPocoBuilder(ModelInfo.ModelInspector);
         return builder.BuildFrom(source);
     }
 }
