@@ -27,8 +27,6 @@ namespace Hl7.Fhir.ElementModel;
 /// used in the construction.</param>
 internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? settings = null)
 {
-    public PocoBuilderSettings? Settings { get; } = settings;
-
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
     /// </summary>
@@ -36,13 +34,13 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
-        var mappings = ElementFactory.ForElement(source, null, inspector);
-        return readFromElement(source, mappings);
+        var classMapping = classMappingForElement(source, null);
+        return readFromElement(source, classMapping);
     }
 
-    private Base readFromElement(ITypedElement node, ElementFactory factory)
+    private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
-        IDictionary<string, object> newInstance = buildNewInstance(factory);
+        IDictionary<string, object> newInstance = buildNewInstance(classMapping);
 
         // Capture the instance type if this is a dynamic type.
         if(newInstance is IDynamicType dt)
@@ -53,20 +51,37 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
         // to the used ObjectValue, if not, just set the value immediately on the DynamicPrimitive.
         if (node.Value is { } value)
         {
-            newInstance["value"] = newInstance is DynamicPrimitive ?
+            var objectValue = newInstance is DynamicPrimitive ?
                 value :
                 convertTypedElementValue(value, node.InstanceType);
+            newInstance["value"] = objectValue;
+
+            if (settings?.AllowUnrecognizedEnums == false && classMapping.EnumType is not null && objectValue is string enumLiteral)
+            {
+                // Backwards-compatible check for enums. Although our POCOs accept strings rather
+                // than enum values, this check is still useful for catching typos in the data and may
+                // be used by older code.
+                if (EnumUtility.ParseLiteral(enumLiteral, classMapping.EnumType) == null)
+                    raiseFormatError(
+                        $"Literal '{value}' is not a valid value for enumeration '{classMapping.EnumType.Name}'",
+                        node.Location);
+            }
         }
 
         // Now, read the children
         foreach (var child in node.Children())
         {
-            var childFactory = ElementFactory.ForElement(child, factory.ClassMapping, inspector);
-            var convertedValue = readFromElement(child, childFactory);
+            var propertyMapping = classMapping.FindMappedElementByName(child.Name);
+
+            if (propertyMapping is null && settings?.IgnoreUnknownMembers == false)
+                raiseFormatError($"Encountered unknown member '{child.Name}' while de-serializing", child.Location);
+
+            var childClassMapping = classMappingForElement(child, propertyMapping);
+            var convertedValue = readFromElement(child, childClassMapping);
 
             try
             {
-                setOrAddProperty(child, newInstance, convertedValue, childFactory);
+                setOrAddProperty(child, newInstance, convertedValue, propertyMapping);
             }
             catch (InvalidCastException e)
             {
@@ -83,74 +98,181 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
         return (Base)newInstance;
     }
 
-    private static IDictionary<string, object> buildNewInstance(ElementFactory factory)
+    private static void raiseFormatError(string message, string location)
     {
-        return factory.MakeInstance() switch
+        throw Error.Format("While building a POCO: " + message, location);
+    }
+
+    private static IDictionary<string, object> buildNewInstance(ClassMapping mapping)
+    {
+        return mapping.Factory() switch
         {
             IDictionary<string,object> b => b,
-            _ => throw Error.InvalidOperation($"Class Factory for '{factory.ClassMapping.Name}' did not return a dictionary, which is required for " +
+            _ => throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a dictionary, which is required for " +
                         $"building up POCO's dynamically.")
         };
     }
 
+    private IList buildNewList(PropertyMapping? propertyMapping, Type elementType)
+    {
+        // For lists, we need to create a list of exactly the type that the property expects,
+        // if we don't know the property type, we'll just create a list of Base, so any type
+        // that we find will fit (it's going in the overflow anyway, so we can chose the
+        // type of list to use).
+        if (propertyMapping is null)
+        {
+            var elementMapping = getClassMapping(elementType);
+            return elementMapping.ListFactory();
+        }
+
+        var propertyClassMapping = getClassMapping(propertyMapping.ImplementingType);
+        return propertyClassMapping?.ListFactory() ?? new List<Base>();
+    }
+
+    private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping)
+    {
+        var propertyClassMapping = propertyMapping is not null
+            ? getClassMapping(propertyMapping.ImplementingType)
+            : null;
+
+        // Normal case, we have a property mapping, and it's not abstract, so we can use the actual
+        // type used by the POCO. The "IsPrimitive" check is a bit of a hack, and is there to avoid
+        // us coming up with .NET string mappings for Extension.url and Element.id. This can go when
+        // we have solved https://github.com/FirelyTeam/firely-net-sdk/issues/2963.
+        if (propertyClassMapping is { NativeType.IsAbstract: false, IsPrimitive: false })
+            return propertyClassMapping;
+
+        // Otherwise, let's use the ITypedElement's instance type.
+        if (node.InstanceType is { } instanceType &&
+            inspector.FindClassMapping(instanceType) is { NativeType.IsAbstract: false } mapping)
+            return mapping;
+
+        // No useable concrete type in the property, nor in the instance type, so we need to create
+        // one of our dynamic flavours. If we do have an abstract type of the property, we can use that
+        // as a hint.
+        if(propertyClassMapping is not null)
+            return determineBestDynamicMappingForType(propertyClassMapping.NativeType);
+
+        // Failing all that, guess what the best dynamic type is based on the instance data.
+        return determineBestDynamicMappingForElement(node);
+    }
+
+    private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
+    private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
+    private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
+
+    /// <summary>
+    /// Determine the "best" dynamic type, based on the abstract type of a POCO property.
+    /// </summary>
+    /// <exception cref="NotSupportedException">The POCO's property is not a Resource or DataType
+    /// subclass.</exception>
+    private ClassMapping determineBestDynamicMappingForType(Type elementType)
+    {
+        if(typeof(Resource).IsAssignableFrom(elementType))
+            return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME);
+        if(typeof(PrimitiveType).IsAssignableFrom(elementType))
+            return getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME);
+        if(typeof(DataType).IsAssignableFrom(elementType))
+            return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+
+        throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
+    }
+
+    /// <summary>
+    /// Determine the "best" dynamic type based on the actual contents of the ITypedElement.
+    /// </summary>
+    private ClassMapping determineBestDynamicMappingForElement(ITypedElement node)
+    {
+        if (node.Value is not null || (node.InstanceType is { } it && char.IsLower(it[0])))
+            return determineBestPrimitiveMapping();
+
+        if (node.Annotation<IResourceTypeSupplier>() is not null)
+            return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME);
+
+        return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+
+        // Instead of just picking a DynamicPrimitive, we can try to pick the best primitive type
+        // based on the ITypedElement's value.
+        ClassMapping determineBestPrimitiveMapping()
+        {
+            return node.Value switch
+            {
+                ET.DateTime => getClassMapping<FhirDateTime>(),
+                ET.Date => getClassMapping<Date>(),
+                ET.Time => getClassMapping<Time>(),
+                decimal => getClassMapping<FhirDecimal>(),
+                bool => getClassMapping<FhirBoolean>(),
+                int => getClassMapping<Integer>(),
+                long => getClassMapping<Integer64>(),
+                string => getClassMapping<FhirString>(),
+                _ => getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME)
+            };
+        }
+    }
+
+    private ClassMapping getClassMapping(string dynTypeName) =>
+        inspector.FindClassMapping(dynTypeName) ??
+        throw Error.InvalidOperation($"Cannot find ClassMapping for type '{dynTypeName}'.");
+
+    private ClassMapping getClassMapping(Type t) =>
+        inspector.FindOrImportClassMapping(t) ??
+        throw Error.InvalidOperation($"Cannot find ClassMapping for type '{t.Name}'.");
+
+    private ClassMapping getClassMapping<T>() => getClassMapping(typeof(T));
+
     private void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
-        Base convertedValue, ElementFactory factory)
+        Base convertedValue, PropertyMapping? propertyMapping)
     {
         // If this element *could* be repeating (either we don't know the definition, or it really is defined
         // to be a collection, then check to see if there are already items present.
-        var couldBeCollection = (node.Definition is null && factory.ElementMapping is null)
+        var couldBeCollection = (node.Definition is null && propertyMapping is null)
                                 || node.Definition?.IsCollection == true
-                                || factory.ElementMapping?.IsCollection == true;
+                                || propertyMapping?.IsCollection == true;
         var existing = couldBeCollection && target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
 
         // If there are, just add this new value.
         if (existing is IList list)
         {
             list.Add(convertedValue);
+            return;
         }
 
         // If we already have a value, but it's not a list, we know we are now dealing with a list.
         // So, create a list, and add both the existing and the new value. Note that assigning a list to
         // that same property only works if this element is in the overflow and we did not know it was a list
         // before. In all other cases, the indexed assignment will fail.
-        else if(existing is not null)
+        if(existing is not null)
         {
-            // Due to List<T> being invariant, we need to create a new list of the type of the property,
-            // not of the instance.
-            var newList =  factory.MakeList();
+            var dynamicTypeHint = existing.GetType() != convertedValue.GetType() ? typeof(Base) : existing.GetType();
+            var newList = buildNewList(propertyMapping, dynamicTypeHint);
             newList.Add(existing);
             newList.Add(convertedValue);
             target[node.Name] = newList;
+            return;
         }
 
         // No existing value, but we know it's a collection, so create a list and add the element.
-        else if (node.Definition?.IsCollection == true || factory.ElementMapping?.IsCollection == true)
+        if (node.Definition?.IsCollection == true || propertyMapping?.IsCollection == true)
         {
-            // Due to List<T> being invariant, we need to create a new list of the type of the property,
-            // not of the instance.
-            // Due to List<T> being invariant, we need to create a new list of the type of the property,
-            // not of the instance.
-            var newList = factory.MakeList();
+            var newList = buildNewList(propertyMapping, convertedValue.GetType());
             newList.Add(convertedValue);
             target[node.Name] = newList;
+            return;
         }
 
         // No existing value, and not a list, just set the element.
+        // Note that some exceptional primitive properties (like Extension.url and Element.id) are
+        // represented in the POCO as .NET primitives, not as FHIR datatypes, so we need to get the value out.
+        if (propertyMapping?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
+            target[node.Name] = value;
         else
-        {
-            // Note that some exceptional primitive properties (like Extension.url and Element.id) are
-            // represented in the POCO as .NET primitives, not as FHIR datatypes, so we need to get the value out.
-            if (factory.ElementMapping?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
-                target[node.Name] = value;
-            else
-                target[node.Name] = convertedValue;
-        }
+            target[node.Name] = convertedValue;
     }
 
     /// <summary>
     /// Convert the value of a typed element to a value that can be set on a POCO property.
     /// </summary>
-    private static object convertTypedElementValue(object value, string? instanceType)
+    private object convertTypedElementValue(object value, string? instanceType)
     {
         return value switch
         {
@@ -170,130 +292,5 @@ internal class PocoBuilderNew(ModelInspector inspector, PocoBuilderSettings? set
             // All other primitives are one-on-one convertible to their .NET counterparts.
             _ => value
         };
-    }
-
-
-    private class ElementFactory
-    {
-        private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
-        private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
-        private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
-
-        private ElementFactory(ClassMapping classMapping, PropertyMapping? elementMapping, Func<IList> listFactory)
-        {
-            _listFactory = listFactory;
-            ElementMapping = elementMapping;
-            ClassMapping = classMapping;
-        }
-
-        private ElementFactory(ClassMapping classMapping, PropertyMapping? elementMapping)
-        {
-            _listFactory = classMapping.ListFactory;
-            ElementMapping = elementMapping;
-            ClassMapping = classMapping;
-        }
-
-        public object MakeInstance() => ClassMapping.Factory();
-        public IList MakeList() => _listFactory();
-
-        private readonly Func<IList> _listFactory;
-
-        public PropertyMapping? ElementMapping { get; }
-        public ClassMapping ClassMapping { get; }
-
-        public static ElementFactory ForElement(ITypedElement node, ClassMapping? parentMapping, ModelInspector inspector)
-        {
-            var propertyMapping = parentMapping?.FindMappedElementByName(node.Name);
-            var elementClassMapping = propertyMapping is not null
-                ? getClassMapping(propertyMapping.ImplementingType, inspector)
-                : null;
-
-            // If the node is a code, wuse the more specific property type (a Code<T>) instead of the instance type.
-            if (node.InstanceType == "code" && propertyMapping?.NativeProperty.PropertyType.IsConstructedGenericType == true)
-                return new ElementFactory(elementClassMapping!, propertyMapping);
-
-            // Normal case: Resolve the instance type through the inspector.
-            // For creating a list, normally we should use the ListFactory of the POCO property's class mapping,
-            // but if that is unknown, use the ListFactory of the instance type instead.
-            // The reason we need to do this is that the property may be a List of a more generic type than the instance,
-            // and since List<T> is invariant, we need to create a List with the correct base class, as specified
-            // in the POCO.
-            if (node.InstanceType is { } instanceType &&
-                inspector.FindClassMapping(instanceType) is { NativeType.IsAbstract: false } mapping)
-            {
-                return new ElementFactory(mapping, propertyMapping,
-                    elementClassMapping?.ListFactory ?? mapping.ListFactory);
-            }
-
-            // No instance type, or we're dealing with an abstract type (e.g. Backbone).
-            // Try to figure out the best concrete type based on the property's type, if available.
-            if (elementClassMapping is not null)
-            {
-                return !elementClassMapping.NativeType.IsAbstract
-                    ? new ElementFactory(elementClassMapping, propertyMapping)
-                    : new ElementFactory(
-                        determineDynamicMappingForAbstractElement(elementClassMapping.NativeType, inspector),
-                        propertyMapping);
-            }
-
-            // Failing all that, guess what the best dynamic type is based on the instance data.
-            return new ElementFactory(determineDynamicMapping(node, inspector), propertyMapping);
-        }
-
-        private static ClassMapping determineDynamicMappingForAbstractElement(Type elementType, ModelInspector inspector)
-        {
-            if(typeof(Resource).IsAssignableFrom(elementType))
-                return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME, inspector);
-            if(typeof(PrimitiveType).IsAssignableFrom(elementType))
-                return getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME, inspector);
-            if(typeof(DataType).IsAssignableFrom(elementType))
-                return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME, inspector);
-
-            throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
-        }
-
-        private static ClassMapping determineDynamicMapping(ITypedElement node, ModelInspector inspector)
-        {
-            // Ok, so the node does not have a type, or the type is not known. So, let's use one
-            // of the applicable dynamic types. If the node has a resource name (but it was unknown),
-            // we'll create a DynamicResource. If the node has a Value, it's a DynamicPrimitive,
-            // otherwise it's a DynamicDataType.
-            // Design question: there might be a "strict" option, where we will not create Dynamic types
-            // for unknown types, but throw an error instead.
-            if (node.Value is not null || (node.InstanceType is { } it && char.IsLower(it[0])))
-                return determineBestPrimitiveMapping(node, inspector);
-
-            if (node.Annotation<IResourceTypeSupplier>() is not null)
-                return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME, inspector);
-
-            return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME, inspector);
-        }
-
-        private static ClassMapping getClassMapping(string dynTypeName, ModelInspector inspector) =>
-            inspector.FindClassMapping(dynTypeName) ??
-            throw Error.InvalidOperation($"Cannot find ClassMapping for type '{dynTypeName}'.");
-
-        private static ClassMapping getClassMapping(Type t, ModelInspector inspector) =>
-            inspector.FindOrImportClassMapping(t) ??
-            throw Error.InvalidOperation($"Cannot find ClassMapping for type '{t.Name}'.");
-
-        private static ClassMapping getClassMapping<T>(ModelInspector inspector) =>
-            getClassMapping(typeof(T), inspector);
-
-        private static ClassMapping determineBestPrimitiveMapping(ITypedElement node, ModelInspector inspector)
-        {
-            return node.Value switch
-            {
-                ET.DateTime => getClassMapping<FhirDateTime>(inspector),
-                ET.Date => getClassMapping<Date>(inspector),
-                ET.Time => getClassMapping<Time>(inspector),
-                decimal => getClassMapping<FhirDecimal>(inspector),
-                bool => getClassMapping<FhirBoolean>(inspector),
-                int => getClassMapping<Integer>(inspector),
-                long => getClassMapping<Integer64>(inspector),
-                string => getClassMapping<FhirString>(inspector),
-                _ => getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME, inspector)
-            };
-        }
     }
 }

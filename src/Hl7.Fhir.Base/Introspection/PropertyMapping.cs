@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Introspection
 
         private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)
         {
-            var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
+            var isValueElement = valueElementAttr.IsPrimitiveValue;
 
             return !isValueElement || isAllowedNativeTypeForDataTypeValue(prop.PropertyType)
                 ? isValueElement

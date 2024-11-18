@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Serialization
 
             Base build()
             {
-                var newBuilder = new PocoBuilderNew(_inspector, new PocoBuilderSettings());
+                var newBuilder = new PocoBuilderNew(_inspector, _settings);
                 return newBuilder.BuildFrom(source);
             }
         }

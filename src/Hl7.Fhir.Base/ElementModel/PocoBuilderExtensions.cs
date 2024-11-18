@@ -23,10 +23,10 @@ namespace Hl7.Fhir.ElementModel
                (T)source.ToPoco(inspector, typeof(T), settings);
 
         public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
-               (T)new PocoBuilderNew(inspector, settings).BuildFrom(element);
+               (T)new PocoBuilderNew(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
 
         public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) =>
-               (Base)new PocoBuilderNew(inspector, settings).BuildFrom(element);
+               new PocoBuilderNew(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
 
         public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null) =>
                 @base.ToTypedElement(inspector, rootName).ToSourceNode();
