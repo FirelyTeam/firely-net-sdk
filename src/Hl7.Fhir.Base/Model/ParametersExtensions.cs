@@ -11,7 +11,6 @@ namespace Hl7.Fhir.Model
         private const string CODEATTRIBUTE = "code";
         private const string URLATTRIBUTE = "url";
         private const string SYSTEMATTRIBUTE = "system";
-        private const string USERATTRIBUTE = "inferSystem";
         private const string CONTEXTATTRIBUTE = "context";
 
         public static bool TryGetDuplicates(this Parameters parameters, out IEnumerable<string> duplicates)
