@@ -182,34 +182,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Subject) { if (elem != null) yield return elem; }
-        if (SymptomConditionEffect != null) yield return SymptomConditionEffect;
-        if (Classification != null) yield return Classification;
-        if (FrequencyOfOccurrence != null) yield return FrequencyOfOccurrence;
-        foreach (var elem in Population) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
-        if (SymptomConditionEffect != null) yield return new ElementValue("symptomConditionEffect", SymptomConditionEffect);
-        if (Classification != null) yield return new ElementValue("classification", Classification);
-        if (FrequencyOfOccurrence != null) yield return new ElementValue("frequencyOfOccurrence", FrequencyOfOccurrence);
-        foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

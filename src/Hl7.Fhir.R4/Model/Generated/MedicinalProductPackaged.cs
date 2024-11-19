@@ -141,28 +141,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (OuterPackaging != null) yield return OuterPackaging;
-          if (ImmediatePackaging != null) yield return ImmediatePackaging;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (OuterPackaging != null) yield return new ElementValue("outerPackaging", OuterPackaging);
-          if (ImmediatePackaging != null) yield return new ElementValue("immediatePackaging", ImmediatePackaging);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -463,48 +441,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-          if (Type != null) yield return Type;
-          if (Quantity != null) yield return Quantity;
-          foreach (var elem in Material) { if (elem != null) yield return elem; }
-          foreach (var elem in AlternateMaterial) { if (elem != null) yield return elem; }
-          foreach (var elem in Device) { if (elem != null) yield return elem; }
-          foreach (var elem in ManufacturedItem) { if (elem != null) yield return elem; }
-          foreach (var elem in PackageItem) { if (elem != null) yield return elem; }
-          if (PhysicalCharacteristics != null) yield return PhysicalCharacteristics;
-          foreach (var elem in OtherCharacteristics) { if (elem != null) yield return elem; }
-          foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return elem; }
-          foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-          foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", elem); }
-          foreach (var elem in AlternateMaterial) { if (elem != null) yield return new ElementValue("alternateMaterial", elem); }
-          foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
-          foreach (var elem in ManufacturedItem) { if (elem != null) yield return new ElementValue("manufacturedItem", elem); }
-          foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
-          if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", PhysicalCharacteristics);
-          foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", elem); }
-          foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", elem); }
-          foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -831,42 +767,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(PackageItem, otherT.PackageItem)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in Subject) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        if (LegalStatusOfSupply != null) yield return LegalStatusOfSupply;
-        foreach (var elem in MarketingStatus) { if (elem != null) yield return elem; }
-        if (MarketingAuthorization != null) yield return MarketingAuthorization;
-        foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
-        foreach (var elem in BatchIdentifier) { if (elem != null) yield return elem; }
-        foreach (var elem in PackageItem) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
-        foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", elem); }
-        if (MarketingAuthorization != null) yield return new ElementValue("marketingAuthorization", MarketingAuthorization);
-        foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
-        foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", elem); }
-        foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

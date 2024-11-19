@@ -328,44 +328,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Request != null) yield return Request;
-        if (Response != null) yield return Response;
-        if (StatusDateElement != null) yield return StatusDateElement;
-        if (CreatedElement != null) yield return CreatedElement;
-        if (Target != null) yield return Target;
-        if (Provider != null) yield return Provider;
-        if (Organization != null) yield return Organization;
-        if (PaymentStatus != null) yield return PaymentStatus;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Request != null) yield return new ElementValue("request", Request);
-        if (Response != null) yield return new ElementValue("response", Response);
-        if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (Target != null) yield return new ElementValue("target", Target);
-        if (Provider != null) yield return new ElementValue("provider", Provider);
-        if (Organization != null) yield return new ElementValue("organization", Organization);
-        if (PaymentStatus != null) yield return new ElementValue("paymentStatus", PaymentStatus);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

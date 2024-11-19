@@ -522,48 +522,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (GroupElement != null) yield return GroupElement;
-          if (GroupDisplayElement != null) yield return GroupDisplayElement;
-          if (SubGroupElement != null) yield return SubGroupElement;
-          if (SubGroupDisplayElement != null) yield return SubGroupDisplayElement;
-          if (PlanElement != null) yield return PlanElement;
-          if (PlanDisplayElement != null) yield return PlanDisplayElement;
-          if (SubPlanElement != null) yield return SubPlanElement;
-          if (SubPlanDisplayElement != null) yield return SubPlanDisplayElement;
-          if (ClassElement != null) yield return ClassElement;
-          if (ClassDisplayElement != null) yield return ClassDisplayElement;
-          if (SubClassElement != null) yield return SubClassElement;
-          if (SubClassDisplayElement != null) yield return SubClassDisplayElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (GroupElement != null) yield return new ElementValue("group", GroupElement);
-          if (GroupDisplayElement != null) yield return new ElementValue("groupDisplay", GroupDisplayElement);
-          if (SubGroupElement != null) yield return new ElementValue("subGroup", SubGroupElement);
-          if (SubGroupDisplayElement != null) yield return new ElementValue("subGroupDisplay", SubGroupDisplayElement);
-          if (PlanElement != null) yield return new ElementValue("plan", PlanElement);
-          if (PlanDisplayElement != null) yield return new ElementValue("planDisplay", PlanDisplayElement);
-          if (SubPlanElement != null) yield return new ElementValue("subPlan", SubPlanElement);
-          if (SubPlanDisplayElement != null) yield return new ElementValue("subPlanDisplay", SubPlanDisplayElement);
-          if (ClassElement != null) yield return new ElementValue("class", ClassElement);
-          if (ClassDisplayElement != null) yield return new ElementValue("classDisplay", ClassDisplayElement);
-          if (SubClassElement != null) yield return new ElementValue("subClass", SubClassElement);
-          if (SubClassDisplayElement != null) yield return new ElementValue("subClassDisplay", SubClassDisplayElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -1095,56 +1053,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Contract, otherT.Contract)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Type != null) yield return Type;
-        if (PolicyHolder != null) yield return PolicyHolder;
-        if (Subscriber != null) yield return Subscriber;
-        if (SubscriberIdElement != null) yield return SubscriberIdElement;
-        if (Beneficiary != null) yield return Beneficiary;
-        if (Relationship != null) yield return Relationship;
-        if (Period != null) yield return Period;
-        foreach (var elem in Payor) { if (elem != null) yield return elem; }
-        if (Grouping != null) yield return Grouping;
-        if (DependentElement != null) yield return DependentElement;
-        if (SequenceElement != null) yield return SequenceElement;
-        if (OrderElement != null) yield return OrderElement;
-        if (NetworkElement != null) yield return NetworkElement;
-        foreach (var elem in Contract) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (PolicyHolder != null) yield return new ElementValue("policyHolder", PolicyHolder);
-        if (Subscriber != null) yield return new ElementValue("subscriber", Subscriber);
-        if (SubscriberIdElement != null) yield return new ElementValue("subscriberId", SubscriberIdElement);
-        if (Beneficiary != null) yield return new ElementValue("beneficiary", Beneficiary);
-        if (Relationship != null) yield return new ElementValue("relationship", Relationship);
-        if (Period != null) yield return new ElementValue("period", Period);
-        foreach (var elem in Payor) { if (elem != null) yield return new ElementValue("payor", elem); }
-        if (Grouping != null) yield return new ElementValue("grouping", Grouping);
-        if (DependentElement != null) yield return new ElementValue("dependent", DependentElement);
-        if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
-        if (OrderElement != null) yield return new ElementValue("order", OrderElement);
-        if (NetworkElement != null) yield return new ElementValue("network", NetworkElement);
-        foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

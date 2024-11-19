@@ -311,40 +311,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Request != null) yield return Request;
-        if (OutcomeElement != null) yield return OutcomeElement;
-        if (DispositionElement != null) yield return DispositionElement;
-        if (CreatedElement != null) yield return CreatedElement;
-        if (Organization != null) yield return Organization;
-        if (RequestProvider != null) yield return RequestProvider;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Request != null) yield return new ElementValue("request", Request);
-        if (OutcomeElement != null) yield return new ElementValue("outcome", OutcomeElement);
-        if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (Organization != null) yield return new ElementValue("organization", Organization);
-        if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

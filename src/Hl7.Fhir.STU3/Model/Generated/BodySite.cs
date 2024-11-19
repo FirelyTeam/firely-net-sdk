@@ -256,38 +256,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (ActiveElement != null) yield return ActiveElement;
-        if (Code != null) yield return Code;
-        foreach (var elem in Qualifier) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in Image) { if (elem != null) yield return elem; }
-        if (Patient != null) yield return Patient;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
-        if (Code != null) yield return new ElementValue("code", Code);
-        foreach (var elem in Qualifier) { if (elem != null) yield return new ElementValue("qualifier", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

@@ -367,48 +367,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Request != null) yield return Request;
-        if (Response != null) yield return Response;
-        if (CreatedElement != null) yield return CreatedElement;
-        if (Provider != null) yield return Provider;
-        if (Payment != null) yield return Payment;
-        if (PaymentDateElement != null) yield return PaymentDateElement;
-        if (Payee != null) yield return Payee;
-        if (Recipient != null) yield return Recipient;
-        if (Amount != null) yield return Amount;
-        if (PaymentStatus != null) yield return PaymentStatus;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Request != null) yield return new ElementValue("request", Request);
-        if (Response != null) yield return new ElementValue("response", Response);
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (Provider != null) yield return new ElementValue("provider", Provider);
-        if (Payment != null) yield return new ElementValue("payment", Payment);
-        if (PaymentDateElement != null) yield return new ElementValue("paymentDate", PaymentDateElement);
-        if (Payee != null) yield return new ElementValue("payee", Payee);
-        if (Recipient != null) yield return new ElementValue("recipient", Recipient);
-        if (Amount != null) yield return new ElementValue("amount", Amount);
-        if (PaymentStatus != null) yield return new ElementValue("paymentStatus", PaymentStatus);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

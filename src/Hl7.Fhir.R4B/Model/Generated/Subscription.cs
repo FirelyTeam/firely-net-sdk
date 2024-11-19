@@ -295,32 +295,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TypeElement != null) yield return TypeElement;
-          if (EndpointElement != null) yield return EndpointElement;
-          if (PayloadElement != null) yield return PayloadElement;
-          foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-          if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
-          if (PayloadElement != null) yield return new ElementValue("payload", PayloadElement);
-          foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -622,38 +596,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Channel, otherT.Channel)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (StatusElement != null) yield return StatusElement;
-        foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        if (EndElement != null) yield return EndElement;
-        if (ReasonElement != null) yield return ReasonElement;
-        if (CriteriaElement != null) yield return CriteriaElement;
-        if (ErrorElement != null) yield return ErrorElement;
-        if (Channel != null) yield return Channel;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        if (EndElement != null) yield return new ElementValue("end", EndElement);
-        if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
-        if (CriteriaElement != null) yield return new ElementValue("criteria", CriteriaElement);
-        if (ErrorElement != null) yield return new ElementValue("error", ErrorElement);
-        if (Channel != null) yield return new ElementValue("channel", Channel);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

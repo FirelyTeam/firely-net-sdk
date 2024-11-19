@@ -839,54 +839,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Bounds != null) yield return Bounds;
-          if (CountElement != null) yield return CountElement;
-          if (CountMaxElement != null) yield return CountMaxElement;
-          if (DurationElement != null) yield return DurationElement;
-          if (DurationMaxElement != null) yield return DurationMaxElement;
-          if (DurationUnitElement != null) yield return DurationUnitElement;
-          if (FrequencyElement != null) yield return FrequencyElement;
-          if (FrequencyMaxElement != null) yield return FrequencyMaxElement;
-          if (PeriodElement != null) yield return PeriodElement;
-          if (PeriodMaxElement != null) yield return PeriodMaxElement;
-          if (PeriodUnitElement != null) yield return PeriodUnitElement;
-          foreach (var elem in DayOfWeekElement) { if (elem != null) yield return elem; }
-          foreach (var elem in TimeOfDayElement) { if (elem != null) yield return elem; }
-          foreach (var elem in WhenElement) { if (elem != null) yield return elem; }
-          if (OffsetElement != null) yield return OffsetElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Bounds != null) yield return new ElementValue("bounds", Bounds);
-          if (CountElement != null) yield return new ElementValue("count", CountElement);
-          if (CountMaxElement != null) yield return new ElementValue("countMax", CountMaxElement);
-          if (DurationElement != null) yield return new ElementValue("duration", DurationElement);
-          if (DurationMaxElement != null) yield return new ElementValue("durationMax", DurationMaxElement);
-          if (DurationUnitElement != null) yield return new ElementValue("durationUnit", DurationUnitElement);
-          if (FrequencyElement != null) yield return new ElementValue("frequency", FrequencyElement);
-          if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", FrequencyMaxElement);
-          if (PeriodElement != null) yield return new ElementValue("period", PeriodElement);
-          if (PeriodMaxElement != null) yield return new ElementValue("periodMax", PeriodMaxElement);
-          if (PeriodUnitElement != null) yield return new ElementValue("periodUnit", PeriodUnitElement);
-          foreach (var elem in DayOfWeekElement) { if (elem != null) yield return new ElementValue("dayOfWeek", elem); }
-          foreach (var elem in TimeOfDayElement) { if (elem != null) yield return new ElementValue("timeOfDay", elem); }
-          foreach (var elem in WhenElement) { if (elem != null) yield return new ElementValue("when", elem); }
-          if (OffsetElement != null) yield return new ElementValue("offset", OffsetElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -1124,30 +1076,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in EventElement) { if (elem != null) yield return elem; }
-        if (Repeat != null) yield return Repeat;
-        if (Code != null) yield return Code;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", elem); }
-        if (Repeat != null) yield return new ElementValue("repeat", Repeat);
-        if (Code != null) yield return new ElementValue("code", Code);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

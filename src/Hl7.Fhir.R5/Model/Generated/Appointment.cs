@@ -3202,34 +3202,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in Type) { if (elem != null) yield return elem; }
-          if (Period != null) yield return Period;
-          if (Actor != null) yield return Actor;
-          if (RequiredElement != null) yield return RequiredElement;
-          if (StatusElement != null) yield return StatusElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-          if (Period != null) yield return new ElementValue("period", Period);
-          if (Actor != null) yield return new ElementValue("actor", Actor);
-          if (RequiredElement != null) yield return new ElementValue("required", RequiredElement);
-          if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -3601,44 +3573,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(ExcludingRecurrenceIdElement, otherT.ExcludingRecurrenceIdElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Timezone != null) yield return Timezone;
-          if (RecurrenceType != null) yield return RecurrenceType;
-          if (LastOccurrenceDateElement != null) yield return LastOccurrenceDateElement;
-          if (OccurrenceCountElement != null) yield return OccurrenceCountElement;
-          foreach (var elem in OccurrenceDateElement) { if (elem != null) yield return elem; }
-          if (WeeklyTemplate != null) yield return WeeklyTemplate;
-          if (MonthlyTemplate != null) yield return MonthlyTemplate;
-          if (YearlyTemplate != null) yield return YearlyTemplate;
-          foreach (var elem in ExcludingDateElement) { if (elem != null) yield return elem; }
-          foreach (var elem in ExcludingRecurrenceIdElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Timezone != null) yield return new ElementValue("timezone", Timezone);
-          if (RecurrenceType != null) yield return new ElementValue("recurrenceType", RecurrenceType);
-          if (LastOccurrenceDateElement != null) yield return new ElementValue("lastOccurrenceDate", LastOccurrenceDateElement);
-          if (OccurrenceCountElement != null) yield return new ElementValue("occurrenceCount", OccurrenceCountElement);
-          foreach (var elem in OccurrenceDateElement) { if (elem != null) yield return new ElementValue("occurrenceDate", elem); }
-          if (WeeklyTemplate != null) yield return new ElementValue("weeklyTemplate", WeeklyTemplate);
-          if (MonthlyTemplate != null) yield return new ElementValue("monthlyTemplate", MonthlyTemplate);
-          if (YearlyTemplate != null) yield return new ElementValue("yearlyTemplate", YearlyTemplate);
-          foreach (var elem in ExcludingDateElement) { if (elem != null) yield return new ElementValue("excludingDate", elem); }
-          foreach (var elem in ExcludingRecurrenceIdElement) { if (elem != null) yield return new ElementValue("excludingRecurrenceId", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -4062,40 +3996,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (MondayElement != null) yield return MondayElement;
-          if (TuesdayElement != null) yield return TuesdayElement;
-          if (WednesdayElement != null) yield return WednesdayElement;
-          if (ThursdayElement != null) yield return ThursdayElement;
-          if (FridayElement != null) yield return FridayElement;
-          if (SaturdayElement != null) yield return SaturdayElement;
-          if (SundayElement != null) yield return SundayElement;
-          if (WeekIntervalElement != null) yield return WeekIntervalElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (MondayElement != null) yield return new ElementValue("monday", MondayElement);
-          if (TuesdayElement != null) yield return new ElementValue("tuesday", TuesdayElement);
-          if (WednesdayElement != null) yield return new ElementValue("wednesday", WednesdayElement);
-          if (ThursdayElement != null) yield return new ElementValue("thursday", ThursdayElement);
-          if (FridayElement != null) yield return new ElementValue("friday", FridayElement);
-          if (SaturdayElement != null) yield return new ElementValue("saturday", SaturdayElement);
-          if (SundayElement != null) yield return new ElementValue("sunday", SundayElement);
-          if (WeekIntervalElement != null) yield return new ElementValue("weekInterval", WeekIntervalElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -4334,32 +4234,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (DayOfMonthElement != null) yield return DayOfMonthElement;
-          if (NthWeekOfMonth != null) yield return NthWeekOfMonth;
-          if (DayOfWeek != null) yield return DayOfWeek;
-          if (MonthIntervalElement != null) yield return MonthIntervalElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (DayOfMonthElement != null) yield return new ElementValue("dayOfMonth", DayOfMonthElement);
-          if (NthWeekOfMonth != null) yield return new ElementValue("nthWeekOfMonth", NthWeekOfMonth);
-          if (DayOfWeek != null) yield return new ElementValue("dayOfWeek", DayOfWeek);
-          if (MonthIntervalElement != null) yield return new ElementValue("monthInterval", MonthIntervalElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -4500,26 +4374,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(YearIntervalElement, otherT.YearIntervalElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (YearIntervalElement != null) yield return YearIntervalElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (YearIntervalElement != null) yield return new ElementValue("yearInterval", YearIntervalElement);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -5313,88 +5167,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(RecurrenceTemplate, otherT.RecurrenceTemplate)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (CancellationReason != null) yield return CancellationReason;
-        foreach (var elem in Class) { if (elem != null) yield return elem; }
-        foreach (var elem in ServiceCategory) { if (elem != null) yield return elem; }
-        foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
-        foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-        if (AppointmentType != null) yield return AppointmentType;
-        foreach (var elem in Reason) { if (elem != null) yield return elem; }
-        if (Priority != null) yield return Priority;
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in Replaces) { if (elem != null) yield return elem; }
-        foreach (var elem in VirtualService) { if (elem != null) yield return elem; }
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
-        if (PreviousAppointment != null) yield return PreviousAppointment;
-        if (OriginatingAppointment != null) yield return OriginatingAppointment;
-        if (StartElement != null) yield return StartElement;
-        if (EndElement != null) yield return EndElement;
-        if (MinutesDurationElement != null) yield return MinutesDurationElement;
-        foreach (var elem in RequestedPeriod) { if (elem != null) yield return elem; }
-        foreach (var elem in Slot) { if (elem != null) yield return elem; }
-        foreach (var elem in Account) { if (elem != null) yield return elem; }
-        if (CreatedElement != null) yield return CreatedElement;
-        if (CancellationDateElement != null) yield return CancellationDateElement;
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        foreach (var elem in PatientInstruction) { if (elem != null) yield return elem; }
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        if (Subject != null) yield return Subject;
-        foreach (var elem in Participant) { if (elem != null) yield return elem; }
-        if (RecurrenceIdElement != null) yield return RecurrenceIdElement;
-        if (OccurrenceChangedElement != null) yield return OccurrenceChangedElement;
-        foreach (var elem in RecurrenceTemplate) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (CancellationReason != null) yield return new ElementValue("cancellationReason", CancellationReason);
-        foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", elem); }
-        foreach (var elem in ServiceCategory) { if (elem != null) yield return new ElementValue("serviceCategory", elem); }
-        foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
-        foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
-        if (AppointmentType != null) yield return new ElementValue("appointmentType", AppointmentType);
-        foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-        if (Priority != null) yield return new ElementValue("priority", Priority);
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", elem); }
-        foreach (var elem in VirtualService) { if (elem != null) yield return new ElementValue("virtualService", elem); }
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
-        if (PreviousAppointment != null) yield return new ElementValue("previousAppointment", PreviousAppointment);
-        if (OriginatingAppointment != null) yield return new ElementValue("originatingAppointment", OriginatingAppointment);
-        if (StartElement != null) yield return new ElementValue("start", StartElement);
-        if (EndElement != null) yield return new ElementValue("end", EndElement);
-        if (MinutesDurationElement != null) yield return new ElementValue("minutesDuration", MinutesDurationElement);
-        foreach (var elem in RequestedPeriod) { if (elem != null) yield return new ElementValue("requestedPeriod", elem); }
-        foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", elem); }
-        foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (CancellationDateElement != null) yield return new ElementValue("cancellationDate", CancellationDateElement);
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        foreach (var elem in PatientInstruction) { if (elem != null) yield return new ElementValue("patientInstruction", elem); }
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
-        if (RecurrenceIdElement != null) yield return new ElementValue("recurrenceId", RecurrenceIdElement);
-        if (OccurrenceChangedElement != null) yield return new ElementValue("occurrenceChanged", OccurrenceChangedElement);
-        foreach (var elem in RecurrenceTemplate) { if (elem != null) yield return new ElementValue("recurrenceTemplate", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

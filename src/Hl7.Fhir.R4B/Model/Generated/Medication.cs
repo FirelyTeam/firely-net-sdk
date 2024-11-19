@@ -213,30 +213,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Item != null) yield return Item;
-          if (IsActiveElement != null) yield return IsActiveElement;
-          if (Strength != null) yield return Strength;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Item != null) yield return new ElementValue("item", Item);
-          if (IsActiveElement != null) yield return new ElementValue("isActive", IsActiveElement);
-          if (Strength != null) yield return new ElementValue("strength", Strength);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -406,28 +382,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (LotNumberElement != null) yield return LotNumberElement;
-          if (ExpirationDateElement != null) yield return ExpirationDateElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
-          if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -664,40 +618,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Batch, otherT.Batch)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Code != null) yield return Code;
-        if (StatusElement != null) yield return StatusElement;
-        if (Manufacturer != null) yield return Manufacturer;
-        if (Form != null) yield return Form;
-        if (Amount != null) yield return Amount;
-        foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
-        if (Batch != null) yield return Batch;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
-        if (Form != null) yield return new ElementValue("form", Form);
-        if (Amount != null) yield return new ElementValue("amount", Amount);
-        foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
-        if (Batch != null) yield return new ElementValue("batch", Batch);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

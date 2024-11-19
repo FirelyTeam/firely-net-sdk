@@ -134,26 +134,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Content != null) yield return Content;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Content != null) yield return new ElementValue("content", Content);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -656,64 +636,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in Definition) { if (elem != null) yield return elem; }
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        foreach (var elem in PartOf) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (NotDoneElement != null) yield return NotDoneElement;
-        if (NotDoneReason != null) yield return NotDoneReason;
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        foreach (var elem in Medium) { if (elem != null) yield return elem; }
-        if (Subject != null) yield return Subject;
-        foreach (var elem in Recipient) { if (elem != null) yield return elem; }
-        foreach (var elem in Topic) { if (elem != null) yield return elem; }
-        if (Context != null) yield return Context;
-        if (SentElement != null) yield return SentElement;
-        if (ReceivedElement != null) yield return ReceivedElement;
-        if (Sender != null) yield return Sender;
-        foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
-        foreach (var elem in Payload) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (NotDoneElement != null) yield return new ElementValue("notDone", NotDoneElement);
-        if (NotDoneReason != null) yield return new ElementValue("notDoneReason", NotDoneReason);
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", elem); }
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
-        foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
-        if (Context != null) yield return new ElementValue("context", Context);
-        if (SentElement != null) yield return new ElementValue("sent", SentElement);
-        if (ReceivedElement != null) yield return new ElementValue("received", ReceivedElement);
-        if (Sender != null) yield return new ElementValue("sender", Sender);
-        foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
-        foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

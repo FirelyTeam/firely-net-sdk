@@ -420,46 +420,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in ServiceCategory) { if (elem != null) yield return elem; }
-        foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
-        foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-        foreach (var elem in AppointmentType) { if (elem != null) yield return elem; }
-        if (Schedule != null) yield return Schedule;
-        if (StatusElement != null) yield return StatusElement;
-        if (StartElement != null) yield return StartElement;
-        if (EndElement != null) yield return EndElement;
-        if (OverbookedElement != null) yield return OverbookedElement;
-        if (CommentElement != null) yield return CommentElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in ServiceCategory) { if (elem != null) yield return new ElementValue("serviceCategory", elem); }
-        foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
-        foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
-        foreach (var elem in AppointmentType) { if (elem != null) yield return new ElementValue("appointmentType", elem); }
-        if (Schedule != null) yield return new ElementValue("schedule", Schedule);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (StartElement != null) yield return new ElementValue("start", StartElement);
-        if (EndElement != null) yield return new ElementValue("end", EndElement);
-        if (OverbookedElement != null) yield return new ElementValue("overbooked", OverbookedElement);
-        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

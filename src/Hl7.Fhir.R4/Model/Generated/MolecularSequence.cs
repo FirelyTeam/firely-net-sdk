@@ -514,42 +514,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Chromosome != null) yield return Chromosome;
-          if (GenomeBuildElement != null) yield return GenomeBuildElement;
-          if (OrientationElement != null) yield return OrientationElement;
-          if (ReferenceSeqId != null) yield return ReferenceSeqId;
-          if (ReferenceSeqPointer != null) yield return ReferenceSeqPointer;
-          if (ReferenceSeqStringElement != null) yield return ReferenceSeqStringElement;
-          if (StrandElement != null) yield return StrandElement;
-          if (WindowStartElement != null) yield return WindowStartElement;
-          if (WindowEndElement != null) yield return WindowEndElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Chromosome != null) yield return new ElementValue("chromosome", Chromosome);
-          if (GenomeBuildElement != null) yield return new ElementValue("genomeBuild", GenomeBuildElement);
-          if (OrientationElement != null) yield return new ElementValue("orientation", OrientationElement);
-          if (ReferenceSeqId != null) yield return new ElementValue("referenceSeqId", ReferenceSeqId);
-          if (ReferenceSeqPointer != null) yield return new ElementValue("referenceSeqPointer", ReferenceSeqPointer);
-          if (ReferenceSeqStringElement != null) yield return new ElementValue("referenceSeqString", ReferenceSeqStringElement);
-          if (StrandElement != null) yield return new ElementValue("strand", StrandElement);
-          if (WindowStartElement != null) yield return new ElementValue("windowStart", WindowStartElement);
-          if (WindowEndElement != null) yield return new ElementValue("windowEnd", WindowEndElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -881,36 +845,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(VariantPointer, otherT.VariantPointer)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (StartElement != null) yield return StartElement;
-          if (EndElement != null) yield return EndElement;
-          if (ObservedAlleleElement != null) yield return ObservedAlleleElement;
-          if (ReferenceAlleleElement != null) yield return ReferenceAlleleElement;
-          if (CigarElement != null) yield return CigarElement;
-          if (VariantPointer != null) yield return VariantPointer;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (StartElement != null) yield return new ElementValue("start", StartElement);
-          if (EndElement != null) yield return new ElementValue("end", EndElement);
-          if (ObservedAlleleElement != null) yield return new ElementValue("observedAllele", ObservedAlleleElement);
-          if (ReferenceAlleleElement != null) yield return new ElementValue("referenceAllele", ReferenceAlleleElement);
-          if (CigarElement != null) yield return new ElementValue("cigar", CigarElement);
-          if (VariantPointer != null) yield return new ElementValue("variantPointer", VariantPointer);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1480,54 +1414,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TypeElement != null) yield return TypeElement;
-          if (StandardSequence != null) yield return StandardSequence;
-          if (StartElement != null) yield return StartElement;
-          if (EndElement != null) yield return EndElement;
-          if (Score != null) yield return Score;
-          if (Method != null) yield return Method;
-          if (TruthTPElement != null) yield return TruthTPElement;
-          if (QueryTPElement != null) yield return QueryTPElement;
-          if (TruthFNElement != null) yield return TruthFNElement;
-          if (QueryFPElement != null) yield return QueryFPElement;
-          if (GtFPElement != null) yield return GtFPElement;
-          if (PrecisionElement != null) yield return PrecisionElement;
-          if (RecallElement != null) yield return RecallElement;
-          if (FScoreElement != null) yield return FScoreElement;
-          if (Roc != null) yield return Roc;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-          if (StandardSequence != null) yield return new ElementValue("standardSequence", StandardSequence);
-          if (StartElement != null) yield return new ElementValue("start", StartElement);
-          if (EndElement != null) yield return new ElementValue("end", EndElement);
-          if (Score != null) yield return new ElementValue("score", Score);
-          if (Method != null) yield return new ElementValue("method", Method);
-          if (TruthTPElement != null) yield return new ElementValue("truthTP", TruthTPElement);
-          if (QueryTPElement != null) yield return new ElementValue("queryTP", QueryTPElement);
-          if (TruthFNElement != null) yield return new ElementValue("truthFN", TruthFNElement);
-          if (QueryFPElement != null) yield return new ElementValue("queryFP", QueryFPElement);
-          if (GtFPElement != null) yield return new ElementValue("gtFP", GtFPElement);
-          if (PrecisionElement != null) yield return new ElementValue("precision", PrecisionElement);
-          if (RecallElement != null) yield return new ElementValue("recall", RecallElement);
-          if (FScoreElement != null) yield return new ElementValue("fScore", FScoreElement);
-          if (Roc != null) yield return new ElementValue("roc", Roc);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -1960,38 +1846,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in ScoreElement) { if (elem != null) yield return elem; }
-          foreach (var elem in NumTPElement) { if (elem != null) yield return elem; }
-          foreach (var elem in NumFPElement) { if (elem != null) yield return elem; }
-          foreach (var elem in NumFNElement) { if (elem != null) yield return elem; }
-          foreach (var elem in PrecisionElement) { if (elem != null) yield return elem; }
-          foreach (var elem in SensitivityElement) { if (elem != null) yield return elem; }
-          foreach (var elem in FMeasureElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in ScoreElement) { if (elem != null) yield return new ElementValue("score", elem); }
-          foreach (var elem in NumTPElement) { if (elem != null) yield return new ElementValue("numTP", elem); }
-          foreach (var elem in NumFPElement) { if (elem != null) yield return new ElementValue("numFP", elem); }
-          foreach (var elem in NumFNElement) { if (elem != null) yield return new ElementValue("numFN", elem); }
-          foreach (var elem in PrecisionElement) { if (elem != null) yield return new ElementValue("precision", elem); }
-          foreach (var elem in SensitivityElement) { if (elem != null) yield return new ElementValue("sensitivity", elem); }
-          foreach (var elem in FMeasureElement) { if (elem != null) yield return new ElementValue("fMeasure", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -2330,36 +2184,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TypeElement != null) yield return TypeElement;
-          if (UrlElement != null) yield return UrlElement;
-          if (NameElement != null) yield return NameElement;
-          if (DatasetIdElement != null) yield return DatasetIdElement;
-          if (VariantsetIdElement != null) yield return VariantsetIdElement;
-          if (ReadsetIdElement != null) yield return ReadsetIdElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-          if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-          if (NameElement != null) yield return new ElementValue("name", NameElement);
-          if (DatasetIdElement != null) yield return new ElementValue("datasetId", DatasetIdElement);
-          if (VariantsetIdElement != null) yield return new ElementValue("variantsetId", VariantsetIdElement);
-          if (ReadsetIdElement != null) yield return new ElementValue("readsetId", ReadsetIdElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -2601,34 +2425,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (VariantType != null) yield return VariantType;
-          if (ExactElement != null) yield return ExactElement;
-          if (LengthElement != null) yield return LengthElement;
-          if (Outer != null) yield return Outer;
-          if (Inner != null) yield return Inner;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (VariantType != null) yield return new ElementValue("variantType", VariantType);
-          if (ExactElement != null) yield return new ElementValue("exact", ExactElement);
-          if (LengthElement != null) yield return new ElementValue("length", LengthElement);
-          if (Outer != null) yield return new ElementValue("outer", Outer);
-          if (Inner != null) yield return new ElementValue("inner", Inner);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -2811,28 +2607,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (StartElement != null) yield return StartElement;
-          if (EndElement != null) yield return EndElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (StartElement != null) yield return new ElementValue("start", StartElement);
-          if (EndElement != null) yield return new ElementValue("end", EndElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -2992,28 +2766,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (StartElement != null) yield return StartElement;
-          if (EndElement != null) yield return EndElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (StartElement != null) yield return new ElementValue("start", StartElement);
-          if (EndElement != null) yield return new ElementValue("end", EndElement);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -3443,56 +3195,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(StructureVariant, otherT.StructureVariant)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (TypeElement != null) yield return TypeElement;
-        if (CoordinateSystemElement != null) yield return CoordinateSystemElement;
-        if (Patient != null) yield return Patient;
-        if (Specimen != null) yield return Specimen;
-        if (Device != null) yield return Device;
-        if (Performer != null) yield return Performer;
-        if (Quantity != null) yield return Quantity;
-        if (ReferenceSeq != null) yield return ReferenceSeq;
-        foreach (var elem in Variant) { if (elem != null) yield return elem; }
-        if (ObservedSeqElement != null) yield return ObservedSeqElement;
-        foreach (var elem in Quality) { if (elem != null) yield return elem; }
-        if (ReadCoverageElement != null) yield return ReadCoverageElement;
-        foreach (var elem in Repository) { if (elem != null) yield return elem; }
-        foreach (var elem in Pointer) { if (elem != null) yield return elem; }
-        foreach (var elem in StructureVariant) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (CoordinateSystemElement != null) yield return new ElementValue("coordinateSystem", CoordinateSystemElement);
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-        if (Specimen != null) yield return new ElementValue("specimen", Specimen);
-        if (Device != null) yield return new ElementValue("device", Device);
-        if (Performer != null) yield return new ElementValue("performer", Performer);
-        if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-        if (ReferenceSeq != null) yield return new ElementValue("referenceSeq", ReferenceSeq);
-        foreach (var elem in Variant) { if (elem != null) yield return new ElementValue("variant", elem); }
-        if (ObservedSeqElement != null) yield return new ElementValue("observedSeq", ObservedSeqElement);
-        foreach (var elem in Quality) { if (elem != null) yield return new ElementValue("quality", elem); }
-        if (ReadCoverageElement != null) yield return new ElementValue("readCoverage", ReadCoverageElement);
-        foreach (var elem in Repository) { if (elem != null) yield return new ElementValue("repository", elem); }
-        foreach (var elem in Pointer) { if (elem != null) yield return new ElementValue("pointer", elem); }
-        foreach (var elem in StructureVariant) { if (elem != null) yield return new ElementValue("structureVariant", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

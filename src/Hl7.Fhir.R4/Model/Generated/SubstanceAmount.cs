@@ -140,28 +140,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (LowLimit != null) yield return LowLimit;
-          if (HighLimit != null) yield return HighLimit;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (LowLimit != null) yield return new ElementValue("lowLimit", LowLimit);
-          if (HighLimit != null) yield return new ElementValue("highLimit", HighLimit);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -324,32 +302,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Amount != null) yield return Amount;
-        if (AmountType != null) yield return AmountType;
-        if (AmountTextElement != null) yield return AmountTextElement;
-        if (ReferenceRange != null) yield return ReferenceRange;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Amount != null) yield return new ElementValue("amount", Amount);
-        if (AmountType != null) yield return new ElementValue("amountType", AmountType);
-        if (AmountTextElement != null) yield return new ElementValue("amountText", AmountTextElement);
-        if (ReferenceRange != null) yield return new ElementValue("referenceRange", ReferenceRange);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

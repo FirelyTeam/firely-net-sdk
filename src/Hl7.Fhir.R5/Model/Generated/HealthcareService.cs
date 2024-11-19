@@ -162,28 +162,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Code != null) yield return Code;
-          if (CommentElement != null) yield return CommentElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Code != null) yield return new ElementValue("code", Code);
-          if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -756,70 +734,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (ActiveElement != null) yield return ActiveElement;
-        if (ProvidedBy != null) yield return ProvidedBy;
-        foreach (var elem in OfferedIn) { if (elem != null) yield return elem; }
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        foreach (var elem in Type) { if (elem != null) yield return elem; }
-        foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-        foreach (var elem in Location) { if (elem != null) yield return elem; }
-        if (NameElement != null) yield return NameElement;
-        if (CommentElement != null) yield return CommentElement;
-        if (ExtraDetailsElement != null) yield return ExtraDetailsElement;
-        if (Photo != null) yield return Photo;
-        foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        foreach (var elem in CoverageArea) { if (elem != null) yield return elem; }
-        foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return elem; }
-        foreach (var elem in Eligibility) { if (elem != null) yield return elem; }
-        foreach (var elem in Program) { if (elem != null) yield return elem; }
-        foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
-        foreach (var elem in Communication) { if (elem != null) yield return elem; }
-        foreach (var elem in ReferralMethod) { if (elem != null) yield return elem; }
-        if (AppointmentRequiredElement != null) yield return AppointmentRequiredElement;
-        foreach (var elem in Availability) { if (elem != null) yield return elem; }
-        foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
-        if (ProvidedBy != null) yield return new ElementValue("providedBy", ProvidedBy);
-        foreach (var elem in OfferedIn) { if (elem != null) yield return new ElementValue("offeredIn", elem); }
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-        foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
-        foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
-        if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-        if (ExtraDetailsElement != null) yield return new ElementValue("extraDetails", ExtraDetailsElement);
-        if (Photo != null) yield return new ElementValue("photo", Photo);
-        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", elem); }
-        foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return new ElementValue("serviceProvisionCode", elem); }
-        foreach (var elem in Eligibility) { if (elem != null) yield return new ElementValue("eligibility", elem); }
-        foreach (var elem in Program) { if (elem != null) yield return new ElementValue("program", elem); }
-        foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
-        foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", elem); }
-        foreach (var elem in ReferralMethod) { if (elem != null) yield return new ElementValue("referralMethod", elem); }
-        if (AppointmentRequiredElement != null) yield return new ElementValue("appointmentRequired", AppointmentRequiredElement);
-        foreach (var elem in Availability) { if (elem != null) yield return new ElementValue("availability", elem); }
-        foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

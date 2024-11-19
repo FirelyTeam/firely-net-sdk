@@ -32,11 +32,11 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -118,7 +118,6 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
 
     // TODO bring Children + NamedChildren over as well.
 }
-
 
 /// <summary>
 /// A dynamic data type that can hold any element.

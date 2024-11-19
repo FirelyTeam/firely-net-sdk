@@ -1267,28 +1267,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (ValueElement != null) yield return ValueElement;
-        if (CurrencyElement != null) yield return CurrencyElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-        if (CurrencyElement != null) yield return new ElementValue("currency", CurrencyElement);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

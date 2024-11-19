@@ -202,28 +202,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Function != null) yield return Function;
-          if (Actor != null) yield return Actor;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Function != null) yield return new ElementValue("function", Function);
-          if (Actor != null) yield return new ElementValue("actor", Actor);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -873,76 +851,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in DefinitionUriElement) { if (elem != null) yield return elem; }
-        foreach (var elem in DefinitionCanonicalElement) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        foreach (var elem in PartOf) { if (elem != null) yield return elem; }
-        if (Code != null) yield return Code;
-        if (Subject != null) yield return Subject;
-        if (Context != null) yield return Context;
-        if (Occurrence != null) yield return Occurrence;
-        foreach (var elem in Performer) { if (elem != null) yield return elem; }
-        if (PerformingOrganization != null) yield return PerformingOrganization;
-        if (RequestingOrganization != null) yield return RequestingOrganization;
-        if (CostCenter != null) yield return CostCenter;
-        if (Quantity != null) yield return Quantity;
-        foreach (var elem in Bodysite) { if (elem != null) yield return elem; }
-        if (FactorOverrideElement != null) yield return FactorOverrideElement;
-        if (PriceOverride != null) yield return PriceOverride;
-        if (OverrideReasonElement != null) yield return OverrideReasonElement;
-        if (Enterer != null) yield return Enterer;
-        if (EnteredDateElement != null) yield return EnteredDateElement;
-        foreach (var elem in Reason) { if (elem != null) yield return elem; }
-        foreach (var elem in Service) { if (elem != null) yield return elem; }
-        if (Product != null) yield return Product;
-        foreach (var elem in Account) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in DefinitionUriElement) { if (elem != null) yield return new ElementValue("definitionUri", elem); }
-        foreach (var elem in DefinitionCanonicalElement) { if (elem != null) yield return new ElementValue("definitionCanonical", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (Context != null) yield return new ElementValue("context", Context);
-        if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
-        foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
-        if (PerformingOrganization != null) yield return new ElementValue("performingOrganization", PerformingOrganization);
-        if (RequestingOrganization != null) yield return new ElementValue("requestingOrganization", RequestingOrganization);
-        if (CostCenter != null) yield return new ElementValue("costCenter", CostCenter);
-        if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-        foreach (var elem in Bodysite) { if (elem != null) yield return new ElementValue("bodysite", elem); }
-        if (FactorOverrideElement != null) yield return new ElementValue("factorOverride", FactorOverrideElement);
-        if (PriceOverride != null) yield return new ElementValue("priceOverride", PriceOverride);
-        if (OverrideReasonElement != null) yield return new ElementValue("overrideReason", OverrideReasonElement);
-        if (Enterer != null) yield return new ElementValue("enterer", Enterer);
-        if (EnteredDateElement != null) yield return new ElementValue("enteredDate", EnteredDateElement);
-        foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-        foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", elem); }
-        if (Product != null) yield return new ElementValue("product", Product);
-        foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

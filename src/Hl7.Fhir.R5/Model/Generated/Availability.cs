@@ -247,32 +247,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return elem; }
-          if (AllDayElement != null) yield return AllDayElement;
-          if (AvailableStartTimeElement != null) yield return AvailableStartTimeElement;
-          if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", elem); }
-          if (AllDayElement != null) yield return new ElementValue("allDay", AllDayElement);
-          if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", AvailableStartTimeElement);
-          if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", AvailableEndTimeElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -430,28 +404,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (DescriptionElement != null) yield return DescriptionElement;
-          if (During != null) yield return During;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-          if (During != null) yield return new ElementValue("during", During);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -564,28 +516,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(NotAvailableTime, otherT.NotAvailableTime)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
-        foreach (var elem in NotAvailableTime) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", elem); }
-        foreach (var elem in NotAvailableTime) { if (elem != null) yield return new ElementValue("notAvailableTime", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

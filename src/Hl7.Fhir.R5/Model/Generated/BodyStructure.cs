@@ -203,34 +203,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Structure != null) yield return Structure;
-          if (Laterality != null) yield return Laterality;
-          foreach (var elem in BodyLandmarkOrientation) { if (elem != null) yield return elem; }
-          foreach (var elem in SpatialReference) { if (elem != null) yield return elem; }
-          foreach (var elem in Qualifier) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Structure != null) yield return new ElementValue("structure", Structure);
-          if (Laterality != null) yield return new ElementValue("laterality", Laterality);
-          foreach (var elem in BodyLandmarkOrientation) { if (elem != null) yield return new ElementValue("bodyLandmarkOrientation", elem); }
-          foreach (var elem in SpatialReference) { if (elem != null) yield return new ElementValue("spatialReference", elem); }
-          foreach (var elem in Qualifier) { if (elem != null) yield return new ElementValue("qualifier", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -419,32 +391,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in LandmarkDescription) { if (elem != null) yield return elem; }
-          foreach (var elem in ClockFacePosition) { if (elem != null) yield return elem; }
-          foreach (var elem in DistanceFromLandmark) { if (elem != null) yield return elem; }
-          foreach (var elem in SurfaceOrientation) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in LandmarkDescription) { if (elem != null) yield return new ElementValue("landmarkDescription", elem); }
-          foreach (var elem in ClockFacePosition) { if (elem != null) yield return new ElementValue("clockFacePosition", elem); }
-          foreach (var elem in DistanceFromLandmark) { if (elem != null) yield return new ElementValue("distanceFromLandmark", elem); }
-          foreach (var elem in SurfaceOrientation) { if (elem != null) yield return new ElementValue("surfaceOrientation", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -588,28 +534,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in Device) { if (elem != null) yield return elem; }
-          foreach (var elem in Value) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
-          foreach (var elem in Value) { if (elem != null) yield return new ElementValue("value", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -864,40 +788,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (ActiveElement != null) yield return ActiveElement;
-        if (Morphology != null) yield return Morphology;
-        foreach (var elem in IncludedStructure) { if (elem != null) yield return elem; }
-        foreach (var elem in ExcludedStructure) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in Image) { if (elem != null) yield return elem; }
-        if (Patient != null) yield return Patient;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
-        if (Morphology != null) yield return new ElementValue("morphology", Morphology);
-        foreach (var elem in IncludedStructure) { if (elem != null) yield return new ElementValue("includedStructure", elem); }
-        foreach (var elem in ExcludedStructure) { if (elem != null) yield return new ElementValue("excludedStructure", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

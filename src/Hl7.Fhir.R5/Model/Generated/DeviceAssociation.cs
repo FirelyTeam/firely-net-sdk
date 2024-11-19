@@ -201,30 +201,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Status != null) yield return Status;
-          foreach (var elem in Operator) { if (elem != null) yield return elem; }
-          if (Period != null) yield return Period;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Status != null) yield return new ElementValue("status", Status);
-          foreach (var elem in Operator) { if (elem != null) yield return new ElementValue("operator", elem); }
-          if (Period != null) yield return new ElementValue("period", Period);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -470,42 +446,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Device != null) yield return Device;
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        if (Status != null) yield return Status;
-        foreach (var elem in StatusReason) { if (elem != null) yield return elem; }
-        if (Subject != null) yield return Subject;
-        if (BodyStructure != null) yield return BodyStructure;
-        if (Period != null) yield return Period;
-        foreach (var elem in Operation) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Device != null) yield return new ElementValue("device", Device);
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        if (Status != null) yield return new ElementValue("status", Status);
-        foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", elem); }
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (BodyStructure != null) yield return new ElementValue("bodyStructure", BodyStructure);
-        if (Period != null) yield return new ElementValue("period", Period);
-        foreach (var elem in Operation) { if (elem != null) yield return new ElementValue("operation", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

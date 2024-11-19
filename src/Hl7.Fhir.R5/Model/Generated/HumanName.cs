@@ -376,38 +376,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (UseElement != null) yield return UseElement;
-        if (TextElement != null) yield return TextElement;
-        if (FamilyElement != null) yield return FamilyElement;
-        foreach (var elem in GivenElement) { if (elem != null) yield return elem; }
-        foreach (var elem in PrefixElement) { if (elem != null) yield return elem; }
-        foreach (var elem in SuffixElement) { if (elem != null) yield return elem; }
-        if (Period != null) yield return Period;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (UseElement != null) yield return new ElementValue("use", UseElement);
-        if (TextElement != null) yield return new ElementValue("text", TextElement);
-        if (FamilyElement != null) yield return new ElementValue("family", FamilyElement);
-        foreach (var elem in GivenElement) { if (elem != null) yield return new ElementValue("given", elem); }
-        foreach (var elem in PrefixElement) { if (elem != null) yield return new ElementValue("prefix", elem); }
-        foreach (var elem in SuffixElement) { if (elem != null) yield return new ElementValue("suffix", elem); }
-        if (Period != null) yield return new ElementValue("period", Period);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

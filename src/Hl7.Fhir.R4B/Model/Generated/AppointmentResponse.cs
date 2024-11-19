@@ -308,40 +308,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Appointment != null) yield return Appointment;
-        if (StartElement != null) yield return StartElement;
-        if (EndElement != null) yield return EndElement;
-        foreach (var elem in ParticipantType) { if (elem != null) yield return elem; }
-        if (Actor != null) yield return Actor;
-        if (ParticipantStatusElement != null) yield return ParticipantStatusElement;
-        if (CommentElement != null) yield return CommentElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Appointment != null) yield return new ElementValue("appointment", Appointment);
-        if (StartElement != null) yield return new ElementValue("start", StartElement);
-        if (EndElement != null) yield return new ElementValue("end", EndElement);
-        foreach (var elem in ParticipantType) { if (elem != null) yield return new ElementValue("participantType", elem); }
-        if (Actor != null) yield return new ElementValue("actor", Actor);
-        if (ParticipantStatusElement != null) yield return new ElementValue("participantStatus", ParticipantStatusElement);
-        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

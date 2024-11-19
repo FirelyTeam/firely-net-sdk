@@ -204,28 +204,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (StatusElement != null) yield return StatusElement;
-        if (DivElement != null) yield return new FhirString(DivElement.Value);
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (DivElement != null) yield return new ElementValue("div", new FhirString(DivElement.Value));
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

@@ -293,30 +293,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RepetitionsElement != null) yield return RepetitionsElement;
-          if (Period != null) yield return Period;
-          foreach (var elem in Recipient) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RepetitionsElement != null) yield return new ElementValue("repetitions", RepetitionsElement);
-          if (Period != null) yield return new ElementValue("period", Period);
-          foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -457,28 +433,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (Value != null) yield return Value;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Value != null) yield return new ElementValue("value", Value);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -610,28 +564,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (Value != null) yield return Value;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Value != null) yield return new ElementValue("value", Value);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1436,88 +1368,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(History, otherT.History)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (InstantiatesCanonicalElement != null) yield return InstantiatesCanonicalElement;
-        if (InstantiatesUriElement != null) yield return InstantiatesUriElement;
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        if (GroupIdentifier != null) yield return GroupIdentifier;
-        foreach (var elem in PartOf) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (StatusReason != null) yield return StatusReason;
-        if (IntentElement != null) yield return IntentElement;
-        if (PriorityElement != null) yield return PriorityElement;
-        if (Code != null) yield return Code;
-        if (DescriptionElement != null) yield return DescriptionElement;
-        if (Focus != null) yield return Focus;
-        if (For != null) yield return For;
-        if (Encounter != null) yield return Encounter;
-        if (CompletionTimeElement != null) yield return CompletionTimeElement;
-        if (AuthoredOnElement != null) yield return AuthoredOnElement;
-        if (LastModifiedElement != null) yield return LastModifiedElement;
-        if (Requester != null) yield return Requester;
-        foreach (var elem in PerformerType) { if (elem != null) yield return elem; }
-        if (Owner != null) yield return Owner;
-        if (Location != null) yield return Location;
-        foreach (var elem in Insurance) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        foreach (var elem in RelevantHistory) { if (elem != null) yield return elem; }
-        if (Restriction != null) yield return Restriction;
-        foreach (var elem in Input) { if (elem != null) yield return elem; }
-        foreach (var elem in Output) { if (elem != null) yield return elem; }
-        if (RequestedLocation != null) yield return RequestedLocation;
-        if (CurrentLocation != null) yield return CurrentLocation;
-        if (Reason != null) yield return Reason;
-        if (History != null) yield return History;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (InstantiatesCanonicalElement != null) yield return new ElementValue("instantiatesCanonical", InstantiatesCanonicalElement);
-        if (InstantiatesUriElement != null) yield return new ElementValue("instantiatesUri", InstantiatesUriElement);
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
-        foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (StatusReason != null) yield return new ElementValue("statusReason", StatusReason);
-        if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
-        if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        if (Focus != null) yield return new ElementValue("focus", Focus);
-        if (For != null) yield return new ElementValue("for", For);
-        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-        if (CompletionTimeElement != null) yield return new ElementValue("completionTime", CompletionTimeElement);
-        if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
-        if (LastModifiedElement != null) yield return new ElementValue("lastModified", LastModifiedElement);
-        if (Requester != null) yield return new ElementValue("requester", Requester);
-        foreach (var elem in PerformerType) { if (elem != null) yield return new ElementValue("performerType", elem); }
-        if (Owner != null) yield return new ElementValue("owner", Owner);
-        if (Location != null) yield return new ElementValue("location", Location);
-        foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", elem); }
-        if (Restriction != null) yield return new ElementValue("restriction", Restriction);
-        foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", elem); }
-        foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", elem); }
-        if (RequestedLocation != null) yield return new ElementValue("requestedLocation", RequestedLocation);
-        if (CurrentLocation != null) yield return new ElementValue("currentLocation", CurrentLocation);
-        if (Reason != null) yield return new ElementValue("reason", Reason);
-        if (History != null) yield return new ElementValue("history", History);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

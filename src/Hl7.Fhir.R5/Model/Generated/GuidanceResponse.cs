@@ -430,52 +430,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (RequestIdentifier != null) yield return RequestIdentifier;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Module != null) yield return Module;
-        if (StatusElement != null) yield return StatusElement;
-        if (Subject != null) yield return Subject;
-        if (Encounter != null) yield return Encounter;
-        if (OccurrenceDateTimeElement != null) yield return OccurrenceDateTimeElement;
-        if (Performer != null) yield return Performer;
-        foreach (var elem in Reason) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        if (EvaluationMessage != null) yield return EvaluationMessage;
-        if (OutputParameters != null) yield return OutputParameters;
-        foreach (var elem in Result) { if (elem != null) yield return elem; }
-        foreach (var elem in DataRequirement) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (RequestIdentifier != null) yield return new ElementValue("requestIdentifier", RequestIdentifier);
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Module != null) yield return new ElementValue("module", Module);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-        if (OccurrenceDateTimeElement != null) yield return new ElementValue("occurrenceDateTime", OccurrenceDateTimeElement);
-        if (Performer != null) yield return new ElementValue("performer", Performer);
-        foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        if (EvaluationMessage != null) yield return new ElementValue("evaluationMessage", EvaluationMessage);
-        if (OutputParameters != null) yield return new ElementValue("outputParameters", OutputParameters);
-        foreach (var elem in Result) { if (elem != null) yield return new ElementValue("result", elem); }
-        foreach (var elem in DataRequirement) { if (elem != null) yield return new ElementValue("dataRequirement", elem); }
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

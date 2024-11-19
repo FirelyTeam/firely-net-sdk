@@ -300,36 +300,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in Type) { if (elem != null) yield return elem; }
-          foreach (var elem in Schedule) { if (elem != null) yield return elem; }
-          foreach (var elem in Nutrient) { if (elem != null) yield return elem; }
-          foreach (var elem in Texture) { if (elem != null) yield return elem; }
-          foreach (var elem in FluidConsistencyType) { if (elem != null) yield return elem; }
-          if (InstructionElement != null) yield return InstructionElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-          foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
-          foreach (var elem in Nutrient) { if (elem != null) yield return new ElementValue("nutrient", elem); }
-          foreach (var elem in Texture) { if (elem != null) yield return new ElementValue("texture", elem); }
-          foreach (var elem in FluidConsistencyType) { if (elem != null) yield return new ElementValue("fluidConsistencyType", elem); }
-          if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -487,28 +457,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Modifier != null) yield return Modifier;
-          if (Amount != null) yield return Amount;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Modifier != null) yield return new ElementValue("modifier", Modifier);
-          if (Amount != null) yield return new ElementValue("amount", Amount);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -637,28 +585,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(FoodType, otherT.FoodType)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Modifier != null) yield return Modifier;
-          if (FoodType != null) yield return FoodType;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Modifier != null) yield return new ElementValue("modifier", Modifier);
-          if (FoodType != null) yield return new ElementValue("foodType", FoodType);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -873,34 +799,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (ProductNameElement != null) yield return ProductNameElement;
-          foreach (var elem in Schedule) { if (elem != null) yield return elem; }
-          if (Quantity != null) yield return Quantity;
-          if (InstructionElement != null) yield return InstructionElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (ProductNameElement != null) yield return new ElementValue("productName", ProductNameElement);
-          foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
-          if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-          if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1222,42 +1120,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (BaseFormulaType != null) yield return BaseFormulaType;
-          if (BaseFormulaProductNameElement != null) yield return BaseFormulaProductNameElement;
-          if (AdditiveType != null) yield return AdditiveType;
-          if (AdditiveProductNameElement != null) yield return AdditiveProductNameElement;
-          if (CaloricDensity != null) yield return CaloricDensity;
-          if (RouteofAdministration != null) yield return RouteofAdministration;
-          foreach (var elem in Administration) { if (elem != null) yield return elem; }
-          if (MaxVolumeToDeliver != null) yield return MaxVolumeToDeliver;
-          if (AdministrationInstructionElement != null) yield return AdministrationInstructionElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (BaseFormulaType != null) yield return new ElementValue("baseFormulaType", BaseFormulaType);
-          if (BaseFormulaProductNameElement != null) yield return new ElementValue("baseFormulaProductName", BaseFormulaProductNameElement);
-          if (AdditiveType != null) yield return new ElementValue("additiveType", AdditiveType);
-          if (AdditiveProductNameElement != null) yield return new ElementValue("additiveProductName", AdditiveProductNameElement);
-          if (CaloricDensity != null) yield return new ElementValue("caloricDensity", CaloricDensity);
-          if (RouteofAdministration != null) yield return new ElementValue("routeofAdministration", RouteofAdministration);
-          foreach (var elem in Administration) { if (elem != null) yield return new ElementValue("administration", elem); }
-          if (MaxVolumeToDeliver != null) yield return new ElementValue("maxVolumeToDeliver", MaxVolumeToDeliver);
-          if (AdministrationInstructionElement != null) yield return new ElementValue("administrationInstruction", AdministrationInstructionElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -1452,30 +1314,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Schedule != null) yield return Schedule;
-          if (Quantity != null) yield return Quantity;
-          if (Rate != null) yield return Rate;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Schedule != null) yield return new ElementValue("schedule", Schedule);
-          if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-          if (Rate != null) yield return new ElementValue("rate", Rate);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1812,48 +1650,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Patient != null) yield return Patient;
-        if (Encounter != null) yield return Encounter;
-        if (DateTimeElement != null) yield return DateTimeElement;
-        if (Orderer != null) yield return Orderer;
-        foreach (var elem in AllergyIntolerance) { if (elem != null) yield return elem; }
-        foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return elem; }
-        foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return elem; }
-        if (OralDiet != null) yield return OralDiet;
-        foreach (var elem in Supplement) { if (elem != null) yield return elem; }
-        if (EnteralFormula != null) yield return EnteralFormula;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-        if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
-        if (Orderer != null) yield return new ElementValue("orderer", Orderer);
-        foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", elem); }
-        foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", elem); }
-        foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", elem); }
-        if (OralDiet != null) yield return new ElementValue("oralDiet", OralDiet);
-        foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", elem); }
-        if (EnteralFormula != null) yield return new ElementValue("enteralFormula", EnteralFormula);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

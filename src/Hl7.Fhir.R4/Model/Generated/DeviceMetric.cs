@@ -412,30 +412,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TypeElement != null) yield return TypeElement;
-          if (StateElement != null) yield return StateElement;
-          if (TimeElement != null) yield return TimeElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-          if (StateElement != null) yield return new ElementValue("state", StateElement);
-          if (TimeElement != null) yield return new ElementValue("time", TimeElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -756,44 +732,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Calibration, otherT.Calibration)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Type != null) yield return Type;
-        if (Unit != null) yield return Unit;
-        if (Source != null) yield return Source;
-        if (Parent != null) yield return Parent;
-        if (OperationalStatusElement != null) yield return OperationalStatusElement;
-        if (ColorElement != null) yield return ColorElement;
-        if (CategoryElement != null) yield return CategoryElement;
-        if (MeasurementPeriod != null) yield return MeasurementPeriod;
-        foreach (var elem in Calibration) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (Unit != null) yield return new ElementValue("unit", Unit);
-        if (Source != null) yield return new ElementValue("source", Source);
-        if (Parent != null) yield return new ElementValue("parent", Parent);
-        if (OperationalStatusElement != null) yield return new ElementValue("operationalStatus", OperationalStatusElement);
-        if (ColorElement != null) yield return new ElementValue("color", ColorElement);
-        if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
-        if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", MeasurementPeriod);
-        foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

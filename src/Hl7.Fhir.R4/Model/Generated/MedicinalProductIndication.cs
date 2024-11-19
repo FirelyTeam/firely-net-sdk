@@ -148,28 +148,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TherapyRelationshipType != null) yield return TherapyRelationshipType;
-          if (Medication != null) yield return Medication;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TherapyRelationshipType != null) yield return new ElementValue("therapyRelationshipType", TherapyRelationshipType);
-          if (Medication != null) yield return new ElementValue("medication", Medication);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -401,42 +379,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Subject) { if (elem != null) yield return elem; }
-        if (DiseaseSymptomProcedure != null) yield return DiseaseSymptomProcedure;
-        if (DiseaseStatus != null) yield return DiseaseStatus;
-        foreach (var elem in Comorbidity) { if (elem != null) yield return elem; }
-        if (IntendedEffect != null) yield return IntendedEffect;
-        if (Duration != null) yield return Duration;
-        foreach (var elem in OtherTherapy) { if (elem != null) yield return elem; }
-        foreach (var elem in UndesirableEffect) { if (elem != null) yield return elem; }
-        foreach (var elem in Population) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
-        if (DiseaseSymptomProcedure != null) yield return new ElementValue("diseaseSymptomProcedure", DiseaseSymptomProcedure);
-        if (DiseaseStatus != null) yield return new ElementValue("diseaseStatus", DiseaseStatus);
-        foreach (var elem in Comorbidity) { if (elem != null) yield return new ElementValue("comorbidity", elem); }
-        if (IntendedEffect != null) yield return new ElementValue("intendedEffect", IntendedEffect);
-        if (Duration != null) yield return new ElementValue("duration", Duration);
-        foreach (var elem in OtherTherapy) { if (elem != null) yield return new ElementValue("otherTherapy", elem); }
-        foreach (var elem in UndesirableEffect) { if (elem != null) yield return new ElementValue("undesirableEffect", elem); }
-        foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

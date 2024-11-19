@@ -277,28 +277,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Agent != null) yield return Agent;
-          if (OnBehalfOf != null) yield return OnBehalfOf;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Agent != null) yield return new ElementValue("agent", Agent);
-          if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -495,34 +473,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (ValidityPeriod != null) yield return ValidityPeriod;
-          if (NumberOfRepeatsAllowedElement != null) yield return NumberOfRepeatsAllowedElement;
-          if (Quantity != null) yield return Quantity;
-          if (ExpectedSupplyDuration != null) yield return ExpectedSupplyDuration;
-          if (Performer != null) yield return Performer;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
-          if (NumberOfRepeatsAllowedElement != null) yield return new ElementValue("numberOfRepeatsAllowed", NumberOfRepeatsAllowedElement);
-          if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-          if (ExpectedSupplyDuration != null) yield return new ElementValue("expectedSupplyDuration", ExpectedSupplyDuration);
-          if (Performer != null) yield return new ElementValue("performer", Performer);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -690,28 +640,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (AllowedElement != null) yield return AllowedElement;
-          if (Reason != null) yield return Reason;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (AllowedElement != null) yield return new ElementValue("allowed", AllowedElement);
-          if (Reason != null) yield return new ElementValue("reason", Reason);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1295,72 +1223,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(EventHistory, otherT.EventHistory)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in Definition) { if (elem != null) yield return elem; }
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        if (GroupIdentifier != null) yield return GroupIdentifier;
-        if (StatusElement != null) yield return StatusElement;
-        if (IntentElement != null) yield return IntentElement;
-        if (Category != null) yield return Category;
-        if (PriorityElement != null) yield return PriorityElement;
-        if (Medication != null) yield return Medication;
-        if (Subject != null) yield return Subject;
-        if (Context != null) yield return Context;
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
-        if (AuthoredOnElement != null) yield return AuthoredOnElement;
-        if (Requester != null) yield return Requester;
-        if (Recorder != null) yield return Recorder;
-        foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        foreach (var elem in DosageInstruction) { if (elem != null) yield return elem; }
-        if (DispenseRequest != null) yield return DispenseRequest;
-        if (Substitution != null) yield return Substitution;
-        if (PriorPrescription != null) yield return PriorPrescription;
-        foreach (var elem in DetectedIssue) { if (elem != null) yield return elem; }
-        foreach (var elem in EventHistory) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
-        if (Category != null) yield return new ElementValue("category", Category);
-        if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
-        if (Medication != null) yield return new ElementValue("medication", Medication);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (Context != null) yield return new ElementValue("context", Context);
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
-        if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
-        if (Requester != null) yield return new ElementValue("requester", Requester);
-        if (Recorder != null) yield return new ElementValue("recorder", Recorder);
-        foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", elem); }
-        if (DispenseRequest != null) yield return new ElementValue("dispenseRequest", DispenseRequest);
-        if (Substitution != null) yield return new ElementValue("substitution", Substitution);
-        if (PriorPrescription != null) yield return new ElementValue("priorPrescription", PriorPrescription);
-        foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", elem); }
-        foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

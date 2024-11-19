@@ -141,28 +141,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RatioType != null) yield return RatioType;
-          foreach (var elem in StartingMaterial) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RatioType != null) yield return new ElementValue("ratioType", RatioType);
-          foreach (var elem in StartingMaterial) { if (elem != null) yield return new ElementValue("startingMaterial", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -338,32 +316,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Code != null) yield return Code;
-          if (Category != null) yield return Category;
-          if (IsDefiningElement != null) yield return IsDefiningElement;
-          if (Amount != null) yield return Amount;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Code != null) yield return new ElementValue("code", Code);
-          if (Category != null) yield return new ElementValue("category", Category);
-          if (IsDefiningElement != null) yield return new ElementValue("isDefining", IsDefiningElement);
-          if (Amount != null) yield return new ElementValue("amount", Amount);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -536,30 +488,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(RepeatUnit, otherT.RepeatUnit)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (AverageMolecularFormulaElement != null) yield return AverageMolecularFormulaElement;
-          if (RepeatUnitAmountType != null) yield return RepeatUnitAmountType;
-          foreach (var elem in RepeatUnit) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (AverageMolecularFormulaElement != null) yield return new ElementValue("averageMolecularFormula", AverageMolecularFormulaElement);
-          if (RepeatUnitAmountType != null) yield return new ElementValue("repeatUnitAmountType", RepeatUnitAmountType);
-          foreach (var elem in RepeatUnit) { if (elem != null) yield return new ElementValue("repeatUnit", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -778,34 +706,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(StructuralRepresentation, otherT.StructuralRepresentation)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (UnitElement != null) yield return UnitElement;
-          if (Orientation != null) yield return Orientation;
-          if (AmountElement != null) yield return AmountElement;
-          foreach (var elem in DegreeOfPolymerisation) { if (elem != null) yield return elem; }
-          foreach (var elem in StructuralRepresentation) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (UnitElement != null) yield return new ElementValue("unit", UnitElement);
-          if (Orientation != null) yield return new ElementValue("orientation", Orientation);
-          if (AmountElement != null) yield return new ElementValue("amount", AmountElement);
-          foreach (var elem in DegreeOfPolymerisation) { if (elem != null) yield return new ElementValue("degreeOfPolymerisation", elem); }
-          foreach (var elem in StructuralRepresentation) { if (elem != null) yield return new ElementValue("structuralRepresentation", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1040,32 +940,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (AverageElement != null) yield return AverageElement;
-          if (LowElement != null) yield return LowElement;
-          if (HighElement != null) yield return HighElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (AverageElement != null) yield return new ElementValue("average", AverageElement);
-          if (LowElement != null) yield return new ElementValue("low", LowElement);
-          if (HighElement != null) yield return new ElementValue("high", HighElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -1253,32 +1127,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Attachment, otherT.Attachment)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (RepresentationElement != null) yield return RepresentationElement;
-          if (Format != null) yield return Format;
-          if (Attachment != null) yield return Attachment;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (RepresentationElement != null) yield return new ElementValue("representation", RepresentationElement);
-          if (Format != null) yield return new ElementValue("format", Format);
-          if (Attachment != null) yield return new ElementValue("attachment", Attachment);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1508,38 +1356,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Repeat, otherT.Repeat)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Identifier != null) yield return Identifier;
-        if (Class != null) yield return Class;
-        if (Geometry != null) yield return Geometry;
-        foreach (var elem in CopolymerConnectivity) { if (elem != null) yield return elem; }
-        if (ModificationElement != null) yield return ModificationElement;
-        foreach (var elem in MonomerSet) { if (elem != null) yield return elem; }
-        foreach (var elem in Repeat) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-        if (Class != null) yield return new ElementValue("class", Class);
-        if (Geometry != null) yield return new ElementValue("geometry", Geometry);
-        foreach (var elem in CopolymerConnectivity) { if (elem != null) yield return new ElementValue("copolymerConnectivity", elem); }
-        if (ModificationElement != null) yield return new ElementValue("modification", ModificationElement);
-        foreach (var elem in MonomerSet) { if (elem != null) yield return new ElementValue("monomerSet", elem); }
-        foreach (var elem in Repeat) { if (elem != null) yield return new ElementValue("repeat", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

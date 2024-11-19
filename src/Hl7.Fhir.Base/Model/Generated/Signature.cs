@@ -375,42 +375,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Type) { if (elem != null) yield return elem; }
-        if (WhenElement != null) yield return WhenElement;
-        if (Who != null) yield return Who;
-        if (OnBehalfOf != null) yield return OnBehalfOf;
-        if (ContentTypeElement != null) yield return ContentTypeElement;
-        if (TargetFormatElement != null) yield return TargetFormatElement;
-        if (SigFormatElement != null) yield return SigFormatElement;
-        if (BlobElement != null) yield return BlobElement;
-        if (DataElement != null) yield return DataElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-        if (WhenElement != null) yield return new ElementValue("when", WhenElement);
-        if (Who != null) yield return new ElementValue("who", Who);
-        if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
-        if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
-        if (TargetFormatElement != null) yield return new ElementValue("targetFormat", TargetFormatElement);
-        if (SigFormatElement != null) yield return new ElementValue("sigFormat", SigFormatElement);
-        if (BlobElement != null) yield return new ElementValue("blob", BlobElement);
-        if (DataElement != null) yield return new ElementValue("data", DataElement);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

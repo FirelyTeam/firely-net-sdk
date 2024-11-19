@@ -254,36 +254,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Outcome != null) yield return Outcome;
-          if (Probability != null) yield return Probability;
-          if (QualitativeRisk != null) yield return QualitativeRisk;
-          if (RelativeRiskElement != null) yield return RelativeRiskElement;
-          if (When != null) yield return When;
-          if (RationaleElement != null) yield return RationaleElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Outcome != null) yield return new ElementValue("outcome", Outcome);
-          if (Probability != null) yield return new ElementValue("probability", Probability);
-          if (QualitativeRisk != null) yield return new ElementValue("qualitativeRisk", QualitativeRisk);
-          if (RelativeRiskElement != null) yield return new ElementValue("relativeRisk", RelativeRiskElement);
-          if (When != null) yield return new ElementValue("when", When);
-          if (RationaleElement != null) yield return new ElementValue("rationale", RationaleElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -727,56 +697,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Identifier != null) yield return Identifier;
-        if (BasedOn != null) yield return BasedOn;
-        if (Parent != null) yield return Parent;
-        if (StatusElement != null) yield return StatusElement;
-        if (Method != null) yield return Method;
-        if (Code != null) yield return Code;
-        if (Subject != null) yield return Subject;
-        if (Context != null) yield return Context;
-        if (Occurrence != null) yield return Occurrence;
-        if (Condition != null) yield return Condition;
-        if (Performer != null) yield return Performer;
-        if (Reason != null) yield return Reason;
-        foreach (var elem in Basis) { if (elem != null) yield return elem; }
-        foreach (var elem in Prediction) { if (elem != null) yield return elem; }
-        if (MitigationElement != null) yield return MitigationElement;
-        if (CommentElement != null) yield return CommentElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-        if (BasedOn != null) yield return new ElementValue("basedOn", BasedOn);
-        if (Parent != null) yield return new ElementValue("parent", Parent);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Method != null) yield return new ElementValue("method", Method);
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (Context != null) yield return new ElementValue("context", Context);
-        if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
-        if (Condition != null) yield return new ElementValue("condition", Condition);
-        if (Performer != null) yield return new ElementValue("performer", Performer);
-        if (Reason != null) yield return new ElementValue("reason", Reason);
-        foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
-        foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", elem); }
-        if (MitigationElement != null) yield return new ElementValue("mitigation", MitigationElement);
-        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

@@ -559,36 +559,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (SeverityElement != null) yield return SeverityElement;
-          if (CodeElement != null) yield return CodeElement;
-          if (Details != null) yield return Details;
-          if (DiagnosticsElement != null) yield return DiagnosticsElement;
-          foreach (var elem in LocationElement) { if (elem != null) yield return elem; }
-          foreach (var elem in ExpressionElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
-          if (CodeElement != null) yield return new ElementValue("code", CodeElement);
-          if (Details != null) yield return new ElementValue("details", Details);
-          if (DiagnosticsElement != null) yield return new ElementValue("diagnostics", DiagnosticsElement);
-          foreach (var elem in LocationElement) { if (elem != null) yield return new ElementValue("location", elem); }
-          foreach (var elem in ExpressionElement) { if (elem != null) yield return new ElementValue("expression", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -712,26 +682,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Issue, otherT.Issue)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Issue) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Issue) { if (elem != null) yield return new ElementValue("issue", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

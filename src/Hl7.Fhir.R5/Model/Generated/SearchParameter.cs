@@ -213,28 +213,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (DefinitionElement != null) yield return DefinitionElement;
-          if (ExpressionElement != null) yield return ExpressionElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (DefinitionElement != null) yield return new ElementValue("definition", DefinitionElement);
-          if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -1294,86 +1272,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (UrlElement != null) yield return UrlElement;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (VersionElement != null) yield return VersionElement;
-        if (VersionAlgorithm != null) yield return VersionAlgorithm;
-        if (NameElement != null) yield return NameElement;
-        if (TitleElement != null) yield return TitleElement;
-        if (DerivedFromElement != null) yield return DerivedFromElement;
-        if (StatusElement != null) yield return StatusElement;
-        if (ExperimentalElement != null) yield return ExperimentalElement;
-        if (DateElement != null) yield return DateElement;
-        if (PublisherElement != null) yield return PublisherElement;
-        foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in UseContext) { if (elem != null) yield return elem; }
-        foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
-        if (PurposeElement != null) yield return PurposeElement;
-        if (CopyrightElement != null) yield return CopyrightElement;
-        if (CopyrightLabelElement != null) yield return CopyrightLabelElement;
-        if (CodeElement != null) yield return CodeElement;
-        foreach (var elem in BaseElement) { if (elem != null) yield return elem; }
-        if (TypeElement != null) yield return TypeElement;
-        if (ExpressionElement != null) yield return ExpressionElement;
-        if (ProcessingModeElement != null) yield return ProcessingModeElement;
-        if (ConstraintElement != null) yield return ConstraintElement;
-        foreach (var elem in TargetElement) { if (elem != null) yield return elem; }
-        if (MultipleOrElement != null) yield return MultipleOrElement;
-        if (MultipleAndElement != null) yield return MultipleAndElement;
-        foreach (var elem in ComparatorElement) { if (elem != null) yield return elem; }
-        foreach (var elem in ModifierElement) { if (elem != null) yield return elem; }
-        foreach (var elem in ChainElement) { if (elem != null) yield return elem; }
-        foreach (var elem in Component) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (VersionElement != null) yield return new ElementValue("version", VersionElement);
-        if (VersionAlgorithm != null) yield return new ElementValue("versionAlgorithm", VersionAlgorithm);
-        if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-        if (DerivedFromElement != null) yield return new ElementValue("derivedFrom", DerivedFromElement);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
-        if (DateElement != null) yield return new ElementValue("date", DateElement);
-        if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
-        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
-        foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
-        if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
-        if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
-        if (CopyrightLabelElement != null) yield return new ElementValue("copyrightLabel", CopyrightLabelElement);
-        if (CodeElement != null) yield return new ElementValue("code", CodeElement);
-        foreach (var elem in BaseElement) { if (elem != null) yield return new ElementValue("base", elem); }
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
-        if (ProcessingModeElement != null) yield return new ElementValue("processingMode", ProcessingModeElement);
-        if (ConstraintElement != null) yield return new ElementValue("constraint", ConstraintElement);
-        foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", elem); }
-        if (MultipleOrElement != null) yield return new ElementValue("multipleOr", MultipleOrElement);
-        if (MultipleAndElement != null) yield return new ElementValue("multipleAnd", MultipleAndElement);
-        foreach (var elem in ComparatorElement) { if (elem != null) yield return new ElementValue("comparator", elem); }
-        foreach (var elem in ModifierElement) { if (elem != null) yield return new ElementValue("modifier", elem); }
-        foreach (var elem in ChainElement) { if (elem != null) yield return new ElementValue("chain", elem); }
-        foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

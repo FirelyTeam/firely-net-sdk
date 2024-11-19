@@ -167,30 +167,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (Dose != null) yield return Dose;
-          if (Rate != null) yield return Rate;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Dose != null) yield return new ElementValue("dose", Dose);
-          if (Rate != null) yield return new ElementValue("rate", Rate);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -547,50 +523,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (SequenceElement != null) yield return SequenceElement;
-        if (TextElement != null) yield return TextElement;
-        foreach (var elem in AdditionalInstruction) { if (elem != null) yield return elem; }
-        if (PatientInstructionElement != null) yield return PatientInstructionElement;
-        if (Timing != null) yield return Timing;
-        if (AsNeeded != null) yield return AsNeeded;
-        if (Site != null) yield return Site;
-        if (Route != null) yield return Route;
-        if (Method != null) yield return Method;
-        foreach (var elem in DoseAndRate) { if (elem != null) yield return elem; }
-        if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
-        if (MaxDosePerAdministration != null) yield return MaxDosePerAdministration;
-        if (MaxDosePerLifetime != null) yield return MaxDosePerLifetime;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
-        if (TextElement != null) yield return new ElementValue("text", TextElement);
-        foreach (var elem in AdditionalInstruction) { if (elem != null) yield return new ElementValue("additionalInstruction", elem); }
-        if (PatientInstructionElement != null) yield return new ElementValue("patientInstruction", PatientInstructionElement);
-        if (Timing != null) yield return new ElementValue("timing", Timing);
-        if (AsNeeded != null) yield return new ElementValue("asNeeded", AsNeeded);
-        if (Site != null) yield return new ElementValue("site", Site);
-        if (Route != null) yield return new ElementValue("route", Route);
-        if (Method != null) yield return new ElementValue("method", Method);
-        foreach (var elem in DoseAndRate) { if (elem != null) yield return new ElementValue("doseAndRate", elem); }
-        if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", MaxDosePerPeriod);
-        if (MaxDosePerAdministration != null) yield return new ElementValue("maxDosePerAdministration", MaxDosePerAdministration);
-        if (MaxDosePerLifetime != null) yield return new ElementValue("maxDosePerLifetime", MaxDosePerLifetime);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

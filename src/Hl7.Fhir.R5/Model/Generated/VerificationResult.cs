@@ -300,38 +300,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Who != null) yield return Who;
-          foreach (var elem in Type) { if (elem != null) yield return elem; }
-          foreach (var elem in CommunicationMethod) { if (elem != null) yield return elem; }
-          if (ValidationStatus != null) yield return ValidationStatus;
-          if (ValidationDateElement != null) yield return ValidationDateElement;
-          if (CanPushUpdates != null) yield return CanPushUpdates;
-          foreach (var elem in PushTypeAvailable) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Who != null) yield return new ElementValue("who", Who);
-          foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-          foreach (var elem in CommunicationMethod) { if (elem != null) yield return new ElementValue("communicationMethod", elem); }
-          if (ValidationStatus != null) yield return new ElementValue("validationStatus", ValidationStatus);
-          if (ValidationDateElement != null) yield return new ElementValue("validationDate", ValidationDateElement);
-          if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", CanPushUpdates);
-          foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -647,40 +615,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Who != null) yield return Who;
-          if (OnBehalfOf != null) yield return OnBehalfOf;
-          if (CommunicationMethod != null) yield return CommunicationMethod;
-          if (DateElement != null) yield return DateElement;
-          if (SourceIdentityCertificateElement != null) yield return SourceIdentityCertificateElement;
-          if (ProxyIdentityCertificateElement != null) yield return ProxyIdentityCertificateElement;
-          if (ProxySignature != null) yield return ProxySignature;
-          if (SourceSignature != null) yield return SourceSignature;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Who != null) yield return new ElementValue("who", Who);
-          if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
-          if (CommunicationMethod != null) yield return new ElementValue("communicationMethod", CommunicationMethod);
-          if (DateElement != null) yield return new ElementValue("date", DateElement);
-          if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", SourceIdentityCertificateElement);
-          if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", ProxyIdentityCertificateElement);
-          if (ProxySignature != null) yield return new ElementValue("proxySignature", ProxySignature);
-          if (SourceSignature != null) yield return new ElementValue("sourceSignature", SourceSignature);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -883,30 +817,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(AttestationSignature, otherT.AttestationSignature)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Organization != null) yield return Organization;
-          if (IdentityCertificateElement != null) yield return IdentityCertificateElement;
-          if (AttestationSignature != null) yield return AttestationSignature;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Organization != null) yield return new ElementValue("organization", Organization);
-          if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", IdentityCertificateElement);
-          if (AttestationSignature != null) yield return new ElementValue("attestationSignature", AttestationSignature);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1322,52 +1232,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Validator, otherT.Validator)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Target) { if (elem != null) yield return elem; }
-        foreach (var elem in TargetLocationElement) { if (elem != null) yield return elem; }
-        if (Need != null) yield return Need;
-        if (StatusElement != null) yield return StatusElement;
-        if (StatusDateElement != null) yield return StatusDateElement;
-        if (ValidationType != null) yield return ValidationType;
-        foreach (var elem in ValidationProcess) { if (elem != null) yield return elem; }
-        if (Frequency != null) yield return Frequency;
-        if (LastPerformedElement != null) yield return LastPerformedElement;
-        if (NextScheduledElement != null) yield return NextScheduledElement;
-        if (FailureAction != null) yield return FailureAction;
-        foreach (var elem in PrimarySource) { if (elem != null) yield return elem; }
-        if (Attestation != null) yield return Attestation;
-        foreach (var elem in Validator) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
-        foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", elem); }
-        if (Need != null) yield return new ElementValue("need", Need);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
-        if (ValidationType != null) yield return new ElementValue("validationType", ValidationType);
-        foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", elem); }
-        if (Frequency != null) yield return new ElementValue("frequency", Frequency);
-        if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", LastPerformedElement);
-        if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", NextScheduledElement);
-        if (FailureAction != null) yield return new ElementValue("failureAction", FailureAction);
-        foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", elem); }
-        if (Attestation != null) yield return new ElementValue("attestation", Attestation);
-        foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

@@ -328,46 +328,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Height != null) yield return Height;
-        if (Width != null) yield return Width;
-        if (Depth != null) yield return Depth;
-        if (Weight != null) yield return Weight;
-        if (NominalVolume != null) yield return NominalVolume;
-        if (ExternalDiameter != null) yield return ExternalDiameter;
-        if (ShapeElement != null) yield return ShapeElement;
-        foreach (var elem in ColorElement) { if (elem != null) yield return elem; }
-        foreach (var elem in ImprintElement) { if (elem != null) yield return elem; }
-        foreach (var elem in Image) { if (elem != null) yield return elem; }
-        if (Scoring != null) yield return Scoring;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Height != null) yield return new ElementValue("height", Height);
-        if (Width != null) yield return new ElementValue("width", Width);
-        if (Depth != null) yield return new ElementValue("depth", Depth);
-        if (Weight != null) yield return new ElementValue("weight", Weight);
-        if (NominalVolume != null) yield return new ElementValue("nominalVolume", NominalVolume);
-        if (ExternalDiameter != null) yield return new ElementValue("externalDiameter", ExternalDiameter);
-        if (ShapeElement != null) yield return new ElementValue("shape", ShapeElement);
-        foreach (var elem in ColorElement) { if (elem != null) yield return new ElementValue("color", elem); }
-        foreach (var elem in ImprintElement) { if (elem != null) yield return new ElementValue("imprint", elem); }
-        foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
-        if (Scoring != null) yield return new ElementValue("scoring", Scoring);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

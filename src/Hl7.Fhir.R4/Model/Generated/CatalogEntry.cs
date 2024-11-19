@@ -192,28 +192,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RelationtypeElement != null) yield return RelationtypeElement;
-          if (Item != null) yield return Item;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RelationtypeElement != null) yield return new ElementValue("relationtype", RelationtypeElement);
-          if (Item != null) yield return new ElementValue("item", Item);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -586,50 +564,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(RelatedEntry, otherT.RelatedEntry)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Type != null) yield return Type;
-        if (OrderableElement != null) yield return OrderableElement;
-        if (ReferencedItem != null) yield return ReferencedItem;
-        foreach (var elem in AdditionalIdentifier) { if (elem != null) yield return elem; }
-        foreach (var elem in Classification) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (ValidityPeriod != null) yield return ValidityPeriod;
-        if (ValidToElement != null) yield return ValidToElement;
-        if (LastUpdatedElement != null) yield return LastUpdatedElement;
-        foreach (var elem in AdditionalCharacteristic) { if (elem != null) yield return elem; }
-        foreach (var elem in AdditionalClassification) { if (elem != null) yield return elem; }
-        foreach (var elem in RelatedEntry) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (OrderableElement != null) yield return new ElementValue("orderable", OrderableElement);
-        if (ReferencedItem != null) yield return new ElementValue("referencedItem", ReferencedItem);
-        foreach (var elem in AdditionalIdentifier) { if (elem != null) yield return new ElementValue("additionalIdentifier", elem); }
-        foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
-        if (ValidToElement != null) yield return new ElementValue("validTo", ValidToElement);
-        if (LastUpdatedElement != null) yield return new ElementValue("lastUpdated", LastUpdatedElement);
-        foreach (var elem in AdditionalCharacteristic) { if (elem != null) yield return new ElementValue("additionalCharacteristic", elem); }
-        foreach (var elem in AdditionalClassification) { if (elem != null) yield return new ElementValue("additionalClassification", elem); }
-        foreach (var elem in RelatedEntry) { if (elem != null) yield return new ElementValue("relatedEntry", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

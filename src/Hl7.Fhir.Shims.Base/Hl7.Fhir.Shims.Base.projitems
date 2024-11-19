@@ -10,7 +10,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Model\ValueSetExpansionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\ElementIdGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotGeneratorErrors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotGeneratorSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\SnapshotSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\CodeSystemFilterProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExpandParameters.cs" />

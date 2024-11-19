@@ -581,52 +581,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Product != null) yield return Product;
-          if (EyeElement != null) yield return EyeElement;
-          if (SphereElement != null) yield return SphereElement;
-          if (CylinderElement != null) yield return CylinderElement;
-          if (AxisElement != null) yield return AxisElement;
-          foreach (var elem in Prism) { if (elem != null) yield return elem; }
-          if (AddElement != null) yield return AddElement;
-          if (PowerElement != null) yield return PowerElement;
-          if (BackCurveElement != null) yield return BackCurveElement;
-          if (DiameterElement != null) yield return DiameterElement;
-          if (Duration != null) yield return Duration;
-          if (ColorElement != null) yield return ColorElement;
-          if (BrandElement != null) yield return BrandElement;
-          foreach (var elem in Note) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Product != null) yield return new ElementValue("product", Product);
-          if (EyeElement != null) yield return new ElementValue("eye", EyeElement);
-          if (SphereElement != null) yield return new ElementValue("sphere", SphereElement);
-          if (CylinderElement != null) yield return new ElementValue("cylinder", CylinderElement);
-          if (AxisElement != null) yield return new ElementValue("axis", AxisElement);
-          foreach (var elem in Prism) { if (elem != null) yield return new ElementValue("prism", elem); }
-          if (AddElement != null) yield return new ElementValue("add", AddElement);
-          if (PowerElement != null) yield return new ElementValue("power", PowerElement);
-          if (BackCurveElement != null) yield return new ElementValue("backCurve", BackCurveElement);
-          if (DiameterElement != null) yield return new ElementValue("diameter", DiameterElement);
-          if (Duration != null) yield return new ElementValue("duration", Duration);
-          if (ColorElement != null) yield return new ElementValue("color", ColorElement);
-          if (BrandElement != null) yield return new ElementValue("brand", BrandElement);
-          foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -877,28 +831,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (AmountElement != null) yield return AmountElement;
-          if (BaseElement != null) yield return BaseElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (AmountElement != null) yield return new ElementValue("amount", AmountElement);
-          if (BaseElement != null) yield return new ElementValue("base", BaseElement);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1178,40 +1110,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(LensSpecification, otherT.LensSpecification)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (CreatedElement != null) yield return CreatedElement;
-        if (Patient != null) yield return Patient;
-        if (Encounter != null) yield return Encounter;
-        if (DateWrittenElement != null) yield return DateWrittenElement;
-        if (Prescriber != null) yield return Prescriber;
-        foreach (var elem in LensSpecification) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-        if (DateWrittenElement != null) yield return new ElementValue("dateWritten", DateWrittenElement);
-        if (Prescriber != null) yield return new ElementValue("prescriber", Prescriber);
-        foreach (var elem in LensSpecification) { if (elem != null) yield return new ElementValue("lensSpecification", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

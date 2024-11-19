@@ -131,26 +131,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Item != null) yield return Item;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Item != null) yield return new ElementValue("item", Item);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -356,38 +336,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Management, otherT.Management)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Subject) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in Interactant) { if (elem != null) yield return elem; }
-        if (Type != null) yield return Type;
-        if (Effect != null) yield return Effect;
-        if (Incidence != null) yield return Incidence;
-        if (Management != null) yield return Management;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in Interactant) { if (elem != null) yield return new ElementValue("interactant", elem); }
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (Effect != null) yield return new ElementValue("effect", Effect);
-        if (Incidence != null) yield return new ElementValue("incidence", Incidence);
-        if (Management != null) yield return new ElementValue("management", Management);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

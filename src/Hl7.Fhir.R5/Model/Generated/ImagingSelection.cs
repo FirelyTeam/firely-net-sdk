@@ -263,28 +263,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Function != null) yield return Function;
-          if (Actor != null) yield return Actor;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Function != null) yield return new ElementValue("function", Function);
-          if (Actor != null) yield return new ElementValue("actor", Actor);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -536,36 +514,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (UidElement != null) yield return UidElement;
-          if (NumberElement != null) yield return NumberElement;
-          if (SopClass != null) yield return SopClass;
-          foreach (var elem in SubsetElement) { if (elem != null) yield return elem; }
-          foreach (var elem in ImageRegion2D) { if (elem != null) yield return elem; }
-          foreach (var elem in ImageRegion3D) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (UidElement != null) yield return new ElementValue("uid", UidElement);
-          if (NumberElement != null) yield return new ElementValue("number", NumberElement);
-          if (SopClass != null) yield return new ElementValue("sopClass", SopClass);
-          foreach (var elem in SubsetElement) { if (elem != null) yield return new ElementValue("subset", elem); }
-          foreach (var elem in ImageRegion2D) { if (elem != null) yield return new ElementValue("imageRegion2D", elem); }
-          foreach (var elem in ImageRegion3D) { if (elem != null) yield return new ElementValue("imageRegion3D", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -763,28 +711,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RegionTypeElement != null) yield return RegionTypeElement;
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RegionTypeElement != null) yield return new ElementValue("regionType", RegionTypeElement);
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return new ElementValue("coordinate", elem); }
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -951,28 +877,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(CoordinateElement, otherT.CoordinateElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RegionTypeElement != null) yield return RegionTypeElement;
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RegionTypeElement != null) yield return new ElementValue("regionType", RegionTypeElement);
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return new ElementValue("coordinate", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1460,58 +1364,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Subject != null) yield return Subject;
-        if (IssuedElement != null) yield return IssuedElement;
-        foreach (var elem in Performer) { if (elem != null) yield return elem; }
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        if (Code != null) yield return Code;
-        if (StudyUidElement != null) yield return StudyUidElement;
-        foreach (var elem in DerivedFrom) { if (elem != null) yield return elem; }
-        foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
-        if (SeriesUidElement != null) yield return SeriesUidElement;
-        if (SeriesNumberElement != null) yield return SeriesNumberElement;
-        if (FrameOfReferenceUidElement != null) yield return FrameOfReferenceUidElement;
-        if (BodySite != null) yield return BodySite;
-        foreach (var elem in Focus) { if (elem != null) yield return elem; }
-        foreach (var elem in Instance) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
-        foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (StudyUidElement != null) yield return new ElementValue("studyUid", StudyUidElement);
-        foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
-        foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
-        if (SeriesUidElement != null) yield return new ElementValue("seriesUid", SeriesUidElement);
-        if (SeriesNumberElement != null) yield return new ElementValue("seriesNumber", SeriesNumberElement);
-        if (FrameOfReferenceUidElement != null) yield return new ElementValue("frameOfReferenceUid", FrameOfReferenceUidElement);
-        if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
-        foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
-        foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

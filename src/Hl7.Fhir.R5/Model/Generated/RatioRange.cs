@@ -147,30 +147,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (LowNumerator != null) yield return LowNumerator;
-        if (HighNumerator != null) yield return HighNumerator;
-        if (Denominator != null) yield return Denominator;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (LowNumerator != null) yield return new ElementValue("lowNumerator", LowNumerator);
-        if (HighNumerator != null) yield return new ElementValue("highNumerator", HighNumerator);
-        if (Denominator != null) yield return new ElementValue("denominator", Denominator);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

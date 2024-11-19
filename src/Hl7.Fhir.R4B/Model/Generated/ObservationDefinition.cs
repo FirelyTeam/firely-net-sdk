@@ -321,32 +321,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (CustomaryUnit != null) yield return CustomaryUnit;
-          if (Unit != null) yield return Unit;
-          if (ConversionFactorElement != null) yield return ConversionFactorElement;
-          if (DecimalPrecisionElement != null) yield return DecimalPrecisionElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (CustomaryUnit != null) yield return new ElementValue("customaryUnit", CustomaryUnit);
-          if (Unit != null) yield return new ElementValue("unit", Unit);
-          if (ConversionFactorElement != null) yield return new ElementValue("conversionFactor", ConversionFactorElement);
-          if (DecimalPrecisionElement != null) yield return new ElementValue("decimalPrecision", DecimalPrecisionElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -644,40 +618,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(ConditionElement, otherT.ConditionElement)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (CategoryElement != null) yield return CategoryElement;
-          if (Range != null) yield return Range;
-          if (Context != null) yield return Context;
-          foreach (var elem in AppliesTo) { if (elem != null) yield return elem; }
-          if (GenderElement != null) yield return GenderElement;
-          if (Age != null) yield return Age;
-          if (GestationalAge != null) yield return GestationalAge;
-          if (ConditionElement != null) yield return ConditionElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
-          if (Range != null) yield return new ElementValue("range", Range);
-          if (Context != null) yield return new ElementValue("context", Context);
-          foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", elem); }
-          if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
-          if (Age != null) yield return new ElementValue("age", Age);
-          if (GestationalAge != null) yield return new ElementValue("gestationalAge", GestationalAge);
-          if (ConditionElement != null) yield return new ElementValue("condition", ConditionElement);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -1082,50 +1022,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(CriticalCodedValueSet, otherT.CriticalCodedValueSet)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        if (Code != null) yield return Code;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in PermittedDataTypeElement) { if (elem != null) yield return elem; }
-        if (MultipleResultsAllowedElement != null) yield return MultipleResultsAllowedElement;
-        if (Method != null) yield return Method;
-        if (PreferredReportNameElement != null) yield return PreferredReportNameElement;
-        if (QuantitativeDetails != null) yield return QuantitativeDetails;
-        foreach (var elem in QualifiedInterval) { if (elem != null) yield return elem; }
-        if (ValidCodedValueSet != null) yield return ValidCodedValueSet;
-        if (NormalCodedValueSet != null) yield return NormalCodedValueSet;
-        if (AbnormalCodedValueSet != null) yield return AbnormalCodedValueSet;
-        if (CriticalCodedValueSet != null) yield return CriticalCodedValueSet;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        if (Code != null) yield return new ElementValue("code", Code);
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in PermittedDataTypeElement) { if (elem != null) yield return new ElementValue("permittedDataType", elem); }
-        if (MultipleResultsAllowedElement != null) yield return new ElementValue("multipleResultsAllowed", MultipleResultsAllowedElement);
-        if (Method != null) yield return new ElementValue("method", Method);
-        if (PreferredReportNameElement != null) yield return new ElementValue("preferredReportName", PreferredReportNameElement);
-        if (QuantitativeDetails != null) yield return new ElementValue("quantitativeDetails", QuantitativeDetails);
-        foreach (var elem in QualifiedInterval) { if (elem != null) yield return new ElementValue("qualifiedInterval", elem); }
-        if (ValidCodedValueSet != null) yield return new ElementValue("validCodedValueSet", ValidCodedValueSet);
-        if (NormalCodedValueSet != null) yield return new ElementValue("normalCodedValueSet", NormalCodedValueSet);
-        if (AbnormalCodedValueSet != null) yield return new ElementValue("abnormalCodedValueSet", AbnormalCodedValueSet);
-        if (CriticalCodedValueSet != null) yield return new ElementValue("criticalCodedValueSet", CriticalCodedValueSet);
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

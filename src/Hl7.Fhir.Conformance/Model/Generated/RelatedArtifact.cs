@@ -655,46 +655,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (TypeElement != null) yield return TypeElement;
-        foreach (var elem in Classifier) { if (elem != null) yield return elem; }
-        if (LabelElement != null) yield return LabelElement;
-        if (DisplayElement != null) yield return DisplayElement;
-        if (CitationElement != null) yield return CitationElement;
-        if (UrlElement != null) yield return UrlElement;
-        if (Document != null) yield return Document;
-        if (ResourceElement != null) yield return ResourceElement;
-        if (ResourceReference != null) yield return ResourceReference;
-        if (PublicationStatusElement != null) yield return PublicationStatusElement;
-        if (PublicationDateElement != null) yield return PublicationDateElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        foreach (var elem in Classifier) { if (elem != null) yield return new ElementValue("classifier", elem); }
-        if (LabelElement != null) yield return new ElementValue("label", LabelElement);
-        if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
-        if (CitationElement != null) yield return new ElementValue("citation", CitationElement);
-        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-        if (Document != null) yield return new ElementValue("document", Document);
-        if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
-        if (ResourceReference != null) yield return new ElementValue("resourceReference", ResourceReference);
-        if (PublicationStatusElement != null) yield return new ElementValue("publicationStatus", PublicationStatusElement);
-        if (PublicationDateElement != null) yield return new ElementValue("publicationDate", PublicationDateElement);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

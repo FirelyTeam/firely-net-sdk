@@ -230,32 +230,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in Role) { if (elem != null) yield return elem; }
-          if (Who != null) yield return Who;
-          if (OnBehalfOf != null) yield return OnBehalfOf;
-          if (RelatedAgentType != null) yield return RelatedAgentType;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", elem); }
-          if (Who != null) yield return new ElementValue("who", Who);
-          if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
-          if (RelatedAgentType != null) yield return new ElementValue("relatedAgentType", RelatedAgentType);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -438,30 +412,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RoleElement != null) yield return RoleElement;
-          if (What != null) yield return What;
-          foreach (var elem in Agent) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RoleElement != null) yield return new ElementValue("role", RoleElement);
-          if (What != null) yield return new ElementValue("what", What);
-          foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -758,44 +708,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Target) { if (elem != null) yield return elem; }
-        if (Period != null) yield return Period;
-        if (RecordedElement != null) yield return RecordedElement;
-        foreach (var elem in PolicyElement) { if (elem != null) yield return elem; }
-        if (Location != null) yield return Location;
-        foreach (var elem in Reason) { if (elem != null) yield return elem; }
-        if (Activity != null) yield return Activity;
-        foreach (var elem in Agent) { if (elem != null) yield return elem; }
-        foreach (var elem in Entity) { if (elem != null) yield return elem; }
-        foreach (var elem in Signature) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
-        if (Period != null) yield return new ElementValue("period", Period);
-        if (RecordedElement != null) yield return new ElementValue("recorded", RecordedElement);
-        foreach (var elem in PolicyElement) { if (elem != null) yield return new ElementValue("policy", elem); }
-        if (Location != null) yield return new ElementValue("location", Location);
-        foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-        if (Activity != null) yield return new ElementValue("activity", Activity);
-        foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
-        foreach (var elem in Entity) { if (elem != null) yield return new ElementValue("entity", elem); }
-        foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)

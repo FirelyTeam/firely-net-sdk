@@ -326,38 +326,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (NameElement != null) yield return NameElement;
-        if (UseElement != null) yield return UseElement;
-        if (MinElement != null) yield return MinElement;
-        if (MaxElement != null) yield return MaxElement;
-        if (DocumentationElement != null) yield return DocumentationElement;
-        if (TypeElement != null) yield return TypeElement;
-        if (Profile != null) yield return Profile;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (UseElement != null) yield return new ElementValue("use", UseElement);
-        if (MinElement != null) yield return new ElementValue("min", MinElement);
-        if (MaxElement != null) yield return new ElementValue("max", MaxElement);
-        if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (Profile != null) yield return new ElementValue("profile", Profile);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

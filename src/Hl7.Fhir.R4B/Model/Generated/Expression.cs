@@ -270,34 +270,6 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (DescriptionElement != null) yield return DescriptionElement;
-        if (NameElement != null) yield return NameElement;
-        if (LanguageElement != null) yield return LanguageElement;
-        if (ExpressionElement != null) yield return ExpressionElement;
-        if (ReferenceElement != null) yield return ReferenceElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
-        if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
-        if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
-      }
-    }
-
     internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)

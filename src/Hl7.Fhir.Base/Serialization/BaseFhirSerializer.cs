@@ -82,7 +82,9 @@ namespace Hl7.Fhir.Serialization
                 }
             }
 
-            foreach (var child in instance.Children)
+#pragma warning disable CS0618 // Type or member is obsolete
+            foreach (var child in instance.Children())
+#pragma warning restore CS0618 // Type or member is obsolete
                 addSubsetted(child, atRoot: false);
         }
     }

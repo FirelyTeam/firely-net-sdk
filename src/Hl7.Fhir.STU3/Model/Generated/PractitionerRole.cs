@@ -254,32 +254,6 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return elem; }
-          if (AllDayElement != null) yield return AllDayElement;
-          if (AvailableStartTimeElement != null) yield return AvailableStartTimeElement;
-          if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", elem); }
-          if (AllDayElement != null) yield return new ElementValue("allDay", AllDayElement);
-          if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", AvailableStartTimeElement);
-          if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", AvailableEndTimeElement);
-        }
-      }
-
       internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
@@ -439,28 +413,6 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(During, otherT.During)) return false;
 
         return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (DescriptionElement != null) yield return DescriptionElement;
-          if (During != null) yield return During;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-          if (During != null) yield return new ElementValue("during", During);
-        }
       }
 
       internal protected override bool TryGetValue(string key, out object value)
@@ -824,52 +776,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
 
       return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (ActiveElement != null) yield return ActiveElement;
-        if (Period != null) yield return Period;
-        if (Practitioner != null) yield return Practitioner;
-        if (Organization != null) yield return Organization;
-        foreach (var elem in Code) { if (elem != null) yield return elem; }
-        foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-        foreach (var elem in Location) { if (elem != null) yield return elem; }
-        foreach (var elem in HealthcareService) { if (elem != null) yield return elem; }
-        foreach (var elem in Telecom) { if (elem != null) yield return elem; }
-        foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
-        foreach (var elem in NotAvailable) { if (elem != null) yield return elem; }
-        if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
-        foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
-        if (Period != null) yield return new ElementValue("period", Period);
-        if (Practitioner != null) yield return new ElementValue("practitioner", Practitioner);
-        if (Organization != null) yield return new ElementValue("organization", Organization);
-        foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
-        foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
-        foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
-        foreach (var elem in HealthcareService) { if (elem != null) yield return new ElementValue("healthcareService", elem); }
-        foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
-        foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", elem); }
-        foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", elem); }
-        if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", AvailabilityExceptionsElement);
-        foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
-      }
     }
 
     internal protected override bool TryGetValue(string key, out object value)
