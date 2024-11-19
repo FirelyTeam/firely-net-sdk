@@ -110,9 +110,9 @@ public class ModelInspectorMembersTest
         // ContactPoint.Value - a FhirString
         contactPointMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("string");
 
-        // Extension.Url - a system primitive
+        // Extension.Url - now a FhirString
         ClassMapping.TryCreate(typeof(Extension), out var extensionMapping);
-        extensionMapping.FindMappedElementByName("url").PropertyTypeMapping.Name.Should().Be("System.String");
+        extensionMapping.FindMappedElementByName("url").PropertyTypeMapping.Name.Should().Be("uri");
 
         // Extension.Value - an abstract DataType
         extensionMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("DataType");

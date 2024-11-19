@@ -58,15 +58,32 @@ namespace Hl7.Fhir.Model
     /// Unique id for inter-element referencing
     /// </summary>
     [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, Order=10)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
     [DataMember]
-    public string ElementId
+    public Hl7.Fhir.Model.FhirString ElementIdElement
     {
-      get { return _ElementId; }
-      set { _ElementId = value; OnPropertyChanged("ElementId"); }
+      get { return _ElementIdElement; }
+      set { _ElementIdElement = value; OnPropertyChanged("ElementIdElement"); }
     }
 
-    private string _ElementId;
+    private Hl7.Fhir.Model.FhirString _ElementIdElement;
+
+    /// <summary>
+    /// Unique id for inter-element referencing
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string ElementId
+    {
+      get { return ElementIdElement != null ? ElementIdElement.Value : null; }
+      set
+      {
+        if (value == null)
+          ElementIdElement = null;
+        else
+          ElementIdElement = new Hl7.Fhir.Model.FhirString(value);
+        OnPropertyChanged("ElementId");
+      }
+    }
 
     /// <summary>
     /// Additional content defined by implementations
@@ -92,7 +109,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(ElementId != null) dest.ElementId = ElementId;
+      if(ElementIdElement != null) dest.ElementIdElement = (Hl7.Fhir.Model.FhirString)ElementIdElement.DeepCopy();
       if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
       return dest;
     }
@@ -104,7 +121,7 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.Matches(otherT)) return false;
-      if( ElementId != otherT.ElementId ) return false;
+      if( !DeepComparable.Matches(ElementIdElement, otherT.ElementIdElement)) return false;
       if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
 
       return true;
@@ -116,7 +133,7 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
-      if(ElementId != otherT.ElementId) return false;
+      if( !DeepComparable.IsExactly(ElementIdElement, otherT.ElementIdElement)) return false;
       if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
 
       return true;
@@ -128,7 +145,7 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.Children) yield return item;
-        if (ElementId != null) yield return new FhirString(ElementId);
+        if (ElementIdElement != null) yield return ElementIdElement;
         foreach (var elem in Extension) { if (elem != null) yield return elem; }
       }
     }
@@ -139,7 +156,7 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.NamedChildren) yield return item;
-        if (ElementId != null) yield return new ElementValue("id", new FhirString(ElementId));
+        if (ElementIdElement != null) yield return new ElementValue("id", ElementIdElement);
         foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", elem); }
       }
     }
@@ -149,8 +166,8 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          value = ElementId;
-          return ElementId is not null;
+          value = ElementIdElement;
+          return ElementIdElement is not null;
         case "extension":
           value = Extension;
           return Extension?.Any() == true;
@@ -165,7 +182,7 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          ElementId = (string)value;
+          ElementIdElement = (Hl7.Fhir.Model.FhirString)value;
           return this;
         case "extension":
           Extension = (List<Hl7.Fhir.Model.Extension>)value;
@@ -179,7 +196,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (ElementId is not null) yield return new KeyValuePair<string,object>("id",ElementId);
+      if (ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",ElementIdElement);
       if (Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",Extension);
     }
 

@@ -339,26 +339,15 @@ namespace Hl7.Fhir.Introspection
             if (elementTypeMapping!.IsBackboneType)
             {
                 var info = elementTypeMapping;
-                return new ITypeSerializationInfo[] { info };
+                return [info];
             }
             else if (IsPrimitive)
             {
-                // Backwards compat hack: the primitives (since .value is never queried, this
-                // means Element.id, Narrative.div and Extension.url) should be returned as FHIR type names, not
-                // system (CQL) type names.
-                var bwcompatType = Name switch
-                {
-                    "url" => "uri",
-                    "id" => "string",
-                    "div" => "xhtml",
-                    _ => throw new NotSupportedException($"Encountered unexpected primitive type {Name} in backward compat behaviour for ITypedElement.InstanceType.")
-                };
-
-                return new[] { (ITypeSerializationInfo)new PocoTypeReferenceInfo(bwcompatType) };
+                throw new NotSupportedException($"Encountered unexpected primitive type {Name} for ITypedElement.InstanceType.")
             }
             else
             {
-                var names = FhirType.Select(ft => getFhirTypeName(ft));
+                var names = FhirType.Select(getFhirTypeName);
                 return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
             }
 
@@ -381,7 +370,7 @@ namespace Hl7.Fhir.Introspection
                 ReferredType = canonical;
             }
 
-            public string ReferredType { get; private set; }
+            public string ReferredType { get; }
         }
 
         #endregion

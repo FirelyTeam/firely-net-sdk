@@ -63,17 +63,33 @@ namespace Hl7.Fhir.Model
     /// identifies the meaning of the extension
     /// </summary>
     [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
-    [UriPattern]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public string Url
+    public Hl7.Fhir.Model.FhirUri UrlElement
     {
-      get { return _Url; }
-      set { _Url = value; OnPropertyChanged("Url"); }
+      get { return _UrlElement; }
+      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private string _Url;
+    private Hl7.Fhir.Model.FhirUri _UrlElement;
+
+    /// <summary>
+    /// identifies the meaning of the extension
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Url
+    {
+      get { return UrlElement != null ? UrlElement.Value : null; }
+      set
+      {
+        if (value == null)
+          UrlElement = null;
+        else
+          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        OnPropertyChanged("Url");
+      }
+    }
 
     /// <summary>
     /// Value of extension
@@ -98,7 +114,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Url != null) dest.Url = Url;
+      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
       if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
       return dest;
     }
@@ -115,7 +131,7 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.Matches(otherT)) return false;
-      if( Url != otherT.Url ) return false;
+      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.Matches(Value, otherT.Value)) return false;
 
       return true;
@@ -127,7 +143,7 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
-      if(Url != otherT.Url) return false;
+      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
 
       return true;
@@ -139,7 +155,7 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.Children) yield return item;
-        if (Url != null) yield return new FhirUri(Url);
+        if (UrlElement != null) yield return UrlElement;
         if (Value != null) yield return Value;
       }
     }
@@ -150,7 +166,7 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.NamedChildren) yield return item;
-        if (Url != null) yield return new ElementValue("url", new FhirUri(Url));
+        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
         if (Value != null) yield return new ElementValue("value", Value);
       }
     }
@@ -160,8 +176,8 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          value = Url;
-          return Url is not null;
+          value = UrlElement;
+          return UrlElement is not null;
         case "value":
           value = Value;
           return Value is not null;
@@ -176,7 +192,7 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          Url = (string)value;
+          UrlElement = (Hl7.Fhir.Model.FhirUri)value;
           return this;
         case "value":
           Value = (Hl7.Fhir.Model.DataType)value;
@@ -190,7 +206,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Url is not null) yield return new KeyValuePair<string,object>("url",Url);
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
     }
 

@@ -115,22 +115,32 @@ public class BaseFhirXmlPocoSerializer
             if (filter?.TryEnterMember(mKey, mValue, propertyMapping) == false)
                 continue;
 
-            var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
-                addSuffixToElementName(mKey, mValue) : mKey;
+            var serializeValue = mValue!;
 
-            if (mValue is ICollection coll and not byte[])
+            if (propertyMapping?.SerializationHint == XmlRepresentation.XmlAttr &&
+                serializeValue is PrimitiveType primitive)
+            {
+                // If this is a FHIR primitive element marked as XmlAttr,
+                // take the primitive's value (e.g. Extension.url, Element.id)
+                serializeValue = primitive.ObjectValue!;
+            }
+
+            var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
+                addSuffixToElementName(mKey, serializeValue) : mKey;
+
+            if (serializeValue is ICollection coll and not byte[])
             {
                 foreach (var value in coll)
                     serializeMemberValue(elementName, value, writer, filter);
             }
             else
-                serializeMemberValue(elementName, mValue, writer, filter);
+                serializeMemberValue(elementName, serializeValue, writer, filter);
 
-            filter?.LeaveMember(mKey, mValue, propertyMapping);
+            filter?.LeaveMember(mKey, serializeValue, propertyMapping);
         }
     }
 
-    private static string addSuffixToElementName(string elementName, object elementValue)
+    private static string addSuffixToElementName(string elementName, object? elementValue)
     {
         var typeName = elementValue switch
         {
