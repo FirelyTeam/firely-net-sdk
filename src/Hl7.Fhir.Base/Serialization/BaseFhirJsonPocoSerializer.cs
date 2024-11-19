@@ -98,7 +98,7 @@ public class BaseFhirJsonPocoSerializer
 
         filter?.EnterObject(element, mapping);
 
-        foreach (var member in element)
+        foreach (var member in element.GetElementPairs())
         {
             if (skipValue && member.Key == "value") continue;
 

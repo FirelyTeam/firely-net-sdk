@@ -75,9 +75,9 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public IElementDefinitionSummary Definition { get; private set; }
+        public IElementDefinitionSummary Definition { get; }
 
-        public string ShortPath { get; private set; }
+        public string ShortPath { get; }
 
         /// <summary>
         /// Elements from the IReadOnlyDictionary can be of type <see cref="Base"/>, IEnumerable&lt;Base&gt; or string.
@@ -107,15 +107,13 @@ namespace Hl7.Fhir.ElementModel
         {
             if (Current is null) return Enumerable.Empty<PocoElementNode>();
 
-            var rod = Current.AsReadOnlyDictionary();
-
             if (name is null)
             {
-                return rod.SelectMany(kvp
+                return Current.GetElementPairs().SelectMany(kvp
                     => createChildNodes(kvp.Key, kvp.Value));
             }
 
-            rod.TryGetValue(name, out var dictValue);
+            Current.TryGetValue(name, out var dictValue);
             return createChildNodes(name, dictValue);
 
             IEnumerable<PocoElementNode> createChildNodes(string childName, object value)
@@ -185,18 +183,13 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (Current is PrimitiveType p && p.ObjectValue != null)
-                {
-                    if (p.ObjectValue != _lastCachedValue)
-                    {
-                        _value = ToITypedElementValue();
-                        _lastCachedValue = p.ObjectValue;
-                    }
+                if (Current is not PrimitiveType { ObjectValue: not null } p) return null;
 
-                    return _value;
-                }
-                else
-                    return null;
+                if (p.ObjectValue == _lastCachedValue) return _value;
+
+                _value = ToITypedElementValue();
+                _lastCachedValue = p.ObjectValue;
+                return _value;
             }
         }
 

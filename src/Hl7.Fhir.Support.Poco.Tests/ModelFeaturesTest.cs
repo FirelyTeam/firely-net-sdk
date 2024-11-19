@@ -57,14 +57,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             ((DataType)null).ToCodings().Should().BeEmpty();
 
-            new Code("bla").ToCodings().Should().BeEquivalentTo(l(c(null, "bla")));
-            new Coding("http://nu.nl", "bla").ToCodings().Should().BeEquivalentTo(l(c("http://nu.nl", "bla")));
-            new Code<AdministrativeGender>(AdministrativeGender.Male).ToCodings().Should().BeEquivalentTo(l(new Coding("http://hl7.org/fhir/administrative-gender", "male")));
-            new CodeableConcept().Add("http://nu.nl", "bla1").Add("http://nu.nl", "bla2").ToCodings().Should().BeEquivalentTo(
-                [c("http://nu.nl", "bla1"), c("http://nu.nl", "bla2")]);
-            new FhirString("bla").ToCodings().Should().BeEquivalentTo(l(c(null, "bla")));
-            new CodeableReference(new CodeableConcept().Add("http://nu.nl", "bla1")).ToCodings().Should()
-                .BeEquivalentTo([c("http://nu.nl", "bla1")]);
+            new Code("bla").ToCodings().IsExactly(l(c(null, "bla"))).Should().BeTrue();
+            new Coding("http://nu.nl", "bla").ToCodings().IsExactly(l(c("http://nu.nl", "bla"))).Should().BeTrue();
+            new Code<AdministrativeGender>(AdministrativeGender.Male).ToCodings()
+                .IsExactly(l(new Coding("http://hl7.org/fhir/administrative-gender", "male"))).Should().BeTrue();
+            new CodeableConcept().Add("http://nu.nl", "bla1").Add("http://nu.nl", "bla2").ToCodings()
+                .IsExactly([c("http://nu.nl", "bla1"), c("http://nu.nl", "bla2")]).Should().BeTrue();
+            new FhirString("bla").ToCodings().IsExactly(l(c(null, "bla"))).Should().BeTrue();
+            new CodeableReference(new CodeableConcept().Add("http://nu.nl", "bla1")).ToCodings()
+                .IsExactly([c("http://nu.nl", "bla1")]).Should().BeTrue();
 
             var list = new[]
             {
@@ -72,7 +73,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 new Code<AdministrativeGender>(AdministrativeGender.Other)
             };
 
-            list.ToCodings().Should().BeEquivalentTo(new[] { c("http://hl7.org/fhir/administrative-gender", "male"), c("http://hl7.org/fhir/administrative-gender", "other") });
+            list.ToCodings().IsExactly([c("http://hl7.org/fhir/administrative-gender", "male"), c("http://hl7.org/fhir/administrative-gender", "other")
+            ]).Should().BeTrue();
 
             var listcc = new[]
             {
@@ -80,8 +82,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 new CodeableConcept().Add("http://nu.nl", "bla3").Add("http://nu.nl", "bla4"),
             };
 
-            listcc.ToCodings().Should().BeEquivalentTo([c("http://nu.nl", "bla1"), c("http://nu.nl", "bla2"), c("http://nu.nl", "bla3"), c("http://nu.nl", "bla4")
-            ]);
+            listcc.ToCodings().IsExactly([c("http://nu.nl", "bla1"), c("http://nu.nl", "bla2"), c("http://nu.nl", "bla3"), c("http://nu.nl", "bla4")
+            ]).Should().BeTrue();
 
             static Coding c(string s, string v) => new(s, v);
             static IEnumerable<Coding> l(Coding c) => [c];

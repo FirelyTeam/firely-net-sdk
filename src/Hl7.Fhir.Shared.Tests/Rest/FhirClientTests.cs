@@ -356,10 +356,8 @@ namespace Hl7.Fhir.Tests.Rest
 
             // Now validate this resource
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
-            var p = new Parameters
-            {
-                { "resource", pat }
-            };
+            var p = new Parameters();
+            p.Add("resource", pat);
             var oI = await client.InstanceOperationAsync(ri.WithoutVersion(), "validate", p);
             oI.Should().BeOfType<OperationOutcome>();
         }
