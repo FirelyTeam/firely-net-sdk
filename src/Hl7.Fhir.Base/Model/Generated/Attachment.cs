@@ -159,14 +159,15 @@ namespace Hl7.Fhir.Model
     /// Uri where the data can be found
     /// </summary>
     [FhirElement("url", InSummary=true, Order=60)]
+    [DeclaredType(Type = typeof(FhirUrl), Since = FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUrl UrlElement
+    public Hl7.Fhir.Model.FhirUri UrlElement
     {
       get { return _UrlElement; }
       set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUrl _UrlElement;
+    private Hl7.Fhir.Model.FhirUri _UrlElement;
 
     /// <summary>
     /// Uri where the data can be found
@@ -181,7 +182,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           UrlElement = null;
         else
-          UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
+          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -480,7 +481,7 @@ namespace Hl7.Fhir.Model
       if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
       if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
       if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
+      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
       if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.Integer64)SizeElement.DeepCopy();
       if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopy();
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -589,7 +590,7 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -638,7 +639,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -652,7 +653,7 @@ namespace Hl7.Fhir.Model
           DataElement = (Hl7.Fhir.Model.Base64Binary)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUrl)value;
+          UrlElement = (Hl7.Fhir.Model.FhirUri)value;
           return this;
         case "size":
           SizeElement = (Hl7.Fhir.Model.Integer64)value;
@@ -687,7 +688,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
