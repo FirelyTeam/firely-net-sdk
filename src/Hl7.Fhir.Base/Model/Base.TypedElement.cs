@@ -140,15 +140,20 @@ public abstract partial class Base : IScopedNode,
             _ => $"{ScopeInfo.Name}"
         };
 
+    [TemporarilyChanged] // We need to use Children for now to preserve scope access, but we would really prefer poco-accesses here. When we refactor, we should change this back.
     bool IScopedNode.TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
     {
-        result = this is Bundle b ? b.Entry.FirstOrDefault(entry => entry.FullUrl == fullUrl) : null;
+        result = this is Bundle b ? (b as IScopedNode)
+            .Children("entry").FirstOrDefault(entry => entry.Children("fullUrl")
+                .SingleOrDefault()?.Value is string url && url == fullUrl)?
+            .Children("resource").SingleOrDefault() : null;
         return result is not null;
     }
 
+    [TemporarilyChanged] // We need to use Children for now to preserve scope access, but we would really prefer poco-accesses here. When we refactor, we should change this back.
     bool IScopedNode.TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
     {
-        result = this is DomainResource dr ? dr.Contained.FirstOrDefault(contained => contained.Id == id) : null;
+        result = this is DomainResource dr ? (dr as IScopedNode).Children("contained").FirstOrDefault(contained => contained.Children("id").SingleOrDefault()?.Value is string containedId && $"#{containedId}" == id) : null;
         return result is not null;
     }
 
@@ -168,6 +173,7 @@ public abstract partial class Base : IScopedNode,
             DomainResource => NodeType.DomainResource | NodeType.Resource,
             Resource => NodeType.Resource,
             ResourceReference or Canonical or CodeableReference => NodeType.Reference,
+            Quantity => NodeType.Quantity,
             _ => 0
         };
     

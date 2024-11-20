@@ -271,17 +271,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("xhtml", typedElements.First().InstanceType);
             Assert.AreEqual("Section.text[0]", typedElements.First().Location);
             Assert.IsNotNull(typedElements.First().Value);
-
-
         }
         
         [TestMethod]
         public void Bundle_WithEntryWithoutFullUrl_ShouldNotThrow()
         {
-            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
+            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]};
 
             var enumerate = () => bundle.BundledResources();
-            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
+            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => !c.Children("fullUrl").Any());
         }
 
         private class CCDAResourceResolver : IAsyncResourceResolver

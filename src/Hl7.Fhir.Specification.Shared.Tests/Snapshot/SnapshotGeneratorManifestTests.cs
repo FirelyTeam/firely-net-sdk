@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rule = test.Rule[i];
             Console.WriteLine($"Verify rule {i}: '{rule.Text}'");
 
-            var nav = output.ToTypedElement();
+            var nav = output;
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
             Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Custom context for accessing input & expected result
         class SnapshotEvaluationContext : FhirEvaluationContext
         {
-            Dictionary<string, ITypedElement> _aliases;
+            Dictionary<string, IScopedNode> _aliases;
             string _testPath;
 
             public SnapshotEvaluationContext(
@@ -794,8 +794,8 @@ namespace Hl7.Fhir.Specification.Tests
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
                 if (input is null) { throw new ArgumentNullException(nameof(input)); }
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
-                Input = input.ToTypedElement();
-                Generated = generated.ToTypedElement();
+                Input = input;
+                Generated = generated;
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Specification.Tests
                 this.WithResourceOverrides(Generated);
             }
 
-            void Trace(string msg, IEnumerable<ITypedElement> elems)
+            void Trace(string msg, IEnumerable<IScopedNode> elems)
             {
                 Console.WriteLine($"[TRACE] {msg}:");
                 foreach (var elem in elems)
@@ -816,19 +816,19 @@ namespace Hl7.Fhir.Specification.Tests
 
             public IResourceResolver TestResolver { get; }
 
-            public ITypedElement Input { get; }
+            public IScopedNode Input { get; }
 
-            public ITypedElement Generated { get; }
+            public IScopedNode Generated { get; }
 
             // Custom FhirPath method implementations
 
-            Dictionary<string, ITypedElement> Aliases => _aliases ?? (_aliases = new Dictionary<string, ITypedElement>());
+            Dictionary<string, IScopedNode> Aliases => _aliases ?? (_aliases = new Dictionary<string, IScopedNode>());
 
-            void AddAlias(string alias, ITypedElement elem) => Aliases[alias] = elem;
+            void AddAlias(string alias, IScopedNode elem) => Aliases[alias] = elem;
 
-            ITypedElement Alias(string alias) => Aliases[alias];
+            IScopedNode Alias(string alias) => Aliases[alias];
 
-            ITypedElement Fixture(string name)
+            IScopedNode Fixture(string name)
             {
                 if (name == $"{Id}-input") { return Input; }
                 if (name == $"{Id}-output") { return Generated; }
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         filePath = Path.ChangeExtension(filePath, "json");
                     }
-                    return Load(filePath).ToTypedElement();
+                    return Load(filePath);
                 }
 
                 // Otherwise assume name refers to a core resource, e.g. 'patient'
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (!(typeName is null))
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToTypedElement();
+                    return TestResolver.FindStructureDefinitionForCoreType(typeName);
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
 
@@ -862,18 +862,18 @@ namespace Hl7.Fhir.Specification.Tests
             // Add custom FHIRPath methods for unit testing
             public static void AddSymbols(SymbolTable symbols)
             {
-                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("fixture", Fixture);
-                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("aliasAs", AliasAs);
-                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("alias", Alias);
-                symbols.Add<ITypedElement, bool, string, EvaluationContext, ITypedElement>("check", Check);
+                symbols.Add<IScopedNode, string, EvaluationContext, IScopedNode>("fixture", Fixture);
+                symbols.Add<IScopedNode, string, EvaluationContext, IScopedNode>("aliasAs", AliasAs);
+                symbols.Add<IScopedNode, string, EvaluationContext, IScopedNode>("alias", Alias);
+                symbols.Add<IScopedNode, bool, string, EvaluationContext, IScopedNode>("check", Check);
             }
 
             // Custom FHIRPath methods for unit testing
 
-            public static ITypedElement Fixture(ITypedElement elem, string name, EvaluationContext ctx)
+            public static IScopedNode Fixture(IScopedNode elem, string name, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Fixture(name) : null;
 
-            public static ITypedElement AliasAs(ITypedElement elem, string id, EvaluationContext ctx)
+            public static IScopedNode AliasAs(IScopedNode elem, string id, EvaluationContext ctx)
             {
                 if (ctx is SnapshotEvaluationContext sctx)
                 {
@@ -882,10 +882,10 @@ namespace Hl7.Fhir.Specification.Tests
                 return elem;
             }
 
-            public static ITypedElement Alias(ITypedElement elem, string id, EvaluationContext ctx)
+            public static IScopedNode Alias(IScopedNode elem, string id, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Alias(id) : null;
 
-            public static ITypedElement Check(ITypedElement elem, bool condition, string message, EvaluationContext ctx)
+            public static IScopedNode Check(IScopedNode elem, bool condition, string message, EvaluationContext ctx)
             {
                 Assert.IsTrue(condition, $"[CHECK] '{elem.Name}' {message}");
                 //if (!condition)

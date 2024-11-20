@@ -10,13 +10,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System.Runtime.CompilerServices;
+
+#pragma warning disable CS0612 // Type or member is obsolete
 
 namespace Hl7.FhirPath.Functions
 {
+    [TemporarilyChanged] // disabled obsolete warning
     internal static class TypeOperators
     {
-        public static bool Is(this ITypedElement focus, string type)
+        public static bool Is(this IScopedNode focus, string type)
         {
             if (focus.InstanceType != null)
             {
@@ -39,10 +44,10 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-        public static IEnumerable<ITypedElement> FilterType(this IEnumerable<ITypedElement> focus, string typeName)
+        public static IEnumerable<IScopedNode> FilterType(this IEnumerable<IScopedNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));
 
-        public static ITypedElement CastAs(this ITypedElement focus, string typeName)
+        public static IScopedNode CastAs(this IScopedNode focus, string typeName)
             => focus.Is(typeName) ? focus : null;
     }
 }
