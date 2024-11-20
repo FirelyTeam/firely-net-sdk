@@ -98,17 +98,14 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (res is StructureDefinition sd)
             {
-                var shouldGenerate = Generator.Settings.RegenerationBehaviour switch
-                {
-                    RegenerationSettings.TRY_USE_EXISTING => !sd.HasSnapshot,
-                    RegenerationSettings.REGENERATE_ONCE => !sd.HasSnapshot || !sd.Snapshot.IsCreatedBySnapshotGenerator(),
-#pragma warning disable CS0618 // Type or member is obsolete
-                    RegenerationSettings.FORCE_REGENERATE => true,
-#pragma warning restore CS0618 // Type or member is obsolete
-                    _ => throw Error.NotSupported($"Unknown regeneration behaviour: {Generator.Settings.RegenerationBehaviour}")
-                };
-                
-                if (shouldGenerate)
+                if (
+                    !sd.HasSnapshot || 
+                    Generator.Settings.RegenerationBehaviour == RegenerationSettings.FORCE_REGENERATE || 
+                    (
+                        !sd.Snapshot.IsCreatedBySnapshotGenerator() && 
+                        Generator.Settings.RegenerationBehaviour == RegenerationSettings.REGENERATE_ONCE
+                    )
+                )
                 {
                     await Generator.UpdateAsync(sd).ConfigureAwait(false);
                 }
