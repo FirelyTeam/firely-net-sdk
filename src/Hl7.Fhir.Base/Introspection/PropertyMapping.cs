@@ -11,6 +11,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -205,7 +206,7 @@ namespace Hl7.Fhir.Introspection
             // with the [DeclaredType] attribute.
             var declaredType = ClassMapping.GetAttribute<DeclaredTypeAttribute>(prop, release);
             var fhirType = declaredType?.Type ??
-                (typeof(Enum).GetTypeInfo().IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
+                (typeof(Enum).IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
 
             if (!ClassMapping.TryGetMappingForType(fhirType, release, out var propertyTypeMapping))
                 throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
@@ -259,7 +260,7 @@ namespace Hl7.Fhir.Introspection
 
         private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)
         {
-            var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
+            var isValueElement = valueElementAttr.IsPrimitiveValue;
 
             return !isValueElement || isAllowedNativeTypeForDataTypeValue(prop.PropertyType)
                 ? isValueElement

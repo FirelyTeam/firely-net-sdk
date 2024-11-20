@@ -16,9 +16,9 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class PocoBuilder : IExceptionSource
+    internal class LegacyPocoBuilder : IExceptionSource
     {
-        public PocoBuilder(ModelInspector inspector, PocoBuilderSettings settings = null)
+        public LegacyPocoBuilder(ModelInspector inspector, PocoBuilderSettings settings = null)
         {
             _settings = settings?.Clone() ?? new PocoBuilderSettings();
             _inspector = inspector ?? throw new ArgumentNullException(nameof(inspector));
@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Serialization
                 ErrorMode = _settings.IgnoreUnknownMembers ?
                     TypedElementSettings.TypeErrorMode.Ignore
                     : TypedElementSettings.TypeErrorMode.Report,
+
 #pragma warning disable CS0618 // Type or member is obsolete
                 TruncateDateTimeToDate = _settings.TruncateDateTimeToDate
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -119,15 +120,9 @@ namespace Hl7.Fhir.Serialization
 
             Base build()
             {
-                var settings = new ParserSettings
-                {
-                    AcceptUnknownMembers = _settings.IgnoreUnknownMembers,
-                    AllowUnrecognizedEnums = _settings.AllowUnrecognizedEnums
-                };
-
-                return new ComplexTypeReader(_inspector, source, settings).Deserialize(null);
+                var newBuilder = new NewPocoBuilder(_inspector, _settings);
+                return newBuilder.BuildFrom(source);
             }
         }
     }
 }
-

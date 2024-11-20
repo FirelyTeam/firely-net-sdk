@@ -56,13 +56,14 @@ namespace Hl7.Fhir.Introspection
         /// metadata for the most recent release for those base classes.</remarks>
         public static ModelInspector ForAssembly(Assembly a)
         {
-            return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)), _ => configureInspector(a));
+            return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)),
+                _ => configureInspector());
 
             // NB: The concurrent dictionary will make sure only one of these initializers will run at the same time,
             // so there is no additional locking done in these nested functions.
-            static ModelInspector configureInspector(Assembly a)
+            ModelInspector configureInspector()
             {
-                if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not FhirModelAssemblyAttribute modelAssemblyAttr)
+                if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not { } modelAssemblyAttr)
                     throw new InvalidOperationException($"Assembly {a.FullName} cannot be used to supply FHIR metadata," +
                         $" as it is not marked with a {nameof(FhirModelAssemblyAttribute)} attribute.");
 

@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization
         /// Needed for backward compatibility with old parser for resources which were saved and considered valid in the past.
         /// </remarks>>
         [Obsolete("Needed for backward compatibility with old parser for resources which were saved and considered valid in the past. " +
-            "Should not be used in new code.")]
+                  "Should not be used in new code.")]
         public bool TruncateDateTimeToDate { get; set; }
 
         /// <summary>

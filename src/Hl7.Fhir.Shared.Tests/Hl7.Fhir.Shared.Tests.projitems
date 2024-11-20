@@ -25,7 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SearchAsyncTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SearchParamFixesTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\UpdateRefreshDeleteAsyncTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\MeasurePerformance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\QueryParserTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\ResourceParsingTests.cs" />

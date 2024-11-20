@@ -30,6 +30,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -37,6 +38,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -109,34 +111,4 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
     protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Overflow;
 
     // TODO bring Children + NamedChildren over as well.
-}
-
-
-/// <summary>
-/// A dynamic data type that can hold any element.
-/// </summary>
-public class DynamicDataType : DataType
-{
-    public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
-
-    public object this[string key]
-    {
-        get => this.AsReadOnlyDictionary()[key];
-        set => SetValue(key, value);
-    }
-}
-
-
-/// <summary>
-/// A dynamic resource that can hold any element.
-/// </summary>
-public class DynamicResource : Resource
-{
-    public void Add(string arg1, object arg2) => this.SetValue(arg1, arg2);
-
-    public object this[string key]
-    {
-        get => this.AsReadOnlyDictionary()[key];
-        set => SetValue(key, value);
-    }
 }

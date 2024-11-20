@@ -45,6 +45,16 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class HumanName
     {
+        public HumanName()
+        {
+        }
+
+        public HumanName(string family, IEnumerable<string> given)
+        {
+            Family = family;
+            Given = given;
+        }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay
         {
