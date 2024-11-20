@@ -91,8 +91,9 @@ namespace Hl7.Fhir.Introspection
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
                 IsResource = type.CanBeTreatedAsType(typeof(Resource)),
-                IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
-                                ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
+                EnumType = ReflectionHelper.IsClosedGenericType(type) &&
+                            ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)) ?
+                            type.GenericTypeArguments[0] : null,
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
                 IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
@@ -157,7 +158,12 @@ namespace Hl7.Fhir.Introspection
         /// Is <c>true</c> when this class represents a code with a required binding.
         /// </summary>
         /// <remarks>See <see cref="Name"></see>.</remarks>
-        public bool IsCodeOfT { get; private set; } = false;
+        public bool IsCodeOfT => EnumType is not null;
+
+        /// <summary>
+        /// If this mapping represents a <c>Code&lt;T&gt;</c>, this property will hold the enum type T.
+        /// </summary>
+        public Type? EnumType { get; private init; }
 
         /// <summary>
         /// Indicates whether this class represents the nested complex type for a backbone element.

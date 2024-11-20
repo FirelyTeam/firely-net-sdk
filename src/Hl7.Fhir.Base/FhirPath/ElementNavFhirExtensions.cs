@@ -39,16 +39,16 @@ namespace Hl7.Fhir.FhirPath
 
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
-            t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
+            t.Add("hasValue", (IScopedNode f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (IScopedNode f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
             t.Add("resolve", (IEnumerable<IScopedNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
 
-            t.Add("memberOf", (ITypedElement input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
+            t.Add("memberOf", (IScopedNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
-            t.Add("htmlchecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false);
-            t.Add("htmlChecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlchecks", (IScopedNode f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlChecks", (IScopedNode f) => f.HtmlChecks(), doNullProp: false);
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
@@ -81,14 +81,14 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HasValue(this ITypedElement focus) => focus?.Value is not null;
+        public static bool HasValue(this IScopedNode focus) => focus?.Value is not null;
 
         /// <summary>
         /// Check if the node has a value, and not just extensions.
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HtmlChecks(this ITypedElement focus)
+        public static bool HtmlChecks(this IScopedNode focus)
         {
             if (focus?.Value is null) return false;
 
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.FhirPath
             return XHtml.IsValidNarrativeXhtml(focus.Value.ToString()!);
         }
 
-        public static IEnumerable<Base?> ToFhirValues(this IEnumerable<ITypedElement> results)
+        public static IEnumerable<Base?> ToFhirValues(this IEnumerable<IScopedNode> results)
         {
             return results.Select(r =>
             {
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="ctx">EvaluationContext of the FhirPath compiler</param>
         /// <returns>See summary</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        internal static bool? MemberOf(ITypedElement input, string valueset, EvaluationContext ctx)
+        internal static bool? MemberOf(IScopedNode input, string valueset, EvaluationContext ctx)
         {
             var service = (ctx is FhirEvaluationContext fctx ? fctx.TerminologyService : null)
                 ?? throw new ArgumentNullException(nameof(ctx), "The 'memberOf' function cannot be executed because the FhirEvaluationContext does not include a TerminologyService.");
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.FhirPath
 
             inParams = input.InstanceType switch
             {
-                "code" when input is ScopedNode sn => inParams.WithCode(code: sn.Value as string, context: sn.LocalLocation),
+                "code" => inParams.WithCode(code: input.Value as string, context: input.GetLocalLocation()),
                 "Coding" => inParams.WithCoding(input.ParseCoding()),
                 "CodeableConcept" => inParams.WithCodeableConcept(input.ParseCodeableConcept()),
                 "string" or "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),

@@ -180,10 +180,9 @@ namespace Hl7.Fhir.Test.Validation
             ResourceIdentity ri = new ResourceIdentity(url);
             if (!string.IsNullOrEmpty(ri.ResourceType))
             {
-                var fac = new Hl7.Fhir.Serialization.DefaultModelFactory();
-                var type = ModelInfo.GetTypeForFhirType(ri.ResourceType);
-                DomainResource res = fac.Create(type) as DomainResource;
-                res.Id = ri.Id;
+                var type = ModelInfo.GetTypeForFhirType(ri.ResourceType)!;
+                DomainResource res = Activator.CreateInstance(type) as DomainResource;
+                res!.Id = ri.Id;
                 return res.ToScopedNode();
             }
             return null;

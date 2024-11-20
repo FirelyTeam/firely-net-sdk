@@ -12,7 +12,7 @@ namespace Hl7.FhirPath.R4.Tests.PocoTests;
 [TestClass]
 public class FhirPathContextTests
 {
-    ScopedNode _bundle;
+    IScopedNode _bundle;
 
     [TestInitialize]
     public void SetupSource()

@@ -3,6 +3,7 @@ using Hl7.Fhir.Rest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 
 namespace Hl7.Fhir.Model;
 
@@ -10,6 +11,14 @@ namespace Hl7.Fhir.Model;
 
 public static class ScopedNodeExtensions
 {
+    internal static IEnumerable<IScopedNode> Parents(this IScopedNode node)
+    {
+        for(var scan = node.Parent; scan is not null; scan = scan.Parent)
+        {
+            yield return scan;
+        }
+    }
+    
     // wrote this, but it never gets picked over the ElementNodeExtensions version which is a shame. Let's keep it here for now.
     public static IEnumerable<IScopedNode> Children(this IEnumerable<IScopedNode> node, string? name = null) =>
         node.SelectMany(n => n.Children(name));
@@ -60,21 +69,21 @@ public static class ScopedNodeExtensions
     /// <summary>
     /// Extract the %resource variable from this IScopedNode
     /// </summary> 
-    internal static IScopedNode GetResourceContext(this IScopedNode node) => node switch
+    internal static IScopedNode? GetResourceContext(this IScopedNode node) => node switch
     {
         { Parent: null } => node, // if parent is null, do not go further
-        { Parent: { } p } when p.Type.HasFlag(NodeType.Bundle) => node, // if parent is bundle, do not go further
         { Type: var type } when type.HasFlag(NodeType.Resource) => node, // if resource, return itself
-        _ => node.Parent!.GetResourceContext() // otherwise, go to parent
+        _ => node?.Parent?.GetResourceContext() // otherwise, go to parent
     };
     
     /// <summary>
     /// Extract the %rootResource variable from this IScopedNode
     /// </summary>
-    internal static IScopedNode GetRootResourceContext(this IScopedNode node) => node.GetResourceContext() switch
+    internal static IScopedNode? GetRootResourceContext(this IScopedNode node) => node.GetResourceContext() switch
     {
         { Name : "contained" } containedResource => containedResource.Parent!, // if contained, return container
-        { } resource => resource // otherwise return %resource
+        { } resource => resource, // otherwise return %resource
+        _ => null
     };
 
     internal static string? FindFullUrl(this IScopedNode node)
@@ -108,6 +117,17 @@ public static class ScopedNodeExtensions
         return identity;
     }
     
-    public static string MakeAbsolute(this ScopedNode node, string reference) =>
+    public static string MakeAbsolute(this IScopedNode node, string reference) =>
         node.MakeAbsolute(new ResourceIdentity(reference)).ToString();
+
+    internal static IScopedNode? GetParentResource(this IScopedNode node) => node.Parents().FirstOrDefault(parentNode => parentNode.Type.HasFlag(NodeType.Resource));
+
+    internal static string GetLocalLocation(this IScopedNode node) =>
+        node.Parent is null 
+            ? node.Location 
+            : $"{node.GetParentResource()!.InstanceType}.{node.Location[(node.GetParentResource()!.Location.Length + 1)..]}";
+
+    public static IEnumerable<IScopedNode> ContainedResources(this IScopedNode node) => node.Children("contained");
+    
+    public static IEnumerable<IScopedNode> BundledResources(this IScopedNode node) => node.Children("entry");
 }

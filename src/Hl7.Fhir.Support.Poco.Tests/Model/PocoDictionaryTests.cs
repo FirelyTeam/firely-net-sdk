@@ -3,7 +3,6 @@ using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using IRO = System.Collections.Generic.IReadOnlyDictionary<string, object>;
 
 namespace Hl7.Fhir.Tests.Model;
 

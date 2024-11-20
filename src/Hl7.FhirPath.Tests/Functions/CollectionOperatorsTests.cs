@@ -1,6 +1,8 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HL7.FhirPath.Tests.Functions
@@ -46,8 +48,19 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestExclude()
         {
-            var left = ElementNode.CreateList(1, 3, 3, 5, 6);
-            var right = ElementNode.CreateList(5, 6);
+            IEnumerable<IScopedNode> left = 
+            [
+                new Integer(1),
+                new Integer(3),
+                new Integer(3),
+                new Integer(5),
+                new Integer(6)
+            ];
+            IEnumerable<IScopedNode> right = 
+            [
+                new Integer(5),
+                new Integer(6)
+            ];
             CollectionAssert.AreEqual(ElementNode.CreateList(1, 3, 3).ToList(),
                     left.Exclude(right).ToList());
         }

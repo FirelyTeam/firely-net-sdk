@@ -215,7 +215,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void CheckTypeDetermination()
         {
-            var values = ElementNode.CreateList(1, 1L, true, "hi", 4.0m, 4.0f, P.DateTime.Now());
+            var values = ElementNode.CreateList(1, 1L, true, "hi", 4.0m, 4.0f, P.DateTime.Now()).ToScopedNodes();
 
             Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(int));
             Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(long));
@@ -230,7 +230,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestItemSelection()
         {
-            var values = ElementNode.CreateList(1L, 2, 3L, 4, 5, 6, 7);
+            var values = ElementNode.CreateList(1L, 2, 3L, 4, 5, 6, 7).ToScopedNodes();
 
             Assert.AreEqual(1L, values.Item(0).Single().Value);
             Assert.AreEqual(2, values.Item(1).Single().Value);
