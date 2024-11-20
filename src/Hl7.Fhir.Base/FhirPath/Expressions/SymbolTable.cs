@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -159,10 +160,10 @@ namespace Hl7.FhirPath.Expressions
 
         public static void AddVar(this SymbolTable table, string name, object value)
         {
-            table.AddVar(name, ElementNode.ForPrimitive(value));
+            table.AddVar(name, ElementNode.ForPrimitive(value).ToScopedNode());
         }
 
-        public static void AddVar(this SymbolTable table, string name, ITypedElement value)
+        public static void AddVar(this SymbolTable table, string name, IScopedNode value)
         {
             table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
         }

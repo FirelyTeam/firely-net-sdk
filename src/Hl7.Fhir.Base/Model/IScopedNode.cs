@@ -20,6 +20,7 @@ public enum NodeType
     DomainResource = 1 << 2,
     Primitive = 1 << 3,
     Reference = 1 << 4,
+    Quantity = 1 << 5,
 }
 
 /// <summary>
@@ -30,7 +31,7 @@ public enum NodeType
 /// the instance or derived from fully aware of the FHIR definitions and types
 /// </remarks>
 #pragma warning disable CS0618 // Type or member is obsolete
-public interface IScopedNode : ITypedElement, IShortPathGenerator
+public partial interface IScopedNode : ITypedElement, IShortPathGenerator
 #pragma warning restore CS0618 // Type or member is obsolete
 {
     /// <summary>

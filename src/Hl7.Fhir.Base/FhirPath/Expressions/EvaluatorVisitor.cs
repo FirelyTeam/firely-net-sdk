@@ -6,10 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using FP = Hl7.FhirPath.Expressions;
 
 namespace Hl7.FhirPath.Expressions
@@ -24,9 +26,10 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
+        [TemporarilyChanged] // we should refactor ConstantExpression to use IScopedNode too...
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
-            return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value));
+            return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value).ToScopedNode());
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
@@ -47,7 +50,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return InvokeeFactory.Return(ElementNode.EmptyList);
+            return InvokeeFactory.Return([]);
         }
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression)
@@ -82,7 +85,7 @@ namespace Hl7.FhirPath.Expressions
 
             return chainResolves;
             
-            IEnumerable<ITypedElement> chainResolves(Closure context, IEnumerable<Invokee> invokees)
+            IEnumerable<IScopedNode> chainResolves(Closure context, IEnumerable<Invokee> invokees)
             {
                 return context.ResolveValue(expression.Name) ?? resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, []);
             }

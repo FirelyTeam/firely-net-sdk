@@ -283,21 +283,21 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestStringJoin()
         {
-            var dummy = ElementNode.CreateList("This ", "is ", "one ", "sentence", ".");
+            var dummy = ElementNode.CreateList("This ", "is ", "one ", "sentence", ".").ToScopedNodes();
             var result = dummy.FpJoin(string.Empty);
             Assert.IsNotNull(result);
             Assert.AreEqual("This is one sentence.", result);
 
-            dummy = ElementNode.CreateList("a", "b", "c");
+            dummy = ElementNode.CreateList("a", "b", "c").ToScopedNodes();
             result = dummy.FpJoin();
             Assert.IsNotNull(result);
             Assert.AreEqual("abc", result);
 
-            dummy = ElementNode.CreateList();
+            dummy = ElementNode.CreateList().ToScopedNodes();
             result = dummy.FpJoin(string.Empty);
             Assert.AreEqual(string.Empty, result);
 
-            dummy = ElementNode.CreateList("This", "is", "a", "separated", "sentence.");
+            dummy = ElementNode.CreateList("This", "is", "a", "separated", "sentence.").ToScopedNodes();
             result = dummy.FpJoin(";");
             Assert.IsNotNull(result);
             Assert.AreEqual("This;is;a;separated;sentence.", result);
@@ -307,7 +307,7 @@ namespace Hl7.FhirPath.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestStringJoinError()
         {
-            var dummy = ElementNode.CreateList("This", "is", "sentence", "with", 1, "number.");
+            var dummy = ElementNode.CreateList("This", "is", "sentence", "with", 1, "number.").ToScopedNodes();
             dummy.FpJoin(string.Empty);
         }
     }
