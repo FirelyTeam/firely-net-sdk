@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Throw on unresolved profile references; must include in TestData folder
             GenerateSnapshotForExternalProfiles = true,
-            RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE,
+            ForceRegenerateSnapshots = true,
             GenerateExtensionsOnConstraints = false,
             GenerateAnnotationsOnConstraints = false,
             GenerateElementIds = true // STU3

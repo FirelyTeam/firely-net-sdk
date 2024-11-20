@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Utility;
-using System;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -35,7 +34,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
             other.GenerateSnapshotForExternalProfiles = GenerateSnapshotForExternalProfiles;
-            other.RegenerationBehaviour = RegenerationBehaviour;
+            other.ForceRegenerateSnapshots = ForceRegenerateSnapshots;
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
@@ -56,18 +55,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
         /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
         /// </summary>
-        [Obsolete(
-            "This setting does not work as intended. We will maintain the old behaviour for now, and we will consider removing it in a future major release. Use the new RegenerationBehaviour setting instead. See also https://github.com/FirelyTeam/firely-net-sdk/pull/2803")]
-        public bool ForceRegenerateSnapshots
-        {
-            get { return this.RegenerationBehaviour == RegenerationSettings.REGENERATE_ONCE; } 
-            set { this.RegenerationBehaviour = value ? RegenerationSettings.REGENERATE_ONCE : RegenerationSettings.TRY_USE_EXISTING; }
-        } // ForceExpandAll
-        
-        /// <summary>
-        /// Setting for the regeneration behaviour of the snapshot generator. see <see cref="RegenerationSettings"/>.
-        /// </summary>
-        public RegenerationSettings RegenerationBehaviour { get; set; }
+        public bool ForceRegenerateSnapshots { get; set; } = false; // ForceExpandAll
 
         /// <summary>
         /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
@@ -95,25 +83,5 @@ namespace Hl7.Fhir.Specification.Snapshot
         // </summary>
         // <remarks>See GForge #9791</remarks>
         // public bool MergeTypeProfiles { get; set; }
-    }
-    
-    /// <summary>
-    /// Settings for defining the behaviour of the snapshot generator with respect to regenerating snapshots.
-    /// </summary>
-    public enum RegenerationSettings
-    {
-        /// <summary>
-        /// Try to use an existing snapshot, if available.
-        /// </summary>
-        TRY_USE_EXISTING,
-        /// <summary>
-        /// Regenerate the snapshot once, to ensure it is up-to-date.
-        /// </summary>
-        REGENERATE_ONCE,
-        /// <summary>
-        /// Regenerate the snapshot every time. This is useful for debugging and testing purposes.
-        /// </summary>
-        [Obsolete("Watch out when using this setting! it could lead to infinite recursion and is mainly meant for debugging and testing purposes. If you previously had ForceRegenerateSnapshots set to true, consider using REGENERATE_ONCE instead.")]
-        FORCE_REGENERATE,
     }
 }
