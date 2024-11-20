@@ -76,8 +76,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-
-        internal static void RemoveAllNonInheritableExtensions(this Element element)
+        /// <summary>
+        /// This extension removes all non-inheritable extensions from the specified element definition and all it's child objects.
+        /// Non-inheritable extensions are extensions that should not be inherited by derived profiles.
+        /// </summary>
+        /// <param name="element"></param>
+        public static void RemoveAllNonInheritableExtensions(this Element element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveNonInheritableExtensions();
