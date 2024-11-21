@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
         {
-            RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE,
+            ForceRegenerateSnapshots = true,
             GenerateSnapshotForExternalProfiles = true
         };
 
@@ -799,8 +799,6 @@ namespace Hl7.Fhir.Specification.Tests
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
-
-                this.WithResourceOverrides(Generated);
             }
 
             void Trace(string msg, IEnumerable<ITypedElement> elems)
