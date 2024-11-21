@@ -164,9 +164,9 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             var result = new Parameters();
 
-            if (Url is { }) result.Add(_urlAttribute, Url); //Either Url, ValueSet or Context is allowed. So try Url first.
-            if (ValueSet is { } && Url is not { }) result.Add(_valueSetAttribute, ValueSet);
-            if (Context is { } && ValueSet is not { } && Url is not { }) result.Add(_contextAttribute, Context); //And then context as last resort.            
+            if (Url is { }) result.Add(_urlAttribute, Url);
+            if (ValueSet is { }) result.Add(_valueSetAttribute, ValueSet);
+            if (Context is { }) result.Add(_contextAttribute, Context);
             if (ValueSetVersion is { }) result.Add(_valueSetVersionAttribute, ValueSetVersion);
             if (Code is { }) result.Add(_codeAttribute, Code);
             if (System is { }) result.Add(_systemAttribute, System);
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (CodeableConcept is { }) result.Add(_codeableConceptAttribute, CodeableConcept);
             if (Date is { }) result.Add(_dateAttribute, Date);
             if (Abstract is { }) result.Add(_abstractAttribute, Abstract);
-            if (DisplayLanguage is { }) result.Add(_displayAttribute, DisplayLanguage);
+            if (DisplayLanguage is { }) result.Add(_displayLanguageAttribute, DisplayLanguage);
             if (InferSystem is { }) result.Add(_inferSystemAttribute, InferSystem);
             return result;
         }
