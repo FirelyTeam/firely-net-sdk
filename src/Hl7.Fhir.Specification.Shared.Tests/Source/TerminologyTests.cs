@@ -757,6 +757,52 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [Fact]
+        public void TestValidateCodeParametersCode()
+        {
+            var parameters = new ValidateCodeParameters()
+                .WithCode("bar", "http://foo.com", "1.0.4", "barDisplay", "nl-NL", "Patient.gender", true);
+
+            parameters.Code.Value.Should().Be("bar");
+            parameters.System.Value.Should().Be("http://foo.com");
+            parameters.SystemVersion.Value.Should().Be("1.0.4");
+            parameters.DisplayLanguage.Value.Should().Be("nl-NL");
+            parameters.Display.Value.Should().Be("barDisplay");
+            parameters.Context.Value.Should().Be("Patient.gender");
+            parameters.InferSystem.Value.Should().Be(true);
+
+            var paramResource = parameters.Build();
+
+            paramResource.Parameter.Should().HaveCount(7);
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "code" && ((Code)p.Value).Value == "bar");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "system" && ((FhirUri)p.Value).Value == "http://foo.com");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "systemVersion" && ((FhirString)p.Value).Value == "1.0.4");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "display" && ((FhirString)p.Value).Value == "barDisplay");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "displayLanguage" && ((Code)p.Value).Value == "nl-NL");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "context" && ((FhirUri)p.Value).Value == "Patient.gender");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "inferSystem" && ((FhirBoolean)p.Value).Value == true);
+        }
+
+        [Fact]
+        public void TestValidateCodeParametersValueSet()
+        {
+            var parameters = new ValidateCodeParameters()
+               .WithValueSet("http://foo.bar", "Patient.gender", new ValueSet(), "1.0.4");
+
+            parameters.Url.Value.Should().Be("http://foo.bar");
+            parameters.Context.Value.Should().Be("Patient.gender");
+            parameters.ValueSet.Should().NotBeNull();
+            parameters.ValueSetVersion.Value.Should().Be("1.0.4");
+
+            var paramResource = parameters.Build();
+
+            paramResource.Parameter.Should().HaveCount(4);
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "url" && ((FhirUri)p.Value).Value == "http://foo.bar");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "context" && ((FhirUri)p.Value).Value == "Patient.gender");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "valueSet" && ((ValueSet)p.Resource) != null);
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "valueSetVersion" && ((FhirString)p.Value).Value == "1.0.4");
+        }
+
 
         #region helper functions
         private static Tasks.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,

@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Tests
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
                 .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
-            
+
             parameters = new ValidateCodeParameters()
                 .WithValueSet(LANGUAGE_VS)
                 .WithCode(code: "fr-CH", context: "context")
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
                   .Build();
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a system or a context must be provided");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a url or a context must be provided");
 
             parameters = new ValidateCodeParameters()
                   .WithValueSet(LANGUAGE_VS)
