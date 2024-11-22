@@ -71,7 +71,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveConstrainedByDiffAnnotation();
-            foreach (var child in element.Children)
+#pragma warning disable CS0618 // Type or member is obsolete
+            foreach (var child in element.Children())
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 child.RemoveAllConstrainedByDiffAnnotations();
             }
@@ -98,7 +100,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static bool HasDiffConstraintAnnotations(this Base elem)
             => elem != null && (
                 elem.HasAnnotation<ConstrainedByDiffAnnotation>()
-                || elem.Children.Any(e => e.HasDiffConstraintAnnotations())
+#pragma warning disable CS0618 // Type or member is obsolete
+                || elem.Children().Any(e => e.HasDiffConstraintAnnotations())
+#pragma warning restore CS0618 // Type or member is obsolete
             );
 
         #endregion

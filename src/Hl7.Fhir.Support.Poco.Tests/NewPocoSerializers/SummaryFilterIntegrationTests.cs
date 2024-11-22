@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var filter = new BundleFilter(new TopLevelFilter(
                 new ElementMetadataFilter
                 {
-                    IncludeNames = new[] { "communication", "type" },
+                    IncludeNames = ["communication", "type"],
                 },
                 new ElementMetadataFilter
                 {
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             communication.Count().Should().Be(1);
 
             // Communication.language is a CodeableConcept, all of its field are in summary...
-            communication.Language.Should().BeEquivalentTo(new CodeableConcept("x", "nl-nl"));
+            communication.Language.IsExactly(new CodeableConcept("x", "nl-nl")).Should().BeTrue();
 
             // The nested Bundle should only its "type" present
             var nb = bp.Entry[1].Resource as Bundle;
@@ -104,11 +104,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void AllSummaryIndeed()
         {
-            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary());
-            var codeSystemCM = ModelInspector.ForAssembly(typeof(Patient).Assembly).FindClassMapping(typeof(CodeSystem));
+            var (_, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary());
+            var codeSystemCm = ModelInspector.ForAssembly(typeof(Patient).Assembly).FindClassMapping(typeof(CodeSystem))!;
 
-            summarized.All(element => codeSystemCM.FindMappedElementByName(element.Key).InSummary).Should().BeTrue();
-            summarized.Count().Should().BeLessThan(codeSystemCM.PropertyMappings.Where(pm => pm.InSummary).Count());
+            summarized.GetElementPairs().All(element => codeSystemCm.FindMappedElementByName(element.Key)!.InSummary).Should().BeTrue();
+            summarized.Count().Should().BeLessThan(codeSystemCm.PropertyMappings.Count(pm => pm.InSummary));
         }
 
         [TestMethod]
@@ -135,7 +135,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SummaryElements()
         {
             // This is actually equivalent to "text" (if elements also includes mandatory)
-            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForElements(new[] { "id", "text", "meta" }));
+            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForElements(["id", "text", "meta"
+            ]));
 
             traverse(summarized).Count().Should().Be(1 +
                 traverse(full.IdElement).Count() +
@@ -147,7 +148,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SummaryCount()
         {
-            var (full, summarized) = runSummarize<Bundle>("simple-bundle.xml", SerializationFilter.ForCount());
+            var (_, summarized) = runSummarize<Bundle>("simple-bundle.xml", SerializationFilter.ForCount());
             
             // check if result contains the link
             traverse(summarized).Should().ContainKey("link");
@@ -176,10 +177,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 (y.Value switch
                 {
                     ICollection array => array.Cast<object>().SelectMany(bsi => childrenAndMe(KeyValuePair.Create(y.Key, bsi))),
-                    Base obj => obj.SelectMany(oc => childrenAndMe(oc)),
-                    var z => Enumerable.Empty<KeyValuePair<string, object>>()
+                    Base obj => obj.GetElementPairs().SelectMany(childrenAndMe),
+                    _ => []
                 }).Prepend(y).ToList();
         }
     }
 
+    file static class EnumerableShim
+    {
+        public static int Count(this Base b) => b.GetElementPairs().Count();
+    }
 }

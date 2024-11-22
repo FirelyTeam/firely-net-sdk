@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -314,7 +315,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(bundle, mode) :
                                     await FhirXmlSerializer.SerializeToStringAsync(bundle, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
-                Assert.AreEqual(actualData, expectedData);
+                actualData.Should().Be(expectedData);
             }
         }
 

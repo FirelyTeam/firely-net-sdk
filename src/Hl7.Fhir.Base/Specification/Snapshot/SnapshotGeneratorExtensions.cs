@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveConstrainedByDiffExtension();
-            foreach (var child in element.Children.OfType<Element>())
+            foreach (var child in element.Children().OfType<Element>())
             {
                 child.RemoveAllConstrainedByDiffExtensions();
             }
@@ -81,7 +81,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveNonInheritableExtensions();
-            foreach (var child in element.Children.OfType<Element>())
+#pragma warning disable CS0618 // Type or member is obsolete
+            foreach (var child in element.Children().OfType<Element>())
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 child.RemoveAllNonInheritableExtensions();
             }

@@ -36,7 +36,10 @@ namespace Hl7.Fhir.Specification.Tests
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
             var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"));
+                .Subject.Value
+                .IsExactly(new FhirString(
+                    $"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"))
+                .Should().BeTrue();
         }
 
         [DataTestMethod]
@@ -50,7 +53,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"The Coding references a value set, not a code system ('{system}')"));
+                .Subject.Value.IsExactly(new FhirString($"The Coding references a value set, not a code system ('{system}')"))
+                .Should().BeTrue();
         }
 
         [TestMethod]
@@ -67,7 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await service.ValueSetValidateCode(parameters);
 
             result.Parameter.Should().Contain(p => p.Name == "result")
-               .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+               .Subject.Value.IsExactly(new FhirBoolean(true)).Should().BeTrue();
         }
     }
 }

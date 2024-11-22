@@ -47,22 +47,22 @@ namespace Hl7.Fhir.Model
         [TestMethod]
         public void TestIsNullOrEmpty_FhirUri() => testIsNullOrEmpty_StringPrimitive<FhirUri>("http://example.org");
 
-        void testIsNullOrEmpty_Primitive<T, V>(V testValue, V emptyValue) where T : PrimitiveType, IValue<V>, new()
+        private static void testIsNullOrEmpty_Primitive<T, V>(V testValue, V emptyValue) where T : PrimitiveType, IValue<V>, new()
         {
             var elem = new T();
             Assert.IsTrue(elem.IsNullOrEmpty());
 
             elem.Value = emptyValue;
             Assert.IsFalse(elem.IsNullOrEmpty());
-            Assert.IsFalse((elem as Base).IsNullOrEmpty());
+            Assert.IsFalse(elem.IsNullOrEmpty());
 
             elem.Value = testValue;
             Assert.IsFalse(elem.IsNullOrEmpty());
-            Assert.IsFalse((elem as Base).IsNullOrEmpty());
+            Assert.IsFalse(elem.IsNullOrEmpty());
 
             elem.Value = default;
             Assert.IsTrue(elem.IsNullOrEmpty());
-            Assert.IsTrue((elem as Base).IsNullOrEmpty());
+            Assert.IsTrue(elem.IsNullOrEmpty());
 
             var extension = new Extension();
             Assert.IsTrue(extension.IsNullOrEmpty());
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             extension.Value = extensionValue;
             Assert.IsFalse(extension.IsNullOrEmpty());
             Assert.IsFalse(elem.IsNullOrEmpty());
-            Assert.IsFalse((elem as Base).IsNullOrEmpty());
+            Assert.IsFalse(elem.IsNullOrEmpty());
 
             extensionValue.Value = null;
             Assert.IsTrue(extensionValue.IsNullOrEmpty());
@@ -85,23 +85,20 @@ namespace Hl7.Fhir.Model
             Assert.IsTrue(elem.IsNullOrEmpty());
         }
 
-        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType, IValue<string>, new()
+        private static void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType, IValue<string>, new()
         {
             var elem = new T();
             Assert.IsTrue(elem.IsNullOrEmpty());
 
             elem.Value = string.Empty;
             Assert.IsTrue(elem.IsNullOrEmpty());
-            Assert.IsTrue((elem as Base).IsNullOrEmpty());
 
             Assert.IsFalse(string.IsNullOrEmpty(exampleValue));
             elem.Value = exampleValue;
             Assert.IsFalse(elem.IsNullOrEmpty());
-            Assert.IsFalse((elem as Base).IsNullOrEmpty());
 
             elem.Value = null;
             Assert.IsTrue(elem.IsNullOrEmpty());
-            Assert.IsTrue((elem as Base).IsNullOrEmpty());
 
             var extension = new Extension();
             Assert.IsTrue(extension.IsNullOrEmpty());
@@ -113,7 +110,6 @@ namespace Hl7.Fhir.Model
             extension.Value = extensionValue;
             Assert.IsFalse(extension.IsNullOrEmpty());
             Assert.IsFalse(elem.IsNullOrEmpty());
-            Assert.IsFalse((elem as Base).IsNullOrEmpty());
 
             extensionValue.Value = null;
             Assert.IsTrue(extensionValue.IsNullOrEmpty());

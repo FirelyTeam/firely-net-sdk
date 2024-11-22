@@ -256,33 +256,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (TypeElement != null) yield return TypeElement;
-        if (EventNameElement != null) yield return EventNameElement;
-        if (EventTiming != null) yield return EventTiming;
-        if (EventData != null) yield return EventData;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (EventNameElement != null) yield return new ElementValue("eventName", EventNameElement);
-        if (EventTiming != null) yield return new ElementValue("eventTiming", EventTiming);
-        if (EventData != null) yield return new ElementValue("eventData", EventData);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -304,7 +278,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -326,7 +300,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);

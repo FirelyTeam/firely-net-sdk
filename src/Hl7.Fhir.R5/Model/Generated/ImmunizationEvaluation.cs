@@ -456,51 +456,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Patient != null) yield return Patient;
-        if (DateElement != null) yield return DateElement;
-        if (Authority != null) yield return Authority;
-        if (TargetDisease != null) yield return TargetDisease;
-        if (ImmunizationEvent != null) yield return ImmunizationEvent;
-        if (DoseStatus != null) yield return DoseStatus;
-        foreach (var elem in DoseStatusReason) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        if (SeriesElement != null) yield return SeriesElement;
-        if (DoseNumberElement != null) yield return DoseNumberElement;
-        if (SeriesDosesElement != null) yield return SeriesDosesElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-        if (DateElement != null) yield return new ElementValue("date", DateElement);
-        if (Authority != null) yield return new ElementValue("authority", Authority);
-        if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
-        if (ImmunizationEvent != null) yield return new ElementValue("immunizationEvent", ImmunizationEvent);
-        if (DoseStatus != null) yield return new ElementValue("doseStatus", DoseStatus);
-        foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
-        if (DoseNumberElement != null) yield return new ElementValue("doseNumber", DoseNumberElement);
-        if (SeriesDosesElement != null) yield return new ElementValue("seriesDoses", SeriesDosesElement);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -549,7 +505,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -598,7 +554,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

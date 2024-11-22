@@ -341,37 +341,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (SubjectState != null) yield return SubjectState;
-          if (Milestone != null) yield return Milestone;
-          if (Reason != null) yield return Reason;
-          if (StartDateElement != null) yield return StartDateElement;
-          if (EndDateElement != null) yield return EndDateElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (SubjectState != null) yield return new ElementValue("subjectState", SubjectState);
-          if (Milestone != null) yield return new ElementValue("milestone", Milestone);
-          if (Reason != null) yield return new ElementValue("reason", Reason);
-          if (StartDateElement != null) yield return new ElementValue("startDate", StartDateElement);
-          if (EndDateElement != null) yield return new ElementValue("endDate", EndDateElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -399,7 +369,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -427,7 +397,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
@@ -693,43 +663,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        foreach (var elem in Progress) { if (elem != null) yield return elem; }
-        if (Period != null) yield return Period;
-        if (Study != null) yield return Study;
-        if (Subject != null) yield return Subject;
-        if (AssignedComparisonGroupElement != null) yield return AssignedComparisonGroupElement;
-        if (ActualComparisonGroupElement != null) yield return ActualComparisonGroupElement;
-        foreach (var elem in Consent) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        foreach (var elem in Progress) { if (elem != null) yield return new ElementValue("progress", elem); }
-        if (Period != null) yield return new ElementValue("period", Period);
-        if (Study != null) yield return new ElementValue("study", Study);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (AssignedComparisonGroupElement != null) yield return new ElementValue("assignedComparisonGroup", AssignedComparisonGroupElement);
-        if (ActualComparisonGroupElement != null) yield return new ElementValue("actualComparisonGroup", ActualComparisonGroupElement);
-        foreach (var elem in Consent) { if (elem != null) yield return new ElementValue("consent", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -766,7 +700,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -803,7 +737,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

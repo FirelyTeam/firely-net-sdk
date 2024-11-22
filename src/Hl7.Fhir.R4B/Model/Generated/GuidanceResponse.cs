@@ -448,55 +448,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (RequestIdentifier != null) yield return RequestIdentifier;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Module != null) yield return Module;
-        if (StatusElement != null) yield return StatusElement;
-        if (Subject != null) yield return Subject;
-        if (Encounter != null) yield return Encounter;
-        if (OccurrenceDateTimeElement != null) yield return OccurrenceDateTimeElement;
-        if (Performer != null) yield return Performer;
-        foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        foreach (var elem in EvaluationMessage) { if (elem != null) yield return elem; }
-        if (OutputParameters != null) yield return OutputParameters;
-        if (Result != null) yield return Result;
-        foreach (var elem in DataRequirement) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (RequestIdentifier != null) yield return new ElementValue("requestIdentifier", RequestIdentifier);
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Module != null) yield return new ElementValue("module", Module);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-        if (OccurrenceDateTimeElement != null) yield return new ElementValue("occurrenceDateTime", OccurrenceDateTimeElement);
-        if (Performer != null) yield return new ElementValue("performer", Performer);
-        foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        foreach (var elem in EvaluationMessage) { if (elem != null) yield return new ElementValue("evaluationMessage", elem); }
-        if (OutputParameters != null) yield return new ElementValue("outputParameters", OutputParameters);
-        if (Result != null) yield return new ElementValue("result", Result);
-        foreach (var elem in DataRequirement) { if (elem != null) yield return new ElementValue("dataRequirement", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -551,7 +503,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -606,7 +558,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (RequestIdentifier is not null) yield return new KeyValuePair<string,object>("requestIdentifier",RequestIdentifier);

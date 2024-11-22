@@ -413,7 +413,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             result.Should().ContainSingle().Subject
                 .Should().BeOfType<Observation.ComponentComponent>()
-                .Subject.Code.Should().BeEquivalentTo(new CodeableConcept("http://loinc.org", "2708-6"));
+                .Subject.Code.IsExactly(new CodeableConcept("http://loinc.org", "2708-6")).Should().BeTrue();
         }
     }
 }

@@ -33,11 +33,11 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 
@@ -95,7 +95,7 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
 
     #endregion
 
-    protected virtual Base SetValue(string key, object? value)
+    internal protected virtual Base SetValue(string key, object? value)
     {
         if (value is null)
             Overflow.Remove(key);
@@ -105,10 +105,18 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
         return this;
     }
 
-    protected virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) =>
+    internal object this[string key]
+    {
+        get => this.TryGetValue(key, out var value)
+            ? value
+            : throw new KeyNotFoundException($"Element '{key}' is not a known FHIR element or has no value.");
+        set => SetValue(key, value);
+    }
+
+    internal protected virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) =>
         Overflow.TryGetValue(key, out value);
 
-    protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Overflow;
+    internal protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Overflow;
 
     // TODO bring Children + NamedChildren over as well.
 }

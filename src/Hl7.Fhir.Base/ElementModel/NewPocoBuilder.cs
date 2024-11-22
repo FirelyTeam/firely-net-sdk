@@ -40,7 +40,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
-        IDictionary<string, object> newInstance = buildNewInstance(classMapping);
+        var newInstance = buildNewInstance(classMapping);
 
         // Capture the instance type if this is a dynamic type.
         if(newInstance is IDynamicType dt)
@@ -79,7 +79,6 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             var childClassMapping = classMappingForElement(child, propertyMapping);
             var convertedValue = readFromElement(child, childClassMapping);
 
-
             // In case the convertedValue does not agree with the actual POCO type of the property, this
             // method will throw an InvalidCastException. Later, we could salvage
             // the data we have so far, and put it in an annotation.
@@ -87,7 +86,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             setOrAddProperty(child, newInstance, convertedValue, propertyMapping);
         }
 
-        return (Base)newInstance;
+        return newInstance;
     }
 
     private static void raiseFormatError(string message, string location)
@@ -95,14 +94,13 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         throw Error.Format("While building a POCO: " + message, location);
     }
 
-    private static IDictionary<string, object> buildNewInstance(ClassMapping mapping)
+    private static Base buildNewInstance(ClassMapping mapping)
     {
-        return mapping.Factory() switch
-        {
-            IDictionary<string,object> b => b,
-            _ => throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a dictionary, which is required for " +
-                        $"building up POCO's dynamically.")
-        };
+        if (mapping.Factory() is Base b) return b;
+
+        throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a " +
+                       $"Base, which is required for " +
+                        $"building up POCO's dynamically.");
     }
 
     private IList buildNewList(PropertyMapping? propertyMapping, Type elementType)
@@ -118,7 +116,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         }
 
         var propertyClassMapping = getClassMapping(propertyMapping.ImplementingType);
-        return propertyClassMapping?.ListFactory() ?? new List<Base>();
+        return propertyClassMapping.ListFactory() ?? new List<Base>();
     }
 
     private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping)
@@ -212,7 +210,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
     private ClassMapping getClassMapping<T>() => getClassMapping(typeof(T));
 
-    private void setOrAddProperty(ITypedElement node, IDictionary<string, object> target,
+    private void setOrAddProperty(ITypedElement node, Base target,
         Base convertedValue, PropertyMapping? propertyMapping)
     {
         // If this element *could* be repeating (either we don't know the definition, or it really is defined
@@ -291,7 +289,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     /// <summary>
     /// Convert the value of a typed element to a value that can be set on a POCO property.
     /// </summary>
-    private object convertTypedElementValue(object value, string? instanceType)
+    private static object convertTypedElementValue(object value, string? instanceType)
     {
         return value switch
         {

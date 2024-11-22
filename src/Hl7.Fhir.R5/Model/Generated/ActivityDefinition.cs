@@ -348,35 +348,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TypeElement != null) yield return TypeElement;
-          if (TypeCanonicalElement != null) yield return TypeCanonicalElement;
-          if (TypeReference != null) yield return TypeReference;
-          if (Role != null) yield return Role;
-          if (Function != null) yield return Function;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-          if (TypeCanonicalElement != null) yield return new ElementValue("typeCanonical", TypeCanonicalElement);
-          if (TypeReference != null) yield return new ElementValue("typeReference", TypeReference);
-          if (Role != null) yield return new ElementValue("role", Role);
-          if (Function != null) yield return new ElementValue("function", Function);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -401,7 +373,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -426,7 +398,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
@@ -546,29 +518,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (PathElement != null) yield return PathElement;
-          if (Expression != null) yield return Expression;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (PathElement != null) yield return new ElementValue("path", PathElement);
-          if (Expression != null) yield return new ElementValue("expression", Expression);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -584,7 +534,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -600,7 +550,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
@@ -1948,123 +1898,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (UrlElement != null) yield return UrlElement;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (VersionElement != null) yield return VersionElement;
-        if (VersionAlgorithm != null) yield return VersionAlgorithm;
-        if (NameElement != null) yield return NameElement;
-        if (TitleElement != null) yield return TitleElement;
-        if (SubtitleElement != null) yield return SubtitleElement;
-        if (StatusElement != null) yield return StatusElement;
-        if (ExperimentalElement != null) yield return ExperimentalElement;
-        if (Subject != null) yield return Subject;
-        if (DateElement != null) yield return DateElement;
-        if (PublisherElement != null) yield return PublisherElement;
-        foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in UseContext) { if (elem != null) yield return elem; }
-        foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
-        if (PurposeElement != null) yield return PurposeElement;
-        if (UsageElement != null) yield return UsageElement;
-        if (CopyrightElement != null) yield return CopyrightElement;
-        if (CopyrightLabelElement != null) yield return CopyrightLabelElement;
-        if (ApprovalDateElement != null) yield return ApprovalDateElement;
-        if (LastReviewDateElement != null) yield return LastReviewDateElement;
-        if (EffectivePeriod != null) yield return EffectivePeriod;
-        foreach (var elem in Topic) { if (elem != null) yield return elem; }
-        foreach (var elem in Author) { if (elem != null) yield return elem; }
-        foreach (var elem in Editor) { if (elem != null) yield return elem; }
-        foreach (var elem in Reviewer) { if (elem != null) yield return elem; }
-        foreach (var elem in Endorser) { if (elem != null) yield return elem; }
-        foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
-        foreach (var elem in LibraryElement) { if (elem != null) yield return elem; }
-        if (KindElement != null) yield return KindElement;
-        if (ProfileElement != null) yield return ProfileElement;
-        if (Code != null) yield return Code;
-        if (IntentElement != null) yield return IntentElement;
-        if (PriorityElement != null) yield return PriorityElement;
-        if (DoNotPerformElement != null) yield return DoNotPerformElement;
-        if (Timing != null) yield return Timing;
-        if (AsNeeded != null) yield return AsNeeded;
-        if (Location != null) yield return Location;
-        foreach (var elem in Participant) { if (elem != null) yield return elem; }
-        if (Product != null) yield return Product;
-        if (Quantity != null) yield return Quantity;
-        foreach (var elem in Dosage) { if (elem != null) yield return elem; }
-        foreach (var elem in BodySite) { if (elem != null) yield return elem; }
-        foreach (var elem in SpecimenRequirementElement) { if (elem != null) yield return elem; }
-        foreach (var elem in ObservationRequirementElement) { if (elem != null) yield return elem; }
-        foreach (var elem in ObservationResultRequirementElement) { if (elem != null) yield return elem; }
-        if (TransformElement != null) yield return TransformElement;
-        foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (VersionElement != null) yield return new ElementValue("version", VersionElement);
-        if (VersionAlgorithm != null) yield return new ElementValue("versionAlgorithm", VersionAlgorithm);
-        if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-        if (SubtitleElement != null) yield return new ElementValue("subtitle", SubtitleElement);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (DateElement != null) yield return new ElementValue("date", DateElement);
-        if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
-        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
-        foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
-        if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
-        if (UsageElement != null) yield return new ElementValue("usage", UsageElement);
-        if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
-        if (CopyrightLabelElement != null) yield return new ElementValue("copyrightLabel", CopyrightLabelElement);
-        if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", ApprovalDateElement);
-        if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", LastReviewDateElement);
-        if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", EffectivePeriod);
-        foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
-        foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
-        foreach (var elem in Editor) { if (elem != null) yield return new ElementValue("editor", elem); }
-        foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", elem); }
-        foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
-        foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
-        foreach (var elem in LibraryElement) { if (elem != null) yield return new ElementValue("library", elem); }
-        if (KindElement != null) yield return new ElementValue("kind", KindElement);
-        if (ProfileElement != null) yield return new ElementValue("profile", ProfileElement);
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
-        if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
-        if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", DoNotPerformElement);
-        if (Timing != null) yield return new ElementValue("timing", Timing);
-        if (AsNeeded != null) yield return new ElementValue("asNeeded", AsNeeded);
-        if (Location != null) yield return new ElementValue("location", Location);
-        foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
-        if (Product != null) yield return new ElementValue("product", Product);
-        if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-        foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", elem); }
-        foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", elem); }
-        foreach (var elem in SpecimenRequirementElement) { if (elem != null) yield return new ElementValue("specimenRequirement", elem); }
-        foreach (var elem in ObservationRequirementElement) { if (elem != null) yield return new ElementValue("observationRequirement", elem); }
-        foreach (var elem in ObservationResultRequirementElement) { if (elem != null) yield return new ElementValue("observationResultRequirement", elem); }
-        if (TransformElement != null) yield return new ElementValue("transform", TransformElement);
-        foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -2221,7 +2055,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -2378,7 +2212,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);

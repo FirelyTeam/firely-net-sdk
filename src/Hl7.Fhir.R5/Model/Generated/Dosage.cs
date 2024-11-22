@@ -167,31 +167,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (Dose != null) yield return Dose;
-          if (Rate != null) yield return Rate;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Dose != null) yield return new ElementValue("dose", Dose);
-          if (Rate != null) yield return new ElementValue("rate", Rate);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -210,7 +186,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -229,7 +205,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
@@ -583,53 +559,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (SequenceElement != null) yield return SequenceElement;
-        if (TextElement != null) yield return TextElement;
-        foreach (var elem in AdditionalInstruction) { if (elem != null) yield return elem; }
-        if (PatientInstructionElement != null) yield return PatientInstructionElement;
-        if (Timing != null) yield return Timing;
-        if (AsNeededElement != null) yield return AsNeededElement;
-        foreach (var elem in AsNeededFor) { if (elem != null) yield return elem; }
-        if (Site != null) yield return Site;
-        if (Route != null) yield return Route;
-        if (Method != null) yield return Method;
-        foreach (var elem in DoseAndRate) { if (elem != null) yield return elem; }
-        foreach (var elem in MaxDosePerPeriod) { if (elem != null) yield return elem; }
-        if (MaxDosePerAdministration != null) yield return MaxDosePerAdministration;
-        if (MaxDosePerLifetime != null) yield return MaxDosePerLifetime;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
-        if (TextElement != null) yield return new ElementValue("text", TextElement);
-        foreach (var elem in AdditionalInstruction) { if (elem != null) yield return new ElementValue("additionalInstruction", elem); }
-        if (PatientInstructionElement != null) yield return new ElementValue("patientInstruction", PatientInstructionElement);
-        if (Timing != null) yield return new ElementValue("timing", Timing);
-        if (AsNeededElement != null) yield return new ElementValue("asNeeded", AsNeededElement);
-        foreach (var elem in AsNeededFor) { if (elem != null) yield return new ElementValue("asNeededFor", elem); }
-        if (Site != null) yield return new ElementValue("site", Site);
-        if (Route != null) yield return new ElementValue("route", Route);
-        if (Method != null) yield return new ElementValue("method", Method);
-        foreach (var elem in DoseAndRate) { if (elem != null) yield return new ElementValue("doseAndRate", elem); }
-        foreach (var elem in MaxDosePerPeriod) { if (elem != null) yield return new ElementValue("maxDosePerPeriod", elem); }
-        if (MaxDosePerAdministration != null) yield return new ElementValue("maxDosePerAdministration", MaxDosePerAdministration);
-        if (MaxDosePerLifetime != null) yield return new ElementValue("maxDosePerLifetime", MaxDosePerLifetime);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -681,7 +611,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -733,7 +663,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
