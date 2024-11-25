@@ -14,21 +14,18 @@ public class PocoDictionaryTests
     {
         var dr = new DynamicResource()
             {
-                ["name"] = "John",
-                ["age"] = 23,
-                ["alive"] = true,
-                ["dob"] = new Date(1972, 11, 30),
+                ["name"] = new FhirString("John"),
 #pragma warning disable CA2244
-                ["weight"] = 75.5m,
+                ["weight"] = new FhirDecimal(75.5m),
 #pragma warning restore CA2244
-                ["weight"] = 80.0m
+                ["weight"] = new FhirDecimal(80.0m),
+                ["someArray"] = new List<FhirString> { new("element") }
             };
 
-        dr["name"].Should().Be("John");
-        dr["age"].Should().Be(23);
-        dr["alive"].Should().Be(true);
-        dr["dob"].Should().BeOfType<Date>().Which.Value.Should().Be("1972-11-30");
-        dr["weight"].Should().Be(80.0m);
+        dr["name"].Should().BeOfType<FhirString>().Which.Value.Should().Be("John");
+        dr["weight"].Should().BeOfType<FhirDecimal>().Which.Value.Should().Be(80.0m);
+        dr["someArray"].Should().BeAssignableTo<IReadOnlyList<FhirString>>()
+            .Which.Count.Should().Be(1);
 
         dr["name"] = null!;
         dr.TryGetValue("name", out _).Should().BeFalse();
@@ -69,11 +66,11 @@ public class PocoDictionaryTests
 
         patient.AddExtension("http://nu.nl", new FhirBoolean(true));
 
-        patient["active"].Should().BeOfType<FhirBoolean>().And
-            .BeAssignableTo<Base>().Which["value"].Should().Be(true);
+        patient["active"].Should().BeOfType<FhirBoolean>().
+            Which.ObjectValue.Should().Be(true);
         patient["text"].Should().BeOfType<Narrative>().And
-            .BeAssignableTo<Base>().Which["div"].Should().BeOfType<XHtml>().And
-            .BeAssignableTo<Base>().Which["value"].Should().Be("<div>hello</div>");
+            .BeAssignableTo<Base>().Which["div"].Should().BeOfType<XHtml>()
+            .Which.ObjectValue.Should().Be("<div>hello</div>");
         patient["meta"].Should().BeOfType<Meta>().And
             .BeAssignableTo<Base>().Which["id"].Should().Be("4");
         var extension = patient["extension"].Should().BeOfType<List<Extension>>().Which.Should().ContainSingle().Subject;
