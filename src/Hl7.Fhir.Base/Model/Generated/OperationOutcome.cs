@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "OperationOutcome.issue"; } }
 
       /// <summary>
-      /// fatal | error | warning | information | success
+      /// fatal | error | warning | information | success.
       /// </summary>
       [FhirElement("severity", InSummary=true, IsModifier=true, Order=40)]
       [FhirElement("severity", InSummary=true, Order=40, Since=FhirRelease.R4)]
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Error or warning code
+      /// Error or warning code.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additional details about the error
+      /// Additional details about the error.
       /// </summary>
       [FhirElement("details", InSummary=true, Order=60)]
       [Binding("IssueDetails")]
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Details;
 
       /// <summary>
-      /// Additional diagnostic information about the issue
+      /// Additional diagnostic information about the issue.
       /// </summary>
       [FhirElement("diagnostics", InSummary=true, Order=70)]
       [DataMember]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Deprecated: Path of element(s) related to issue
+      /// Deprecated: Path of element(s) related to issue.
       /// </summary>
       [FhirElement("location", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// FHIRPath of element(s) related to issue
+      /// FHIRPath of element(s) related to issue.
       /// </summary>
       [FhirElement("expression", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A single issue associated with the action
+    /// A single issue associated with the action.
     /// </summary>
     [FhirElement("issue", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=-1)]

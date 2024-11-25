@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "AppointmentResponse"; } }
 
     /// <summary>
-    /// External Ids for this item
+    /// External Ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Appointment this response relates to
+    /// Appointment this response relates to.
     /// </summary>
     [FhirElement("appointment", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Appointment;
 
     /// <summary>
-    /// Time from appointment, or requested new start time
+    /// Time from appointment, or requested new start time.
     /// </summary>
     [FhirElement("start", Order=110, FiveWs="when.init")]
     [DataMember]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Time from appointment, or requested new end time
+    /// Time from appointment, or requested new end time.
     /// </summary>
     [FhirElement("end", Order=120, FiveWs="when.done")]
     [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Role of participant in the appointment
+    /// Role of participant in the appointment.
     /// </summary>
     [FhirElement("participantType", InSummary=true, Order=130)]
     [Binding("ParticipantType")]
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
 
     /// <summary>
-    /// Person, Location/HealthcareService or Device
+    /// Person, Location/HealthcareService or Device.
     /// </summary>
     [FhirElement("actor", InSummary=true, Order=140, FiveWs="who")]
     [CLSCompliant(false)]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Actor;
 
     /// <summary>
-    /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
+    /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error.
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional comments
+    /// Additional comments.
     /// </summary>
     [FhirElement("comment", Order=160)]
     [DataMember]

@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PractitionerRole.availableTime"; } }
 
       /// <summary>
-      /// mon | tue | wed | thu | fri | sat | sun
+      /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Always available? e.g. 24 hour service
+      /// Always available? e.g. 24 hour service.
       /// </summary>
       [FhirElement("allDay", Order=50)]
       [DataMember]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Opening time of day (ignored if allDay = true)
+      /// Opening time of day (ignored if allDay = true).
       /// </summary>
       [FhirElement("availableStartTime", Order=60)]
       [DataMember]
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Closing time of day (ignored if allDay = true)
+      /// Closing time of day (ignored if allDay = true).
       /// </summary>
       [FhirElement("availableEndTime", Order=70)]
       [DataMember]
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PractitionerRole.notAvailable"; } }
 
       /// <summary>
-      /// Reason presented to the user explaining why time not available
+      /// Reason presented to the user explaining why time not available.
       /// </summary>
       [FhirElement("description", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Service not availablefrom this date
+      /// Service not availablefrom this date.
       /// </summary>
       [FhirElement("during", Order=50)]
       [DataMember]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifiers that are specific to a role/location
+    /// Business Identifiers that are specific to a role/location.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this practitioner's record is in active use
+    /// Whether this practitioner's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=100, FiveWs="status")]
     [DataMember]
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The period during which the practitioner is authorized to perform in these role(s)
+    /// The period during which the practitioner is authorized to perform in these role(s).
     /// </summary>
     [FhirElement("period", InSummary=true, Order=110, FiveWs="when.done")]
     [DataMember]
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Practitioner that is able to provide the defined services for the organation
+    /// Practitioner that is able to provide the defined services for the organation.
     /// </summary>
     [FhirElement("practitioner", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Practitioner;
 
     /// <summary>
-    /// Organization where the roles are available
+    /// Organization where the roles are available.
     /// </summary>
     [FhirElement("organization", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Roles which this practitioner may perform
+    /// Roles which this practitioner may perform.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140)]
     [Binding("PractitionerRole")]
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
     /// <summary>
-    /// Specific specialty of the practitioner
+    /// Specific specialty of the practitioner.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=150)]
     [Binding("PractitionerSpecialty")]
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// The location(s) at which this practitioner provides care
+    /// The location(s) at which this practitioner provides care.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=160, FiveWs="where")]
     [CLSCompliant(false)]
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Location;
 
     /// <summary>
-    /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
+    /// The list of healthcare services that this worker provides for this role's Organization/Location(s).
     /// </summary>
     [FhirElement("healthcareService", Order=170)]
     [CLSCompliant(false)]
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
 
     /// <summary>
-    /// Contact details that are specific to the role/location/service
+    /// Contact details that are specific to the role/location/service.
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// Times the Service Site is available
+    /// Times the Service Site is available.
     /// </summary>
     [FhirElement("availableTime", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.PractitionerRole.AvailableTimeComponent> _AvailableTime;
 
     /// <summary>
-    /// Not available during this time due to provided reason
+    /// Not available during this time due to provided reason.
     /// </summary>
     [FhirElement("notAvailable", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.PractitionerRole.NotAvailableComponent> _NotAvailable;
 
     /// <summary>
-    /// Description of availability exceptions
+    /// Description of availability exceptions.
     /// </summary>
     [FhirElement("availabilityExceptions", Order=210)]
     [DataMember]
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Technical endpoints providing access to services operated for the practitioner with this role
+    /// Technical endpoints providing access to services operated for the practitioner with this role.
     /// </summary>
     [FhirElement("endpoint", Order=220)]
     [CLSCompliant(false)]

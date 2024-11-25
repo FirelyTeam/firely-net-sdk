@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Reference"; } }
 
     /// <summary>
-    /// Literal reference, Relative, internal or absolute URL
+    /// Literal reference, Relative, internal or absolute URL.
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=30)]
     [DataMember]
@@ -91,8 +91,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type the reference refers to (e.g. "Patient") - must be a resource in resources. Note: Element was introduced in R4, do not use when working with older releases.
+    /// Type the reference refers to (e.g. "Patient") - must be a resource in resources.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R4, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("type", InSummary=true, Order=40, Since=FhirRelease.R4)]
     [Binding("FHIRResourceTypeExt")]
     [DataMember]
@@ -123,7 +126,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical reference, when literal reference is not known
+    /// Logical reference, when literal reference is not known.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=50)]
     [DataMember]
@@ -136,7 +139,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Text alternative for the resource
+    /// Text alternative for the resource.
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]

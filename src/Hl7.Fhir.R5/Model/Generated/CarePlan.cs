@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CarePlan.activity"; } }
 
       /// <summary>
-      /// Results of the activity (concept, or Appointment, Encounter, Procedure, etc.)
+      /// Results of the activity (concept, or Appointment, Encounter, Procedure, etc.).
       /// </summary>
       [FhirElement("performedActivity", Order=40)]
       [Binding("CarePlanActivityPerformed")]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _PerformedActivity;
 
       /// <summary>
-      /// Comments about the activity status/progress
+      /// Comments about the activity status/progress.
       /// </summary>
       [FhirElement("progress", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Annotation> _Progress;
 
       /// <summary>
-      /// Activity that is intended to be part of the care plan
+      /// Activity that is intended to be part of the care plan.
       /// </summary>
       [FhirElement("plannedActivityReference", Order=60)]
       [CLSCompliant(false)]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this plan
+    /// External Ids for this plan.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Instantiates FHIR protocol or definition
+    /// Instantiates FHIR protocol or definition.
     /// </summary>
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Instantiates external protocol or definition
+    /// Instantiates external protocol or definition.
     /// </summary>
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Fulfills plan, proposal or order
+    /// Fulfills plan, proposal or order.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// CarePlan replaced by this CarePlan
+    /// CarePlan replaced by this CarePlan.
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
 
     /// <summary>
-    /// Part of referenced CarePlan
+    /// Part of referenced CarePlan.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
+    /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// proposal | plan | order | option | directive
+    /// proposal | plan | order | option | directive.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of plan
+    /// Type of plan.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [Binding("CarePlanCategory")]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Human-friendly name for the care plan
+    /// Human-friendly name for the care plan.
     /// </summary>
     [FhirElement("title", InSummary=true, Order=180)]
     [DataMember]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Summary of nature of plan
+    /// Summary of nature of plan.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=190, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who the care plan is for
+    /// Who the care plan is for.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=200, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The Encounter during which this CarePlan was created
+    /// The Encounter during which this CarePlan was created.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=210, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Time period plan covers
+    /// Time period plan covers.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=220, FiveWs="FiveWs.planned")]
     [DataMember]
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Date record was first recorded
+    /// Date record was first recorded.
     /// </summary>
     [FhirElement("created", InSummary=true, Order=230, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who is the designated responsible party
+    /// Who is the designated responsible party.
     /// </summary>
     [FhirElement("custodian", InSummary=true, Order=240, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Custodian;
 
     /// <summary>
-    /// Who provided the content of the care plan
+    /// Who provided the content of the care plan.
     /// </summary>
     [FhirElement("contributor", Order=250)]
     [CLSCompliant(false)]
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Contributor;
 
     /// <summary>
-    /// Who's involved in plan?
+    /// Who's involved in plan?.
     /// </summary>
     [FhirElement("careTeam", Order=260, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _CareTeam;
 
     /// <summary>
-    /// Health issues this plan addresses
+    /// Health issues this plan addresses.
     /// </summary>
     [FhirElement("addresses", InSummary=true, Order=270, FiveWs="FiveWs.why[x]")]
     [Binding("CarePlanAddresses")]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Addresses;
 
     /// <summary>
-    /// Information considered as part of plan
+    /// Information considered as part of plan.
     /// </summary>
     [FhirElement("supportingInfo", Order=280)]
     [CLSCompliant(false)]
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInfo;
 
     /// <summary>
-    /// Desired outcome of plan
+    /// Desired outcome of plan.
     /// </summary>
     [FhirElement("goal", Order=290)]
     [CLSCompliant(false)]
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Goal;
 
     /// <summary>
-    /// Action to occur or has occurred as part of plan
+    /// Action to occur or has occurred as part of plan.
     /// </summary>
     [FhirElement("activity", Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CarePlan.ActivityComponent> _Activity;
 
     /// <summary>
-    /// Comments about the plan
+    /// Comments about the plan.
     /// </summary>
     [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]

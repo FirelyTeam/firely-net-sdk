@@ -62,8 +62,10 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// Indication of the reason the entity signed the object(s).
-    /// Note: Since R5 the cardinality is expanded to 0..* (previous it was 1..*).
     /// </summary>
+    /// <remarks>
+    /// Since R5 the cardinality is expanded to 0..* (previous it was 1..*).
+    /// </remarks>
     [FhirElement("type", InSummary=true, Order=30)]
     [Binding("SignatureType")]
     [Cardinality(Min=0,Max=-1)]
@@ -78,8 +80,10 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// When the signature was created.
-    /// Note: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1).
     /// </summary>
+    /// <remarks>
+    /// Since R5 the cardinality is expanded to 0..1 (previous it was 1..1).
+    /// </remarks>
     [FhirElement("when", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Instant WhenElement
@@ -110,9 +114,11 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// Who signed.
+    /// </summary>
+    /// <remarks>
     /// Note 1: Since R4 the type of this element should be a fixed type (ResourceReference). For backwards compatibility it remains of type DataType.
     /// Note 2: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1).
-    /// </summary>
+    /// </remarks>
     [FhirElement("who", InSummary=true, Order=50, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("who", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
@@ -131,8 +137,10 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// The party represented.
-    /// Note: Since R4 the type of this element should be a fixed type (ResourceReference). For backwards compatibility it remains of type DataType.
     /// </summary>
+    /// <remarks>
+    /// Since R4 the type of this element should be a fixed type (ResourceReference). For backwards compatibility it remains of type DataType.
+    /// </remarks>
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Since=FhirRelease.R4)]
     [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
@@ -150,8 +158,11 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _OnBehalfOf;
 
     /// <summary>
-    /// The technical format of the signature. Note: Element is deprecated since R4, do not use with R4 and newer releases.
+    /// The technical format of the signature.
     /// </summary>
+    /// <remarks>
+    /// Element is deprecated since R4, do not use with R4 and newer releases.
+    /// </remarks>
     [FhirElement("contentType", InSummary=true, Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
     [Binding("MimeType")]
@@ -183,8 +194,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The technical format of the signed resources. Note: Element was introduced in R4, do not use when working with older releases.
+    /// The technical format of the signed resources.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R4, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("targetFormat", Order=70, Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
@@ -215,8 +229,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The technical format of the signature. Note: Element was introduced in R4, do not use when working with older releases.
+    /// The technical format of the signature.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R4, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("sigFormat", Order=80, Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
@@ -247,8 +264,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The actual signature content (XML DigSig. JWS, picture, etc.). Note: Element is replaced by 'Signature.data' since R4. Do not use this element 'blob' with R4 and newer releases.
+    /// The actual signature content (XML DigSig. JWS, picture, etc.).
     /// </summary>
+    /// <remarks>
+    /// Element is replaced by 'Signature.data' since R4. Do not use this element 'blob' with R4 and newer releases.
+    /// </remarks>
     [FhirElement("blob", Order=90)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
@@ -279,8 +299,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The actual signature content (XML DigSig. JWS, picture, etc.). Note: Element was introduced in R4, do not use when working with older releases.
+    /// The actual signature content (XML DigSig. JWS, picture, etc.).
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R4, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("data", Order=90, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary DataElement

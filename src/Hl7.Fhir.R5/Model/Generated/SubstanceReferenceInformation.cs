@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceReferenceInformation.gene"; } }
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("geneSequenceOrigin", InSummary=true, Order=40)]
       [DataMember]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _GeneSequenceOrigin;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("gene", InSummary=true, Order=50)]
       [DataMember]
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Gene;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceReferenceInformation.geneElement"; } }
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("element", InSummary=true, Order=50)]
       [DataMember]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Element;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceReferenceInformation.target"; } }
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("target", InSummary=true, Order=40)]
       [DataMember]
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Target;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("interaction", InSummary=true, Order=60)]
       [DataMember]
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Interaction;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("organism", InSummary=true, Order=70)]
       [DataMember]
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Organism;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("organismType", InSummary=true, Order=80)]
       [DataMember]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _OrganismType;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Amount;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("amountType", InSummary=true, Order=100)]
       [DataMember]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _AmountType;
 
       /// <summary>
-      /// Todo
+      /// Todo.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=110)]
       [CLSCompliant(false)]
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Todo
+    /// Todo.
     /// </summary>
     [FhirElement("comment", InSummary=true, Order=90)]
     [DataMember]
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Todo
+    /// Todo.
     /// </summary>
     [FhirElement("gene", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent> _Gene;
 
     /// <summary>
-    /// Todo
+    /// Todo.
     /// </summary>
     [FhirElement("geneElement", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent> _GeneElement;
 
     /// <summary>
-    /// Todo
+    /// Todo.
     /// </summary>
     [FhirElement("target", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]

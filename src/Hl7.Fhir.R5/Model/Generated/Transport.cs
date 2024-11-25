@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Transport.restriction"; } }
 
       /// <summary>
-      /// How many times to repeat
+      /// How many times to repeat.
       /// </summary>
       [FhirElement("repetitions", Order=40)]
       [DataMember]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// When fulfillment sought
+      /// When fulfillment sought.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// For whom is fulfillment sought?
+      /// For whom is fulfillment sought?.
       /// </summary>
       [FhirElement("recipient", Order=60)]
       [CLSCompliant(false)]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Transport.input"; } }
 
       /// <summary>
-      /// Label for the input
+      /// Label for the input.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("TransportInputParameterType")]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Content to use in performing the transport
+      /// Content to use in performing the transport.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Transport.output"; } }
 
       /// <summary>
-      /// Label for output
+      /// Label for output.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("TransportOutputParameterType")]
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Result of output
+      /// Result of output.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier
+    /// External identifier.
     /// </summary>
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Formal definition of transport
+    /// Formal definition of transport.
     /// </summary>
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [DataMember]
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Formal definition of transport
+    /// Formal definition of transport.
     /// </summary>
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [DataMember]
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Request fulfilled by this transport
+    /// Request fulfilled by this transport.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Requisition or grouper id
+    /// Requisition or grouper id.
     /// </summary>
     [FhirElement("groupIdentifier", InSummary=true, Order=130)]
     [DataMember]
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _GroupIdentifier;
 
     /// <summary>
-    /// Part of referenced event
+    /// Part of referenced event.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// in-progress | completed | abandoned | cancelled | planned | entered-in-error
+    /// in-progress | completed | abandoned | cancelled | planned | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason for current status
+    /// Reason for current status.
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=160)]
     [Binding("TransportStatusReason")]
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _StatusReason;
 
     /// <summary>
-    /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+    /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// routine | urgent | asap | stat
+    /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", Order=180, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Transport Type
+    /// Transport Type.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=190, FiveWs="FiveWs.what[x]")]
     [Binding("TransportCode")]
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Human-readable explanation of transport
+    /// Human-readable explanation of transport.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=200)]
     [DataMember]
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What transport is acting on
+    /// What transport is acting on.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=210, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
@@ -903,7 +903,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Focus;
 
     /// <summary>
-    /// Beneficiary of the Transport
+    /// Beneficiary of the Transport.
     /// </summary>
     [FhirElement("for", InSummary=true, Order=220, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -918,7 +918,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _For;
 
     /// <summary>
-    /// Healthcare event during which this transport originated
+    /// Healthcare event during which this transport originated.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=230, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Completion time of the event (the occurrence)
+    /// Completion time of the event (the occurrence).
     /// </summary>
     [FhirElement("completionTime", InSummary=true, Order=240, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Transport Creation Date
+    /// Transport Creation Date.
     /// </summary>
     [FhirElement("authoredOn", Order=250, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Transport Last Modified Date
+    /// Transport Last Modified Date.
     /// </summary>
     [FhirElement("lastModified", InSummary=true, Order=260)]
     [DataMember]
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who is asking for transport to be done
+    /// Who is asking for transport to be done.
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=270, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Requester;
 
     /// <summary>
-    /// Requested performer
+    /// Requested performer.
     /// </summary>
     [FhirElement("performerType", Order=280, FiveWs="FiveWs.actor")]
     [Binding("TransportPerformerType")]
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _PerformerType;
 
     /// <summary>
-    /// Responsible individual
+    /// Responsible individual.
     /// </summary>
     [FhirElement("owner", InSummary=true, Order=290, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Owner;
 
     /// <summary>
-    /// Where transport occurs
+    /// Where transport occurs.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=300, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -1086,7 +1086,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Associated insurance coverage
+    /// Associated insurance coverage.
     /// </summary>
     [FhirElement("insurance", Order=310)]
     [CLSCompliant(false)]
@@ -1102,7 +1102,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Insurance;
 
     /// <summary>
-    /// Comments made about the transport
+    /// Comments made about the transport.
     /// </summary>
     [FhirElement("note", Order=320)]
     [Cardinality(Min=0,Max=-1)]
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Key events in history of the Transport
+    /// Key events in history of the Transport.
     /// </summary>
     [FhirElement("relevantHistory", Order=330)]
     [CLSCompliant(false)]
@@ -1132,7 +1132,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
 
     /// <summary>
-    /// Constraints on fulfillment transports
+    /// Constraints on fulfillment transports.
     /// </summary>
     [FhirElement("restriction", Order=340)]
     [DataMember]
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Transport.RestrictionComponent _Restriction;
 
     /// <summary>
-    /// Information used to perform transport
+    /// Information used to perform transport.
     /// </summary>
     [FhirElement("input", Order=350)]
     [Cardinality(Min=0,Max=-1)]
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Transport.ParameterComponent> _Input;
 
     /// <summary>
-    /// Information produced as part of transport
+    /// Information produced as part of transport.
     /// </summary>
     [FhirElement("output", Order=360)]
     [Cardinality(Min=0,Max=-1)]
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Transport.OutputComponent> _Output;
 
     /// <summary>
-    /// The desired location
+    /// The desired location.
     /// </summary>
     [FhirElement("requestedLocation", InSummary=true, Order=370, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -1189,7 +1189,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _RequestedLocation;
 
     /// <summary>
-    /// The entity current location
+    /// The entity current location.
     /// </summary>
     [FhirElement("currentLocation", InSummary=true, Order=380, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -1205,7 +1205,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _CurrentLocation;
 
     /// <summary>
-    /// Why transport is needed
+    /// Why transport is needed.
     /// </summary>
     [FhirElement("reason", Order=390, FiveWs="FiveWs.why[x]")]
     [Binding("TransportReason")]
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _Reason;
 
     /// <summary>
-    /// Parent (or preceding) transport
+    /// Parent (or preceding) transport.
     /// </summary>
     [FhirElement("history", Order=400, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]

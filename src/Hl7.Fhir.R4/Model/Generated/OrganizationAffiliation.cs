@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "OrganizationAffiliation"; } }
 
     /// <summary>
-    /// Business identifiers that are specific to this role
+    /// Business identifiers that are specific to this role.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this organization affiliation record is in active use
+    /// Whether this organization affiliation record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The period during which the participatingOrganization is affiliated with the primary organization
+    /// The period during which the participatingOrganization is affiliated with the primary organization.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Organization where the role is available
+    /// Organization where the role is available.
     /// </summary>
     [FhirElement("organization", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Organization that provides/performs the role (e.g. providing services or is a member of)
+    /// Organization that provides/performs the role (e.g. providing services or is a member of).
     /// </summary>
     [FhirElement("participatingOrganization", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ParticipatingOrganization;
 
     /// <summary>
-    /// Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
+    /// Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined).
     /// </summary>
     [FhirElement("network", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Network;
 
     /// <summary>
-    /// Definition of the role the participatingOrganization plays
+    /// Definition of the role the participatingOrganization plays.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=150)]
     [Binding("OrganizationAffiliation")]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
     /// <summary>
-    /// Specific specialty of the participatingOrganization in the context of the role
+    /// Specific specialty of the participatingOrganization in the context of the role.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=160)]
     [Binding("OrganizationSpecialty")]
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// The location(s) at which the role occurs
+    /// The location(s) at which the role occurs.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=170, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Location;
 
     /// <summary>
-    /// Healthcare services provided through the role
+    /// Healthcare services provided through the role.
     /// </summary>
     [FhirElement("healthcareService", Order=180)]
     [CLSCompliant(false)]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
 
     /// <summary>
-    /// Contact details at the participatingOrganization relevant to this Affiliation
+    /// Contact details at the participatingOrganization relevant to this Affiliation.
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// Technical endpoints providing access to services operated for this role
+    /// Technical endpoints providing access to services operated for this role.
     /// </summary>
     [FhirElement("endpoint", Order=200)]
     [CLSCompliant(false)]

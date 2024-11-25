@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Parameters.parameter"; } }
 
       /// <summary>
-      /// Name from the definition
+      /// Name from the definition.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If parameter is a data type
+      /// If parameter is a data type.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [DataMember]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Value;
 
       /// <summary>
-      /// If parameter is a whole resource
+      /// If parameter is a whole resource.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Resource _Resource;
 
       /// <summary>
-      /// Named part of a multi-part parameter
+      /// Named part of a multi-part parameter.
       /// </summary>
       [FhirElement("part", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Operation Parameter
+    /// Operation Parameter.
     /// </summary>
     [FhirElement("parameter", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]

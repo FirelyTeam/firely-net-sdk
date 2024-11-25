@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier for this record
+    /// External identifier for this record.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Fulfills plan, proposal or order
+    /// Fulfills plan, proposal or order.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// active | completed | entered-in-error +
+    /// active | completed | entered-in-error +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient using device
+    /// Patient using device.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Supporting information
+    /// Supporting information.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
 
     /// <summary>
-    /// How often  the device was used
+    /// How often  the device was used.
     /// </summary>
     [FhirElement("timing", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Timing;
 
     /// <summary>
-    /// When statement was recorded
+    /// When statement was recorded.
     /// </summary>
     [FhirElement("recordedOn", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who made the statement
+    /// Who made the statement.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=160, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Source;
 
     /// <summary>
-    /// Reference to device used
+    /// Reference to device used.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=170, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// Why device was used
+    /// Why device was used.
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=180, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Why was DeviceUseStatement performed?
+    /// Why was DeviceUseStatement performed?.
     /// </summary>
     [FhirElement("reasonReference", InSummary=true, Order=190, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// Target body site
+    /// Target body site.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=200)]
     [Binding("BodySite")]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BodySite;
 
     /// <summary>
-    /// Addition details (comments, instructions)
+    /// Addition details (comments, instructions).
     /// </summary>
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]

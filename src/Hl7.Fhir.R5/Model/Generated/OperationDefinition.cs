@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "OperationDefinition.parameter"; } }
 
       /// <summary>
-      /// Name in Parameters.parameter.name or in URL
+      /// Name in Parameters.parameter.name or in URL.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// in | out
+      /// in | out.
       /// </summary>
       [FhirElement("use", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// instance | type | system
+      /// instance | type | system.
       /// </summary>
       [FhirElement("scope", Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Minimum Cardinality
+      /// Minimum Cardinality.
       /// </summary>
       [FhirElement("min", Order=70)]
       [Cardinality(Min=1,Max=1)]
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Maximum Cardinality (a number or *)
+      /// Maximum Cardinality (a number or *).
       /// </summary>
       [FhirElement("max", Order=80)]
       [Cardinality(Min=1,Max=1)]
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Description of meaning/use
+      /// Description of meaning/use.
       /// </summary>
       [FhirElement("documentation", Order=90)]
       [DataMember]
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What type this parameter has
+      /// What type this parameter has.
       /// </summary>
       [FhirElement("type", Order=100)]
       [DeclaredType(Type = typeof(Code))]
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Allowed sub-type this parameter can have (if type is abstract)
+      /// Allowed sub-type this parameter can have (if type is abstract).
       /// </summary>
       [FhirElement("allowedType", Order=110)]
       [DeclaredType(Type = typeof(Code))]
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If type is Reference | canonical, allowed targets. If type is 'Resource', then this constrains the allowed resource types
+      /// If type is Reference | canonical, allowed targets. If type is 'Resource', then this constrains the allowed resource types.
       /// </summary>
       [FhirElement("targetProfile", Order=120)]
       [Cardinality(Min=0,Max=-1)]
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// number | date | string | token | reference | composite | quantity | uri | special
+      /// number | date | string | token | reference | composite | quantity | uri | special.
       /// </summary>
       [FhirElement("searchType", Order=130)]
       [DeclaredType(Type = typeof(Code))]
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// ValueSet details if this is coded
+      /// ValueSet details if this is coded.
       /// </summary>
       [FhirElement("binding", Order=140)]
       [DataMember]
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.OperationDefinition.BindingComponent _Binding;
 
       /// <summary>
-      /// References to this parameter
+      /// References to this parameter.
       /// </summary>
       [FhirElement("referencedFrom", Order=150)]
       [Cardinality(Min=0,Max=-1)]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.OperationDefinition.ReferencedFromComponent> _ReferencedFrom;
 
       /// <summary>
-      /// Parts of a nested Parameter
+      /// Parts of a nested Parameter.
       /// </summary>
       [FhirElement("part", Order=160)]
       [Cardinality(Min=0,Max=-1)]
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "OperationDefinition.parameter.binding"; } }
 
       /// <summary>
-      /// required | extensible | preferred | example
+      /// required | extensible | preferred | example.
       /// </summary>
       [FhirElement("strength", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Source of value set
+      /// Source of value set.
       /// </summary>
       [FhirElement("valueSet", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -876,7 +876,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "OperationDefinition.parameter.referencedFrom"; } }
 
       /// <summary>
-      /// Referencing parameter
+      /// Referencing parameter.
       /// </summary>
       [FhirElement("source", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Element id of reference
+      /// Element id of reference.
       /// </summary>
       [FhirElement("sourceId", Order=50)]
       [DataMember]
@@ -1042,7 +1042,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "OperationDefinition.overload"; } }
 
       /// <summary>
-      /// Name of parameter to include in overload
+      /// Name of parameter to include in overload.
       /// </summary>
       [FhirElement("parameterName", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Comments to go on overload
+      /// Comments to go on overload.
       /// </summary>
       [FhirElement("comment", Order=50)]
       [DataMember]
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this operation definition, represented as an absolute URI (globally unique)
+    /// Canonical identifier for this operation definition, represented as an absolute URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -1222,7 +1222,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the implementation guide (business identifier)
+    /// Additional identifier for the implementation guide (business identifier).
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1236,7 +1236,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the operation definition
+    /// Business version of the operation definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -1282,7 +1282,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this operation definition (computer friendly)
+    /// Name for this operation definition (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
@@ -1314,7 +1314,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this operation definition (human friendly)
+    /// Name for this operation definition (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
@@ -1345,7 +1345,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1379,7 +1379,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// operation | query
+    /// operation | query.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -1413,7 +1413,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
@@ -1444,7 +1444,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1475,7 +1475,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=190, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -1506,7 +1506,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1520,7 +1520,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the operation definition
+    /// Natural language description of the operation definition.
     /// </summary>
     [FhirElement("description", Order=210)]
     [DataMember]
@@ -1551,7 +1551,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -1565,7 +1565,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for operation definition (if applicable)
+    /// Intended jurisdiction for operation definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
     [Binding("Jurisdiction")]
@@ -1580,7 +1580,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this operation definition is defined
+    /// Why this operation definition is defined.
     /// </summary>
     [FhirElement("purpose", Order=240, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -1611,7 +1611,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=250)]
     [DataMember]
@@ -1642,7 +1642,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     [FhirElement("copyrightLabel", Order=260)]
     [DataMember]
@@ -1673,7 +1673,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Whether content is changed by the operation
+    /// Whether content is changed by the operation.
     /// </summary>
     [FhirElement("affectsState", InSummary=true, Order=270)]
     [DataMember]
@@ -1704,7 +1704,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Recommended name for operation in search url
+    /// Recommended name for operation in search url.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=280)]
     [Cardinality(Min=1,Max=1)]
@@ -1736,7 +1736,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional information about use
+    /// Additional information about use.
     /// </summary>
     [FhirElement("comment", Order=290)]
     [DataMember]
@@ -1767,7 +1767,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Marks this as a profile of the base
+    /// Marks this as a profile of the base.
     /// </summary>
     [FhirElement("base", InSummary=true, Order=300)]
     [DataMember]
@@ -1798,7 +1798,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Types this operation applies to
+    /// Types this operation applies to.
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=310)]
     [DeclaredType(Type = typeof(Code))]
@@ -1832,7 +1832,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Invoke at the system level?
+    /// Invoke at the system level?.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=320)]
     [Cardinality(Min=1,Max=1)]
@@ -1864,7 +1864,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Invoke at the type level?
+    /// Invoke at the type level?.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=330)]
     [Cardinality(Min=1,Max=1)]
@@ -1896,7 +1896,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Invoke on an instance?
+    /// Invoke on an instance?.
     /// </summary>
     [FhirElement("instance", InSummary=true, Order=340)]
     [Cardinality(Min=1,Max=1)]
@@ -1928,7 +1928,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Validation information for in parameters
+    /// Validation information for in parameters.
     /// </summary>
     [FhirElement("inputProfile", Order=350)]
     [DataMember]
@@ -1959,7 +1959,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Validation information for out parameters
+    /// Validation information for out parameters.
     /// </summary>
     [FhirElement("outputProfile", Order=360)]
     [DataMember]
@@ -1990,7 +1990,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Parameters for the operation/query
+    /// Parameters for the operation/query.
     /// </summary>
     [FhirElement("parameter", Order=370)]
     [Cardinality(Min=0,Max=-1)]
@@ -2004,7 +2004,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> _Parameter;
 
     /// <summary>
-    /// Define overloaded variants for when  generating code
+    /// Define overloaded variants for when  generating code.
     /// </summary>
     [FhirElement("overload", Order=380)]
     [Cardinality(Min=0,Max=-1)]

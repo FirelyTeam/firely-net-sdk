@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.goal"; } }
 
       /// <summary>
-      /// E.g. Treatment, dietary, behavioral
+      /// E.g. Treatment, dietary, behavioral.
       /// </summary>
       [FhirElement("category", Order=40)]
       [Binding("GoalCategory")]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Code or text describing the goal
+      /// Code or text describing the goal.
       /// </summary>
       [FhirElement("description", Order=50)]
       [Binding("GoalDescription")]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Description;
 
       /// <summary>
-      /// high-priority | medium-priority | low-priority
+      /// high-priority | medium-priority | low-priority.
       /// </summary>
       [FhirElement("priority", Order=60)]
       [Binding("GoalPriority")]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Priority;
 
       /// <summary>
-      /// When goal pursuit begins
+      /// When goal pursuit begins.
       /// </summary>
       [FhirElement("start", Order=70)]
       [Binding("GoalStartEvent")]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Start;
 
       /// <summary>
-      /// What does the goal address
+      /// What does the goal address.
       /// </summary>
       [FhirElement("addresses", Order=80)]
       [Binding("GoalAddresses")]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Addresses;
 
       /// <summary>
-      /// Supporting documentation for the goal
+      /// Supporting documentation for the goal.
       /// </summary>
       [FhirElement("documentation", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
 
       /// <summary>
-      /// Target outcome for the goal
+      /// Target outcome for the goal.
       /// </summary>
       [FhirElement("target", Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.goal.target"; } }
 
       /// <summary>
-      /// The parameter whose value is to be tracked
+      /// The parameter whose value is to be tracked.
       /// </summary>
       [FhirElement("measure", Order=40)]
       [Binding("GoalTargetMeasure")]
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Measure;
 
       /// <summary>
-      /// The target value to be achieved
+      /// The target value to be achieved.
       /// </summary>
       [FhirElement("detail", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Detail;
 
       /// <summary>
-      /// Reach goal within
+      /// Reach goal within.
       /// </summary>
       [FhirElement("due", Order=60)]
       [DataMember]
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.action"; } }
 
       /// <summary>
-      /// User-visible prefix for the action (e.g. 1. or A.)
+      /// User-visible prefix for the action (e.g. 1. or A.).
       /// </summary>
       [FhirElement("prefix", Order=40)]
       [DataMember]
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// User-visible title
+      /// User-visible title.
       /// </summary>
       [FhirElement("title", Order=50)]
       [DataMember]
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Brief description of the action
+      /// Brief description of the action.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Static text equivalent of the action, used if the dynamic aspects cannot be interpreted by the receiving system
+      /// Static text equivalent of the action, used if the dynamic aspects cannot be interpreted by the receiving system.
       /// </summary>
       [FhirElement("textEquivalent", Order=70)]
       [DataMember]
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// routine | urgent | asap | stat
+      /// routine | urgent | asap | stat.
       /// </summary>
       [FhirElement("priority", Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Code representing the meaning of the action or sub-actions
+      /// Code representing the meaning of the action or sub-actions.
       /// </summary>
       [FhirElement("code", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
       /// <summary>
-      /// Why the action should be performed
+      /// Why the action should be performed.
       /// </summary>
       [FhirElement("reason", Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
 
       /// <summary>
-      /// Supporting documentation for the intended performer of the action
+      /// Supporting documentation for the intended performer of the action.
       /// </summary>
       [FhirElement("documentation", Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
 
       /// <summary>
-      /// What goals this action supports
+      /// What goals this action supports.
       /// </summary>
       [FhirElement("goalId", Order=120)]
       [Cardinality(Min=0,Max=-1)]
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Type of individual the action is focused on
+      /// Type of individual the action is focused on.
       /// </summary>
       [FhirElement("subject", Order=130, Choice=ChoiceType.DatatypeChoice)]
       [Binding("SubjectType")]
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Subject;
 
       /// <summary>
-      /// When the action should be triggered
+      /// When the action should be triggered.
       /// </summary>
       [FhirElement("trigger", Order=140)]
       [Cardinality(Min=0,Max=-1)]
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TriggerDefinition> _Trigger;
 
       /// <summary>
-      /// Whether or not the action is applicable
+      /// Whether or not the action is applicable.
       /// </summary>
       [FhirElement("condition", Order=150)]
       [Cardinality(Min=0,Max=-1)]
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent> _Condition;
 
       /// <summary>
-      /// Input data requirements
+      /// Input data requirements.
       /// </summary>
       [FhirElement("input", Order=160)]
       [Cardinality(Min=0,Max=-1)]
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.DataRequirement> _Input;
 
       /// <summary>
-      /// Output data definition
+      /// Output data definition.
       /// </summary>
       [FhirElement("output", Order=170)]
       [Cardinality(Min=0,Max=-1)]
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.DataRequirement> _Output;
 
       /// <summary>
-      /// Relationship to another action
+      /// Relationship to another action.
       /// </summary>
       [FhirElement("relatedAction", Order=180)]
       [Cardinality(Min=0,Max=-1)]
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent> _RelatedAction;
 
       /// <summary>
-      /// When the action should take place
+      /// When the action should take place.
       /// </summary>
       [FhirElement("timing", Order=190, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Timing;
 
       /// <summary>
-      /// Who should participate in the action
+      /// Who should participate in the action.
       /// </summary>
       [FhirElement("participant", Order=200)]
       [Cardinality(Min=0,Max=-1)]
@@ -830,7 +830,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent> _Participant;
 
       /// <summary>
-      /// create | update | remove | fire-event
+      /// create | update | remove | fire-event.
       /// </summary>
       [FhirElement("type", Order=210)]
       [Binding("ActionType")]
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// visual-group | logical-group | sentence-group
+      /// visual-group | logical-group | sentence-group.
       /// </summary>
       [FhirElement("groupingBehavior", Order=220)]
       [DeclaredType(Type = typeof(Code))]
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
+      /// any | all | all-or-none | exactly-one | at-most-one | one-or-more.
       /// </summary>
       [FhirElement("selectionBehavior", Order=230)]
       [DeclaredType(Type = typeof(Code))]
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// must | could | must-unless-documented
+      /// must | could | must-unless-documented.
       /// </summary>
       [FhirElement("requiredBehavior", Order=240)]
       [DeclaredType(Type = typeof(Code))]
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// yes | no
+      /// yes | no.
       /// </summary>
       [FhirElement("precheckBehavior", Order=250)]
       [DeclaredType(Type = typeof(Code))]
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// single | multiple
+      /// single | multiple.
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=260)]
       [DeclaredType(Type = typeof(Code))]
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Description of the activity to be performed
+      /// Description of the activity to be performed.
       /// </summary>
       [FhirElement("definition", Order=270, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Definition;
 
       /// <summary>
-      /// Transform to apply the template
+      /// Transform to apply the template.
       /// </summary>
       [FhirElement("transform", Order=280)]
       [DataMember]
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Dynamic aspects of the definition
+      /// Dynamic aspects of the definition.
       /// </summary>
       [FhirElement("dynamicValue", Order=290)]
       [Cardinality(Min=0,Max=-1)]
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> _DynamicValue;
 
       /// <summary>
-      /// A sub-action
+      /// A sub-action.
       /// </summary>
       [FhirElement("action", Order=300)]
       [Cardinality(Min=0,Max=-1)]
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.action.condition"; } }
 
       /// <summary>
-      /// applicability | start | stop
+      /// applicability | start | stop.
       /// </summary>
       [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -1470,7 +1470,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Boolean-valued expression
+      /// Boolean-valued expression.
       /// </summary>
       [FhirElement("expression", Order=50)]
       [DataMember]
@@ -1586,7 +1586,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.action.relatedAction"; } }
 
       /// <summary>
-      /// What action is this related to
+      /// What action is this related to.
       /// </summary>
       [FhirElement("actionId", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1618,7 +1618,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end
+      /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end.
       /// </summary>
       [FhirElement("relationship", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -1652,7 +1652,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Time offset for the relationship
+      /// Time offset for the relationship.
       /// </summary>
       [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1779,7 +1779,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.action.participant"; } }
 
       /// <summary>
-      /// patient | practitioner | related-person | device
+      /// patient | practitioner | related-person | device.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -1813,7 +1813,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// E.g. Nurse, Surgeon, Parent
+      /// E.g. Nurse, Surgeon, Parent.
       /// </summary>
       [FhirElement("role", Order=50)]
       [Binding("ActionParticipantRole")]
@@ -1930,7 +1930,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "PlanDefinition.action.dynamicValue"; } }
 
       /// <summary>
-      /// The path to the element to be set dynamically
+      /// The path to the element to be set dynamically.
       /// </summary>
       [FhirElement("path", Order=40)]
       [DataMember]
@@ -1961,7 +1961,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An expression that provides the dynamic value for the customization
+      /// An expression that provides the dynamic value for the customization.
       /// </summary>
       [FhirElement("expression", Order=50)]
       [DataMember]
@@ -2060,7 +2060,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this plan definition, represented as a URI (globally unique)
+    /// Canonical identifier for this plan definition, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -2091,7 +2091,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the plan definition
+    /// Additional identifier for the plan definition.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -2105,7 +2105,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the plan definition
+    /// Business version of the plan definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -2136,7 +2136,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this plan definition (computer friendly)
+    /// Name for this plan definition (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -2167,7 +2167,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this plan definition (human friendly)
+    /// Name for this plan definition (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
@@ -2198,7 +2198,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Subordinate title of the plan definition
+    /// Subordinate title of the plan definition.
     /// </summary>
     [FhirElement("subtitle", Order=140)]
     [DataMember]
@@ -2229,7 +2229,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// order-set | clinical-protocol | eca-rule | workflow-definition
+    /// order-set | clinical-protocol | eca-rule | workflow-definition.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=150)]
     [Binding("PlanDefinitionType")]
@@ -2243,7 +2243,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -2277,7 +2277,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
@@ -2308,7 +2308,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of individual the plan definition is focused on
+    /// Type of individual the plan definition is focused on.
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
@@ -2325,7 +2325,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Subject;
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -2356,7 +2356,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=200, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -2387,7 +2387,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -2401,7 +2401,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the plan definition
+    /// Natural language description of the plan definition.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
@@ -2432,7 +2432,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -2446,7 +2446,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for plan definition (if applicable)
+    /// Intended jurisdiction for plan definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
     [Binding("Jurisdiction")]
@@ -2461,7 +2461,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this plan definition is defined
+    /// Why this plan definition is defined.
     /// </summary>
     [FhirElement("purpose", Order=250, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -2492,7 +2492,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Describes the clinical usage of the plan
+    /// Describes the clinical usage of the plan.
     /// </summary>
     [FhirElement("usage", Order=260)]
     [DataMember]
@@ -2523,7 +2523,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=270)]
     [DataMember]
@@ -2554,7 +2554,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the plan definition was approved by publisher
+    /// When the plan definition was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=280)]
     [DataMember]
@@ -2585,7 +2585,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the plan definition was last reviewed
+    /// When the plan definition was last reviewed.
     /// </summary>
     [FhirElement("lastReviewDate", Order=290)]
     [DataMember]
@@ -2616,7 +2616,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the plan definition is expected to be used
+    /// When the plan definition is expected to be used.
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=300)]
     [DataMember]
@@ -2629,7 +2629,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _EffectivePeriod;
 
     /// <summary>
-    /// E.g. Education, Treatment, Assessment
+    /// E.g. Education, Treatment, Assessment.
     /// </summary>
     [FhirElement("topic", Order=310)]
     [Binding("DefinitionTopic")]
@@ -2644,7 +2644,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Topic;
 
     /// <summary>
-    /// Who authored the content
+    /// Who authored the content.
     /// </summary>
     [FhirElement("author", Order=320)]
     [Cardinality(Min=0,Max=-1)]
@@ -2658,7 +2658,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Author;
 
     /// <summary>
-    /// Who edited the content
+    /// Who edited the content.
     /// </summary>
     [FhirElement("editor", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -2672,7 +2672,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Editor;
 
     /// <summary>
-    /// Who reviewed the content
+    /// Who reviewed the content.
     /// </summary>
     [FhirElement("reviewer", Order=340)]
     [Cardinality(Min=0,Max=-1)]
@@ -2686,7 +2686,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Reviewer;
 
     /// <summary>
-    /// Who endorsed the content
+    /// Who endorsed the content.
     /// </summary>
     [FhirElement("endorser", Order=350)]
     [Cardinality(Min=0,Max=-1)]
@@ -2700,7 +2700,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Endorser;
 
     /// <summary>
-    /// Additional documentation, citations
+    /// Additional documentation, citations.
     /// </summary>
     [FhirElement("relatedArtifact", Order=360)]
     [Cardinality(Min=0,Max=-1)]
@@ -2714,7 +2714,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
 
     /// <summary>
-    /// Logic used by the plan definition
+    /// Logic used by the plan definition.
     /// </summary>
     [FhirElement("library", Order=370)]
     [Cardinality(Min=0,Max=-1)]
@@ -2746,7 +2746,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What the plan is trying to accomplish
+    /// What the plan is trying to accomplish.
     /// </summary>
     [FhirElement("goal", Order=380)]
     [Cardinality(Min=0,Max=-1)]
@@ -2760,7 +2760,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.PlanDefinition.GoalComponent> _Goal;
 
     /// <summary>
-    /// Action defined by the plan
+    /// Action defined by the plan.
     /// </summary>
     [FhirElement("action", Order=390)]
     [Cardinality(Min=0,Max=-1)]

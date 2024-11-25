@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Basic"; } }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Kind of Resource
+    /// Kind of Resource.
     /// </summary>
     [FhirElement("code", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Binding("BasicResourceType")]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Identifies the focus of this resource
+    /// Identifies the focus of this resource.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// When created
+    /// When created.
     /// </summary>
     [FhirElement("created", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who created
+    /// Who created.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=130, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]

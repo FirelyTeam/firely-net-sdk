@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ChargeItem.performer"; } }
 
       /// <summary>
-      /// What type of performance was done
+      /// What type of performance was done.
       /// </summary>
       [FhirElement("function", Order=40)]
       [Binding("ChargeItemPerformerFunction")]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Individual who was performing
+      /// Individual who was performing.
       /// </summary>
       [FhirElement("actor", Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for item
+    /// Business Identifier for item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Defining information about the code of this charge item
+    /// Defining information about the code of this charge item.
     /// </summary>
     [FhirElement("definitionUri", Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Resource defining the code of this ChargeItem
+    /// Resource defining the code of this ChargeItem.
     /// </summary>
     [FhirElement("definitionCanonical", Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
+    /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Part of referenced ChargeItem
+    /// Part of referenced ChargeItem.
     /// </summary>
     [FhirElement("partOf", Order=130)]
     [CLSCompliant(false)]
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// A code that identifies the charge, like a billing code
+    /// A code that identifies the charge, like a billing code.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Binding("ChargeItemCode")]
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Individual service was done for/to
+    /// Individual service was done for/to.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter associated with this ChargeItem
+    /// Encounter associated with this ChargeItem.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When the charged service was applied
+    /// When the charged service was applied.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Who performed charged service
+    /// Who performed charged service.
     /// </summary>
     [FhirElement("performer", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ChargeItem.PerformerComponent> _Performer;
 
     /// <summary>
-    /// Organization providing the charged service
+    /// Organization providing the charged service.
     /// </summary>
     [FhirElement("performingOrganization", Order=190)]
     [CLSCompliant(false)]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PerformingOrganization;
 
     /// <summary>
-    /// Organization requesting the charged service
+    /// Organization requesting the charged service.
     /// </summary>
     [FhirElement("requestingOrganization", Order=200)]
     [CLSCompliant(false)]
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _RequestingOrganization;
 
     /// <summary>
-    /// Organization that has ownership of the (potential, future) revenue
+    /// Organization that has ownership of the (potential, future) revenue.
     /// </summary>
     [FhirElement("costCenter", Order=210)]
     [CLSCompliant(false)]
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _CostCenter;
 
     /// <summary>
-    /// Quantity of which the charge item has been serviced
+    /// Quantity of which the charge item has been serviced.
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=220)]
     [DataMember]
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Quantity;
 
     /// <summary>
-    /// Anatomical location, if relevant
+    /// Anatomical location, if relevant.
     /// </summary>
     [FhirElement("bodysite", InSummary=true, Order=230)]
     [Binding("BodySite")]
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Bodysite;
 
     /// <summary>
-    /// Unit price overriding the associated rules
+    /// Unit price overriding the associated rules.
     /// </summary>
     [FhirElement("unitPriceComponent", Order=240)]
     [DataMember]
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.MonetaryComponent _UnitPriceComponent;
 
     /// <summary>
-    /// Total price overriding the associated rules
+    /// Total price overriding the associated rules.
     /// </summary>
     [FhirElement("totalPriceComponent", Order=250)]
     [DataMember]
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.MonetaryComponent _TotalPriceComponent;
 
     /// <summary>
-    /// Reason for overriding the list price/factor
+    /// Reason for overriding the list price/factor.
     /// </summary>
     [FhirElement("overrideReason", Order=260)]
     [Binding("override-reason")]
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _OverrideReason;
 
     /// <summary>
-    /// Individual who was entering
+    /// Individual who was entering.
     /// </summary>
     [FhirElement("enterer", InSummary=true, Order=270, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Enterer;
 
     /// <summary>
-    /// Date the charge item was entered
+    /// Date the charge item was entered.
     /// </summary>
     [FhirElement("enteredDate", InSummary=true, Order=280)]
     [DataMember]
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Why was the charged  service rendered?
+    /// Why was the charged  service rendered?.
     /// </summary>
     [FhirElement("reason", Order=290, FiveWs="FiveWs.why[x]")]
     [Binding("ChargeItemReason")]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
 
     /// <summary>
-    /// Which rendered service is being charged?
+    /// Which rendered service is being charged?.
     /// </summary>
     [FhirElement("service", Order=300, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Service;
 
     /// <summary>
-    /// Product charged
+    /// Product charged.
     /// </summary>
     [FhirElement("product", Order=310)]
     [Binding("ChargeItemProduct")]
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Product;
 
     /// <summary>
-    /// Account to place this charge
+    /// Account to place this charge.
     /// </summary>
     [FhirElement("account", InSummary=true, Order=320)]
     [CLSCompliant(false)]
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Account;
 
     /// <summary>
-    /// Comments made about the ChargeItem
+    /// Comments made about the ChargeItem.
     /// </summary>
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Further information supporting this charge
+    /// Further information supporting this charge.
     /// </summary>
     [FhirElement("supportingInformation", Order=340)]
     [CLSCompliant(false)]

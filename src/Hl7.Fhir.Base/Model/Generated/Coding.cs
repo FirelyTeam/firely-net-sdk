@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Coding"; } }
 
     /// <summary>
-    /// Identity of the terminology system
+    /// Identity of the terminology system.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=30)]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Version of the system - if relevant
+    /// Version of the system - if relevant.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=40)]
     [DataMember]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Symbol in syntax defined by the system
+    /// Symbol in syntax defined by the system.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
     [DataMember]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Representation defined by the system
+    /// Representation defined by the system.
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// If this coding was chosen directly by the user
+    /// If this coding was chosen directly by the user.
     /// </summary>
     [FhirElement("userSelected", InSummary=true, Order=70)]
     [DataMember]

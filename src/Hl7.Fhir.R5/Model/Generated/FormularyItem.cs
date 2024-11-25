@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for this formulary item
+    /// Business identifier for this formulary item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Codes that identify this formulary item
+    /// Codes that identify this formulary item.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100)]
     [Binding("FormularyItemFormalRepresentation")]
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// active | entered-in-error | inactive
+    /// active | entered-in-error | inactive.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]

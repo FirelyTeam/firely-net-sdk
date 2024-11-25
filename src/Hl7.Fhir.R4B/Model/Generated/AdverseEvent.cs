@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.suspectEntity"; } }
 
       /// <summary>
-      /// Refers to the specific entity that caused the adverse event
+      /// Refers to the specific entity that caused the adverse event.
       /// </summary>
       [FhirElement("instance", InSummary=true, Order=40)]
       [CLSCompliant(false)]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Instance;
 
       /// <summary>
-      /// Information on the possible cause of the event
+      /// Information on the possible cause of the event.
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.suspectEntity.causality"; } }
 
       /// <summary>
-      /// Assessment of if the entity caused the event
+      /// Assessment of if the entity caused the event.
       /// </summary>
       [FhirElement("assessment", InSummary=true, Order=40)]
       [Binding("AdverseEventCausalityAssessment")]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Assessment;
 
       /// <summary>
-      /// AdverseEvent.suspectEntity.causalityProductRelatedness
+      /// AdverseEvent.suspectEntity.causalityProductRelatedness.
       /// </summary>
       [FhirElement("productRelatedness", InSummary=true, Order=50)]
       [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// AdverseEvent.suspectEntity.causalityAuthor
+      /// AdverseEvent.suspectEntity.causalityAuthor.
       /// </summary>
       [FhirElement("author", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Author;
 
       /// <summary>
-      /// ProbabilityScale | Bayesian | Checklist
+      /// ProbabilityScale | Bayesian | Checklist.
       /// </summary>
       [FhirElement("method", InSummary=true, Order=70)]
       [Binding("AdverseEventCausalityMethod")]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for the event
+    /// Business identifier for the event.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// actual | potential
+    /// actual | potential.
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
+    /// product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("AdverseEventCategory")]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Type of the event itself in relation to the subject
+    /// Type of the event itself in relation to the subject.
     /// </summary>
     [FhirElement("event", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Binding("AdverseEventType")]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Event;
 
     /// <summary>
-    /// Subject impacted by event
+    /// Subject impacted by event.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.who")]
     [CLSCompliant(false)]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter created as part of
+    /// Encounter created as part of.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=140, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When the event occurred
+    /// When the event occurred.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.init")]
     [DataMember]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the event was detected
+    /// When the event was detected.
     /// </summary>
     [FhirElement("detected", InSummary=true, Order=160)]
     [DataMember]
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the event was recorded
+    /// When the event was recorded.
     /// </summary>
     [FhirElement("recordedDate", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Effect on the subject due to this event
+    /// Effect on the subject due to this event.
     /// </summary>
     [FhirElement("resultingCondition", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ResultingCondition;
 
     /// <summary>
-    /// Location where adverse event occurred
+    /// Location where adverse event occurred.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=190)]
     [CLSCompliant(false)]
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Seriousness of the event
+    /// Seriousness of the event.
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=200)]
     [Binding("AdverseEventSeriousness")]
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Seriousness;
 
     /// <summary>
-    /// mild | moderate | severe
+    /// mild | moderate | severe.
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=210)]
     [Binding("AdverseEventSeverity")]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Severity;
 
     /// <summary>
-    /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
+    /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown.
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=220)]
     [Binding("AdverseEventOutcome")]
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Outcome;
 
     /// <summary>
-    /// Who recorded the adverse event
+    /// Who recorded the adverse event.
     /// </summary>
     [FhirElement("recorder", InSummary=true, Order=230, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Recorder;
 
     /// <summary>
-    /// Who  was involved in the adverse event or the potential adverse event
+    /// Who  was involved in the adverse event or the potential adverse event.
     /// </summary>
     [FhirElement("contributor", InSummary=true, Order=240)]
     [CLSCompliant(false)]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Contributor;
 
     /// <summary>
-    /// The suspected agent causing the adverse event
+    /// The suspected agent causing the adverse event.
     /// </summary>
     [FhirElement("suspectEntity", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -799,7 +799,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> _SuspectEntity;
 
     /// <summary>
-    /// AdverseEvent.subjectMedicalHistory
+    /// AdverseEvent.subjectMedicalHistory.
     /// </summary>
     [FhirElement("subjectMedicalHistory", InSummary=true, Order=260)]
     [CLSCompliant(false)]
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SubjectMedicalHistory;
 
     /// <summary>
-    /// AdverseEvent.referenceDocument
+    /// AdverseEvent.referenceDocument.
     /// </summary>
     [FhirElement("referenceDocument", InSummary=true, Order=270)]
     [CLSCompliant(false)]
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReferenceDocument;
 
     /// <summary>
-    /// AdverseEvent.study
+    /// AdverseEvent.study.
     /// </summary>
     [FhirElement("study", InSummary=true, Order=280)]
     [CLSCompliant(false)]

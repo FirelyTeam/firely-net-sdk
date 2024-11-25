@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ManufacturedItemDefinition.property"; } }
 
       /// <summary>
-      /// A code expressing the type of characteristic
+      /// A code expressing the type of characteristic.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SNOMEDCTCharacteristicCodes")]
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// A value for the characteristic
+      /// A value for the characteristic.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier
+    /// Unique identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Dose form as manufactured (before any necessary transformation)
+    /// Dose form as manufactured (before any necessary transformation).
     /// </summary>
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=110)]
     [Binding("ManufacturedDoseForm")]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ManufacturedDoseForm;
 
     /// <summary>
-    /// The “real world” units in which the quantity of the item is described
+    /// The “real world” units in which the quantity of the item is described.
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=120)]
     [Binding("UnitOfPresentation")]
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
 
     /// <summary>
-    /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
+    /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues).
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
 
     /// <summary>
-    /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
+    /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource.
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=140)]
     [Binding("SNOMEDCTSubstanceCodes")]
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Ingredient;
 
     /// <summary>
-    /// General characteristics of this item
+    /// General characteristics of this item.
     /// </summary>
     [FhirElement("property", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]

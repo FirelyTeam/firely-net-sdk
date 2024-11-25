@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Timing.repeat"; } }
 
       /// <summary>
-      /// Length/Range of lengths, or (Start and/or end) limits
+      /// Length/Range of lengths, or (Start and/or end) limits.
       /// </summary>
       [FhirElement("bounds", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Bounds;
 
       /// <summary>
-      /// Number of times to repeat
+      /// Number of times to repeat.
       /// </summary>
       [FhirElement("count", InSummary=true, Order=40)]
       [DataMember]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Maximum number of times to repeat
+      /// Maximum number of times to repeat.
       /// </summary>
       [FhirElement("countMax", InSummary=true, Order=50)]
       [DataMember]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How long when it happens
+      /// How long when it happens.
       /// </summary>
       [FhirElement("duration", InSummary=true, Order=60)]
       [DataMember]
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How long when it happens (Max)
+      /// How long when it happens (Max).
       /// </summary>
       [FhirElement("durationMax", InSummary=true, Order=70)]
       [DataMember]
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// s | min | h | d | wk | mo | a - unit of time (UCUM)
+      /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Event occurs frequency times per period
+      /// Event occurs frequency times per period.
       /// </summary>
       [FhirElement("frequency", InSummary=true, Order=90)]
       [DataMember]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Event occurs up to frequencyMax times per period
+      /// Event occurs up to frequencyMax times per period.
       /// </summary>
       [FhirElement("frequencyMax", InSummary=true, Order=100)]
       [DataMember]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Event occurs frequency times per period
+      /// Event occurs frequency times per period.
       /// </summary>
       [FhirElement("period", InSummary=true, Order=110)]
       [DataMember]
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Upper limit of period (3-4 hours)
+      /// Upper limit of period (3-4 hours).
       /// </summary>
       [FhirElement("periodMax", InSummary=true, Order=120)]
       [DataMember]
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// s | min | h | d | wk | mo | a - unit of time (UCUM)
+      /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
       [DeclaredType(Type = typeof(Code))]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// mon | tue | wed | thu | fri | sat | sun
+      /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
       [DeclaredType(Type = typeof(Code))]
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Time of day for action
+      /// Time of day for action.
       /// </summary>
       [FhirElement("timeOfDay", InSummary=true, Order=150)]
       [Cardinality(Min=0,Max=-1)]
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Regular life events the event is tied to
+      /// Regular life events the event is tied to.
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
       [DeclaredType(Type = typeof(Code))]
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Minutes from event (before or after)
+      /// Minutes from event (before or after).
       /// </summary>
       [FhirElement("offset", InSummary=true, Order=170)]
       [DataMember]
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the event occurs
+    /// When the event occurs.
     /// </summary>
     [FhirElement("event", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the event is to occur
+    /// When the event is to occur.
     /// </summary>
     [FhirElement("repeat", InSummary=true, Order=40)]
     [DataMember]
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Timing.RepeatComponent _Repeat;
 
     /// <summary>
-    /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +
+    /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
     [Binding("TimingAbbreviation")]

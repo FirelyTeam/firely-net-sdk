@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The identifier of the request associated with this response, if any
+    /// The identifier of the request associated with this response, if any.
     /// </summary>
     [FhirElement("requestIdentifier", InSummary=true, Order=90)]
     [DataMember]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _RequestIdentifier;
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// What guidance was requested
+    /// What guidance was requested.
     /// </summary>
     [FhirElement("module", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Module;
 
     /// <summary>
-    /// success | data-requested | data-required | in-progress | failure | entered-in-error
+    /// success | data-requested | data-required | in-progress | failure | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient the request was performed for
+    /// Patient the request was performed for.
     /// </summary>
     [FhirElement("subject", Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter during which the response was returned
+    /// Encounter during which the response was returned.
     /// </summary>
     [FhirElement("encounter", Order=140, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When the guidance response was processed
+    /// When the guidance response was processed.
     /// </summary>
     [FhirElement("occurrenceDateTime", Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Device returning the guidance
+    /// Device returning the guidance.
     /// </summary>
     [FhirElement("performer", Order=160, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Performer;
 
     /// <summary>
-    /// Why guidance is needed
+    /// Why guidance is needed.
     /// </summary>
     [FhirElement("reasonCode", Order=170, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Why guidance is needed
+    /// Why guidance is needed.
     /// </summary>
     [FhirElement("reasonReference", Order=180, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// Additional notes about the response
+    /// Additional notes about the response.
     /// </summary>
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Messages resulting from the evaluation of the artifact or artifacts
+    /// Messages resulting from the evaluation of the artifact or artifacts.
     /// </summary>
     [FhirElement("evaluationMessage", Order=200)]
     [CLSCompliant(false)]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _EvaluationMessage;
 
     /// <summary>
-    /// The output parameters of the evaluation, if any
+    /// The output parameters of the evaluation, if any.
     /// </summary>
     [FhirElement("outputParameters", Order=210)]
     [CLSCompliant(false)]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _OutputParameters;
 
     /// <summary>
-    /// Proposed actions, if any
+    /// Proposed actions, if any.
     /// </summary>
     [FhirElement("result", Order=220)]
     [CLSCompliant(false)]
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Result;
 
     /// <summary>
-    /// Additional required data
+    /// Additional required data.
     /// </summary>
     [FhirElement("dataRequirement", Order=230)]
     [Cardinality(Min=0,Max=-1)]

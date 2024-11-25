@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "PaymentNotice"; } }
 
     /// <summary>
-    /// Business Identifier
+    /// Business Identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Request reference
+    /// Request reference.
     /// </summary>
     [FhirElement("request", Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Request;
 
     /// <summary>
-    /// Response reference
+    /// Response reference.
     /// </summary>
     [FhirElement("response", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Response;
 
     /// <summary>
-    /// Payment or clearing date
+    /// Payment or clearing date.
     /// </summary>
     [FhirElement("statusDate", Order=130, FiveWs="when.done")]
     [DataMember]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Creation date
+    /// Creation date.
     /// </summary>
     [FhirElement("created", Order=140, FiveWs="when.recorded")]
     [DataMember]
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Insurer or Regulatory body
+    /// Insurer or Regulatory body.
     /// </summary>
     [FhirElement("target", Order=150)]
     [CLSCompliant(false)]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Target;
 
     /// <summary>
-    /// Responsible practitioner
+    /// Responsible practitioner.
     /// </summary>
     [FhirElement("provider", Order=160, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Provider;
 
     /// <summary>
-    /// Responsible organization
+    /// Responsible organization.
     /// </summary>
     [FhirElement("organization", Order=170, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Whether payment has been sent or cleared
+    /// Whether payment has been sent or cleared.
     /// </summary>
     [FhirElement("paymentStatus", Order=180)]
     [Binding("PaymentStatus")]

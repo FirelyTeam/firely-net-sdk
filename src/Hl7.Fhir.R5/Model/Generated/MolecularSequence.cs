@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MolecularSequence.relative"; } }
 
       /// <summary>
-      /// Ways of identifying nucleotides or amino acids within a sequence
+      /// Ways of identifying nucleotides or amino acids within a sequence.
       /// </summary>
       [FhirElement("coordinateSystem", InSummary=true, Order=40)]
       [Binding("LL5323-2")]
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _CoordinateSystem;
 
       /// <summary>
-      /// Indicates the order in which the sequence should be considered when putting multiple 'relative' elements together
+      /// Indicates the order in which the sequence should be considered when putting multiple 'relative' elements together.
       /// </summary>
       [FhirElement("ordinalPosition", Order=50)]
       [DataMember]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Indicates the nucleotide range in the composed sequence when multiple 'relative' elements are used together
+      /// Indicates the nucleotide range in the composed sequence when multiple 'relative' elements are used together.
       /// </summary>
       [FhirElement("sequenceRange", Order=60)]
       [DataMember]
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Range _SequenceRange;
 
       /// <summary>
-      /// A sequence used as starting sequence
+      /// A sequence used as starting sequence.
       /// </summary>
       [FhirElement("startingSequence", InSummary=true, Order=70)]
       [DataMember]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent _StartingSequence;
 
       /// <summary>
-      /// Changes in sequence from the starting sequence
+      /// Changes in sequence from the starting sequence.
       /// </summary>
       [FhirElement("edit", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MolecularSequence.relative.startingSequence"; } }
 
       /// <summary>
-      /// The genome assembly used for starting sequence, e.g. GRCh38
+      /// The genome assembly used for starting sequence, e.g. GRCh38.
       /// </summary>
       [FhirElement("genomeAssembly", InSummary=true, Order=40)]
       [Binding("LL1040-6")]
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _GenomeAssembly;
 
       /// <summary>
-      /// Chromosome Identifier
+      /// Chromosome Identifier.
       /// </summary>
       [FhirElement("chromosome", InSummary=true, Order=50)]
       [Binding("LL2938-0")]
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Chromosome;
 
       /// <summary>
-      /// The reference sequence that represents the starting sequence
+      /// The reference sequence that represents the starting sequence.
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [Binding("Multiple bindings acceptable (NCBI or LRG)")]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Sequence;
 
       /// <summary>
-      /// Start position of the window on the starting sequence
+      /// Start position of the window on the starting sequence.
       /// </summary>
       [FhirElement("windowStart", InSummary=true, Order=70)]
       [DataMember]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// End position of the window on the starting sequence
+      /// End position of the window on the starting sequence.
       /// </summary>
       [FhirElement("windowEnd", InSummary=true, Order=80)]
       [DataMember]
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// sense | antisense
+      /// sense | antisense.
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=90)]
       [DeclaredType(Type = typeof(Code))]
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// watson | crick
+      /// watson | crick.
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MolecularSequence.relative.edit"; } }
 
       /// <summary>
-      /// Start position of the edit on the starting sequence
+      /// Start position of the edit on the starting sequence.
       /// </summary>
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// End position of the edit on the starting sequence
+      /// End position of the edit on the starting sequence.
       /// </summary>
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Allele that was observed
+      /// Allele that was observed.
       /// </summary>
       [FhirElement("replacementSequence", InSummary=true, Order=60)]
       [DataMember]
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Allele in the starting sequence
+      /// Allele in the starting sequence.
       /// </summary>
       [FhirElement("replacedSequence", InSummary=true, Order=70)]
       [DataMember]
@@ -912,7 +912,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique ID for this particular sequence
+    /// Unique ID for this particular sequence.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -926,7 +926,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// aa | dna | rna
+    /// aa | dna | rna.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Subject this sequence is associated too
+    /// Subject this sequence is associated too.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -974,7 +974,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// What the molecular sequence is about, when it is not about the subject of record
+    /// What the molecular sequence is about, when it is not about the subject of record.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Focus;
 
     /// <summary>
-    /// Specimen used for sequencing
+    /// Specimen used for sequencing.
     /// </summary>
     [FhirElement("specimen", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Specimen;
 
     /// <summary>
-    /// The method for sequencing
+    /// The method for sequencing.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -1020,7 +1020,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// Who should be responsible for test result
+    /// Who should be responsible for test result.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=150)]
     [CLSCompliant(false)]
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Performer;
 
     /// <summary>
-    /// Sequence that was observed
+    /// Sequence that was observed.
     /// </summary>
     [FhirElement("literal", InSummary=true, Order=160)]
     [DataMember]
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Embedded file or a link (URL) which contains content to represent the sequence
+    /// Embedded file or a link (URL) which contains content to represent the sequence.
     /// </summary>
     [FhirElement("formatted", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -1080,7 +1080,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Formatted;
 
     /// <summary>
-    /// A sequence defined relative to another sequence
+    /// A sequence defined relative to another sequence.
     /// </summary>
     [FhirElement("relative", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]

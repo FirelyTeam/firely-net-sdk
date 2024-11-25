@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CareTeam.participant"; } }
 
       /// <summary>
-      /// Type of involvement
+      /// Type of involvement.
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("CareTeamParticipantRole")]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Role;
 
       /// <summary>
-      /// Who is involved
+      /// Who is involved.
       /// </summary>
       [FhirElement("member", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Member;
 
       /// <summary>
-      /// Organization of the practitioner
+      /// Organization of the practitioner.
       /// </summary>
       [FhirElement("onBehalfOf", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
 
       /// <summary>
-      /// When the member is generally available within this care team
+      /// When the member is generally available within this care team.
       /// </summary>
       [FhirElement("coverage", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this team
+    /// External Ids for this team.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// proposed | active | suspended | inactive | entered-in-error
+    /// proposed | active | suspended | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of team
+    /// Type of team.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("CareTeamCategory")]
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Name of the team, such as crisis assessment team
+    /// Name of the team, such as crisis assessment team.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who care team is for
+    /// Who care team is for.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Time period team covers
+    /// Time period team covers.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=140, FiveWs="FiveWs.init")]
     [DataMember]
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Members of the team
+    /// Members of the team.
     /// </summary>
     [FhirElement("participant", Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CareTeam.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// Why the care team exists
+    /// Why the care team exists.
     /// </summary>
     [FhirElement("reason", Order=160, FiveWs="FiveWs.why[x]")]
     [Binding("CareTeamReason")]
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Reason;
 
     /// <summary>
-    /// Organization responsible for the care team
+    /// Organization responsible for the care team.
     /// </summary>
     [FhirElement("managingOrganization", InSummary=true, Order=170)]
     [CLSCompliant(false)]
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ManagingOrganization;
 
     /// <summary>
-    /// A contact detail for the care team (that applies to all members)
+    /// A contact detail for the care team (that applies to all members).
     /// </summary>
     [FhirElement("telecom", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// Comments made about the CareTeam
+    /// Comments made about the CareTeam.
     /// </summary>
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]

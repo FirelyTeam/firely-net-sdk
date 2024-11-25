@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   public abstract partial class Element : Hl7.Fhir.Model.Base
   {
     /// <summary>
-    /// Unique id for inter-element referencing
+    /// Unique id for inter-element referencing.
     /// </summary>
     [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, Order=10)]
     [DeclaredType(Type = typeof(SystemPrimitive.String))]
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
     private string _ElementId;
 
     /// <summary>
-    /// Additional content defined by implementations
+    /// Additional content defined by implementations.
     /// </summary>
     [FhirElement("extension", Order=20)]
     [Cardinality(Min=0,Max=-1)]

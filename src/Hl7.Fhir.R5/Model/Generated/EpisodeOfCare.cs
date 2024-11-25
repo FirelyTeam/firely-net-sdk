@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EpisodeOfCare.statusHistory"; } }
 
       /// <summary>
-      /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
+      /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
       /// </summary>
       [FhirElement("status", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Duration the EpisodeOfCare was in the specified status
+      /// Duration the EpisodeOfCare was in the specified status.
       /// </summary>
       [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EpisodeOfCare.reason"; } }
 
       /// <summary>
-      /// What the reason value should be used for/as
+      /// What the reason value should be used for/as.
       /// </summary>
       [FhirElement("use", InSummary=true, Order=40)]
       [Binding("reason-use")]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Use;
 
       /// <summary>
-      /// Medical reason to be addressed
+      /// Medical reason to be addressed.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("reason-code")]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EpisodeOfCare.diagnosis"; } }
 
       /// <summary>
-      /// The medical condition that was addressed during the episode of care
+      /// The medical condition that was addressed during the episode of care.
       /// </summary>
       [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("condition-code")]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Condition;
 
       /// <summary>
-      /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
+      /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …).
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
       [Binding("DiagnosisUse")]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier(s) relevant for this EpisodeOfCare
+    /// Business Identifier(s) relevant for this EpisodeOfCare.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
+    /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Past list of status codes (the current status may be included to cover the start date of the status)
+    /// Past list of status codes (the current status may be included to cover the start date of the status).
     /// </summary>
     [FhirElement("statusHistory", Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> _StatusHistory;
 
     /// <summary>
-    /// Type/class  - e.g. specialist referral, disease management
+    /// Type/class  - e.g. specialist referral, disease management.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("EpisodeOfCareType")]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
     /// <summary>
-    /// The list of medical reasons that are expected to be addressed during the episode of care
+    /// The list of medical reasons that are expected to be addressed during the episode of care.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent> _Reason;
 
     /// <summary>
-    /// The list of medical conditions that were addressed during the episode of care
+    /// The list of medical conditions that were addressed during the episode of care.
     /// </summary>
     [FhirElement("diagnosis", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> _Diagnosis;
 
     /// <summary>
-    /// The patient who is the focus of this episode of care
+    /// The patient who is the focus of this episode of care.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Organization that assumes responsibility for care coordination
+    /// Organization that assumes responsibility for care coordination.
     /// </summary>
     [FhirElement("managingOrganization", InSummary=true, Order=160)]
     [CLSCompliant(false)]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
 
     /// <summary>
-    /// Interval during responsibility is assumed
+    /// Interval during responsibility is assumed.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=170, FiveWs="FiveWs.init")]
     [DataMember]
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Originating Referral Request(s)
+    /// Originating Referral Request(s).
     /// </summary>
     [FhirElement("referralRequest", Order=180)]
     [CLSCompliant(false)]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReferralRequest;
 
     /// <summary>
-    /// Care manager/care coordinator for the patient
+    /// Care manager/care coordinator for the patient.
     /// </summary>
     [FhirElement("careManager", Order=190)]
     [CLSCompliant(false)]
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _CareManager;
 
     /// <summary>
-    /// Other practitioners facilitating this episode of care
+    /// Other practitioners facilitating this episode of care.
     /// </summary>
     [FhirElement("careTeam", Order=200)]
     [CLSCompliant(false)]
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _CareTeam;
 
     /// <summary>
-    /// The set of accounts that may be used for billing for this EpisodeOfCare
+    /// The set of accounts that may be used for billing for this EpisodeOfCare.
     /// </summary>
     [FhirElement("account", Order=210)]
     [CLSCompliant(false)]

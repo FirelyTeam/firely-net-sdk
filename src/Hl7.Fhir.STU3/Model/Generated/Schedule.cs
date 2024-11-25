@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Schedule"; } }
 
     /// <summary>
-    /// External Ids for this item
+    /// External Ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this schedule is in active use
+    /// Whether this schedule is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A broad categorisation of the service that is to be performed during this appointment
+    /// A broad categorisation of the service that is to be performed during this appointment.
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="class")]
     [Binding("service-category")]
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
 
     /// <summary>
-    /// The specific service that is to be performed during this appointment
+    /// The specific service that is to be performed during this appointment.
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="class")]
     [Binding("service-type")]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
 
     /// <summary>
-    /// The specialty of a practitioner that would be required to perform the service requested in this appointment
+    /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="class")]
     [Binding("specialty")]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, PractitionerRole, Device, Patient or RelatedPerson
+    /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, PractitionerRole, Device, Patient or RelatedPerson.
     /// </summary>
     [FhirElement("actor", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Actor;
 
     /// <summary>
-    /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
+    /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates.
     /// </summary>
     [FhirElement("planningHorizon", InSummary=true, Order=150, FiveWs="when.planned")]
     [DataMember]
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _PlanningHorizon;
 
     /// <summary>
-    /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated
+    /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated.
     /// </summary>
     [FhirElement("comment", Order=160)]
     [DataMember]

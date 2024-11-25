@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.software"; } }
 
       /// <summary>
-      /// A name the software is known by
+      /// A name the software is known by.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Version covered by this statement
+      /// Version covered by this statement.
       /// </summary>
       [FhirElement("version", InSummary=true, Order=50)]
       [DataMember]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Date this version released
+      /// Date this version released.
       /// </summary>
       [FhirElement("releaseDate", InSummary=true, Order=60)]
       [DataMember]
@@ -638,41 +638,26 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.implementation"; } }
 
       /// <summary>
-      /// Describes this specific instance
+      /// Describes this specific instance.
       /// </summary>
+      /// <remarks>
+      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, Hl7.Fhir.Model.Markdown in R5.
+      /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(FhirString))]
-      [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
+      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
+      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DescriptionElement
+      public Hl7.Fhir.Model.DataType Description
       {
-        get { return _DescriptionElement; }
-        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        get { return _Description; }
+        set { _Description = value; OnPropertyChanged("Description"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _DescriptionElement;
+      private Hl7.Fhir.Model.DataType _Description;
 
       /// <summary>
-      /// Describes this specific instance
-      /// </summary>
-      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-      [IgnoreDataMember]
-      public string Description
-      {
-        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-        set
-        {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-          OnPropertyChanged("Description");
-        }
-      }
-
-      /// <summary>
-      /// Base URL for the installation
+      /// Base URL for the installation.
       /// </summary>
       [FhirElement("url", InSummary=true, Order=50)]
       [DataMember]
@@ -712,7 +697,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+        if(Description != null) dest.Description = (Hl7.Fhir.Model.DataType)Description.DeepCopy();
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         return dest;
       }
@@ -729,7 +714,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+        if( !DeepComparable.Matches(Description, otherT.Description)) return false;
         if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
 
         return true;
@@ -741,7 +726,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+        if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
         if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
 
         return true;
@@ -752,8 +737,8 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = DescriptionElement;
-            return DescriptionElement is not null;
+            value = Description;
+            return Description is not null;
           case "url":
             value = UrlElement;
             return UrlElement is not null;
@@ -768,7 +753,7 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+            Description = (Hl7.Fhir.Model.DataType)value;
             return this;
           case "url":
             UrlElement = (Hl7.Fhir.Model.FhirUri)value;
@@ -782,7 +767,7 @@ namespace Hl7.Fhir.Model
       internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
         if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       }
 
@@ -806,7 +791,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest"; } }
 
       /// <summary>
-      /// client | server
+      /// client | server.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -840,7 +825,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// General description of implementation
+      /// General description of implementation.
       /// </summary>
       [FhirElement("documentation", Order=50)]
       [DataMember]
@@ -871,7 +856,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Information about security of implementation
+      /// Information about security of implementation.
       /// </summary>
       [FhirElement("security", InSummary=true, Order=60)]
       [DataMember]
@@ -884,7 +869,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CapabilityStatement.SecurityComponent _Security;
 
       /// <summary>
-      /// Resource served on the REST interface
+      /// Resource served on the REST interface.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -898,7 +883,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.ResourceComponent> _Resource;
 
       /// <summary>
-      /// What operations are supported?
+      /// What operations are supported?.
       /// </summary>
       [FhirElement("interaction", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -912,7 +897,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.SystemInteractionComponent> _Interaction;
 
       /// <summary>
-      /// Search parameters for searching all resources
+      /// Search parameters for searching all resources.
       /// </summary>
       [FhirElement("searchParam", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -926,7 +911,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent> _SearchParam;
 
       /// <summary>
-      /// Definition of an operation or a custom query
+      /// Definition of an operation or a custom query.
       /// </summary>
       [FhirElement("operation", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -940,7 +925,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.OperationComponent> _Operation;
 
       /// <summary>
-      /// Compartments served/used by system
+      /// Compartments served/used by system.
       /// </summary>
       [FhirElement("compartment", Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -1134,7 +1119,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.security"; } }
 
       /// <summary>
-      /// Adds CORS Headers (http://enable-cors.org/)
+      /// Adds CORS Headers (http://enable-cors.org/).
       /// </summary>
       [FhirElement("cors", InSummary=true, Order=40)]
       [DataMember]
@@ -1165,7 +1150,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates
+      /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates.
       /// </summary>
       [FhirElement("service", InSummary=true, Order=50)]
       [Binding("RestfulSecurityService")]
@@ -1180,7 +1165,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Service;
 
       /// <summary>
-      /// General description of how security works
+      /// General description of how security works.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -1211,7 +1196,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Certificates associated with security profiles
+      /// Certificates associated with security profiles.
       /// </summary>
       [FhirElement("certificate", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -1344,7 +1329,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.security.certificate"; } }
 
       /// <summary>
-      /// Mime type for certificates
+      /// Mime type for certificates.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("MimeType")]
@@ -1376,7 +1361,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Actual certificate
+      /// Actual certificate.
       /// </summary>
       [FhirElement("blob", Order=50)]
       [DataMember]
@@ -1510,7 +1495,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.resource"; } }
 
       /// <summary>
-      /// A resource type that is supported
+      /// A resource type that is supported.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -1544,7 +1529,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Base System profile for all uses of resource
+      /// Base System profile for all uses of resource.
       /// </summary>
       [FhirElement("profile", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -1559,7 +1544,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Profile;
 
       /// <summary>
-      /// Additional information about the use of the resource type
+      /// Additional information about the use of the resource type.
       /// </summary>
       [FhirElement("documentation", Order=60)]
       [DataMember]
@@ -1590,7 +1575,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What operations are supported?
+      /// What operations are supported?.
       /// </summary>
       [FhirElement("interaction", Order=70)]
       [Cardinality(Min=1,Max=-1)]
@@ -1604,7 +1589,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.ResourceInteractionComponent> _Interaction;
 
       /// <summary>
-      /// no-version | versioned | versioned-update
+      /// no-version | versioned | versioned-update.
       /// </summary>
       [FhirElement("versioning", Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -1637,7 +1622,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether vRead can return past versions
+      /// Whether vRead can return past versions.
       /// </summary>
       [FhirElement("readHistory", Order=90)]
       [DataMember]
@@ -1668,7 +1653,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If update can commit to a new identity
+      /// If update can commit to a new identity.
       /// </summary>
       [FhirElement("updateCreate", Order=100)]
       [DataMember]
@@ -1699,7 +1684,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If allows/uses conditional create
+      /// If allows/uses conditional create.
       /// </summary>
       [FhirElement("conditionalCreate", Order=110)]
       [DataMember]
@@ -1730,7 +1715,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// not-supported | modified-since | not-match | full-support
+      /// not-supported | modified-since | not-match | full-support.
       /// </summary>
       [FhirElement("conditionalRead", Order=120)]
       [DeclaredType(Type = typeof(Code))]
@@ -1763,7 +1748,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If allows/uses conditional update
+      /// If allows/uses conditional update.
       /// </summary>
       [FhirElement("conditionalUpdate", Order=130)]
       [DataMember]
@@ -1794,7 +1779,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// not-supported | single | multiple - how conditional delete is supported
+      /// not-supported | single | multiple - how conditional delete is supported.
       /// </summary>
       [FhirElement("conditionalDelete", Order=140)]
       [DeclaredType(Type = typeof(Code))]
@@ -1827,7 +1812,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// literal | logical | resolves | enforced | local
+      /// literal | logical | resolves | enforced | local.
       /// </summary>
       [FhirElement("referencePolicy", Order=150)]
       [DeclaredType(Type = typeof(Code))]
@@ -1861,7 +1846,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// _include values supported by the server
+      /// _include values supported by the server.
       /// </summary>
       [FhirElement("searchInclude", Order=160)]
       [Cardinality(Min=0,Max=-1)]
@@ -1893,7 +1878,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// _revinclude values supported by the server
+      /// _revinclude values supported by the server.
       /// </summary>
       [FhirElement("searchRevInclude", Order=170)]
       [Cardinality(Min=0,Max=-1)]
@@ -1925,7 +1910,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Search parameters supported by implementation
+      /// Search parameters supported by implementation.
       /// </summary>
       [FhirElement("searchParam", Order=180)]
       [Cardinality(Min=0,Max=-1)]
@@ -2171,7 +2156,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.resource.interaction"; } }
 
       /// <summary>
-      /// read | vread | update | patch | delete | history-instance | history-type | create | search-type
+      /// read | vread | update | patch | delete | history-instance | history-type | create | search-type.
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -2205,7 +2190,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Anything special about operation behavior
+      /// Anything special about operation behavior.
       /// </summary>
       [FhirElement("documentation", Order=50)]
       [DataMember]
@@ -2338,7 +2323,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.resource.searchParam"; } }
 
       /// <summary>
-      /// Name of search parameter
+      /// Name of search parameter.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -2370,7 +2355,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Source of definition for parameter
+      /// Source of definition for parameter.
       /// </summary>
       [FhirElement("definition", Order=50)]
       [DataMember]
@@ -2401,7 +2386,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// number | date | string | token | reference | composite | quantity | uri
+      /// number | date | string | token | reference | composite | quantity | uri.
       /// </summary>
       [FhirElement("type", Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -2435,7 +2420,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Server-specific usage
+      /// Server-specific usage.
       /// </summary>
       [FhirElement("documentation", Order=70)]
       [DataMember]
@@ -2588,7 +2573,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.interaction"; } }
 
       /// <summary>
-      /// transaction | batch | search-system | history-system
+      /// transaction | batch | search-system | history-system.
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -2622,7 +2607,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Anything special about operation behavior
+      /// Anything special about operation behavior.
       /// </summary>
       [FhirElement("documentation", Order=50)]
       [DataMember]
@@ -2755,7 +2740,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.rest.operation"; } }
 
       /// <summary>
-      /// Name by which the operation/query is invoked
+      /// Name by which the operation/query is invoked.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -2787,7 +2772,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The defined operation/query
+      /// The defined operation/query.
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -2906,7 +2891,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.messaging"; } }
 
       /// <summary>
-      /// Where messages should be sent
+      /// Where messages should be sent.
       /// </summary>
       [FhirElement("endpoint", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -2920,7 +2905,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.EndpointComponent> _Endpoint;
 
       /// <summary>
-      /// Reliable Message Cache Length (min)
+      /// Reliable Message Cache Length (min).
       /// </summary>
       [FhirElement("reliableCache", Order=50)]
       [DataMember]
@@ -2951,7 +2936,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Messaging interface behavior details
+      /// Messaging interface behavior details.
       /// </summary>
       [FhirElement("documentation", Order=60)]
       [DataMember]
@@ -2982,7 +2967,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Messages supported by this system
+      /// Messages supported by this system.
       /// </summary>
       [FhirElement("supportedMessage", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -2996,7 +2981,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent> _SupportedMessage;
 
       /// <summary>
-      /// Declare support for this event
+      /// Declare support for this event.
       /// </summary>
       [FhirElement("event", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -3142,7 +3127,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.messaging.endpoint"; } }
 
       /// <summary>
-      /// http | ftp | mllp +
+      /// http | ftp | mllp +.
       /// </summary>
       [FhirElement("protocol", Order=40)]
       [Binding("MessageTransport")]
@@ -3157,7 +3142,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Protocol;
 
       /// <summary>
-      /// Network address or identifier of the end-point
+      /// Network address or identifier of the end-point.
       /// </summary>
       [FhirElement("address", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -3292,7 +3277,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.messaging.supportedMessage"; } }
 
       /// <summary>
-      /// sender | receiver
+      /// sender | receiver.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -3326,7 +3311,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Message supported by this system
+      /// Message supported by this system.
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -3445,7 +3430,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.messaging.event"; } }
 
       /// <summary>
-      /// Event type
+      /// Event type.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [Binding("MessageEvent")]
@@ -3460,7 +3445,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Code;
 
       /// <summary>
-      /// Consequence | Currency | Notification
+      /// Consequence | Currency | Notification.
       /// </summary>
       [FhirElement("category", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -3493,7 +3478,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// sender | receiver
+      /// sender | receiver.
       /// </summary>
       [FhirElement("mode", Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -3527,7 +3512,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Resource that's focus of message
+      /// Resource that's focus of message.
       /// </summary>
       [FhirElement("focus", Order=70)]
       [DeclaredType(Type = typeof(Code))]
@@ -3561,7 +3546,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Profile that describes the request
+      /// Profile that describes the request.
       /// </summary>
       [FhirElement("request", InSummary=true, Order=80)]
       [CLSCompliant(false)]
@@ -3577,7 +3562,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Request;
 
       /// <summary>
-      /// Profile that describes the response
+      /// Profile that describes the response.
       /// </summary>
       [FhirElement("response", InSummary=true, Order=90)]
       [CLSCompliant(false)]
@@ -3593,7 +3578,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Response;
 
       /// <summary>
-      /// Endpoint-specific event documentation
+      /// Endpoint-specific event documentation.
       /// </summary>
       [FhirElement("documentation", Order=100)]
       [DataMember]
@@ -3776,7 +3761,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CapabilityStatement.document"; } }
 
       /// <summary>
-      /// producer | consumer
+      /// producer | consumer.
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -3810,7 +3795,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Description of document support
+      /// Description of document support.
       /// </summary>
       [FhirElement("documentation", Order=50)]
       [DataMember]
@@ -3841,7 +3826,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Constraint on a resource used in the document
+      /// Constraint on a resource used in the document.
       /// </summary>
       [FhirElement("profile", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -3953,7 +3938,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical URI to reference this capability statement (globally unique)
+    /// Logical URI to reference this capability statement (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
@@ -3984,7 +3969,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business version of the capability statement
+    /// Business version of the capability statement.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
@@ -4015,7 +4000,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this capability statement (computer friendly)
+    /// Name for this capability statement (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110)]
     [DataMember]
@@ -4046,7 +4031,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this capability statement (human friendly)
+    /// Name for this capability statement (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
@@ -4077,7 +4062,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -4111,7 +4096,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=140, FiveWs="class")]
     [DataMember]
@@ -4142,7 +4127,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date this was last changed
+    /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
@@ -4174,7 +4159,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=160, FiveWs="who.witness")]
     [DataMember]
@@ -4205,7 +4190,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -4219,7 +4204,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the capability statement
+    /// Natural language description of the capability statement.
     /// </summary>
     [FhirElement("description", Order=180)]
     [DataMember]
@@ -4250,7 +4235,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Context the content is intended to support
+    /// Context the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -4264,7 +4249,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for capability statement (if applicable)
+    /// Intended jurisdiction for capability statement (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Binding("Jurisdiction")]
@@ -4279,7 +4264,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this capability statement is defined
+    /// Why this capability statement is defined.
     /// </summary>
     [FhirElement("purpose", Order=210, FiveWs="why")]
     [DataMember]
@@ -4310,7 +4295,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=220)]
     [DataMember]
@@ -4341,7 +4326,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// instance | capability | requirements
+    /// instance | capability | requirements.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
@@ -4375,7 +4360,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical URL of another capability statement this implements
+    /// Canonical URL of another capability statement this implements.
     /// </summary>
     [FhirElement("instantiates", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -4407,7 +4392,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Software that is covered by this capability statement
+    /// Software that is covered by this capability statement.
     /// </summary>
     [FhirElement("software", InSummary=true, Order=250)]
     [DataMember]
@@ -4420,7 +4405,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CapabilityStatement.SoftwareComponent _Software;
 
     /// <summary>
-    /// If this describes a specific instance
+    /// If this describes a specific instance.
     /// </summary>
     [FhirElement("implementation", InSummary=true, Order=260)]
     [DataMember]
@@ -4433,7 +4418,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CapabilityStatement.ImplementationComponent _Implementation;
 
     /// <summary>
-    /// FHIR Version the system uses
+    /// FHIR Version the system uses.
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=270)]
     [Cardinality(Min=1,Max=1)]
@@ -4465,7 +4450,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// no | extensions | elements | both
+    /// no | extensions | elements | both.
     /// </summary>
     [FhirElement("acceptUnknown", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
@@ -4499,7 +4484,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// formats supported (xml | json | ttl | mime type)
+    /// formats supported (xml | json | ttl | mime type).
     /// </summary>
     [FhirElement("format", InSummary=true, Order=290)]
     [Binding("MimeType")]
@@ -4532,7 +4517,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patch formats supported
+    /// Patch formats supported.
     /// </summary>
     [FhirElement("patchFormat", InSummary=true, Order=300)]
     [Binding("MimeType")]
@@ -4565,7 +4550,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Implementation guides supported
+    /// Implementation guides supported.
     /// </summary>
     [FhirElement("implementationGuide", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
@@ -4597,7 +4582,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Profiles for use cases supported
+    /// Profiles for use cases supported.
     /// </summary>
     [FhirElement("profile", InSummary=true, Order=320)]
     [CLSCompliant(false)]
@@ -4613,7 +4598,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Profile;
 
     /// <summary>
-    /// If the endpoint is a RESTful one
+    /// If the endpoint is a RESTful one.
     /// </summary>
     [FhirElement("rest", InSummary=true, Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -4627,7 +4612,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CapabilityStatement.RestComponent> _Rest;
 
     /// <summary>
-    /// If messaging is supported
+    /// If messaging is supported.
     /// </summary>
     [FhirElement("messaging", InSummary=true, Order=340)]
     [Cardinality(Min=0,Max=-1)]
@@ -4641,7 +4626,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CapabilityStatement.MessagingComponent> _Messaging;
 
     /// <summary>
-    /// Document definition
+    /// Document definition.
     /// </summary>
     [FhirElement("document", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]

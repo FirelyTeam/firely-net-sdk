@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.participant"; } }
 
       /// <summary>
-      /// Type of involvement
+      /// Type of involvement.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("AdverseEventParticipantFunction")]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Who was involved in the adverse event or the potential adverse event
+      /// Who was involved in the adverse event or the potential adverse event.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.suspectEntity"; } }
 
       /// <summary>
-      /// Refers to the specific entity that caused the adverse event
+      /// Refers to the specific entity that caused the adverse event.
       /// </summary>
       [FhirElement("instance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Instance;
 
       /// <summary>
-      /// Information on the possible cause of the event
+      /// Information on the possible cause of the event.
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
       [DataMember]
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.suspectEntity.causality"; } }
 
       /// <summary>
-      /// Method of evaluating the relatedness of the suspected entity to the event
+      /// Method of evaluating the relatedness of the suspected entity to the event.
       /// </summary>
       [FhirElement("assessmentMethod", InSummary=true, Order=40)]
       [Binding("AdverseEventCausalityMethod")]
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _AssessmentMethod;
 
       /// <summary>
-      /// Result of the assessment regarding the relatedness of the suspected entity to the event
+      /// Result of the assessment regarding the relatedness of the suspected entity to the event.
       /// </summary>
       [FhirElement("entityRelatedness", InSummary=true, Order=50)]
       [Binding("AdverseEventCausalityAssessment")]
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _EntityRelatedness;
 
       /// <summary>
-      /// Author of the information on the possible cause of the event
+      /// Author of the information on the possible cause of the event.
       /// </summary>
       [FhirElement("author", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.contributingFactor"; } }
 
       /// <summary>
-      /// Item suspected to have increased the probability or severity of the adverse event
+      /// Item suspected to have increased the probability or severity of the adverse event.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventContributingFactor")]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.preventiveAction"; } }
 
       /// <summary>
-      /// Action that contributed to avoiding the adverse event
+      /// Action that contributed to avoiding the adverse event.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventPreventiveAction")]
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.mitigatingAction"; } }
 
       /// <summary>
-      /// Ameliorating action taken after the adverse event occured in order to reduce the extent of harm
+      /// Ameliorating action taken after the adverse event occured in order to reduce the extent of harm.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventMitigatingAction")]
@@ -872,7 +872,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AdverseEvent.supportingInfo"; } }
 
       /// <summary>
-      /// Subject medical history or document relevant to this adverse event
+      /// Subject medical history or document relevant to this adverse event.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventSupportingInfo")]
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for the event
+    /// Business identifier for the event.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// in-progress | completed | entered-in-error | unknown
+    /// in-progress | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1014,7 +1014,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// actual | potential
+    /// actual | potential.
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site
+    /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("AdverseEventCategory")]
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Event or incident that occurred or was averted
+    /// Event or incident that occurred or was averted.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("AdverseEventType")]
@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Subject impacted by event
+    /// Subject impacted by event.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The Encounter associated with the start of the AdverseEvent
+    /// The Encounter associated with the start of the AdverseEvent.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -1108,7 +1108,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When the event occurred
+    /// When the event occurred.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -1123,7 +1123,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// When the event was detected
+    /// When the event was detected.
     /// </summary>
     [FhirElement("detected", InSummary=true, Order=170)]
     [DataMember]
@@ -1154,7 +1154,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the event was recorded
+    /// When the event was recorded.
     /// </summary>
     [FhirElement("recordedDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Effect on the subject due to this event
+    /// Effect on the subject due to this event.
     /// </summary>
     [FhirElement("resultingEffect", InSummary=true, Order=190)]
     [CLSCompliant(false)]
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ResultingEffect;
 
     /// <summary>
-    /// Location where adverse event occurred
+    /// Location where adverse event occurred.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=200)]
     [CLSCompliant(false)]
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Seriousness or gravity of the event
+    /// Seriousness or gravity of the event.
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=210)]
     [Binding("AdverseEventSeriousness")]
@@ -1230,7 +1230,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Seriousness;
 
     /// <summary>
-    /// Type of outcome from the adverse event
+    /// Type of outcome from the adverse event.
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=220)]
     [Binding("AdverseEventOutcome")]
@@ -1245,7 +1245,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Outcome;
 
     /// <summary>
-    /// Who recorded the adverse event
+    /// Who recorded the adverse event.
     /// </summary>
     [FhirElement("recorder", InSummary=true, Order=230, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Recorder;
 
     /// <summary>
-    /// Who was involved in the adverse event or the potential adverse event and what they did
+    /// Who was involved in the adverse event or the potential adverse event and what they did.
     /// </summary>
     [FhirElement("participant", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// Research study that the subject is enrolled in
+    /// Research study that the subject is enrolled in.
     /// </summary>
     [FhirElement("study", InSummary=true, Order=250)]
     [CLSCompliant(false)]
@@ -1290,7 +1290,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Study;
 
     /// <summary>
-    /// Considered likely or probable or anticipated in the research study
+    /// Considered likely or probable or anticipated in the research study.
     /// </summary>
     [FhirElement("expectedInResearchStudy", Order=260)]
     [DataMember]
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The suspected agent causing the adverse event
+    /// The suspected agent causing the adverse event.
     /// </summary>
     [FhirElement("suspectEntity", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -1335,7 +1335,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> _SuspectEntity;
 
     /// <summary>
-    /// Contributing factors suspected to have increased the probability or severity of the adverse event
+    /// Contributing factors suspected to have increased the probability or severity of the adverse event.
     /// </summary>
     [FhirElement("contributingFactor", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
@@ -1349,7 +1349,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent> _ContributingFactor;
 
     /// <summary>
-    /// Preventive actions that contributed to avoiding the adverse event
+    /// Preventive actions that contributed to avoiding the adverse event.
     /// </summary>
     [FhirElement("preventiveAction", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -1363,7 +1363,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent> _PreventiveAction;
 
     /// <summary>
-    /// Ameliorating actions taken after the adverse event occured in order to reduce the extent of harm
+    /// Ameliorating actions taken after the adverse event occured in order to reduce the extent of harm.
     /// </summary>
     [FhirElement("mitigatingAction", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -1377,7 +1377,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent> _MitigatingAction;
 
     /// <summary>
-    /// Supporting information relevant to the event
+    /// Supporting information relevant to the event.
     /// </summary>
     [FhirElement("supportingInfo", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
@@ -1391,7 +1391,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent> _SupportingInfo;
 
     /// <summary>
-    /// Comment on adverse event
+    /// Comment on adverse event.
     /// </summary>
     [FhirElement("note", InSummary=true, Order=320)]
     [Cardinality(Min=0,Max=-1)]

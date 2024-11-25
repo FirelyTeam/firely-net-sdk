@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ProcedureRequest.requester"; } }
 
       /// <summary>
-      /// Individual making the request
+      /// Individual making the request.
       /// </summary>
       [FhirElement("agent", InSummary=true, Order=40, FiveWs="who.author")]
       [CLSCompliant(false)]
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Agent;
 
       /// <summary>
-      /// Organization agent is acting for
+      /// Organization agent is acting for.
       /// </summary>
       [FhirElement("onBehalfOf", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifiers assigned to this order
+    /// Identifiers assigned to this order.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Protocol or definition
+    /// Protocol or definition.
     /// </summary>
     [FhirElement("definition", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Definition;
 
     /// <summary>
-    /// What request fulfills
+    /// What request fulfills.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// What request replaces
+    /// What request replaces.
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
 
     /// <summary>
-    /// Composite Request ID
+    /// Composite Request ID.
     /// </summary>
     [FhirElement("requisition", InSummary=true, Order=130)]
     [DataMember]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Requisition;
 
     /// <summary>
-    /// draft | active | suspended | completed | entered-in-error | cancelled
+    /// draft | active | suspended | completed | entered-in-error | cancelled.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// proposal | plan | order +
+    /// proposal | plan | order +.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// routine | urgent | asap | stat
+    /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// True if procedure should not be performed
+    /// True if procedure should not be performed.
     /// </summary>
     [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=170)]
     [DataMember]
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Classification of procedure
+    /// Classification of procedure.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=180, FiveWs="class")]
     [Binding("ProcedureRequestCategory")]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// What is being requested/ordered
+    /// What is being requested/ordered.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=190, FiveWs="what")]
     [Binding("ProcedureRequestCode")]
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Individual the service is ordered for
+    /// Individual the service is ordered for.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=200, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter or Episode during which request was created
+    /// Encounter or Episode during which request was created.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=210, FiveWs="context")]
     [CLSCompliant(false)]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// When procedure should occur
+    /// When procedure should occur.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Preconditions for procedure or diagnostic
+    /// Preconditions for procedure or diagnostic.
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
     [Binding("ProcedureAsNeededReason")]
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _AsNeeded;
 
     /// <summary>
-    /// Date request signed
+    /// Date request signed.
     /// </summary>
     [FhirElement("authoredOn", InSummary=true, Order=240, FiveWs="when.recorded")]
     [DataMember]
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who/what is requesting procedure or diagnostic
+    /// Who/what is requesting procedure or diagnostic.
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=250)]
     [DataMember]
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ProcedureRequest.RequesterComponent _Requester;
 
     /// <summary>
-    /// Performer role
+    /// Performer role.
     /// </summary>
     [FhirElement("performerType", InSummary=true, Order=260, FiveWs="who.actor")]
     [Binding("ProcedureRequestParticipantRole")]
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _PerformerType;
 
     /// <summary>
-    /// Requested perfomer
+    /// Requested perfomer.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=270, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Performer;
 
     /// <summary>
-    /// Explanation/Justification for test
+    /// Explanation/Justification for test.
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=280, FiveWs="why")]
     [Binding("ProcedureRequestReason")]
@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Explanation/Justification for test
+    /// Explanation/Justification for test.
     /// </summary>
     [FhirElement("reasonReference", InSummary=true, Order=290, FiveWs="why")]
     [CLSCompliant(false)]
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// Additional clinical information
+    /// Additional clinical information.
     /// </summary>
     [FhirElement("supportingInfo", Order=300)]
     [CLSCompliant(false)]
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInfo;
 
     /// <summary>
-    /// Procedure Samples
+    /// Procedure Samples.
     /// </summary>
     [FhirElement("specimen", InSummary=true, Order=310)]
     [CLSCompliant(false)]
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
 
     /// <summary>
-    /// Location on Body
+    /// Location on Body.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=320)]
     [Binding("BodySite")]
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
 
     /// <summary>
-    /// Comments
+    /// Comments.
     /// </summary>
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Request provenance
+    /// Request provenance.
     /// </summary>
     [FhirElement("relevantHistory", Order=340)]
     [CLSCompliant(false)]

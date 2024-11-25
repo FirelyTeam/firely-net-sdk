@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Observation.triggeredBy"; } }
 
       /// <summary>
-      /// Triggering observation
+      /// Triggering observation.
       /// </summary>
       [FhirElement("observation", InSummary=true, Order=40)]
       [CLSCompliant(false)]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Observation;
 
       /// <summary>
-      /// reflex | repeat | re-run
+      /// reflex | repeat | re-run.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reason that the observation was triggered
+      /// Reason that the observation was triggered.
       /// </summary>
       [FhirElement("reason", Order=60)]
       [DataMember]
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Observation.referenceRange"; } }
 
       /// <summary>
-      /// Low Range, if relevant
+      /// Low Range, if relevant.
       /// </summary>
       [FhirElement("low", Order=40)]
       [DataMember]
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Low;
 
       /// <summary>
-      /// High Range, if relevant
+      /// High Range, if relevant.
       /// </summary>
       [FhirElement("high", Order=50)]
       [DataMember]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _High;
 
       /// <summary>
-      /// Normal value, if relevant
+      /// Normal value, if relevant.
       /// </summary>
       [FhirElement("normalValue", Order=60)]
       [Binding("ObservationReferenceRangeNormalValue")]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _NormalValue;
 
       /// <summary>
-      /// Reference range qualifier
+      /// Reference range qualifier.
       /// </summary>
       [FhirElement("type", Order=70)]
       [Binding("ObservationRangeMeaning")]
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Reference range population
+      /// Reference range population.
       /// </summary>
       [FhirElement("appliesTo", Order=80)]
       [Binding("ObservationRangeType")]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _AppliesTo;
 
       /// <summary>
-      /// Applicable age range, if relevant
+      /// Applicable age range, if relevant.
       /// </summary>
       [FhirElement("age", Order=90)]
       [DataMember]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Range _Age;
 
       /// <summary>
-      /// Text based reference range in an observation
+      /// Text based reference range in an observation.
       /// </summary>
       [FhirElement("text", Order=100)]
       [DataMember]
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Observation.component"; } }
 
       /// <summary>
-      /// Type of component observation (code / type)
+      /// Type of component observation (code / type).
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("ObservationCode")]
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Actual component result
+      /// Actual component result.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Value;
 
       /// <summary>
-      /// Why the component result is missing
+      /// Why the component result is missing.
       /// </summary>
       [FhirElement("dataAbsentReason", Order=60)]
       [Binding("ObservationValueAbsentReason")]
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
 
       /// <summary>
-      /// High, low, normal, etc
+      /// High, low, normal, etc.
       /// </summary>
       [FhirElement("interpretation", Order=70)]
       [Binding("ObservationInterpretation")]
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Interpretation;
 
       /// <summary>
-      /// Provides guide for interpretation of component result
+      /// Provides guide for interpretation of component result.
       /// </summary>
       [FhirElement("referenceRange", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for observation
+    /// Business Identifier for observation.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Instantiates FHIR ObservationDefinition
+    /// Instantiates FHIR ObservationDefinition.
     /// </summary>
     [FhirElement("instantiates", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Instantiates;
 
     /// <summary>
-    /// Fulfills plan, proposal or order
+    /// Fulfills plan, proposal or order.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Triggering observation(s)
+    /// Triggering observation(s).
     /// </summary>
     [FhirElement("triggeredBy", Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Observation.TriggeredByComponent> _TriggeredBy;
 
     /// <summary>
-    /// Part of referenced event
+    /// Part of referenced event.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// registered | preliminary | final | amended +
+    /// registered | preliminary | final | amended +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Classification of  type of observation
+    /// Classification of  type of observation.
     /// </summary>
     [FhirElement("category", Order=150, FiveWs="FiveWs.class")]
     [Binding("ObservationCategory")]
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Type of observation (code / type)
+    /// Type of observation (code / type).
     /// </summary>
     [FhirElement("code", InSummary=true, Order=160, FiveWs="FiveWs.what[x]")]
     [Binding("ObservationCode")]
@@ -895,7 +895,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Who and/or what the observation is about
+    /// Who and/or what the observation is about.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=170, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// What the observation is about, when it is not about the subject of record
+    /// What the observation is about, when it is not about the subject of record.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=180, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -926,7 +926,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Focus;
 
     /// <summary>
-    /// Healthcare event during which this observation is made
+    /// Healthcare event during which this observation is made.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=190, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Clinically relevant time/time-period for observation
+    /// Clinically relevant time/time-period for observation.
     /// </summary>
     [FhirElement("effective", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Effective;
 
     /// <summary>
-    /// Date/Time this version was made available
+    /// Date/Time this version was made available.
     /// </summary>
     [FhirElement("issued", InSummary=true, Order=210, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who is responsible for the observation
+    /// Who is responsible for the observation.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=220, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Performer;
 
     /// <summary>
-    /// Actual result
+    /// Actual result.
     /// </summary>
     [FhirElement("value", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Value;
 
     /// <summary>
-    /// Why the result is missing
+    /// Why the result is missing.
     /// </summary>
     [FhirElement("dataAbsentReason", Order=240)]
     [Binding("ObservationValueAbsentReason")]
@@ -1033,7 +1033,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
 
     /// <summary>
-    /// High, low, normal, etc
+    /// High, low, normal, etc.
     /// </summary>
     [FhirElement("interpretation", Order=250)]
     [Binding("ObservationInterpretation")]
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Interpretation;
 
     /// <summary>
-    /// Comments about the observation
+    /// Comments about the observation.
     /// </summary>
     [FhirElement("note", Order=260)]
     [Cardinality(Min=0,Max=-1)]
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Observed body part
+    /// Observed body part.
     /// </summary>
     [FhirElement("bodySite", Order=270)]
     [Binding("BodySite")]
@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BodySite;
 
     /// <summary>
-    /// Observed body structure
+    /// Observed body structure.
     /// </summary>
     [FhirElement("bodyStructure", Order=280)]
     [CLSCompliant(false)]
@@ -1091,7 +1091,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _BodyStructure;
 
     /// <summary>
-    /// How it was done
+    /// How it was done.
     /// </summary>
     [FhirElement("method", Order=290)]
     [Binding("ObservationMethod")]
@@ -1105,7 +1105,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Method;
 
     /// <summary>
-    /// Specimen used for this observation
+    /// Specimen used for this observation.
     /// </summary>
     [FhirElement("specimen", Order=300)]
     [CLSCompliant(false)]
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Specimen;
 
     /// <summary>
-    /// A reference to the device that generates the measurements or the device settings for the device
+    /// A reference to the device that generates the measurements or the device settings for the device.
     /// </summary>
     [FhirElement("device", Order=310)]
     [CLSCompliant(false)]
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// Provides guide for interpretation
+    /// Provides guide for interpretation.
     /// </summary>
     [FhirElement("referenceRange", Order=320)]
     [Cardinality(Min=0,Max=-1)]
@@ -1149,7 +1149,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> _ReferenceRange;
 
     /// <summary>
-    /// Related resource that belongs to the Observation group
+    /// Related resource that belongs to the Observation group.
     /// </summary>
     [FhirElement("hasMember", InSummary=true, Order=330)]
     [CLSCompliant(false)]
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _HasMember;
 
     /// <summary>
-    /// Related resource from which the observation is made
+    /// Related resource from which the observation is made.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=340)]
     [CLSCompliant(false)]
@@ -1181,7 +1181,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
 
     /// <summary>
-    /// Component results
+    /// Component results.
     /// </summary>
     [FhirElement("component", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]

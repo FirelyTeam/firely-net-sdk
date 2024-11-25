@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "MedicinalProductUndesirableEffect"; } }
 
     /// <summary>
-    /// The medication for which this is an indication
+    /// The medication for which this is an indication.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Subject;
 
     /// <summary>
-    /// The symptom, condition or undesirable effect
+    /// The symptom, condition or undesirable effect.
     /// </summary>
     [FhirElement("symptomConditionEffect", InSummary=true, Order=100)]
     [DataMember]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _SymptomConditionEffect;
 
     /// <summary>
-    /// Classification of the effect
+    /// Classification of the effect.
     /// </summary>
     [FhirElement("classification", InSummary=true, Order=110)]
     [DataMember]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Classification;
 
     /// <summary>
-    /// The frequency of occurrence of the effect
+    /// The frequency of occurrence of the effect.
     /// </summary>
     [FhirElement("frequencyOfOccurrence", InSummary=true, Order=120)]
     [DataMember]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _FrequencyOfOccurrence;
 
     /// <summary>
-    /// The population group to which this applies
+    /// The population group to which this applies.
     /// </summary>
     [FhirElement("population", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]

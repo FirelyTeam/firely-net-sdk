@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Immunization.performer"; } }
 
       /// <summary>
-      /// What type of performance was done
+      /// What type of performance was done.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("ImmunizationFunction")]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Individual or organization who was performing
+      /// Individual or organization who was performing.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Immunization.programEligibility"; } }
 
       /// <summary>
-      /// The program that eligibility is declared for
+      /// The program that eligibility is declared for.
       /// </summary>
       [FhirElement("program", Order=40)]
       [Binding("VaccineFundingProgram")]
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Program;
 
       /// <summary>
-      /// The patient's eligibility status for the program
+      /// The patient's eligibility status for the program.
       /// </summary>
       [FhirElement("programStatus", Order=50)]
       [Binding("ProgramEligibility")]
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Immunization.reaction"; } }
 
       /// <summary>
-      /// When reaction started
+      /// When reaction started.
       /// </summary>
       [FhirElement("date", Order=40)]
       [DataMember]
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additional information on reaction
+      /// Additional information on reaction.
       /// </summary>
       [FhirElement("manifestation", Order=50)]
       [DataMember]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableReference _Manifestation;
 
       /// <summary>
-      /// Indicates self-reported reaction
+      /// Indicates self-reported reaction.
       /// </summary>
       [FhirElement("reported", Order=60)]
       [DataMember]
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Immunization.protocolApplied"; } }
 
       /// <summary>
-      /// Name of vaccine series
+      /// Name of vaccine series.
       /// </summary>
       [FhirElement("series", Order=40)]
       [DataMember]
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Who is responsible for publishing the recommendations
+      /// Who is responsible for publishing the recommendations.
       /// </summary>
       [FhirElement("authority", Order=50)]
       [CLSCompliant(false)]
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Authority;
 
       /// <summary>
-      /// Vaccine preventatable disease being targeted
+      /// Vaccine preventatable disease being targeted.
       /// </summary>
       [FhirElement("targetDisease", Order=60)]
       [Binding("TargetDisease")]
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
 
       /// <summary>
-      /// Dose number within series
+      /// Dose number within series.
       /// </summary>
       [FhirElement("doseNumber", Order=70)]
       [Cardinality(Min=1,Max=1)]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recommended number of doses for immunity
+      /// Recommended number of doses for immunity.
       /// </summary>
       [FhirElement("seriesDoses", Order=80)]
       [DataMember]
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Authority that the immunization event is based on
+    /// Authority that the immunization event is based on.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// completed | entered-in-error | not-done
+    /// completed | entered-in-error | not-done.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason for current status
+    /// Reason for current status.
     /// </summary>
     [FhirElement("statusReason", Order=120)]
     [Binding("ImmunizationStatusReason")]
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _StatusReason;
 
     /// <summary>
-    /// Vaccine administered
+    /// Vaccine administered.
     /// </summary>
     [FhirElement("vaccineCode", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("VaccineCode")]
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _VaccineCode;
 
     /// <summary>
-    /// Product that was administered
+    /// Product that was administered.
     /// </summary>
     [FhirElement("administeredProduct", Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _AdministeredProduct;
 
     /// <summary>
-    /// Vaccine manufacturer
+    /// Vaccine manufacturer.
     /// </summary>
     [FhirElement("manufacturer", Order=150)]
     [DataMember]
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _Manufacturer;
 
     /// <summary>
-    /// Vaccine lot number
+    /// Vaccine lot number.
     /// </summary>
     [FhirElement("lotNumber", Order=160)]
     [DataMember]
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Vaccine expiration date
+    /// Vaccine expiration date.
     /// </summary>
     [FhirElement("expirationDate", Order=170)]
     [DataMember]
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who was immunized
+    /// Who was immunized.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=180, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -993,7 +993,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Encounter immunization was part of
+    /// Encounter immunization was part of.
     /// </summary>
     [FhirElement("encounter", Order=190, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Additional information in support of the immunization
+    /// Additional information in support of the immunization.
     /// </summary>
     [FhirElement("supportingInformation", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
 
     /// <summary>
-    /// Vaccine administration date
+    /// Vaccine administration date.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -1040,7 +1040,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Indicates context the data was captured in
+    /// Indicates context the data was captured in.
     /// </summary>
     [FhirElement("primarySource", InSummary=true, Order=220, FiveWs="FiveWs.source")]
     [DataMember]
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Indicates the source of a  reported record
+    /// Indicates the source of a  reported record.
     /// </summary>
     [FhirElement("informationSource", Order=230, FiveWs="FiveWs.source")]
     [Binding("ImmunizationReportOrigin")]
@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _InformationSource;
 
     /// <summary>
-    /// Where immunization occurred
+    /// Where immunization occurred.
     /// </summary>
     [FhirElement("location", Order=240, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Body site vaccine  was administered
+    /// Body site vaccine  was administered.
     /// </summary>
     [FhirElement("site", Order=250)]
     [Binding("ImmunizationSite")]
@@ -1114,7 +1114,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Site;
 
     /// <summary>
-    /// How vaccine entered body
+    /// How vaccine entered body.
     /// </summary>
     [FhirElement("route", Order=260)]
     [Binding("ImmunizationRoute")]
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Route;
 
     /// <summary>
-    /// Amount of vaccine administered
+    /// Amount of vaccine administered.
     /// </summary>
     [FhirElement("doseQuantity", Order=270)]
     [DataMember]
@@ -1141,7 +1141,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _DoseQuantity;
 
     /// <summary>
-    /// Who performed event
+    /// Who performed event.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
@@ -1155,7 +1155,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Immunization.PerformerComponent> _Performer;
 
     /// <summary>
-    /// Additional immunization notes
+    /// Additional immunization notes.
     /// </summary>
     [FhirElement("note", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -1169,7 +1169,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Why immunization occurred
+    /// Why immunization occurred.
     /// </summary>
     [FhirElement("reason", Order=300)]
     [Binding("ImmunizationReason")]
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Reason;
 
     /// <summary>
-    /// Dose potency
+    /// Dose potency.
     /// </summary>
     [FhirElement("isSubpotent", InSummary=true, IsModifier=true, Order=310)]
     [DataMember]
@@ -1215,7 +1215,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason for being subpotent
+    /// Reason for being subpotent.
     /// </summary>
     [FhirElement("subpotentReason", Order=320)]
     [Binding("SubpotentReason")]
@@ -1230,7 +1230,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _SubpotentReason;
 
     /// <summary>
-    /// Patient eligibility for a specific vaccination program
+    /// Patient eligibility for a specific vaccination program.
     /// </summary>
     [FhirElement("programEligibility", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -1244,7 +1244,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Immunization.ProgramEligibilityComponent> _ProgramEligibility;
 
     /// <summary>
-    /// Funding source for the vaccine
+    /// Funding source for the vaccine.
     /// </summary>
     [FhirElement("fundingSource", Order=340)]
     [Binding("FundingSource")]
@@ -1258,7 +1258,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _FundingSource;
 
     /// <summary>
-    /// Details of a reaction that follows immunization
+    /// Details of a reaction that follows immunization.
     /// </summary>
     [FhirElement("reaction", Order=350)]
     [Cardinality(Min=0,Max=-1)]
@@ -1272,7 +1272,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Immunization.ReactionComponent> _Reaction;
 
     /// <summary>
-    /// Protocol followed by the provider
+    /// Protocol followed by the provider.
     /// </summary>
     [FhirElement("protocolApplied", Order=360)]
     [Cardinality(Min=0,Max=-1)]

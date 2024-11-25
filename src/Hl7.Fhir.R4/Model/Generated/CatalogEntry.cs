@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CatalogEntry.relatedEntry"; } }
 
       /// <summary>
-      /// triggers | is-replaced-by
+      /// triggers | is-replaced-by.
       /// </summary>
       [FhirElement("relationtype", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The reference to the related item
+      /// The reference to the related item.
       /// </summary>
       [FhirElement("item", Order=50)]
       [CLSCompliant(false)]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier of the catalog item
+    /// Unique identifier of the catalog item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// The type of item - medication, device, service, protocol or other
+    /// The type of item - medication, device, service, protocol or other.
     /// </summary>
     [FhirElement("type", Order=100)]
     [DataMember]
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Whether the entry represents an orderable item
+    /// Whether the entry represents an orderable item.
     /// </summary>
     [FhirElement("orderable", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The item that is being defined
+    /// The item that is being defined.
     /// </summary>
     [FhirElement("referencedItem", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ReferencedItem;
 
     /// <summary>
-    /// Any additional identifier(s) for the catalog item, in the same granularity or concept
+    /// Any additional identifier(s) for the catalog item, in the same granularity or concept.
     /// </summary>
     [FhirElement("additionalIdentifier", Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _AdditionalIdentifier;
 
     /// <summary>
-    /// Classification (category or class) of the item entry
+    /// Classification (category or class) of the item entry.
     /// </summary>
     [FhirElement("classification", Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Classification;
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The time period in which this catalog entry is expected to be active
+    /// The time period in which this catalog entry is expected to be active.
     /// </summary>
     [FhirElement("validityPeriod", Order=160)]
     [DataMember]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _ValidityPeriod;
 
     /// <summary>
-    /// The date until which this catalog entry is expected to be active
+    /// The date until which this catalog entry is expected to be active.
     /// </summary>
     [FhirElement("validTo", Order=170)]
     [DataMember]
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When was this catalog last updated
+    /// When was this catalog last updated.
     /// </summary>
     [FhirElement("lastUpdated", Order=180)]
     [DataMember]
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional characteristics of the catalog entry
+    /// Additional characteristics of the catalog entry.
     /// </summary>
     [FhirElement("additionalCharacteristic", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _AdditionalCharacteristic;
 
     /// <summary>
-    /// Additional classification of the catalog entry
+    /// Additional classification of the catalog entry.
     /// </summary>
     [FhirElement("additionalClassification", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _AdditionalClassification;
 
     /// <summary>
-    /// An item that this catalog entry is related to
+    /// An item that this catalog entry is related to.
     /// </summary>
     [FhirElement("relatedEntry", Order=210)]
     [Cardinality(Min=0,Max=-1)]

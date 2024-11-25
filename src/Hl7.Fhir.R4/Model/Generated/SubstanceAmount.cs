@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceAmount.referenceRange"; } }
 
       /// <summary>
-      /// Lower limit possible or expected
+      /// Lower limit possible or expected.
       /// </summary>
       [FhirElement("lowLimit", InSummary=true, Order=30)]
       [DataMember]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _LowLimit;
 
       /// <summary>
-      /// Upper limit possible or expected
+      /// Upper limit possible or expected.
       /// </summary>
       [FhirElement("highLimit", InSummary=true, Order=40)]
       [DataMember]
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
+    /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field.
     /// </summary>
     [FhirElement("amount", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Amount;
 
     /// <summary>
-    /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements
+    /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements.
     /// </summary>
     [FhirElement("amountType", InSummary=true, Order=50)]
     [DataMember]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _AmountType;
 
     /// <summary>
-    /// A textual comment on a numeric value
+    /// A textual comment on a numeric value.
     /// </summary>
     [FhirElement("amountText", InSummary=true, Order=60)]
     [DataMember]
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reference range of possible or expected values
+    /// Reference range of possible or expected values.
     /// </summary>
     [FhirElement("referenceRange", InSummary=true, Order=70)]
     [DataMember]

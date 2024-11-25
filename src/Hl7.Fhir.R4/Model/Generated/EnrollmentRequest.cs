@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "EnrollmentRequest"; } }
 
     /// <summary>
-    /// Business Identifier
+    /// Business Identifier.
     /// </summary>
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Creation date
+    /// Creation date.
     /// </summary>
     [FhirElement("created", Order=110)]
     [DataMember]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Target
+    /// Target.
     /// </summary>
     [FhirElement("insurer", Order=120)]
     [CLSCompliant(false)]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Insurer;
 
     /// <summary>
-    /// Responsible practitioner
+    /// Responsible practitioner.
     /// </summary>
     [FhirElement("provider", Order=130, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Provider;
 
     /// <summary>
-    /// The subject to be enrolled
+    /// The subject to be enrolled.
     /// </summary>
     [FhirElement("candidate", Order=140, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Candidate;
 
     /// <summary>
-    /// Insurance information
+    /// Insurance information.
     /// </summary>
     [FhirElement("coverage", Order=150)]
     [CLSCompliant(false)]

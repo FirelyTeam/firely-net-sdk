@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
+    /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name or URI that identifies the event
+    /// Name or URI that identifies the event.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Coded definition of the event
+    /// Coded definition of the event.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
     [DataMember]
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// What event
+    /// What event.
     /// </summary>
     [FhirElement("subscriptionTopic", InSummary=true, Order=60)]
     [DataMember]
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Timing of the event
+    /// Timing of the event.
     /// </summary>
     [FhirElement("timing", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Timing;
 
     /// <summary>
-    /// Triggering data of the event (multiple = 'and')
+    /// Triggering data of the event (multiple = 'and').
     /// </summary>
     [FhirElement("data", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DataRequirement> _Data;
 
     /// <summary>
-    /// Whether the event triggers (boolean expression)
+    /// Whether the event triggers (boolean expression).
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=90)]
     [DataMember]

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "EligibilityRequest"; } }
 
     /// <summary>
-    /// Business Identifier
+    /// Business Identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Desired processing priority
+    /// Desired processing priority.
     /// </summary>
     [FhirElement("priority", Order=110, FiveWs="class")]
     [Binding("ProcessPriority")]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Priority;
 
     /// <summary>
-    /// The subject of the Products and Services
+    /// The subject of the Products and Services.
     /// </summary>
     [FhirElement("patient", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Estimated date or dates of Service
+    /// Estimated date or dates of Service.
     /// </summary>
     [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Serviced;
 
     /// <summary>
-    /// Creation date
+    /// Creation date.
     /// </summary>
     [FhirElement("created", Order=140, FiveWs="when.recorded")]
     [DataMember]
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Author
+    /// Author.
     /// </summary>
     [FhirElement("enterer", Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Enterer;
 
     /// <summary>
-    /// Responsible practitioner
+    /// Responsible practitioner.
     /// </summary>
     [FhirElement("provider", Order=160, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Provider;
 
     /// <summary>
-    /// Responsible organization
+    /// Responsible organization.
     /// </summary>
     [FhirElement("organization", Order=170, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Target
+    /// Target.
     /// </summary>
     [FhirElement("insurer", Order=180, FiveWs="who")]
     [CLSCompliant(false)]
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Insurer;
 
     /// <summary>
-    /// Servicing Facility
+    /// Servicing Facility.
     /// </summary>
     [FhirElement("facility", Order=190, FiveWs="where")]
     [CLSCompliant(false)]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Facility;
 
     /// <summary>
-    /// Insurance or medical plan
+    /// Insurance or medical plan.
     /// </summary>
     [FhirElement("coverage", Order=200)]
     [CLSCompliant(false)]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Coverage;
 
     /// <summary>
-    /// Business agreement
+    /// Business agreement.
     /// </summary>
     [FhirElement("businessArrangement", Order=210)]
     [DataMember]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of services covered
+    /// Type of services covered.
     /// </summary>
     [FhirElement("benefitCategory", Order=220)]
     [Binding("BenefitCategory")]
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BenefitCategory;
 
     /// <summary>
-    /// Detailed services covered within the type
+    /// Detailed services covered within the type.
     /// </summary>
     [FhirElement("benefitSubCategory", Order=230)]
     [Binding("BenefitSubCategory")]

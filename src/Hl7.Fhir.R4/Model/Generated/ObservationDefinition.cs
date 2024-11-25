@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ObservationDefinition.quantitativeDetails"; } }
 
       /// <summary>
-      /// Customary unit for quantitative results
+      /// Customary unit for quantitative results.
       /// </summary>
       [FhirElement("customaryUnit", Order=40)]
       [Binding("ObservationUnit")]
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _CustomaryUnit;
 
       /// <summary>
-      /// SI unit for quantitative results
+      /// SI unit for quantitative results.
       /// </summary>
       [FhirElement("unit", Order=50)]
       [Binding("ObservationUnit")]
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Unit;
 
       /// <summary>
-      /// SI to Customary unit conversion factor
+      /// SI to Customary unit conversion factor.
       /// </summary>
       [FhirElement("conversionFactor", Order=60)]
       [DataMember]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Decimal precision of observation quantitative results
+      /// Decimal precision of observation quantitative results.
       /// </summary>
       [FhirElement("decimalPrecision", Order=70)]
       [DataMember]
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ObservationDefinition.qualifiedInterval"; } }
 
       /// <summary>
-      /// reference | critical | absolute
+      /// reference | critical | absolute.
       /// </summary>
       [FhirElement("category", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The interval itself, for continuous or ordinal observations
+      /// The interval itself, for continuous or ordinal observations.
       /// </summary>
       [FhirElement("range", Order=50)]
       [DataMember]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Range _Range;
 
       /// <summary>
-      /// Range context qualifier
+      /// Range context qualifier.
       /// </summary>
       [FhirElement("context", Order=60)]
       [Binding("ObservationRangeMeaning")]
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Context;
 
       /// <summary>
-      /// Targetted population of the range
+      /// Targetted population of the range.
       /// </summary>
       [FhirElement("appliesTo", Order=70)]
       [Binding("ObservationRangeAppliesTo")]
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _AppliesTo;
 
       /// <summary>
-      /// male | female | other | unknown
+      /// male | female | other | unknown.
       /// </summary>
       [FhirElement("gender", Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applicable age range, if relevant
+      /// Applicable age range, if relevant.
       /// </summary>
       [FhirElement("age", Order=90)]
       [DataMember]
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Range _Age;
 
       /// <summary>
-      /// Applicable gestational age range, if relevant
+      /// Applicable gestational age range, if relevant.
       /// </summary>
       [FhirElement("gestationalAge", Order=100)]
       [DataMember]
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Range _GestationalAge;
 
       /// <summary>
-      /// Condition associated with the reference range
+      /// Condition associated with the reference range.
       /// </summary>
       [FhirElement("condition", Order=110)]
       [DataMember]
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Category of observation
+    /// Category of observation.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Binding("ObservationCategory")]
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Type of observation (code / type)
+    /// Type of observation (code / type).
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Binding("ObservationCode")]
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Business identifier for this ObservationDefinition instance
+    /// Business identifier for this ObservationDefinition instance.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -748,7 +748,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
+    /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period.
     /// </summary>
     [FhirElement("permittedDataType", Order=120)]
     [DeclaredType(Type = typeof(Code))]
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Multiple results allowed
+    /// Multiple results allowed.
     /// </summary>
     [FhirElement("multipleResultsAllowed", Order=130)]
     [DataMember]
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Method used to produce the observation
+    /// Method used to produce the observation.
     /// </summary>
     [FhirElement("method", Order=140)]
     [Binding("ObservationMethod")]
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Method;
 
     /// <summary>
-    /// Preferred report name
+    /// Preferred report name.
     /// </summary>
     [FhirElement("preferredReportName", Order=150)]
     [DataMember]
@@ -858,7 +858,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Characteristics of quantitative results
+    /// Characteristics of quantitative results.
     /// </summary>
     [FhirElement("quantitativeDetails", Order=160)]
     [DataMember]
@@ -871,7 +871,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent _QuantitativeDetails;
 
     /// <summary>
-    /// Qualified range for continuous and ordinal observation results
+    /// Qualified range for continuous and ordinal observation results.
     /// </summary>
     [FhirElement("qualifiedInterval", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -885,7 +885,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent> _QualifiedInterval;
 
     /// <summary>
-    /// Value set of valid coded values for the observations conforming to this ObservationDefinition
+    /// Value set of valid coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
     [FhirElement("validCodedValueSet", Order=180)]
     [CLSCompliant(false)]
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ValidCodedValueSet;
 
     /// <summary>
-    /// Value set of normal coded values for the observations conforming to this ObservationDefinition
+    /// Value set of normal coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
     [FhirElement("normalCodedValueSet", Order=190)]
     [CLSCompliant(false)]
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _NormalCodedValueSet;
 
     /// <summary>
-    /// Value set of abnormal coded values for the observations conforming to this ObservationDefinition
+    /// Value set of abnormal coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
     [FhirElement("abnormalCodedValueSet", Order=200)]
     [CLSCompliant(false)]
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _AbnormalCodedValueSet;
 
     /// <summary>
-    /// Value set of critical coded values for the observations conforming to this ObservationDefinition
+    /// Value set of critical coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
     [FhirElement("criticalCodedValueSet", Order=210)]
     [CLSCompliant(false)]

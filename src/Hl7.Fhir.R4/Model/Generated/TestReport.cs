@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.participant"; } }
 
       /// <summary>
-      /// test-engine | client | server
+      /// test-engine | client | server.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The uri of the participant. An absolute URL is preferred
+      /// The uri of the participant. An absolute URL is preferred.
       /// </summary>
       [FhirElement("uri", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The display name of the participant
+      /// The display name of the participant.
       /// </summary>
       [FhirElement("display", Order=60)]
       [DataMember]
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.setup"; } }
 
       /// <summary>
-      /// A setup operation or assert that was executed
+      /// A setup operation or assert that was executed.
       /// </summary>
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.setup.action"; } }
 
       /// <summary>
-      /// The operation to perform
+      /// The operation to perform.
       /// </summary>
       [FhirElement("operation", Order=40)]
       [DataMember]
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.TestReport.OperationComponent _Operation;
 
       /// <summary>
-      /// The assertion to perform
+      /// The assertion to perform.
       /// </summary>
       [FhirElement("assert", Order=50)]
       [DataMember]
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.setup.action.operation"; } }
 
       /// <summary>
-      /// pass | skip | fail | warning | error
+      /// pass | skip | fail | warning | error.
       /// </summary>
       [FhirElement("result", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A message associated with the result
+      /// A message associated with the result.
       /// </summary>
       [FhirElement("message", Order=50)]
       [DataMember]
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A link to further details on the result
+      /// A link to further details on the result.
       /// </summary>
       [FhirElement("detail", Order=60)]
       [DataMember]
@@ -858,7 +858,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.setup.action.assert"; } }
 
       /// <summary>
-      /// pass | skip | fail | warning | error
+      /// pass | skip | fail | warning | error.
       /// </summary>
       [FhirElement("result", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -892,7 +892,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A message associated with the result
+      /// A message associated with the result.
       /// </summary>
       [FhirElement("message", Order=50)]
       [DataMember]
@@ -923,7 +923,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A link to further details on the result
+      /// A link to further details on the result.
       /// </summary>
       [FhirElement("detail", Order=60)]
       [DataMember]
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.test"; } }
 
       /// <summary>
-      /// Tracking/logging name of this test
+      /// Tracking/logging name of this test.
       /// </summary>
       [FhirElement("name", Order=40)]
       [DataMember]
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Tracking/reporting short description of the test
+      /// Tracking/reporting short description of the test.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -1125,7 +1125,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A test operation or assert that was performed
+      /// A test operation or assert that was performed.
       /// </summary>
       [FhirElement("action", Order=60)]
       [Cardinality(Min=1,Max=-1)]
@@ -1252,7 +1252,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.test.action"; } }
 
       /// <summary>
-      /// The operation performed
+      /// The operation performed.
       /// </summary>
       [FhirElement("operation", Order=40)]
       [DataMember]
@@ -1265,7 +1265,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.TestReport.OperationComponent _Operation;
 
       /// <summary>
-      /// The assertion performed
+      /// The assertion performed.
       /// </summary>
       [FhirElement("assert", Order=50)]
       [DataMember]
@@ -1380,7 +1380,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.teardown"; } }
 
       /// <summary>
-      /// One or more teardown operations performed
+      /// One or more teardown operations performed.
       /// </summary>
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
@@ -1487,7 +1487,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestReport.teardown.action"; } }
 
       /// <summary>
-      /// The teardown operation performed
+      /// The teardown operation performed.
       /// </summary>
       [FhirElement("operation", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1577,7 +1577,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier
+    /// External identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -1590,7 +1590,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Informal name of the executed TestScript
+    /// Informal name of the executed TestScript.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=100)]
     [DataMember]
@@ -1621,7 +1621,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// completed | in-progress | waiting | stopped | entered-in-error
+    /// completed | in-progress | waiting | stopped | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reference to the  version-specific TestScript that was executed to produce this TestReport
+    /// Reference to the  version-specific TestScript that was executed to produce this TestReport.
     /// </summary>
     [FhirElement("testScript", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -1671,7 +1671,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _TestScript;
 
     /// <summary>
-    /// pass | fail | pending
+    /// pass | fail | pending.
     /// </summary>
     [FhirElement("result", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
@@ -1705,7 +1705,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The final score (percentage of tests passed) resulting from the execution of the TestScript
+    /// The final score (percentage of tests passed) resulting from the execution of the TestScript.
     /// </summary>
     [FhirElement("score", InSummary=true, Order=140)]
     [DataMember]
@@ -1736,7 +1736,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the tester producing this report (Organization or individual)
+    /// Name of the tester producing this report (Organization or individual).
     /// </summary>
     [FhirElement("tester", InSummary=true, Order=150)]
     [DataMember]
@@ -1767,7 +1767,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the TestScript was executed and this TestReport was generated
+    /// When the TestScript was executed and this TestReport was generated.
     /// </summary>
     [FhirElement("issued", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1798,7 +1798,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A participant in the test execution, either the execution engine, a client, or a server
+    /// A participant in the test execution, either the execution engine, a client, or a server.
     /// </summary>
     [FhirElement("participant", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -1812,7 +1812,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestReport.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// The results of the series of required setup operations before the tests were executed
+    /// The results of the series of required setup operations before the tests were executed.
     /// </summary>
     [FhirElement("setup", Order=180)]
     [DataMember]
@@ -1825,7 +1825,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TestReport.SetupComponent _Setup;
 
     /// <summary>
-    /// A test executed from the test script
+    /// A test executed from the test script.
     /// </summary>
     [FhirElement("test", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1839,7 +1839,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestReport.TestComponent> _Test;
 
     /// <summary>
-    /// The results of running the series of required clean up steps
+    /// The results of running the series of required clean up steps.
     /// </summary>
     [FhirElement("teardown", Order=200)]
     [DataMember]

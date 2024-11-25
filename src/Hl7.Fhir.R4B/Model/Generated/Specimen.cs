@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Specimen.collection"; } }
 
       /// <summary>
-      /// Who collected the specimen
+      /// Who collected the specimen.
       /// </summary>
       [FhirElement("collector", InSummary=true, Order=40, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Collector;
 
       /// <summary>
-      /// Collection time
+      /// Collection time.
       /// </summary>
       [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.init")]
       [CLSCompliant(false)]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Collected;
 
       /// <summary>
-      /// How long it took to collect specimen
+      /// How long it took to collect specimen.
       /// </summary>
       [FhirElement("duration", InSummary=true, Order=60, FiveWs="FiveWs.init")]
       [DataMember]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Duration _Duration;
 
       /// <summary>
-      /// The quantity of specimen collected
+      /// The quantity of specimen collected.
       /// </summary>
       [FhirElement("quantity", Order=70)]
       [DataMember]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Technique used to perform collection
+      /// Technique used to perform collection.
       /// </summary>
       [FhirElement("method", Order=80)]
       [Binding("SpecimenCollectionMethod")]
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Method;
 
       /// <summary>
-      /// Anatomical collection site
+      /// Anatomical collection site.
       /// </summary>
       [FhirElement("bodySite", Order=90)]
       [Binding("BodySite")]
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _BodySite;
 
       /// <summary>
-      /// Whether or how long patient abstained from food and/or drink
+      /// Whether or how long patient abstained from food and/or drink.
       /// </summary>
       [FhirElement("fastingStatus", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
       [Binding("FastingStatus")]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Specimen.processing"; } }
 
       /// <summary>
-      /// Textual description of procedure
+      /// Textual description of procedure.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Indicates the treatment step  applied to the specimen
+      /// Indicates the treatment step  applied to the specimen.
       /// </summary>
       [FhirElement("procedure", Order=50)]
       [Binding("SpecimenProcessingProcedure")]
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Procedure;
 
       /// <summary>
-      /// Material used in the processing step
+      /// Material used in the processing step.
       /// </summary>
       [FhirElement("additive", Order=60)]
       [CLSCompliant(false)]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Additive;
 
       /// <summary>
-      /// Date and time of specimen processing
+      /// Date and time of specimen processing.
       /// </summary>
       [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Specimen.container"; } }
 
       /// <summary>
-      /// Id for the container
+      /// Id for the container.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
       /// <summary>
-      /// Textual description of the container
+      /// Textual description of the container.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Kind of container directly associated with specimen
+      /// Kind of container directly associated with specimen.
       /// </summary>
       [FhirElement("type", Order=60)]
       [Binding("SpecimenContainerType")]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Container volume or size
+      /// Container volume or size.
       /// </summary>
       [FhirElement("capacity", Order=70)]
       [DataMember]
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Capacity;
 
       /// <summary>
-      /// Quantity of specimen within container
+      /// Quantity of specimen within container.
       /// </summary>
       [FhirElement("specimenQuantity", Order=80)]
       [DataMember]
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _SpecimenQuantity;
 
       /// <summary>
-      /// Additive associated with container
+      /// Additive associated with container.
       /// </summary>
       [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
       [Binding("SpecimenContainerAdditive")]
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Identifier
+    /// External Identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Identifier assigned by the lab
+    /// Identifier assigned by the lab.
     /// </summary>
     [FhirElement("accessionIdentifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _AccessionIdentifier;
 
     /// <summary>
-    /// available | unavailable | unsatisfactory | entered-in-error
+    /// available | unavailable | unsatisfactory | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of material that forms the specimen
+    /// Kind of material that forms the specimen.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Binding("SpecimenType")]
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device
+    /// Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The time when specimen was received for processing
+    /// The time when specimen was received for processing.
     /// </summary>
     [FhirElement("receivedTime", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Specimen from which this specimen originated
+    /// Specimen from which this specimen originated.
     /// </summary>
     [FhirElement("parent", Order=150)]
     [CLSCompliant(false)]
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Parent;
 
     /// <summary>
-    /// Why the specimen was collected
+    /// Why the specimen was collected.
     /// </summary>
     [FhirElement("request", Order=160, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -940,7 +940,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Request;
 
     /// <summary>
-    /// Collection details
+    /// Collection details.
     /// </summary>
     [FhirElement("collection", Order=170)]
     [DataMember]
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Specimen.CollectionComponent _Collection;
 
     /// <summary>
-    /// Processing and processing step details
+    /// Processing and processing step details.
     /// </summary>
     [FhirElement("processing", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -967,7 +967,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Specimen.ProcessingComponent> _Processing;
 
     /// <summary>
-    /// Direct container of specimen (tube/slide, etc.)
+    /// Direct container of specimen (tube/slide, etc.).
     /// </summary>
     [FhirElement("container", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -981,7 +981,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Specimen.ContainerComponent> _Container;
 
     /// <summary>
-    /// State of the specimen
+    /// State of the specimen.
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=200)]
     [Binding("SpecimenCondition")]
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Condition;
 
     /// <summary>
-    /// Comments
+    /// Comments.
     /// </summary>
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]

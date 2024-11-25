@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Range"; } }
 
     /// <summary>
-    /// Low limit
+    /// Low limit.
     /// </summary>
     [FhirElement("low", InSummary=true, Order=30)]
     [DataMember]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Low;
 
     /// <summary>
-    /// High limit
+    /// High limit.
     /// </summary>
     [FhirElement("high", InSummary=true, Order=40)]
     [DataMember]

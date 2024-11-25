@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryReport.inventoryListing"; } }
 
       /// <summary>
-      /// Location of the inventory items
+      /// Location of the inventory items.
       /// </summary>
       [FhirElement("location", Order=40)]
       [CLSCompliant(false)]
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Location;
 
       /// <summary>
-      /// The status of the items that are being reported
+      /// The status of the items that are being reported.
       /// </summary>
       [FhirElement("itemStatus", InSummary=true, Order=50)]
       [DataMember]
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ItemStatus;
 
       /// <summary>
-      /// The date and time when the items were counted
+      /// The date and time when the items were counted.
       /// </summary>
       [FhirElement("countingDateTime", Order=60)]
       [DataMember]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The item or items in this listing
+      /// The item or items in this listing.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryReport.inventoryListing.item"; } }
 
       /// <summary>
-      /// The inventory category or classification of the items being reported
+      /// The inventory category or classification of the items being reported.
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
       [DataMember]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// The quantity of the item or items being reported
+      /// The quantity of the item or items being reported.
       /// </summary>
       [FhirElement("quantity", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// The code or reference to the item type
+      /// The code or reference to the item type.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for the report
+    /// Business identifier for the report.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// draft | requested | active | entered-in-error
+    /// draft | requested | active | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// snapshot | difference
+    /// snapshot | difference.
     /// </summary>
     [FhirElement("countType", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// addition | subtraction
+    /// addition | subtraction.
     /// </summary>
     [FhirElement("operationType", InSummary=true, Order=120)]
     [DataMember]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _OperationType;
 
     /// <summary>
-    /// The reason for this count - regular count, ad-hoc count, new arrivals, etc
+    /// The reason for this count - regular count, ad-hoc count, new arrivals, etc.
     /// </summary>
     [FhirElement("operationTypeReason", InSummary=true, Order=130)]
     [DataMember]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _OperationTypeReason;
 
     /// <summary>
-    /// When the report has been submitted
+    /// When the report has been submitted.
     /// </summary>
     [FhirElement("reportedDateTime", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=1)]
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who submits the report
+    /// Who submits the report.
     /// </summary>
     [FhirElement("reporter", Order=150)]
     [CLSCompliant(false)]
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Reporter;
 
     /// <summary>
-    /// The period the report refers to
+    /// The period the report refers to.
     /// </summary>
     [FhirElement("reportingPeriod", Order=160)]
     [DataMember]
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _ReportingPeriod;
 
     /// <summary>
-    /// An inventory listing section (grouped by any of the attributes)
+    /// An inventory listing section (grouped by any of the attributes).
     /// </summary>
     [FhirElement("inventoryListing", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> _InventoryListing;
 
     /// <summary>
-    /// A note associated with the InventoryReport
+    /// A note associated with the InventoryReport.
     /// </summary>
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]

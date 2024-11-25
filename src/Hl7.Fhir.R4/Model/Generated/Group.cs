@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Group.characteristic"; } }
 
       /// <summary>
-      /// Kind of characteristic
+      /// Kind of characteristic.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Binding("GroupCharacteristicKind")]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Value held by characteristic
+      /// Value held by characteristic.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("GroupCharacteristicValue")]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Value;
 
       /// <summary>
-      /// Group includes or excludes
+      /// Group includes or excludes.
       /// </summary>
       [FhirElement("exclude", Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Period over which characteristic is tested
+      /// Period over which characteristic is tested.
       /// </summary>
       [FhirElement("period", Order=70)]
       [DataMember]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Group.member"; } }
 
       /// <summary>
-      /// Reference to the group member
+      /// Reference to the group member.
       /// </summary>
       [FhirElement("entity", Order=40)]
       [CLSCompliant(false)]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Entity;
 
       /// <summary>
-      /// Period member belonged to the group
+      /// Period member belonged to the group.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// If member is no longer in group
+      /// If member is no longer in group.
       /// </summary>
       [FhirElement("inactive", Order=60)]
       [DataMember]
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique id
+    /// Unique id.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this group's record is in active use
+    /// Whether this group's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// person | animal | practitioner | device | medication | substance
+    /// person | animal | practitioner | device | medication | substance.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Descriptive or actual
+    /// Descriptive or actual.
     /// </summary>
     [FhirElement("actual", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of Group members
+    /// Kind of Group members.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("GroupKind")]
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Label for Group
+    /// Label for Group.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=140)]
     [DataMember]
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Number of members
+    /// Number of members.
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=150)]
     [DataMember]
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Entity that is the custodian of the Group's definition
+    /// Entity that is the custodian of the Group's definition.
     /// </summary>
     [FhirElement("managingEntity", InSummary=true, Order=160)]
     [CLSCompliant(false)]
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ManagingEntity;
 
     /// <summary>
-    /// Include / Exclude group members by Trait
+    /// Include / Exclude group members by Trait.
     /// </summary>
     [FhirElement("characteristic", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Group.CharacteristicComponent> _Characteristic;
 
     /// <summary>
-    /// Who or what is in group
+    /// Who or what is in group.
     /// </summary>
     [FhirElement("member", Order=180)]
     [Cardinality(Min=0,Max=-1)]

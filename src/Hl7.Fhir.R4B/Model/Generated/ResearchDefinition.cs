@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ResearchDefinition"; } }
 
     /// <summary>
-    /// Canonical identifier for this research definition, represented as a URI (globally unique)
+    /// Canonical identifier for this research definition, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the research definition
+    /// Additional identifier for the research definition.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the research definition
+    /// Business version of the research definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this research definition (computer friendly)
+    /// Name for this research definition (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this research definition (human friendly)
+    /// Name for this research definition (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Title for use in informal contexts
+    /// Title for use in informal contexts.
     /// </summary>
     [FhirElement("shortTitle", Order=140)]
     [DataMember]
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Subordinate title of the ResearchDefinition
+    /// Subordinate title of the ResearchDefinition.
     /// </summary>
     [FhirElement("subtitle", Order=150)]
     [DataMember]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+    /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device.
     /// </summary>
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Subject;
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=200, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the research definition
+    /// Natural language description of the research definition.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Used for footnotes or explanatory notes
+    /// Used for footnotes or explanatory notes.
     /// </summary>
     [FhirElement("comment", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for research definition (if applicable)
+    /// Intended jurisdiction for research definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this research definition is defined
+    /// Why this research definition is defined.
     /// </summary>
     [FhirElement("purpose", Order=260, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Describes the clinical usage of the ResearchDefinition
+    /// Describes the clinical usage of the ResearchDefinition.
     /// </summary>
     [FhirElement("usage", Order=270)]
     [DataMember]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=280)]
     [DataMember]
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the research definition was approved by publisher
+    /// When the research definition was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=290)]
     [DataMember]
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the research definition was last reviewed
+    /// When the research definition was last reviewed.
     /// </summary>
     [FhirElement("lastReviewDate", Order=300)]
     [DataMember]
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the research definition is expected to be used
+    /// When the research definition is expected to be used.
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=310)]
     [DataMember]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Topic;
 
     /// <summary>
-    /// Who authored the content
+    /// Who authored the content.
     /// </summary>
     [FhirElement("author", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Author;
 
     /// <summary>
-    /// Who edited the content
+    /// Who edited the content.
     /// </summary>
     [FhirElement("editor", Order=340)]
     [Cardinality(Min=0,Max=-1)]
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Editor;
 
     /// <summary>
-    /// Who reviewed the content
+    /// Who reviewed the content.
     /// </summary>
     [FhirElement("reviewer", Order=350)]
     [Cardinality(Min=0,Max=-1)]
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Reviewer;
 
     /// <summary>
-    /// Who endorsed the content
+    /// Who endorsed the content.
     /// </summary>
     [FhirElement("endorser", Order=360)]
     [Cardinality(Min=0,Max=-1)]
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
 
     /// <summary>
-    /// Logic used by the ResearchDefinition
+    /// Logic used by the ResearchDefinition.
     /// </summary>
     [FhirElement("library", Order=380)]
     [Cardinality(Min=0,Max=-1)]
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What population?
+    /// What population?.
     /// </summary>
     [FhirElement("population", InSummary=true, Order=390)]
     [CLSCompliant(false)]
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Population;
 
     /// <summary>
-    /// What exposure?
+    /// What exposure?.
     /// </summary>
     [FhirElement("exposure", InSummary=true, Order=400)]
     [CLSCompliant(false)]
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Exposure;
 
     /// <summary>
-    /// What alternative exposure state?
+    /// What alternative exposure state?.
     /// </summary>
     [FhirElement("exposureAlternative", InSummary=true, Order=410)]
     [CLSCompliant(false)]
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ExposureAlternative;
 
     /// <summary>
-    /// What outcome?
+    /// What outcome?.
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=420)]
     [CLSCompliant(false)]

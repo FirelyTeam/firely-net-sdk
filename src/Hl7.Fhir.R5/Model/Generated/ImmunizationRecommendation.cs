@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImmunizationRecommendation.recommendation"; } }
 
       /// <summary>
-      /// Vaccine  or vaccine group recommendation applies to
+      /// Vaccine  or vaccine group recommendation applies to.
       /// </summary>
       [FhirElement("vaccineCode", InSummary=true, Order=40)]
       [Binding("VaccineCode")]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _VaccineCode;
 
       /// <summary>
-      /// Disease to be immunized against
+      /// Disease to be immunized against.
       /// </summary>
       [FhirElement("targetDisease", InSummary=true, Order=50)]
       [Binding("TargetDisease")]
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
 
       /// <summary>
-      /// Vaccine which is contraindicated to fulfill the recommendation
+      /// Vaccine which is contraindicated to fulfill the recommendation.
       /// </summary>
       [FhirElement("contraindicatedVaccineCode", InSummary=true, Order=60)]
       [Binding("VaccineCode")]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ContraindicatedVaccineCode;
 
       /// <summary>
-      /// Vaccine recommendation status
+      /// Vaccine recommendation status.
       /// </summary>
       [FhirElement("forecastStatus", InSummary=true, IsModifier=true, Order=70)]
       [Binding("ImmunizationRecommendationStatus")]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ForecastStatus;
 
       /// <summary>
-      /// Vaccine administration status reason
+      /// Vaccine administration status reason.
       /// </summary>
       [FhirElement("forecastReason", InSummary=true, Order=80)]
       [Binding("ImmunizationRecommendationReason")]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ForecastReason;
 
       /// <summary>
-      /// Dates governing proposed immunization
+      /// Dates governing proposed immunization.
       /// </summary>
       [FhirElement("dateCriterion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> _DateCriterion;
 
       /// <summary>
-      /// Protocol details
+      /// Protocol details.
       /// </summary>
       [FhirElement("description", Order=100)]
       [DataMember]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Name of vaccination series
+      /// Name of vaccination series.
       /// </summary>
       [FhirElement("series", Order=110)]
       [DataMember]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recommended dose number within series
+      /// Recommended dose number within series.
       /// </summary>
       [FhirElement("doseNumber", InSummary=true, Order=120)]
       [DataMember]
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recommended number of doses for immunity
+      /// Recommended number of doses for immunity.
       /// </summary>
       [FhirElement("seriesDoses", Order=130)]
       [DataMember]
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Past immunizations supporting recommendation
+      /// Past immunizations supporting recommendation.
       /// </summary>
       [FhirElement("supportingImmunization", Order=140)]
       [CLSCompliant(false)]
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _SupportingImmunization;
 
       /// <summary>
-      /// Patient observations supporting recommendation
+      /// Patient observations supporting recommendation.
       /// </summary>
       [FhirElement("supportingPatientInformation", Order=150)]
       [CLSCompliant(false)]
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImmunizationRecommendation.recommendation.dateCriterion"; } }
 
       /// <summary>
-      /// Type of date
+      /// Type of date.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Binding("ImmunizationRecommendationDateCriterion")]
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Recommended date
+      /// Recommended date.
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Who this profile is for
+    /// Who this profile is for.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Date recommendation(s) created
+    /// Date recommendation(s) created.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who is responsible for protocol
+    /// Who is responsible for protocol.
     /// </summary>
     [FhirElement("authority", Order=120)]
     [CLSCompliant(false)]
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Authority;
 
     /// <summary>
-    /// Vaccine administration recommendations
+    /// Vaccine administration recommendations.
     /// </summary>
     [FhirElement("recommendation", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=-1)]

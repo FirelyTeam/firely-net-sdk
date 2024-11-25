@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ParameterDefinition"; } }
 
     /// <summary>
-    /// Name used to access the parameter value
+    /// Name used to access the parameter value.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// in | out
+    /// in | out.
     /// </summary>
     [FhirElement("use", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Minimum cardinality
+    /// Minimum cardinality.
     /// </summary>
     [FhirElement("min", InSummary=true, Order=50)]
     [DataMember]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Maximum cardinality (a number of *)
+    /// Maximum cardinality (a number of *).
     /// </summary>
     [FhirElement("max", InSummary=true, Order=60)]
     [DataMember]
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A brief description of the parameter
+    /// A brief description of the parameter.
     /// </summary>
     [FhirElement("documentation", InSummary=true, Order=70)]
     [DataMember]
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What type of value
+    /// What type of value.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=80)]
     [DeclaredType(Type = typeof(Code))]
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What profile the value is expected to be
+    /// What profile the value is expected to be.
     /// </summary>
     [FhirElement("profile", InSummary=true, Order=90)]
     [DataMember]

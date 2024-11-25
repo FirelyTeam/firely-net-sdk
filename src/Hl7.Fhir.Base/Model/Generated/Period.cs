@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Period"; } }
 
     /// <summary>
-    /// Starting time with inclusive boundary
+    /// Starting time with inclusive boundary.
     /// </summary>
     [FhirElement("start", InSummary=true, Order=30)]
     [DataMember]
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// End time with inclusive boundary, if not ongoing
+    /// End time with inclusive boundary, if not ongoing.
     /// </summary>
     [FhirElement("end", InSummary=true, Order=40)]
     [DataMember]

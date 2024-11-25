@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Practitioner.qualification"; } }
 
       /// <summary>
-      /// An identifier for this qualification for the practitioner
+      /// An identifier for this qualification for the practitioner.
       /// </summary>
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
       /// <summary>
-      /// Coded representation of the qualification
+      /// Coded representation of the qualification.
       /// </summary>
       [FhirElement("code", Order=50)]
       [Binding("Qualification")]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Period during which the qualification is valid
+      /// Period during which the qualification is valid.
       /// </summary>
       [FhirElement("period", Order=60)]
       [DataMember]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// Organization that regulates and issues the qualification
+      /// Organization that regulates and issues the qualification.
       /// </summary>
       [FhirElement("issuer", Order=70)]
       [CLSCompliant(false)]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Practitioner.communication"; } }
 
       /// <summary>
-      /// The language code used to communicate with the practitioner
+      /// The language code used to communicate with the practitioner.
       /// </summary>
       [FhirElement("language", Order=40)]
       [Binding("Language")]
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Language;
 
       /// <summary>
-      /// Language preference indicator
+      /// Language preference indicator.
       /// </summary>
       [FhirElement("preferred", Order=50)]
       [DataMember]
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// An identifier for the person as this agent
+    /// An identifier for the person as this agent.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this practitioner's record is in active use
+    /// Whether this practitioner's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The name(s) associated with the practitioner
+    /// The name(s) associated with the practitioner.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.HumanName> _Name;
 
     /// <summary>
-    /// A contact detail for the practitioner (that apply to all roles)
+    /// A contact detail for the practitioner (that apply to all roles).
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// male | female | other | unknown
+    /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The date  on which the practitioner was born
+    /// The date  on which the practitioner was born.
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=140)]
     [DataMember]
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Indicates if the practitioner is deceased or not
+    /// Indicates if the practitioner is deceased or not.
     /// </summary>
     [FhirElement("deceased", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Deceased;
 
     /// <summary>
-    /// Address(es) of the practitioner that are not role specific (typically home address)
+    /// Address(es) of the practitioner that are not role specific (typically home address).
     /// </summary>
     [FhirElement("address", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Address> _Address;
 
     /// <summary>
-    /// Image of the person
+    /// Image of the person.
     /// </summary>
     [FhirElement("photo", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Photo;
 
     /// <summary>
-    /// Qualifications, certifications, accreditations, licenses, training, etc. pertaining to the provision of care
+    /// Qualifications, certifications, accreditations, licenses, training, etc. pertaining to the provision of care.
     /// </summary>
     [FhirElement("qualification", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Practitioner.QualificationComponent> _Qualification;
 
     /// <summary>
-    /// A language which may be used to communicate with the practitioner
+    /// A language which may be used to communicate with the practitioner.
     /// </summary>
     [FhirElement("communication", Order=190)]
     [Cardinality(Min=0,Max=-1)]

@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "RiskAssessment.prediction"; } }
 
       /// <summary>
-      /// Possible outcome for the subject
+      /// Possible outcome for the subject.
       /// </summary>
       [FhirElement("outcome", Order=40)]
       [Binding("RiskAssessmentOutcome")]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Outcome;
 
       /// <summary>
-      /// Likelihood of specified outcome
+      /// Likelihood of specified outcome.
       /// </summary>
       [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Probability;
 
       /// <summary>
-      /// Likelihood of specified outcome as a qualitative value
+      /// Likelihood of specified outcome as a qualitative value.
       /// </summary>
       [FhirElement("qualitativeRisk", Order=60)]
       [Binding("RiskAssessmentProbability")]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _QualitativeRisk;
 
       /// <summary>
-      /// Relative likelihood
+      /// Relative likelihood.
       /// </summary>
       [FhirElement("relativeRisk", Order=70)]
       [DataMember]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Timeframe or age range
+      /// Timeframe or age range.
       /// </summary>
       [FhirElement("when", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _When;
 
       /// <summary>
-      /// Explanation of prediction
+      /// Explanation of prediction.
       /// </summary>
       [FhirElement("rationale", Order=90)]
       [DataMember]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier for the assessment
+    /// Unique identifier for the assessment.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Request fulfilled by this assessment
+    /// Request fulfilled by this assessment.
     /// </summary>
     [FhirElement("basedOn", Order=100)]
     [CLSCompliant(false)]
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _BasedOn;
 
     /// <summary>
-    /// Part of this occurrence
+    /// Part of this occurrence.
     /// </summary>
     [FhirElement("parent", Order=110)]
     [CLSCompliant(false)]
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Parent;
 
     /// <summary>
-    /// registered | preliminary | final | amended +
+    /// registered | preliminary | final | amended +.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Evaluation mechanism
+    /// Evaluation mechanism.
     /// </summary>
     [FhirElement("method", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("RiskAssessmentMethod")]
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Method;
 
     /// <summary>
-    /// Type of assessment
+    /// Type of assessment.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Who/what does assessment apply to?
+    /// Who/what does assessment apply to?.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Where was assessment performed?
+    /// Where was assessment performed?.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When was assessment made?
+    /// When was assessment made?.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Condition assessed
+    /// Condition assessed.
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Condition;
 
     /// <summary>
-    /// Who did assessment?
+    /// Who did assessment?.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=190, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Performer;
 
     /// <summary>
-    /// Why the assessment was necessary?
+    /// Why the assessment was necessary?.
     /// </summary>
     [FhirElement("reasonCode", Order=200, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Why the assessment was necessary?
+    /// Why the assessment was necessary?.
     /// </summary>
     [FhirElement("reasonReference", Order=210, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// Information used in assessment
+    /// Information used in assessment.
     /// </summary>
     [FhirElement("basis", Order=220)]
     [CLSCompliant(false)]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Basis;
 
     /// <summary>
-    /// Outcome predicted
+    /// Outcome predicted.
     /// </summary>
     [FhirElement("prediction", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> _Prediction;
 
     /// <summary>
-    /// How to reduce risk
+    /// How to reduce risk.
     /// </summary>
     [FhirElement("mitigation", Order=240)]
     [DataMember]
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Comments on the risk assessment
+    /// Comments on the risk assessment.
     /// </summary>
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
