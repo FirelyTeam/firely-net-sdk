@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel
     {
         [TemporarilyChanged] // This should be restored to use the original ITE stack.
         public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
-            => @base.WithScopeInfo(@base.BuildRoot(rootName));
+            => new SinglePocoElementNode(rootName ?? @base.TypeName, null, null, @base);
     }
 }
 #nullable restore

@@ -4,6 +4,6 @@ namespace Hl7.Fhir.ElementModel
 {
     public interface IFhirValueProvider
     {
-        Base FhirValue { get; }
+        Model.Base FhirValue { get; }
     }
 }
