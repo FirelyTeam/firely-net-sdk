@@ -68,12 +68,15 @@ public class PocoDictionaryTests
 
         patient["active"].Should().BeOfType<FhirBoolean>().
             Which.ObjectValue.Should().Be(true);
-        patient["text"].Should().BeOfType<Narrative>().And
-            .BeAssignableTo<Base>().Which["div"].Should().BeOfType<XHtml>()
+        patient["text"].Should().BeOfType<Narrative>()
+            .Which["div"].Should().BeOfType<XHtml>()
             .Which.ObjectValue.Should().Be("<div>hello</div>");
-        patient["meta"].Should().BeOfType<Meta>().And
-            .BeAssignableTo<Base>().Which["id"].Should().Be("4");
+        patient["meta"].Should().BeOfType<Meta>()
+            .Which["id"].Should().BeOfType<FhirString>()
+            .Which.ObjectValue.Should().Be("4");
         var extension = patient["extension"].Should().BeOfType<List<Extension>>().Which.Should().ContainSingle().Subject;
-        extension.Should().BeAssignableTo<Base>().Which["url"].Should().Be("http://nu.nl");
+        extension.Should().BeAssignableTo<Base>()
+            .Which["url"].Should().BeOfType<FhirUri>()
+            .Which.ObjectValue.Should().Be("http://nu.nl");
     }
 }
