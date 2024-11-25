@@ -125,21 +125,21 @@ public class TypedElementToPocoTests
     {
         var subject = new Patient();
 
-        var subjectDict = subject.AsDictionary();
-        subjectDict.Add("newField", new FhirString("hi"));
-        subjectDict.Add("newDynamicField", new DynamicPrimitive() { ObjectValue = "hi3" });
-        subjectDict.Add("newListField", new List<FhirString> { new("hi1"), new("hi2") });
+        subject.SetValue("newField", new FhirString("hi"));
+        subject.SetValue("newDynamicField", new DynamicPrimitive() { ObjectValue = "hi3" });
+        subject.SetValue("newListField", new List<FhirString> { new("hi1"), new("hi2") });
 
-        var dict = toPoco(subject).AsDictionary();
-        dict.TryGetValue("newField", out var newField).Should().BeTrue();
+        var subjectRt = toPoco(subject);
+        subjectRt.TryGetValue("newField", out var newField).Should().BeTrue();
         newField.Should().BeOfType<FhirString>().Which.Value.Should().Be("hi");
 
-        dict.TryGetValue("newDynamicField", out var newDynamicField).Should().BeTrue();
+        subjectRt.TryGetValue("newDynamicField", out var newDynamicField).Should().BeTrue();
         newDynamicField.Should().BeOfType<DynamicPrimitive>().Which.ObjectValue.Should().Be("hi3");
 
-        dict.TryGetValue("newListField", out var newListField).Should().BeTrue();
-        newListField.Should().BeOfType<List<FhirString>>().Which.Should().BeEquivalentTo(
-            [new FhirString("hi1"), new FhirString("hi2")]);
+        subjectRt.TryGetValue("newListField", out var newListField).Should().BeTrue();
+        newListField.Should().BeOfType<List<FhirString>>().Which
+            .IsExactly([new FhirString("hi1"), new FhirString("hi2")])
+            .Should().BeTrue();
     }
 
     private T toPoco<T>(T source) where T : Base, new()

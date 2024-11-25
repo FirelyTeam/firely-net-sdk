@@ -1020,7 +1020,8 @@ public partial class BaseFhirClient : IDisposable
         var capabilityStatement = await executeAsync<Resource>(tx, HttpStatusCode.OK, ct).ConfigureAwait(false);
         if (capabilityStatement is null) return null;
 
-        return capabilityStatement.AsReadOnlyDictionary().TryGetValue("fhirVersion", out var value) && value is PrimitiveType pt && pt.ObjectValue is string version
+        return capabilityStatement.TryGetValue("fhirVersion", out var value) &&
+               value is PrimitiveType { ObjectValue: string version }
             ? version
             : null;
     }

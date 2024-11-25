@@ -306,33 +306,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in Type) { if (elem != null) yield return elem; }
-          if (Actor != null) yield return Actor;
-          if (RequiredElement != null) yield return RequiredElement;
-          if (StatusElement != null) yield return StatusElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-          if (Actor != null) yield return new ElementValue("actor", Actor);
-          if (RequiredElement != null) yield return new ElementValue("required", RequiredElement);
-          if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -354,7 +328,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -376,7 +350,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
@@ -918,65 +892,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (ServiceCategory != null) yield return ServiceCategory;
-        foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
-        foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-        if (AppointmentType != null) yield return AppointmentType;
-        foreach (var elem in Reason) { if (elem != null) yield return elem; }
-        foreach (var elem in Indication) { if (elem != null) yield return elem; }
-        if (PriorityElement != null) yield return PriorityElement;
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
-        if (StartElement != null) yield return StartElement;
-        if (EndElement != null) yield return EndElement;
-        if (MinutesDurationElement != null) yield return MinutesDurationElement;
-        foreach (var elem in Slot) { if (elem != null) yield return elem; }
-        if (CreatedElement != null) yield return CreatedElement;
-        if (CommentElement != null) yield return CommentElement;
-        foreach (var elem in IncomingReferral) { if (elem != null) yield return elem; }
-        foreach (var elem in Participant) { if (elem != null) yield return elem; }
-        foreach (var elem in RequestedPeriod) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (ServiceCategory != null) yield return new ElementValue("serviceCategory", ServiceCategory);
-        foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
-        foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
-        if (AppointmentType != null) yield return new ElementValue("appointmentType", AppointmentType);
-        foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-        foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", elem); }
-        if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
-        if (StartElement != null) yield return new ElementValue("start", StartElement);
-        if (EndElement != null) yield return new ElementValue("end", EndElement);
-        if (MinutesDurationElement != null) yield return new ElementValue("minutesDuration", MinutesDurationElement);
-        foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", elem); }
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-        foreach (var elem in IncomingReferral) { if (elem != null) yield return new ElementValue("incomingReferral", elem); }
-        foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
-        foreach (var elem in RequestedPeriod) { if (elem != null) yield return new ElementValue("requestedPeriod", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1046,7 +962,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1116,7 +1032,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

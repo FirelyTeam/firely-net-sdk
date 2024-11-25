@@ -435,39 +435,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (DeviceIdentifierElement != null) yield return DeviceIdentifierElement;
-          if (NameElement != null) yield return NameElement;
-          if (JurisdictionElement != null) yield return JurisdictionElement;
-          if (CarrierHRFElement != null) yield return CarrierHRFElement;
-          if (CarrierAIDCElement != null) yield return CarrierAIDCElement;
-          if (IssuerElement != null) yield return IssuerElement;
-          if (EntryTypeElement != null) yield return EntryTypeElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", DeviceIdentifierElement);
-          if (NameElement != null) yield return new ElementValue("name", NameElement);
-          if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", JurisdictionElement);
-          if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", CarrierHRFElement);
-          if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", CarrierAIDCElement);
-          if (IssuerElement != null) yield return new ElementValue("issuer", IssuerElement);
-          if (EntryTypeElement != null) yield return new ElementValue("entryType", EntryTypeElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -498,7 +466,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -529,7 +497,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DeviceIdentifierElement is not null) yield return new KeyValuePair<string,object>("deviceIdentifier",DeviceIdentifierElement);
@@ -1014,59 +982,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Udi != null) yield return Udi;
-        if (StatusElement != null) yield return StatusElement;
-        if (Type != null) yield return Type;
-        if (LotNumberElement != null) yield return LotNumberElement;
-        if (ManufacturerElement != null) yield return ManufacturerElement;
-        if (ManufactureDateElement != null) yield return ManufactureDateElement;
-        if (ExpirationDateElement != null) yield return ExpirationDateElement;
-        if (ModelElement != null) yield return ModelElement;
-        if (VersionElement != null) yield return VersionElement;
-        if (Patient != null) yield return Patient;
-        if (Owner != null) yield return Owner;
-        foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        if (Location != null) yield return Location;
-        if (UrlElement != null) yield return UrlElement;
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-        foreach (var elem in Safety) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Udi != null) yield return new ElementValue("udi", Udi);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
-        if (ManufacturerElement != null) yield return new ElementValue("manufacturer", ManufacturerElement);
-        if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", ManufactureDateElement);
-        if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
-        if (ModelElement != null) yield return new ElementValue("model", ModelElement);
-        if (VersionElement != null) yield return new ElementValue("version", VersionElement);
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-        if (Owner != null) yield return new ElementValue("owner", Owner);
-        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        if (Location != null) yield return new ElementValue("location", Location);
-        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-        foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1127,7 +1043,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1188,7 +1104,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

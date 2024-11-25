@@ -107,6 +107,7 @@ public class BaseFhirXmlPocoSerializer
     {
         // Make sure that elements with attributes are serialized first.
         var orderedMembers = element
+            .GetElementPairs()
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
             .OrderBy(p => p.mapping?.SerializationHint != XmlRepresentation.XmlAttr);
 

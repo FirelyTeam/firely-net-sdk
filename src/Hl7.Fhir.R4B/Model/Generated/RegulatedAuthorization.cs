@@ -199,35 +199,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Identifier != null) yield return Identifier;
-          if (Type != null) yield return Type;
-          if (Status != null) yield return Status;
-          if (Date != null) yield return Date;
-          foreach (var elem in Application) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Status != null) yield return new ElementValue("status", Status);
-          if (Date != null) yield return new ElementValue("date", Date);
-          foreach (var elem in Application) { if (elem != null) yield return new ElementValue("application", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -252,7 +224,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -277,7 +249,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
@@ -605,53 +577,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in Subject) { if (elem != null) yield return elem; }
-        if (Type != null) yield return Type;
-        if (DescriptionElement != null) yield return DescriptionElement;
-        foreach (var elem in Region) { if (elem != null) yield return elem; }
-        if (Status != null) yield return Status;
-        if (StatusDateElement != null) yield return StatusDateElement;
-        if (ValidityPeriod != null) yield return ValidityPeriod;
-        if (Indication != null) yield return Indication;
-        if (IntendedUse != null) yield return IntendedUse;
-        foreach (var elem in Basis) { if (elem != null) yield return elem; }
-        if (Holder != null) yield return Holder;
-        if (Regulator != null) yield return Regulator;
-        if (Case != null) yield return Case;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        foreach (var elem in Region) { if (elem != null) yield return new ElementValue("region", elem); }
-        if (Status != null) yield return new ElementValue("status", Status);
-        if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
-        if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
-        if (Indication != null) yield return new ElementValue("indication", Indication);
-        if (IntendedUse != null) yield return new ElementValue("intendedUse", IntendedUse);
-        foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
-        if (Holder != null) yield return new ElementValue("holder", Holder);
-        if (Regulator != null) yield return new ElementValue("regulator", Regulator);
-        if (Case != null) yield return new ElementValue("case", Case);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -703,7 +629,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -755,7 +681,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

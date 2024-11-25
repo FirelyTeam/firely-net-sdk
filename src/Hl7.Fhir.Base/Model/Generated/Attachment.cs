@@ -546,51 +546,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (ContentTypeElement != null) yield return ContentTypeElement;
-        if (LanguageElement != null) yield return LanguageElement;
-        if (DataElement != null) yield return DataElement;
-        if (UrlElement != null) yield return UrlElement;
-        if (SizeElement != null) yield return SizeElement;
-        if (HashElement != null) yield return HashElement;
-        if (TitleElement != null) yield return TitleElement;
-        if (CreationElement != null) yield return CreationElement;
-        if (HeightElement != null) yield return HeightElement;
-        if (WidthElement != null) yield return WidthElement;
-        if (FramesElement != null) yield return FramesElement;
-        if (DurationElement != null) yield return DurationElement;
-        if (PagesElement != null) yield return PagesElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
-        if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
-        if (DataElement != null) yield return new ElementValue("data", DataElement);
-        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-        if (SizeElement != null) yield return new ElementValue("size", SizeElement);
-        if (HashElement != null) yield return new ElementValue("hash", HashElement);
-        if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-        if (CreationElement != null) yield return new ElementValue("creation", CreationElement);
-        if (HeightElement != null) yield return new ElementValue("height", HeightElement);
-        if (WidthElement != null) yield return new ElementValue("width", WidthElement);
-        if (FramesElement != null) yield return new ElementValue("frames", FramesElement);
-        if (DurationElement != null) yield return new ElementValue("duration", DurationElement);
-        if (PagesElement != null) yield return new ElementValue("pages", PagesElement);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -639,7 +595,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -688,7 +644,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);

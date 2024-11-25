@@ -391,51 +391,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Identifier != null) yield return Identifier;
-          if (Predecessor != null) yield return Predecessor;
-          if (Target != null) yield return Target;
-          if (TargetItem != null) yield return TargetItem;
-          if (Encounter != null) yield return Encounter;
-          if (Account != null) yield return Account;
-          if (Type != null) yield return Type;
-          if (Submitter != null) yield return Submitter;
-          if (Response != null) yield return Response;
-          if (DateElement != null) yield return DateElement;
-          if (Responsible != null) yield return Responsible;
-          if (Payee != null) yield return Payee;
-          if (Amount != null) yield return Amount;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-          if (Predecessor != null) yield return new ElementValue("predecessor", Predecessor);
-          if (Target != null) yield return new ElementValue("target", Target);
-          if (TargetItem != null) yield return new ElementValue("targetItem", TargetItem);
-          if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-          if (Account != null) yield return new ElementValue("account", Account);
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Submitter != null) yield return new ElementValue("submitter", Submitter);
-          if (Response != null) yield return new ElementValue("response", Response);
-          if (DateElement != null) yield return new ElementValue("date", DateElement);
-          if (Responsible != null) yield return new ElementValue("responsible", Responsible);
-          if (Payee != null) yield return new ElementValue("payee", Payee);
-          if (Amount != null) yield return new ElementValue("amount", Amount);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -484,7 +440,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -533,7 +489,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
@@ -678,29 +634,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (TypeElement != null) yield return TypeElement;
-          if (TextElement != null) yield return TextElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-          if (TextElement != null) yield return new ElementValue("text", TextElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -716,7 +650,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -732,7 +666,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
@@ -1471,83 +1405,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (Type != null) yield return Type;
-        if (StatusElement != null) yield return StatusElement;
-        if (Kind != null) yield return Kind;
-        if (Period != null) yield return Period;
-        if (CreatedElement != null) yield return CreatedElement;
-        if (Enterer != null) yield return Enterer;
-        if (IssuerType != null) yield return IssuerType;
-        if (PaymentIssuer != null) yield return PaymentIssuer;
-        if (Request != null) yield return Request;
-        if (Requestor != null) yield return Requestor;
-        if (OutcomeElement != null) yield return OutcomeElement;
-        if (DispositionElement != null) yield return DispositionElement;
-        if (DateElement != null) yield return DateElement;
-        if (Location != null) yield return Location;
-        if (Method != null) yield return Method;
-        if (CardBrandElement != null) yield return CardBrandElement;
-        if (AccountNumberElement != null) yield return AccountNumberElement;
-        if (ExpirationDateElement != null) yield return ExpirationDateElement;
-        if (ProcessorElement != null) yield return ProcessorElement;
-        if (ReferenceNumberElement != null) yield return ReferenceNumberElement;
-        if (AuthorizationElement != null) yield return AuthorizationElement;
-        if (TenderedAmount != null) yield return TenderedAmount;
-        if (ReturnedAmount != null) yield return ReturnedAmount;
-        if (Amount != null) yield return Amount;
-        if (PaymentIdentifier != null) yield return PaymentIdentifier;
-        foreach (var elem in Allocation) { if (elem != null) yield return elem; }
-        if (FormCode != null) yield return FormCode;
-        foreach (var elem in ProcessNote) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Kind != null) yield return new ElementValue("kind", Kind);
-        if (Period != null) yield return new ElementValue("period", Period);
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (Enterer != null) yield return new ElementValue("enterer", Enterer);
-        if (IssuerType != null) yield return new ElementValue("issuerType", IssuerType);
-        if (PaymentIssuer != null) yield return new ElementValue("paymentIssuer", PaymentIssuer);
-        if (Request != null) yield return new ElementValue("request", Request);
-        if (Requestor != null) yield return new ElementValue("requestor", Requestor);
-        if (OutcomeElement != null) yield return new ElementValue("outcome", OutcomeElement);
-        if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
-        if (DateElement != null) yield return new ElementValue("date", DateElement);
-        if (Location != null) yield return new ElementValue("location", Location);
-        if (Method != null) yield return new ElementValue("method", Method);
-        if (CardBrandElement != null) yield return new ElementValue("cardBrand", CardBrandElement);
-        if (AccountNumberElement != null) yield return new ElementValue("accountNumber", AccountNumberElement);
-        if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
-        if (ProcessorElement != null) yield return new ElementValue("processor", ProcessorElement);
-        if (ReferenceNumberElement != null) yield return new ElementValue("referenceNumber", ReferenceNumberElement);
-        if (AuthorizationElement != null) yield return new ElementValue("authorization", AuthorizationElement);
-        if (TenderedAmount != null) yield return new ElementValue("tenderedAmount", TenderedAmount);
-        if (ReturnedAmount != null) yield return new ElementValue("returnedAmount", ReturnedAmount);
-        if (Amount != null) yield return new ElementValue("amount", Amount);
-        if (PaymentIdentifier != null) yield return new ElementValue("paymentIdentifier", PaymentIdentifier);
-        foreach (var elem in Allocation) { if (elem != null) yield return new ElementValue("allocation", elem); }
-        if (FormCode != null) yield return new ElementValue("formCode", FormCode);
-        foreach (var elem in ProcessNote) { if (elem != null) yield return new ElementValue("processNote", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1644,7 +1502,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1741,7 +1599,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

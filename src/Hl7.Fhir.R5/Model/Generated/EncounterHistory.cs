@@ -151,29 +151,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Location != null) yield return Location;
-          if (Form != null) yield return Form;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Location != null) yield return new ElementValue("location", Location);
-          if (Form != null) yield return new ElementValue("form", Form);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -189,7 +167,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -205,7 +183,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
@@ -533,51 +511,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Encounter != null) yield return Encounter;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Class != null) yield return Class;
-        foreach (var elem in Type) { if (elem != null) yield return elem; }
-        foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
-        if (Subject != null) yield return Subject;
-        if (SubjectStatus != null) yield return SubjectStatus;
-        if (ActualPeriod != null) yield return ActualPeriod;
-        if (PlannedStartDateElement != null) yield return PlannedStartDateElement;
-        if (PlannedEndDateElement != null) yield return PlannedEndDateElement;
-        if (Length != null) yield return Length;
-        foreach (var elem in Location) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Class != null) yield return new ElementValue("class", Class);
-        foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-        foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (SubjectStatus != null) yield return new ElementValue("subjectStatus", SubjectStatus);
-        if (ActualPeriod != null) yield return new ElementValue("actualPeriod", ActualPeriod);
-        if (PlannedStartDateElement != null) yield return new ElementValue("plannedStartDate", PlannedStartDateElement);
-        if (PlannedEndDateElement != null) yield return new ElementValue("plannedEndDate", PlannedEndDateElement);
-        if (Length != null) yield return new ElementValue("length", Length);
-        foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -626,7 +560,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -675,7 +609,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);

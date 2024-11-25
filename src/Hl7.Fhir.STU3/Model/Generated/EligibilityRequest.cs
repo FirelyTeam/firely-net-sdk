@@ -416,55 +416,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Priority != null) yield return Priority;
-        if (Patient != null) yield return Patient;
-        if (Serviced != null) yield return Serviced;
-        if (CreatedElement != null) yield return CreatedElement;
-        if (Enterer != null) yield return Enterer;
-        if (Provider != null) yield return Provider;
-        if (Organization != null) yield return Organization;
-        if (Insurer != null) yield return Insurer;
-        if (Facility != null) yield return Facility;
-        if (Coverage != null) yield return Coverage;
-        if (BusinessArrangementElement != null) yield return BusinessArrangementElement;
-        if (BenefitCategory != null) yield return BenefitCategory;
-        if (BenefitSubCategory != null) yield return BenefitSubCategory;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Priority != null) yield return new ElementValue("priority", Priority);
-        if (Patient != null) yield return new ElementValue("patient", Patient);
-        if (Serviced != null) yield return new ElementValue("serviced", Serviced);
-        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-        if (Enterer != null) yield return new ElementValue("enterer", Enterer);
-        if (Provider != null) yield return new ElementValue("provider", Provider);
-        if (Organization != null) yield return new ElementValue("organization", Organization);
-        if (Insurer != null) yield return new ElementValue("insurer", Insurer);
-        if (Facility != null) yield return new ElementValue("facility", Facility);
-        if (Coverage != null) yield return new ElementValue("coverage", Coverage);
-        if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", BusinessArrangementElement);
-        if (BenefitCategory != null) yield return new ElementValue("benefitCategory", BenefitCategory);
-        if (BenefitSubCategory != null) yield return new ElementValue("benefitSubCategory", BenefitSubCategory);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -519,7 +471,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -574,7 +526,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);

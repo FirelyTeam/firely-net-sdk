@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var parsed = parsedObject.Should().BeOfType<ContactDetail>().Subject;
                 parsed.Telecom.Count.Should().Be(2);
                 parsed.Telecom[0].System.Should().Be(ContactPoint.ContactPointSystem.Phone);
-                parsed.Telecom[1].Count().Should().Be(0);
+                parsed.Telecom[1].GetElementPairs().Count().Should().Be(0);
             }
         }
 

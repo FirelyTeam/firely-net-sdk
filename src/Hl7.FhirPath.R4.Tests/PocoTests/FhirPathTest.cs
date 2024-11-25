@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Dataflow;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -59,7 +60,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IScopedNode> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.IsTrue(traced);
 
             traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IScopedNode> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");
@@ -412,7 +413,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             result.Should().ContainSingle().Subject
                 .Should().BeOfType<Observation.ComponentComponent>()
-                .Subject.Code.Should().BeEquivalentTo(new CodeableConcept("http://loinc.org", "2708-6"));
+                .Subject.Code.IsExactly(new CodeableConcept("http://loinc.org", "2708-6")).Should().BeTrue();
         }
     }
 }

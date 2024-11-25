@@ -159,31 +159,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (GeneSequenceOrigin != null) yield return GeneSequenceOrigin;
-          if (Gene != null) yield return Gene;
-          foreach (var elem in Source) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (GeneSequenceOrigin != null) yield return new ElementValue("geneSequenceOrigin", GeneSequenceOrigin);
-          if (Gene != null) yield return new ElementValue("gene", Gene);
-          foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -202,7 +178,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -221,7 +197,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (GeneSequenceOrigin is not null) yield return new KeyValuePair<string,object>("geneSequenceOrigin",GeneSequenceOrigin);
@@ -334,31 +310,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (Element != null) yield return Element;
-          foreach (var elem in Source) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Element != null) yield return new ElementValue("element", Element);
-          foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -377,7 +329,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -396,7 +348,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
@@ -526,33 +478,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Domain != null) yield return Domain;
-          if (Classification != null) yield return Classification;
-          foreach (var elem in Subtype) { if (elem != null) yield return elem; }
-          foreach (var elem in Source) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Domain != null) yield return new ElementValue("domain", Domain);
-          if (Classification != null) yield return new ElementValue("classification", Classification);
-          foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", elem); }
-          foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -574,7 +500,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -596,7 +522,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
@@ -792,41 +718,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Target != null) yield return Target;
-          if (Type != null) yield return Type;
-          if (Interaction != null) yield return Interaction;
-          if (Organism != null) yield return Organism;
-          if (OrganismType != null) yield return OrganismType;
-          if (Amount != null) yield return Amount;
-          if (AmountType != null) yield return AmountType;
-          foreach (var elem in Source) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Target != null) yield return new ElementValue("target", Target);
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (Interaction != null) yield return new ElementValue("interaction", Interaction);
-          if (Organism != null) yield return new ElementValue("organism", Organism);
-          if (OrganismType != null) yield return new ElementValue("organismType", OrganismType);
-          if (Amount != null) yield return new ElementValue("amount", Amount);
-          if (AmountType != null) yield return new ElementValue("amountType", AmountType);
-          foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -860,7 +752,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -894,7 +786,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
@@ -1050,35 +942,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (CommentElement != null) yield return CommentElement;
-        foreach (var elem in Gene) { if (elem != null) yield return elem; }
-        foreach (var elem in GeneElement) { if (elem != null) yield return elem; }
-        foreach (var elem in Classification) { if (elem != null) yield return elem; }
-        foreach (var elem in Target) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-        foreach (var elem in Gene) { if (elem != null) yield return new ElementValue("gene", elem); }
-        foreach (var elem in GeneElement) { if (elem != null) yield return new ElementValue("geneElement", elem); }
-        foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", elem); }
-        foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1103,7 +967,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1128,7 +992,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);

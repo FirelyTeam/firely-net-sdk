@@ -488,45 +488,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (UseElement != null) yield return UseElement;
-        if (TypeElement != null) yield return TypeElement;
-        if (TextElement != null) yield return TextElement;
-        foreach (var elem in LineElement) { if (elem != null) yield return elem; }
-        if (CityElement != null) yield return CityElement;
-        if (DistrictElement != null) yield return DistrictElement;
-        if (StateElement != null) yield return StateElement;
-        if (PostalCodeElement != null) yield return PostalCodeElement;
-        if (CountryElement != null) yield return CountryElement;
-        if (Period != null) yield return Period;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (UseElement != null) yield return new ElementValue("use", UseElement);
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (TextElement != null) yield return new ElementValue("text", TextElement);
-        foreach (var elem in LineElement) { if (elem != null) yield return new ElementValue("line", elem); }
-        if (CityElement != null) yield return new ElementValue("city", CityElement);
-        if (DistrictElement != null) yield return new ElementValue("district", DistrictElement);
-        if (StateElement != null) yield return new ElementValue("state", StateElement);
-        if (PostalCodeElement != null) yield return new ElementValue("postalCode", PostalCodeElement);
-        if (CountryElement != null) yield return new ElementValue("country", CountryElement);
-        if (Period != null) yield return new ElementValue("period", Period);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -566,7 +528,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -606,7 +568,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);

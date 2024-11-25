@@ -140,29 +140,7 @@ namespace Hl7.Fhir.Model
         return true;
       }
 
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (LowLimit != null) yield return LowLimit;
-          if (HighLimit != null) yield return HighLimit;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (LowLimit != null) yield return new ElementValue("lowLimit", LowLimit);
-          if (HighLimit != null) yield return new ElementValue("highLimit", HighLimit);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      internal protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -178,7 +156,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override Base SetValue(string key, object value)
+      internal protected override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -194,7 +172,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (LowLimit is not null) yield return new KeyValuePair<string,object>("lowLimit",LowLimit);
@@ -326,33 +304,7 @@ namespace Hl7.Fhir.Model
       return true;
     }
 
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Amount != null) yield return Amount;
-        if (AmountType != null) yield return AmountType;
-        if (AmountTextElement != null) yield return AmountTextElement;
-        if (ReferenceRange != null) yield return ReferenceRange;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Amount != null) yield return new ElementValue("amount", Amount);
-        if (AmountType != null) yield return new ElementValue("amountType", AmountType);
-        if (AmountTextElement != null) yield return new ElementValue("amountText", AmountTextElement);
-        if (ReferenceRange != null) yield return new ElementValue("referenceRange", ReferenceRange);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    internal protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -374,7 +326,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override Base SetValue(string key, object value)
+    internal protected override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -396,7 +348,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);

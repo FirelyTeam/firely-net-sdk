@@ -7,15 +7,17 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.FhirPath.Functions
 {
     internal static class CollectionOperators
     {
-        public static bool? BooleanEval(this IEnumerable<ITypedElement> focus)
+        public static bool? BooleanEval(this IEnumerable<IScopedNode> focus)
         {
             if (!focus.Any()) return null;
 
@@ -30,44 +32,47 @@ namespace Hl7.FhirPath.Functions
         }
 
 
-        public static bool Not(this IEnumerable<ITypedElement> focus)
+        public static bool Not(this IEnumerable<IScopedNode> focus)
             => focus.Count() > 1
             ? throw Error.InvalidOperation($"Operator {nameof(Not)} is not applicable for collections with more than one item.")
             : !focus.BooleanEval().Value;
 
-        public static IEnumerable<ITypedElement> DistinctUnion(this IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b)
+        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
+        public static IEnumerable<IScopedNode> DistinctUnion(this IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b)
             => a.Union(b, EqualityOperators.TypedElementEqualityComparer);
 
-        public static IEnumerable<ITypedElement> Item(this IEnumerable<ITypedElement> focus, int index)
+        public static IEnumerable<IScopedNode> Item(this IEnumerable<IScopedNode> focus, int index)
             => focus.Skip(index).Take(1);
 
-        public static ITypedElement Last(this IEnumerable<ITypedElement> focus)
+        public static IScopedNode Last(this IEnumerable<IScopedNode> focus)
             => focus.Reverse().First();
 
-        public static IEnumerable<ITypedElement> Tail(this IEnumerable<ITypedElement> focus)
+        public static IEnumerable<IScopedNode> Tail(this IEnumerable<IScopedNode> focus)
             => focus.Skip(1);
 
-        public static bool Contains(this IEnumerable<ITypedElement> focus, ITypedElement value)
+        public static bool Contains(this IEnumerable<IScopedNode> focus, IScopedNode value)
             => focus.Contains(value, EqualityOperators.TypedElementEqualityComparer);
 
-        public static IEnumerable<ITypedElement> Distinct(this IEnumerable<ITypedElement> focus)
+        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
+        public static IEnumerable<IScopedNode> Distinct(this IEnumerable<IScopedNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer);
 
-        public static bool IsDistinct(this IEnumerable<ITypedElement> focus)
+        public static bool IsDistinct(this IEnumerable<IScopedNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer).Count() == focus.Count();
 
-        public static bool SubsetOf(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
+        public static bool SubsetOf(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
             => focus.All(fitem => other.Contains(fitem));
 
-        public static IEnumerable<ITypedElement> Intersect(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
+        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
+        public static IEnumerable<IScopedNode> Intersect(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
             => focus.Intersect(other, EqualityOperators.TypedElementEqualityComparer);
 
-        public static IEnumerable<ITypedElement> Exclude(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
+        public static IEnumerable<IScopedNode> Exclude(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
             => focus.Where(f => !other.Contains(f));
 
-        public static int IndexOf(this IEnumerable<ITypedElement> focus, ITypedElement item, int start = 0)
+        public static int IndexOf(this IEnumerable<IScopedNode> focus, IScopedNode item, int start = 0)
         {
-            var typedElements = focus as ITypedElement[] ?? focus.ToArray();
+            var typedElements = focus as IScopedNode[] ?? focus.ToArray();
             for (int i = start; i < typedElements.Length; i++)
             {
                 if (EqualityOperators.TypedElementEqualityComparer.Equals(typedElements[i], item))
@@ -78,9 +83,9 @@ namespace Hl7.FhirPath.Functions
             return -1;
         }
 
-        public static int LastIndexOf(this IEnumerable<ITypedElement> focus, ITypedElement item, int to = -1)
+        public static int LastIndexOf(this IEnumerable<IScopedNode> focus, IScopedNode item, int to = -1)
         {
-            var typedElements = focus as ITypedElement[] ?? focus.ToArray();
+            var typedElements = focus as IScopedNode[] ?? focus.ToArray();
             to = to < 0 ? typedElements.Count() - 1 : to;
             for (int i = to; i >= 0; i--)
             {
@@ -93,27 +98,26 @@ namespace Hl7.FhirPath.Functions
         }
         
 
-        public static IEnumerable<ITypedElement> Navigate(this IEnumerable<ITypedElement> elements, string name)
+        public static IEnumerable<IScopedNode> Navigate(this IEnumerable<IScopedNode> elements, string name)
             => elements.SelectMany(e => e.Navigate(name));
 
-        public static IEnumerable<ITypedElement> Navigate(this ITypedElement element, string name)
+        public static IEnumerable<IScopedNode> Navigate(this IScopedNode element, string name)
         {
             if (char.IsUpper(name[0]))
             {
                 // If we are at a resource, we should match a path that is possibly not rooted in the resource
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
-                // Also we do some poor polymorphism here: Resource.meta.lastUpdated is also allowed.
                 var baseClasses = new[] { "Resource", "DomainResource" };
                 if (element.InstanceType == name || baseClasses.Contains(name))
                 {
-                    return new List<ITypedElement>() { element };
+                    return new List<IScopedNode>() { element };
                 }
             }
 
             return element.Children(name);
         }
 
-        public static string FpJoin(this IEnumerable<ITypedElement> collection, string separator = null)
+        public static string FpJoin(this IEnumerable<IScopedNode> collection, string separator = null)
         {
             //if the collection is empty return the empty result
             if (!collection.Any())

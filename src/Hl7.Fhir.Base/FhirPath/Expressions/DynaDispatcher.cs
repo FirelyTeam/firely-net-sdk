@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -25,18 +26,18 @@ namespace Hl7.FhirPath.Expressions
         private readonly string _name;
         private readonly SymbolTable _scope;
 
-        public IEnumerable<ITypedElement> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public IEnumerable<IScopedNode> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            var actualArgs = new List<IEnumerable<ITypedElement>>();
+            var actualArgs = new List<IEnumerable<IScopedNode>>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
-            if (!focus.Any()) return ElementNode.EmptyList;
+            if (!focus.Any()) return [];
 
             actualArgs.Add(focus);
             var newCtx = context.Nest(focus);
 
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa => !aa.Any())) return ElementNode.EmptyList;
+            if (actualArgs.Any(aa => !aa.Any())) return [];
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 
