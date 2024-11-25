@@ -18,11 +18,8 @@ public static class BaseExtensions
                 case ("div", XHtml xhtml):
                     yield return new FhirString(xhtml.Value);
                     break;
-                case ("id", string id):
-                    yield return new FhirString(id);
-                    break;
-                case ("url", string url):
-                    yield return new FhirUri(url);
+                case ("id", FhirUri id):
+                    yield return new FhirString(id.Value);
                     break;
                 case (_, IEnumerable<Base> list):
                     foreach (var item in list)

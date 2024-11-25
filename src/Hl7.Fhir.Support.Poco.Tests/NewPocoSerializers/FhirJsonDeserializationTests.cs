@@ -646,10 +646,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
                 Console.WriteLine(recoveredActual);
 
-                assertErrors(dfe.Exceptions, new string[]
-                {
+                assertErrors(dfe.Exceptions, [
                     ERR.STRING_ISNOTAN_INSTANT_CODE,
-                    ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level                   
+                    ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level
                     ERR.UNKNOWN_RESOURCE_TYPE_CODE, ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE,
                     ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.NO_RESOURCETYPE_PROPERTY_CODE,
                     ERR.UNEXPECTED_JSON_TOKEN_CODE, ERR.EXPECTED_START_OF_ARRAY_CODE,
@@ -673,7 +672,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.NUMBER_CANNOT_BE_PARSED_CODE, // multipleBirthInteger should not be a float (3.14)
                     ERR.INCORRECT_BASE64_DATA_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
                     ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
-                });
+                ]);
 
                 var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
                 var recoveredExpected = File.ReadAllText(recoveredFilename);

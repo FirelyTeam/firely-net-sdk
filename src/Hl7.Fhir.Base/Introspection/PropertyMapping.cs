@@ -343,7 +343,8 @@ namespace Hl7.Fhir.Introspection
             }
             else if (IsPrimitive)
             {
-                throw new NotSupportedException($"Encountered unexpected primitive type {Name} for ITypedElement.InstanceType.")
+                throw new NotSupportedException(
+                    $"Encountered unexpected primitive type {Name} for ITypedElement.InstanceType.");
             }
             else
             {

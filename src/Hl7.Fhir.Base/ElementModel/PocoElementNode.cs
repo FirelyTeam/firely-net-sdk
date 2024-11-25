@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
 
-            Location = InstanceType;
+            Location = InstanceType!;
             ShortPath = InstanceType;
         }
 
@@ -49,9 +49,9 @@ namespace Hl7.Fhir.ElementModel
             var instanceType = definition.Choice != ChoiceType.None
                 ? instance.GetType()
                 : determineInstanceType(definition);
-            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType);
+            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType)!;
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
-            Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
+            Definition = definition;
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;

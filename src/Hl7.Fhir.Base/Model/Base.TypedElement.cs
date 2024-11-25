@@ -93,17 +93,13 @@ public abstract partial class Base : IScopedNode,
         this.GetElementPairs()
             .Where(ep => (name == null || name == ep.Key))
             .SelectMany<KeyValuePair<string, object>, Base>(ep =>
-                (ep.Key, ep.Value) switch
+                ep.Value switch
                 {
-                    (_, Base b) => (IEnumerable<Base>) [b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                    (_, IEnumerable<Base> list) => list.Select((item, idx) =>
+                    Base b => (IEnumerable<Base>) [b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                    IEnumerable<Base> list => list.Select((item, idx) =>
                         item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
-                    ("url", string s) when this is Extension =>
-                        [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                    ("id", string s) when this is Element =>
-                        [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                    ("value", _) => [],
-                    _ => throw new InvalidOperationException("Unexpected system primitive in child list")
+                    _ => throw new InvalidOperationException($"Key '{ep.Key}' has a value with " +
+                                                             $"unexpected type '{ep.Value.GetType()}'.")
                 }
             );
 
@@ -218,14 +214,12 @@ public abstract partial class Base : IScopedNode,
     IEnumerable<IScopedNode> IScopedNode.Children(string? name) => this.GetElementPairs()
         .Where(ep => (name == null || name == ep.Key))
         .SelectMany<KeyValuePair<string, object>, Base>(ep =>
-            (ep.Key, ep.Value) switch
+            ep.Value switch
             {
-                (_, Base b) => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                (_, IEnumerable<Base> list) => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
-                ("url", string s) when this is Extension => [new FhirUri(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                ("id", string s) when this is Element => [new FhirString(s).WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
-                ("value", _) => [],
-                _ => throw new InvalidOperationException("Unexpected system primitive in child list")
+                Base b => (IEnumerable<Base>)[b.WithScopeInfo(new ScopeInformation(this, ep.Key, null))],
+                IEnumerable<Base> list => list.Select((item, idx) => item.WithScopeInfo(new ScopeInformation(this, ep.Key, idx))),
+                _ => throw new InvalidOperationException($"Key '{ep.Key}' has a value with " +
+                                                         $"unexpected type '{ep.Value.GetType()}'.")
             }
         );
 

@@ -1,3 +1,5 @@
+#if NOT_USED
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,3 +49,5 @@ public class BaseDictionary(Base wrapped) : IReadOnlyDictionary<string,object>
     #endregion
 
 }
+
+#endif

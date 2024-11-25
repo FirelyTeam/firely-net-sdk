@@ -14,7 +14,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -77,10 +76,8 @@ public class BaseFhirXmlPocoSerializer
         SerializationUtil.WriteXmlToString(element, (o,w) => Serialize(o, w, summary));
 
     /// <summary>
-    /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
+    /// Serializes the given PCO with FHIR data into XML.
     /// </summary>
-    /// <remarks>Not serializing the "value" element is useful when serializing FHIR primitives into two properties, one
-    /// with just the value, and one with the id/extensions.</remarks>
     private void serializeInternal(
         Base element,
         XmlWriter writer,
@@ -106,8 +103,10 @@ public class BaseFhirXmlPocoSerializer
     private void serializeElement(Base element, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
     {
         // Make sure that elements with attributes are serialized first.
+        // Add the special "value" attribute if this is a FhirPrimitive.
         var orderedMembers = element
             .GetElementPairs()
+            .Concat(element is PrimitiveType { ObjectValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
             .OrderBy(p => p.mapping?.SerializationHint != XmlRepresentation.XmlAttr);
 
@@ -129,7 +128,7 @@ public class BaseFhirXmlPocoSerializer
             var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
                 addSuffixToElementName(mKey, serializeValue) : mKey;
 
-            if (serializeValue is ICollection coll and not byte[])
+            if (serializeValue is IReadOnlyList<Base> coll)
             {
                 foreach (var value in coll)
                     serializeMemberValue(elementName, value, writer, filter);

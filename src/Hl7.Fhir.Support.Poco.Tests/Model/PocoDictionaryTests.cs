@@ -46,10 +46,11 @@ public class PocoDictionaryTests
         pat["name"] = new List<HumanName> { new HumanName().WithGiven("John") };
 
         // Adding a non-existing property should work
-        pat["weight"] = 80.0m;
+        Assert.ThrowsException<InvalidCastException>(() => pat["weight"] = 80.0m);
+        pat["weight"] = new FhirDecimal(80.0m);
 
         pat["name"].Should().BeOfType<List<HumanName>>();
-        pat["weight"].Should().Be(80.0m);
+        pat["weight"].Should().BeOfType<FhirDecimal>().Which.Value.Should().Be(80.0m);
 
         pat["name"] = null!;
         pat["weight"] = null!;

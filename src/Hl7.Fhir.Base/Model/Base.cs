@@ -30,15 +30,12 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -50,7 +47,6 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
     /// FHIR Type Name
     /// </summary>
     public virtual string TypeName => GetType().Name;
-
 
     private Dictionary<string, object>? _overflow = null;
 
@@ -71,11 +67,11 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
         public IEnumerable<object> Annotations(Type type)
         {
             if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
-                    return new[] { this };
+                    return [this];
             else if (type == typeof(IFhirValueProvider))
-                return new[] { this };
+                return [this];
             else if (type == typeof(IResourceTypeSupplier))
-                return new[] { this };
+                return [this];
             else
                 return annotations.OfType(type);
         }
@@ -100,7 +96,11 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
         if (value is null)
             Overflow.Remove(key);
         else
+        {
+            if (value is not Base && value is not IReadOnlyList<Base>)
+                throw new InvalidCastException($"Value for key '{key}' must be of type Base or a list of type Base.");
             Overflow[key] = value;
+        }
 
         return this;
     }
@@ -117,6 +117,4 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
         Overflow.TryGetValue(key, out value);
 
     internal protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Overflow;
-
-    // TODO bring Children + NamedChildren over as well.
 }
