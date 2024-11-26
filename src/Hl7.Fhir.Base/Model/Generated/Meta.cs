@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
     /// Profiles this resource claims to conform to.
     /// </summary>
     /// <remarks>
-    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.Canonical in R4.
+    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.Canonical starting from R4.
     /// </remarks>
     [FhirElement("profile", InSummary=true, Order=60)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
@@ -175,37 +175,37 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.PrimitiveType> _ProfileElement;
 
     /// <summary>
-    /// Profiles this resource claims to conform to
+    /// Profiles this resource claims to conform to. Use this property in STU3.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Profile_STU3
+    public IEnumerable<string> ProfileUri
     {
-      get { return ProfileElement != null ? ProfileElement.Value : null; }
+      get { return ProfileElement != null ? ProfileElement.Cast<Hl7.Fhir.Model.FhirUri>().Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
           ProfileElement = null;
         else
-          ProfileElement = new Hl7.Fhir.Model.FhirUri(value);
-        OnPropertyChanged("Profile_STU3");
+          ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+        OnPropertyChanged("ProfileUri");
       }
     }
 
     /// <summary>
-    /// Profiles this resource claims to conform to
+    /// Profiles this resource claims to conform to. Use this property starting from R4.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Profile
+    public IEnumerable<string> Profile
     {
-      get { return ProfileElement != null ? ProfileElement.Value : null; }
+      get { return ProfileElement != null ? ProfileElement.Cast<Hl7.Fhir.Model.Canonical>().Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
           ProfileElement = null;
         else
-          ProfileElement = new Hl7.Fhir.Model.Canonical(value);
+          ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("Profile");
       }
     }

@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1.
       /// </summary>
       /// <remarks>
-      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, Hl7.Fhir.Model.Code in R5.
+      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Code starting from R5.
       /// </remarks>
       [FhirElement("relation", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
@@ -973,31 +973,31 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.PrimitiveType _RelationElement;
 
       /// <summary>
-      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1. Use this property in STU3, R4 and R4B.
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Relation_STU3
+      public string RelationString
       {
-        get { return RelationElement != null ? RelationElement.Value : null; }
+        get { return RelationElement != null ? ((Hl7.Fhir.Model.FhirString)RelationElement).Value : null; }
         set
         {
           if (value == null)
             RelationElement = null;
           else
             RelationElement = new Hl7.Fhir.Model.FhirString(value);
-          OnPropertyChanged("Relation_STU3");
+          OnPropertyChanged("RelationString");
         }
       }
 
       /// <summary>
-      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1. Use this property starting from R5.
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
       public string Relation
       {
-        get { return RelationElement != null ? RelationElement.Value : null; }
+        get { return RelationElement != null ? ((Hl7.Fhir.Model.Code)RelationElement).Value : null; }
         set
         {
           if (value == null)

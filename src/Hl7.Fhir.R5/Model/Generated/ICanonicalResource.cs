@@ -1840,14 +1840,14 @@ namespace Hl7.Fhir.Model
     }
 
     /// <remarks>
-    /// MedicationKnowledge.NameElement (ListTypeReference { Name = List, PropertyTypeString = List&lt;Hl7.Fhir.Model.FhirString&gt;, Element = PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string } }) is incompatible with
-    /// ICanonicalResource.name (PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string })
+    /// MedicationKnowledge.NameElement (List&lt;Hl7.Fhir.Model.FhirString&gt;) is incompatible with
+    /// ICanonicalResource.name (Hl7.Fhir.Model.FhirString)
     /// </remarks>
     [IgnoreDataMember]
     Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement
     {
       get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.NameElement (ListTypeReference { Name = List, PropertyTypeString = List<Hl7.Fhir.Model.FhirString>, Element = PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string } }) is incompatible with ICanonicalResource.name (PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string })");}
+      set { throw new NotImplementedException("MedicationKnowledge.NameElement (List<Hl7.Fhir.Model.FhirString>) is incompatible with ICanonicalResource.name (Hl7.Fhir.Model.FhirString)");}
     }
 
     // MedicationKnowledge.NameElement () is incompatible with ICanonicalResource.name (string)
@@ -1873,14 +1873,14 @@ namespace Hl7.Fhir.Model
     }
 
     /// <remarks>
-    /// MedicationKnowledge.StatusElement (CodedTypeReference { Name = code, PropertyTypeString = Code&lt;Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes&gt;, PocoTypeName = MedicationKnowledgeStatusCodes, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?, EnumName = MedicationKnowledgeStatusCodes, EnumClassName = MedicationKnowledge }) is incompatible with
-    /// ICanonicalResource.status (CodedTypeReference { Name = code, PropertyTypeString = Code&lt;Hl7.Fhir.Model.PublicationStatus&gt;, PocoTypeName = PublicationStatus, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.PublicationStatus?, EnumName = PublicationStatus, EnumClassName =  })
+    /// MedicationKnowledge.StatusElement (Code&lt;Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes&gt;) is incompatible with
+    /// ICanonicalResource.status (Code&lt;Hl7.Fhir.Model.PublicationStatus&gt;)
     /// </remarks>
     [IgnoreDataMember]
     Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement
     {
       get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.StatusElement (CodedTypeReference { Name = code, PropertyTypeString = Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>, PocoTypeName = MedicationKnowledgeStatusCodes, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?, EnumName = MedicationKnowledgeStatusCodes, EnumClassName = MedicationKnowledge }) is incompatible with ICanonicalResource.status (CodedTypeReference { Name = code, PropertyTypeString = Code<Hl7.Fhir.Model.PublicationStatus>, PocoTypeName = PublicationStatus, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.PublicationStatus?, EnumName = PublicationStatus, EnumClassName =  })");}
+      set { throw new NotImplementedException("MedicationKnowledge.StatusElement (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>) is incompatible with ICanonicalResource.status (Code<Hl7.Fhir.Model.PublicationStatus>)");}
     }
 
     // MedicationKnowledge.StatusElement (Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?) is incompatible with ICanonicalResource.status (Hl7.Fhir.Model.PublicationStatus?)

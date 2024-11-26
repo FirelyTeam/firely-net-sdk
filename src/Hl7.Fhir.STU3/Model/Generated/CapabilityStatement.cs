@@ -641,20 +641,56 @@ namespace Hl7.Fhir.Model
       /// Describes this specific instance.
       /// </summary>
       /// <remarks>
-      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, Hl7.Fhir.Model.Markdown in R5.
+      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
       /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(Type = typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Description
+      public Hl7.Fhir.Model.PrimitiveType DescriptionElement
       {
-        get { return _Description; }
-        set { _Description = value; OnPropertyChanged("Description"); }
+        get { return _DescriptionElement; }
+        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Description;
+      private Hl7.Fhir.Model.PrimitiveType _DescriptionElement;
+
+      /// <summary>
+      /// Describes this specific instance. Use this property in STU3, R4 and R4B.
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string DescriptionString
+      {
+        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.FhirString)DescriptionElement).Value : null; }
+        set
+        {
+          if (value == null)
+            DescriptionElement = null;
+          else
+            DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          OnPropertyChanged("DescriptionString");
+        }
+      }
+
+      /// <summary>
+      /// Describes this specific instance. Use this property starting from R5.
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Description
+      {
+        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.Markdown)DescriptionElement).Value : null; }
+        set
+        {
+          if (value == null)
+            DescriptionElement = null;
+          else
+            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Description");
+        }
+      }
 
       /// <summary>
       /// Base URL for the installation.
@@ -697,7 +733,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Description != null) dest.Description = (Hl7.Fhir.Model.DataType)Description.DeepCopy();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.PrimitiveType)DescriptionElement.DeepCopy();
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         return dest;
       }
@@ -714,7 +750,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
 
         return true;
@@ -726,7 +762,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
 
         return true;
@@ -737,8 +773,8 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = Description;
-            return Description is not null;
+            value = DescriptionElement;
+            return DescriptionElement is not null;
           case "url":
             value = UrlElement;
             return UrlElement is not null;
@@ -753,7 +789,7 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            Description = (Hl7.Fhir.Model.DataType)value;
+            DescriptionElement = (Hl7.Fhir.Model.PrimitiveType)value;
             return this;
           case "url":
             UrlElement = (Hl7.Fhir.Model.FhirUri)value;
@@ -767,7 +803,7 @@ namespace Hl7.Fhir.Model
       internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       }
 

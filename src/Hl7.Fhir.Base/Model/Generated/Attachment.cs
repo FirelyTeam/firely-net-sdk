@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
     /// Uri where the data can be found.
     /// </summary>
     /// <remarks>
-    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.FhirUrl in R4.
+    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.FhirUrl starting from R4.
     /// </remarks>
     [FhirElement("url", InSummary=true, Order=60)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
@@ -174,31 +174,31 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.PrimitiveType _UrlElement;
 
     /// <summary>
-    /// Uri where the data can be found
+    /// Uri where the data can be found. Use this property in STU3.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url_STU3
+    public string UrlUri
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get { return UrlElement != null ? ((Hl7.Fhir.Model.FhirUri)UrlElement).Value : null; }
       set
       {
         if (value == null)
           UrlElement = null;
         else
           UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-        OnPropertyChanged("Url_STU3");
+        OnPropertyChanged("UrlUri");
       }
     }
 
     /// <summary>
-    /// Uri where the data can be found
+    /// Uri where the data can be found. Use this property starting from R4.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
     public string Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get { return UrlElement != null ? ((Hl7.Fhir.Model.FhirUrl)UrlElement).Value : null; }
       set
       {
         if (value == null)
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
     /// Number of bytes of content (if url provided).
     /// </summary>
     /// <remarks>
-    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.UnsignedInt in STU3, Hl7.Fhir.Model.Integer64 in R5.
+    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.UnsignedInt in STU3, R4 and R4B, Hl7.Fhir.Model.Integer64 starting from R5.
     /// </remarks>
     [FhirElement("size", InSummary=true, Order=70)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
@@ -228,31 +228,31 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.PrimitiveType _SizeElement;
 
     /// <summary>
-    /// Number of bytes of content (if url provided)
+    /// Number of bytes of content (if url provided). Use this property in STU3, R4 and R4B.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public int? Size_STU3
+    public int? SizeUnsignedInt
     {
-      get { return SizeElement != null ? SizeElement.Value : null; }
+      get { return SizeElement != null ? ((Hl7.Fhir.Model.UnsignedInt)SizeElement).Value : null; }
       set
       {
         if (value == null)
           SizeElement = null;
         else
           SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
-        OnPropertyChanged("Size_STU3");
+        OnPropertyChanged("SizeUnsignedInt");
       }
     }
 
     /// <summary>
-    /// Number of bytes of content (if url provided)
+    /// Number of bytes of content (if url provided). Use this property starting from R5.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
     public long? Size
     {
-      get { return SizeElement != null ? SizeElement.Value : null; }
+      get { return SizeElement != null ? ((Hl7.Fhir.Model.Integer64)SizeElement).Value : null; }
       set
       {
         if (value == null)

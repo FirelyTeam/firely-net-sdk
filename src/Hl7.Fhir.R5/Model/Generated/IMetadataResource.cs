@@ -671,14 +671,14 @@ namespace Hl7.Fhir.Model
     }
 
     /// <remarks>
-    /// MedicationKnowledge.Author (ComplexTypeReference { Name = Reference, PropertyTypeString = Hl7.Fhir.Model.ResourceReference, PocoTypeName = ResourceReference }) is incompatible with
-    /// IMetadataResource.author (ListTypeReference { Name = List, PropertyTypeString = List&lt;Hl7.Fhir.Model.ContactDetail&gt;, Element = ComplexTypeReference { Name = ContactDetail, PropertyTypeString = Hl7.Fhir.Model.ContactDetail, PocoTypeName = ContactDetail } })
+    /// MedicationKnowledge.Author (Hl7.Fhir.Model.ResourceReference) is incompatible with
+    /// IMetadataResource.author (List&lt;Hl7.Fhir.Model.ContactDetail&gt;)
     /// </remarks>
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.Author (ComplexTypeReference { Name = Reference, PropertyTypeString = Hl7.Fhir.Model.ResourceReference, PocoTypeName = ResourceReference }) is incompatible with IMetadataResource.author (ListTypeReference { Name = List, PropertyTypeString = List<Hl7.Fhir.Model.ContactDetail>, Element = ComplexTypeReference { Name = ContactDetail, PropertyTypeString = Hl7.Fhir.Model.ContactDetail, PocoTypeName = ContactDetail } })");}
+      set { throw new NotImplementedException("MedicationKnowledge.Author (Hl7.Fhir.Model.ResourceReference) is incompatible with IMetadataResource.author (List<Hl7.Fhir.Model.ContactDetail>)");}
     }
 
     [IgnoreDataMember]
