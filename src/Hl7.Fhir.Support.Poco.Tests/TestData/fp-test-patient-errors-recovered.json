@@ -16,6 +16,7 @@
       "id": "1",
       "identifier": [
         {
+          "id": "true",
           "system": "http://hl7.org/fhir/sid/us-ssn",
           "value": "444222222"
         }
@@ -229,7 +230,6 @@
   "_gender": {
     "extension": [
       {
-        "url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
         "valueCode": "metrosexual"
       },
       {

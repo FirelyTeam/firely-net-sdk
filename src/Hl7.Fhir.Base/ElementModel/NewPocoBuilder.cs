@@ -54,9 +54,16 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             var objectValue = newInstance is DynamicPrimitive ?
                 value :
                 convertTypedElementValue(value, node.InstanceType);
-            newInstance["value"] = objectValue;
 
-            if (settings?.AllowUnrecognizedEnums == false && classMapping.EnumType is not null && objectValue is string enumLiteral)
+            if(newInstance is PrimitiveType pt)
+                pt.ObjectValue = objectValue;
+            else
+                raiseFormatError($"{node.Name} is a primitive of type {value.GetType()}, but the target POCO is a {newInstance.GetType()}, " +
+                                 $"which is not FHIR primitive.", node.Location);
+
+            if (settings?.AllowUnrecognizedEnums == false &&
+                classMapping.EnumType is not null &&
+                objectValue is string enumLiteral)
             {
                 // Backwards-compatible check for enums. Although our POCOs accept strings rather
                 // than enum values, this check is still useful for catching typos in the data and may
