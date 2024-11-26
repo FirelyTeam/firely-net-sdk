@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
 
-            Location = InstanceType;
+            Location = InstanceType!;
             ShortPath = InstanceType;
         }
 
@@ -49,9 +49,9 @@ namespace Hl7.Fhir.ElementModel
             var instanceType = definition.Choice != ChoiceType.None
                 ? instance.GetType()
                 : determineInstanceType(definition);
-            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType);
+            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType)!;
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
-            Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
+            Definition = definition;
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
@@ -61,18 +61,8 @@ namespace Hl7.Fhir.ElementModel
         private Type determineInstanceType(PropertyMapping definition)
         {
             if (!definition.IsPrimitive) return definition.PropertyTypeMapping.NativeType;
-
-            // Backwards compat hack: the primitives (since .value is never queried, this
-            // means Element.id, Narrative.div and Extension.url) should be returned as FHIR types, not
-            // system (CQL) type.
-            return definition.Name switch
-            {
-                "url" => typeof(FhirUri),
-                "id" => typeof(FhirString),
-                //"div" => typeof(XHtml),
-                _ => throw new NotSupportedException(
-                    $"Encountered unexpected primitive type {Name} in backward compat behaviour for PocoElementNode.InstanceType.")
-            };
+            throw new NotSupportedException(
+                $"Encountered unexpected primitive type {Name} for PocoElementNode.InstanceType.");
         }
 
         public IElementDefinitionSummary Definition { get; }
@@ -92,8 +82,6 @@ namespace Hl7.Fhir.ElementModel
             {
                 (Base @base, _, _)  => new[] { (@base, 0) },
                 (IEnumerable<Base> bases, _, _)  => bases.Select((e, i) => (e, i)),
-                (string s, Extension, "url")  => new[]{ ( (Base)new FhirUri(s), 0)},
-                (string s, Element, "id")  => new[]{ ((Base)new FhirString(s), 0)},
                 _ => Enumerable.Empty<(Base, int)>(),
             };
         }

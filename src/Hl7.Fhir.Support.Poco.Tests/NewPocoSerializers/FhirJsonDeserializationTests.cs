@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
             yield return data<Extension>(new { unknown = "test" }, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
             yield return data<Extension>(new { url = "test" });
-            yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE);
+            yield return data<Extension>(new { _url = "test" }, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<Extension>(new { unknown = "test", url = "test" },
                 ERR.UNKNOWN_PROPERTY_FOUND_CODE);
             yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE);
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
             yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
-            yield return data<ContactDetail>(new { _name = new { id = true } }, ERR.INCOMPATIBLE_SIMPLE_VALUE_CODE);
+            yield return data<ContactDetail>(new { _name = new { id = true } }, ERR.UNEXPECTED_JSON_TOKEN_CODE);
             yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
 
             static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement.Value
@@ -646,13 +646,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
                 Console.WriteLine(recoveredActual);
 
-                assertErrors(dfe.Exceptions, new string[]
-                {
+                assertErrors(dfe.Exceptions, [
                     ERR.STRING_ISNOTAN_INSTANT_CODE,
-                    ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level                   
+                    ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level
                     ERR.UNKNOWN_RESOURCE_TYPE_CODE, ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE,
                     ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.NO_RESOURCETYPE_PROPERTY_CODE,
-                    ERR.INCOMPATIBLE_SIMPLE_VALUE_CODE, ERR.EXPECTED_START_OF_ARRAY_CODE,
+                    ERR.UNEXPECTED_JSON_TOKEN_CODE, ERR.EXPECTED_START_OF_ARRAY_CODE,
                     ERR.UNKNOWN_PROPERTY_FOUND_CODE, // mother is not a property of HumanName
                     ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, // family is not an array,
                     ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE, // telecom use cannot be null
@@ -665,7 +664,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     COVE.URI_LITERAL_INVALID_CODE, // incorrect oid
                     COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, // given cannot be a single array with just a null
                     ERR.UNEXPECTED_JSON_TOKEN_CODE, // telecom.rank should be a number, not a boolean
-                    ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, // should be extension.url, not extension._url
+                    ERR.EXPECTED_START_OF_OBJECT_CODE, // extension._url is an object (although not applicable)
                     ERR.UNEXPECTED_JSON_TOKEN_CODE, // gender.extension.valueCode should be a string, not a number
                     ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE, // extension.value is incorrect
                     ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, // extension.valueSuperDecimal is incorrect
@@ -673,7 +672,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.NUMBER_CANNOT_BE_PARSED_CODE, // multipleBirthInteger should not be a float (3.14)
                     ERR.INCORRECT_BASE64_DATA_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
                     ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
-                });
+                ]);
 
                 var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
                 var recoveredExpected = File.ReadAllText(recoveredFilename);

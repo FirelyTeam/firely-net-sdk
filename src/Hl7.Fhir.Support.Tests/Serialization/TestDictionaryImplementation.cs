@@ -25,32 +25,23 @@ public class TestDictionaryImplementation
         b.Any().Should().Be(false);
 
         b = new FhirBoolean(true).GetElementList();
-        b.Count.Should().Be(1);
-        b.First().Should().BeEquivalentTo(KeyValuePair.Create("value", true));
+        b.Any().Should().Be(false);
 
         var nb = new FhirBoolean(true);
         nb.SetStringExtension("http://nu.nl", "then");
         nb.ElementId = "id1";
 
         b = nb.GetElementList();
-        b.Count.Should().Be(3);
-        b.Select(kvp => kvp.Key).Should().BeEquivalentTo("value", "id", "extension");
-        var values = b.Select(kvp => kvp.Value).ToList();
-        values.First().Should().BeOfType<bool>();
-        values.Skip(1).First().Should().BeOfType<string>();
-        values.Skip(2).First().Should().BeAssignableTo<IEnumerable<Extension>>();
-        b[2].Value.Should().BeAssignableTo<IEnumerable<Extension>>();
+        b.Count.Should().Be(2);
+
+        b[0].Key.Should().Be("id");
+        b[0].Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("id1");
+        b[1].Key.Should().Be("extension");
+        b[1].Value.Should().BeAssignableTo<IEnumerable<Extension>>();
 
         nb.TryGetValue("id", out var v).Should().BeTrue();
-        v.Should().Be("id1");
+        v.Should().BeOfType<FhirString>().Which.Value.Should().Be("id1");
         nb.TryGetValue("idX", out _).Should().BeFalse();
-    }
-
-    [TestMethod]
-    public void CanEnumerateCodedValue()
-    {
-        var b = new Code<Narrative.NarrativeStatus>(Narrative.NarrativeStatus.Additional).GetElementList();
-        b.Should().BeEquivalentTo(new[] { KeyValuePair.Create("value", Narrative.NarrativeStatus.Additional.GetLiteral()) });
     }
 
     [TestMethod]
@@ -73,7 +64,8 @@ public class TestDictionaryImplementation
         var ext = new Extension("http://nu.nl", new FhirBoolean(true));
         var b = ext.GetElementList();
         b.Count.Should().Be(2);
-        b[0].Should().Be(KeyValuePair.Create<string, object>("url", "http://nu.nl"));
+        b[0].Key.Should().Be("url");
+        b[0].Value.Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
         b[1].Key.Should().Be("value");
         b[1].Value.Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
 

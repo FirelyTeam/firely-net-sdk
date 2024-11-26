@@ -132,7 +132,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
             Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
 
-            IScopedNode? externalResolve(string url)
+            IScopedNode externalResolve(string url)
             {
                 lastUrlResolved = url;
                 return null;

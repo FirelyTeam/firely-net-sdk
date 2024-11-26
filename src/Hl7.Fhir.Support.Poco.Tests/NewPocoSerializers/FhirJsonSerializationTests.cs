@@ -73,11 +73,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
-            FhirBoolean b = new() { ObjectValue = "treu" };
-            var jdoc = JsonDocument.Parse(JsonSerializer.Serialize(b, options));
-            Assert.AreEqual("treu", jdoc.RootElement.GetProperty("value").GetString());
+            var b = new FhirBoolean() { ObjectValue = "treu" };
+            var pInvalid = new Patient { ActiveElement = b };
 
-            Patient p = new() { Contact = new() { new Patient.ContactComponent() } };
+            var jdoc = JsonDocument.Parse(JsonSerializer.Serialize(pInvalid, options));
+            Assert.AreEqual("treu", jdoc.RootElement
+                .GetProperty("active").GetString());
+
+            Patient p = new() { Contact = [new Patient.ContactComponent()] };
             jdoc = JsonDocument.Parse(JsonSerializer.Serialize(p, options));
             var contactArray = jdoc.RootElement.GetProperty("contact");
             contactArray.GetArrayLength().Should().Be(1);

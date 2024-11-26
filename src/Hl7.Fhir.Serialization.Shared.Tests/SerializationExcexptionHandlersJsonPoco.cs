@@ -591,8 +591,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Patient.birthDate.id", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON126", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -799,8 +799,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON126", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[0].Expression.First());
 
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);

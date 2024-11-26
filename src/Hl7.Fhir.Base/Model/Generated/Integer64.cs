@@ -77,14 +77,14 @@ namespace Hl7.Fhir.Model
     public long? Value
     {
       get
-      {
-          return ObjectValue switch
-          {
-              null => null,
-              long l => l,
-              _ => Convert.ToInt64(ObjectValue)
-          };
-      }
+{
+    return ObjectValue switch
+    {
+        null => null,
+        long l => l,
+        _ => Convert.ToInt64(ObjectValue)
+    };
+}
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

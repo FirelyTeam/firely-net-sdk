@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Serialization
             /// <summary>
             /// Deserialize the non-value part of a FhirPrimitive, and do not call validation of
             /// the instance yet, since it will be done when the FhirPrimitive has been constructed
-            /// completely, includin its value part.
+            /// completely, including its value part.
             /// </summary>
             FhirPrimitive
         }
@@ -689,34 +689,10 @@ namespace Hl7.Fhir.Serialization
                 return DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
             }
 
-            // primitive values (not FHIR primitives, real primitives, like Element.id)
-            // Note: 'value' attributes for FHIR primitives are handled elsewhere, since that logic
-            // needs to handle PrimitiveType.ObjectValue & dual properties.
-            else if (propertyValueMapping.IsPrimitive)
-            {
-                var (result, error) = DeserializePrimitiveValue(ref reader, propertyValueMapping.NativeType, propertyMapping.FhirType.FirstOrDefault(), state.Path);
-
-                if (error is not null && result is not null)
-                {
-                    // Signal the fact that we're throwing away data here, as we cannot put
-                    // "raw" data into a simple property like Id and Url.
-                    state.Errors.Add(ERR.INCOMPATIBLE_SIMPLE_VALUE(ref reader, state.Path.GetInstancePath(), error.Message, error));
-                    return null;
-                }
-                else
-                {
-                    state.Errors.Add(error);
-                    return result;
-                }
-            }
-
             // "normal" complex types & backbones
-            else
-            {
-                var newComplex = (Base)propertyValueMapping.Factory();
-                deserializeObjectInto(newComplex, propertyValueMapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: false);
-                return newComplex;
-            }
+            var newComplex = (Base)propertyValueMapping.Factory();
+            deserializeObjectInto(newComplex, propertyValueMapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: false);
+            return newComplex;
         }
 
         /// <summary>
@@ -837,19 +813,23 @@ namespace Hl7.Fhir.Serialization
             bool success;
 
             if (implementingType == typeof(decimal))
-                success = reader.TryGetDecimal(out decimal dec) && (value = dec) is { };
+                success = reader.TryGetDecimal(out decimal dec) && (value = dec) is not null;
+            else if (implementingType == typeof(short))
+                success = reader.TryGetInt16(out short i16) && (value = i16) is not null;
+            else if (implementingType == typeof(ushort))
+                success = reader.TryGetUInt16(out ushort ui16) && (value = ui16) is not null;
             else if (implementingType == typeof(int))
-                success = reader.TryGetInt32(out int i32) && (value = i32) is { };
+                success = reader.TryGetInt32(out int i32) && (value = i32) is not null;
             else if (implementingType == typeof(uint))
-                success = reader.TryGetUInt32(out uint ui32) && (value = ui32) is { };
+                success = reader.TryGetUInt32(out uint ui32) && (value = ui32) is not null;
             else if (implementingType == typeof(long))
-                success = reader.TryGetInt64(out long i64) && (value = i64) is { };
+                success = reader.TryGetInt64(out long i64) && (value = i64) is not null;
             else if (implementingType == typeof(ulong))
-                success = reader.TryGetUInt64(out ulong ui64) && (value = ui64) is { };
+                success = reader.TryGetUInt64(out ulong ui64) && (value = ui64) is not null;
             else if (implementingType == typeof(float))
-                success = reader.TryGetSingle(out float si) && si.IsNormal() && (value = si) is { };
+                success = reader.TryGetSingle(out float si) && si.IsNormal() && (value = si) is not null;
             else if (implementingType == typeof(double))
-                success = reader.TryGetDouble(out double dbl) && dbl.IsNormal() && (value = dbl) is { };
+                success = reader.TryGetDouble(out double dbl) && dbl.IsNormal() && (value = dbl) is not null;
             else
             {
                 var rawValue = reader.GetRawText();

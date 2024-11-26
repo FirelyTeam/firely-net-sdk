@@ -548,6 +548,10 @@ namespace Hl7.Fhir.Serialization
             {
                 if (implementingType == typeof(string))
                     return (trimmedValue, null);
+                else if (implementingType == typeof(FhirString))
+                    return (new FhirString(trimmedValue), null);
+                else if(implementingType == typeof(FhirUri))
+                    return (new FhirUri(trimmedValue), null);
                 else if (implementingType == typeof(bool))
                 {
                     return ElementModel.Types.Boolean.TryParse(trimmedValue, out var parsed)

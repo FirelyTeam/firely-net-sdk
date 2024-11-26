@@ -57,36 +57,6 @@ namespace Hl7.Fhir.Model
             return ObjectValue is null ? null : PrimitiveTypeConverter.ConvertTo<string>(ObjectValue);
         }
 
-        /// <inheritdoc/>
-        internal protected override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
-        {
-            if (key == "value")
-            {
-                value = ObjectValue;
-                return value is not null;
-            }
-            else
-                return base.TryGetValue(key, out value);
-        }
-
-        internal protected override Base SetValue(string key, object? value)
-        {
-            switch (key)
-            {
-                case "value":
-                    ObjectValue = value;
-                    return this;
-                default:
-                    return base.SetValue(key, value);
-            }
-        }
-        /// <inheritdoc/>
-        internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
-        {
-            if (ObjectValue is not null) yield return new KeyValuePair<string, object>("value", ObjectValue);
-            foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        }
-
         /// <summary>
         /// Returns true if the primitive has any child elements (currently in FHIR this can
         /// be only the element id and zero or more extensions).
