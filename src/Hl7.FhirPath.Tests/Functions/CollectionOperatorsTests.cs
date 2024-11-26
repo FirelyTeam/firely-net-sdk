@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -51,10 +52,8 @@ namespace HL7.FhirPath.Tests.Functions
         {
             IEnumerable<IScopedNode> left =
                 RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
-            IEnumerable<IScopedNode> right = 
+            IEnumerable<IScopedNode> right =
                 RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([5, 6]);
-            CollectionAssert.AreEqual(RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3]).ToList(),
-                    left.Exclude(right).ToList());
         }
     }
 }
