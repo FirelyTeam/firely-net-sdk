@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public IEnumerable<string> ProfileUri
     {
-      get { return ProfileElement != null ? ProfileElement.Cast<Hl7.Fhir.Model.FhirUri>().Select(elem => elem.Value) : null; }
+      get { return ProfileElement != null ? ProfileElement.Cast<IValue<string>>().Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public IEnumerable<string> Profile
     {
-      get { return ProfileElement != null ? ProfileElement.Cast<Hl7.Fhir.Model.Canonical>().Select(elem => elem.Value) : null; }
+      get { return ProfileElement != null ? ProfileElement.Cast<IValue<string>>().Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
