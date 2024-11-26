@@ -13,7 +13,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -61,7 +60,7 @@ public class BaseFhirJsonPocoSerializer
     /// Serializes the given dictionary with FHIR data into Json.
     /// </summary>
     public void Serialize(Base element, Utf8JsonWriter writer) =>
-        serializeInternal(element, writer, skipValue: false);
+        serializeInternal(element, writer);
     
     /// <summary>
     /// Serializes the given dictionary with FHIR data into a Json string.
@@ -70,21 +69,28 @@ public class BaseFhirJsonPocoSerializer
     {
         var stream = new MemoryStream();
         var writer = new Utf8JsonWriter(stream);
-        serializeInternal(element, writer, skipValue: false);
+        serializeInternal(element, writer);
         writer.Flush();
         return Encoding.UTF8.GetString(stream.ToArray());
     }
 
     /// <summary>
-    /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
+    /// Serializes the given POCO with FHIR data into Json, optionally skipping the "value" element.
     /// </summary>
     /// <remarks>Not serializing the "value" element is useful when serializing FHIR primitives into two properties, one
     /// with just the value, and one with the id/extensions.</remarks>
     private void serializeInternal(
-        Base element,
-        Utf8JsonWriter writer,
-        bool skipValue)
+        Base? element,
+        Utf8JsonWriter writer
+        )
     {
+        if (element is null)
+        {
+            // empty objects in arrays may occur in error situations.
+            writer.WriteNullValue();
+            return;
+        }
+
         writer.WriteStartObject();
         var filter = Settings.SummaryFilter;
 
@@ -100,8 +106,6 @@ public class BaseFhirJsonPocoSerializer
 
         foreach (var member in element.GetElementPairs())
         {
-            if (skipValue && member.Key == "value") continue;
-
             var propertyMapping = mapping?.FindMappedElementByName(member.Key);
 
             if (filter?.TryEnterMember(member.Key, member.Value, propertyMapping) == false)
@@ -116,25 +120,33 @@ public class BaseFhirJsonPocoSerializer
                 ? (member.Value is Integer64 ? typeof(Integer64) : null)
                 : propertyMapping?.FhirType.FirstOrDefault();
 
-            if (member.Value is PrimitiveType pt)
-                serializeFhirPrimitive(propertyName, pt, writer, requiredType);
-            else if (member.Value is IReadOnlyCollection<PrimitiveType?> pts)
-                serializeFhirPrimitiveList(propertyName, pts, writer, requiredType);
-            else
+            switch (member.Value)
             {
-                writer.WritePropertyName(propertyName);
+                case PrimitiveType pt:
+                    serializeFhirPrimitive(propertyName, pt, writer, requiredType);
+                    break;
+                case IReadOnlyList<PrimitiveType?> pts:
+                    serializeFhirPrimitiveList(propertyName, pts, writer, requiredType);
+                    break;
+                case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
+                    {
+                        writer.WritePropertyName(propertyName);
+                        writer.WriteStartArray();
 
-                if (member.Value is ICollection coll and not byte[])
-                {
-                    writer.WriteStartArray();
+                        foreach (var child in children)
+                            serializeInternal(child, writer);
 
-                    foreach (var value in coll)
-                        serializeMemberValue(value, writer, requiredType);
-
-                    writer.WriteEndArray();
-                }
-                else
-                    serializeMemberValue(member.Value, writer, requiredType);
+                        writer.WriteEndArray();
+                        break;
+                    }
+                case Base b:
+                    {
+                        writer.WritePropertyName(propertyName);
+                        serializeInternal(b, writer);
+                        break;
+                    }
+                default:
+                    throw new InvalidOperationException($"GetElementPairs() returned a non-Base element of type {member.Value.GetType()}.");
             }
 
             filter?.LeaveMember(member.Key, member.Value, propertyMapping);
@@ -153,15 +165,7 @@ public class BaseFhirJsonPocoSerializer
             _ => null
         };
 
-        return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName.Substring(1);
-    }
-
-    private void serializeMemberValue(object value, Utf8JsonWriter writer, Type? requiredType = null)
-    {
-        if (value is Base complex)
-            serializeInternal(complex, writer, skipValue: false);
-        else
-            SerializePrimitiveValue(value, writer, requiredType);
+        return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName[1..];
     }
 
     /// <summary>
@@ -172,7 +176,7 @@ public class BaseFhirJsonPocoSerializer
     /// may use Json <c>null</c>s as placeholders.</remarks>
     private void serializeFhirPrimitiveList(
         string elementName,
-        IReadOnlyCollection<PrimitiveType?> values,
+        IReadOnlyList<PrimitiveType?> values,
         Utf8JsonWriter writer,
         Type? requiredType = null)
     {
@@ -198,7 +202,7 @@ public class BaseFhirJsonPocoSerializer
                     writeStartArray(elementName, numNullsMissed, writer);
                 }
 
-                SerializePrimitiveValue(value!.ObjectValue, writer, requiredType);
+                SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
             }
             else
             {
@@ -228,7 +232,7 @@ public class BaseFhirJsonPocoSerializer
                     writeStartArray("_" + elementName, numNullsMissed, writer);
                 }
 
-                serializeInternal(value, writer, skipValue: true);
+                serializeInternal(value, writer);
             }
             else
             {
@@ -267,12 +271,11 @@ public class BaseFhirJsonPocoSerializer
             SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
         }
 
-        if (value.HasElements)
-        {
-            // Write a property with '_elementName'
-            writer.WritePropertyName("_" + elementName);
-            serializeInternal(value, writer, skipValue: true);
-        }
+        if (!value.HasElements) return;
+
+        // Write a property with '_elementName'
+        writer.WritePropertyName("_" + elementName);
+        serializeInternal(value, writer);
     }
 
     /// <summary>
