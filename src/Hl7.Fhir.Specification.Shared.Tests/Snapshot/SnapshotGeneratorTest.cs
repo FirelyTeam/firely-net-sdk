@@ -4123,7 +4123,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
 
-            baseBinding.Description.Should().BeEquivalentTo(profileBinding.Description);
+            baseBinding.DescriptionElement.IsExactly(profileBinding.DescriptionElement).Should().BeTrue();
             baseBinding.ValueSet.Should().BeEquivalentTo(profileBinding.ValueSet);
         }
 

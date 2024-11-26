@@ -782,18 +782,6 @@ namespace Hl7.Fhir.Serialization
                 bool isInteger64()
                     => fhirType == typeof(Integer64);
             }
-
-            // Validation is now done using POCO validation, so have removed it here.
-            // Keep code around in case I make my mind up before publication.
-            //static (object?, FhirJsonException?) readEnum(ref Utf8JsonReader reader, Type enumType)
-            //{
-            //    var contents = reader.GetString()!;
-            //    var enumValue = EnumUtility.ParseLiteral(contents, enumType);
-
-            //    return enumValue is not null
-            //        ? (contents, null)
-            //        : (contents, ERR.CODED_VALUE_NOT_IN_ENUM.With(ref reader, contents, EnumUtility.GetName(enumType)));
-            //}
         }
 
         private static (object?, FhirJsonException) unexpectedToken(ref Utf8JsonReader reader, string instancePath, string? value, string expected, string actual) =>

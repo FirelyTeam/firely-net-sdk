@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string DescriptionString
       {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.FhirString)DescriptionElement).Value : null; }
+        get { return DescriptionElement != null ? ((IValue<string>)DescriptionElement).Value : null; }
         set
         {
           if (value == null)
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Description
       {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.Markdown)DescriptionElement).Value : null; }
+        get { return DescriptionElement != null ? ((IValue<string>)DescriptionElement).Value : null; }
         set
         {
           if (value == null)

@@ -1431,7 +1431,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string RequirementsString
       {
-        get { return RequirementsElement != null ? ((Hl7.Fhir.Model.FhirString)RequirementsElement).Value : null; }
+        get { return RequirementsElement != null ? ((IValue<string>)RequirementsElement).Value : null; }
         set
         {
           if (value == null)
@@ -1449,7 +1449,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Requirements
       {
-        get { return RequirementsElement != null ? ((Hl7.Fhir.Model.Markdown)RequirementsElement).Value : null; }
+        get { return RequirementsElement != null ? ((IValue<string>)RequirementsElement).Value : null; }
         set
         {
           if (value == null)
@@ -1879,7 +1879,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string DescriptionString
       {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.FhirString)DescriptionElement).Value : null; }
+        get { return DescriptionElement != null ? ((IValue<string>)DescriptionElement).Value : null; }
         set
         {
           if (value == null)
@@ -1897,7 +1897,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Description
       {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.Markdown)DescriptionElement).Value : null; }
+        get { return DescriptionElement != null ? ((IValue<string>)DescriptionElement).Value : null; }
         set
         {
           if (value == null)
@@ -2533,7 +2533,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string CommentString
       {
-        get { return CommentElement != null ? ((Hl7.Fhir.Model.FhirString)CommentElement).Value : null; }
+        get { return CommentElement != null ? ((IValue<string>)CommentElement).Value : null; }
         set
         {
           if (value == null)
@@ -2551,7 +2551,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Comment
       {
-        get { return CommentElement != null ? ((Hl7.Fhir.Model.Markdown)CommentElement).Value : null; }
+        get { return CommentElement != null ? ((IValue<string>)CommentElement).Value : null; }
         set
         {
           if (value == null)

@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string RelationString
       {
-        get { return RelationElement != null ? ((Hl7.Fhir.Model.FhirString)RelationElement).Value : null; }
+        get { return RelationElement != null ? ((IValue<string>)RelationElement).Value : null; }
         set
         {
           if (value == null)
@@ -997,7 +997,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Relation
       {
-        get { return RelationElement != null ? ((Hl7.Fhir.Model.Code)RelationElement).Value : null; }
+        get { return RelationElement != null ? ((IValue<string>)RelationElement).Value : null; }
         set
         {
           if (value == null)

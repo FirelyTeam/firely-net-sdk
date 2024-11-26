@@ -1354,53 +1354,30 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why this constraint is necessary or appropriate.
       /// </summary>
-      /// <remarks>
-      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
-      /// </remarks>
       [FhirElement("requirements", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.PrimitiveType RequirementsElement
+      public Hl7.Fhir.Model.FhirString RequirementsElement
       {
         get { return _RequirementsElement; }
         set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
       }
 
-      private Hl7.Fhir.Model.PrimitiveType _RequirementsElement;
+      private Hl7.Fhir.Model.FhirString _RequirementsElement;
 
       /// <summary>
-      /// Why this constraint is necessary or appropriate. Use this property in STU3, R4 and R4B.
+      /// Why this constraint is necessary or appropriate
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string RequirementsString
+      public string Requirements
       {
-        get { return RequirementsElement != null ? ((Hl7.Fhir.Model.FhirString)RequirementsElement).Value : null; }
+        get { return RequirementsElement != null ? RequirementsElement.Value : null; }
         set
         {
           if (value == null)
             RequirementsElement = null;
           else
             RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
-          OnPropertyChanged("RequirementsString");
-        }
-      }
-
-      /// <summary>
-      /// Why this constraint is necessary or appropriate. Use this property starting from R5.
-      /// </summary>
-      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-      [IgnoreDataMember]
-      public string Requirements
-      {
-        get { return RequirementsElement != null ? ((Hl7.Fhir.Model.Markdown)RequirementsElement).Value : null; }
-        set
-        {
-          if (value == null)
-            RequirementsElement = null;
-          else
-            RequirementsElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Requirements");
         }
       }
@@ -1580,7 +1557,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
-        if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.PrimitiveType)RequirementsElement.DeepCopy();
+        if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
         if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity>)SeverityElement.DeepCopy();
         if(HumanElement != null) dest.HumanElement = (Hl7.Fhir.Model.FhirString)HumanElement.DeepCopy();
         if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
@@ -1668,7 +1645,7 @@ namespace Hl7.Fhir.Model
             KeyElement = (Hl7.Fhir.Model.Id)value;
             return this;
           case "requirements":
-            RequirementsElement = (Hl7.Fhir.Model.PrimitiveType)value;
+            RequirementsElement = (Hl7.Fhir.Model.FhirString)value;
             return this;
           case "severity":
             SeverityElement = (Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity>)value;
@@ -1759,53 +1736,30 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human explanation of the value set.
       /// </summary>
-      /// <remarks>
-      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
-      /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.PrimitiveType DescriptionElement
+      public Hl7.Fhir.Model.FhirString DescriptionElement
       {
         get { return _DescriptionElement; }
         set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.PrimitiveType _DescriptionElement;
+      private Hl7.Fhir.Model.FhirString _DescriptionElement;
 
       /// <summary>
-      /// Human explanation of the value set. Use this property in STU3, R4 and R4B.
+      /// Human explanation of the value set
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string DescriptionString
+      public string Description
       {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.FhirString)DescriptionElement).Value : null; }
+        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
         set
         {
           if (value == null)
             DescriptionElement = null;
           else
             DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-          OnPropertyChanged("DescriptionString");
-        }
-      }
-
-      /// <summary>
-      /// Human explanation of the value set. Use this property starting from R5.
-      /// </summary>
-      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-      [IgnoreDataMember]
-      public string Description
-      {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.Markdown)DescriptionElement).Value : null; }
-        set
-        {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1837,7 +1791,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>)StrengthElement.DeepCopy();
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.PrimitiveType)DescriptionElement.DeepCopy();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
         if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.DataType)ValueSet.DeepCopy();
         return dest;
       }
@@ -1901,7 +1855,7 @@ namespace Hl7.Fhir.Model
             StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>)value;
             return this;
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.PrimitiveType)value;
+            DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
             return this;
           case "valueSet":
             ValueSet = (Hl7.Fhir.Model.DataType)value;
@@ -2038,53 +1992,30 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Comments about the mapping or its use.
       /// </summary>
-      /// <remarks>
-      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
-      /// </remarks>
       [FhirElement("comment", InSummary=true, Order=60)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.PrimitiveType CommentElement
+      public Hl7.Fhir.Model.FhirString CommentElement
       {
         get { return _CommentElement; }
         set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
       }
 
-      private Hl7.Fhir.Model.PrimitiveType _CommentElement;
+      private Hl7.Fhir.Model.FhirString _CommentElement;
 
       /// <summary>
-      /// Comments about the mapping or its use. Use this property in STU3, R4 and R4B.
+      /// Comments about the mapping or its use
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string CommentString
+      public string Comment
       {
-        get { return CommentElement != null ? ((Hl7.Fhir.Model.FhirString)CommentElement).Value : null; }
+        get { return CommentElement != null ? CommentElement.Value : null; }
         set
         {
           if (value == null)
             CommentElement = null;
           else
             CommentElement = new Hl7.Fhir.Model.FhirString(value);
-          OnPropertyChanged("CommentString");
-        }
-      }
-
-      /// <summary>
-      /// Comments about the mapping or its use. Use this property starting from R5.
-      /// </summary>
-      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-      [IgnoreDataMember]
-      public string Comment
-      {
-        get { return CommentElement != null ? ((Hl7.Fhir.Model.Markdown)CommentElement).Value : null; }
-        set
-        {
-          if (value == null)
-            CommentElement = null;
-          else
-            CommentElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -2102,7 +2033,7 @@ namespace Hl7.Fhir.Model
         if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
         if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
         if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
-        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.PrimitiveType)CommentElement.DeepCopy();
+        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
         return dest;
       }
 
@@ -2176,7 +2107,7 @@ namespace Hl7.Fhir.Model
             MapElement = (Hl7.Fhir.Model.FhirString)value;
             return this;
           case "comment":
-            CommentElement = (Hl7.Fhir.Model.PrimitiveType)value;
+            CommentElement = (Hl7.Fhir.Model.FhirString)value;
             return this;
           default:
             return base.SetValue(key, value);

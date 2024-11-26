@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string UrlUri
     {
-      get { return UrlElement != null ? ((Hl7.Fhir.Model.FhirUri)UrlElement).Value : null; }
+      get { return UrlElement != null ? ((IValue<string>)UrlElement).Value : null; }
       set
       {
         if (value == null)
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Url
     {
-      get { return UrlElement != null ? ((Hl7.Fhir.Model.FhirUrl)UrlElement).Value : null; }
+      get { return UrlElement != null ? ((IValue<string>)UrlElement).Value : null; }
       set
       {
         if (value == null)

@@ -640,54 +640,31 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Describes this specific instance.
       /// </summary>
-      /// <remarks>
-      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
-      /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PrimitiveType DescriptionElement
+      public Hl7.Fhir.Model.FhirString DescriptionElement
       {
         get { return _DescriptionElement; }
         set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.PrimitiveType _DescriptionElement;
+      private Hl7.Fhir.Model.FhirString _DescriptionElement;
 
       /// <summary>
-      /// Describes this specific instance. Use this property in STU3, R4 and R4B.
+      /// Describes this specific instance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string DescriptionString
+      public string Description
       {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.FhirString)DescriptionElement).Value : null; }
+        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
         set
         {
           if (value == null)
             DescriptionElement = null;
           else
             DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-          OnPropertyChanged("DescriptionString");
-        }
-      }
-
-      /// <summary>
-      /// Describes this specific instance. Use this property starting from R5.
-      /// </summary>
-      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-      [IgnoreDataMember]
-      public string Description
-      {
-        get { return DescriptionElement != null ? ((Hl7.Fhir.Model.Markdown)DescriptionElement).Value : null; }
-        set
-        {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Description");
         }
       }
@@ -733,7 +710,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.PrimitiveType)DescriptionElement.DeepCopy();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         return dest;
       }
@@ -789,7 +766,7 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.PrimitiveType)value;
+            DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
             return this;
           case "url":
             UrlElement = (Hl7.Fhir.Model.FhirUri)value;
