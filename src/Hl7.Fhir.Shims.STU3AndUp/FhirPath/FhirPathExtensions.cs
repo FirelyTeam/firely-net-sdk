@@ -27,14 +27,13 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="resolver">results of a resolver as Resource</param>
         /// <returns>Result of the convertion to IScopedNode</returns>
-        public static Func<string, IScopedNode?> ToFhirPathResolver(this Func<string, Resource> resolver)
+        public static Func<string, IScopedNode?> ToFhirPathResolver(this Func<string, SinglePocoElementNode> resolver)
         {
             return navResolver;
 
             IScopedNode? navResolver(string url)
             {
-                var resource = resolver(url);
-                return resource;
+                return resolver(url);
             }
         }
 

@@ -48,19 +48,10 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestExclude()
         {
-            IEnumerable<IScopedNode> left = 
-            [
-                new Integer(1),
-                new Integer(3),
-                new Integer(3),
-                new Integer(5),
-                new Integer(6)
-            ];
+            IEnumerable<IScopedNode> left =
+                new RepeatingPrimitiveElementNode<Integer>(1, 3, 3, 5, 6);
             IEnumerable<IScopedNode> right = 
-            [
-                new Integer(5),
-                new Integer(6)
-            ];
+                new RepeatingPrimitiveElementNode<Integer>(5, 6);
             CollectionAssert.AreEqual(ElementNode.CreateList(1, 3, 3).ToList(),
                     left.Exclude(right).ToList());
         }

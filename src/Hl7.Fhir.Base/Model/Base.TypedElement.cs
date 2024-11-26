@@ -47,11 +47,6 @@ public abstract partial class Base
         }
     }
 
-    string? IResourceTypeSupplier.ResourceType =>
-        this is Resource
-            ? ((ITypedElement)this).InstanceType
-            : null;
-
     // #region ScopeInformation
     //
     // [NonSerialized] private ScopeInformation? _scopeInfo;

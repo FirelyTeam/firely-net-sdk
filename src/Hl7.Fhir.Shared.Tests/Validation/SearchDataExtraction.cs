@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Test.Validation
                 var type = ModelInfo.GetTypeForFhirType(ri.ResourceType)!;
                 DomainResource res = Activator.CreateInstance(type) as DomainResource;
                 res!.Id = ri.Id;
-                return res.ToScopedNode();
+                return res.ToElementNode();
             }
             return null;
         }

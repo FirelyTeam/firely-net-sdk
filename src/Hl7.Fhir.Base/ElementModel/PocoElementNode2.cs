@@ -13,42 +13,17 @@ namespace Hl7.Fhir.ElementModel;
 
 #nullable enable
 
-public abstract record PocoElementNode2(string Name, PocoElementNode2? Parent, object Payload) : IScopedNode, IFhirValueProvider, IResourceTypeSupplier
+public abstract record PocoElementNode2(string Name, SinglePocoElementNode? Parent, object Payload) : IEnumerable<SinglePocoElementNode>
 {
-    public abstract SinglePocoElementNode this[int index] { get; }
-    
     public abstract IEnumerable<PocoElementNode2> Children();
     public abstract PocoElementNode2? Child(string name);
-
-    public abstract IEnumerable<PocoElementNode2> ListMembers();
-    public abstract NodeType Type { get; }
-    public abstract object? Value { get; }
-    public abstract string Location { get; }
-    public abstract bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result);
-
-    public abstract bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result);
-
-    public IElementDefinitionSummary? Definition => null;
-
-    IScopedNode? IScopedNode.Parent => Parent;
-    IEnumerable<IScopedNode> IScopedNode.Children(string? name) => name is null 
-        ? Children().SelectMany(node => node.ListMembers())
-        : Child(name) is {} child ? [child] : [];
-
-    IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children();
-
-    public abstract string? InstanceType { get; }
-    public abstract string ShortPath { get; }
-    public Base FhirValue { get; }
-    public string ResourceType { get; }
+    
+    public abstract IEnumerator<SinglePocoElementNode> GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
-public record SinglePocoElementNode(string Name, int? Index, PocoElementNode2? Parent, Base Poco) : PocoElementNode2(Name, Parent, Poco)
+public record SinglePocoElementNode(string Name, int? Index, SinglePocoElementNode? Parent, Base Poco) : PocoElementNode2(Name, Parent, Poco), IScopedNode, IFhirValueProvider, IResourceTypeSupplier
 {
-    public override SinglePocoElementNode this[int index] => index == 0
-        ? this
-        : throw new ArgumentException("Index out of range", nameof(index));
-
     public override IEnumerable<PocoElementNode2> Children() =>
         Poco.GetElementPairs()
             .Where(kvp => kvp.Key is not "value") // we should be able to throw this check away once we deprecate value
@@ -72,9 +47,9 @@ public record SinglePocoElementNode(string Name, int? Index, PocoElementNode2? P
         }
         : null;
 
-    public override IEnumerable<PocoElementNode2> ListMembers() => [this];
+    private IEnumerable<SinglePocoElementNode> asList() => [this];
 
-    public override NodeType Type => Poco switch
+    public NodeType Type => Poco switch
     {
         Bundle => NodeType.Bundle | NodeType.Resource,
         PrimitiveType => NodeType.Primitive,
@@ -85,7 +60,7 @@ public record SinglePocoElementNode(string Name, int? Index, PocoElementNode2? P
         _ => 0
     };
 
-    public override string? InstanceType =>
+    public string? InstanceType =>
         Poco switch
         {
             BackboneElement => "BackboneElement",
@@ -93,10 +68,9 @@ public record SinglePocoElementNode(string Name, int? Index, PocoElementNode2? P
             _ => Poco.TypeName
         };
 
-    private Lazy<object?> _iteValue = new (() => Poco is PrimitiveType ? Poco.ToITypedElementValue() : null);
-    public override object? Value => _iteValue.Value;
+    public virtual object? Value => null;
 
-    public override string Location => (Index, Parent) switch
+    public string Location => (Index, Parent) switch
     {
         // if we have an index, write it
         ({ } idx, { } parent) => $"{parent.Location}.{Name}[{idx}]",
@@ -106,19 +80,22 @@ public record SinglePocoElementNode(string Name, int? Index, PocoElementNode2? P
         _ => Name
     };
 
-    public override bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
+    public IElementDefinitionSummary? Definition => null;
+
+    public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
     {
         result = Poco is Bundle ? this
             .Child<RepeatingPocoElementNode>("entry")?
             .FirstOrDefault<Bundle.EntryComponent>(entry => 
                 entry.FullUrl == fullUrl)
-            ?.Child("resource") : null;
+            ?.Child<SinglePocoElementNode>("resource") : null;
         return result is not null;
     }
 
-    public override bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result) => throw new NotImplementedException();
+    public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result) => throw new NotImplementedException();
+    public override IEnumerator<SinglePocoElementNode> GetEnumerator() => asList().GetEnumerator();
 
-    public override string ShortPath => (Index, Parent) switch
+    public string ShortPath => (Index, Parent) switch
     {
         // if we have an index, we have a parent.
         ({ } idx, { } parent) => $"{parent.ShortPath}.{Name}[{idx}]",
@@ -127,11 +104,24 @@ public record SinglePocoElementNode(string Name, int? Index, PocoElementNode2? P
         // if we have neither, we are the root. Note that we omit indices here.
         _ => Name
     };
+
+    public Base FhirValue => Poco;
+    
+    public string? ResourceType => Poco is Resource 
+        ? InstanceType
+        : null;
+    
+    IScopedNode? IScopedNode.Parent => Parent;
+    IEnumerable<IScopedNode> IScopedNode.Children(string? name) => name is null 
+        ? Children().SelectMany(node => node)
+        : Child(name) ?? Enumerable.Empty<SinglePocoElementNode>();
+
+    IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children();
 }
 
-public record RepeatingPocoElementNode(string Name, PocoElementNode2? Parent, IReadOnlyList<Base> Pocos) : PocoElementNode2(Name, Parent, Pocos)
+public record RepeatingPocoElementNode(string Name, SinglePocoElementNode? Parent, IReadOnlyList<Base> Pocos) : PocoElementNode2(Name, Parent, Pocos)
 {
-    public override SinglePocoElementNode this[int index] => new(Name, index, Parent, Pocos[index]);
+    public SinglePocoElementNode this[int index] => new(Name, index, Parent, Pocos[index]);
     
     public override IEnumerable<PocoElementNode2> Children()
     {
@@ -144,7 +134,7 @@ public record RepeatingPocoElementNode(string Name, PocoElementNode2? Parent, IR
     }
 
     public IEnumerable<SinglePocoElementNode> Where<T>([NotNull] Func<T, bool> predicate) where T : Base =>
-        Pocos.OfType<T>().Where(predicate).Select((poco, index) => new SinglePocoElementNode(Name, index, this, poco));
+        Pocos.OfType<T>().Where(predicate).Select((poco, index) => new SinglePocoElementNode(Name, index, Parent, poco));
 
     public SinglePocoElementNode? FirstOrDefault<T>([NotNull] Func<T, bool> predicate) where T : Base
     {
@@ -156,17 +146,21 @@ public record RepeatingPocoElementNode(string Name, PocoElementNode2? Parent, IR
         return null;
     }
 
-    public override IEnumerable<PocoElementNode2> ListMembers() => Pocos.Select((poco, index) => new SinglePocoElementNode(Name, index, Parent, poco));
-    public override NodeType Type => throw new NotImplementedException();
-    public override string? InstanceType { get; } // derive from classMapping?
-    public override string ShortPath => throw new NotImplementedException();
+    public override IEnumerator<SinglePocoElementNode> GetEnumerator() => Pocos.Select((poco, index) => new SinglePocoElementNode(Name, index, Parent, poco)).GetEnumerator();
+}
 
-    public override object? Value => throw new NotImplementedException();
+public record SinglePrimitiveElementNode<T>(T Primitive, string? Name = null) : SinglePocoElementNode(Name ?? "value", null, null, Primitive) where T : PrimitiveType, new()
+{
+    private readonly Lazy<object?> _iteValue = new (Primitive.ToITypedElementValue);
+    public override object? Value => _iteValue.Value;
+    
+    public SinglePrimitiveElementNode(object primitive, string? name = null) : this(new T {ObjectValue = primitive}, name){}
+}
 
-    public override string Location => throw new NotImplementedException();
-    public override bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result) => throw new NotImplementedException();
 
-    public override bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result) => throw new NotImplementedException();
+public record RepeatingPrimitiveElementNode<T>(IReadOnlyList<T> Values, string? Name = null) : RepeatingPocoElementNode(Name ?? "value", null, Values) where T : PrimitiveType, new()
+{
+    public RepeatingPrimitiveElementNode(params object[] values) : this(values.Select(v => new T { ObjectValue = v }).ToList()){}
 }
 
 public static class PocoElementNodeExtensions

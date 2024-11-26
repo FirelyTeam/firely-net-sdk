@@ -17,7 +17,7 @@ public class EnviromentTests
         var compiler = new FhirPathCompiler();
         var expr = compiler.Compile("%var = 1");
         
-        expr.IsTrue(null!, new EvaluationContext { Environment = new Dictionary<string, IEnumerable<IScopedNode>> {{ "var", new [] { new Integer(1) }}}} ).Should().BeTrue();
-        expr.IsTrue(null!, new EvaluationContext { Environment = new Dictionary<string, IEnumerable<IScopedNode>> {{ "var", new [] { new Integer(2) }}}} ).Should().BeFalse();
+        expr.IsTrue(null!, new EvaluationContext { Environment = new Dictionary<string, IEnumerable<IScopedNode>> {{ "var", new SinglePrimitiveElementNode<Integer>(1) }}} ).Should().BeTrue();
+        expr.IsTrue(null!, new EvaluationContext { Environment = new Dictionary<string, IEnumerable<IScopedNode>> {{ "var", new SinglePrimitiveElementNode<Integer>(2)}}} ).Should().BeFalse();
     }
 }

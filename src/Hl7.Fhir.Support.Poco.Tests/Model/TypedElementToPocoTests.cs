@@ -55,7 +55,7 @@ public class TypedElementToPocoTests
     [DynamicData(nameof(PrimitiveTestData))]
     public void GuessesCorrectPrimitive(Type t, object dynamicValue, string objectValue)
     {
-        ITypedElement subject = new DynamicPrimitive { DynamicTypeName = "DoesNotExist", ObjectValue = dynamicValue };
+        ITypedElement subject = new SinglePrimitiveElementNode<DynamicPrimitive>(new (){ DynamicTypeName = "DoesNotExist", ObjectValue = dynamicValue });
         var poco = toPoco(subject);
         poco.Should().BeOfType(t);
         (poco as PrimitiveType)!.ObjectValue.Should().Be(objectValue ?? dynamicValue);
@@ -144,7 +144,7 @@ public class TypedElementToPocoTests
 
     private T toPoco<T>(T source) where T : Base, new()
     {
-        var poco = toPoco((ITypedElement)source);
+        var poco = toPoco(source.ToElementNode());
         return poco.Should().BeOfType<T>().Subject;
     }
 

@@ -500,7 +500,7 @@ namespace HL7.FhirPath.Tests
         [DynamicData(nameof(AllFunctionTestcases), DynamicDataSourceType.Method)]
         public void AssertTestcases(string expression, bool expected, bool invalid = false)
         {
-            IScopedNode dummy = new FhirBoolean(true);
+            IScopedNode dummy = new SinglePrimitiveElementNode<FhirBoolean>(true);
 
             if (invalid)
             {

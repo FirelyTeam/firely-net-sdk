@@ -278,7 +278,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]};
 
-            var enumerate = () => bundle.BundledResources();
+            var enumerate = () => bundle.ToElementNode().BundledResources();
             enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => !c.Children("fullUrl").Any());
         }
 
