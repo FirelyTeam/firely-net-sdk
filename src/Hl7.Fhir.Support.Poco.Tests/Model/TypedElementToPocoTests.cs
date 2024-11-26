@@ -116,7 +116,7 @@ public class TypedElementToPocoTests
             };
 
         var poco = toPoco(subject);
-        poco.IsExactly(subject).Should().BeTrue();
+        poco.Should().BeEquivalentTo(subject);
     }
 
 
@@ -138,8 +138,7 @@ public class TypedElementToPocoTests
 
         subjectRt.TryGetValue("newListField", out var newListField).Should().BeTrue();
         newListField.Should().BeOfType<List<FhirString>>().Which
-            .IsExactly([new FhirString("hi1"), new FhirString("hi2")])
-            .Should().BeTrue();
+            .Should().BeEquivalentTo([new FhirString("hi1"), new FhirString("hi2")]);
     }
 
     private T toPoco<T>(T source) where T : Base, new()

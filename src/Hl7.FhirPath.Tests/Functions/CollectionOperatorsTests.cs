@@ -13,10 +13,11 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void Intersect()
         {
-            var a = ElementNode.ForPrimitive("A");
-            var b1 = ElementNode.ForPrimitive("B");
-            var c = ElementNode.ForPrimitive("C");
-            var b2 = ElementNode.ForPrimitive("B");
+            var a = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("A");
+            var b1 = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("B");
+            var c = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("C");
+            var b2 = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("B");
+            
 
             var col1 = new ITypedElement[] { a, b1 };
             var col2 = new ITypedElement[] { c, b2 };
@@ -39,9 +40,9 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestIntersect()
         {
-            var left = ElementNode.CreateList(1, 3, 3, 5, 6);
-            var right = ElementNode.CreateList(3, 5, 5, 6, 8);
-            CollectionAssert.AreEqual(ElementNode.CreateList(3, 5, 6).ToList(),
+            var left = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
+            var right = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 5, 6, 8]);
+            CollectionAssert.AreEqual(RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 6]).ToList(),
                     left.Intersect(right).ToList());
         }
 
@@ -49,10 +50,10 @@ namespace HL7.FhirPath.Tests.Functions
         public void TestExclude()
         {
             IEnumerable<IScopedNode> left =
-                new RepeatingPrimitiveElementNode<Integer>(1, 3, 3, 5, 6);
+                RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
             IEnumerable<IScopedNode> right = 
-                new RepeatingPrimitiveElementNode<Integer>(5, 6);
-            CollectionAssert.AreEqual(ElementNode.CreateList(1, 3, 3).ToList(),
+                RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([5, 6]);
+            CollectionAssert.AreEqual(RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3]).ToList(),
                     left.Exclude(right).ToList());
         }
     }

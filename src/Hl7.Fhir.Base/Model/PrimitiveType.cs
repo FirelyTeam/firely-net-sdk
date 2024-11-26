@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
+using Types = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
 {
@@ -62,6 +63,31 @@ namespace Hl7.Fhir.Model
         /// be only the element id and zero or more extensions).
         /// </summary>
         public bool HasElements => ElementId is not null || Extension?.Any() == true;
+        
+        internal object? ToITypedElementValue()
+        {
+            try
+            {
+                return this switch
+                {
+                    Instant { Value: { } ins } => Types.DateTime.FromDateTimeOffset(ins),
+                    Time { Value: { } time } => Types.Time.Parse(time),
+                    Date { Value: { } dt } => Types.Date.Parse(dt),
+                    FhirDateTime { Value: { } fdt } => Types.DateTime.Parse(fdt),
+                    Integer fint => fint.Value,
+                    Integer64 fint64 => fint64.Value,
+                    PositiveInt pint => pint.Value,
+                    UnsignedInt unsint => unsint.Value,
+                    Base64Binary { Value: { } b64 } => PrimitiveTypeConverter.ConvertTo<string>(b64),
+                    { } prim => prim.ObjectValue
+                };
+            }
+            catch (FormatException)
+            {
+                // If it fails, just return the unparsed contents
+                return this.ObjectValue;
+            }
+        }
     }
 }
 

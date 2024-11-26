@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Tests
         public void HtmlChecks(string xml, bool expected, string because)
         {
             var evaluator = _compiler.Compile("htmlChecks()");
-            evaluator.Predicate(new SinglePrimitiveElementNode<XHtml>(xml), new FhirEvaluationContext()).Should().Be(expected, because);
+            evaluator.Predicate(SinglePrimitiveElementNode<XHtml>.FromSystemPrimitive<XHtml>(xml), new FhirEvaluationContext()).Should().Be(expected, because);
         }
 
         [DataTestMethod]

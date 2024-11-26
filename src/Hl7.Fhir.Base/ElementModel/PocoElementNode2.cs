@@ -1,6 +1,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using System;
 using System.Collections;
@@ -13,36 +14,34 @@ namespace Hl7.Fhir.ElementModel;
 
 #nullable enable
 
-public abstract record PocoElementNode2(string Name, SinglePocoElementNode? Parent, object Payload) : IEnumerable<SinglePocoElementNode>
+public abstract record PocoElementNode2(SinglePocoElementNode? Parent, string Name) : IEnumerable<SinglePocoElementNode>
 {
-    public abstract IEnumerable<PocoElementNode2> Children();
-    public abstract PocoElementNode2? Child(string name);
-    
     public abstract IEnumerator<SinglePocoElementNode> GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
-public record SinglePocoElementNode(string Name, int? Index, SinglePocoElementNode? Parent, Base Poco) : PocoElementNode2(Name, Parent, Poco), IScopedNode, IFhirValueProvider, IResourceTypeSupplier
+public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, int? Index, string? Name) : PocoElementNode2(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier
 {
-    public override IEnumerable<PocoElementNode2> Children() =>
+    public IEnumerable<PocoElementNode2> Children() =>
         Poco.GetElementPairs()
-            .Where(kvp => kvp.Key is not "value") // we should be able to throw this check away once we deprecate value
             .Select<KeyValuePair<string, object>, PocoElementNode2>(ep =>
                 (ep.Key, ep.Value) switch
                 {
-                    ({ } key, Base b) => new SinglePocoElementNode(key, null, this, b),
-                    ({ } key, IEnumerable<Base> list) => new RepeatingPocoElementNode(key, this, list.ToList()),
-                    ("url", string s) when Poco is Extension => new SinglePocoElementNode("url", null, this, new FhirUri(s)),
-                    ("id", string s) when Poco is Element => new SinglePocoElementNode("id", null, this, new FhirString(s)),
+                    ({ } key, PrimitiveType primitive) => new SinglePrimitiveElementNode<PrimitiveType>(primitive, key) {Parent = this},
+                    ({ } key, Base b) => new SinglePocoElementNode(b, this, null, key),
+                    ({ } key, IEnumerable<PrimitiveType> primitiveList) => new RepeatingPrimitiveElementNode<PrimitiveType>(primitiveList.ToList(), key) {Parent = this},
+                    ({ } key, IEnumerable<Base> list) => new RepeatingPocoElementNode(list.ToList(), this, key),
                     _ => throw new InvalidOperationException("Unexpected system primitive in child list")
                 }
             );
 
-    public override PocoElementNode2? Child(string name) => Poco.TryGetValue(name, out var result)
+    public PocoElementNode2? Child(string name) => Poco.TryGetValue(name, out var result)
         ? result switch
         {
-            Base b => new SinglePocoElementNode(name, null, this, b),
-            IEnumerable<Base> list => new RepeatingPocoElementNode(name, this, list.ToList()),
+            PrimitiveType primitive => new SinglePrimitiveElementNode<PrimitiveType>(primitive, name) {Parent = this},
+            Base b => new SinglePocoElementNode(b, this, null, name),
+            IEnumerable<PrimitiveType> primitiveList => new RepeatingPrimitiveElementNode<PrimitiveType>(primitiveList.ToList(), name) {Parent = this},
+            IEnumerable<Base> list => new RepeatingPocoElementNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected system primitive in child list")
         }
         : null;
@@ -119,61 +118,54 @@ public record SinglePocoElementNode(string Name, int? Index, SinglePocoElementNo
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children();
 }
 
-public record RepeatingPocoElementNode(string Name, SinglePocoElementNode? Parent, IReadOnlyList<Base> Pocos) : PocoElementNode2(Name, Parent, Pocos)
+public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, SinglePocoElementNode? Parent, string Name) : PocoElementNode2(Parent, Name)
 {
-    public SinglePocoElementNode this[int index] => new(Name, index, Parent, Pocos[index]);
-    
-    public override IEnumerable<PocoElementNode2> Children()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override PocoElementNode2? Child(string name)
-    {
-        throw new NotImplementedException();
-    }
+    public SinglePocoElementNode this[int index] => new(Pocos[index], Parent, index, Name);
 
     public IEnumerable<SinglePocoElementNode> Where<T>([NotNull] Func<T, bool> predicate) where T : Base =>
-        Pocos.OfType<T>().Where(predicate).Select((poco, index) => new SinglePocoElementNode(Name, index, Parent, poco));
+        Pocos.OfType<T>().Where(predicate).Select((poco, index) => new SinglePocoElementNode(poco, Parent, index, Name));
 
     public SinglePocoElementNode? FirstOrDefault<T>([NotNull] Func<T, bool> predicate) where T : Base
     {
         for(int index = 0; index < Pocos.Count(); index++)
         {
             if (Pocos[index] is T item && predicate(item))
-                return new SinglePocoElementNode(Name, index, Parent, item);
+                return new SinglePocoElementNode(item, Parent, index, Name);
         }
         return null;
     }
 
-    public override IEnumerator<SinglePocoElementNode> GetEnumerator() => Pocos.Select((poco, index) => new SinglePocoElementNode(Name, index, Parent, poco)).GetEnumerator();
+    public override IEnumerator<SinglePocoElementNode> GetEnumerator() => Pocos.Select((poco, index) => new SinglePocoElementNode(poco, Parent, index, Name)).GetEnumerator();
 }
 
-public record SinglePrimitiveElementNode<T>(T Primitive, string? Name = null) : SinglePocoElementNode(Name ?? "value", null, null, Primitive) where T : PrimitiveType, new()
+public record SinglePrimitiveElementNode<T> : SinglePocoElementNode where T : PrimitiveType
 {
-    private readonly Lazy<object?> _iteValue = new (Primitive.ToITypedElementValue);
-    public override object? Value => _iteValue.Value;
-    
-    public SinglePrimitiveElementNode(object primitive, string? name = null) : this(new T {ObjectValue = primitive}, name){}
+    public static SinglePrimitiveElementNode<T> FromSystemPrimitive<TTo>(object primitive, string? name = null) where TTo : T, new()
+    {
+        return new SinglePrimitiveElementNode<T>(new TTo { ObjectValue = primitive }, name);
+    }
+
+    public SinglePrimitiveElementNode(T primitive, string? name = null) : base(primitive, null, null, name ?? "value"){}
+    private T Primitive => (T)Poco;
+    public override object? Value => Primitive.ToITypedElementValue();
 }
 
 
-public record RepeatingPrimitiveElementNode<T>(IReadOnlyList<T> Values, string? Name = null) : RepeatingPocoElementNode(Name ?? "value", null, Values) where T : PrimitiveType, new()
+public record RepeatingPrimitiveElementNode<T> : RepeatingPocoElementNode where T : PrimitiveType
 {
-    public RepeatingPrimitiveElementNode(params object[] values) : this(values.Select(v => new T { ObjectValue = v }).ToList()){}
+    public RepeatingPrimitiveElementNode(IReadOnlyList<T> primitives, string? name = null) : base(primitives, null, name ?? "value") { }
+
+    public static RepeatingPrimitiveElementNode<T> FromSystemPrimitives<TTo>(IEnumerable<object> values, string? name = null) where TTo: T, new()
+    {
+        return new RepeatingPrimitiveElementNode<T>(values.Select(v => new TTo { ObjectValue = v }).ToList(), name);
+    }
+
+    public override IEnumerator<SinglePocoElementNode> GetEnumerator() => Primitives.Select((primitive, index) => new SinglePrimitiveElementNode<T>(primitive, Name) {Index = index}).GetEnumerator();
+
+    private IReadOnlyList<T> Primitives => (IReadOnlyList<T>)Pocos;
 }
 
 public static class PocoElementNodeExtensions
 {
-    public static T? ExtractSingle<T>(this PocoElementNode2? node) where T : Base => node?.Payload as T;
-
-    public static IEnumerable<T> ExtractList<T>(this PocoElementNode2? node) where T : Base => 
-        node?.Payload switch
-        {
-            IEnumerable<T> list => list,
-            T single => [single],
-            _ => []
-        };
-    
-    public static T? Child<T>(this PocoElementNode2? node, string name) where T : PocoElementNode2 => node?.Child(name) as T;
+    public static T? Child<T>(this SinglePocoElementNode? node, string name) where T : PocoElementNode2 => node?.Child(name) as T;
 }

@@ -41,7 +41,7 @@ namespace Hl7.FhirPath.Expressions
             
             newClosure.SetThis(input);
             newClosure.SetThat(input);
-            newClosure.SetIndex(new SinglePrimitiveElementNode<Integer>(0));
+            newClosure.SetIndex(SinglePrimitiveElementNode<Integer>.FromSystemPrimitive<Integer>(0));
             newClosure.SetOriginalContext(input);
             
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });

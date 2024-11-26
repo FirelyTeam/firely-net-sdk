@@ -19,33 +19,6 @@ internal record ScopeInformation(IScopedNode? Parent, string Name, int? Index);
 
 public abstract partial class Base
 {
-    public Base FhirValue => this;
-
-    internal object? ToITypedElementValue()
-    {
-        try
-        {
-            return this switch
-            {
-                Instant { Value: { } ins } => P.DateTime.FromDateTimeOffset(ins),
-                Time { Value: { } time } => P.Time.Parse(time),
-                Date { Value: { } dt } => P.Date.Parse(dt),
-                FhirDateTime { Value: { } fdt } => P.DateTime.Parse(fdt),
-                Integer fint => fint.Value,
-                Integer64 fint64 => fint64.Value,
-                PositiveInt pint => pint.Value,
-                UnsignedInt unsint => unsint.Value,
-                Base64Binary { Value: { } b64 } => PrimitiveTypeConverter.ConvertTo<string>(b64),
-                PrimitiveType prim => prim.ObjectValue,
-                _ => null
-            };
-        }
-        catch (FormatException)
-        {
-            // If it fails, just return the unparsed contents
-            return (this as PrimitiveType)?.ObjectValue;
-        }
-    }
 
     // #region ScopeInformation
     //
