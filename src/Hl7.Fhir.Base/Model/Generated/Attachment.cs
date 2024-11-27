@@ -162,6 +162,11 @@ namespace Hl7.Fhir.Model
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.FhirUrl starting from R4.
     /// </remarks>
     [FhirElement("url", InSummary=true, Order=60)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl))]
+    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [DataMember]
@@ -216,6 +221,11 @@ namespace Hl7.Fhir.Model
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.UnsignedInt in STU3, R4 and R4B, Hl7.Fhir.Model.Integer64 starting from R5.
     /// </remarks>
     [FhirElement("size", InSummary=true, Order=70)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Integer64))]
+    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [DataMember]

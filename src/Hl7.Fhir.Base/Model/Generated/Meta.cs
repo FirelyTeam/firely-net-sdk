@@ -162,6 +162,11 @@ namespace Hl7.Fhir.Model
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.Canonical starting from R4.
     /// </remarks>
     [FhirElement("profile", InSummary=true, Order=60)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
+    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
     [Cardinality(Min=0,Max=-1)]

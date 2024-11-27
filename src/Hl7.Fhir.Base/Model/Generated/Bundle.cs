@@ -960,6 +960,11 @@ namespace Hl7.Fhir.Model
       /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Code starting from R5.
       /// </remarks>
       [FhirElement("relation", InSummary=true, Order=40)]
+      [CLSCompliant(false)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Code))]
+      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
+      // [AllowedTypes(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(Type = typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]

@@ -58,8 +58,8 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [Ignore("Doesn't work for our ModelInspector.ForType() hack")]
-        [TemporarilyChanged]
+      //  [Ignore("Doesn't work for our ModelInspector.ForType() hack")]
+      //  [TemporarilyChanged]
         public void WorksWithTypedElementSerializers()
         {
             var sig = new Bundle { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
