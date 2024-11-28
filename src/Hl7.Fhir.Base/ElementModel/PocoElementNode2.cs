@@ -141,12 +141,12 @@ public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, SinglePocoElem
 {
     public SinglePocoElementNode this[int index] => new(Pocos[index], Parent, index, Name);
 
-    public IEnumerable<SinglePocoElementNode> Where<T>([NotNull] Func<T, bool> predicate) where T : Base =>
+    public IEnumerable<SinglePocoElementNode> Where<T>(Func<T, bool> predicate) where T : Base =>
         Pocos.OfType<T>().Where(predicate).Select((poco, index) => new SinglePocoElementNode(poco, Parent, index, Name));
 
-    public SinglePocoElementNode? FirstOrDefault<T>([NotNull] Func<T, bool> predicate) where T : Base
+    public SinglePocoElementNode? FirstOrDefault<T>(Func<T, bool> predicate) where T : Base
     {
-        for(int index = 0; index < Pocos.Count(); index++)
+        for(int index = 0; index < Pocos.Count; index++)
         {
             if (Pocos[index] is T item && predicate(item))
                 return new SinglePocoElementNode(item, Parent, index, Name);
