@@ -469,7 +469,7 @@ namespace Hl7.FhirPath.Expressions
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-                if (result == false) return SinglePrimitiveElementNode<FhirBoolean>.FromSystemPrimitive<FhirBoolean>(true);
+                if (result == true) return SinglePrimitiveElementNode<FhirBoolean>.FromSystemPrimitive<FhirBoolean>(true);
             }
 
             return SinglePrimitiveElementNode<FhirBoolean>.FromSystemPrimitive<FhirBoolean>(false);

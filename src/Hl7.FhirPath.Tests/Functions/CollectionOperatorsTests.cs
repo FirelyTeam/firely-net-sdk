@@ -20,9 +20,9 @@ namespace HL7.FhirPath.Tests.Functions
             var b2 = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("B");
             
 
-            var col1 = new ITypedElement[] { a, b1 };
-            var col2 = new ITypedElement[] { c, b2 };
-            var col3 = new ITypedElement[] { c };
+            var col1 = new IScopedNode[] { a, b1 };
+            var col2 = new IScopedNode[] { c, b2 };
+            var col3 = new IScopedNode[] { c };
 
             var result = col1.Intersect(col2);
             Assert.IsNotNull(result);
@@ -41,10 +41,9 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestIntersect()
         {
-            var left = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
-            var right = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 5, 6, 8]);
-            CollectionAssert.AreEqual(RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 6]).ToList(),
-                    left.Intersect(right).ToList());
+            IEnumerable<IScopedNode> left = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
+            IEnumerable<IScopedNode> right = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 5, 6, 8]);
+            RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
         }
 
         [TestMethod]
@@ -54,6 +53,7 @@ namespace HL7.FhirPath.Tests.Functions
                 RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
             IEnumerable<IScopedNode> right =
                 RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([5, 6]);
+            RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
         }
     }
 }

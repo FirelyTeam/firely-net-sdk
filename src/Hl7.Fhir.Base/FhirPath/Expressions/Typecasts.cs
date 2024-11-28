@@ -64,7 +64,8 @@ namespace Hl7.FhirPath.Expressions
             if (to == typeof(object)) return id;
             if (from.CanBeTreatedAsType(to)) return id;
 
-            bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<IScopedNode>));
+            // this check seems weird, but PocoElementNode both implements IScopedNode and IEnumerable<IScopedNode> for the sake of backwards compatibility
+            bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<IScopedNode>)) && !from.CanBeTreatedAsType(typeof(IScopedNode));
             if (to == typeof(P.Quantity) && from.CanBeTreatedAsType(typeof(IScopedNode))) return tryQuantity;
             if (to == typeof(IScopedNode) && (!fromElemList)) return any2primitiveTypedElement;
             if (to == typeof(IEnumerable<IScopedNode>)) return any2List;
@@ -111,7 +112,7 @@ namespace Hl7.FhirPath.Expressions
         internal static object UnboxTo(object instance, Type to)
         {
             if (instance == null) return null;
-
+            
             if (instance is IEnumerable<IScopedNode> list)
             {
                 var cachedEnum = CachedEnumerable.Create(list);
@@ -121,7 +122,7 @@ namespace Hl7.FhirPath.Expressions
                 if (cachedEnum.Count() == 1)
                     instance = cachedEnum.Single();
             }
-
+            
             if (instance is IScopedNode element)
             {
                 if (to.CanBeTreatedAsType(typeof(IScopedNode))) return instance;
@@ -133,8 +134,8 @@ namespace Hl7.FhirPath.Expressions
                 // to represent the object in Value.
 
                 var isPrimitive = element.Value != null ||
-                    (element.InstanceType != null &&
-                        Char.IsLower(element.InstanceType[0]) || element.InstanceType.StartsWith("System."));
+                                  (element.InstanceType != null &&
+                                      Char.IsLower(element.InstanceType[0]) || element.InstanceType.StartsWith("System."));
                 if (isPrimitive)
                     instance = element.Value;
             }
@@ -213,6 +214,9 @@ namespace Hl7.FhirPath.Expressions
 
         public static string ReadableFhirPathName(object value)
         {
+            if (value is IScopedNode te)
+                return te.InstanceType;
+            
             if (value is IEnumerable<IScopedNode> ete)
             {
                 var values = ete.ToList();
@@ -220,10 +224,8 @@ namespace Hl7.FhirPath.Expressions
 
                 return values.Count > 1 ? "collection of " + String.Join("/", types) : types.Single();
             }
-            else if (value is IScopedNode te)
-                return te.InstanceType;
-            else
-                return value.GetType().Name;
+            
+            return value.GetType().Name;
         }
 
         public static string ReadableTypeName(Type t)

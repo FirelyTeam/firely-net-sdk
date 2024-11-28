@@ -32,13 +32,12 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestUnbox()
         {
-
             Assert.IsNull(Typecasts.UnboxTo(emptyColl, typeof(string)));
             collection.SequenceEqual(Typecasts.UnboxTo(collection, typeof(IEnumerable<IScopedNode>)) as IEnumerable<IScopedNode>);
             Assert.AreEqual(complex, Typecasts.UnboxTo(singleC, typeof(IScopedNode)));
 
             Assert.AreEqual(4L, Typecasts.UnboxTo(singleV, typeof(long)));
-            Assert.AreEqual(4L, Typecasts.UnboxTo(new Integer64(4L), typeof(long)));
+            Assert.AreEqual(4L, Typecasts.UnboxTo(SinglePrimitiveElementNode<Integer64>.FromSystemPrimitive<Integer64>(4L), typeof(long)));
 
             Assert.AreEqual(complex, Typecasts.UnboxTo(complex, typeof(IScopedNode)));
             Assert.IsNull(Typecasts.UnboxTo(null, typeof(string)));

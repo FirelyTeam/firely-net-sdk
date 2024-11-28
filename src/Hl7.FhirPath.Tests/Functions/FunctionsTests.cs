@@ -541,7 +541,7 @@ namespace HL7.FhirPath.Tests
             {
                 iterations++;
 
-                return new Integer(iterations);
+                return 1;
             });
 
             var expression = new FhirPathCompiler(symbols).Compile("once()");

@@ -3,12 +3,14 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.ElementModel;
 
@@ -20,7 +22,7 @@ public abstract record PocoElementNode2(SinglePocoElementNode? Parent, string Na
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
-public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, int? Index, string? Name) : PocoElementNode2(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier
+public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, int? Index, string? Name) : PocoElementNode2(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotated
 {
     public IEnumerable<PocoElementNode2> Children() =>
         Poco.GetElementPairs()
@@ -45,7 +47,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
             _ => throw new InvalidOperationException("Unexpected system primitive in child list")
         }
         : null;
-
+    
     private IEnumerable<SinglePocoElementNode> asList() => [this];
 
     public NodeType Type => Poco switch
@@ -84,14 +86,21 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
     public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
     {
         result = Poco is Bundle ? this
-            .Child<RepeatingPocoElementNode>("entry")?
-            .FirstOrDefault<Bundle.EntryComponent>(entry => 
+            .Child<RepeatingPocoElementNode>("entry")
+            ?.FirstOrDefault<Bundle.EntryComponent>(entry => 
                 entry.FullUrl == fullUrl)
             ?.Child<SinglePocoElementNode>("resource") : null;
         return result is not null;
     }
 
-    public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result) => throw new NotImplementedException();
+    public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
+    {
+        result = Poco is DomainResource ? this
+            .Child<RepeatingPocoElementNode>("contained")
+            ?.FirstOrDefault<Resource>(contained => $"#{contained.Id}" == id) : null;
+        return result is not null; 
+    }
+        
     public override IEnumerator<SinglePocoElementNode> GetEnumerator() => asList().GetEnumerator();
 
     public string ShortPath => (Index, Parent) switch
@@ -115,7 +124,17 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
         ? Children().SelectMany(node => node)
         : Child(name) ?? Enumerable.Empty<SinglePocoElementNode>();
 
-    IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children();
+    IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children(name);
+    public IEnumerable<object> Annotations(Type type)
+    {
+        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
+            return [this];
+        if (type == typeof(IFhirValueProvider))
+            return [this];
+        if (type == typeof(IResourceTypeSupplier))
+            return [this];
+        return Poco.Annotations(type);
+    }
 }
 
 public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, SinglePocoElementNode? Parent, string Name) : PocoElementNode2(Parent, Name)

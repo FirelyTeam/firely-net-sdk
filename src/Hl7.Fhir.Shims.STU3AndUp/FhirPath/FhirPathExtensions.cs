@@ -47,23 +47,23 @@ namespace Hl7.Fhir.FhirPath
 
         /// <inheritdoc cref="FhirPathCompilerCache.Select(IScopedNode, string, EvaluationContext?)"/>
         public static IEnumerable<Base?> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Select(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext()).ToFhirValues();
+            => CACHE.Select(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext()).ToFhirValues();
 
         /// <inheritdoc cref="FhirPathCompilerCache.Scalar(IScopedNode, string, EvaluationContext?)"/>
         public static object? Scalar(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Scalar(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.Scalar(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext());
 
         /// <inheritdoc cref="FhirPathCompilerCache.Predicate(IScopedNode, string, EvaluationContext?)"/>
         public static bool Predicate(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Predicate(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.Predicate(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext());
 
         /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(IScopedNode, string, EvaluationContext?)"/>
         public static bool IsTrue(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.IsTrue(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.IsTrue(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext());
 
         /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(IScopedNode, string, bool, EvaluationContext?) "/>
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext? ctx = null)
-            => CACHE.IsBoolean(input.ToTypedElement().ToScopedNode(), expression, value, ctx ?? new FhirEvaluationContext());
+            => CACHE.IsBoolean(input.ToElementNode(), expression, value, ctx ?? new FhirEvaluationContext());
     }
 }
 
