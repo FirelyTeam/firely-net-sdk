@@ -1,13 +1,9 @@
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
