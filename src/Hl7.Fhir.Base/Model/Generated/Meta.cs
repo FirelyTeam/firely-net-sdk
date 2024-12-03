@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Meta"; } }
 
     /// <summary>
-    /// Version specific identifier
+    /// Version specific identifier.
     /// </summary>
     [FhirElement("versionId", InSummary=true, Order=30)]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the resource version last changed
+    /// When the resource version last changed.
     /// </summary>
     [FhirElement("lastUpdated", InSummary=true, Order=40)]
     [DataMember]
@@ -122,8 +122,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifies where the resource comes from. Note: Element was introduced in R4, do not use when working with older releases.
+    /// Identifies where the resource comes from.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R4, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("source", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri SourceElement
@@ -153,40 +156,67 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Profiles this resource claims to conform to
+    /// Profiles this resource claims to conform to.
     /// </summary>
+    /// <remarks>
+    /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.Canonical starting from R4.
+    /// </remarks>
     [FhirElement("profile", InSummary=true, Order=60)]
-    [DeclaredType(Type = typeof(Canonical), Since = FhirRelease.R4)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
+    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
+    [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    [DeclaredType(Type = typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    public List<Hl7.Fhir.Model.FhirUri> ProfileElement
+    public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement
     {
-      get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+      get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(); return _ProfileElement; }
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+    private List<Hl7.Fhir.Model.PrimitiveType> _ProfileElement;
 
     /// <summary>
-    /// Profiles this resource claims to conform to
+    /// Profiles this resource claims to conform to. Use this property in STU3.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Profile
+    public IEnumerable<string> ProfileUri
     {
-      get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
+      get { return ProfileElement != null ? ProfileElement.Cast<IValue<string>>().Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
           ProfileElement = null;
         else
-          ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+          ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+        OnPropertyChanged("ProfileUri");
+      }
+    }
+
+    /// <summary>
+    /// Profiles this resource claims to conform to. Use this property starting from R4.
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public IEnumerable<string> Profile
+    {
+      get { return ProfileElement != null ? ProfileElement.Cast<IValue<string>>().Select(elem => elem.Value) : null; }
+      set
+      {
+        if (value == null)
+          ProfileElement = null;
+        else
+          ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("Profile");
       }
     }
 
     /// <summary>
-    /// Security Labels applied to this resource
+    /// Security Labels applied to this resource.
     /// </summary>
     [FhirElement("security", InSummary=true, Order=70)]
     [Binding("SecurityLabels")]
@@ -201,7 +231,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Coding> _Security;
 
     /// <summary>
-    /// Tags applied to this resource
+    /// Tags applied to this resource.
     /// </summary>
     [FhirElement("tag", InSummary=true, Order=80)]
     [Binding("Tags")]
@@ -228,7 +258,7 @@ namespace Hl7.Fhir.Model
       if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
       if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopy();
       if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
-      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
+      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(ProfileElement.DeepCopy());
       if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
       if(Tag.Any()) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
       return dest;
@@ -314,7 +344,7 @@ namespace Hl7.Fhir.Model
           SourceElement = (Hl7.Fhir.Model.FhirUri)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.FhirUri>)value;
+          ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>)value;
           return this;
         case "security":
           Security = (List<Hl7.Fhir.Model.Coding>)value;

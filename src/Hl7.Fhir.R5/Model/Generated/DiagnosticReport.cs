@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DiagnosticReport.supportingInfo"; } }
 
       /// <summary>
-      /// Supporting information role code
+      /// Supporting information role code.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("DiagnosticReportSupportingInfoType")]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Supporting information reference
+      /// Supporting information reference.
       /// </summary>
       [FhirElement("reference", Order=50)]
       [CLSCompliant(false)]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DiagnosticReport.media"; } }
 
       /// <summary>
-      /// Comment about the image or data (e.g. explanation)
+      /// Comment about the image or data (e.g. explanation).
       /// </summary>
       [FhirElement("comment", Order=40)]
       [DataMember]
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reference to the image or data source
+      /// Reference to the image or data source.
       /// </summary>
       [FhirElement("link", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for report
+    /// Business identifier for report.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// What was requested
+    /// What was requested.
     /// </summary>
     [FhirElement("basedOn", Order=100)]
     [CLSCompliant(false)]
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// registered | partial | preliminary | modified | final | amended | corrected | appended | cancelled | entered-in-error | unknown
+    /// registered | partial | preliminary | modified | final | amended | corrected | appended | cancelled | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Service category
+    /// Service category.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("DiagnosticServiceSection")]
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Name/Code for this diagnostic report
+    /// Name/Code for this diagnostic report.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("DiagnosticReportCodes")]
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// The subject of the report - usually, but not always, the patient
+    /// The subject of the report - usually, but not always, the patient.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Health care event when test ordered
+    /// Health care event when test ordered.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Clinically relevant time/time-period for report
+    /// Clinically relevant time/time-period for report.
     /// </summary>
     [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Effective;
 
     /// <summary>
-    /// DateTime this version was made
+    /// DateTime this version was made.
     /// </summary>
     [FhirElement("issued", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Responsible Diagnostic Service
+    /// Responsible Diagnostic Service.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=180, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Performer;
 
     /// <summary>
-    /// Primary result interpreter
+    /// Primary result interpreter.
     /// </summary>
     [FhirElement("resultsInterpreter", InSummary=true, Order=190, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ResultsInterpreter;
 
     /// <summary>
-    /// Specimens this report is based on
+    /// Specimens this report is based on.
     /// </summary>
     [FhirElement("specimen", Order=200)]
     [CLSCompliant(false)]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
 
     /// <summary>
-    /// Observations
+    /// Observations.
     /// </summary>
     [FhirElement("result", Order=210)]
     [CLSCompliant(false)]
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Result;
 
     /// <summary>
-    /// Comments about the diagnostic report
+    /// Comments about the diagnostic report.
     /// </summary>
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Reference to full details of an analysis associated with the diagnostic report
+    /// Reference to full details of an analysis associated with the diagnostic report.
     /// </summary>
     [FhirElement("study", Order=230)]
     [CLSCompliant(false)]
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Study;
 
     /// <summary>
-    /// Additional information supporting the diagnostic report
+    /// Additional information supporting the diagnostic report.
     /// </summary>
     [FhirElement("supportingInfo", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DiagnosticReport.SupportingInfoComponent> _SupportingInfo;
 
     /// <summary>
-    /// Key images or data associated with this report
+    /// Key images or data associated with this report.
     /// </summary>
     [FhirElement("media", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent> _Media;
 
     /// <summary>
-    /// Reference to a Composition resource for the DiagnosticReport structure
+    /// Reference to a Composition resource for the DiagnosticReport structure.
     /// </summary>
     [FhirElement("composition", Order=260)]
     [CLSCompliant(false)]
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Composition;
 
     /// <summary>
-    /// Clinical conclusion (interpretation) of test results
+    /// Clinical conclusion (interpretation) of test results.
     /// </summary>
     [FhirElement("conclusion", Order=270)]
     [DataMember]
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Codes for the clinical conclusion of test results
+    /// Codes for the clinical conclusion of test results.
     /// </summary>
     [FhirElement("conclusionCode", Order=280)]
     [Binding("AdjunctDiagnosis")]
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ConclusionCode;
 
     /// <summary>
-    /// Entire report as issued
+    /// Entire report as issued.
     /// </summary>
     [FhirElement("presentedForm", Order=290)]
     [Cardinality(Min=0,Max=-1)]

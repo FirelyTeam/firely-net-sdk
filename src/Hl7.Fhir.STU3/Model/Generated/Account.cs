@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.coverage"; } }
 
       /// <summary>
-      /// The party(s) that are responsible for covering the payment of this account
+      /// The party(s) that are responsible for covering the payment of this account.
       /// </summary>
       [FhirElement("coverage", InSummary=true, Order=40)]
       [CLSCompliant(false)]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Coverage;
 
       /// <summary>
-      /// The priority of the coverage in the context of this account
+      /// The priority of the coverage in the context of this account.
       /// </summary>
       [FhirElement("priority", InSummary=true, Order=50)]
       [DataMember]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.guarantor"; } }
 
       /// <summary>
-      /// Responsible entity
+      /// Responsible entity.
       /// </summary>
       [FhirElement("party", Order=40)]
       [CLSCompliant(false)]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Party;
 
       /// <summary>
-      /// Credit or other hold applied
+      /// Credit or other hold applied.
       /// </summary>
       [FhirElement("onHold", Order=50)]
       [DataMember]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Guarrantee account during
+      /// Guarrantee account during.
       /// </summary>
       [FhirElement("period", Order=60)]
       [DataMember]
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Account number
+    /// Account number.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | inactive | entered-in-error
+    /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// E.g. patient, expense, depreciation
+    /// E.g. patient, expense, depreciation.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [Binding("AccountType")]
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Human-readable label
+    /// Human-readable label.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120, FiveWs="what")]
     [DataMember]
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What is account tied to?
+    /// What is account tied to?.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Transaction window
+    /// Transaction window.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=140, FiveWs="when.done")]
     [DataMember]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Time window that transactions may be posted to this account
+    /// Time window that transactions may be posted to this account.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Active;
 
     /// <summary>
-    /// How much is in account?
+    /// How much is in account?.
     /// </summary>
     [FhirElement("balance", Order=160)]
     [DataMember]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Money _Balance;
 
     /// <summary>
-    /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
+    /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account.
     /// </summary>
     [FhirElement("coverage", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.CoverageComponent> _Coverage;
 
     /// <summary>
-    /// Who is responsible?
+    /// Who is responsible?.
     /// </summary>
     [FhirElement("owner", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Owner;
 
     /// <summary>
-    /// Explanation of purpose/use
+    /// Explanation of purpose/use.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=190)]
     [DataMember]
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Responsible for the account
+    /// Responsible for the account.
     /// </summary>
     [FhirElement("guarantor", Order=200)]
     [Cardinality(Min=0,Max=-1)]

@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DeviceDispense.performer"; } }
 
       /// <summary>
-      /// Who performed the dispense and what they did
+      /// Who performed the dispense and what they did.
       /// </summary>
       [FhirElement("function", Order=40)]
       [DataMember]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Individual who was performing
+      /// Individual who was performing.
       /// </summary>
       [FhirElement("actor", Order=50)]
       [CLSCompliant(false)]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for this dispensation
+    /// Business identifier for this dispensation.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// The order or request that this dispense is fulfilling
+    /// The order or request that this dispense is fulfilling.
     /// </summary>
     [FhirElement("basedOn", Order=100)]
     [CLSCompliant(false)]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// The bigger event that this dispense is a part of
+    /// The bigger event that this dispense is a part of.
     /// </summary>
     [FhirElement("partOf", Order=110)]
     [CLSCompliant(false)]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
+    /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Why a dispense was or was not performed
+    /// Why a dispense was or was not performed.
     /// </summary>
     [FhirElement("statusReason", Order=130)]
     [Binding("DeviceDispenseStatusReason")]
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _StatusReason;
 
     /// <summary>
-    /// Type of device dispense
+    /// Type of device dispense.
     /// </summary>
     [FhirElement("category", Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// What device was supplied
+    /// What device was supplied.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _Device;
 
     /// <summary>
-    /// Who the dispense is for
+    /// Who the dispense is for.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Who collected the device or where the medication was delivered
+    /// Who collected the device or where the medication was delivered.
     /// </summary>
     [FhirElement("receiver", Order=170)]
     [CLSCompliant(false)]
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Receiver;
 
     /// <summary>
-    /// Encounter associated with event
+    /// Encounter associated with event.
     /// </summary>
     [FhirElement("encounter", Order=180)]
     [CLSCompliant(false)]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Information that supports the dispensing of the device
+    /// Information that supports the dispensing of the device.
     /// </summary>
     [FhirElement("supportingInformation", Order=190, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
 
     /// <summary>
-    /// Who performed event
+    /// Who performed event.
     /// </summary>
     [FhirElement("performer", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DeviceDispense.PerformerComponent> _Performer;
 
     /// <summary>
-    /// Where the dispense occurred
+    /// Where the dispense occurred.
     /// </summary>
     [FhirElement("location", Order=210)]
     [CLSCompliant(false)]
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Trial fill, partial fill, emergency fill, etc
+    /// Trial fill, partial fill, emergency fill, etc.
     /// </summary>
     [FhirElement("type", Order=220)]
     [DataMember]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Amount dispensed
+    /// Amount dispensed.
     /// </summary>
     [FhirElement("quantity", Order=230)]
     [DataMember]
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Quantity;
 
     /// <summary>
-    /// When product was packaged and reviewed
+    /// When product was packaged and reviewed.
     /// </summary>
     [FhirElement("preparedDate", InSummary=true, Order=240)]
     [DataMember]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When product was given out
+    /// When product was given out.
     /// </summary>
     [FhirElement("whenHandedOver", Order=250)]
     [DataMember]
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the device was sent or should be sent
+    /// Where the device was sent or should be sent.
     /// </summary>
     [FhirElement("destination", Order=260)]
     [CLSCompliant(false)]
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Destination;
 
     /// <summary>
-    /// Information about the dispense
+    /// Information about the dispense.
     /// </summary>
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Full representation of the usage instructions
+    /// Full representation of the usage instructions.
     /// </summary>
     [FhirElement("usageInstruction", Order=280)]
     [DataMember]
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A list of relevant lifecycle events
+    /// A list of relevant lifecycle events.
     /// </summary>
     [FhirElement("eventHistory", Order=290)]
     [CLSCompliant(false)]

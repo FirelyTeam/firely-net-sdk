@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Invoice.participant"; } }
 
       /// <summary>
-      /// Type of involvement in creation of this Invoice
+      /// Type of involvement in creation of this Invoice.
       /// </summary>
       [FhirElement("role", Order=40)]
       [DataMember]
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Role;
 
       /// <summary>
-      /// Individual who was involved
+      /// Individual who was involved.
       /// </summary>
       [FhirElement("actor", Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Invoice.lineItem"; } }
 
       /// <summary>
-      /// Sequence number of line item
+      /// Sequence number of line item.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [DataMember]
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reference to ChargeItem containing details of this line item or an inline billing code
+      /// Reference to ChargeItem containing details of this line item or an inline billing code.
       /// </summary>
       [FhirElement("chargeItem", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _ChargeItem;
 
       /// <summary>
-      /// Components of total line item price
+      /// Components of total line item price.
       /// </summary>
       [FhirElement("priceComponent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Invoice.lineItem.priceComponent"; } }
 
       /// <summary>
-      /// base | surcharge | deduction | discount | tax | informational
+      /// base | surcharge | deduction | discount | tax | informational.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Code identifying the specific component
+      /// Code identifying the specific component.
       /// </summary>
       [FhirElement("code", Order=50)]
       [DataMember]
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Factor used for calculating this component
+      /// Factor used for calculating this component.
       /// </summary>
       [FhirElement("factor", Order=60)]
       [DataMember]
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Monetary amount associated with this component
+      /// Monetary amount associated with this component.
       /// </summary>
       [FhirElement("amount", Order=70)]
       [DataMember]
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for item
+    /// Business Identifier for item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// draft | issued | balanced | cancelled | entered-in-error
+    /// draft | issued | balanced | cancelled | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason for cancellation of this Invoice
+    /// Reason for cancellation of this Invoice.
     /// </summary>
     [FhirElement("cancelledReason", Order=110)]
     [DataMember]
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of Invoice
+    /// Type of Invoice.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Recipient(s) of goods and services
+    /// Recipient(s) of goods and services.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Recipient of this invoice
+    /// Recipient of this invoice.
     /// </summary>
     [FhirElement("recipient", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Recipient;
 
     /// <summary>
-    /// Invoice date / posting date
+    /// Invoice date / posting date.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Participant in creation of this Invoice
+    /// Participant in creation of this Invoice.
     /// </summary>
     [FhirElement("participant", Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Invoice.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// Issuing Organization of Invoice
+    /// Issuing Organization of Invoice.
     /// </summary>
     [FhirElement("issuer", Order=170)]
     [CLSCompliant(false)]
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Issuer;
 
     /// <summary>
-    /// Account that is being balanced
+    /// Account that is being balanced.
     /// </summary>
     [FhirElement("account", Order=180)]
     [CLSCompliant(false)]
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Account;
 
     /// <summary>
-    /// Line items of this Invoice
+    /// Line items of this Invoice.
     /// </summary>
     [FhirElement("lineItem", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Invoice.LineItemComponent> _LineItem;
 
     /// <summary>
-    /// Components of Invoice total
+    /// Components of Invoice total.
     /// </summary>
     [FhirElement("totalPriceComponent", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Invoice.PriceComponentComponent> _TotalPriceComponent;
 
     /// <summary>
-    /// Net total of this Invoice
+    /// Net total of this Invoice.
     /// </summary>
     [FhirElement("totalNet", InSummary=true, Order=210)]
     [DataMember]
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Money _TotalNet;
 
     /// <summary>
-    /// Gross total of this Invoice
+    /// Gross total of this Invoice.
     /// </summary>
     [FhirElement("totalGross", InSummary=true, Order=220)]
     [DataMember]
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Money _TotalGross;
 
     /// <summary>
-    /// Payment details
+    /// Payment details.
     /// </summary>
     [FhirElement("paymentTerms", Order=230)]
     [DataMember]
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Comments made about the invoice
+    /// Comments made about the invoice.
     /// </summary>
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]

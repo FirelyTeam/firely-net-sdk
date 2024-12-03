@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// usual | official | temp | nickname | anonymous | old | maiden
+    /// usual | official | temp | nickname | anonymous | old | maiden.
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Text representation of the full name
+    /// Text representation of the full name.
     /// </summary>
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Family name (often called 'Surname')
+    /// Family name (often called 'Surname').
     /// </summary>
     [FhirElement("family", InSummary=true, Order=50)]
     [DataMember]
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Given names (not always 'first'). Includes middle names
+    /// Given names (not always 'first'). Includes middle names.
     /// </summary>
     [FhirElement("given", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Parts that come before the name
+    /// Parts that come before the name.
     /// </summary>
     [FhirElement("prefix", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Parts that come after the name
+    /// Parts that come after the name.
     /// </summary>
     [FhirElement("suffix", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Time period when name was/is in use
+    /// Time period when name was/is in use.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=90)]
     [DataMember]

@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicinalProductIndication.otherTherapy"; } }
 
       /// <summary>
-      /// The type of relationship between the medicinal product indication or contraindication and another therapy
+      /// The type of relationship between the medicinal product indication or contraindication and another therapy.
       /// </summary>
       [FhirElement("therapyRelationshipType", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _TherapyRelationshipType;
 
       /// <summary>
-      /// Reference to a specific medication (active substance, medicinal product or class of products) as part of an indication or contraindication
+      /// Reference to a specific medication (active substance, medicinal product or class of products) as part of an indication or contraindication.
       /// </summary>
       [FhirElement("medication", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The medication for which this is an indication
+    /// The medication for which this is an indication.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Subject;
 
     /// <summary>
-    /// The disease, symptom or procedure that is the indication for treatment
+    /// The disease, symptom or procedure that is the indication for treatment.
     /// </summary>
     [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=100)]
     [DataMember]
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _DiseaseSymptomProcedure;
 
     /// <summary>
-    /// The status of the disease or symptom for which the indication applies
+    /// The status of the disease or symptom for which the indication applies.
     /// </summary>
     [FhirElement("diseaseStatus", InSummary=true, Order=110)]
     [DataMember]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _DiseaseStatus;
 
     /// <summary>
-    /// Comorbidity (concurrent condition) or co-infection as part of the indication
+    /// Comorbidity (concurrent condition) or co-infection as part of the indication.
     /// </summary>
     [FhirElement("comorbidity", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Comorbidity;
 
     /// <summary>
-    /// The intended effect, aim or strategy to be achieved by the indication
+    /// The intended effect, aim or strategy to be achieved by the indication.
     /// </summary>
     [FhirElement("intendedEffect", InSummary=true, Order=130)]
     [DataMember]
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _IntendedEffect;
 
     /// <summary>
-    /// Timing or duration information as part of the indication
+    /// Timing or duration information as part of the indication.
     /// </summary>
     [FhirElement("duration", InSummary=true, Order=140)]
     [DataMember]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Duration;
 
     /// <summary>
-    /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
+    /// Information about the use of the medicinal product in relation to other therapies described as part of the indication.
     /// </summary>
     [FhirElement("otherTherapy", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent> _OtherTherapy;
 
     /// <summary>
-    /// Describe the undesirable effects of the medicinal product
+    /// Describe the undesirable effects of the medicinal product.
     /// </summary>
     [FhirElement("undesirableEffect", InSummary=true, Order=160)]
     [CLSCompliant(false)]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _UndesirableEffect;
 
     /// <summary>
-    /// The population group to which this applies
+    /// The population group to which this applies.
     /// </summary>
     [FhirElement("population", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]

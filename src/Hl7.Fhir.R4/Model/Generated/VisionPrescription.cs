@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "VisionPrescription.lensSpecification"; } }
 
       /// <summary>
-      /// Product to be supplied
+      /// Product to be supplied.
       /// </summary>
       [FhirElement("product", InSummary=true, Order=40)]
       [Binding("VisionProduct")]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Product;
 
       /// <summary>
-      /// right | left
+      /// right | left.
       /// </summary>
       [FhirElement("eye", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Power of the lens
+      /// Power of the lens.
       /// </summary>
       [FhirElement("sphere", Order=60)]
       [DataMember]
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Lens power for astigmatism
+      /// Lens power for astigmatism.
       /// </summary>
       [FhirElement("cylinder", Order=70)]
       [DataMember]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Lens meridian which contain no power for astigmatism
+      /// Lens meridian which contain no power for astigmatism.
       /// </summary>
       [FhirElement("axis", Order=80)]
       [DataMember]
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Eye alignment compensation
+      /// Eye alignment compensation.
       /// </summary>
       [FhirElement("prism", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> _Prism;
 
       /// <summary>
-      /// Added power for multifocal levels
+      /// Added power for multifocal levels.
       /// </summary>
       [FhirElement("add", Order=100)]
       [DataMember]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Contact lens power
+      /// Contact lens power.
       /// </summary>
       [FhirElement("power", Order=110)]
       [DataMember]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Contact lens back curvature
+      /// Contact lens back curvature.
       /// </summary>
       [FhirElement("backCurve", Order=120)]
       [DataMember]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Contact lens diameter
+      /// Contact lens diameter.
       /// </summary>
       [FhirElement("diameter", Order=130)]
       [DataMember]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Lens wear duration
+      /// Lens wear duration.
       /// </summary>
       [FhirElement("duration", Order=140)]
       [DataMember]
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Duration;
 
       /// <summary>
-      /// Color required
+      /// Color required.
       /// </summary>
       [FhirElement("color", Order=150)]
       [DataMember]
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Brand required
+      /// Brand required.
       /// </summary>
       [FhirElement("brand", Order=160)]
       [DataMember]
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Notes for coatings
+      /// Notes for coatings.
       /// </summary>
       [FhirElement("note", Order=170)]
       [Cardinality(Min=0,Max=-1)]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "VisionPrescription.lensSpecification.prism"; } }
 
       /// <summary>
-      /// Amount of adjustment
+      /// Amount of adjustment.
       /// </summary>
       [FhirElement("amount", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// up | down | in | out
+      /// up | down | in | out.
       /// </summary>
       [FhirElement("base", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for vision prescription
+    /// Business Identifier for vision prescription.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -923,7 +923,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Response creation date
+    /// Response creation date.
     /// </summary>
     [FhirElement("created", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who prescription is for
+    /// Who prescription is for.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Created during encounter / admission / stay
+    /// Created during encounter / admission / stay.
     /// </summary>
     [FhirElement("encounter", Order=130, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When prescription was authorized
+    /// When prescription was authorized.
     /// </summary>
     [FhirElement("dateWritten", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who authorized the vision prescription
+    /// Who authorized the vision prescription.
     /// </summary>
     [FhirElement("prescriber", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Prescriber;
 
     /// <summary>
-    /// Vision lens authorization
+    /// Vision lens authorization.
     /// </summary>
     [FhirElement("lensSpecification", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=-1)]

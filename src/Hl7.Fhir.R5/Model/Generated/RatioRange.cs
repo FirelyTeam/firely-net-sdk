@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "RatioRange"; } }
 
     /// <summary>
-    /// Low Numerator limit
+    /// Low Numerator limit.
     /// </summary>
     [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _LowNumerator;
 
     /// <summary>
-    /// High Numerator limit
+    /// High Numerator limit.
     /// </summary>
     [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _HighNumerator;
 
     /// <summary>
-    /// Denominator value
+    /// Denominator value.
     /// </summary>
     [FhirElement("denominator", InSummary=true, Order=50)]
     [DataMember]

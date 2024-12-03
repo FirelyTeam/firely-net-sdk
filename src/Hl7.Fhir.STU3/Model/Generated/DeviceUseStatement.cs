@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier for this record
+    /// External identifier for this record.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | completed | entered-in-error +
+    /// active | completed | entered-in-error +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient using device
+    /// Patient using device.
     /// </summary>
     [FhirElement("subject", Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Period device was used
+    /// Period device was used.
     /// </summary>
     [FhirElement("whenUsed", Order=120, FiveWs="when.done")]
     [DataMember]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _WhenUsed;
 
     /// <summary>
-    /// How often  the device was used
+    /// How often  the device was used.
     /// </summary>
     [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Timing;
 
     /// <summary>
-    /// When statement was recorded
+    /// When statement was recorded.
     /// </summary>
     [FhirElement("recordedOn", Order=140, FiveWs="when.recorded")]
     [DataMember]
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who made the statement
+    /// Who made the statement.
     /// </summary>
     [FhirElement("source", Order=150, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Source;
 
     /// <summary>
-    /// Reference to device used
+    /// Reference to device used.
     /// </summary>
     [FhirElement("device", Order=160, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// Why device was used
+    /// Why device was used.
     /// </summary>
     [FhirElement("indication", Order=170, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
 
     /// <summary>
-    /// Target body site
+    /// Target body site.
     /// </summary>
     [FhirElement("bodySite", Order=180)]
     [Binding("BodySite")]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BodySite;
 
     /// <summary>
-    /// Addition details (comments, instructions)
+    /// Addition details (comments, instructions).
     /// </summary>
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]

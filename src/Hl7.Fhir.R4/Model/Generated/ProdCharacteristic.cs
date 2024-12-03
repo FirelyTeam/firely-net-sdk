@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ProdCharacteristic"; } }
 
     /// <summary>
-    /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("height", InSummary=true, Order=40)]
     [DataMember]
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Height;
 
     /// <summary>
-    /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("width", InSummary=true, Order=50)]
     [DataMember]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Width;
 
     /// <summary>
-    /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("depth", InSummary=true, Order=60)]
     [DataMember]
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Depth;
 
     /// <summary>
-    /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("weight", InSummary=true, Order=70)]
     [DataMember]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Weight;
 
     /// <summary>
-    /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("nominalVolume", InSummary=true, Order=80)]
     [DataMember]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _NominalVolume;
 
     /// <summary>
-    /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("externalDiameter", InSummary=true, Order=90)]
     [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _ExternalDiameter;
 
     /// <summary>
-    /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
+    /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
     [FhirElement("shape", InSummary=true, Order=100)]
     [DataMember]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
+    /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
     [FhirElement("color", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where applicable, the imprint can be specified as text
+    /// Where applicable, the imprint can be specified as text.
     /// </summary>
     [FhirElement("imprint", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
+    /// Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations.
     /// </summary>
     [FhirElement("image", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Image;
 
     /// <summary>
-    /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
+    /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
     [FhirElement("scoring", InSummary=true, Order=140)]
     [DataMember]

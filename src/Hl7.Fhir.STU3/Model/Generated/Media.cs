@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifier(s) for the image
+    /// Identifier(s) for the image.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Procedure that caused this media to be created
+    /// Procedure that caused this media to be created.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// photo | video | audio
+    /// photo | video | audio.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The type of acquisition equipment/process
+    /// The type of acquisition equipment/process.
     /// </summary>
     [FhirElement("subtype", InSummary=true, Order=120, FiveWs="class")]
     [Binding("DigitalMediaSubtype")]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Subtype;
 
     /// <summary>
-    /// Imaging view, e.g. Lateral or Antero-posterior
+    /// Imaging view, e.g. Lateral or Antero-posterior.
     /// </summary>
     [FhirElement("view", InSummary=true, Order=130, FiveWs="class")]
     [Binding("MediaView")]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _View;
 
     /// <summary>
-    /// Who/What this Media is a record of
+    /// Who/What this Media is a record of.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter / Episode associated with media
+    /// Encounter / Episode associated with media.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=150, FiveWs="context")]
     [CLSCompliant(false)]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// When Media was collected
+    /// When Media was collected.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// The person who generated the image
+    /// The person who generated the image.
     /// </summary>
     [FhirElement("operator", InSummary=true, Order=170, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Operator;
 
     /// <summary>
-    /// Why was event performed?
+    /// Why was event performed?.
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=180, FiveWs="why")]
     [Binding("MediaReason")]
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Body part in media
+    /// Body part in media.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=190)]
     [Binding("BodySite")]
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BodySite;
 
     /// <summary>
-    /// Observing Device
+    /// Observing Device.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=200)]
     [CLSCompliant(false)]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// Height of the image in pixels (photo/video)
+    /// Height of the image in pixels (photo/video).
     /// </summary>
     [FhirElement("height", InSummary=true, Order=210)]
     [DataMember]
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Width of the image in pixels (photo/video)
+    /// Width of the image in pixels (photo/video).
     /// </summary>
     [FhirElement("width", InSummary=true, Order=220)]
     [DataMember]
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Number of frames if &gt; 1 (photo)
+    /// Number of frames if &gt; 1 (photo).
     /// </summary>
     [FhirElement("frames", InSummary=true, Order=230)]
     [DataMember]
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Length in seconds (audio / video)
+    /// Length in seconds (audio / video).
     /// </summary>
     [FhirElement("duration", InSummary=true, Order=240)]
     [DataMember]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Actual Media - reference or data
+    /// Actual Media - reference or data.
     /// </summary>
     [FhirElement("content", Order=250)]
     [Cardinality(Min=1,Max=1)]
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Attachment _Content;
 
     /// <summary>
-    /// Comments made about the media
+    /// Comments made about the media.
     /// </summary>
     [FhirElement("note", Order=260)]
     [Cardinality(Min=0,Max=-1)]

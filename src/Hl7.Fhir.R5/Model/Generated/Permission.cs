@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Permission.justification"; } }
 
       /// <summary>
-      /// The regulatory grounds upon which this Permission builds
+      /// The regulatory grounds upon which this Permission builds.
       /// </summary>
       [FhirElement("basis", InSummary=true, Order=40)]
       [Binding("ConsentRegulatoryBasis")]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Basis;
 
       /// <summary>
-      /// Justifing rational
+      /// Justifing rational.
       /// </summary>
       [FhirElement("evidence", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Permission.rule"; } }
 
       /// <summary>
-      /// deny | permit
+      /// deny | permit.
       /// </summary>
       [FhirElement("type", InSummary=true, IsModifier=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The selection criteria to identify data that is within scope of this provision
+      /// The selection criteria to identify data that is within scope of this provision.
       /// </summary>
       [FhirElement("data", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Permission.DataComponent> _Data;
 
       /// <summary>
-      /// A description or definition of which activities are allowed to be done on the data
+      /// A description or definition of which activities are allowed to be done on the data.
       /// </summary>
       [FhirElement("activity", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Permission.ActivityComponent> _Activity;
 
       /// <summary>
-      /// What limits apply to the use of the data
+      /// What limits apply to the use of the data.
       /// </summary>
       [FhirElement("limit", InSummary=true, Order=70)]
       [Binding("PermissionUsageLimits")]
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Permission.rule.data"; } }
 
       /// <summary>
-      /// Explicit FHIR Resource references
+      /// Explicit FHIR Resource references.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Permission.ResourceComponent> _Resource;
 
       /// <summary>
-      /// Security tag code on .meta.security
+      /// Security tag code on .meta.security.
       /// </summary>
       [FhirElement("security", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Coding> _Security;
 
       /// <summary>
-      /// Timeframe encompasing data create/update
+      /// Timeframe encompasing data create/update.
       /// </summary>
       [FhirElement("period", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Period> _Period;
 
       /// <summary>
-      /// Expression identifying the data
+      /// Expression identifying the data.
       /// </summary>
       [FhirElement("expression", InSummary=true, Order=70)]
       [DataMember]
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Permission.rule.data.resource"; } }
 
       /// <summary>
-      /// instance | related | dependents | authoredby
+      /// instance | related | dependents | authoredby.
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The actual data reference
+      /// The actual data reference.
       /// </summary>
       [FhirElement("reference", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Permission.rule.activity"; } }
 
       /// <summary>
-      /// Authorized actor(s)
+      /// Authorized actor(s).
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=40)]
       [CLSCompliant(false)]
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Actor;
 
       /// <summary>
-      /// Actions controlled by this rule
+      /// Actions controlled by this rule.
       /// </summary>
       [FhirElement("action", InSummary=true, Order=50)]
       [Binding("ProcessingActivityAction")]
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Action;
 
       /// <summary>
-      /// The purpose for which the permission is given
+      /// The purpose for which the permission is given.
       /// </summary>
       [FhirElement("purpose", InSummary=true, Order=60)]
       [Binding("PurposeOfUse")]
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// active | entered-in-error | draft | rejected
+    /// active | entered-in-error | draft | rejected.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
     [DeclaredType(Type = typeof(Code))]
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The person or entity that asserts the permission
+    /// The person or entity that asserts the permission.
     /// </summary>
     [FhirElement("asserter", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -998,7 +998,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Asserter;
 
     /// <summary>
-    /// The date that permission was asserted
+    /// The date that permission was asserted.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The period in which the permission is active
+    /// The period in which the permission is active.
     /// </summary>
     [FhirElement("validity", InSummary=true, Order=120)]
     [DataMember]
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Validity;
 
     /// <summary>
-    /// The asserted justification for using the data
+    /// The asserted justification for using the data.
     /// </summary>
     [FhirElement("justification", InSummary=true, Order=130)]
     [DataMember]
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Permission.JustificationComponent _Justification;
 
     /// <summary>
-    /// deny-overrides | permit-overrides | ordered-deny-overrides | ordered-permit-overrides | deny-unless-permit | permit-unless-deny
+    /// deny-overrides | permit-overrides | ordered-deny-overrides | ordered-permit-overrides | deny-unless-permit | permit-unless-deny.
     /// </summary>
     [FhirElement("combining", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
@@ -1090,7 +1090,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Constraints to the Permission
+    /// Constraints to the Permission.
     /// </summary>
     [FhirElement("rule", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.compose"; } }
 
       /// <summary>
-      /// Fixed date for version-less references (transitive)
+      /// Fixed date for version-less references (transitive).
       /// </summary>
       [FhirElement("lockedDate", InSummary=true, Order=40, FiveWs="when.init")]
       [DataMember]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether inactive codes are in the value set
+      /// Whether inactive codes are in the value set.
       /// </summary>
       [FhirElement("inactive", InSummary=true, Order=50)]
       [DataMember]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Include one or more codes from a code system or other value set(s)
+      /// Include one or more codes from a code system or other value set(s).
       /// </summary>
       [FhirElement("include", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Include;
 
       /// <summary>
-      /// Explicitly exclude codes from a code system or other value sets
+      /// Explicitly exclude codes from a code system or other value sets.
       /// </summary>
       [FhirElement("exclude", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.compose.include"; } }
 
       /// <summary>
-      /// The system the codes come from
+      /// The system the codes come from.
       /// </summary>
       [FhirElement("system", InSummary=true, Order=40)]
       [DataMember]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific version of the code system referred to
+      /// Specific version of the code system referred to.
       /// </summary>
       [FhirElement("version", InSummary=true, Order=50)]
       [DataMember]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A concept defined in the system
+      /// A concept defined in the system.
       /// </summary>
       [FhirElement("concept", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent> _Concept;
 
       /// <summary>
-      /// Select codes/concepts by their properties (including relationships)
+      /// Select codes/concepts by their properties (including relationships).
       /// </summary>
       [FhirElement("filter", InSummary=true, IsModifier=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.FilterComponent> _Filter;
 
       /// <summary>
-      /// Select only contents included in this value set
+      /// Select only contents included in this value set.
       /// </summary>
       [FhirElement("valueSet", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.compose.include.concept"; } }
 
       /// <summary>
-      /// Code or expression from system
+      /// Code or expression from system.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Text to display for this code for this value set in this valueset
+      /// Text to display for this code for this value set in this valueset.
       /// </summary>
       [FhirElement("display", Order=50)]
       [DataMember]
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additional representations for this concept
+      /// Additional representations for this concept.
       /// </summary>
       [FhirElement("designation", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.compose.include.concept.designation"; } }
 
       /// <summary>
-      /// Human language of the designation
+      /// Human language of the designation.
       /// </summary>
       [FhirElement("language", Order=40)]
       [Binding("Language")]
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Details how this designation would be used
+      /// Details how this designation would be used.
       /// </summary>
       [FhirElement("use", Order=50)]
       [Binding("ConceptDesignationUse")]
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Use;
 
       /// <summary>
-      /// The text value for this designation
+      /// The text value for this designation.
       /// </summary>
       [FhirElement("value", Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -923,7 +923,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.compose.include.filter"; } }
 
       /// <summary>
-      /// A property defined by the code system
+      /// A property defined by the code system.
       /// </summary>
       [FhirElement("property", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists
+      /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists.
       /// </summary>
       [FhirElement("op", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Code from the system, or regex criteria, or boolean value for exists
+      /// Code from the system, or regex criteria, or boolean value for exists.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.expansion"; } }
 
       /// <summary>
-      /// Uniquely identifies this expansion
+      /// Uniquely identifies this expansion.
       /// </summary>
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1166,7 +1166,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Time ValueSet expansion happened
+      /// Time ValueSet expansion happened.
       /// </summary>
       [FhirElement("timestamp", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total number of codes in the expansion
+      /// Total number of codes in the expansion.
       /// </summary>
       [FhirElement("total", Order=60)]
       [DataMember]
@@ -1229,7 +1229,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Offset at which this resource starts
+      /// Offset at which this resource starts.
       /// </summary>
       [FhirElement("offset", Order=70)]
       [DataMember]
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Parameter that controlled the expansion process
+      /// Parameter that controlled the expansion process.
       /// </summary>
       [FhirElement("parameter", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.ParameterComponent> _Parameter;
 
       /// <summary>
-      /// Codes in the value set
+      /// Codes in the value set.
       /// </summary>
       [FhirElement("contains", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -1431,7 +1431,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.expansion.parameter"; } }
 
       /// <summary>
-      /// Name as assigned by the server
+      /// Name as assigned by the server.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1463,7 +1463,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Value of the named parameter
+      /// Value of the named parameter.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1580,7 +1580,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ValueSet.expansion.contains"; } }
 
       /// <summary>
-      /// System value for the code
+      /// System value for the code.
       /// </summary>
       [FhirElement("system", Order=40)]
       [DataMember]
@@ -1611,7 +1611,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If user cannot select this entry
+      /// If user cannot select this entry.
       /// </summary>
       [FhirElement("abstract", Order=50)]
       [DataMember]
@@ -1642,7 +1642,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If concept is inactive in the code system
+      /// If concept is inactive in the code system.
       /// </summary>
       [FhirElement("inactive", Order=60)]
       [DataMember]
@@ -1673,7 +1673,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Version in which this code/display is defined
+      /// Version in which this code/display is defined.
       /// </summary>
       [FhirElement("version", Order=70)]
       [DataMember]
@@ -1704,7 +1704,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Code - if blank, this is not a selectable code
+      /// Code - if blank, this is not a selectable code.
       /// </summary>
       [FhirElement("code", Order=80)]
       [DataMember]
@@ -1735,7 +1735,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// User display for the concept
+      /// User display for the concept.
       /// </summary>
       [FhirElement("display", Order=90)]
       [DataMember]
@@ -1766,7 +1766,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additional representations for this item
+      /// Additional representations for this item.
       /// </summary>
       [FhirElement("designation", Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -1780,7 +1780,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.DesignationComponent> _Designation;
 
       /// <summary>
-      /// Codes contained under this entry
+      /// Codes contained under this entry.
       /// </summary>
       [FhirElement("contains", Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -1940,7 +1940,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical URI to reference this value set (globally unique)
+    /// Logical URI to reference this value set (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
@@ -1971,7 +1971,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the value set
+    /// Additional identifier for the value set.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -1985,7 +1985,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the value set
+    /// Business version of the value set.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
@@ -2016,7 +2016,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this value set (computer friendly)
+    /// Name for this value set (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -2047,7 +2047,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this value set (human friendly)
+    /// Name for this value set (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
@@ -2078,7 +2078,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -2112,7 +2112,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
@@ -2143,7 +2143,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date this was last changed
+    /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
@@ -2174,7 +2174,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
@@ -2205,7 +2205,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -2219,7 +2219,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the value set
+    /// Natural language description of the value set.
     /// </summary>
     [FhirElement("description", Order=190)]
     [DataMember]
@@ -2250,7 +2250,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Context the content is intended to support
+    /// Context the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -2264,7 +2264,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for value set (if applicable)
+    /// Intended jurisdiction for value set (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
@@ -2279,7 +2279,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Indicates whether or not any change to the content logical definition may occur
+    /// Indicates whether or not any change to the content logical definition may occur.
     /// </summary>
     [FhirElement("immutable", InSummary=true, Order=220)]
     [DataMember]
@@ -2310,7 +2310,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Why this value set is defined
+    /// Why this value set is defined.
     /// </summary>
     [FhirElement("purpose", Order=230, FiveWs="why")]
     [DataMember]
@@ -2341,7 +2341,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
@@ -2372,7 +2372,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Whether this is intended to be used with an extensible binding
+    /// Whether this is intended to be used with an extensible binding.
     /// </summary>
     [FhirElement("extensible", InSummary=true, Order=250)]
     [DataMember]
@@ -2403,7 +2403,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Definition of the content of the value set (CLD)
+    /// Definition of the content of the value set (CLD).
     /// </summary>
     [FhirElement("compose", Order=260)]
     [DataMember]
@@ -2416,7 +2416,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ValueSet.ComposeComponent _Compose;
 
     /// <summary>
-    /// Used when the value set is "expanded"
+    /// Used when the value set is "expanded".
     /// </summary>
     [FhirElement("expansion", Order=270)]
     [DataMember]

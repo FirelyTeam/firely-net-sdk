@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ActorDefinition"; } }
 
     /// <summary>
-    /// Canonical identifier for this actor definition, represented as a URI (globally unique)
+    /// Canonical identifier for this actor definition, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the actor definition (business identifier)
+    /// Additional identifier for the actor definition (business identifier).
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the actor definition
+    /// Business version of the actor definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [Binding("??")]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this actor definition (computer friendly)
+    /// Name for this actor definition (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this actor definition (human friendly)
+    /// Name for this actor definition (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the actor
+    /// Natural language description of the actor.
     /// </summary>
     [FhirElement("description", Order=200)]
     [DataMember]
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for actor definition (if applicable)
+    /// Intended jurisdiction for actor definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this actor definition is defined
+    /// Why this actor definition is defined.
     /// </summary>
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// person | system
+    /// person | system.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Functionality associated with the actor
+    /// Functionality associated with the actor.
     /// </summary>
     [FhirElement("documentation", Order=270)]
     [DataMember]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reference to more information about the actor
+    /// Reference to more information about the actor.
     /// </summary>
     [FhirElement("reference", Order=280)]
     [Cardinality(Min=0,Max=-1)]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// CapabilityStatement for the actor (if applicable)
+    /// CapabilityStatement for the actor (if applicable).
     /// </summary>
     [FhirElement("capabilities", Order=290)]
     [DataMember]
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Definition of this actor in another context / IG
+    /// Definition of this actor in another context / IG.
     /// </summary>
     [FhirElement("derivedFrom", Order=300)]
     [Cardinality(Min=0,Max=-1)]

@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.fixedVersion"; } }
 
       /// <summary>
-      /// System to have its version fixed
+      /// System to have its version fixed.
       /// </summary>
       [FhirElement("system", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific version of the code system referred to
+      /// Specific version of the code system referred to.
       /// </summary>
       [FhirElement("version", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// default | check | override
+      /// default | check | override.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.excludedSystem"; } }
 
       /// <summary>
-      /// The specific code system to be excluded
+      /// The specific code system to be excluded.
       /// </summary>
       [FhirElement("system", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific version of the code system referred to
+      /// Specific version of the code system referred to.
       /// </summary>
       [FhirElement("version", InSummary=true, Order=50)]
       [DataMember]
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.designation"; } }
 
       /// <summary>
-      /// Designations to be included
+      /// Designations to be included.
       /// </summary>
       [FhirElement("include", InSummary=true, Order=40)]
       [DataMember]
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExpansionProfile.DesignationIncludeComponent _Include;
 
       /// <summary>
-      /// Designations to be excluded
+      /// Designations to be excluded.
       /// </summary>
       [FhirElement("exclude", InSummary=true, Order=50)]
       [DataMember]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.designation.include"; } }
 
       /// <summary>
-      /// The designation to be included
+      /// The designation to be included.
       /// </summary>
       [FhirElement("designation", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.designation.include.designation"; } }
 
       /// <summary>
-      /// Human language of the designation to be included
+      /// Human language of the designation to be included.
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
       [Binding("Language")]
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What kind of Designation to include
+      /// What kind of Designation to include.
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
       [Binding("ConceptDesignationUse")]
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.designation.exclude"; } }
 
       /// <summary>
-      /// The designation to be excluded
+      /// The designation to be excluded.
       /// </summary>
       [FhirElement("designation", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExpansionProfile.designation.exclude.designation"; } }
 
       /// <summary>
-      /// Human language of the designation to be excluded
+      /// Human language of the designation to be excluded.
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
       [Binding("Language")]
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What kind of Designation to exclude
+      /// What kind of Designation to exclude.
       /// </summary>
       [FhirElement("use", InSummary=true, Order=50)]
       [Binding("ConceptDesignationUse")]
@@ -1096,7 +1096,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical URI to reference this expansion profile (globally unique)
+    /// Logical URI to reference this expansion profile (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the expansion profile
+    /// Additional identifier for the expansion profile.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Business version of the expansion profile
+    /// Business version of the expansion profile.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
@@ -1171,7 +1171,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this expansion profile (computer friendly)
+    /// Name for this expansion profile (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -1202,7 +1202,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1236,7 +1236,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=140, FiveWs="class")]
     [DataMember]
@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date this was last changed
+    /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
@@ -1298,7 +1298,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=160, FiveWs="who.witness")]
     [DataMember]
@@ -1329,7 +1329,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -1343,7 +1343,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the expansion profile
+    /// Natural language description of the expansion profile.
     /// </summary>
     [FhirElement("description", Order=180)]
     [DataMember]
@@ -1374,7 +1374,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Context the content is intended to support
+    /// Context the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1388,7 +1388,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for expansion profile (if applicable)
+    /// Intended jurisdiction for expansion profile (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Binding("Jurisdiction")]
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Fix use of a code system to a particular version
+    /// Fix use of a code system to a particular version.
     /// </summary>
     [FhirElement("fixedVersion", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -1417,7 +1417,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExpansionProfile.FixedVersionComponent> _FixedVersion;
 
     /// <summary>
-    /// Systems/Versions to be exclude
+    /// Systems/Versions to be exclude.
     /// </summary>
     [FhirElement("excludedSystem", InSummary=true, Order=220)]
     [DataMember]
@@ -1430,7 +1430,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ExpansionProfile.ExcludedSystemComponent _ExcludedSystem;
 
     /// <summary>
-    /// Whether the expansion should include concept designations
+    /// Whether the expansion should include concept designations.
     /// </summary>
     [FhirElement("includeDesignations", InSummary=true, Order=230)]
     [DataMember]
@@ -1461,7 +1461,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the expansion profile imposes designation contraints
+    /// When the expansion profile imposes designation contraints.
     /// </summary>
     [FhirElement("designation", InSummary=true, Order=240)]
     [DataMember]
@@ -1474,7 +1474,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ExpansionProfile.DesignationComponent _Designation;
 
     /// <summary>
-    /// Include or exclude the value set definition in the expansion
+    /// Include or exclude the value set definition in the expansion.
     /// </summary>
     [FhirElement("includeDefinition", InSummary=true, Order=250)]
     [DataMember]
@@ -1505,7 +1505,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Include or exclude inactive concepts in the expansion
+    /// Include or exclude inactive concepts in the expansion.
     /// </summary>
     [FhirElement("activeOnly", InSummary=true, Order=260)]
     [DataMember]
@@ -1536,7 +1536,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Nested codes in the expansion or not
+    /// Nested codes in the expansion or not.
     /// </summary>
     [FhirElement("excludeNested", InSummary=true, Order=270)]
     [DataMember]
@@ -1567,7 +1567,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Include or exclude codes which cannot be rendered in user interfaces in the value set expansion
+    /// Include or exclude codes which cannot be rendered in user interfaces in the value set expansion.
     /// </summary>
     [FhirElement("excludeNotForUI", InSummary=true, Order=280)]
     [DataMember]
@@ -1598,7 +1598,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Include or exclude codes which are post coordinated expressions in the value set expansion
+    /// Include or exclude codes which are post coordinated expressions in the value set expansion.
     /// </summary>
     [FhirElement("excludePostCoordinated", InSummary=true, Order=290)]
     [DataMember]
@@ -1629,7 +1629,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Specify the language for the display element of codes in the value set expansion
+    /// Specify the language for the display element of codes in the value set expansion.
     /// </summary>
     [FhirElement("displayLanguage", InSummary=true, Order=300)]
     [Binding("Language")]
@@ -1661,7 +1661,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Controls behaviour of the value set expand operation when value sets are too large to be completely expanded
+    /// Controls behaviour of the value set expand operation when value sets are too large to be completely expanded.
     /// </summary>
     [FhirElement("limitedExpansion", InSummary=true, Order=310)]
     [DataMember]

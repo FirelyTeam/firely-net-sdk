@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "BodySite"; } }
 
     /// <summary>
-    /// Bodysite identifier
+    /// Bodysite identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this body site record is in active use
+    /// Whether this body site record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Named anatomical location
+    /// Named anatomical location.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
     [Binding("BodySite")]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Modification to location code
+    /// Modification to location code.
     /// </summary>
     [FhirElement("qualifier", Order=120, FiveWs="what")]
     [Binding("BodySiteQualifier")]
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Qualifier;
 
     /// <summary>
-    /// Anatomical location description
+    /// Anatomical location description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Attached images
+    /// Attached images.
     /// </summary>
     [FhirElement("image", Order=140, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Image;
 
     /// <summary>
-    /// Who this is about
+    /// Who this is about.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]

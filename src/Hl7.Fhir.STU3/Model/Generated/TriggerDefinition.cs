@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended
+    /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Triggering event name
+    /// Triggering event name.
     /// </summary>
     [FhirElement("eventName", InSummary=true, Order=40)]
     [DataMember]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Timing of the event
+    /// Timing of the event.
     /// </summary>
     [FhirElement("eventTiming", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _EventTiming;
 
     /// <summary>
-    /// Triggering data of the event
+    /// Triggering data of the event.
     /// </summary>
     [FhirElement("eventData", InSummary=true, Order=60)]
     [DataMember]

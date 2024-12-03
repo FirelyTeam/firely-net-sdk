@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationAdministration.performer"; } }
 
       /// <summary>
-      /// Type of performance
+      /// Type of performance.
       /// </summary>
       [FhirElement("function", Order=40)]
       [Binding("MedicationAdministrationPerformerFunction")]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Who performed the medication administration
+      /// Who performed the medication administration.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationAdministration.dosage"; } }
 
       /// <summary>
-      /// Free text dosage instructions e.g. SIG
+      /// Free text dosage instructions e.g. SIG.
       /// </summary>
       [FhirElement("text", Order=40)]
       [DataMember]
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Body site administered to
+      /// Body site administered to.
       /// </summary>
       [FhirElement("site", Order=50)]
       [Binding("MedicationAdministrationSite")]
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Site;
 
       /// <summary>
-      /// Path of substance into body
+      /// Path of substance into body.
       /// </summary>
       [FhirElement("route", Order=60)]
       [Binding("RouteOfAdministration")]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Route;
 
       /// <summary>
-      /// How drug was administered
+      /// How drug was administered.
       /// </summary>
       [FhirElement("method", Order=70)]
       [Binding("MedicationAdministrationMethod")]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Method;
 
       /// <summary>
-      /// Amount of medication per dose
+      /// Amount of medication per dose.
       /// </summary>
       [FhirElement("dose", Order=80)]
       [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Dose;
 
       /// <summary>
-      /// Dose quantity per unit of time
+      /// Dose quantity per unit of time.
       /// </summary>
       [FhirElement("rate", Order=90, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier
+    /// External identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Instantiates protocol or definition
+    /// Instantiates protocol or definition.
     /// </summary>
     [FhirElement("instantiates", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Part of referenced event
+    /// Part of referenced event.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
+    /// in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason administration not performed
+    /// Reason administration not performed.
     /// </summary>
     [FhirElement("statusReason", Order=130)]
     [Binding("MedicationAdministrationNegationReason")]
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _StatusReason;
 
     /// <summary>
-    /// Type of medication usage
+    /// Type of medication usage.
     /// </summary>
     [FhirElement("category", Order=140)]
     [Binding("MedicationAdministrationCategory")]
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Category;
 
     /// <summary>
-    /// What was administered
+    /// What was administered.
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [Binding("MedicationCode")]
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Medication;
 
     /// <summary>
-    /// Who received medication
+    /// Who received medication.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter or Episode of Care administered as part of
+    /// Encounter or Episode of Care administered as part of.
     /// </summary>
     [FhirElement("context", Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// Additional information to support administration
+    /// Additional information to support administration.
     /// </summary>
     [FhirElement("supportingInformation", Order=180, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
 
     /// <summary>
-    /// Start and end time of administration
+    /// Start and end time of administration.
     /// </summary>
     [FhirElement("effective", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Effective;
 
     /// <summary>
-    /// Who performed the medication administration and what they did
+    /// Who performed the medication administration and what they did.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=200, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationAdministration.PerformerComponent> _Performer;
 
     /// <summary>
-    /// Reason administration performed
+    /// Reason administration performed.
     /// </summary>
     [FhirElement("reasonCode", Order=210)]
     [Binding("MedicationAdministrationReason")]
@@ -722,7 +722,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Condition or observation that supports why the medication was administered
+    /// Condition or observation that supports why the medication was administered.
     /// </summary>
     [FhirElement("reasonReference", Order=220, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// Request administration performed against
+    /// Request administration performed against.
     /// </summary>
     [FhirElement("request", Order=230)]
     [CLSCompliant(false)]
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Request;
 
     /// <summary>
-    /// Device used to administer
+    /// Device used to administer.
     /// </summary>
     [FhirElement("device", Order=240)]
     [CLSCompliant(false)]
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Device;
 
     /// <summary>
-    /// Information about the administration
+    /// Information about the administration.
     /// </summary>
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Details of how medication was taken
+    /// Details of how medication was taken.
     /// </summary>
     [FhirElement("dosage", Order=260)]
     [DataMember]
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.MedicationAdministration.DosageComponent _Dosage;
 
     /// <summary>
-    /// A list of events of interest in the lifecycle
+    /// A list of events of interest in the lifecycle.
     /// </summary>
     [FhirElement("eventHistory", Order=270)]
     [CLSCompliant(false)]

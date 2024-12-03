@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "BodyStructure"; } }
 
     /// <summary>
-    /// Bodystructure identifier
+    /// Bodystructure identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this record is in active use
+    /// Whether this record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of Structure
+    /// Kind of Structure.
     /// </summary>
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureCode")]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Morphology;
 
     /// <summary>
-    /// Body site
+    /// Body site.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Binding("BodySite")]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Location;
 
     /// <summary>
-    /// Body site modifier
+    /// Body site modifier.
     /// </summary>
     [FhirElement("locationQualifier", Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureQualifier")]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _LocationQualifier;
 
     /// <summary>
-    /// Text description
+    /// Text description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Attached images
+    /// Attached images.
     /// </summary>
     [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Image;
 
     /// <summary>
-    /// Who this is about
+    /// Who this is about.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]

@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Encounter.participant"; } }
 
       /// <summary>
-      /// Role of participant in encounter
+      /// Role of participant in encounter.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ParticipantType")]
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Period of time during the encounter that the participant participated
+      /// Period of time during the encounter that the participant participated.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// The individual, device, or service participating in the encounter
+      /// The individual, device, or service participating in the encounter.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=60, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Encounter.reason"; } }
 
       /// <summary>
-      /// What the reason value should be used for/as
+      /// What the reason value should be used for/as.
       /// </summary>
       [FhirElement("use", InSummary=true, Order=40)]
       [Binding("reason-use")]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Use;
 
       /// <summary>
-      /// Reason the encounter takes place (core or reference)
+      /// Reason the encounter takes place (core or reference).
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.why[x]")]
       [Binding("EncounterReason")]
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Encounter.diagnosis"; } }
 
       /// <summary>
-      /// The diagnosis relevant to the encounter
+      /// The diagnosis relevant to the encounter.
       /// </summary>
       [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.why[x]")]
       [Binding("condition-code")]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Condition;
 
       /// <summary>
-      /// Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)
+      /// Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …).
       /// </summary>
       [FhirElement("use", Order=50)]
       [Binding("DiagnosisUse")]
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Encounter.admission"; } }
 
       /// <summary>
-      /// Pre-admission identifier
+      /// Pre-admission identifier.
       /// </summary>
       [FhirElement("preAdmissionIdentifier", Order=40)]
       [DataMember]
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _PreAdmissionIdentifier;
 
       /// <summary>
-      /// The location/organization from which the patient came before admission
+      /// The location/organization from which the patient came before admission.
       /// </summary>
       [FhirElement("origin", Order=50)]
       [CLSCompliant(false)]
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Origin;
 
       /// <summary>
-      /// From where patient was admitted (physician referral, transfer)
+      /// From where patient was admitted (physician referral, transfer).
       /// </summary>
       [FhirElement("admitSource", Order=60)]
       [Binding("AdmitSource")]
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
 
       /// <summary>
-      /// Indicates that the patient is being re-admitted
+      /// Indicates that the patient is being re-admitted.
       /// </summary>
       [FhirElement("reAdmission", Order=70)]
       [Binding("ReAdmissionType")]
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ReAdmission;
 
       /// <summary>
-      /// Location/organization to which the patient is discharged
+      /// Location/organization to which the patient is discharged.
       /// </summary>
       [FhirElement("destination", Order=80)]
       [CLSCompliant(false)]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Destination;
 
       /// <summary>
-      /// Category or kind of location after discharge
+      /// Category or kind of location after discharge.
       /// </summary>
       [FhirElement("dischargeDisposition", Order=90)]
       [Binding("DischargeDisp")]
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Encounter.location"; } }
 
       /// <summary>
-      /// Location the encounter takes place
+      /// Location the encounter takes place.
       /// </summary>
       [FhirElement("location", Order=40, FiveWs="FiveWs.where[x]")]
       [CLSCompliant(false)]
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Location;
 
       /// <summary>
-      /// planned | active | reserved | completed
+      /// planned | active | reserved | completed.
       /// </summary>
       [FhirElement("status", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The physical type of the location (usually the level in the location hierarchy - bed, room, ward, virtual etc.)
+      /// The physical type of the location (usually the level in the location hierarchy - bed, room, ward, virtual etc.).
       /// </summary>
       [FhirElement("form", Order=60)]
       [Binding("LocationForm")]
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Form;
 
       /// <summary>
-      /// Time period during which the patient was present at the location
+      /// Time period during which the patient was present at the location.
       /// </summary>
       [FhirElement("period", Order=70)]
       [DataMember]
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifier(s) by which this encounter is known
+    /// Identifier(s) by which this encounter is known.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -962,7 +962,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// planned | in-progress | on-hold | discharged | completed | cancelled | discontinued | entered-in-error | unknown
+    /// planned | in-progress | on-hold | discharged | completed | cancelled | discontinued | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Classification of patient encounter context - e.g. Inpatient, outpatient
+    /// Classification of patient encounter context - e.g. Inpatient, outpatient.
     /// </summary>
     [FhirElement("class", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("EncounterClass")]
@@ -1011,7 +1011,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Class;
 
     /// <summary>
-    /// Indicates the urgency of the encounter
+    /// Indicates the urgency of the encounter.
     /// </summary>
     [FhirElement("priority", Order=120, FiveWs="FiveWs.grade")]
     [Binding("Priority")]
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Priority;
 
     /// <summary>
-    /// Specific type of encounter (e.g. e-mail consultation, surgical day-care, ...)
+    /// Specific type of encounter (e.g. e-mail consultation, surgical day-care, ...).
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("EncounterType")]
@@ -1040,7 +1040,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
     /// <summary>
-    /// Specific type of service
+    /// Specific type of service.
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=140)]
     [Binding("EncounterServiceType")]
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _ServiceType;
 
     /// <summary>
-    /// The patient or group related to this encounter
+    /// The patient or group related to this encounter.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The current status of the subject in relation to the Encounter
+    /// The current status of the subject in relation to the Encounter.
     /// </summary>
     [FhirElement("subjectStatus", Order=160)]
     [Binding("SubjectStatus")]
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _SubjectStatus;
 
     /// <summary>
-    /// Episode(s) of care that this encounter should be recorded against
+    /// Episode(s) of care that this encounter should be recorded against.
     /// </summary>
     [FhirElement("episodeOfCare", InSummary=true, Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _EpisodeOfCare;
 
     /// <summary>
-    /// The request that initiated this encounter
+    /// The request that initiated this encounter.
     /// </summary>
     [FhirElement("basedOn", Order=180)]
     [CLSCompliant(false)]
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// The group(s) that are allocated to participate in this encounter
+    /// The group(s) that are allocated to participate in this encounter.
     /// </summary>
     [FhirElement("careTeam", Order=190)]
     [CLSCompliant(false)]
@@ -1132,7 +1132,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _CareTeam;
 
     /// <summary>
-    /// Another Encounter this encounter is part of
+    /// Another Encounter this encounter is part of.
     /// </summary>
     [FhirElement("partOf", Order=200)]
     [CLSCompliant(false)]
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PartOf;
 
     /// <summary>
-    /// The organization (facility) responsible for this encounter
+    /// The organization (facility) responsible for this encounter.
     /// </summary>
     [FhirElement("serviceProvider", Order=210)]
     [CLSCompliant(false)]
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ServiceProvider;
 
     /// <summary>
-    /// List of participants involved in the encounter
+    /// List of participants involved in the encounter.
     /// </summary>
     [FhirElement("participant", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -1176,7 +1176,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Encounter.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// The appointment that scheduled this encounter
+    /// The appointment that scheduled this encounter.
     /// </summary>
     [FhirElement("appointment", InSummary=true, Order=230)]
     [CLSCompliant(false)]
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Appointment;
 
     /// <summary>
-    /// Connection details of a virtual service (e.g. conference call)
+    /// Connection details of a virtual service (e.g. conference call).
     /// </summary>
     [FhirElement("virtualService", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -1206,7 +1206,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.VirtualServiceDetail> _VirtualService;
 
     /// <summary>
-    /// The actual start and end time of the encounter
+    /// The actual start and end time of the encounter.
     /// </summary>
     [FhirElement("actualPeriod", Order=250, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _ActualPeriod;
 
     /// <summary>
-    /// The planned start date/time (or admission date) of the encounter
+    /// The planned start date/time (or admission date) of the encounter.
     /// </summary>
     [FhirElement("plannedStartDate", Order=260)]
     [DataMember]
@@ -1250,7 +1250,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The planned end date/time (or discharge date) of the encounter
+    /// The planned end date/time (or discharge date) of the encounter.
     /// </summary>
     [FhirElement("plannedEndDate", Order=270)]
     [DataMember]
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Actual quantity of time the encounter lasted (less time absent)
+    /// Actual quantity of time the encounter lasted (less time absent).
     /// </summary>
     [FhirElement("length", Order=280)]
     [DataMember]
@@ -1294,7 +1294,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Duration _Length;
 
     /// <summary>
-    /// The list of medical reasons that are expected to be addressed during the episode of care
+    /// The list of medical reasons that are expected to be addressed during the episode of care.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -1308,7 +1308,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Encounter.ReasonComponent> _Reason;
 
     /// <summary>
-    /// The list of diagnosis relevant to this encounter
+    /// The list of diagnosis relevant to this encounter.
     /// </summary>
     [FhirElement("diagnosis", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -1322,7 +1322,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Encounter.DiagnosisComponent> _Diagnosis;
 
     /// <summary>
-    /// The set of accounts that may be used for billing for this Encounter
+    /// The set of accounts that may be used for billing for this Encounter.
     /// </summary>
     [FhirElement("account", Order=310)]
     [CLSCompliant(false)]
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Account;
 
     /// <summary>
-    /// Diet preferences reported by the patient
+    /// Diet preferences reported by the patient.
     /// </summary>
     [FhirElement("dietPreference", Order=320)]
     [Binding("PatientDiet")]
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _DietPreference;
 
     /// <summary>
-    /// Wheelchair, translator, stretcher, etc
+    /// Wheelchair, translator, stretcher, etc.
     /// </summary>
     [FhirElement("specialArrangement", Order=330)]
     [Binding("Arrangements")]
@@ -1368,7 +1368,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _SpecialArrangement;
 
     /// <summary>
-    /// Special courtesies (VIP, board member)
+    /// Special courtesies (VIP, board member).
     /// </summary>
     [FhirElement("specialCourtesy", Order=340)]
     [Binding("Courtesies")]
@@ -1383,7 +1383,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _SpecialCourtesy;
 
     /// <summary>
-    /// Details about the admission to a healthcare service
+    /// Details about the admission to a healthcare service.
     /// </summary>
     [FhirElement("admission", Order=350)]
     [DataMember]
@@ -1396,7 +1396,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Encounter.AdmissionComponent _Admission;
 
     /// <summary>
-    /// List of locations where the patient has been
+    /// List of locations where the patient has been.
     /// </summary>
     [FhirElement("location", Order=360)]
     [Cardinality(Min=0,Max=-1)]

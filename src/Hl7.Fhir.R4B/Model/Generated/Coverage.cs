@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Coverage.class"; } }
 
       /// <summary>
-      /// Type of class such as 'group' or 'plan'
+      /// Type of class such as 'group' or 'plan'.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("CoverageClass")]
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Value associated with the type
+      /// Value associated with the type.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Human readable description of the type and value
+      /// Human readable description of the type and value.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Coverage.costToBeneficiary"; } }
 
       /// <summary>
-      /// Cost category
+      /// Cost category.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("CopayTypes")]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The amount or percentage due from the beneficiary
+      /// The amount or percentage due from the beneficiary.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Value;
 
       /// <summary>
-      /// Exceptions for patient payments
+      /// Exceptions for patient payments.
       /// </summary>
       [FhirElement("exception", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Coverage.costToBeneficiary.exception"; } }
 
       /// <summary>
-      /// Exception category
+      /// Exception category.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("CoverageFinancialException")]
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The effective period of the exception
+      /// The effective period of the exception.
       /// </summary>
       [FhirElement("period", InSummary=true, Order=50)]
       [DataMember]
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for the coverage
+    /// Business Identifier for the coverage.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Coverage category such as medical or accident
+    /// Coverage category such as medical or accident.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("CoverageType")]
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Owner of the policy
+    /// Owner of the policy.
     /// </summary>
     [FhirElement("policyHolder", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PolicyHolder;
 
     /// <summary>
-    /// Subscriber to the policy
+    /// Subscriber to the policy.
     /// </summary>
     [FhirElement("subscriber", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subscriber;
 
     /// <summary>
-    /// ID assigned to the subscriber
+    /// ID assigned to the subscriber.
     /// </summary>
     [FhirElement("subscriberId", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [DataMember]
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Plan beneficiary
+    /// Plan beneficiary.
     /// </summary>
     [FhirElement("beneficiary", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Beneficiary;
 
     /// <summary>
-    /// Dependent number
+    /// Dependent number.
     /// </summary>
     [FhirElement("dependent", InSummary=true, Order=160)]
     [DataMember]
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Beneficiary relationship to the subscriber
+    /// Beneficiary relationship to the subscriber.
     /// </summary>
     [FhirElement("relationship", Order=170)]
     [Binding("Relationship")]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
     /// <summary>
-    /// Coverage start and end dates
+    /// Coverage start and end dates.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=180, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Issuer of the policy
+    /// Issuer of the policy.
     /// </summary>
     [FhirElement("payor", InSummary=true, Order=190, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Payor;
 
     /// <summary>
-    /// Additional coverage classifications
+    /// Additional coverage classifications.
     /// </summary>
     [FhirElement("class", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Coverage.ClassComponent> _Class;
 
     /// <summary>
-    /// Relative order of the coverage
+    /// Relative order of the coverage.
     /// </summary>
     [FhirElement("order", InSummary=true, Order=210)]
     [DataMember]
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Insurer network
+    /// Insurer network.
     /// </summary>
     [FhirElement("network", InSummary=true, Order=220)]
     [DataMember]
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient payments for services/products
+    /// Patient payments for services/products.
     /// </summary>
     [FhirElement("costToBeneficiary", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent> _CostToBeneficiary;
 
     /// <summary>
-    /// Reimbursement to insurer
+    /// Reimbursement to insurer.
     /// </summary>
     [FhirElement("subrogation", Order=240)]
     [DataMember]
@@ -873,7 +873,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contract details
+    /// Contract details.
     /// </summary>
     [FhirElement("contract", Order=250)]
     [CLSCompliant(false)]

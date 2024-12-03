@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "NutritionProduct.nutrient"; } }
 
       /// <summary>
-      /// The (relevant) nutrients in the product
+      /// The (relevant) nutrients in the product.
       /// </summary>
       [FhirElement("item", Order=40)]
       [Binding("NutritionProductNutrient")]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableReference _Item;
 
       /// <summary>
-      /// The amount of nutrient expressed in one or more units: X per pack / per serving / per dose
+      /// The amount of nutrient expressed in one or more units: X per pack / per serving / per dose.
       /// </summary>
       [FhirElement("amount", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "NutritionProduct.ingredient"; } }
 
       /// <summary>
-      /// The ingredient contained in the product
+      /// The ingredient contained in the product.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableReference _Item;
 
       /// <summary>
-      /// The amount of ingredient that is in the product
+      /// The amount of ingredient that is in the product.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "NutritionProduct.productCharacteristic"; } }
 
       /// <summary>
-      /// Code specifying the type of characteristic
+      /// Code specifying the type of characteristic.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("PropertyCharacteristic")]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The value of the characteristic
+      /// The value of the characteristic.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "NutritionProduct.instance"; } }
 
       /// <summary>
-      /// The amount of items or instances
+      /// The amount of items or instances.
       /// </summary>
       [FhirElement("quantity", Order=40)]
       [DataMember]
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// The identifier for the physical instance, typically a serial number
+      /// The identifier for the physical instance, typically a serial number.
       /// </summary>
       [FhirElement("identifier", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
       /// <summary>
-      /// The identification of the batch or lot of the product
+      /// The identification of the batch or lot of the product.
       /// </summary>
       [FhirElement("lotNumber", Order=60)]
       [DataMember]
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The expiry date or date and time for the product
+      /// The expiry date or date and time for the product.
       /// </summary>
       [FhirElement("expiry", Order=70)]
       [DataMember]
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The date until which the product is expected to be good for consumption
+      /// The date until which the product is expected to be good for consumption.
       /// </summary>
       [FhirElement("useBy", Order=80)]
       [DataMember]
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// active | inactive | entered-in-error
+    /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
+    /// A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc).
     /// </summary>
     [FhirElement("category", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Binding("NutritionProductCategory")]
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// A code designating a specific type of nutritional product
+    /// A code designating a specific type of nutritional product.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="FiveWs.identifier")]
     [Binding("NutritionProductCode")]
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Manufacturer, representative or officially responsible for the product
+    /// Manufacturer, representative or officially responsible for the product.
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
 
     /// <summary>
-    /// The product's nutritional information expressed by the nutrients
+    /// The product's nutritional information expressed by the nutrients.
     /// </summary>
     [FhirElement("nutrient", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent> _Nutrient;
 
     /// <summary>
-    /// Ingredients contained in this product
+    /// Ingredients contained in this product.
     /// </summary>
     [FhirElement("ingredient", Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent> _Ingredient;
 
     /// <summary>
-    /// Known or suspected allergens that are a part of this product
+    /// Known or suspected allergens that are a part of this product.
     /// </summary>
     [FhirElement("knownAllergen", Order=150)]
     [Binding("AllergenClass")]
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _KnownAllergen;
 
     /// <summary>
-    /// Specifies descriptive properties of the nutrition product
+    /// Specifies descriptive properties of the nutrition product.
     /// </summary>
     [FhirElement("productCharacteristic", Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.NutritionProduct.ProductCharacteristicComponent> _ProductCharacteristic;
 
     /// <summary>
-    /// One or several physical instances or occurrences of the nutrition product
+    /// One or several physical instances or occurrences of the nutrition product.
     /// </summary>
     [FhirElement("instance", Order=170)]
     [DataMember]
@@ -876,7 +876,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.NutritionProduct.InstanceComponent _Instance;
 
     /// <summary>
-    /// Comments made about the product
+    /// Comments made about the product.
     /// </summary>
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]

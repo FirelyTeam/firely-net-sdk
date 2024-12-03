@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "PractitionerRole"; } }
 
     /// <summary>
-    /// Identifiers for a role/location
+    /// Identifiers for a role/location.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this practitioner role record is in active use
+    /// Whether this practitioner role record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The period during which the practitioner is authorized to perform in these role(s)
+    /// The period during which the practitioner is authorized to perform in these role(s).
     /// </summary>
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Practitioner that provides services for the organization
+    /// Practitioner that provides services for the organization.
     /// </summary>
     [FhirElement("practitioner", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Practitioner;
 
     /// <summary>
-    /// Organization where the roles are available
+    /// Organization where the roles are available.
     /// </summary>
     [FhirElement("organization", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Roles which this practitioner may perform
+    /// Roles which this practitioner may perform.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140)]
     [Binding("PractitionerRole")]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
     /// <summary>
-    /// Specific specialty of the practitioner
+    /// Specific specialty of the practitioner.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=150)]
     [Binding("PractitionerSpecialty")]
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// Location(s) where the practitioner provides care
+    /// Location(s) where the practitioner provides care.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=160, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Location;
 
     /// <summary>
-    /// Healthcare services provided for this role's Organization/Location(s)
+    /// Healthcare services provided for this role's Organization/Location(s).
     /// </summary>
     [FhirElement("healthcareService", Order=170)]
     [CLSCompliant(false)]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
 
     /// <summary>
-    /// Official contact details relating to this PractitionerRole
+    /// Official contact details relating to this PractitionerRole.
     /// </summary>
     [FhirElement("contact", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExtendedContactDetail> _Contact;
 
     /// <summary>
-    /// Collection of characteristics (attributes)
+    /// Collection of characteristics (attributes).
     /// </summary>
     [FhirElement("characteristic", Order=190)]
     [Binding("ServiceCharacteristic")]
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Characteristic;
 
     /// <summary>
-    /// A language the practitioner (in this role) can use in patient communication
+    /// A language the practitioner (in this role) can use in patient communication.
     /// </summary>
     [FhirElement("communication", Order=200)]
     [Binding("Language")]
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
 
     /// <summary>
-    /// Times the Practitioner is available at this location and/or healthcare service (including exceptions)
+    /// Times the Practitioner is available at this location and/or healthcare service (including exceptions).
     /// </summary>
     [FhirElement("availability", Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Availability> _Availability;
 
     /// <summary>
-    /// Endpoints for interacting with the practitioner in this role
+    /// Endpoints for interacting with the practitioner in this role.
     /// </summary>
     [FhirElement("endpoint", Order=220)]
     [CLSCompliant(false)]

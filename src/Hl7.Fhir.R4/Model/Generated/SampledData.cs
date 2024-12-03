@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "SampledData"; } }
 
     /// <summary>
-    /// Zero value and units
+    /// Zero value and units.
     /// </summary>
     [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Origin;
 
     /// <summary>
-    /// Number of milliseconds between samples
+    /// Number of milliseconds between samples.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Multiply data by this before adding to origin
+    /// Multiply data by this before adding to origin.
     /// </summary>
     [FhirElement("factor", InSummary=true, Order=50)]
     [DataMember]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Lower limit of detection
+    /// Lower limit of detection.
     /// </summary>
     [FhirElement("lowerLimit", InSummary=true, Order=60)]
     [DataMember]
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Upper limit of detection
+    /// Upper limit of detection.
     /// </summary>
     [FhirElement("upperLimit", InSummary=true, Order=70)]
     [DataMember]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Number of sample points at each time point
+    /// Number of sample points at each time point.
     /// </summary>
     [FhirElement("dimensions", InSummary=true, Order=80)]
     [Cardinality(Min=1,Max=1)]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Decimal values with spaces, or "E" | "U" | "L"
+    /// Decimal values with spaces, or "E" | "U" | "L".
     /// </summary>
     [FhirElement("data", Order=90)]
     [DataMember]

@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// phone | fax | email | pager | url | sms | other
+    /// phone | fax | email | pager | url | sms | other.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The actual contact point details
+    /// The actual contact point details.
     /// </summary>
     [FhirElement("value", InSummary=true, Order=40)]
     [DataMember]
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// home | work | temp | old | mobile - purpose of this contact point
+    /// home | work | temp | old | mobile - purpose of this contact point.
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=50)]
     [DeclaredType(Type = typeof(Code))]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Specify preferred order of use (1 = highest)
+    /// Specify preferred order of use (1 = highest).
     /// </summary>
     [FhirElement("rank", InSummary=true, Order=60)]
     [DataMember]
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Time period when the contact point was/is in use
+    /// Time period when the contact point was/is in use.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]

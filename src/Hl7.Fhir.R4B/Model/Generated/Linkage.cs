@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Linkage.item"; } }
 
       /// <summary>
-      /// source | alternate | historical
+      /// source | alternate | historical.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Resource being linked
+      /// Resource being linked.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Whether this linkage assertion is active or not
+    /// Whether this linkage assertion is active or not.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [DataMember]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who is responsible for linkages
+    /// Who is responsible for linkages.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=100, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Author;
 
     /// <summary>
-    /// Item to be linked
+    /// Item to be linked.
     /// </summary>
     [FhirElement("item", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]

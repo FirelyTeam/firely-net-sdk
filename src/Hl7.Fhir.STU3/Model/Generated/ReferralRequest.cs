@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ReferralRequest.requester"; } }
 
       /// <summary>
-      /// Individual making the request
+      /// Individual making the request.
       /// </summary>
       [FhirElement("agent", InSummary=true, Order=40, FiveWs="who.author")]
       [CLSCompliant(false)]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Agent;
 
       /// <summary>
-      /// Organization agent is acting for
+      /// Organization agent is acting for.
       /// </summary>
       [FhirElement("onBehalfOf", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Instantiates protocol or definition
+    /// Instantiates protocol or definition.
     /// </summary>
     [FhirElement("definition", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Definition;
 
     /// <summary>
-    /// Request fulfilled by this request
+    /// Request fulfilled by this request.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Request(s) replaced by this request
+    /// Request(s) replaced by this request.
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
 
     /// <summary>
-    /// Composite request this is part of
+    /// Composite request this is part of.
     /// </summary>
     [FhirElement("groupIdentifier", InSummary=true, Order=130)]
     [DataMember]
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _GroupIdentifier;
 
     /// <summary>
-    /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
+    /// draft | active | suspended | cancelled | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// proposal | plan | order
+    /// proposal | plan | order.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Referral/Transition of care request type
+    /// Referral/Transition of care request type.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="class")]
     [Binding("ReferralType")]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Urgency of referral / transfer of care request
+    /// Urgency of referral / transfer of care request.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Actions requested as part of the referral
+    /// Actions requested as part of the referral.
     /// </summary>
     [FhirElement("serviceRequested", InSummary=true, Order=180, FiveWs="what")]
     [Binding("RequestedService")]
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ServiceRequested;
 
     /// <summary>
-    /// Patient referred to care or transfer
+    /// Patient referred to care or transfer.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=190, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Originating encounter
+    /// Originating encounter.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=200, FiveWs="context")]
     [CLSCompliant(false)]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// When the service(s) requested in the referral should occur
+    /// When the service(s) requested in the referral should occur.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Date of creation/activation
+    /// Date of creation/activation.
     /// </summary>
     [FhirElement("authoredOn", InSummary=true, Order=220, FiveWs="when.recorded")]
     [DataMember]
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who/what is requesting service
+    /// Who/what is requesting service.
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=230)]
     [DataMember]
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ReferralRequest.RequesterComponent _Requester;
 
     /// <summary>
-    /// The clinical specialty (discipline) that the referral is requested for
+    /// The clinical specialty (discipline) that the referral is requested for.
     /// </summary>
     [FhirElement("specialty", Order=240)]
     [Binding("ReferralSpecialty")]
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Specialty;
 
     /// <summary>
-    /// Receiver of referral / transfer of care request
+    /// Receiver of referral / transfer of care request.
     /// </summary>
     [FhirElement("recipient", InSummary=true, Order=250, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
 
     /// <summary>
-    /// Reason for referral / transfer of care request
+    /// Reason for referral / transfer of care request.
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=260, FiveWs="why")]
     [Binding("ReferralReason")]
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Why is service needed?
+    /// Why is service needed?.
     /// </summary>
     [FhirElement("reasonReference", InSummary=true, Order=270, FiveWs="why")]
     [CLSCompliant(false)]
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// A textual description of the referral
+    /// A textual description of the referral.
     /// </summary>
     [FhirElement("description", Order=280)]
     [DataMember]
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additonal information to support referral or transfer of care request
+    /// Additonal information to support referral or transfer of care request.
     /// </summary>
     [FhirElement("supportingInfo", Order=290)]
     [CLSCompliant(false)]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInfo;
 
     /// <summary>
-    /// Comments made about referral request
+    /// Comments made about referral request.
     /// </summary>
     [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Key events in history of request
+    /// Key events in history of request.
     /// </summary>
     [FhirElement("relevantHistory", Order=310)]
     [CLSCompliant(false)]

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Coverage.grouping"; } }
 
       /// <summary>
-      /// An identifier for the group
+      /// An identifier for the group.
       /// </summary>
       [FhirElement("group", InSummary=true, Order=40)]
       [DataMember]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Display text for an identifier for the group
+      /// Display text for an identifier for the group.
       /// </summary>
       [FhirElement("groupDisplay", InSummary=true, Order=50)]
       [DataMember]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An identifier for the subsection of the group
+      /// An identifier for the subsection of the group.
       /// </summary>
       [FhirElement("subGroup", InSummary=true, Order=60)]
       [DataMember]
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Display text for the subsection of the group
+      /// Display text for the subsection of the group.
       /// </summary>
       [FhirElement("subGroupDisplay", InSummary=true, Order=70)]
       [DataMember]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An identifier for the plan
+      /// An identifier for the plan.
       /// </summary>
       [FhirElement("plan", InSummary=true, Order=80)]
       [DataMember]
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Display text for the plan
+      /// Display text for the plan.
       /// </summary>
       [FhirElement("planDisplay", InSummary=true, Order=90)]
       [DataMember]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An identifier for the subsection of the plan
+      /// An identifier for the subsection of the plan.
       /// </summary>
       [FhirElement("subPlan", InSummary=true, Order=100)]
       [DataMember]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Display text for the subsection of the plan
+      /// Display text for the subsection of the plan.
       /// </summary>
       [FhirElement("subPlanDisplay", InSummary=true, Order=110)]
       [DataMember]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An identifier for the class
+      /// An identifier for the class.
       /// </summary>
       [FhirElement("class", InSummary=true, Order=120)]
       [DataMember]
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Display text for the class
+      /// Display text for the class.
       /// </summary>
       [FhirElement("classDisplay", InSummary=true, Order=130)]
       [DataMember]
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An identifier for the subsection of the class
+      /// An identifier for the subsection of the class.
       /// </summary>
       [FhirElement("subClass", InSummary=true, Order=140)]
       [DataMember]
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Display text for the subsection of the subclass
+      /// Display text for the subsection of the subclass.
       /// </summary>
       [FhirElement("subClassDisplay", InSummary=true, Order=150)]
       [DataMember]
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The primary coverage ID
+    /// The primary coverage ID.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of coverage such as medical or accident
+    /// Type of coverage such as medical or accident.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [Binding("CoverageType")]
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Owner of the policy
+    /// Owner of the policy.
     /// </summary>
     [FhirElement("policyHolder", InSummary=true, Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PolicyHolder;
 
     /// <summary>
-    /// Subscriber to the policy
+    /// Subscriber to the policy.
     /// </summary>
     [FhirElement("subscriber", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subscriber;
 
     /// <summary>
-    /// ID assigned to the Subscriber
+    /// ID assigned to the Subscriber.
     /// </summary>
     [FhirElement("subscriberId", InSummary=true, Order=140, FiveWs="who.focus")]
     [DataMember]
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Plan Beneficiary
+    /// Plan Beneficiary.
     /// </summary>
     [FhirElement("beneficiary", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Beneficiary;
 
     /// <summary>
-    /// Beneficiary relationship to the Subscriber
+    /// Beneficiary relationship to the Subscriber.
     /// </summary>
     [FhirElement("relationship", Order=160)]
     [Binding("Relationship")]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
     /// <summary>
-    /// Coverage start and end dates
+    /// Coverage start and end dates.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=170, FiveWs="when.done")]
     [DataMember]
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Identifier for the plan or agreement issuer
+    /// Identifier for the plan or agreement issuer.
     /// </summary>
     [FhirElement("payor", InSummary=true, Order=180, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Payor;
 
     /// <summary>
-    /// Additional coverage classifications
+    /// Additional coverage classifications.
     /// </summary>
     [FhirElement("grouping", Order=190)]
     [DataMember]
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coverage.GroupComponent _Grouping;
 
     /// <summary>
-    /// Dependent number
+    /// Dependent number.
     /// </summary>
     [FhirElement("dependent", InSummary=true, Order=200)]
     [DataMember]
@@ -858,7 +858,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The plan instance or sequence counter
+    /// The plan instance or sequence counter.
     /// </summary>
     [FhirElement("sequence", InSummary=true, Order=210)]
     [DataMember]
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Relative order of the coverage
+    /// Relative order of the coverage.
     /// </summary>
     [FhirElement("order", InSummary=true, Order=220)]
     [DataMember]
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Insurer network
+    /// Insurer network.
     /// </summary>
     [FhirElement("network", InSummary=true, Order=230)]
     [DataMember]
@@ -951,7 +951,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contract details
+    /// Contract details.
     /// </summary>
     [FhirElement("contract", Order=240)]
     [CLSCompliant(false)]

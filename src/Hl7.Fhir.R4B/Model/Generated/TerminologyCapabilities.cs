@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.software"; } }
 
       /// <summary>
-      /// A name the software is known by
+      /// A name the software is known by.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Version covered by this statement
+      /// Version covered by this statement.
       /// </summary>
       [FhirElement("version", InSummary=true, Order=50)]
       [DataMember]
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.implementation"; } }
 
       /// <summary>
-      /// Describes this specific instance
+      /// Describes this specific instance.
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Base URL for the implementation
+      /// Base URL for the implementation.
       /// </summary>
       [FhirElement("url", InSummary=true, Order=50)]
       [DataMember]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.codeSystem"; } }
 
       /// <summary>
-      /// URI for the Code System
+      /// URI for the Code System.
       /// </summary>
       [FhirElement("uri", Order=40)]
       [DataMember]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Version of Code System supported
+      /// Version of Code System supported.
       /// </summary>
       [FhirElement("version", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent> _Version;
 
       /// <summary>
-      /// Whether subsumption is supported
+      /// Whether subsumption is supported.
       /// </summary>
       [FhirElement("subsumption", Order=60)]
       [DataMember]
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.codeSystem.version"; } }
 
       /// <summary>
-      /// Version identifier for this version
+      /// Version identifier for this version.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DataMember]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If this is the default version for this code system
+      /// If this is the default version for this code system.
       /// </summary>
       [FhirElement("isDefault", InSummary=true, Order=50)]
       [DataMember]
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If compositional grammar is supported
+      /// If compositional grammar is supported.
       /// </summary>
       [FhirElement("compositional", Order=60)]
       [DataMember]
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Language Displays supported
+      /// Language Displays supported.
       /// </summary>
       [FhirElement("language", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Filter Properties supported
+      /// Filter Properties supported.
       /// </summary>
       [FhirElement("filter", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent> _Filter;
 
       /// <summary>
-      /// Properties supported for $lookup
+      /// Properties supported for $lookup.
       /// </summary>
       [FhirElement("property", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.codeSystem.version.filter"; } }
 
       /// <summary>
-      /// Code of the property supported
+      /// Code of the property supported.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Operations supported for the property
+      /// Operations supported for the property.
       /// </summary>
       [FhirElement("op", Order=50)]
       [Cardinality(Min=1,Max=-1)]
@@ -1091,7 +1091,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.expansion"; } }
 
       /// <summary>
-      /// Whether the server can return nested value sets
+      /// Whether the server can return nested value sets.
       /// </summary>
       [FhirElement("hierarchical", Order=40)]
       [DataMember]
@@ -1122,7 +1122,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether the server supports paging on expansion
+      /// Whether the server supports paging on expansion.
       /// </summary>
       [FhirElement("paging", Order=50)]
       [DataMember]
@@ -1153,7 +1153,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Allow request for incomplete expansions?
+      /// Allow request for incomplete expansions?.
       /// </summary>
       [FhirElement("incomplete", Order=60)]
       [DataMember]
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Supported expansion parameter
+      /// Supported expansion parameter.
       /// </summary>
       [FhirElement("parameter", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent> _Parameter;
 
       /// <summary>
-      /// Documentation about text searching works
+      /// Documentation about text searching works.
       /// </summary>
       [FhirElement("textFilter", Order=80)]
       [DataMember]
@@ -1358,7 +1358,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.expansion.parameter"; } }
 
       /// <summary>
-      /// Expansion Parameter name
+      /// Expansion Parameter name.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1390,7 +1390,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Description of support for parameter
+      /// Description of support for parameter.
       /// </summary>
       [FhirElement("documentation", Order=50)]
       [DataMember]
@@ -1520,7 +1520,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.validateCode"; } }
 
       /// <summary>
-      /// Whether translations are validated
+      /// Whether translations are validated.
       /// </summary>
       [FhirElement("translations", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1641,7 +1641,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.translation"; } }
 
       /// <summary>
-      /// Whether the client must identify the map
+      /// Whether the client must identify the map.
       /// </summary>
       [FhirElement("needsMap", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1765,7 +1765,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TerminologyCapabilities.closure"; } }
 
       /// <summary>
-      /// If cross-system closure is supported
+      /// If cross-system closure is supported.
       /// </summary>
       [FhirElement("translation", Order=40)]
       [DataMember]
@@ -1872,7 +1872,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this terminology capabilities, represented as a URI (globally unique)
+    /// Canonical identifier for this terminology capabilities, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -1903,7 +1903,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business version of the terminology capabilities
+    /// Business version of the terminology capabilities.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
@@ -1934,7 +1934,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this terminology capabilities (computer friendly)
+    /// Name for this terminology capabilities (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110)]
     [DataMember]
@@ -1965,7 +1965,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this terminology capabilities (human friendly)
+    /// Name for this terminology capabilities (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
@@ -1996,7 +1996,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -2030,7 +2030,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [DataMember]
@@ -2061,7 +2061,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
@@ -2093,7 +2093,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=160, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -2124,7 +2124,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -2138,7 +2138,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the terminology capabilities
+    /// Natural language description of the terminology capabilities.
     /// </summary>
     [FhirElement("description", Order=180)]
     [DataMember]
@@ -2169,7 +2169,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -2183,7 +2183,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for terminology capabilities (if applicable)
+    /// Intended jurisdiction for terminology capabilities (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Binding("Jurisdiction")]
@@ -2198,7 +2198,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this terminology capabilities is defined
+    /// Why this terminology capabilities is defined.
     /// </summary>
     [FhirElement("purpose", Order=210, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -2229,7 +2229,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", InSummary=true, Order=220)]
     [DataMember]
@@ -2260,7 +2260,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// instance | capability | requirements
+    /// instance | capability | requirements.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
@@ -2294,7 +2294,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Software that is covered by this terminology capability statement
+    /// Software that is covered by this terminology capability statement.
     /// </summary>
     [FhirElement("software", InSummary=true, Order=240)]
     [DataMember]
@@ -2307,7 +2307,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TerminologyCapabilities.SoftwareComponent _Software;
 
     /// <summary>
-    /// If this describes a specific instance
+    /// If this describes a specific instance.
     /// </summary>
     [FhirElement("implementation", InSummary=true, Order=250)]
     [DataMember]
@@ -2320,7 +2320,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TerminologyCapabilities.ImplementationComponent _Implementation;
 
     /// <summary>
-    /// Whether lockedDate is supported
+    /// Whether lockedDate is supported.
     /// </summary>
     [FhirElement("lockedDate", InSummary=true, Order=260)]
     [DataMember]
@@ -2351,7 +2351,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A code system supported by the server
+    /// A code system supported by the server.
     /// </summary>
     [FhirElement("codeSystem", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -2365,7 +2365,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent> _CodeSystem;
 
     /// <summary>
-    /// Information about the [ValueSet/$expand](valueset-operation-expand.html) operation
+    /// Information about the [ValueSet/$expand](valueset-operation-expand.html) operation.
     /// </summary>
     [FhirElement("expansion", Order=280)]
     [DataMember]
@@ -2378,7 +2378,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TerminologyCapabilities.ExpansionComponent _Expansion;
 
     /// <summary>
-    /// explicit | all
+    /// explicit | all.
     /// </summary>
     [FhirElement("codeSearch", Order=290)]
     [DeclaredType(Type = typeof(Code))]
@@ -2411,7 +2411,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Information about the [ValueSet/$validate-code](valueset-operation-validate-code.html) operation
+    /// Information about the [ValueSet/$validate-code](valueset-operation-validate-code.html) operation.
     /// </summary>
     [FhirElement("validateCode", Order=300)]
     [DataMember]
@@ -2424,7 +2424,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TerminologyCapabilities.ValidateCodeComponent _ValidateCode;
 
     /// <summary>
-    /// Information about the [ConceptMap/$translate](conceptmap-operation-translate.html) operation
+    /// Information about the [ConceptMap/$translate](conceptmap-operation-translate.html) operation.
     /// </summary>
     [FhirElement("translation", Order=310)]
     [DataMember]
@@ -2437,7 +2437,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TerminologyCapabilities.TranslationComponent _Translation;
 
     /// <summary>
-    /// Information about the [ConceptMap/$closure](conceptmap-operation-closure.html) operation
+    /// Information about the [ConceptMap/$closure](conceptmap-operation-closure.html) operation.
     /// </summary>
     [FhirElement("closure", Order=320)]
     [DataMember]

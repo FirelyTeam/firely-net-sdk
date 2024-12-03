@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ProcessRequest.item"; } }
 
       /// <summary>
-      /// Service instance
+      /// Service instance.
       /// </summary>
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier
+    /// Business Identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// cancel | poll | reprocess | status
+    /// cancel | poll | reprocess | status.
     /// </summary>
     [FhirElement("action", Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Party which is the target of the request
+    /// Party which is the target of the request.
     /// </summary>
     [FhirElement("target", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Target;
 
     /// <summary>
-    /// Creation date
+    /// Creation date.
     /// </summary>
     [FhirElement("created", Order=130, FiveWs="when.recorded")]
     [DataMember]
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Responsible practitioner
+    /// Responsible practitioner.
     /// </summary>
     [FhirElement("provider", Order=140, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Provider;
 
     /// <summary>
-    /// Responsible organization
+    /// Responsible organization.
     /// </summary>
     [FhirElement("organization", Order=150, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Reference to the Request resource
+    /// Reference to the Request resource.
     /// </summary>
     [FhirElement("request", Order=160)]
     [CLSCompliant(false)]
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Request;
 
     /// <summary>
-    /// Reference to the Response resource
+    /// Reference to the Response resource.
     /// </summary>
     [FhirElement("response", Order=170)]
     [CLSCompliant(false)]
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Response;
 
     /// <summary>
-    /// Remove history
+    /// Remove history.
     /// </summary>
     [FhirElement("nullify", Order=180)]
     [DataMember]
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reference number/string
+    /// Reference number/string.
     /// </summary>
     [FhirElement("reference", Order=190)]
     [DataMember]
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Items to re-adjudicate
+    /// Items to re-adjudicate.
     /// </summary>
     [FhirElement("item", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> _Item;
 
     /// <summary>
-    /// Resource type(s) to include
+    /// Resource type(s) to include.
     /// </summary>
     [FhirElement("include", Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Resource type(s) to exclude
+    /// Resource type(s) to exclude.
     /// </summary>
     [FhirElement("exclude", Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Selection period
+    /// Selection period.
     /// </summary>
     [FhirElement("period", Order=230)]
     [DataMember]

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Extension"; } }
 
     /// <summary>
-    /// identifies the meaning of the extension
+    /// identifies the meaning of the extension.
     /// </summary>
     [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Value of extension
+    /// Value of extension.
     /// </summary>
     [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [DataMember]

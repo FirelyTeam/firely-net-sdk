@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DeviceMetric.calibration"; } }
 
       /// <summary>
-      /// unspecified | offset | gain | two-point
+      /// unspecified | offset | gain | two-point.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// not-calibrated | calibration-required | calibrated | unspecified
+      /// not-calibrated | calibration-required | calibrated | unspecified.
       /// </summary>
       [FhirElement("state", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Describes the time last calibration has been performed
+      /// Describes the time last calibration has been performed.
       /// </summary>
       [FhirElement("time", Order=60)]
       [DataMember]
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Instance identifier
+    /// Instance identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Identity of metric, for example Heart Rate or PEEP Setting
+    /// Identity of metric, for example Heart Rate or PEEP Setting.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Binding("MetricType")]
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Unit of Measure for the Metric
+    /// Unit of Measure for the Metric.
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=110)]
     [Binding("MetricUnit")]
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Unit;
 
     /// <summary>
-    /// Describes the link to the Device
+    /// Describes the link to the Device.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// on | off | standby | entered-in-error
+    /// on | off | standby | entered-in-error.
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Color name (from CSS4) or #RRGGBB code
+    /// Color name (from CSS4) or #RRGGBB code.
     /// </summary>
     [FhirElement("color", Order=140)]
     [DataMember]
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// measurement | setting | calculation | unspecified
+    /// measurement | setting | calculation | unspecified.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Indicates how often the metric is taken or recorded
+    /// Indicates how often the metric is taken or recorded.
     /// </summary>
     [FhirElement("measurementFrequency", Order=160)]
     [DataMember]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _MeasurementFrequency;
 
     /// <summary>
-    /// Describes the calibrations that have been performed or that are required to be performed
+    /// Describes the calibrations that have been performed or that are required to be performed.
     /// </summary>
     [FhirElement("calibration", Order=170)]
     [Cardinality(Min=0,Max=-1)]

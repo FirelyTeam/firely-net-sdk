@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MessageHeader.destination"; } }
 
       /// <summary>
-      /// Name of system
+      /// Name of system.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Particular delivery destination within the destination
+      /// Particular delivery destination within the destination.
       /// </summary>
       [FhirElement("target", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Target;
 
       /// <summary>
-      /// Actual destination address or id
+      /// Actual destination address or id.
       /// </summary>
       [FhirElement("endpoint", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MessageHeader.source"; } }
 
       /// <summary>
-      /// Name of system
+      /// Name of system.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [DataMember]
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Name of software running the system
+      /// Name of software running the system.
       /// </summary>
       [FhirElement("software", InSummary=true, Order=50)]
       [DataMember]
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Version of software running
+      /// Version of software running.
       /// </summary>
       [FhirElement("version", InSummary=true, Order=60)]
       [DataMember]
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Human contact for problems
+      /// Human contact for problems.
       /// </summary>
       [FhirElement("contact", InSummary=true, Order=70)]
       [DataMember]
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ContactPoint _Contact;
 
       /// <summary>
-      /// Actual message source address or id
+      /// Actual message source address or id.
       /// </summary>
       [FhirElement("endpoint", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=1)]
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MessageHeader.response"; } }
 
       /// <summary>
-      /// Id of original message
+      /// Id of original message.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// ok | transient-error | fatal-error
+      /// ok | transient-error | fatal-error.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific list of hints/warnings/errors
+      /// Specific list of hints/warnings/errors.
       /// </summary>
       [FhirElement("details", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Code for the event this message represents
+    /// Code for the event this message represents.
     /// </summary>
     [FhirElement("event", InSummary=true, Order=90, FiveWs="what")]
     [Binding("MessageEvent")]
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coding _Event;
 
     /// <summary>
-    /// Message destination application(s)
+    /// Message destination application(s).
     /// </summary>
     [FhirElement("destination", InSummary=true, Order=100, FiveWs="who.focus")]
     [Cardinality(Min=0,Max=-1)]
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> _Destination;
 
     /// <summary>
-    /// Intended "real-world" recipient for the data
+    /// Intended "real-world" recipient for the data.
     /// </summary>
     [FhirElement("receiver", InSummary=true, Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -786,7 +786,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Receiver;
 
     /// <summary>
-    /// Real world sender of the message
+    /// Real world sender of the message.
     /// </summary>
     [FhirElement("sender", InSummary=true, Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Sender;
 
     /// <summary>
-    /// Time that the message was sent
+    /// Time that the message was sent.
     /// </summary>
     [FhirElement("timestamp", InSummary=true, Order=130, FiveWs="when.init")]
     [Cardinality(Min=1,Max=1)]
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The source of the data entry
+    /// The source of the data entry.
     /// </summary>
     [FhirElement("enterer", InSummary=true, Order=140, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Enterer;
 
     /// <summary>
-    /// The source of the decision
+    /// The source of the decision.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Author;
 
     /// <summary>
-    /// Message source application
+    /// Message source application.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=160, FiveWs="who.actor")]
     [Cardinality(Min=1,Max=1)]
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.MessageHeader.MessageSourceComponent _Source;
 
     /// <summary>
-    /// Final responsibility for event
+    /// Final responsibility for event.
     /// </summary>
     [FhirElement("responsible", InSummary=true, Order=170, FiveWs="who.witness")]
     [CLSCompliant(false)]
@@ -892,7 +892,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Responsible;
 
     /// <summary>
-    /// Cause of event
+    /// Cause of event.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=180, FiveWs="why")]
     [Binding("EventReason")]
@@ -906,7 +906,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Reason;
 
     /// <summary>
-    /// If this is a reply to prior message
+    /// If this is a reply to prior message.
     /// </summary>
     [FhirElement("response", InSummary=true, Order=190)]
     [DataMember]
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.MessageHeader.ResponseComponent _Response;
 
     /// <summary>
-    /// The actual content of the message
+    /// The actual content of the message.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=200)]
     [CLSCompliant(false)]

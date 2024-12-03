@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ArtifactAssessment.content"; } }
 
       /// <summary>
-      /// comment | classifier | rating | container | response | change-request
+      /// comment | classifier | rating | container | response | change-request.
       /// </summary>
       [FhirElement("informationType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Brief summary of the content
+      /// Brief summary of the content.
       /// </summary>
       [FhirElement("summary", Order=50)]
       [DataMember]
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What type of content
+      /// What type of content.
       /// </summary>
       [FhirElement("type", Order=60)]
       [Binding("EvidenceCertaintyType")]
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Rating, classifier, or assessment
+      /// Rating, classifier, or assessment.
       /// </summary>
       [FhirElement("classifier", Order=70)]
       [Binding("EvidenceCertaintyRating")]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Classifier;
 
       /// <summary>
-      /// Quantitative rating
+      /// Quantitative rating.
       /// </summary>
       [FhirElement("quantity", Order=80)]
       [DataMember]
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Who authored the content
+      /// Who authored the content.
       /// </summary>
       [FhirElement("author", Order=90)]
       [CLSCompliant(false)]
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Author;
 
       /// <summary>
-      /// What the comment is directed to
+      /// What the comment is directed to.
       /// </summary>
       [FhirElement("path", Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additional information
+      /// Additional information.
       /// </summary>
       [FhirElement("relatedArtifact", Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
 
       /// <summary>
-      /// Acceptable to publicly share the resource content
+      /// Acceptable to publicly share the resource content.
       /// </summary>
       [FhirElement("freeToShare", Order=120)]
       [DataMember]
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Contained content
+      /// Contained content.
       /// </summary>
       [FhirElement("component", Order=130)]
       [Cardinality(Min=0,Max=-1)]
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the artifact assessment
+    /// Additional identifier for the artifact assessment.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// A short title for the assessment for use in displaying and selecting
+    /// A short title for the assessment for use in displaying and selecting.
     /// </summary>
     [FhirElement("title", InSummary=true, Order=100)]
     [DataMember]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to cite the comment or rating
+    /// How to cite the comment or rating.
     /// </summary>
     [FhirElement("citeAs", Order=110, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _CiteAs;
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -702,7 +702,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=130)]
     [DataMember]
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the artifact assessment was approved by publisher
+    /// When the artifact assessment was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=140)]
     [DataMember]
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the artifact assessment was last reviewed by the publisher
+    /// When the artifact assessment was last reviewed by the publisher.
     /// </summary>
     [FhirElement("lastReviewDate", InSummary=true, Order=150)]
     [DataMember]
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The artifact assessed, commented upon or rated
+    /// The artifact assessed, commented upon or rated.
     /// </summary>
     [FhirElement("artifact", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Artifact;
 
     /// <summary>
-    /// Comment, classifier, or rating content
+    /// Comment, classifier, or rating content.
     /// </summary>
     [FhirElement("content", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> _Content;
 
     /// <summary>
-    /// submitted | triaged | waiting-for-input | resolved-no-change | resolved-change-required | deferred | duplicate | applied | published | entered-in-error
+    /// submitted | triaged | waiting-for-input | resolved-no-change | resolved-change-required | deferred | duplicate | applied | published | entered-in-error.
     /// </summary>
     [FhirElement("workflowStatus", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
@@ -859,7 +859,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// unresolved | not-persuasive | persuasive | persuasive-with-modification | not-persuasive-with-modification
+    /// unresolved | not-persuasive | persuasive | persuasive-with-modification | not-persuasive-with-modification.
     /// </summary>
     [FhirElement("disposition", InSummary=true, Order=190)]
     [DeclaredType(Type = typeof(Code))]
