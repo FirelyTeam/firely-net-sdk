@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Model;
 using System.Runtime.CompilerServices;
 
@@ -17,13 +18,11 @@ namespace Hl7.Fhir.ElementModel
     {
         [TemporarilyChanged] // This should be restored to use the original ITE stack.
         public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
-            => @base is PrimitiveType primitive 
-                ? new SinglePrimitiveElementNode<PrimitiveType>(primitive, rootName) 
-                : new SinglePocoElementNode(@base, null, null, rootName);
+            => ToElementNode(@base, rootName);
 
         public static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null)
             => @base is PrimitiveType primitive 
-                ? new SinglePrimitiveElementNode<PrimitiveType>(primitive, rootName) 
+                ? new SinglePrimitiveElementNode(primitive, rootName) 
                 : new SinglePocoElementNode(@base, null, null, rootName);
     }
 }

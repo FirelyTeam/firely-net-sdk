@@ -14,10 +14,10 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void Intersect()
         {
-            var a = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("A");
-            var b1 = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("B");
-            var c = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("C");
-            var b2 = SinglePrimitiveElementNode<FhirString>.FromSystemPrimitive<FhirString>("B");
+            var a = SinglePrimitiveElementNode.FromSystemPrimitive<FhirString>("A");
+            var b1 = SinglePrimitiveElementNode.FromSystemPrimitive<FhirString>("B");
+            var c = SinglePrimitiveElementNode.FromSystemPrimitive<FhirString>("C");
+            var b2 = SinglePrimitiveElementNode.FromSystemPrimitive<FhirString>("B");
             
 
             var col1 = new IScopedNode[] { a, b1 };
@@ -41,19 +41,19 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestIntersect()
         {
-            IEnumerable<IScopedNode> left = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
-            IEnumerable<IScopedNode> right = RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 5, 6, 8]);
-            RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
+            IEnumerable<IScopedNode> left = RepeatingPrimitiveElementNode.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
+            IEnumerable<IScopedNode> right = RepeatingPrimitiveElementNode.FromSystemPrimitives<Integer>([3, 5, 5, 6, 8]);
+            RepeatingPrimitiveElementNode.FromSystemPrimitives<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
         }
 
         [TestMethod]
         public void TestExclude()
         {
             IEnumerable<IScopedNode> left =
-                RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
+                RepeatingPrimitiveElementNode.FromSystemPrimitives<Integer>([1, 3, 3, 5, 6]);
             IEnumerable<IScopedNode> right =
-                RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([5, 6]);
-            RepeatingPrimitiveElementNode<Integer>.FromSystemPrimitives<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
+                RepeatingPrimitiveElementNode.FromSystemPrimitives<Integer>([5, 6]);
+            RepeatingPrimitiveElementNode.FromSystemPrimitives<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
         }
     }
 }

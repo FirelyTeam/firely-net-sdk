@@ -37,7 +37,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(complex, Typecasts.UnboxTo(singleC, typeof(IScopedNode)));
 
             Assert.AreEqual(4L, Typecasts.UnboxTo(singleV, typeof(long)));
-            Assert.AreEqual(4L, Typecasts.UnboxTo(SinglePrimitiveElementNode<Integer64>.FromSystemPrimitive<Integer64>(4L), typeof(long)));
+            Assert.AreEqual(4L, Typecasts.UnboxTo(SinglePrimitiveElementNode.FromSystemPrimitive<Integer64>(4L), typeof(long)));
 
             Assert.AreEqual(complex, Typecasts.UnboxTo(complex, typeof(IScopedNode)));
             Assert.IsNull(Typecasts.UnboxTo(null, typeof(string)));

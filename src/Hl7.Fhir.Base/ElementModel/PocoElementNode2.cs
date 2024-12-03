@@ -14,6 +14,7 @@ namespace Hl7.Fhir.ElementModel;
 
 public abstract record PocoElementNode2(SinglePocoElementNode? Parent, string Name) : IEnumerable<SinglePocoElementNode>
 {
+    
     public abstract IEnumerator<SinglePocoElementNode> GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
@@ -34,9 +35,9 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
     private PocoElementNode2 nodeFor(string name, object value) =>
         value switch
         {
-            PrimitiveType primitive => new SinglePrimitiveElementNode<PrimitiveType>(primitive, name) { Parent = this },
+            PrimitiveType primitive => new SinglePrimitiveElementNode(primitive, name) { Parent = this },
             Base b => new SinglePocoElementNode(b, this, null, name),
-            IEnumerable<PrimitiveType> primitiveList => new RepeatingPrimitiveElementNode<PrimitiveType>(primitiveList.ToList(), name) { Parent = this },
+            IEnumerable<PrimitiveType> primitiveList => new RepeatingPrimitiveElementNode(primitiveList.ToList(), name) { Parent = this },
             IEnumerable<Base> list => new RepeatingPocoElementNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
         };
@@ -168,31 +169,26 @@ public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, SinglePocoElem
     public override IEnumerator<SinglePocoElementNode> GetEnumerator() => Pocos.Select((poco, index) => new SinglePocoElementNode(poco, Parent, index, Name)).GetEnumerator();
 }
 
-public record SinglePrimitiveElementNode<T> : SinglePocoElementNode where T : PrimitiveType
+public record SinglePrimitiveElementNode(PrimitiveType Primitive, string? Name = null) : SinglePocoElementNode(Primitive, null, null, Name)
 {
-    public static SinglePrimitiveElementNode<T> FromSystemPrimitive<TTo>(object primitive, string? name = null) where TTo : T, new()
+    public static SinglePrimitiveElementNode FromSystemPrimitive<TTo>(object primitive, string? name = null) where TTo : PrimitiveType, new()
     {
-        return new SinglePrimitiveElementNode<T>(new TTo { ObjectValue = primitive }, name);
+        return new SinglePrimitiveElementNode(new TTo { ObjectValue = primitive }, name);
     }
-
-    public SinglePrimitiveElementNode(T primitive, string? name = null) : base(primitive, null, null, name ?? "value") { }
-    private T Primitive => (T)Poco;
+    
+    public static implicit operator SinglePrimitiveElementNode(PrimitiveType primitive) => new(primitive);
+    
     public override object? Value => Primitive.ToITypedElementValue();
 }
 
-public record RepeatingPrimitiveElementNode<T> : RepeatingPocoElementNode where T : PrimitiveType
-{
-    public RepeatingPrimitiveElementNode(IReadOnlyList<T> primitives, string? name = null) : base(primitives, null, name ?? "value") { }
-
-    public static RepeatingPrimitiveElementNode<T> FromSystemPrimitives<TTo>(IEnumerable<object> values, string? name = null) where TTo : T, new()
+public record RepeatingPrimitiveElementNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : RepeatingPocoElementNode(Primitives, null, Name ?? "value")
+{ public static RepeatingPrimitiveElementNode FromSystemPrimitives<TTo>(IEnumerable<object> values, string? name = null) where TTo : PrimitiveType, new()
     {
-        return new RepeatingPrimitiveElementNode<T>(values.Select(v => new TTo { ObjectValue = v }).ToList(), name);
+        return new RepeatingPrimitiveElementNode(values.Select(v => new TTo { ObjectValue = v }).ToList(), name);
     }
 
     public override IEnumerator<SinglePocoElementNode> GetEnumerator() =>
-        Primitives.Select((primitive, index) => new SinglePrimitiveElementNode<T>(primitive, Name) { Index = index }).GetEnumerator();
-
-    private IReadOnlyList<T> Primitives => (IReadOnlyList<T>)Pocos;
+        Primitives.Select((primitive, index) => new SinglePrimitiveElementNode(primitive, Name) { Index = index }).GetEnumerator();
 }
 
 public static class PocoElementNodeExtensions
