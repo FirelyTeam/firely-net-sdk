@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Support.Poco;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -94,9 +93,9 @@ namespace Hl7.Fhir.ElementModel
         public NodeType Type => this switch
         {
             { AtResource: true } when Current.Children("contained").Any() => NodeType.DomainResource | NodeType.Resource,
-            { InstanceType: FhirTypeConstants.BUNDLE } => NodeType.Bundle | NodeType.Resource,
+            { InstanceType: FhirTypeNames.BUNDLE } => NodeType.Bundle | NodeType.Resource,
             { AtResource: true } => NodeType.Resource,
-            { InstanceType: FhirTypeConstants.REFERENCE or FhirTypeConstants.CANONICAL or FhirTypeConstants.CODEABLEREFERENCE } => NodeType.Reference,
+            { InstanceType: FhirTypeNames.REFERENCE or FhirTypeNames.CANONICAL or FhirTypeNames.CODEABLEREFERENCE } => NodeType.Reference,
             { Value: not null } => NodeType.Primitive,
             _ => 0
         };
