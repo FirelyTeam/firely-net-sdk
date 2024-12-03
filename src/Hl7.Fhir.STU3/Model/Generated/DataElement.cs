@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DataElement.mapping"; } }
 
       /// <summary>
-      /// Internal id when this mapping is used
+      /// Internal id when this mapping is used.
       /// </summary>
       [FhirElement("identity", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Identifies what this mapping refers to
+      /// Identifies what this mapping refers to.
       /// </summary>
       [FhirElement("uri", Order=50)]
       [DataMember]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Names what this mapping refers to
+      /// Names what this mapping refers to.
       /// </summary>
       [FhirElement("name", Order=60)]
       [DataMember]
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical URI to reference this data element (globally unique)
+    /// Logical URI to reference this data element (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the data element
+    /// Additional identifier for the data element.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the data element
+    /// Business version of the data element.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date this was last changed
+    /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this data element (computer friendly)
+    /// Name for this data element (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this data element (human friendly)
+    /// Name for this data element (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=170)]
     [DataMember]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Context the content is intended to support
+    /// Context the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for data element (if applicable)
+    /// Intended jurisdiction for data element (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Binding("Jurisdiction")]
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=210)]
     [DataMember]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
+    /// comparable | fully-specified | equivalent | convertable | scaleable | flexible.
     /// </summary>
     [FhirElement("stringency", InSummary=true, Order=220)]
     [DeclaredType(Type = typeof(Code))]
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External specification mapped to
+    /// External specification mapped to.
     /// </summary>
     [FhirElement("mapping", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DataElement.MappingComponent> _Mapping;
 
     /// <summary>
-    /// Definition of element
+    /// Definition of element.
     /// </summary>
     [FhirElement("element", InSummary=true, Order=240)]
     [Cardinality(Min=1,Max=-1)]

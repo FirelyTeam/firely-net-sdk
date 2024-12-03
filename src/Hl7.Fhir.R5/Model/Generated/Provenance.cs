@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Provenance.agent"; } }
 
       /// <summary>
-      /// How the agent participated
+      /// How the agent participated.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ProvenanceAgentType")]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// What the agents role was
+      /// What the agents role was.
       /// </summary>
       [FhirElement("role", Order=50)]
       [Binding("ProvenanceAgentRole")]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Role;
 
       /// <summary>
-      /// The agent that participated in the event
+      /// The agent that participated in the event.
       /// </summary>
       [FhirElement("who", InSummary=true, Order=60, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Who;
 
       /// <summary>
-      /// The agent that delegated
+      /// The agent that delegated.
       /// </summary>
       [FhirElement("onBehalfOf", Order=70)]
       [CLSCompliant(false)]
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Provenance.entity"; } }
 
       /// <summary>
-      /// revision | quotation | source | instantiates | removal
+      /// revision | quotation | source | instantiates | removal.
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Identity of entity
+      /// Identity of entity.
       /// </summary>
       [FhirElement("what", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _What;
 
       /// <summary>
-      /// Entity is attributed to this agent
+      /// Entity is attributed to this agent.
       /// </summary>
       [FhirElement("agent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Target Reference(s) (usually version specific)
+    /// Target Reference(s) (usually version specific).
     /// </summary>
     [FhirElement("target", InSummary=true, Order=90, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Target;
 
     /// <summary>
-    /// When the activity occurred
+    /// When the activity occurred.
     /// </summary>
     [FhirElement("occurred", Order=100, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurred;
 
     /// <summary>
-    /// When the activity was recorded / updated
+    /// When the activity was recorded / updated.
     /// </summary>
     [FhirElement("recorded", InSummary=true, Order=110, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Policy or plan the activity was defined by
+    /// Policy or plan the activity was defined by.
     /// </summary>
     [FhirElement("policy", Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the activity occurred, if relevant
+    /// Where the activity occurred, if relevant.
     /// </summary>
     [FhirElement("location", Order=130, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Authorization (purposeOfUse) related to the event
+    /// Authorization (purposeOfUse) related to the event.
     /// </summary>
     [FhirElement("authorization", Order=140, FiveWs="FiveWs.why[x]")]
     [Binding("ProvenanceReason")]
@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Authorization;
 
     /// <summary>
-    /// Activity that occurred
+    /// Activity that occurred.
     /// </summary>
     [FhirElement("activity", Order=150, FiveWs="FiveWs.why[x]")]
     [Binding("ProvenanceActivity")]
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Activity;
 
     /// <summary>
-    /// Workflow authorization within which this event occurred
+    /// Workflow authorization within which this event occurred.
     /// </summary>
     [FhirElement("basedOn", Order=160, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// The patient is the subject of the data created/updated (.target) by the activity
+    /// The patient is the subject of the data created/updated (.target) by the activity.
     /// </summary>
     [FhirElement("patient", Order=170, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Encounter within which this event occurred or which the event is tightly associated
+    /// Encounter within which this event occurred or which the event is tightly associated.
     /// </summary>
     [FhirElement("encounter", Order=180, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Actor involved
+    /// Actor involved.
     /// </summary>
     [FhirElement("agent", InSummary=true, Order=190, FiveWs="FiveWs.who")]
     [Cardinality(Min=1,Max=-1)]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Provenance.AgentComponent> _Agent;
 
     /// <summary>
-    /// An entity used in this activity
+    /// An entity used in this activity.
     /// </summary>
     [FhirElement("entity", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Provenance.EntityComponent> _Entity;
 
     /// <summary>
-    /// Signature on target
+    /// Signature on target.
     /// </summary>
     [FhirElement("signature", Order=210)]
     [Cardinality(Min=0,Max=-1)]

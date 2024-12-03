@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ProductShelfLife"; } }
 
     /// <summary>
-    /// Unique identifier for the packaged Medicinal Product
+    /// Unique identifier for the packaged Medicinal Product.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=40)]
     [DataMember]
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
+    /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Period;
 
     /// <summary>
-    /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
+    /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
     /// </summary>
     [FhirElement("specialPrecautionsForStorage", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]

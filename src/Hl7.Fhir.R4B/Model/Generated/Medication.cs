@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Medication.ingredient"; } }
 
       /// <summary>
-      /// The actual ingredient or content
+      /// The actual ingredient or content.
       /// </summary>
       [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Item;
 
       /// <summary>
-      /// Active ingredient indicator
+      /// Active ingredient indicator.
       /// </summary>
       [FhirElement("isActive", Order=50)]
       [DataMember]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Quantity of ingredient present
+      /// Quantity of ingredient present.
       /// </summary>
       [FhirElement("strength", Order=60)]
       [DataMember]
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Medication.batch"; } }
 
       /// <summary>
-      /// Identifier assigned to batch
+      /// Identifier assigned to batch.
       /// </summary>
       [FhirElement("lotNumber", Order=40)]
       [DataMember]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// When batch will expire
+      /// When batch will expire.
       /// </summary>
       [FhirElement("expirationDate", Order=50)]
       [DataMember]
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for this medication
+    /// Business identifier for this medication.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Codes that identify this medication
+    /// Codes that identify this medication.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Binding("MedicationFormalRepresentation")]
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// active | inactive | entered-in-error
+    /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Manufacturer of the item
+    /// Manufacturer of the item.
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=120, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Manufacturer;
 
     /// <summary>
-    /// powder | tablets | capsule +
+    /// powder | tablets | capsule +.
     /// </summary>
     [FhirElement("form", Order=130)]
     [Binding("MedicationForm")]
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Form;
 
     /// <summary>
-    /// Amount of drug in package
+    /// Amount of drug in package.
     /// </summary>
     [FhirElement("amount", InSummary=true, Order=140)]
     [DataMember]
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Ratio _Amount;
 
     /// <summary>
-    /// Active or inactive ingredient
+    /// Active or inactive ingredient.
     /// </summary>
     [FhirElement("ingredient", Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Medication.IngredientComponent> _Ingredient;
 
     /// <summary>
-    /// Details about packaged medications
+    /// Details about packaged medications.
     /// </summary>
     [FhirElement("batch", Order=160)]
     [DataMember]

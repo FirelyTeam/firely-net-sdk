@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "RelatedPerson"; } }
 
     /// <summary>
-    /// A human identifier for this person
+    /// A human identifier for this person.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this related person's record is in active use
+    /// Whether this related person's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The patient this person is related to
+    /// The patient this person is related to.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// The nature of the relationship
+    /// The nature of the relationship.
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=120, FiveWs="class")]
     [Binding("PatientRelationshipType")]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
     /// <summary>
-    /// A name associated with the person
+    /// A name associated with the person.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.HumanName> _Name;
 
     /// <summary>
-    /// A contact detail for the person
+    /// A contact detail for the person.
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// male | female | other | unknown
+    /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The date on which the related person was born
+    /// The date on which the related person was born.
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=160)]
     [DataMember]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Address where the related person can be contacted or visited
+    /// Address where the related person can be contacted or visited.
     /// </summary>
     [FhirElement("address", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Address> _Address;
 
     /// <summary>
-    /// Image of the person
+    /// Image of the person.
     /// </summary>
     [FhirElement("photo", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Photo;
 
     /// <summary>
-    /// Period of time that this relationship is considered valid
+    /// Period of time that this relationship is considered valid.
     /// </summary>
     [FhirElement("period", Order=190, FiveWs="when.done")]
     [DataMember]

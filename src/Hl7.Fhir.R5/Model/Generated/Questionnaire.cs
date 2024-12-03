@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Questionnaire.item"; } }
 
       /// <summary>
-      /// Unique id for item in questionnaire
+      /// Unique id for item in questionnaire.
       /// </summary>
       [FhirElement("linkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// ElementDefinition - details for the item
+      /// ElementDefinition - details for the item.
       /// </summary>
       [FhirElement("definition", Order=50)]
       [DataMember]
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Corresponding concept for this item in a terminology
+      /// Corresponding concept for this item in a terminology.
       /// </summary>
       [FhirElement("code", Order=60)]
       [Binding("QuestionnaireConcept")]
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Coding> _Code;
 
       /// <summary>
-      /// E.g. "1(a)", "2.5.3"
+      /// E.g. "1(a)", "2.5.3".
       /// </summary>
       [FhirElement("prefix", Order=70)]
       [DataMember]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Primary text for the item
+      /// Primary text for the item.
       /// </summary>
       [FhirElement("text", Order=80)]
       [DataMember]
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// group | display | boolean | decimal | integer | date | dateTime +
+      /// group | display | boolean | decimal | integer | date | dateTime +.
       /// </summary>
       [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Only allow data when
+      /// Only allow data when.
       /// </summary>
       [FhirElement("enableWhen", IsModifier=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Questionnaire.EnableWhenComponent> _EnableWhen;
 
       /// <summary>
-      /// all | any
+      /// all | any.
       /// </summary>
       [FhirElement("enableBehavior", Order=110)]
       [DeclaredType(Type = typeof(Code))]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// hidden | protected
+      /// hidden | protected.
       /// </summary>
       [FhirElement("disabledDisplay", Order=120)]
       [DeclaredType(Type = typeof(Code))]
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether the item must be included in data results
+      /// Whether the item must be included in data results.
       /// </summary>
       [FhirElement("required", Order=130)]
       [DataMember]
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether the item may repeat
+      /// Whether the item may repeat.
       /// </summary>
       [FhirElement("repeats", Order=140)]
       [DataMember]
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Don't allow human editing
+      /// Don't allow human editing.
       /// </summary>
       [FhirElement("readOnly", Order=150)]
       [DataMember]
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// No more than these many characters
+      /// No more than these many characters.
       /// </summary>
       [FhirElement("maxLength", Order=160)]
       [DataMember]
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// optionsOnly | optionsOrType | optionsOrString
+      /// optionsOnly | optionsOrType | optionsOrString.
       /// </summary>
       [FhirElement("answerConstraint", Order=170)]
       [DeclaredType(Type = typeof(Code))]
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// ValueSet containing permitted answers
+      /// ValueSet containing permitted answers.
       /// </summary>
       [FhirElement("answerValueSet", Order=180)]
       [DataMember]
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Permitted answer
+      /// Permitted answer.
       /// </summary>
       [FhirElement("answerOption", Order=190)]
       [Cardinality(Min=0,Max=-1)]
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Questionnaire.AnswerOptionComponent> _AnswerOption;
 
       /// <summary>
-      /// Initial value(s) when item is first rendered
+      /// Initial value(s) when item is first rendered.
       /// </summary>
       [FhirElement("initial", Order=200)]
       [Cardinality(Min=0,Max=-1)]
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Questionnaire.InitialComponent> _Initial;
 
       /// <summary>
-      /// Nested questionnaire items
+      /// Nested questionnaire items.
       /// </summary>
       [FhirElement("item", Order=210)]
       [Cardinality(Min=0,Max=-1)]
@@ -1054,7 +1054,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Questionnaire.item.enableWhen"; } }
 
       /// <summary>
-      /// The linkId of question that determines whether item is enabled/disabled
+      /// The linkId of question that determines whether item is enabled/disabled.
       /// </summary>
       [FhirElement("question", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1086,7 +1086,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// exists | = | != | &gt; | &lt; | &gt;= | &lt;=
+      /// exists | = | != | &gt; | &lt; | &gt;= | &lt;=.
       /// </summary>
       [FhirElement("operator", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Value for question comparison based on operator
+      /// Value for question comparison based on operator.
       /// </summary>
       [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [Binding("QuestionnaireQuestionOption3")]
@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Questionnaire.item.answerOption"; } }
 
       /// <summary>
-      /// Answer value
+      /// Answer value.
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("QuestionnaireQuestionOption")]
@@ -1269,7 +1269,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Value;
 
       /// <summary>
-      /// Whether option is selected by default
+      /// Whether option is selected by default.
       /// </summary>
       [FhirElement("initialSelected", Order=50)]
       [DataMember]
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Questionnaire.item.initial"; } }
 
       /// <summary>
-      /// Actual value for initializing the question
+      /// Actual value for initializing the question.
       /// </summary>
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("QuestionnaireQuestionOption2")]
@@ -1497,7 +1497,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this questionnaire, represented as an absolute URI (globally unique)
+    /// Canonical identifier for this questionnaire, represented as an absolute URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -1528,7 +1528,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for questionnaire
+    /// Business identifier for questionnaire.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1542,7 +1542,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the questionnaire
+    /// Business version of the questionnaire.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -1573,7 +1573,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -1588,7 +1588,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this questionnaire (computer friendly)
+    /// Name for this questionnaire (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
@@ -1619,7 +1619,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this questionnaire (human friendly)
+    /// Name for this questionnaire (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
@@ -1650,7 +1650,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Based on Questionnaire
+    /// Based on Questionnaire.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -1682,7 +1682,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1716,7 +1716,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
@@ -1747,7 +1747,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Resource that can be subject of QuestionnaireResponse
+    /// Resource that can be subject of QuestionnaireResponse.
     /// </summary>
     [FhirElement("subjectType", InSummary=true, Order=180, FiveWs="FiveWs.who")]
     [DeclaredType(Type = typeof(Code))]
@@ -1781,7 +1781,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1812,7 +1812,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=200, FiveWs="FiveWs.author")]
     [DataMember]
@@ -1843,7 +1843,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -1857,7 +1857,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the questionnaire
+    /// Natural language description of the questionnaire.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
@@ -1888,7 +1888,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -1902,7 +1902,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for questionnaire (if applicable)
+    /// Intended jurisdiction for questionnaire (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
     [Binding("Jurisdiction")]
@@ -1917,7 +1917,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this questionnaire is defined
+    /// Why this questionnaire is defined.
     /// </summary>
     [FhirElement("purpose", Order=250, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -1948,7 +1948,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=260)]
     [DataMember]
@@ -1979,7 +1979,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     [FhirElement("copyrightLabel", Order=270)]
     [DataMember]
@@ -2010,7 +2010,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the questionnaire was approved by publisher
+    /// When the questionnaire was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=280)]
     [DataMember]
@@ -2041,7 +2041,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the questionnaire was last reviewed by the publisher
+    /// When the questionnaire was last reviewed by the publisher.
     /// </summary>
     [FhirElement("lastReviewDate", Order=290)]
     [DataMember]
@@ -2072,7 +2072,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the questionnaire is expected to be used
+    /// When the questionnaire is expected to be used.
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=300)]
     [DataMember]
@@ -2085,7 +2085,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _EffectivePeriod;
 
     /// <summary>
-    /// Concept that represents the overall questionnaire
+    /// Concept that represents the overall questionnaire.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=310)]
     [Binding("QuestionnaireConcept")]
@@ -2100,7 +2100,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Coding> _Code;
 
     /// <summary>
-    /// Questions and sections within the Questionnaire
+    /// Questions and sections within the Questionnaire.
     /// </summary>
     [FhirElement("item", Order=320)]
     [Cardinality(Min=0,Max=-1)]

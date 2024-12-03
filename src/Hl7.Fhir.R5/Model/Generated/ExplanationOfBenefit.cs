@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.related"; } }
 
       /// <summary>
-      /// Reference to the related claim
+      /// Reference to the related claim.
       /// </summary>
       [FhirElement("claim", Order=40)]
       [CLSCompliant(false)]
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Claim;
 
       /// <summary>
-      /// How the reference claim is related
+      /// How the reference claim is related.
       /// </summary>
       [FhirElement("relationship", Order=50)]
       [Binding("RelatedClaimRelationship")]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
       /// <summary>
-      /// File or case reference
+      /// File or case reference.
       /// </summary>
       [FhirElement("reference", Order=60)]
       [DataMember]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.event"; } }
 
       /// <summary>
-      /// Specific event
+      /// Specific event.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("DatesType")]
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Occurance date or period
+      /// Occurance date or period.
       /// </summary>
       [FhirElement("when", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.payee"; } }
 
       /// <summary>
-      /// Category of recipient
+      /// Category of recipient.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("PayeeType")]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Recipient reference
+      /// Recipient reference.
       /// </summary>
       [FhirElement("party", Order=50)]
       [CLSCompliant(false)]
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.careTeam"; } }
 
       /// <summary>
-      /// Order of care team
+      /// Order of care team.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Practitioner or organization
+      /// Practitioner or organization.
       /// </summary>
       [FhirElement("provider", Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Provider;
 
       /// <summary>
-      /// Indicator of the lead practitioner
+      /// Indicator of the lead practitioner.
       /// </summary>
       [FhirElement("responsible", Order=60)]
       [DataMember]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Function within the team
+      /// Function within the team.
       /// </summary>
       [FhirElement("role", Order=70)]
       [Binding("CareTeamRole")]
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Role;
 
       /// <summary>
-      /// Practitioner or provider specialization
+      /// Practitioner or provider specialization.
       /// </summary>
       [FhirElement("specialty", Order=80)]
       [Binding("ProviderQualification")]
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.supportingInfo"; } }
 
       /// <summary>
-      /// Information instance identifier
+      /// Information instance identifier.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Classification of the supplied information
+      /// Classification of the supplied information.
       /// </summary>
       [FhirElement("category", Order=50)]
       [Binding("InformationCategory")]
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Type of information
+      /// Type of information.
       /// </summary>
       [FhirElement("code", Order=60)]
       [Binding("InformationCode")]
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// When it occurred
+      /// When it occurred.
       /// </summary>
       [FhirElement("timing", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Timing;
 
       /// <summary>
-      /// Data to be provided
+      /// Data to be provided.
       /// </summary>
       [FhirElement("value", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Value;
 
       /// <summary>
-      /// Explanation for the information
+      /// Explanation for the information.
       /// </summary>
       [FhirElement("reason", Order=90)]
       [Binding("MissingReason")]
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.diagnosis"; } }
 
       /// <summary>
-      /// Diagnosis instance identifier
+      /// Diagnosis instance identifier.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Nature of illness or problem
+      /// Nature of illness or problem.
       /// </summary>
       [FhirElement("diagnosis", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("ICD10")]
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Diagnosis;
 
       /// <summary>
-      /// Timing or nature of the diagnosis
+      /// Timing or nature of the diagnosis.
       /// </summary>
       [FhirElement("type", Order=60)]
       [Binding("DiagnosisType")]
@@ -1083,7 +1083,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Present on admission
+      /// Present on admission.
       /// </summary>
       [FhirElement("onAdmission", Order=70)]
       [Binding("DiagnosisOnAdmission")]
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.procedure"; } }
 
       /// <summary>
-      /// Procedure instance identifier
+      /// Procedure instance identifier.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Category of Procedure
+      /// Category of Procedure.
       /// </summary>
       [FhirElement("type", Order=50)]
       [Binding("ProcedureType")]
@@ -1266,7 +1266,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// When the procedure was performed
+      /// When the procedure was performed.
       /// </summary>
       [FhirElement("date", Order=60)]
       [DataMember]
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific clinical procedure
+      /// Specific clinical procedure.
       /// </summary>
       [FhirElement("procedure", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [Binding("ICD10_Procedures")]
@@ -1315,7 +1315,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Procedure;
 
       /// <summary>
-      /// Unique device identifier
+      /// Unique device identifier.
       /// </summary>
       [FhirElement("udi", Order=80)]
       [CLSCompliant(false)]
@@ -1464,7 +1464,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.insurance"; } }
 
       /// <summary>
-      /// Coverage to be used for adjudication
+      /// Coverage to be used for adjudication.
       /// </summary>
       [FhirElement("focal", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1496,7 +1496,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Insurance information
+      /// Insurance information.
       /// </summary>
       [FhirElement("coverage", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Coverage;
 
       /// <summary>
-      /// Prior authorization reference number
+      /// Prior authorization reference number.
       /// </summary>
       [FhirElement("preAuthRef", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1656,7 +1656,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.accident"; } }
 
       /// <summary>
-      /// When the incident occurred
+      /// When the incident occurred.
       /// </summary>
       [FhirElement("date", Order=40)]
       [DataMember]
@@ -1687,7 +1687,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The nature of the accident
+      /// The nature of the accident.
       /// </summary>
       [FhirElement("type", Order=50)]
       [Binding("AccidentType")]
@@ -1701,7 +1701,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Where the event occurred
+      /// Where the event occurred.
       /// </summary>
       [FhirElement("location", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1829,7 +1829,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.item"; } }
 
       /// <summary>
-      /// Item instance identifier
+      /// Item instance identifier.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1861,7 +1861,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applicable care team members
+      /// Applicable care team members.
       /// </summary>
       [FhirElement("careTeamSequence", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1893,7 +1893,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applicable diagnoses
+      /// Applicable diagnoses.
       /// </summary>
       [FhirElement("diagnosisSequence", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1925,7 +1925,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applicable procedures
+      /// Applicable procedures.
       /// </summary>
       [FhirElement("procedureSequence", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -1957,7 +1957,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applicable exception and supporting information
+      /// Applicable exception and supporting information.
       /// </summary>
       [FhirElement("informationSequence", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -1989,7 +1989,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Number for tracking
+      /// Number for tracking.
       /// </summary>
       [FhirElement("traceNumber", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -2003,7 +2003,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
       /// <summary>
-      /// Revenue or cost center code
+      /// Revenue or cost center code.
       /// </summary>
       [FhirElement("revenue", Order=100)]
       [Binding("RevenueCenter")]
@@ -2017,7 +2017,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Revenue;
 
       /// <summary>
-      /// Benefit classification
+      /// Benefit classification.
       /// </summary>
       [FhirElement("category", Order=110)]
       [Binding("BenefitCategory")]
@@ -2031,7 +2031,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Billing, service, product, or drug code
+      /// Billing, service, product, or drug code.
       /// </summary>
       [FhirElement("productOrService", Order=120)]
       [Binding("ServiceProduct")]
@@ -2045,7 +2045,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
 
       /// <summary>
-      /// End of a range of codes
+      /// End of a range of codes.
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=130)]
       [Binding("ServiceProduct")]
@@ -2059,7 +2059,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrServiceEnd;
 
       /// <summary>
-      /// Request or Referral for Service
+      /// Request or Referral for Service.
       /// </summary>
       [FhirElement("request", Order=140)]
       [CLSCompliant(false)]
@@ -2075,7 +2075,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Request;
 
       /// <summary>
-      /// Product or service billing modifiers
+      /// Product or service billing modifiers.
       /// </summary>
       [FhirElement("modifier", Order=150)]
       [Binding("Modifiers")]
@@ -2090,7 +2090,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
 
       /// <summary>
-      /// Program the product or service is provided under
+      /// Program the product or service is provided under.
       /// </summary>
       [FhirElement("programCode", Order=160)]
       [Binding("ProgramCode")]
@@ -2105,7 +2105,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ProgramCode;
 
       /// <summary>
-      /// Date or dates of service or product delivery
+      /// Date or dates of service or product delivery.
       /// </summary>
       [FhirElement("serviced", Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
@@ -2120,7 +2120,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Serviced;
 
       /// <summary>
-      /// Place of service or where product was supplied
+      /// Place of service or where product was supplied.
       /// </summary>
       [FhirElement("location", Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
       [Binding("ServicePlace")]
@@ -2137,7 +2137,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Location;
 
       /// <summary>
-      /// Paid by the patient
+      /// Paid by the patient.
       /// </summary>
       [FhirElement("patientPaid", Order=190)]
       [DataMember]
@@ -2150,7 +2150,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _PatientPaid;
 
       /// <summary>
-      /// Count of products or services
+      /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=200)]
       [DataMember]
@@ -2163,7 +2163,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Fee, charge or cost per item
+      /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=210)]
       [DataMember]
@@ -2176,7 +2176,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _UnitPrice;
 
       /// <summary>
-      /// Price scaling factor
+      /// Price scaling factor.
       /// </summary>
       [FhirElement("factor", Order=220)]
       [DataMember]
@@ -2207,7 +2207,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total tax
+      /// Total tax.
       /// </summary>
       [FhirElement("tax", Order=230)]
       [DataMember]
@@ -2220,7 +2220,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Tax;
 
       /// <summary>
-      /// Total item cost
+      /// Total item cost.
       /// </summary>
       [FhirElement("net", Order=240)]
       [DataMember]
@@ -2233,7 +2233,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Net;
 
       /// <summary>
-      /// Unique device identifier
+      /// Unique device identifier.
       /// </summary>
       [FhirElement("udi", Order=250)]
       [CLSCompliant(false)]
@@ -2249,7 +2249,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Udi;
 
       /// <summary>
-      /// Anatomical location
+      /// Anatomical location.
       /// </summary>
       [FhirElement("bodySite", Order=260)]
       [Cardinality(Min=0,Max=-1)]
@@ -2263,7 +2263,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ExplanationOfBenefit.ItemBodySiteComponent> _BodySite;
 
       /// <summary>
-      /// Encounters associated with the listed treatments
+      /// Encounters associated with the listed treatments.
       /// </summary>
       [FhirElement("encounter", Order=270)]
       [CLSCompliant(false)]
@@ -2279,7 +2279,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Encounter;
 
       /// <summary>
-      /// Applicable note numbers
+      /// Applicable note numbers.
       /// </summary>
       [FhirElement("noteNumber", Order=280)]
       [Cardinality(Min=0,Max=-1)]
@@ -2311,7 +2311,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Adjudication results
+      /// Adjudication results.
       /// </summary>
       [FhirElement("reviewOutcome", Order=290)]
       [DataMember]
@@ -2324,7 +2324,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExplanationOfBenefit.ReviewOutcomeComponent _ReviewOutcome;
 
       /// <summary>
-      /// Adjudication details
+      /// Adjudication details.
       /// </summary>
       [FhirElement("adjudication", Order=300)]
       [Cardinality(Min=0,Max=-1)]
@@ -2338,7 +2338,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> _Adjudication;
 
       /// <summary>
-      /// Additional items
+      /// Additional items.
       /// </summary>
       [FhirElement("detail", Order=310)]
       [Cardinality(Min=0,Max=-1)]
@@ -2714,7 +2714,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.item.bodySite"; } }
 
       /// <summary>
-      /// Location
+      /// Location.
       /// </summary>
       [FhirElement("site", Order=40)]
       [Binding("OralSites")]
@@ -2729,7 +2729,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Site;
 
       /// <summary>
-      /// Sub-location
+      /// Sub-location.
       /// </summary>
       [FhirElement("subSite", Order=50)]
       [Binding("Surface")]
@@ -2846,7 +2846,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.item.reviewOutcome"; } }
 
       /// <summary>
-      /// Result of the adjudication
+      /// Result of the adjudication.
       /// </summary>
       [FhirElement("decision", Order=40)]
       [Binding("AdjudicationDecision")]
@@ -2860,7 +2860,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Decision;
 
       /// <summary>
-      /// Reason for result of the adjudication
+      /// Reason for result of the adjudication.
       /// </summary>
       [FhirElement("reason", Order=50)]
       [Binding("AdjudicationDecisionReason")]
@@ -2875,7 +2875,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
 
       /// <summary>
-      /// Preauthorization reference
+      /// Preauthorization reference.
       /// </summary>
       [FhirElement("preAuthRef", Order=60)]
       [DataMember]
@@ -2906,7 +2906,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Preauthorization reference effective period
+      /// Preauthorization reference effective period.
       /// </summary>
       [FhirElement("preAuthPeriod", Order=70)]
       [DataMember]
@@ -3041,7 +3041,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.item.adjudication"; } }
 
       /// <summary>
-      /// Type of adjudication information
+      /// Type of adjudication information.
       /// </summary>
       [FhirElement("category", Order=40)]
       [Binding("Adjudication")]
@@ -3056,7 +3056,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Explanation of adjudication outcome
+      /// Explanation of adjudication outcome.
       /// </summary>
       [FhirElement("reason", Order=50)]
       [Binding("AdjudicationReason")]
@@ -3070,7 +3070,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Reason;
 
       /// <summary>
-      /// Monetary amount
+      /// Monetary amount.
       /// </summary>
       [FhirElement("amount", Order=60)]
       [DataMember]
@@ -3083,7 +3083,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Amount;
 
       /// <summary>
-      /// Non-monitary value
+      /// Non-monitary value.
       /// </summary>
       [FhirElement("quantity", Order=70)]
       [DataMember]
@@ -3218,7 +3218,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.item.detail"; } }
 
       /// <summary>
-      /// Product or service provided
+      /// Product or service provided.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -3250,7 +3250,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Number for tracking
+      /// Number for tracking.
       /// </summary>
       [FhirElement("traceNumber", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -3264,7 +3264,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
       /// <summary>
-      /// Revenue or cost center code
+      /// Revenue or cost center code.
       /// </summary>
       [FhirElement("revenue", Order=60)]
       [Binding("RevenueCenter")]
@@ -3278,7 +3278,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Revenue;
 
       /// <summary>
-      /// Benefit classification
+      /// Benefit classification.
       /// </summary>
       [FhirElement("category", Order=70)]
       [Binding("BenefitCategory")]
@@ -3292,7 +3292,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Billing, service, product, or drug code
+      /// Billing, service, product, or drug code.
       /// </summary>
       [FhirElement("productOrService", Order=80)]
       [Binding("ServiceProduct")]
@@ -3306,7 +3306,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
 
       /// <summary>
-      /// End of a range of codes
+      /// End of a range of codes.
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=90)]
       [Binding("ServiceProduct")]
@@ -3320,7 +3320,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrServiceEnd;
 
       /// <summary>
-      /// Service/Product billing modifiers
+      /// Service/Product billing modifiers.
       /// </summary>
       [FhirElement("modifier", Order=100)]
       [Binding("Modifiers")]
@@ -3335,7 +3335,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
 
       /// <summary>
-      /// Program the product or service is provided under
+      /// Program the product or service is provided under.
       /// </summary>
       [FhirElement("programCode", Order=110)]
       [Binding("ProgramCode")]
@@ -3350,7 +3350,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ProgramCode;
 
       /// <summary>
-      /// Paid by the patient
+      /// Paid by the patient.
       /// </summary>
       [FhirElement("patientPaid", Order=120)]
       [DataMember]
@@ -3363,7 +3363,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _PatientPaid;
 
       /// <summary>
-      /// Count of products or services
+      /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=130)]
       [DataMember]
@@ -3376,7 +3376,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Fee, charge or cost per item
+      /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=140)]
       [DataMember]
@@ -3389,7 +3389,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _UnitPrice;
 
       /// <summary>
-      /// Price scaling factor
+      /// Price scaling factor.
       /// </summary>
       [FhirElement("factor", Order=150)]
       [DataMember]
@@ -3420,7 +3420,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total tax
+      /// Total tax.
       /// </summary>
       [FhirElement("tax", Order=160)]
       [DataMember]
@@ -3433,7 +3433,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Tax;
 
       /// <summary>
-      /// Total item cost
+      /// Total item cost.
       /// </summary>
       [FhirElement("net", Order=170)]
       [DataMember]
@@ -3446,7 +3446,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Net;
 
       /// <summary>
-      /// Unique device identifier
+      /// Unique device identifier.
       /// </summary>
       [FhirElement("udi", Order=180)]
       [CLSCompliant(false)]
@@ -3462,7 +3462,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Udi;
 
       /// <summary>
-      /// Applicable note numbers
+      /// Applicable note numbers.
       /// </summary>
       [FhirElement("noteNumber", Order=190)]
       [Cardinality(Min=0,Max=-1)]
@@ -3494,7 +3494,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Detail level adjudication results
+      /// Detail level adjudication results.
       /// </summary>
       [FhirElement("reviewOutcome", Order=200)]
       [DataMember]
@@ -3507,7 +3507,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExplanationOfBenefit.ReviewOutcomeComponent _ReviewOutcome;
 
       /// <summary>
-      /// Detail level adjudication details
+      /// Detail level adjudication details.
       /// </summary>
       [FhirElement("adjudication", Order=210)]
       [Cardinality(Min=0,Max=-1)]
@@ -3521,7 +3521,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> _Adjudication;
 
       /// <summary>
-      /// Additional items
+      /// Additional items.
       /// </summary>
       [FhirElement("subDetail", Order=220)]
       [Cardinality(Min=0,Max=-1)]
@@ -3807,7 +3807,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.item.detail.subDetail"; } }
 
       /// <summary>
-      /// Product or service provided
+      /// Product or service provided.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -3839,7 +3839,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Number for tracking
+      /// Number for tracking.
       /// </summary>
       [FhirElement("traceNumber", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -3853,7 +3853,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
       /// <summary>
-      /// Revenue or cost center code
+      /// Revenue or cost center code.
       /// </summary>
       [FhirElement("revenue", Order=60)]
       [Binding("RevenueCenter")]
@@ -3867,7 +3867,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Revenue;
 
       /// <summary>
-      /// Benefit classification
+      /// Benefit classification.
       /// </summary>
       [FhirElement("category", Order=70)]
       [Binding("BenefitCategory")]
@@ -3881,7 +3881,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Billing, service, product, or drug code
+      /// Billing, service, product, or drug code.
       /// </summary>
       [FhirElement("productOrService", Order=80)]
       [Binding("ServiceProduct")]
@@ -3895,7 +3895,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
 
       /// <summary>
-      /// End of a range of codes
+      /// End of a range of codes.
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=90)]
       [Binding("ServiceProduct")]
@@ -3909,7 +3909,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrServiceEnd;
 
       /// <summary>
-      /// Service/Product billing modifiers
+      /// Service/Product billing modifiers.
       /// </summary>
       [FhirElement("modifier", Order=100)]
       [Binding("Modifiers")]
@@ -3924,7 +3924,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
 
       /// <summary>
-      /// Program the product or service is provided under
+      /// Program the product or service is provided under.
       /// </summary>
       [FhirElement("programCode", Order=110)]
       [Binding("ProgramCode")]
@@ -3939,7 +3939,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ProgramCode;
 
       /// <summary>
-      /// Paid by the patient
+      /// Paid by the patient.
       /// </summary>
       [FhirElement("patientPaid", Order=120)]
       [DataMember]
@@ -3952,7 +3952,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _PatientPaid;
 
       /// <summary>
-      /// Count of products or services
+      /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=130)]
       [DataMember]
@@ -3965,7 +3965,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Fee, charge or cost per item
+      /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=140)]
       [DataMember]
@@ -3978,7 +3978,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _UnitPrice;
 
       /// <summary>
-      /// Price scaling factor
+      /// Price scaling factor.
       /// </summary>
       [FhirElement("factor", Order=150)]
       [DataMember]
@@ -4009,7 +4009,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total tax
+      /// Total tax.
       /// </summary>
       [FhirElement("tax", Order=160)]
       [DataMember]
@@ -4022,7 +4022,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Tax;
 
       /// <summary>
-      /// Total item cost
+      /// Total item cost.
       /// </summary>
       [FhirElement("net", Order=170)]
       [DataMember]
@@ -4035,7 +4035,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Net;
 
       /// <summary>
-      /// Unique device identifier
+      /// Unique device identifier.
       /// </summary>
       [FhirElement("udi", Order=180)]
       [CLSCompliant(false)]
@@ -4051,7 +4051,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Udi;
 
       /// <summary>
-      /// Applicable note numbers
+      /// Applicable note numbers.
       /// </summary>
       [FhirElement("noteNumber", Order=190)]
       [Cardinality(Min=0,Max=-1)]
@@ -4083,7 +4083,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Subdetail level adjudication results
+      /// Subdetail level adjudication results.
       /// </summary>
       [FhirElement("reviewOutcome", Order=200)]
       [DataMember]
@@ -4096,7 +4096,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExplanationOfBenefit.ReviewOutcomeComponent _ReviewOutcome;
 
       /// <summary>
-      /// Subdetail level adjudication details
+      /// Subdetail level adjudication details.
       /// </summary>
       [FhirElement("adjudication", Order=210)]
       [Cardinality(Min=0,Max=-1)]
@@ -4372,7 +4372,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.addItem"; } }
 
       /// <summary>
-      /// Item sequence number
+      /// Item sequence number.
       /// </summary>
       [FhirElement("itemSequence", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -4404,7 +4404,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Detail sequence number
+      /// Detail sequence number.
       /// </summary>
       [FhirElement("detailSequence", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -4436,7 +4436,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Subdetail sequence number
+      /// Subdetail sequence number.
       /// </summary>
       [FhirElement("subDetailSequence", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -4468,7 +4468,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Number for tracking
+      /// Number for tracking.
       /// </summary>
       [FhirElement("traceNumber", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -4482,7 +4482,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
       /// <summary>
-      /// Authorized providers
+      /// Authorized providers.
       /// </summary>
       [FhirElement("provider", Order=80, FiveWs="FiveWs.source")]
       [CLSCompliant(false)]
@@ -4498,7 +4498,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Provider;
 
       /// <summary>
-      /// Revenue or cost center code
+      /// Revenue or cost center code.
       /// </summary>
       [FhirElement("revenue", Order=90)]
       [Binding("RevenueCenter")]
@@ -4512,7 +4512,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Revenue;
 
       /// <summary>
-      /// Billing, service, product, or drug code
+      /// Billing, service, product, or drug code.
       /// </summary>
       [FhirElement("productOrService", Order=100)]
       [Binding("ServiceProduct")]
@@ -4526,7 +4526,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
 
       /// <summary>
-      /// End of a range of codes
+      /// End of a range of codes.
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=110)]
       [Binding("ServiceProduct")]
@@ -4540,7 +4540,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrServiceEnd;
 
       /// <summary>
-      /// Request or Referral for Service
+      /// Request or Referral for Service.
       /// </summary>
       [FhirElement("request", Order=120)]
       [CLSCompliant(false)]
@@ -4556,7 +4556,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Request;
 
       /// <summary>
-      /// Service/Product billing modifiers
+      /// Service/Product billing modifiers.
       /// </summary>
       [FhirElement("modifier", Order=130)]
       [Binding("Modifiers")]
@@ -4571,7 +4571,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
 
       /// <summary>
-      /// Program the product or service is provided under
+      /// Program the product or service is provided under.
       /// </summary>
       [FhirElement("programCode", Order=140)]
       [Binding("ProgramCode")]
@@ -4586,7 +4586,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ProgramCode;
 
       /// <summary>
-      /// Date or dates of service or product delivery
+      /// Date or dates of service or product delivery.
       /// </summary>
       [FhirElement("serviced", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
@@ -4601,7 +4601,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Serviced;
 
       /// <summary>
-      /// Place of service or where product was supplied
+      /// Place of service or where product was supplied.
       /// </summary>
       [FhirElement("location", Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
       [Binding("ServicePlace")]
@@ -4618,7 +4618,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Location;
 
       /// <summary>
-      /// Paid by the patient
+      /// Paid by the patient.
       /// </summary>
       [FhirElement("patientPaid", Order=170)]
       [DataMember]
@@ -4631,7 +4631,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _PatientPaid;
 
       /// <summary>
-      /// Count of products or services
+      /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=180)]
       [DataMember]
@@ -4644,7 +4644,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Fee, charge or cost per item
+      /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=190)]
       [DataMember]
@@ -4657,7 +4657,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _UnitPrice;
 
       /// <summary>
-      /// Price scaling factor
+      /// Price scaling factor.
       /// </summary>
       [FhirElement("factor", Order=200)]
       [DataMember]
@@ -4688,7 +4688,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total tax
+      /// Total tax.
       /// </summary>
       [FhirElement("tax", Order=210)]
       [DataMember]
@@ -4701,7 +4701,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Tax;
 
       /// <summary>
-      /// Total item cost
+      /// Total item cost.
       /// </summary>
       [FhirElement("net", Order=220)]
       [DataMember]
@@ -4714,7 +4714,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Net;
 
       /// <summary>
-      /// Anatomical location
+      /// Anatomical location.
       /// </summary>
       [FhirElement("bodySite", Order=230)]
       [Cardinality(Min=0,Max=-1)]
@@ -4728,7 +4728,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemBodySiteComponent> _BodySite;
 
       /// <summary>
-      /// Applicable note numbers
+      /// Applicable note numbers.
       /// </summary>
       [FhirElement("noteNumber", Order=240)]
       [Cardinality(Min=0,Max=-1)]
@@ -4760,7 +4760,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additem level adjudication results
+      /// Additem level adjudication results.
       /// </summary>
       [FhirElement("reviewOutcome", Order=250)]
       [DataMember]
@@ -4773,7 +4773,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExplanationOfBenefit.ReviewOutcomeComponent _ReviewOutcome;
 
       /// <summary>
-      /// Added items adjudication
+      /// Added items adjudication.
       /// </summary>
       [FhirElement("adjudication", Order=260)]
       [Cardinality(Min=0,Max=-1)]
@@ -4787,7 +4787,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> _Adjudication;
 
       /// <summary>
-      /// Insurer added line items
+      /// Insurer added line items.
       /// </summary>
       [FhirElement("detail", Order=270)]
       [Cardinality(Min=0,Max=-1)]
@@ -5123,7 +5123,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.addItem.bodySite"; } }
 
       /// <summary>
-      /// Location
+      /// Location.
       /// </summary>
       [FhirElement("site", Order=40)]
       [Binding("OralSites")]
@@ -5138,7 +5138,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Site;
 
       /// <summary>
-      /// Sub-location
+      /// Sub-location.
       /// </summary>
       [FhirElement("subSite", Order=50)]
       [Binding("Surface")]
@@ -5255,7 +5255,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.addItem.detail"; } }
 
       /// <summary>
-      /// Number for tracking
+      /// Number for tracking.
       /// </summary>
       [FhirElement("traceNumber", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -5269,7 +5269,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
       /// <summary>
-      /// Revenue or cost center code
+      /// Revenue or cost center code.
       /// </summary>
       [FhirElement("revenue", Order=50)]
       [Binding("RevenueCenter")]
@@ -5283,7 +5283,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Revenue;
 
       /// <summary>
-      /// Billing, service, product, or drug code
+      /// Billing, service, product, or drug code.
       /// </summary>
       [FhirElement("productOrService", Order=60)]
       [Binding("ServiceProduct")]
@@ -5297,7 +5297,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
 
       /// <summary>
-      /// End of a range of codes
+      /// End of a range of codes.
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=70)]
       [Binding("ServiceProduct")]
@@ -5311,7 +5311,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrServiceEnd;
 
       /// <summary>
-      /// Service/Product billing modifiers
+      /// Service/Product billing modifiers.
       /// </summary>
       [FhirElement("modifier", Order=80)]
       [Binding("Modifiers")]
@@ -5326,7 +5326,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
 
       /// <summary>
-      /// Paid by the patient
+      /// Paid by the patient.
       /// </summary>
       [FhirElement("patientPaid", Order=90)]
       [DataMember]
@@ -5339,7 +5339,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _PatientPaid;
 
       /// <summary>
-      /// Count of products or services
+      /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=100)]
       [DataMember]
@@ -5352,7 +5352,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Fee, charge or cost per item
+      /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=110)]
       [DataMember]
@@ -5365,7 +5365,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _UnitPrice;
 
       /// <summary>
-      /// Price scaling factor
+      /// Price scaling factor.
       /// </summary>
       [FhirElement("factor", Order=120)]
       [DataMember]
@@ -5396,7 +5396,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total tax
+      /// Total tax.
       /// </summary>
       [FhirElement("tax", Order=130)]
       [DataMember]
@@ -5409,7 +5409,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Tax;
 
       /// <summary>
-      /// Total item cost
+      /// Total item cost.
       /// </summary>
       [FhirElement("net", Order=140)]
       [DataMember]
@@ -5422,7 +5422,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Net;
 
       /// <summary>
-      /// Applicable note numbers
+      /// Applicable note numbers.
       /// </summary>
       [FhirElement("noteNumber", Order=150)]
       [Cardinality(Min=0,Max=-1)]
@@ -5454,7 +5454,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additem detail level adjudication results
+      /// Additem detail level adjudication results.
       /// </summary>
       [FhirElement("reviewOutcome", Order=160)]
       [DataMember]
@@ -5467,7 +5467,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExplanationOfBenefit.ReviewOutcomeComponent _ReviewOutcome;
 
       /// <summary>
-      /// Added items adjudication
+      /// Added items adjudication.
       /// </summary>
       [FhirElement("adjudication", Order=170)]
       [Cardinality(Min=0,Max=-1)]
@@ -5481,7 +5481,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> _Adjudication;
 
       /// <summary>
-      /// Insurer added line items
+      /// Insurer added line items.
       /// </summary>
       [FhirElement("subDetail", Order=180)]
       [Cardinality(Min=0,Max=-1)]
@@ -5727,7 +5727,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.addItem.detail.subDetail"; } }
 
       /// <summary>
-      /// Number for tracking
+      /// Number for tracking.
       /// </summary>
       [FhirElement("traceNumber", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -5741,7 +5741,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
       /// <summary>
-      /// Revenue or cost center code
+      /// Revenue or cost center code.
       /// </summary>
       [FhirElement("revenue", Order=50)]
       [Binding("RevenueCenter")]
@@ -5755,7 +5755,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Revenue;
 
       /// <summary>
-      /// Billing, service, product, or drug code
+      /// Billing, service, product, or drug code.
       /// </summary>
       [FhirElement("productOrService", Order=60)]
       [Binding("ServiceProduct")]
@@ -5769,7 +5769,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
 
       /// <summary>
-      /// End of a range of codes
+      /// End of a range of codes.
       /// </summary>
       [FhirElement("productOrServiceEnd", Order=70)]
       [Binding("ServiceProduct")]
@@ -5783,7 +5783,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ProductOrServiceEnd;
 
       /// <summary>
-      /// Service/Product billing modifiers
+      /// Service/Product billing modifiers.
       /// </summary>
       [FhirElement("modifier", Order=80)]
       [Binding("Modifiers")]
@@ -5798,7 +5798,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
 
       /// <summary>
-      /// Paid by the patient
+      /// Paid by the patient.
       /// </summary>
       [FhirElement("patientPaid", Order=90)]
       [DataMember]
@@ -5811,7 +5811,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _PatientPaid;
 
       /// <summary>
-      /// Count of products or services
+      /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=100)]
       [DataMember]
@@ -5824,7 +5824,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Fee, charge or cost per item
+      /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=110)]
       [DataMember]
@@ -5837,7 +5837,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _UnitPrice;
 
       /// <summary>
-      /// Price scaling factor
+      /// Price scaling factor.
       /// </summary>
       [FhirElement("factor", Order=120)]
       [DataMember]
@@ -5868,7 +5868,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Total tax
+      /// Total tax.
       /// </summary>
       [FhirElement("tax", Order=130)]
       [DataMember]
@@ -5881,7 +5881,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Tax;
 
       /// <summary>
-      /// Total item cost
+      /// Total item cost.
       /// </summary>
       [FhirElement("net", Order=140)]
       [DataMember]
@@ -5894,7 +5894,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Net;
 
       /// <summary>
-      /// Applicable note numbers
+      /// Applicable note numbers.
       /// </summary>
       [FhirElement("noteNumber", Order=150)]
       [Cardinality(Min=0,Max=-1)]
@@ -5926,7 +5926,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additem subdetail level adjudication results
+      /// Additem subdetail level adjudication results.
       /// </summary>
       [FhirElement("reviewOutcome", Order=160)]
       [DataMember]
@@ -5939,7 +5939,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ExplanationOfBenefit.ReviewOutcomeComponent _ReviewOutcome;
 
       /// <summary>
-      /// Added items adjudication
+      /// Added items adjudication.
       /// </summary>
       [FhirElement("adjudication", Order=170)]
       [Cardinality(Min=0,Max=-1)]
@@ -6176,7 +6176,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.total"; } }
 
       /// <summary>
-      /// Type of adjudication information
+      /// Type of adjudication information.
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
       [Binding("Adjudication")]
@@ -6191,7 +6191,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Financial total for the category
+      /// Financial total for the category.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -6307,7 +6307,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.payment"; } }
 
       /// <summary>
-      /// Partial or complete payment
+      /// Partial or complete payment.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("PaymentType")]
@@ -6321,7 +6321,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Payment adjustment for non-claim issues
+      /// Payment adjustment for non-claim issues.
       /// </summary>
       [FhirElement("adjustment", Order=50)]
       [DataMember]
@@ -6334,7 +6334,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Adjustment;
 
       /// <summary>
-      /// Explanation for the variance
+      /// Explanation for the variance.
       /// </summary>
       [FhirElement("adjustmentReason", Order=60)]
       [Binding("PaymentAdjustmentReason")]
@@ -6348,7 +6348,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _AdjustmentReason;
 
       /// <summary>
-      /// Expected date of payment
+      /// Expected date of payment.
       /// </summary>
       [FhirElement("date", Order=70)]
       [DataMember]
@@ -6379,7 +6379,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Payable amount after adjustment
+      /// Payable amount after adjustment.
       /// </summary>
       [FhirElement("amount", Order=80)]
       [DataMember]
@@ -6392,7 +6392,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Money _Amount;
 
       /// <summary>
-      /// Business identifier for the payment
+      /// Business identifier for the payment.
       /// </summary>
       [FhirElement("identifier", Order=90)]
       [DataMember]
@@ -6547,7 +6547,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.processNote"; } }
 
       /// <summary>
-      /// Note instance identifier
+      /// Note instance identifier.
       /// </summary>
       [FhirElement("number", Order=40)]
       [DataMember]
@@ -6578,7 +6578,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Note purpose
+      /// Note purpose.
       /// </summary>
       [FhirElement("type", Order=50)]
       [Binding("NoteType")]
@@ -6592,7 +6592,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Note explanatory text
+      /// Note explanatory text.
       /// </summary>
       [FhirElement("text", Order=60)]
       [DataMember]
@@ -6623,7 +6623,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Language of the text
+      /// Language of the text.
       /// </summary>
       [FhirElement("language", Order=70)]
       [Binding("Language")]
@@ -6756,7 +6756,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.benefitBalance"; } }
 
       /// <summary>
-      /// Benefit classification
+      /// Benefit classification.
       /// </summary>
       [FhirElement("category", Order=40)]
       [Binding("BenefitCategory")]
@@ -6771,7 +6771,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Excluded from the plan
+      /// Excluded from the plan.
       /// </summary>
       [FhirElement("excluded", Order=50)]
       [DataMember]
@@ -6802,7 +6802,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Short name for the benefit
+      /// Short name for the benefit.
       /// </summary>
       [FhirElement("name", Order=60)]
       [DataMember]
@@ -6833,7 +6833,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Description of the benefit or services covered
+      /// Description of the benefit or services covered.
       /// </summary>
       [FhirElement("description", Order=70)]
       [DataMember]
@@ -6864,7 +6864,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// In or out of network
+      /// In or out of network.
       /// </summary>
       [FhirElement("network", Order=80)]
       [Binding("BenefitNetwork")]
@@ -6878,7 +6878,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Network;
 
       /// <summary>
-      /// Individual or family
+      /// Individual or family.
       /// </summary>
       [FhirElement("unit", Order=90)]
       [Binding("BenefitUnit")]
@@ -6892,7 +6892,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Unit;
 
       /// <summary>
-      /// Annual or lifetime
+      /// Annual or lifetime.
       /// </summary>
       [FhirElement("term", Order=100)]
       [Binding("BenefitTerm")]
@@ -6906,7 +6906,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Term;
 
       /// <summary>
-      /// Benefit Summary
+      /// Benefit Summary.
       /// </summary>
       [FhirElement("financial", Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -7082,7 +7082,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ExplanationOfBenefit.benefitBalance.financial"; } }
 
       /// <summary>
-      /// Benefit classification
+      /// Benefit classification.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("BenefitType")]
@@ -7097,7 +7097,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Benefits allowed
+      /// Benefits allowed.
       /// </summary>
       [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -7112,7 +7112,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Allowed;
 
       /// <summary>
-      /// Benefits used
+      /// Benefits used.
       /// </summary>
       [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -7223,7 +7223,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for the resource
+    /// Business Identifier for the resource.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -7237,7 +7237,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Number for tracking
+    /// Number for tracking.
     /// </summary>
     [FhirElement("traceNumber", Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -7251,7 +7251,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _TraceNumber;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -7285,7 +7285,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Category or discipline
+    /// Category or discipline.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("ClaimType")]
@@ -7300,7 +7300,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// More granular claim type
+    /// More granular claim type.
     /// </summary>
     [FhirElement("subType", Order=130, FiveWs="FiveWs.class")]
     [Binding("ClaimSubType")]
@@ -7314,7 +7314,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _SubType;
 
     /// <summary>
-    /// claim | preauthorization | predetermination
+    /// claim | preauthorization | predetermination.
     /// </summary>
     [FhirElement("use", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -7348,7 +7348,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The recipient of the products and services
+    /// The recipient of the products and services.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -7364,7 +7364,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Relevant time frame for the claim
+    /// Relevant time frame for the claim.
     /// </summary>
     [FhirElement("billablePeriod", InSummary=true, Order=160, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -7377,7 +7377,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _BillablePeriod;
 
     /// <summary>
-    /// Response creation date
+    /// Response creation date.
     /// </summary>
     [FhirElement("created", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
@@ -7409,7 +7409,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Author of the claim
+    /// Author of the claim.
     /// </summary>
     [FhirElement("enterer", Order=180, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -7424,7 +7424,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Enterer;
 
     /// <summary>
-    /// Party responsible for reimbursement
+    /// Party responsible for reimbursement.
     /// </summary>
     [FhirElement("insurer", InSummary=true, Order=190, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -7439,7 +7439,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Insurer;
 
     /// <summary>
-    /// Party responsible for the claim
+    /// Party responsible for the claim.
     /// </summary>
     [FhirElement("provider", InSummary=true, Order=200, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
@@ -7454,7 +7454,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Provider;
 
     /// <summary>
-    /// Desired processing urgency
+    /// Desired processing urgency.
     /// </summary>
     [FhirElement("priority", Order=210)]
     [Binding("ProcessPriority")]
@@ -7468,7 +7468,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Priority;
 
     /// <summary>
-    /// For whom to reserve funds
+    /// For whom to reserve funds.
     /// </summary>
     [FhirElement("fundsReserveRequested", Order=220)]
     [Binding("FundsReserve")]
@@ -7482,7 +7482,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _FundsReserveRequested;
 
     /// <summary>
-    /// Funds reserved status
+    /// Funds reserved status.
     /// </summary>
     [FhirElement("fundsReserve", Order=230)]
     [Binding("FundsReserve")]
@@ -7496,7 +7496,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _FundsReserve;
 
     /// <summary>
-    /// Prior or corollary claims
+    /// Prior or corollary claims.
     /// </summary>
     [FhirElement("related", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -7510,7 +7510,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.RelatedClaimComponent> _Related;
 
     /// <summary>
-    /// Prescription authorizing services or products
+    /// Prescription authorizing services or products.
     /// </summary>
     [FhirElement("prescription", Order=250)]
     [CLSCompliant(false)]
@@ -7525,7 +7525,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Prescription;
 
     /// <summary>
-    /// Original prescription if superceded by fulfiller
+    /// Original prescription if superceded by fulfiller.
     /// </summary>
     [FhirElement("originalPrescription", Order=260)]
     [CLSCompliant(false)]
@@ -7540,7 +7540,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _OriginalPrescription;
 
     /// <summary>
-    /// Event information
+    /// Event information.
     /// </summary>
     [FhirElement("event", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -7554,7 +7554,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.EventComponent> _Event;
 
     /// <summary>
-    /// Recipient of benefits payable
+    /// Recipient of benefits payable.
     /// </summary>
     [FhirElement("payee", Order=280)]
     [DataMember]
@@ -7567,7 +7567,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ExplanationOfBenefit.PayeeComponent _Payee;
 
     /// <summary>
-    /// Treatment Referral
+    /// Treatment Referral.
     /// </summary>
     [FhirElement("referral", Order=290, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
@@ -7582,7 +7582,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Referral;
 
     /// <summary>
-    /// Encounters associated with the listed treatments
+    /// Encounters associated with the listed treatments.
     /// </summary>
     [FhirElement("encounter", Order=300)]
     [CLSCompliant(false)]
@@ -7598,7 +7598,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Encounter;
 
     /// <summary>
-    /// Servicing Facility
+    /// Servicing Facility.
     /// </summary>
     [FhirElement("facility", Order=310, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -7613,7 +7613,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Facility;
 
     /// <summary>
-    /// Claim reference
+    /// Claim reference.
     /// </summary>
     [FhirElement("claim", Order=320, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -7628,7 +7628,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Claim;
 
     /// <summary>
-    /// Claim response reference
+    /// Claim response reference.
     /// </summary>
     [FhirElement("claimResponse", Order=330)]
     [CLSCompliant(false)]
@@ -7643,7 +7643,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ClaimResponse;
 
     /// <summary>
-    /// queued | complete | error | partial
+    /// queued | complete | error | partial.
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=340)]
     [DeclaredType(Type = typeof(Code))]
@@ -7677,7 +7677,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Result of the adjudication
+    /// Result of the adjudication.
     /// </summary>
     [FhirElement("decision", InSummary=true, Order=350)]
     [Binding("AdjudicationDecision")]
@@ -7691,7 +7691,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Decision;
 
     /// <summary>
-    /// Disposition Message
+    /// Disposition Message.
     /// </summary>
     [FhirElement("disposition", Order=360)]
     [DataMember]
@@ -7722,7 +7722,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Preauthorization reference
+    /// Preauthorization reference.
     /// </summary>
     [FhirElement("preAuthRef", Order=370)]
     [Cardinality(Min=0,Max=-1)]
@@ -7754,7 +7754,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Preauthorization in-effect period
+    /// Preauthorization in-effect period.
     /// </summary>
     [FhirElement("preAuthRefPeriod", Order=380)]
     [Cardinality(Min=0,Max=-1)]
@@ -7768,7 +7768,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Period> _PreAuthRefPeriod;
 
     /// <summary>
-    /// Package billing code
+    /// Package billing code.
     /// </summary>
     [FhirElement("diagnosisRelatedGroup", Order=390)]
     [Binding("DiagnosisRelatedGroup")]
@@ -7782,7 +7782,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _DiagnosisRelatedGroup;
 
     /// <summary>
-    /// Care Team members
+    /// Care Team members.
     /// </summary>
     [FhirElement("careTeam", Order=400)]
     [Cardinality(Min=0,Max=-1)]
@@ -7796,7 +7796,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.CareTeamComponent> _CareTeam;
 
     /// <summary>
-    /// Supporting information
+    /// Supporting information.
     /// </summary>
     [FhirElement("supportingInfo", Order=410)]
     [Cardinality(Min=0,Max=-1)]
@@ -7810,7 +7810,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.SupportingInformationComponent> _SupportingInfo;
 
     /// <summary>
-    /// Pertinent diagnosis information
+    /// Pertinent diagnosis information.
     /// </summary>
     [FhirElement("diagnosis", Order=420)]
     [Cardinality(Min=0,Max=-1)]
@@ -7824,7 +7824,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.DiagnosisComponent> _Diagnosis;
 
     /// <summary>
-    /// Clinical procedures performed
+    /// Clinical procedures performed.
     /// </summary>
     [FhirElement("procedure", Order=430)]
     [Cardinality(Min=0,Max=-1)]
@@ -7838,7 +7838,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.ProcedureComponent> _Procedure;
 
     /// <summary>
-    /// Precedence (primary, secondary, etc.)
+    /// Precedence (primary, secondary, etc.).
     /// </summary>
     [FhirElement("precedence", Order=440)]
     [DataMember]
@@ -7869,7 +7869,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient insurance information
+    /// Patient insurance information.
     /// </summary>
     [FhirElement("insurance", InSummary=true, Order=450)]
     [Cardinality(Min=0,Max=-1)]
@@ -7883,7 +7883,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.InsuranceComponent> _Insurance;
 
     /// <summary>
-    /// Details of the event
+    /// Details of the event.
     /// </summary>
     [FhirElement("accident", Order=460)]
     [DataMember]
@@ -7896,7 +7896,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ExplanationOfBenefit.AccidentComponent _Accident;
 
     /// <summary>
-    /// Paid by the patient
+    /// Paid by the patient.
     /// </summary>
     [FhirElement("patientPaid", Order=470)]
     [DataMember]
@@ -7909,7 +7909,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Money _PatientPaid;
 
     /// <summary>
-    /// Product or service provided
+    /// Product or service provided.
     /// </summary>
     [FhirElement("item", Order=480)]
     [Cardinality(Min=0,Max=-1)]
@@ -7923,7 +7923,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.ItemComponent> _Item;
 
     /// <summary>
-    /// Insurer added line items
+    /// Insurer added line items.
     /// </summary>
     [FhirElement("addItem", Order=490)]
     [Cardinality(Min=0,Max=-1)]
@@ -7937,7 +7937,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemComponent> _AddItem;
 
     /// <summary>
-    /// Header-level adjudication
+    /// Header-level adjudication.
     /// </summary>
     [FhirElement("adjudication", Order=500)]
     [Cardinality(Min=0,Max=-1)]
@@ -7951,7 +7951,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> _Adjudication;
 
     /// <summary>
-    /// Adjudication totals
+    /// Adjudication totals.
     /// </summary>
     [FhirElement("total", InSummary=true, Order=510)]
     [Cardinality(Min=0,Max=-1)]
@@ -7965,7 +7965,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.TotalComponent> _Total;
 
     /// <summary>
-    /// Payment Details
+    /// Payment Details.
     /// </summary>
     [FhirElement("payment", Order=520)]
     [DataMember]
@@ -7978,7 +7978,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ExplanationOfBenefit.PaymentComponent _Payment;
 
     /// <summary>
-    /// Printed form identifier
+    /// Printed form identifier.
     /// </summary>
     [FhirElement("formCode", Order=530)]
     [Binding("Forms")]
@@ -7992,7 +7992,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _FormCode;
 
     /// <summary>
-    /// Printed reference or actual form
+    /// Printed reference or actual form.
     /// </summary>
     [FhirElement("form", Order=540)]
     [DataMember]
@@ -8005,7 +8005,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Attachment _Form;
 
     /// <summary>
-    /// Note concerning adjudication
+    /// Note concerning adjudication.
     /// </summary>
     [FhirElement("processNote", Order=550)]
     [Cardinality(Min=0,Max=-1)]
@@ -8019,7 +8019,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExplanationOfBenefit.NoteComponent> _ProcessNote;
 
     /// <summary>
-    /// When the benefits are applicable
+    /// When the benefits are applicable.
     /// </summary>
     [FhirElement("benefitPeriod", Order=560)]
     [DataMember]
@@ -8032,7 +8032,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _BenefitPeriod;
 
     /// <summary>
-    /// Balance by Benefit Category
+    /// Balance by Benefit Category.
     /// </summary>
     [FhirElement("benefitBalance", Order=570)]
     [Cardinality(Min=0,Max=-1)]

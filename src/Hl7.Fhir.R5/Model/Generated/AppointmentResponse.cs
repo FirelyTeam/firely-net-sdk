@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this item
+    /// External Ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Appointment this response relates to
+    /// Appointment this response relates to.
     /// </summary>
     [FhirElement("appointment", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Appointment;
 
     /// <summary>
-    /// Indicator for a counter proposal
+    /// Indicator for a counter proposal.
     /// </summary>
     [FhirElement("proposedNewTime", InSummary=true, Order=110)]
     [DataMember]
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Time from appointment, or requested new start time
+    /// Time from appointment, or requested new start time.
     /// </summary>
     [FhirElement("start", Order=120, FiveWs="FiveWs.init")]
     [DataMember]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Time from appointment, or requested new end time
+    /// Time from appointment, or requested new end time.
     /// </summary>
     [FhirElement("end", Order=130, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Role of participant in the appointment
+    /// Role of participant in the appointment.
     /// </summary>
     [FhirElement("participantType", InSummary=true, Order=140)]
     [Binding("ParticipantType")]
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
 
     /// <summary>
-    /// Person(s), Location, HealthcareService, or Device
+    /// Person(s), Location, HealthcareService, or Device.
     /// </summary>
     [FhirElement("actor", InSummary=true, Order=150, FiveWs="FiveWs.who")]
     [CLSCompliant(false)]
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Actor;
 
     /// <summary>
-    /// accepted | declined | tentative | needs-action | entered-in-error
+    /// accepted | declined | tentative | needs-action | entered-in-error.
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional comments
+    /// Additional comments.
     /// </summary>
     [FhirElement("comment", Order=170)]
     [DataMember]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// This response is for all occurrences in a recurring request
+    /// This response is for all occurrences in a recurring request.
     /// </summary>
     [FhirElement("recurring", Order=180)]
     [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Original date within a recurring request
+    /// Original date within a recurring request.
     /// </summary>
     [FhirElement("occurrenceDate", Order=190)]
     [DataMember]
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The recurrence ID of the specific recurring request
+    /// The recurrence ID of the specific recurring request.
     /// </summary>
     [FhirElement("recurrenceId", Order=200)]
     [DataMember]

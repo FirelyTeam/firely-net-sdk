@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DeviceAssociation.operation"; } }
 
       /// <summary>
-      /// Device operational condition
+      /// Device operational condition.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=40)]
       [Binding("DeviceAssociationOperationStatus")]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Status;
 
       /// <summary>
-      /// The individual performing the action enabled by the device
+      /// The individual performing the action enabled by the device.
       /// </summary>
       [FhirElement("operator", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Operator;
 
       /// <summary>
-      /// Begin and end dates and times for the device's operation
+      /// Begin and end dates and times for the device's operation.
       /// </summary>
       [FhirElement("period", InSummary=true, Order=60)]
       [DataMember]
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Instance identifier
+    /// Instance identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Reference to the devices associated with the patient or group
+    /// Reference to the devices associated with the patient or group.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Device;
 
     /// <summary>
-    /// Describes the relationship between the device and subject
+    /// Describes the relationship between the device and subject.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// implanted | explanted | attached | entered-in-error | unknown
+    /// implanted | explanted | attached | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [Binding("DeviceAssociationStatus")]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Status;
 
     /// <summary>
-    /// The reasons given for the current association status
+    /// The reasons given for the current association status.
     /// </summary>
     [FhirElement("statusReason", InSummary=true, Order=130)]
     [Binding("DeviceAssociationStatusReason")]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _StatusReason;
 
     /// <summary>
-    /// The individual, group of individuals or device that the device is on or associated with
+    /// The individual, group of individuals or device that the device is on or associated with.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Current anatomical location of the device in/on subject
+    /// Current anatomical location of the device in/on subject.
     /// </summary>
     [FhirElement("bodyStructure", InSummary=true, Order=150)]
     [CLSCompliant(false)]
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _BodyStructure;
 
     /// <summary>
-    /// Begin and end dates and times for the device association
+    /// Begin and end dates and times for the device association.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=160)]
     [DataMember]
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// The details about the device when it is in use to describe its operation
+    /// The details about the device when it is in use to describe its operation.
     /// </summary>
     [FhirElement("operation", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ProcessResponse.processNote"; } }
 
       /// <summary>
-      /// display | print | printoper
+      /// display | print | printoper.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("NoteType")]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Comment on the processing
+      /// Comment on the processing.
       /// </summary>
       [FhirElement("text", Order=50)]
       [DataMember]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier
+    /// Business Identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error
+    /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Creation date
+    /// Creation date.
     /// </summary>
     [FhirElement("created", Order=110, FiveWs="when.recorded")]
     [DataMember]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Authoring Organization
+    /// Authoring Organization.
     /// </summary>
     [FhirElement("organization", Order=120, FiveWs="who.source")]
     [CLSCompliant(false)]
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Request reference
+    /// Request reference.
     /// </summary>
     [FhirElement("request", Order=130, FiveWs="why")]
     [CLSCompliant(false)]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Request;
 
     /// <summary>
-    /// Processing outcome
+    /// Processing outcome.
     /// </summary>
     [FhirElement("outcome", Order=140)]
     [Binding("ProcessingOutcome")]
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Outcome;
 
     /// <summary>
-    /// Disposition Message
+    /// Disposition Message.
     /// </summary>
     [FhirElement("disposition", Order=150)]
     [DataMember]
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Responsible Practitioner
+    /// Responsible Practitioner.
     /// </summary>
     [FhirElement("requestProvider", Order=160)]
     [CLSCompliant(false)]
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _RequestProvider;
 
     /// <summary>
-    /// Responsible organization
+    /// Responsible organization.
     /// </summary>
     [FhirElement("requestOrganization", Order=170)]
     [CLSCompliant(false)]
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
 
     /// <summary>
-    /// Printed Form Identifier
+    /// Printed Form Identifier.
     /// </summary>
     [FhirElement("form", Order=180)]
     [Binding("Forms")]
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Form;
 
     /// <summary>
-    /// Processing comments or additional requirements
+    /// Processing comments or additional requirements.
     /// </summary>
     [FhirElement("processNote", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent> _ProcessNote;
 
     /// <summary>
-    /// Error code
+    /// Error code.
     /// </summary>
     [FhirElement("error", Order=200)]
     [Binding("AdjudicationError")]
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Error;
 
     /// <summary>
-    /// Request for additional information
+    /// Request for additional information.
     /// </summary>
     [FhirElement("communicationRequest", Order=210)]
     [CLSCompliant(false)]

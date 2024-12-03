@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DetectedIssue.evidence"; } }
 
       /// <summary>
-      /// Manifestation
+      /// Manifestation.
       /// </summary>
       [FhirElement("code", Order=40, FiveWs="FiveWs.why[x]")]
       [Binding("DetectedIssueEvidenceCode")]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
       /// <summary>
-      /// Supporting information
+      /// Supporting information.
       /// </summary>
       [FhirElement("detail", Order=50, FiveWs="FiveWs.why[x]")]
       [CLSCompliant(false)]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DetectedIssue.mitigation"; } }
 
       /// <summary>
-      /// What mitigation?
+      /// What mitigation?.
       /// </summary>
       [FhirElement("action", Order=40)]
       [Binding("DetectedIssueMitigationAction")]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Action;
 
       /// <summary>
-      /// Date committed
+      /// Date committed.
       /// </summary>
       [FhirElement("date", Order=50)]
       [DataMember]
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Who is committing?
+      /// Who is committing?.
       /// </summary>
       [FhirElement("author", Order=60)]
       [CLSCompliant(false)]
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Author;
 
       /// <summary>
-      /// Additional notes about the mitigation
+      /// Additional notes about the mitigation.
       /// </summary>
       [FhirElement("note", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique id for the detected issue
+    /// Unique id for the detected issue.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// preliminary | final | entered-in-error | mitigated
+    /// preliminary | final | entered-in-error | mitigated.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of detected issue, e.g. drug-drug, duplicate therapy, etc
+    /// Type of detected issue, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("category", Order=110, FiveWs="FiveWs.class")]
     [Binding("DetectedIssueCategory")]
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Specific type of detected issue, e.g. drug-drug, duplicate therapy, etc
+    /// Specific type of detected issue, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("DetectedIssueCategory")]
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// high | moderate | low
+    /// high | moderate | low.
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Associated subject
+    /// Associated subject.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter detected issue is part of
+    /// Encounter detected issue is part of.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When identified
+    /// When identified.
     /// </summary>
     [FhirElement("identified", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.recorded")]
     [CLSCompliant(false)]
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Identified;
 
     /// <summary>
-    /// The provider or device that identified the issue
+    /// The provider or device that identified the issue.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Author;
 
     /// <summary>
-    /// Problem resource
+    /// Problem resource.
     /// </summary>
     [FhirElement("implicated", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
 
     /// <summary>
-    /// Supporting evidence
+    /// Supporting evidence.
     /// </summary>
     [FhirElement("evidence", Order=190, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent> _Evidence;
 
     /// <summary>
-    /// Description and context
+    /// Description and context.
     /// </summary>
     [FhirElement("detail", Order=200)]
     [DataMember]
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Authority for issue
+    /// Authority for issue.
     /// </summary>
     [FhirElement("reference", Order=210)]
     [DataMember]
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Step taken to address
+    /// Step taken to address.
     /// </summary>
     [FhirElement("mitigation", Order=220)]
     [Cardinality(Min=0,Max=-1)]

@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstancePolymer.monomerSet"; } }
 
       /// <summary>
-      /// Captures the type of ratio to the entire polymer, e.g. Monomer/Polymer ratio, SRU/Polymer Ratio
+      /// Captures the type of ratio to the entire polymer, e.g. Monomer/Polymer ratio, SRU/Polymer Ratio.
       /// </summary>
       [FhirElement("ratioType", InSummary=true, Order=40)]
       [DataMember]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _RatioType;
 
       /// <summary>
-      /// The starting materials - monomer(s) used in the synthesis of the polymer
+      /// The starting materials - monomer(s) used in the synthesis of the polymer.
       /// </summary>
       [FhirElement("startingMaterial", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstancePolymer.monomerSet.startingMaterial"; } }
 
       /// <summary>
-      /// The type of substance for this starting material
+      /// The type of substance for this starting material.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DataMember]
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Substance high level category, e.g. chemical substance
+      /// Substance high level category, e.g. chemical substance.
       /// </summary>
       [FhirElement("category", InSummary=true, Order=50)]
       [DataMember]
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Used to specify whether the attribute described is a defining element for the unique identification of the polymer
+      /// Used to specify whether the attribute described is a defining element for the unique identification of the polymer.
       /// </summary>
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A percentage
+      /// A percentage.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=70)]
       [DataMember]
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstancePolymer.repeat"; } }
 
       /// <summary>
-      /// A representation of an (average) molecular formula from a polymer
+      /// A representation of an (average) molecular formula from a polymer.
       /// </summary>
       [FhirElement("averageMolecularFormula", InSummary=true, Order=40)]
       [DataMember]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How the quantitative amount of Structural Repeat Units is captured (e.g. Exact, Numeric, Average)
+      /// How the quantitative amount of Structural Repeat Units is captured (e.g. Exact, Numeric, Average).
       /// </summary>
       [FhirElement("repeatUnitAmountType", InSummary=true, Order=50)]
       [DataMember]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _RepeatUnitAmountType;
 
       /// <summary>
-      /// An SRU - Structural Repeat Unit
+      /// An SRU - Structural Repeat Unit.
       /// </summary>
       [FhirElement("repeatUnit", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstancePolymer.repeat.repeatUnit"; } }
 
       /// <summary>
-      /// Structural repeat units are essential elements for defining polymers
+      /// Structural repeat units are essential elements for defining polymers.
       /// </summary>
       [FhirElement("unit", InSummary=true, Order=40)]
       [DataMember]
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The orientation of the polymerisation, e.g. head-tail, head-head, random
+      /// The orientation of the polymerisation, e.g. head-tail, head-head, random.
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=50)]
       [DataMember]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Orientation;
 
       /// <summary>
-      /// Number of repeats of this unit
+      /// Number of repeats of this unit.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=60)]
       [DataMember]
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applies to homopolymer and block co-polymers where the degree of polymerisation within a block can be described
+      /// Applies to homopolymer and block co-polymers where the degree of polymerisation within a block can be described.
       /// </summary>
       [FhirElement("degreeOfPolymerisation", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent> _DegreeOfPolymerisation;
 
       /// <summary>
-      /// A graphical structure for this SRU
+      /// A graphical structure for this SRU.
       /// </summary>
       [FhirElement("structuralRepresentation", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation"; } }
 
       /// <summary>
-      /// The type of the degree of polymerisation shall be described, e.g. SRU/Polymer Ratio
+      /// The type of the degree of polymerisation shall be described, e.g. SRU/Polymer Ratio.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// An average amount of polymerisation
+      /// An average amount of polymerisation.
       /// </summary>
       [FhirElement("average", InSummary=true, Order=50)]
       [DataMember]
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A low expected limit of the amount
+      /// A low expected limit of the amount.
       /// </summary>
       [FhirElement("low", InSummary=true, Order=60)]
       [DataMember]
@@ -859,7 +859,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A high expected limit of the amount
+      /// A high expected limit of the amount.
       /// </summary>
       [FhirElement("high", InSummary=true, Order=70)]
       [DataMember]
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstancePolymer.repeat.repeatUnit.structuralRepresentation"; } }
 
       /// <summary>
-      /// The type of structure (e.g. Full, Partial, Representative)
+      /// The type of structure (e.g. Full, Partial, Representative).
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The structural representation as text string in a standard format e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF
+      /// The structural representation as text string in a standard format e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF.
       /// </summary>
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The format of the representation e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF
+      /// The format of the representation e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF.
       /// </summary>
       [FhirElement("format", InSummary=true, Order=60)]
       [DataMember]
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Format;
 
       /// <summary>
-      /// An attached file with the structural representation
+      /// An attached file with the structural representation.
       /// </summary>
       [FhirElement("attachment", InSummary=true, Order=70)]
       [DataMember]
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A business idenfier for this polymer, but typically this is handled by a SubstanceDefinition identifier
+    /// A business idenfier for this polymer, but typically this is handled by a SubstanceDefinition identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Overall type of the polymer
+    /// Overall type of the polymer.
     /// </summary>
     [FhirElement("class", InSummary=true, Order=100)]
     [DataMember]
@@ -1211,7 +1211,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Class;
 
     /// <summary>
-    /// Polymer geometry, e.g. linear, branched, cross-linked, network or dendritic
+    /// Polymer geometry, e.g. linear, branched, cross-linked, network or dendritic.
     /// </summary>
     [FhirElement("geometry", InSummary=true, Order=110)]
     [DataMember]
@@ -1224,7 +1224,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Geometry;
 
     /// <summary>
-    /// Descrtibes the copolymer sequence type (polymer connectivity)
+    /// Descrtibes the copolymer sequence type (polymer connectivity).
     /// </summary>
     [FhirElement("copolymerConnectivity", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -1238,7 +1238,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _CopolymerConnectivity;
 
     /// <summary>
-    /// Todo - this is intended to connect to a repeating full modification structure, also used by Protein and Nucleic Acid . String is just a placeholder
+    /// Todo - this is intended to connect to a repeating full modification structure, also used by Protein and Nucleic Acid . String is just a placeholder.
     /// </summary>
     [FhirElement("modification", InSummary=true, Order=130)]
     [DataMember]
@@ -1269,7 +1269,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Todo
+    /// Todo.
     /// </summary>
     [FhirElement("monomerSet", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> _MonomerSet;
 
     /// <summary>
-    /// Specifies and quantifies the repeated units and their configuration
+    /// Specifies and quantifies the repeated units and their configuration.
     /// </summary>
     [FhirElement("repeat", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]

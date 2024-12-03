@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AllergyIntolerance.participant"; } }
 
       /// <summary>
-      /// Type of involvement
+      /// Type of involvement.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("AllergyIntoleranceParticipantFunction")]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Who or what participated in the activities related to the allergy or intolerance
+      /// Who or what participated in the activities related to the allergy or intolerance.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "AllergyIntolerance.reaction"; } }
 
       /// <summary>
-      /// Specific substance or pharmaceutical product considered to be responsible for event
+      /// Specific substance or pharmaceutical product considered to be responsible for event.
       /// </summary>
       [FhirElement("substance", Order=40)]
       [Binding("SubstanceCode")]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Substance;
 
       /// <summary>
-      /// Clinical symptoms/signs associated with the Event
+      /// Clinical symptoms/signs associated with the Event.
       /// </summary>
       [FhirElement("manifestation", Order=50)]
       [Binding("Manifestation")]
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Manifestation;
 
       /// <summary>
-      /// Description of the event as a whole
+      /// Description of the event as a whole.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Date(/time) when manifestations showed
+      /// Date(/time) when manifestations showed.
       /// </summary>
       [FhirElement("onset", Order=70)]
       [DataMember]
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// mild | moderate | severe (of event as a whole)
+      /// mild | moderate | severe (of event as a whole).
       /// </summary>
       [FhirElement("severity", Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How the subject was exposed to the substance
+      /// How the subject was exposed to the substance.
       /// </summary>
       [FhirElement("exposureRoute", Order=90)]
       [Binding("RouteOfAdministration")]
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ExposureRoute;
 
       /// <summary>
-      /// Text about event not captured in other fields
+      /// Text about event not captured in other fields.
       /// </summary>
       [FhirElement("note", Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External ids for this item
+    /// External ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | inactive | resolved
+    /// active | inactive | resolved.
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [Binding("AllergyIntoleranceClinicalStatus")]
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ClinicalStatus;
 
     /// <summary>
-    /// unconfirmed | presumed | confirmed | refuted | entered-in-error
+    /// unconfirmed | presumed | confirmed | refuted | entered-in-error.
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [Binding("AllergyIntoleranceVerificationStatus")]
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _VerificationStatus;
 
     /// <summary>
-    /// allergy | intolerance - Underlying mechanism (if known)
+    /// allergy | intolerance - Underlying mechanism (if known).
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("AllergyIntoleranceType")]
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// food | medication | environment | biologic
+    /// food | medication | environment | biologic.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// low | high | unable-to-assess
+    /// low | high | unable-to-assess.
     /// </summary>
     [FhirElement("criticality", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Code that identifies the allergy or intolerance
+    /// Code that identifies the allergy or intolerance.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Binding("AllergyIntoleranceCode")]
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Who the allergy or intolerance is for
+    /// Who the allergy or intolerance is for.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Encounter when the allergy or intolerance was asserted
+    /// Encounter when the allergy or intolerance was asserted.
     /// </summary>
     [FhirElement("encounter", Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When allergy or intolerance was identified
+    /// When allergy or intolerance was identified.
     /// </summary>
     [FhirElement("onset", Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.init")]
     [CLSCompliant(false)]
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Onset;
 
     /// <summary>
-    /// Date allergy or intolerance was first recorded
+    /// Date allergy or intolerance was first recorded.
     /// </summary>
     [FhirElement("recordedDate", Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who or what participated in the activities related to the allergy or intolerance and how they were involved
+    /// Who or what participated in the activities related to the allergy or intolerance and how they were involved.
     /// </summary>
     [FhirElement("participant", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.AllergyIntolerance.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// Date(/time) of last known occurrence of a reaction
+    /// Date(/time) of last known occurrence of a reaction.
     /// </summary>
     [FhirElement("lastOccurrence", Order=210)]
     [DataMember]
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional text not captured in other fields
+    /// Additional text not captured in other fields.
     /// </summary>
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Adverse Reaction Events linked to exposure to substance
+    /// Adverse Reaction Events linked to exposure to substance.
     /// </summary>
     [FhirElement("reaction", Order=230)]
     [Cardinality(Min=0,Max=-1)]

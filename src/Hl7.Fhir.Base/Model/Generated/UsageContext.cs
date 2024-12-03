@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "UsageContext"; } }
 
     /// <summary>
-    /// Type of context being specified
+    /// Type of context being specified.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=30)]
     [Binding("UsageContextType")]
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coding _Code;
 
     /// <summary>
-    /// Value that defines the context
+    /// Value that defines the context.
     /// </summary>
     [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [Binding("UsageContextValue")]

@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SupplyDelivery.suppliedItem"; } }
 
       /// <summary>
-      /// Amount dispensed
+      /// Amount dispensed.
       /// </summary>
       [FhirElement("quantity", Order=40)]
       [DataMember]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Medication, Substance, or Device supplied
+      /// Medication, Substance, or Device supplied.
       /// </summary>
       [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("SupplyDeliveryItem")]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier
+    /// External identifier.
     /// </summary>
     [FhirElement("identifier", Order=90)]
     [DataMember]
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Fulfills plan, proposal or order
+    /// Fulfills plan, proposal or order.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Part of referenced event
+    /// Part of referenced event.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// in-progress | completed | abandoned | entered-in-error
+    /// in-progress | completed | abandoned | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient for whom the item is supplied
+    /// Patient for whom the item is supplied.
     /// </summary>
     [FhirElement("patient", Order=130)]
     [CLSCompliant(false)]
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Category of dispense event
+    /// Category of dispense event.
     /// </summary>
     [FhirElement("type", Order=140)]
     [Binding("SupplyDeliveryType")]
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// The item that is delivered or supplied
+    /// The item that is delivered or supplied.
     /// </summary>
     [FhirElement("suppliedItem", Order=150)]
     [DataMember]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent _SuppliedItem;
 
     /// <summary>
-    /// When event occurred
+    /// When event occurred.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Dispenser
+    /// Dispenser.
     /// </summary>
     [FhirElement("supplier", Order=170)]
     [CLSCompliant(false)]
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Supplier;
 
     /// <summary>
-    /// Where the Supply was sent
+    /// Where the Supply was sent.
     /// </summary>
     [FhirElement("destination", Order=180)]
     [CLSCompliant(false)]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Destination;
 
     /// <summary>
-    /// Who collected the Supply
+    /// Who collected the Supply.
     /// </summary>
     [FhirElement("receiver", Order=190)]
     [CLSCompliant(false)]

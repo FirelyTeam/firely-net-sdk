@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubscriptionStatus.notificationEvent"; } }
 
       /// <summary>
-      /// Sequencing index of this event
+      /// Sequencing index of this event.
       /// </summary>
       [FhirElement("eventNumber", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The instant this event occurred
+      /// The instant this event occurred.
       /// </summary>
       [FhirElement("timestamp", Order=50)]
       [DataMember]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reference to the primary resource or information of this event
+      /// Reference to the primary resource or information of this event.
       /// </summary>
       [FhirElement("focus", Order=60)]
       [CLSCompliant(false)]
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Focus;
 
       /// <summary>
-      /// References related to the focus resource and/or context of this event
+      /// References related to the focus resource and/or context of this event.
       /// </summary>
       [FhirElement("additionalContext", Order=70)]
       [CLSCompliant(false)]
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// requested | active | error | off | entered-in-error
+    /// requested | active | error | off | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// handshake | heartbeat | event-notification | query-status | query-event
+    /// handshake | heartbeat | event-notification | query-status | query-event.
     /// </summary>
     [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Events since the Subscription was created
+    /// Events since the Subscription was created.
     /// </summary>
     [FhirElement("eventsSinceSubscriptionStart", InSummary=true, Order=110)]
     [DataMember]
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Detailed information about any events relevant to this notification
+    /// Detailed information about any events relevant to this notification.
     /// </summary>
     [FhirElement("notificationEvent", Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent> _NotificationEvent;
 
     /// <summary>
-    /// Reference to the Subscription responsible for this notification
+    /// Reference to the Subscription responsible for this notification.
     /// </summary>
     [FhirElement("subscription", InSummary=true, Order=130, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subscription;
 
     /// <summary>
-    /// Reference to the SubscriptionTopic this notification relates to
+    /// Reference to the SubscriptionTopic this notification relates to.
     /// </summary>
     [FhirElement("topic", InSummary=true, Order=140)]
     [DataMember]
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// List of errors on the subscription
+    /// List of errors on the subscription.
     /// </summary>
     [FhirElement("error", InSummary=true, Order=150)]
     [Binding("SubscriptionError")]

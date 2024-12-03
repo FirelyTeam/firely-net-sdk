@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ClinicalImpression.investigation"; } }
 
       /// <summary>
-      /// A name/code for the set
+      /// A name/code for the set.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Binding("InvestigationGroupType")]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Record of a specific investigation
+      /// Record of a specific investigation.
       /// </summary>
       [FhirElement("item", Order=50)]
       [CLSCompliant(false)]
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ClinicalImpression.finding"; } }
 
       /// <summary>
-      /// What was found
+      /// What was found.
       /// </summary>
       [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("ConditionKind")]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Item;
 
       /// <summary>
-      /// Which investigations support finding
+      /// Which investigations support finding.
       /// </summary>
       [FhirElement("basis", Order=50)]
       [DataMember]
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// draft | completed | entered-in-error
+    /// draft | completed | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of assessment performed
+    /// Kind of assessment performed.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
     [Binding("ClinicalImpressionCode")]
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Why/how the assessment was performed
+    /// Why/how the assessment was performed.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=120)]
     [DataMember]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Patient or group assessed
+    /// Patient or group assessed.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter or Episode created from
+    /// Encounter or Episode created from.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=140, FiveWs="context")]
     [CLSCompliant(false)]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// Time of assessment
+    /// Time of assessment.
     /// </summary>
     [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Effective;
 
     /// <summary>
-    /// When the assessment was documented
+    /// When the assessment was documented.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The clinician performing the assessment
+    /// The clinician performing the assessment.
     /// </summary>
     [FhirElement("assessor", InSummary=true, Order=170, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Assessor;
 
     /// <summary>
-    /// Reference to last assessment
+    /// Reference to last assessment.
     /// </summary>
     [FhirElement("previous", Order=180)]
     [CLSCompliant(false)]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Previous;
 
     /// <summary>
-    /// Relevant impressions of patient state
+    /// Relevant impressions of patient state.
     /// </summary>
     [FhirElement("problem", InSummary=true, Order=190, FiveWs="why")]
     [CLSCompliant(false)]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Problem;
 
     /// <summary>
-    /// One or more sets of investigations (signs, symptions, etc.)
+    /// One or more sets of investigations (signs, symptions, etc.).
     /// </summary>
     [FhirElement("investigation", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ClinicalImpression.InvestigationComponent> _Investigation;
 
     /// <summary>
-    /// Clinical Protocol followed
+    /// Clinical Protocol followed.
     /// </summary>
     [FhirElement("protocol", Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Summary of the assessment
+    /// Summary of the assessment.
     /// </summary>
     [FhirElement("summary", Order=220)]
     [DataMember]
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Possible or likely findings and diagnoses
+    /// Possible or likely findings and diagnoses.
     /// </summary>
     [FhirElement("finding", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent> _Finding;
 
     /// <summary>
-    /// Estimate of likely outcome
+    /// Estimate of likely outcome.
     /// </summary>
     [FhirElement("prognosisCodeableConcept", Order=240)]
     [Binding("ClinicalImpressionPrognosis")]
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _PrognosisCodeableConcept;
 
     /// <summary>
-    /// RiskAssessment expressing likely outcome
+    /// RiskAssessment expressing likely outcome.
     /// </summary>
     [FhirElement("prognosisReference", Order=250)]
     [CLSCompliant(false)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PrognosisReference;
 
     /// <summary>
-    /// Action taken as part of assessment procedure
+    /// Action taken as part of assessment procedure.
     /// </summary>
     [FhirElement("action", Order=260)]
     [CLSCompliant(false)]
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Action;
 
     /// <summary>
-    /// Comments made about the ClinicalImpression
+    /// Comments made about the ClinicalImpression.
     /// </summary>
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]

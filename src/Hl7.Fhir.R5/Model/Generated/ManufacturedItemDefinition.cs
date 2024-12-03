@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ManufacturedItemDefinition.property"; } }
 
       /// <summary>
-      /// A code expressing the type of characteristic
+      /// A code expressing the type of characteristic.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SNOMEDCTCharacteristicCodes")]
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// A value for the characteristic
+      /// A value for the characteristic.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ManufacturedItemDefinition.component"; } }
 
       /// <summary>
-      /// Defining type of the component e.g. shell, layer, ink
+      /// Defining type of the component e.g. shell, layer, ink.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The function of this component within the item e.g. delivers active ingredient, masks taste
+      /// The function of this component within the item e.g. delivers active ingredient, masks taste.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Function;
 
       /// <summary>
-      /// The measurable amount of total quantity of all substances in the component, expressable in different ways (e.g. by mass or volume)
+      /// The measurable amount of total quantity of all substances in the component, expressable in different ways (e.g. by mass or volume).
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Quantity> _Amount;
 
       /// <summary>
-      /// A reference to a constituent of the manufactured item as a whole, linked here so that its component location within the item can be indicated. This not where the item's ingredient are primarily stated (for which see Ingredient.for or ManufacturedItemDefinition.ingredient)
+      /// A reference to a constituent of the manufactured item as a whole, linked here so that its component location within the item can be indicated. This not where the item's ingredient are primarily stated (for which see Ingredient.for or ManufacturedItemDefinition.ingredient).
       /// </summary>
       [FhirElement("constituent", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent> _Constituent;
 
       /// <summary>
-      /// General characteristics of this component
+      /// General characteristics of this component.
       /// </summary>
       [FhirElement("property", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
 
       /// <summary>
-      /// A component that this component contains or is made from
+      /// A component that this component contains or is made from.
       /// </summary>
       [FhirElement("component", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ManufacturedItemDefinition.component.constituent"; } }
 
       /// <summary>
-      /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume)
+      /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume).
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Quantity> _Amount;
 
       /// <summary>
-      /// The physical location of the constituent/ingredient within the component
+      /// The physical location of the constituent/ingredient within the component.
       /// </summary>
       [FhirElement("location", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Location;
 
       /// <summary>
-      /// The function of this constituent within the component e.g. binder
+      /// The function of this constituent within the component e.g. binder.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Function;
 
       /// <summary>
-      /// The ingredient that is the constituent of the given component
+      /// The ingredient that is the constituent of the given component.
       /// </summary>
       [FhirElement("hasIngredient", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier
+    /// Unique identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A descriptive name applied to this item
+    /// A descriptive name applied to this item.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DataMember]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Dose form as manufactured (before any necessary transformation)
+    /// Dose form as manufactured (before any necessary transformation).
     /// </summary>
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=120)]
     [Binding("ManufacturedDoseForm")]
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ManufacturedDoseForm;
 
     /// <summary>
-    /// The “real-world” units in which the quantity of the item is described
+    /// The “real-world” units in which the quantity of the item is described.
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=130)]
     [Binding("UnitOfPresentation")]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
 
     /// <summary>
-    /// Manufacturer of the item, one of several possible
+    /// Manufacturer of the item, one of several possible.
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
 
     /// <summary>
-    /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated
+    /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.
     /// </summary>
     [FhirElement("marketingStatus", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MarketingStatus> _MarketingStatus;
 
     /// <summary>
-    /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
+    /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource.
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=160)]
     [Binding("SNOMEDCTSubstanceCodes")]
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Ingredient;
 
     /// <summary>
-    /// General characteristics of this item
+    /// General characteristics of this item.
     /// </summary>
     [FhirElement("property", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
 
     /// <summary>
-    /// Physical parts of the manufactured item, that it is intrisically made from. This is distinct from the ingredients that are part of its chemical makeup
+    /// Physical parts of the manufactured item, that it is intrisically made from. This is distinct from the ingredients that are part of its chemical makeup.
     /// </summary>
     [FhirElement("component", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]

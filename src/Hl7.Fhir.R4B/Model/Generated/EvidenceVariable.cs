@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EvidenceVariable.characteristic"; } }
 
       /// <summary>
-      /// Natural language description of the characteristic
+      /// Natural language description of the characteristic.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What code or expression defines members?
+      /// What code or expression defines members?.
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Definition;
 
       /// <summary>
-      /// Method used for describing characteristic
+      /// Method used for describing characteristic.
       /// </summary>
       [FhirElement("method", Order=60)]
       [Binding("CharacteristicMethod")]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Method;
 
       /// <summary>
-      /// Device used for determining characteristic
+      /// Device used for determining characteristic.
       /// </summary>
       [FhirElement("device", Order=70)]
       [CLSCompliant(false)]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Device;
 
       /// <summary>
-      /// Whether the characteristic includes or excludes members
+      /// Whether the characteristic includes or excludes members.
       /// </summary>
       [FhirElement("exclude", Order=80)]
       [DataMember]
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Observation time from study start
+      /// Observation time from study start.
       /// </summary>
       [FhirElement("timeFromStart", Order=90)]
       [DataMember]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.EvidenceVariable.TimeFromStartComponent _TimeFromStart;
 
       /// <summary>
-      /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
+      /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
       [DeclaredType(Type = typeof(Code))]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EvidenceVariable.characteristic.timeFromStart"; } }
 
       /// <summary>
-      /// Human readable description
+      /// Human readable description.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Used to express the observation at a defined amount of time after the study start
+      /// Used to express the observation at a defined amount of time after the study start.
       /// </summary>
       [FhirElement("quantity", Order=50)]
       [DataMember]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// Used to express the observation within a period after the study start
+      /// Used to express the observation within a period after the study start.
       /// </summary>
       [FhirElement("range", Order=60)]
       [DataMember]
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Range _Range;
 
       /// <summary>
-      /// Used for footnotes or explanatory notes
+      /// Used for footnotes or explanatory notes.
       /// </summary>
       [FhirElement("note", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EvidenceVariable.category"; } }
 
       /// <summary>
-      /// Description of the grouping
+      /// Description of the grouping.
       /// </summary>
       [FhirElement("name", Order=40)]
       [DataMember]
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Definition of the grouping
+      /// Definition of the grouping.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this evidence variable, represented as a URI (globally unique)
+    /// Canonical identifier for this evidence variable, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the evidence variable
+    /// Additional identifier for the evidence variable.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the evidence variable
+    /// Business version of the evidence variable.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this evidence variable (computer friendly)
+    /// Name for this evidence variable (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this evidence variable (human friendly)
+    /// Name for this evidence variable (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Title for use in informal contexts
+    /// Title for use in informal contexts.
     /// </summary>
     [FhirElement("shortTitle", InSummary=true, Order=140)]
     [DataMember]
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Subordinate title of the EvidenceVariable
+    /// Subordinate title of the EvidenceVariable.
     /// </summary>
     [FhirElement("subtitle", Order=150)]
     [DataMember]
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Natural language description of the evidence variable
+    /// Natural language description of the evidence variable.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
@@ -1027,7 +1027,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Used for footnotes or explanatory notes
+    /// Used for footnotes or explanatory notes.
     /// </summary>
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=210, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -1086,7 +1086,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Who authored the content
+    /// Who authored the content.
     /// </summary>
     [FhirElement("author", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -1114,7 +1114,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Author;
 
     /// <summary>
-    /// Who edited the content
+    /// Who edited the content.
     /// </summary>
     [FhirElement("editor", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Editor;
 
     /// <summary>
-    /// Who reviewed the content
+    /// Who reviewed the content.
     /// </summary>
     [FhirElement("reviewer", Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -1142,7 +1142,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Reviewer;
 
     /// <summary>
-    /// Who endorsed the content
+    /// Who endorsed the content.
     /// </summary>
     [FhirElement("endorser", Order=260)]
     [Cardinality(Min=0,Max=-1)]
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
 
     /// <summary>
-    /// Actual or conceptual
+    /// Actual or conceptual.
     /// </summary>
     [FhirElement("actual", Order=280)]
     [DataMember]
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// intersection | union
+    /// intersection | union.
     /// </summary>
     [FhirElement("characteristicCombination", Order=290)]
     [DeclaredType(Type = typeof(Code))]
@@ -1234,7 +1234,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What defines the members of the evidence element
+    /// What defines the members of the evidence element.
     /// </summary>
     [FhirElement("characteristic", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -1248,7 +1248,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> _Characteristic;
 
     /// <summary>
-    /// continuous | dichotomous | ordinal | polychotomous
+    /// continuous | dichotomous | ordinal | polychotomous.
     /// </summary>
     [FhirElement("handling", InSummary=true, Order=310)]
     [DeclaredType(Type = typeof(Code))]
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A grouping for ordinal or polychotomous variables
+    /// A grouping for ordinal or polychotomous variables.
     /// </summary>
     [FhirElement("category", Order=320)]
     [Cardinality(Min=0,Max=-1)]

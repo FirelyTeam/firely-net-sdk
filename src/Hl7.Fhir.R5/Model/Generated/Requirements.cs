@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Requirements.statement"; } }
 
       /// <summary>
-      /// Key that identifies this statement
+      /// Key that identifies this statement.
       /// </summary>
       [FhirElement("key", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Short Human label for this statement
+      /// Short Human label for this statement.
       /// </summary>
       [FhirElement("label", Order=50)]
       [DataMember]
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// SHALL | SHOULD | MAY | SHOULD-NOT
+      /// SHALL | SHOULD | MAY | SHOULD-NOT.
       /// </summary>
       [FhirElement("conformance", Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Set to true if requirements statement is conditional
+      /// Set to true if requirements statement is conditional.
       /// </summary>
       [FhirElement("conditionality", Order=70)]
       [DataMember]
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The actual requirement
+      /// The actual requirement.
       /// </summary>
       [FhirElement("requirement", Order=80)]
       [Cardinality(Min=1,Max=1)]
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Another statement this clarifies/restricts ([url#]key)
+      /// Another statement this clarifies/restricts ([url#]key).
       /// </summary>
       [FhirElement("derivedFrom", Order=90)]
       [DataMember]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A larger requirement that this requirement helps to refine and enable
+      /// A larger requirement that this requirement helps to refine and enable.
       /// </summary>
       [FhirElement("parent", Order=100)]
       [DataMember]
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Design artifact that satisfies this requirement
+      /// Design artifact that satisfies this requirement.
       /// </summary>
       [FhirElement("satisfiedBy", Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// External artifact (rule/document etc. that) created this requirement
+      /// External artifact (rule/document etc. that) created this requirement.
       /// </summary>
       [FhirElement("reference", Order=120)]
       [Cardinality(Min=0,Max=-1)]
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Who asked for this statement
+      /// Who asked for this statement.
       /// </summary>
       [FhirElement("source", Order=130, FiveWs="FiveWs.source")]
       [CLSCompliant(false)]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this Requirements, represented as a URI (globally unique)
+    /// Canonical identifier for this Requirements, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the Requirements (business identifier)
+    /// Additional identifier for the Requirements (business identifier).
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the Requirements
+    /// Business version of the Requirements.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this Requirements (computer friendly)
+    /// Name for this Requirements (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this Requirements (human friendly)
+    /// Name for this Requirements (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -858,7 +858,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -872,7 +872,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the requirements
+    /// Natural language description of the requirements.
     /// </summary>
     [FhirElement("description", Order=200)]
     [DataMember]
@@ -903,7 +903,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for Requirements (if applicable)
+    /// Intended jurisdiction for Requirements (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this Requirements is defined
+    /// Why this Requirements is defined.
     /// </summary>
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Other set of Requirements this builds on
+    /// Other set of Requirements this builds on.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External artifact (rule/document etc. that) created this set of requirements
+    /// External artifact (rule/document etc. that) created this set of requirements.
     /// </summary>
     [FhirElement("reference", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Actor for these requirements
+    /// Actor for these requirements.
     /// </summary>
     [FhirElement("actor", Order=280, FiveWs="FiveWs.who")]
     [Cardinality(Min=0,Max=-1)]
@@ -1121,7 +1121,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Actual statement as markdown
+    /// Actual statement as markdown.
     /// </summary>
     [FhirElement("statement", Order=290)]
     [Cardinality(Min=0,Max=-1)]

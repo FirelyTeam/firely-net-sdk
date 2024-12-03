@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "NamingSystem.uniqueId"; } }
 
       /// <summary>
-      /// oid | uuid | uri | other
+      /// oid | uuid | uri | other.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The unique identifier
+      /// The unique identifier.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=1,Max=1)]
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Is this the id that should be used for this type
+      /// Is this the id that should be used for this type.
       /// </summary>
       [FhirElement("preferred", Order=60)]
       [DataMember]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Notes about identifier usage
+      /// Notes about identifier usage.
       /// </summary>
       [FhirElement("comment", Order=70)]
       [DataMember]
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// When is identifier valid?
+      /// When is identifier valid?.
       /// </summary>
       [FhirElement("period", Order=80)]
       [DataMember]
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this naming system (computer friendly)
+    /// Name for this naming system (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// codesystem | identifier | root
+    /// codesystem | identifier | root.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=130, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Who maintains system namespace?
+    /// Who maintains system namespace?.
     /// </summary>
     [FhirElement("responsible", Order=150, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Natural language description of the naming system
+    /// Natural language description of the naming system.
     /// </summary>
     [FhirElement("description", Order=170)]
     [DataMember]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for naming system (if applicable)
+    /// Intended jurisdiction for naming system (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// How/where is it used
+    /// How/where is it used.
     /// </summary>
     [FhirElement("usage", Order=200)]
     [DataMember]
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifiers used for system
+    /// Unique identifiers used for system.
     /// </summary>
     [FhirElement("uniqueId", InSummary=true, Order=210)]
     [Cardinality(Min=1,Max=-1)]

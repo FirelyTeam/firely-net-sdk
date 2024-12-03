@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
     string ApprovalDate { get; set; }
 
     /// <summary>
-    /// When the MetadataResource was approved by publisher
+    /// When the MetadataResource was approved by publisher.
     /// </summary>
     Hl7.Fhir.Model.Date ApprovalDateElement { get; set; }
 
@@ -66,42 +66,42 @@ namespace Hl7.Fhir.Model
     string LastReviewDate { get; set; }
 
     /// <summary>
-    /// When the MetadataResource was last reviewed by the publisher
+    /// When the MetadataResource was last reviewed by the publisher.
     /// </summary>
     Hl7.Fhir.Model.Date LastReviewDateElement { get; set; }
 
     /// <summary>
-    /// When the MetadataResource is expected to be used
+    /// When the MetadataResource is expected to be used.
     /// </summary>
     Hl7.Fhir.Model.Period EffectivePeriod { get; set; }
 
     /// <summary>
-    /// E.g. Education, Treatment, Assessment, etc
+    /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
     List<Hl7.Fhir.Model.CodeableConcept> Topic { get; set; }
 
     /// <summary>
-    /// Who authored the MetadataResource
+    /// Who authored the MetadataResource.
     /// </summary>
     List<Hl7.Fhir.Model.ContactDetail> Author { get; set; }
 
     /// <summary>
-    /// Who edited the MetadataResource
+    /// Who edited the MetadataResource.
     /// </summary>
     List<Hl7.Fhir.Model.ContactDetail> Editor { get; set; }
 
     /// <summary>
-    /// Who reviewed the MetadataResource
+    /// Who reviewed the MetadataResource.
     /// </summary>
     List<Hl7.Fhir.Model.ContactDetail> Reviewer { get; set; }
 
     /// <summary>
-    /// Who endorsed the MetadataResource
+    /// Who endorsed the MetadataResource.
     /// </summary>
     List<Hl7.Fhir.Model.ContactDetail> Endorser { get; set; }
 
     /// <summary>
-    /// Additional documentation, citations, etc
+    /// Additional documentation, citations, etc.
     /// </summary>
     List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact { get; set; }
 
@@ -671,14 +671,14 @@ namespace Hl7.Fhir.Model
     }
 
     /// <remarks>
-    /// MedicationKnowledge.Author (ComplexTypeReference { Name = Reference, PropertyTypeString = Hl7.Fhir.Model.ResourceReference, PocoTypeName = ResourceReference }) is incompatible with
-    /// IMetadataResource.author (ListTypeReference { Name = List, PropertyTypeString = List&lt;Hl7.Fhir.Model.ContactDetail&gt;, Element = ComplexTypeReference { Name = ContactDetail, PropertyTypeString = Hl7.Fhir.Model.ContactDetail, PocoTypeName = ContactDetail } })
+    /// MedicationKnowledge.Author (Hl7.Fhir.Model.ResourceReference) is incompatible with
+    /// IMetadataResource.author (List&lt;Hl7.Fhir.Model.ContactDetail&gt;)
     /// </remarks>
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.Author (ComplexTypeReference { Name = Reference, PropertyTypeString = Hl7.Fhir.Model.ResourceReference, PocoTypeName = ResourceReference }) is incompatible with IMetadataResource.author (ListTypeReference { Name = List, PropertyTypeString = List<Hl7.Fhir.Model.ContactDetail>, Element = ComplexTypeReference { Name = ContactDetail, PropertyTypeString = Hl7.Fhir.Model.ContactDetail, PocoTypeName = ContactDetail } })");}
+      set { throw new NotImplementedException("MedicationKnowledge.Author (Hl7.Fhir.Model.ResourceReference) is incompatible with IMetadataResource.author (List<Hl7.Fhir.Model.ContactDetail>)");}
     }
 
     [IgnoreDataMember]

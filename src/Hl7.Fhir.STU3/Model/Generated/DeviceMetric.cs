@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DeviceMetric.calibration"; } }
 
       /// <summary>
-      /// unspecified | offset | gain | two-point
+      /// unspecified | offset | gain | two-point.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// not-calibrated | calibration-required | calibrated | unspecified
+      /// not-calibrated | calibration-required | calibrated | unspecified.
       /// </summary>
       [FhirElement("state", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Describes the time last calibration has been performed
+      /// Describes the time last calibration has been performed.
       /// </summary>
       [FhirElement("time", InSummary=true, Order=60)]
       [DataMember]
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier of this DeviceMetric
+    /// Unique identifier of this DeviceMetric.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Identity of metric, for example Heart Rate or PEEP Setting
+    /// Identity of metric, for example Heart Rate or PEEP Setting.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
     [Binding("MetricType")]
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Unit of Measure for the Metric
+    /// Unit of Measure for the Metric.
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=110)]
     [Binding("MetricUnit")]
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Unit;
 
     /// <summary>
-    /// Describes the link to the source Device
+    /// Describes the link to the source Device.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Source;
 
     /// <summary>
-    /// Describes the link to the parent DeviceComponent
+    /// Describes the link to the parent DeviceComponent.
     /// </summary>
     [FhirElement("parent", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Parent;
 
     /// <summary>
-    /// on | off | standby | entered-in-error
+    /// on | off | standby | entered-in-error.
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// black | red | green | yellow | blue | magenta | cyan | white
+    /// black | red | green | yellow | blue | magenta | cyan | white.
     /// </summary>
     [FhirElement("color", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// measurement | setting | calculation | unspecified
+    /// measurement | setting | calculation | unspecified.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=160, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Describes the measurement repetition time
+    /// Describes the measurement repetition time.
     /// </summary>
     [FhirElement("measurementPeriod", InSummary=true, Order=170)]
     [DataMember]
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Timing _MeasurementPeriod;
 
     /// <summary>
-    /// Describes the calibrations that have been performed or that are required to be performed
+    /// Describes the calibrations that have been performed or that are required to be performed.
     /// </summary>
     [FhirElement("calibration", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]

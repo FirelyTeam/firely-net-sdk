@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.relatedMedicationKnowledge"; } }
 
       /// <summary>
-      /// Category of medicationKnowledge
+      /// Category of medicationKnowledge.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Associated documentation about the associated medication knowledge
+      /// Associated documentation about the associated medication knowledge.
       /// </summary>
       [FhirElement("reference", Order=50)]
       [CLSCompliant(false)]
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.monograph"; } }
 
       /// <summary>
-      /// The category of medication document
+      /// The category of medication document.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DataMember]
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Associated documentation about the medication
+      /// Associated documentation about the medication.
       /// </summary>
       [FhirElement("source", Order=50)]
       [CLSCompliant(false)]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.ingredient"; } }
 
       /// <summary>
-      /// Medication(s) or substance(s) contained in the medication
+      /// Medication(s) or substance(s) contained in the medication.
       /// </summary>
       [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Item;
 
       /// <summary>
-      /// Active ingredient indicator
+      /// Active ingredient indicator.
       /// </summary>
       [FhirElement("isActive", Order=50)]
       [DataMember]
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Quantity of ingredient present
+      /// Quantity of ingredient present.
       /// </summary>
       [FhirElement("strength", Order=60)]
       [DataMember]
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.cost"; } }
 
       /// <summary>
-      /// The category of the cost information
+      /// The category of the cost information.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The source or owner for the price information
+      /// The source or owner for the price information.
       /// </summary>
       [FhirElement("source", Order=50)]
       [DataMember]
@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The price of the medication
+      /// The price of the medication.
       /// </summary>
       [FhirElement("cost", Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.monitoringProgram"; } }
 
       /// <summary>
-      /// Type of program under which the medication is monitored
+      /// Type of program under which the medication is monitored.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DataMember]
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Name of the reviewing program
+      /// Name of the reviewing program.
       /// </summary>
       [FhirElement("name", Order=50)]
       [DataMember]
@@ -853,7 +853,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.administrationGuidelines"; } }
 
       /// <summary>
-      /// Dosage for the medication for the specific guidelines
+      /// Dosage for the medication for the specific guidelines.
       /// </summary>
       [FhirElement("dosage", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent> _Dosage;
 
       /// <summary>
-      /// Indication for use that apply to the specific administration guidelines
+      /// Indication for use that apply to the specific administration guidelines.
       /// </summary>
       [FhirElement("indication", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Indication;
 
       /// <summary>
-      /// Characteristics of the patient that are relevant to the administration guidelines
+      /// Characteristics of the patient that are relevant to the administration guidelines.
       /// </summary>
       [FhirElement("patientCharacteristics", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.administrationGuidelines.dosage"; } }
 
       /// <summary>
-      /// Type of dosage
+      /// Type of dosage.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1020,7 +1020,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Dosage for the medication for the specific guidelines
+      /// Dosage for the medication for the specific guidelines.
       /// </summary>
       [FhirElement("dosage", Order=50)]
       [Cardinality(Min=1,Max=-1)]
@@ -1136,7 +1136,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.administrationGuidelines.patientCharacteristics"; } }
 
       /// <summary>
-      /// Specific characteristic that is relevant to the administration guideline
+      /// Specific characteristic that is relevant to the administration guideline.
       /// </summary>
       [FhirElement("characteristic", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1152,7 +1152,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Characteristic;
 
       /// <summary>
-      /// The specific characteristic
+      /// The specific characteristic.
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.medicineClassification"; } }
 
       /// <summary>
-      /// The type of category for the medication (for example, therapeutic classification, therapeutic sub-classification)
+      /// The type of category for the medication (for example, therapeutic classification, therapeutic sub-classification).
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Specific category assigned to the medication
+      /// Specific category assigned to the medication.
       /// </summary>
       [FhirElement("classification", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1413,7 +1413,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.packaging"; } }
 
       /// <summary>
-      /// A code that defines the specific type of packaging that the medication can be found in
+      /// A code that defines the specific type of packaging that the medication can be found in.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("MedicationPackageType")]
@@ -1427,7 +1427,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The number of product units the package would contain if fully loaded
+      /// The number of product units the package would contain if fully loaded.
       /// </summary>
       [FhirElement("quantity", Order=50)]
       [DataMember]
@@ -1542,7 +1542,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.drugCharacteristic"; } }
 
       /// <summary>
-      /// Code specifying the type of characteristic of medication
+      /// Code specifying the type of characteristic of medication.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("MedicationCharacteristic")]
@@ -1556,7 +1556,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Description of the characteristic
+      /// Description of the characteristic.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1670,7 +1670,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.regulatory"; } }
 
       /// <summary>
-      /// Specifies the authority of the regulation
+      /// Specifies the authority of the regulation.
       /// </summary>
       [FhirElement("regulatoryAuthority", Order=40)]
       [CLSCompliant(false)]
@@ -1686,7 +1686,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _RegulatoryAuthority;
 
       /// <summary>
-      /// Specifies if changes are allowed when dispensing a medication from a regulatory perspective
+      /// Specifies if changes are allowed when dispensing a medication from a regulatory perspective.
       /// </summary>
       [FhirElement("substitution", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1700,7 +1700,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent> _Substitution;
 
       /// <summary>
-      /// Specifies the schedule of a medication in jurisdiction
+      /// Specifies the schedule of a medication in jurisdiction.
       /// </summary>
       [FhirElement("schedule", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1714,7 +1714,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent> _Schedule;
 
       /// <summary>
-      /// The maximum number of units of the medication that can be dispensed in a period
+      /// The maximum number of units of the medication that can be dispensed in a period.
       /// </summary>
       [FhirElement("maxDispense", Order=70)]
       [DataMember]
@@ -1846,7 +1846,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.regulatory.substitution"; } }
 
       /// <summary>
-      /// Specifies the type of substitution allowed
+      /// Specifies the type of substitution allowed.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1860,7 +1860,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Specifies if regulation allows for changes in the medication when dispensing
+      /// Specifies if regulation allows for changes in the medication when dispensing.
       /// </summary>
       [FhirElement("allowed", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1991,7 +1991,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.regulatory.schedule"; } }
 
       /// <summary>
-      /// Specifies the specific drug schedule
+      /// Specifies the specific drug schedule.
       /// </summary>
       [FhirElement("schedule", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -2094,7 +2094,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.regulatory.maxDispense"; } }
 
       /// <summary>
-      /// The maximum number of units of the medication that can be dispensed
+      /// The maximum number of units of the medication that can be dispensed.
       /// </summary>
       [FhirElement("quantity", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -2108,7 +2108,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Quantity;
 
       /// <summary>
-      /// The period that applies to the maximum number of units
+      /// The period that applies to the maximum number of units.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
@@ -2220,7 +2220,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicationKnowledge.kinetics"; } }
 
       /// <summary>
-      /// The drug concentration measured at certain discrete points in time
+      /// The drug concentration measured at certain discrete points in time.
       /// </summary>
       [FhirElement("areaUnderCurve", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -2234,7 +2234,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Quantity> _AreaUnderCurve;
 
       /// <summary>
-      /// The median lethal dose of a drug
+      /// The median lethal dose of a drug.
       /// </summary>
       [FhirElement("lethalDose50", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -2248,7 +2248,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Quantity> _LethalDose50;
 
       /// <summary>
-      /// Time required for concentration in the body to decrease by half
+      /// Time required for concentration in the body to decrease by half.
       /// </summary>
       [FhirElement("halfLifePeriod", Order=60)]
       [DataMember]
@@ -2357,7 +2357,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Code that identifies this medication
+    /// Code that identifies this medication.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Binding("MedicationFormalRepresentation")]
@@ -2371,7 +2371,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// active | inactive | entered-in-error
+    /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
@@ -2404,7 +2404,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Manufacturer of the item
+    /// Manufacturer of the item.
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=110, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -2419,7 +2419,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Manufacturer;
 
     /// <summary>
-    /// powder | tablets | capsule +
+    /// powder | tablets | capsule +.
     /// </summary>
     [FhirElement("doseForm", Order=120)]
     [Binding("MedicationForm")]
@@ -2433,7 +2433,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _DoseForm;
 
     /// <summary>
-    /// Amount of drug in package
+    /// Amount of drug in package.
     /// </summary>
     [FhirElement("amount", InSummary=true, Order=130)]
     [DataMember]
@@ -2446,7 +2446,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Amount;
 
     /// <summary>
-    /// Additional names for a medication
+    /// Additional names for a medication.
     /// </summary>
     [FhirElement("synonym", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -2478,7 +2478,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Associated or related medication information
+    /// Associated or related medication information.
     /// </summary>
     [FhirElement("relatedMedicationKnowledge", Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -2492,7 +2492,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent> _RelatedMedicationKnowledge;
 
     /// <summary>
-    /// A medication resource that is associated with this medication
+    /// A medication resource that is associated with this medication.
     /// </summary>
     [FhirElement("associatedMedication", Order=160)]
     [CLSCompliant(false)]
@@ -2508,7 +2508,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _AssociatedMedication;
 
     /// <summary>
-    /// Category of the medication or product
+    /// Category of the medication or product.
     /// </summary>
     [FhirElement("productType", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -2522,7 +2522,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ProductType;
 
     /// <summary>
-    /// Associated documentation about the medication
+    /// Associated documentation about the medication.
     /// </summary>
     [FhirElement("monograph", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -2536,7 +2536,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.MonographComponent> _Monograph;
 
     /// <summary>
-    /// Active or inactive ingredient
+    /// Active or inactive ingredient.
     /// </summary>
     [FhirElement("ingredient", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -2550,7 +2550,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent> _Ingredient;
 
     /// <summary>
-    /// The instructions for preparing the medication
+    /// The instructions for preparing the medication.
     /// </summary>
     [FhirElement("preparationInstruction", Order=200)]
     [DataMember]
@@ -2581,7 +2581,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The intended or approved route of administration
+    /// The intended or approved route of administration.
     /// </summary>
     [FhirElement("intendedRoute", Order=210)]
     [Binding("MedicationRoute")]
@@ -2596,7 +2596,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _IntendedRoute;
 
     /// <summary>
-    /// The pricing of the medication
+    /// The pricing of the medication.
     /// </summary>
     [FhirElement("cost", Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -2610,7 +2610,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent> _Cost;
 
     /// <summary>
-    /// Program under which a medication is reviewed
+    /// Program under which a medication is reviewed.
     /// </summary>
     [FhirElement("monitoringProgram", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -2624,7 +2624,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent> _MonitoringProgram;
 
     /// <summary>
-    /// Guidelines for administration of the medication
+    /// Guidelines for administration of the medication.
     /// </summary>
     [FhirElement("administrationGuidelines", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -2638,7 +2638,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent> _AdministrationGuidelines;
 
     /// <summary>
-    /// Categorization of the medication within a formulary or classification system
+    /// Categorization of the medication within a formulary or classification system.
     /// </summary>
     [FhirElement("medicineClassification", Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -2652,7 +2652,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent> _MedicineClassification;
 
     /// <summary>
-    /// Details about packaged medications
+    /// Details about packaged medications.
     /// </summary>
     [FhirElement("packaging", Order=260)]
     [DataMember]
@@ -2665,7 +2665,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent _Packaging;
 
     /// <summary>
-    /// Specifies descriptive properties of the medicine
+    /// Specifies descriptive properties of the medicine.
     /// </summary>
     [FhirElement("drugCharacteristic", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -2679,7 +2679,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent> _DrugCharacteristic;
 
     /// <summary>
-    /// Potential clinical issue with or between medication(s)
+    /// Potential clinical issue with or between medication(s).
     /// </summary>
     [FhirElement("contraindication", Order=280)]
     [CLSCompliant(false)]
@@ -2695,7 +2695,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Contraindication;
 
     /// <summary>
-    /// Regulatory information about a medication
+    /// Regulatory information about a medication.
     /// </summary>
     [FhirElement("regulatory", Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -2709,7 +2709,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent> _Regulatory;
 
     /// <summary>
-    /// The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
+    /// The time course of drug absorption, distribution, metabolism and excretion of a medication from the body.
     /// </summary>
     [FhirElement("kinetics", Order=300)]
     [Cardinality(Min=0,Max=-1)]

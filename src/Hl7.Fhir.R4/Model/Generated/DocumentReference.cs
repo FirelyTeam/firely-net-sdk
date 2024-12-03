@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DocumentReference.relatesTo"; } }
 
       /// <summary>
-      /// replaces | transforms | signs | appends
+      /// replaces | transforms | signs | appends.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Target of the relationship
+      /// Target of the relationship.
       /// </summary>
       [FhirElement("target", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DocumentReference.content"; } }
 
       /// <summary>
-      /// Where to access the document
+      /// Where to access the document.
       /// </summary>
       [FhirElement("attachment", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Attachment _Attachment;
 
       /// <summary>
-      /// Format/content rules for the document
+      /// Format/content rules for the document.
       /// </summary>
       [FhirElement("format", InSummary=true, Order=50)]
       [Binding("DocumentFormat")]
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DocumentReference.context"; } }
 
       /// <summary>
-      /// Context of the document  content
+      /// Context of the document  content.
       /// </summary>
       [FhirElement("encounter", Order=40, FiveWs="FiveWs.context")]
       [CLSCompliant(false)]
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Encounter;
 
       /// <summary>
-      /// Main clinical acts documented
+      /// Main clinical acts documented.
       /// </summary>
       [FhirElement("event", Order=50)]
       [Binding("DocumentEventType")]
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Event;
 
       /// <summary>
-      /// Time of service that is being documented
+      /// Time of service that is being documented.
       /// </summary>
       [FhirElement("period", InSummary=true, Order=60)]
       [DataMember]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// Kind of facility where patient was seen
+      /// Kind of facility where patient was seen.
       /// </summary>
       [FhirElement("facilityType", Order=70)]
       [Binding("DocumentC80FacilityType")]
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _FacilityType;
 
       /// <summary>
-      /// Additional details about where the content was created (e.g. clinical specialty)
+      /// Additional details about where the content was created (e.g. clinical specialty).
       /// </summary>
       [FhirElement("practiceSetting", Order=80)]
       [Binding("DocumentC80PracticeSetting")]
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _PracticeSetting;
 
       /// <summary>
-      /// Patient demographics from source
+      /// Patient demographics from source.
       /// </summary>
       [FhirElement("sourcePatientInfo", Order=90)]
       [CLSCompliant(false)]
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _SourcePatientInfo;
 
       /// <summary>
-      /// Related identifiers or resources
+      /// Related identifiers or resources.
       /// </summary>
       [FhirElement("related", Order=100)]
       [CLSCompliant(false)]
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Master Version Specific Identifier
+    /// Master Version Specific Identifier.
     /// </summary>
     [FhirElement("masterIdentifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _MasterIdentifier;
 
     /// <summary>
-    /// Other identifiers for the document
+    /// Other identifiers for the document.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// current | superseded | entered-in-error
+    /// current | superseded | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// preliminary | final | amended | entered-in-error
+    /// preliminary | final | amended | entered-in-error.
     /// </summary>
     [FhirElement("docStatus", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of document (LOINC if possible)
+    /// Kind of document (LOINC if possible).
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("DocumentC80Type")]
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Categorization of document
+    /// Categorization of document.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [Binding("DocumentC80Class")]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Who/what is the subject of the document
+    /// Who/what is the subject of the document.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// When this document reference was created
+    /// When this document reference was created.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who and/or what authored the document
+    /// Who and/or what authored the document.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=170)]
     [CLSCompliant(false)]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Author;
 
     /// <summary>
-    /// Who/what authenticated the document
+    /// Who/what authenticated the document.
     /// </summary>
     [FhirElement("authenticator", Order=180, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Authenticator;
 
     /// <summary>
-    /// Organization which maintains the document
+    /// Organization which maintains the document.
     /// </summary>
     [FhirElement("custodian", Order=190)]
     [CLSCompliant(false)]
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Custodian;
 
     /// <summary>
-    /// Relationships to other documents
+    /// Relationships to other documents.
     /// </summary>
     [FhirElement("relatesTo", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> _RelatesTo;
 
     /// <summary>
-    /// Human-readable description
+    /// Human-readable description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=210)]
     [DataMember]
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Document security-tags
+    /// Document security-tags.
     /// </summary>
     [FhirElement("securityLabel", InSummary=true, Order=220)]
     [Binding("SecurityLabels")]
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _SecurityLabel;
 
     /// <summary>
-    /// Document referenced
+    /// Document referenced.
     /// </summary>
     [FhirElement("content", InSummary=true, Order=230)]
     [Cardinality(Min=1,Max=-1)]
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DocumentReference.ContentComponent> _Content;
 
     /// <summary>
-    /// Clinical context of document
+    /// Clinical context of document.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=240)]
     [DataMember]

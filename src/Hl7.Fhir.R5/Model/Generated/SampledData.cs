@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "SampledData"; } }
 
     /// <summary>
-    /// Zero value and units
+    /// Zero value and units.
     /// </summary>
     [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Origin;
 
     /// <summary>
-    /// Number of intervalUnits between samples
+    /// Number of intervalUnits between samples.
     /// </summary>
     [FhirElement("interval", InSummary=true, Order=40)]
     [DataMember]
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The measurement unit of the interval between samples
+    /// The measurement unit of the interval between samples.
     /// </summary>
     [FhirElement("intervalUnit", InSummary=true, Order=50)]
     [Binding("Units")]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Multiply data by this before adding to origin
+    /// Multiply data by this before adding to origin.
     /// </summary>
     [FhirElement("factor", InSummary=true, Order=60)]
     [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Lower limit of detection
+    /// Lower limit of detection.
     /// </summary>
     [FhirElement("lowerLimit", InSummary=true, Order=70)]
     [DataMember]
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Upper limit of detection
+    /// Upper limit of detection.
     /// </summary>
     [FhirElement("upperLimit", InSummary=true, Order=80)]
     [DataMember]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Number of sample points at each time point
+    /// Number of sample points at each time point.
     /// </summary>
     [FhirElement("dimensions", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Defines the codes used in the data
+    /// Defines the codes used in the data.
     /// </summary>
     [FhirElement("codeMap", Order=100)]
     [DataMember]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Offsets, typically in time, at which data values were taken
+    /// Offsets, typically in time, at which data values were taken.
     /// </summary>
     [FhirElement("offsets", Order=110)]
     [DataMember]
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Decimal values with spaces, or "E" | "U" | "L", or another code
+    /// Decimal values with spaces, or "E" | "U" | "L", or another code.
     /// </summary>
     [FhirElement("data", Order=120)]
     [DataMember]

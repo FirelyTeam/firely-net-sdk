@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryItem.name"; } }
 
       /// <summary>
-      /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'
+      /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'.
       /// </summary>
       [FhirElement("nameType", InSummary=true, Order=40)]
       [Binding("NameType")]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _NameType;
 
       /// <summary>
-      /// The language used to express the item name
+      /// The language used to express the item name.
       /// </summary>
       [FhirElement("language", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The name or designation of the item
+      /// The name or designation of the item.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryItem.responsibleOrganization"; } }
 
       /// <summary>
-      /// The role of the organization e.g. manufacturer, distributor, or other
+      /// The role of the organization e.g. manufacturer, distributor, or other.
       /// </summary>
       [FhirElement("role", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Role;
 
       /// <summary>
-      /// An organization that is associated with the item
+      /// An organization that is associated with the item.
       /// </summary>
       [FhirElement("organization", Order=50)]
       [CLSCompliant(false)]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryItem.description"; } }
 
       /// <summary>
-      /// The language that is used in the item description
+      /// The language that is used in the item description.
       /// </summary>
       [FhirElement("language", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Textual description of the item
+      /// Textual description of the item.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryItem.association"; } }
 
       /// <summary>
-      /// The type of association between the device and the other item
+      /// The type of association between the device and the other item.
       /// </summary>
       [FhirElement("associationType", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _AssociationType;
 
       /// <summary>
-      /// The related item or product
+      /// The related item or product.
       /// </summary>
       [FhirElement("relatedItem", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _RelatedItem;
 
       /// <summary>
-      /// The quantity of the product in this product
+      /// The quantity of the product in this product.
       /// </summary>
       [FhirElement("quantity", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -748,7 +748,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryItem.characteristic"; } }
 
       /// <summary>
-      /// The characteristic that is being defined
+      /// The characteristic that is being defined.
       /// </summary>
       [FhirElement("characteristicType", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _CharacteristicType;
 
       /// <summary>
-      /// The value of the attribute
+      /// The value of the attribute.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "InventoryItem.instance"; } }
 
       /// <summary>
-      /// The identifier for the physical instance, typically a serial number
+      /// The identifier for the physical instance, typically a serial number.
       /// </summary>
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
       /// <summary>
-      /// The lot or batch number of the item
+      /// The lot or batch number of the item.
       /// </summary>
       [FhirElement("lotNumber", Order=50)]
       [DataMember]
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The expiry date or date and time for the product
+      /// The expiry date or date and time for the product.
       /// </summary>
       [FhirElement("expiry", Order=60)]
       [DataMember]
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The subject that the item is associated with
+      /// The subject that the item is associated with.
       /// </summary>
       [FhirElement("subject", Order=70)]
       [CLSCompliant(false)]
@@ -968,7 +968,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Subject;
 
       /// <summary>
-      /// The location that the item is associated with
+      /// The location that the item is associated with.
       /// </summary>
       [FhirElement("location", Order=80)]
       [CLSCompliant(false)]
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for the inventory item
+    /// Business identifier for the inventory item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -1113,7 +1113,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | inactive | entered-in-error | unknown
+    /// active | inactive | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Category or class of the item
+    /// Category or class of the item.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -1161,7 +1161,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Code designating the specific type of item
+    /// Code designating the specific type of item.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
     /// <summary>
-    /// The item name(s) - the brand name, or common name, functional name, generic name or others
+    /// The item name(s) - the brand name, or common name, functional name, generic name or others.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -1189,7 +1189,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.InventoryItem.NameComponent> _Name;
 
     /// <summary>
-    /// Organization(s) responsible for the product
+    /// Organization(s) responsible for the product.
     /// </summary>
     [FhirElement("responsibleOrganization", Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -1203,7 +1203,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent> _ResponsibleOrganization;
 
     /// <summary>
-    /// Descriptive characteristics of the item
+    /// Descriptive characteristics of the item.
     /// </summary>
     [FhirElement("description", Order=150)]
     [DataMember]
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.InventoryItem.DescriptionComponent _Description;
 
     /// <summary>
-    /// The usage status like recalled, in use, discarded
+    /// The usage status like recalled, in use, discarded.
     /// </summary>
     [FhirElement("inventoryStatus", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -1230,7 +1230,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _InventoryStatus;
 
     /// <summary>
-    /// The base unit of measure - the unit in which the product is used or counted
+    /// The base unit of measure - the unit in which the product is used or counted.
     /// </summary>
     [FhirElement("baseUnit", InSummary=true, Order=170)]
     [DataMember]
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BaseUnit;
 
     /// <summary>
-    /// Net content or amount present in the item
+    /// Net content or amount present in the item.
     /// </summary>
     [FhirElement("netContent", InSummary=true, Order=180)]
     [DataMember]
@@ -1256,7 +1256,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _NetContent;
 
     /// <summary>
-    /// Association with other items or products
+    /// Association with other items or products.
     /// </summary>
     [FhirElement("association", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1270,7 +1270,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.InventoryItem.AssociationComponent> _Association;
 
     /// <summary>
-    /// Characteristic of the item
+    /// Characteristic of the item.
     /// </summary>
     [FhirElement("characteristic", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1284,7 +1284,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent> _Characteristic;
 
     /// <summary>
-    /// Instances or occurrences of the product
+    /// Instances or occurrences of the product.
     /// </summary>
     [FhirElement("instance", Order=210)]
     [DataMember]
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.InventoryItem.InstanceComponent _Instance;
 
     /// <summary>
-    /// Link to a product resource used in clinical workflows
+    /// Link to a product resource used in clinical workflows.
     /// </summary>
     [FhirElement("productReference", Order=220)]
     [CLSCompliant(false)]

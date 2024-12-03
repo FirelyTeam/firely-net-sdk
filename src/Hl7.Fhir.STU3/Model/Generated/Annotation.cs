@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Annotation"; } }
 
     /// <summary>
-    /// Individual responsible for the annotation
+    /// Individual responsible for the annotation.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Author;
 
     /// <summary>
-    /// When the annotation was made
+    /// When the annotation was made.
     /// </summary>
     [FhirElement("time", InSummary=true, Order=40)]
     [DataMember]
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The annotation  - text content
+    /// The annotation  - text content.
     /// </summary>
     [FhirElement("text", Order=50)]
     [Cardinality(Min=1,Max=1)]

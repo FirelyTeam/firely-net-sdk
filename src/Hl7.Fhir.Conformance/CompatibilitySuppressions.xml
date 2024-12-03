@@ -9,6 +9,34 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.CapabilityStatement.ImplementationComponent.get_DescriptionElement</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.ConstraintComponent.get_RequirementsElement</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent.get_DescriptionElement</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.MappingComponent.get_CommentElement</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
     <DiagnosticId>PKV006</DiagnosticId>
     <Target>.NETStandard,Version=v2.0</Target>
   </Suppression>

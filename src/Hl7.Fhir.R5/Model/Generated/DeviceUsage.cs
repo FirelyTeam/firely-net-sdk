@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DeviceUsage.adherence"; } }
 
       /// <summary>
-      /// always | never | sometimes
+      /// always | never | sometimes.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Binding("DeviceUsageAdherenceCode")]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// lost | stolen | prescribed | broken | burned | forgot
+      /// lost | stolen | prescribed | broken | burned | forgot.
       /// </summary>
       [FhirElement("reason", Order=50)]
       [Binding("DeviceUsageAdherenceReason")]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External identifier for this record
+    /// External identifier for this record.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Fulfills plan, proposal or order
+    /// Fulfills plan, proposal or order.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// active | completed | not-done | entered-in-error +
+    /// active | completed | not-done | entered-in-error +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The category of the statement - classifying how the statement is made
+    /// The category of the statement - classifying how the statement is made.
     /// </summary>
     [FhirElement("category", Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Patient using device
+    /// Patient using device.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Supporting information
+    /// Supporting information.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
 
     /// <summary>
-    /// The encounter or episode of care that establishes the context for this device use statement
+    /// The encounter or episode of care that establishes the context for this device use statement.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=150)]
     [CLSCompliant(false)]
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// How often  the device was used
+    /// How often  the device was used.
     /// </summary>
     [FhirElement("timing", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Timing;
 
     /// <summary>
-    /// When the statement was made (and recorded)
+    /// When the statement was made (and recorded).
     /// </summary>
     [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The status of the device usage, for example always, sometimes, never. This is not the same as the status of the statement
+    /// The status of the device usage, for example always, sometimes, never. This is not the same as the status of the statement.
     /// </summary>
     [FhirElement("usageStatus", Order=180)]
     [Binding("DeviceUsageStatus")]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _UsageStatus;
 
     /// <summary>
-    /// The reason for asserting the usage status - for example forgot, lost, stolen, broken
+    /// The reason for asserting the usage status - for example forgot, lost, stolen, broken.
     /// </summary>
     [FhirElement("usageReason", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _UsageReason;
 
     /// <summary>
-    /// How device is being used
+    /// How device is being used.
     /// </summary>
     [FhirElement("adherence", Order=200)]
     [DataMember]
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DeviceUsage.AdherenceComponent _Adherence;
 
     /// <summary>
-    /// Who made the statement
+    /// Who made the statement.
     /// </summary>
     [FhirElement("informationSource", InSummary=true, Order=210, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _InformationSource;
 
     /// <summary>
-    /// Code or Reference to device used
+    /// Code or Reference to device used.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=220, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _Device;
 
     /// <summary>
-    /// Why device was used
+    /// Why device was used.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=230, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Reason;
 
     /// <summary>
-    /// Target body site
+    /// Target body site.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=240)]
     [Binding("BodySite")]
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _BodySite;
 
     /// <summary>
-    /// Addition details (comments, instructions)
+    /// Addition details (comments, instructions).
     /// </summary>
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]

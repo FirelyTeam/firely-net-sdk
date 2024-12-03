@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Schedule"; } }
 
     /// <summary>
-    /// External Ids for this item
+    /// External Ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this schedule is in active use
+    /// Whether this schedule is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// High-level category
+    /// High-level category.
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("service-category")]
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCategory;
 
     /// <summary>
-    /// Specific service
+    /// Specific service.
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("service-type")]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
 
     /// <summary>
-    /// Type of specialty needed
+    /// Type of specialty needed.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("specialty")]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// Resource(s) that availability information is being provided for
+    /// Resource(s) that availability information is being provided for.
     /// </summary>
     [FhirElement("actor", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Actor;
 
     /// <summary>
-    /// Period of time covered by schedule
+    /// Period of time covered by schedule.
     /// </summary>
     [FhirElement("planningHorizon", InSummary=true, Order=150, FiveWs="FiveWs.planned")]
     [DataMember]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _PlanningHorizon;
 
     /// <summary>
-    /// Comments on availability
+    /// Comments on availability.
     /// </summary>
     [FhirElement("comment", Order=160)]
     [DataMember]

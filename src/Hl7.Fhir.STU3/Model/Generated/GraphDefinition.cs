@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "GraphDefinition.link"; } }
 
       /// <summary>
-      /// Path in the resource that contains the link
+      /// Path in the resource that contains the link.
       /// </summary>
       [FhirElement("path", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Which slice (if profiled)
+      /// Which slice (if profiled).
       /// </summary>
       [FhirElement("sliceName", Order=50)]
       [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Minimum occurrences for this link
+      /// Minimum occurrences for this link.
       /// </summary>
       [FhirElement("min", Order=60)]
       [DataMember]
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Maximum occurrences for this link
+      /// Maximum occurrences for this link.
       /// </summary>
       [FhirElement("max", Order=70)]
       [DataMember]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Why this link is specified
+      /// Why this link is specified.
       /// </summary>
       [FhirElement("description", Order=80)]
       [DataMember]
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Potential target for the link
+      /// Potential target for the link.
       /// </summary>
       [FhirElement("target", Order=90)]
       [Cardinality(Min=1,Max=-1)]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "GraphDefinition.link.target"; } }
 
       /// <summary>
-      /// Type of resource this link refers to
+      /// Type of resource this link refers to.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Profile for the target resource
+      /// Profile for the target resource.
       /// </summary>
       [FhirElement("profile", Order=50)]
       [DataMember]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Compartment Consistency Rules
+      /// Compartment Consistency Rules.
       /// </summary>
       [FhirElement("compartment", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.GraphDefinition.CompartmentComponent> _Compartment;
 
       /// <summary>
-      /// Additional links from target resource
+      /// Additional links from target resource.
       /// </summary>
       [FhirElement("link", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "GraphDefinition.link.target.compartment"; } }
 
       /// <summary>
-      /// Identifies the compartment
+      /// Identifies the compartment.
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// identical | matching | different | custom
+      /// identical | matching | different | custom.
       /// </summary>
       [FhirElement("rule", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Custom rule, as a FHIRPath expression
+      /// Custom rule, as a FHIRPath expression.
       /// </summary>
       [FhirElement("expression", Order=60)]
       [DataMember]
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Documentation for FHIRPath expression
+      /// Documentation for FHIRPath expression.
       /// </summary>
       [FhirElement("description", Order=70)]
       [DataMember]
@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical URI to reference this graph definition (globally unique)
+    /// Logical URI to reference this graph definition (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
@@ -895,7 +895,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business version of the graph definition
+    /// Business version of the graph definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
@@ -926,7 +926,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this graph definition (computer friendly)
+    /// Name for this graph definition (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
@@ -958,7 +958,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date this was last changed
+    /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
@@ -1054,7 +1054,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the graph definition
+    /// Natural language description of the graph definition.
     /// </summary>
     [FhirElement("description", Order=170)]
     [DataMember]
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Context the content is intended to support
+    /// Context the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for graph definition (if applicable)
+    /// Intended jurisdiction for graph definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this graph definition is defined
+    /// Why this graph definition is defined.
     /// </summary>
     [FhirElement("purpose", Order=200, FiveWs="why")]
     [DataMember]
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type of resource at which the graph starts
+    /// Type of resource at which the graph starts.
     /// </summary>
     [FhirElement("start", Order=210)]
     [DeclaredType(Type = typeof(Code))]
@@ -1224,7 +1224,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Profile on base resource
+    /// Profile on base resource.
     /// </summary>
     [FhirElement("profile", Order=220)]
     [DataMember]
@@ -1255,7 +1255,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Links this graph makes rules about
+    /// Links this graph makes rules about.
     /// </summary>
     [FhirElement("link", Order=230)]
     [Cardinality(Min=0,Max=-1)]

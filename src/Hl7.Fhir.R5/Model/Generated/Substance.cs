@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Substance.ingredient"; } }
 
       /// <summary>
-      /// Optional amount (concentration)
+      /// Optional amount (concentration).
       /// </summary>
       [FhirElement("quantity", InSummary=true, Order=40)]
       [DataMember]
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Ratio _Quantity;
 
       /// <summary>
-      /// A component of the substance
+      /// A component of the substance.
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("SubstanceIngredient")]
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier
+    /// Unique identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Is this an instance of a substance or a kind of one
+    /// Is this an instance of a substance or a kind of one.
     /// </summary>
     [FhirElement("instance", InSummary=true, IsModifier=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// active | inactive | entered-in-error
+    /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What class/type of substance this is
+    /// What class/type of substance this is.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("SubstanceCategory")]
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// What substance this is
+    /// What substance this is.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("SubstanceCode")]
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _Code;
 
     /// <summary>
-    /// Textual description of the substance, comments
+    /// Textual description of the substance, comments.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=140)]
     [DataMember]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When no longer valid to use
+    /// When no longer valid to use.
     /// </summary>
     [FhirElement("expiry", InSummary=true, Order=150)]
     [DataMember]
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Amount of substance in the package
+    /// Amount of substance in the package.
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=160)]
     [DataMember]
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Quantity;
 
     /// <summary>
-    /// Composition information about the substance
+    /// Composition information about the substance.
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]

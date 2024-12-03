@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ResearchStudy.arm"; } }
 
       /// <summary>
-      /// Label for study arm
+      /// Label for study arm.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Categorization of study arm
+      /// Categorization of study arm.
       /// </summary>
       [FhirElement("code", Order=50)]
       [DataMember]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Short explanation of study path
+      /// Short explanation of study path.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for study
+    /// Business Identifier for study.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Name for this study
+    /// Name for this study.
     /// </summary>
     [FhirElement("title", InSummary=true, Order=100)]
     [DataMember]
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Steps followed in executing study
+    /// Steps followed in executing study.
     /// </summary>
     [FhirElement("protocol", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Protocol;
 
     /// <summary>
-    /// Part of larger study
+    /// Part of larger study.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// draft | in-progress | suspended | stopped | completed | entered-in-error
+    /// draft | in-progress | suspended | stopped | completed | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Classifications for the study
+    /// Classifications for the study.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=140)]
     [Binding("ResearchStudyCategory")]
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Drugs, devices, conditions, etc. under study
+    /// Drugs, devices, conditions, etc. under study.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=150, FiveWs="what")]
     [Binding("ResearchStudyFocus")]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Focus;
 
     /// <summary>
-    /// Contact details for the study
+    /// Contact details for the study.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// References and dependencies
+    /// References and dependencies.
     /// </summary>
     [FhirElement("relatedArtifact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
 
     /// <summary>
-    /// Used to search for the study
+    /// Used to search for the study.
     /// </summary>
     [FhirElement("keyword", InSummary=true, Order=180)]
     [Binding("ResearchStudyKeyword")]
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Keyword;
 
     /// <summary>
-    /// Geographic region(s) for study
+    /// Geographic region(s) for study.
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// What this is study doing
+    /// What this is study doing.
     /// </summary>
     [FhirElement("description", Order=200)]
     [DataMember]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Inclusion &amp; exclusion criteria
+    /// Inclusion &amp; exclusion criteria.
     /// </summary>
     [FhirElement("enrollment", InSummary=true, Order=210, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Enrollment;
 
     /// <summary>
-    /// When the study began and ended
+    /// When the study began and ended.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=220, FiveWs="when.done")]
     [DataMember]
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Organization responsible for the study
+    /// Organization responsible for the study.
     /// </summary>
     [FhirElement("sponsor", InSummary=true, Order=230, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Sponsor;
 
     /// <summary>
-    /// The individual responsible for the study
+    /// The individual responsible for the study.
     /// </summary>
     [FhirElement("principalInvestigator", InSummary=true, Order=240, FiveWs="who.actor")]
     [CLSCompliant(false)]
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PrincipalInvestigator;
 
     /// <summary>
-    /// Location involved in study execution
+    /// Location involved in study execution.
     /// </summary>
     [FhirElement("site", InSummary=true, Order=250, FiveWs="where")]
     [CLSCompliant(false)]
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Site;
 
     /// <summary>
-    /// Reason for terminating study early
+    /// Reason for terminating study early.
     /// </summary>
     [FhirElement("reasonStopped", InSummary=true, Order=260, FiveWs="why")]
     [DataMember]
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ReasonStopped;
 
     /// <summary>
-    /// Comments made about the event
+    /// Comments made about the event.
     /// </summary>
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Defined path through the study for a subject
+    /// Defined path through the study for a subject.
     /// </summary>
     [FhirElement("arm", Order=280)]
     [Cardinality(Min=0,Max=-1)]

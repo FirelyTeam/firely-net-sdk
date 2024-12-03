@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Organization.contact"; } }
 
       /// <summary>
-      /// The type of contact
+      /// The type of contact.
       /// </summary>
       [FhirElement("purpose", Order=40)]
       [Binding("ContactPartyType")]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Purpose;
 
       /// <summary>
-      /// A name associated with the contact
+      /// A name associated with the contact.
       /// </summary>
       [FhirElement("name", Order=50)]
       [DataMember]
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.HumanName _Name;
 
       /// <summary>
-      /// Contact details (telephone, email, etc.)  for a contact
+      /// Contact details (telephone, email, etc.)  for a contact.
       /// </summary>
       [FhirElement("telecom", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
       /// <summary>
-      /// Visiting or postal addresses for the contact
+      /// Visiting or postal addresses for the contact.
       /// </summary>
       [FhirElement("address", Order=70)]
       [DataMember]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifies this organization  across multiple systems
+    /// Identifies this organization  across multiple systems.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether the organization's record is still in active use
+    /// Whether the organization's record is still in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of organization
+    /// Kind of organization.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("OrganizationType")]
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
     /// <summary>
-    /// Name used for the organization
+    /// Name used for the organization.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A list of alternate names that the organization is known as, or was known as in the past
+    /// A list of alternate names that the organization is known as, or was known as in the past.
     /// </summary>
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A contact detail for the organization
+    /// A contact detail for the organization.
     /// </summary>
     [FhirElement("telecom", Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// An address for the organization
+    /// An address for the organization.
     /// </summary>
     [FhirElement("address", Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Address> _Address;
 
     /// <summary>
-    /// The organization of which this organization forms a part
+    /// The organization of which this organization forms a part.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=160)]
     [CLSCompliant(false)]
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PartOf;
 
     /// <summary>
-    /// Contact for the organization for a certain purpose
+    /// Contact for the organization for a certain purpose.
     /// </summary>
     [FhirElement("contact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Organization.ContactComponent> _Contact;
 
     /// <summary>
-    /// Technical endpoints providing access to services operated for the organization
+    /// Technical endpoints providing access to services operated for the organization.
     /// </summary>
     [FhirElement("endpoint", Order=180)]
     [CLSCompliant(false)]

@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Subscription.filterBy"; } }
 
       /// <summary>
-      /// Allowed Resource (reference to definition) for this Subscription filter
+      /// Allowed Resource (reference to definition) for this Subscription filter.
       /// </summary>
       [FhirElement("resourceType", InSummary=true, Order=40)]
       [Binding("FHIRTypes")]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Filter label defined in SubscriptionTopic
+      /// Filter label defined in SubscriptionTopic.
       /// </summary>
       [FhirElement("filterParameter", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// eq | ne | gt | lt | ge | le | sa | eb | ap
+      /// eq | ne | gt | lt | ge | le | sa | eb | ap.
       /// </summary>
       [FhirElement("comparator", Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate
+      /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate.
       /// </summary>
       [FhirElement("modifier", Order=70)]
       [DeclaredType(Type = typeof(Code))]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Literal value or resource path
+      /// Literal value or resource path.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=1)]
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Subscription.parameter"; } }
 
       /// <summary>
-      /// Name (key) of the parameter
+      /// Name (key) of the parameter.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Value of the parameter to use or pass through
+      /// Value of the parameter to use or pass through.
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifiers (business identifier)
+    /// Additional identifiers (business identifier).
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Human readable name for this subscription
+    /// Human readable name for this subscription.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=100)]
     [DataMember]
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// requested | active | error | off | entered-in-error
+    /// requested | active | error | off | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reference to the subscription topic being subscribed to
+    /// Reference to the subscription topic being subscribed to.
     /// </summary>
     [FhirElement("topic", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for source (e.g. troubleshooting)
+    /// Contact details for source (e.g. troubleshooting).
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Contact;
 
     /// <summary>
-    /// When to automatically delete the subscription
+    /// When to automatically delete the subscription.
     /// </summary>
     [FhirElement("end", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Entity responsible for Subscription changes
+    /// Entity responsible for Subscription changes.
     /// </summary>
     [FhirElement("managingEntity", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ManagingEntity;
 
     /// <summary>
-    /// Description of why this subscription was created
+    /// Description of why this subscription was created.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Criteria for narrowing the subscription topic stream
+    /// Criteria for narrowing the subscription topic stream.
     /// </summary>
     [FhirElement("filterBy", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Subscription.FilterByComponent> _FilterBy;
 
     /// <summary>
-    /// Channel type for notifications
+    /// Channel type for notifications.
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=180)]
     [Binding("SubscriptionChannelType")]
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coding _ChannelType;
 
     /// <summary>
-    /// Where the channel points to
+    /// Where the channel points to.
     /// </summary>
     [FhirElement("endpoint", InSummary=true, Order=190)]
     [DataMember]
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Channel type
+    /// Channel type.
     /// </summary>
     [FhirElement("parameter", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Subscription.ParameterComponent> _Parameter;
 
     /// <summary>
-    /// Interval in seconds to send 'heartbeat' notification
+    /// Interval in seconds to send 'heartbeat' notification.
     /// </summary>
     [FhirElement("heartbeatPeriod", InSummary=true, Order=210)]
     [DataMember]
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Timeout in seconds to attempt notification delivery
+    /// Timeout in seconds to attempt notification delivery.
     /// </summary>
     [FhirElement("timeout", InSummary=true, Order=220)]
     [DataMember]
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// MIME type to send, or omit for no payload
+    /// MIME type to send, or omit for no payload.
     /// </summary>
     [FhirElement("contentType", InSummary=true, Order=230)]
     [Binding("MimeType")]
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// empty | id-only | full-resource
+    /// empty | id-only | full-resource.
     /// </summary>
     [FhirElement("content", InSummary=true, Order=240)]
     [DeclaredType(Type = typeof(Code))]
@@ -952,7 +952,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Maximum number of events that can be combined in a single notification
+    /// Maximum number of events that can be combined in a single notification.
     /// </summary>
     [FhirElement("maxCount", InSummary=true, Order=250)]
     [DataMember]

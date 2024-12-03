@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "FamilyMemberHistory.condition"; } }
 
       /// <summary>
-      /// Condition suffered by relation
+      /// Condition suffered by relation.
       /// </summary>
       [FhirElement("code", Order=40)]
       [Binding("ConditionCode")]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Outcome;
 
       /// <summary>
-      /// When condition first manifested
+      /// When condition first manifested.
       /// </summary>
       [FhirElement("onset", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Onset;
 
       /// <summary>
-      /// Extra information about condition
+      /// Extra information about condition.
       /// </summary>
       [FhirElement("note", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Id(s) for this record
+    /// External Id(s) for this record.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Instantiates protocol or definition
+    /// Instantiates protocol or definition.
     /// </summary>
     [FhirElement("definition", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Definition;
 
     /// <summary>
-    /// partial | completed | entered-in-error | health-unknown
+    /// partial | completed | entered-in-error | health-unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The taking of a family member's history did not occur
+    /// The taking of a family member's history did not occur.
     /// </summary>
     [FhirElement("notDone", InSummary=true, IsModifier=true, Order=120)]
     [DataMember]
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// subject-unknown | withheld | unable-to-obtain | deferred
+    /// subject-unknown | withheld | unable-to-obtain | deferred.
     /// </summary>
     [FhirElement("notDoneReason", InSummary=true, Order=130)]
     [Binding("FamilyHistoryNotDoneReason")]
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _NotDoneReason;
 
     /// <summary>
-    /// Patient history is about
+    /// Patient history is about.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// When history was captured/updated
+    /// When history was captured/updated.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The family member described
+    /// The family member described.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Relationship to the subject
+    /// Relationship to the subject.
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=170)]
     [Binding("FamilialRelationship")]
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
     /// <summary>
-    /// male | female | other | unknown
+    /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// (approximate) date of birth
+    /// (approximate) date of birth.
     /// </summary>
     [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Born;
 
     /// <summary>
-    /// (approximate) age
+    /// (approximate) age.
     /// </summary>
     [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Age;
 
     /// <summary>
-    /// Age is estimated?
+    /// Age is estimated?.
     /// </summary>
     [FhirElement("estimatedAge", InSummary=true, IsModifier=true, Order=210)]
     [DataMember]
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Dead? How old/when?
+    /// Dead? How old/when?.
     /// </summary>
     [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Deceased;
 
     /// <summary>
-    /// Why was family member history performed?
+    /// Why was family member history performed?.
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="why")]
     [Binding("FamilyHistoryReason")]
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Why was family member history performed?
+    /// Why was family member history performed?.
     /// </summary>
     [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="why")]
     [CLSCompliant(false)]
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// General note about related person
+    /// General note about related person.
     /// </summary>
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Condition that the related person had
+    /// Condition that the related person had.
     /// </summary>
     [FhirElement("condition", Order=260)]
     [Cardinality(Min=0,Max=-1)]

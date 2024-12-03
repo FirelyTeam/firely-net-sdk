@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImplementationGuide.dependency"; } }
 
       /// <summary>
-      /// reference | inclusion
+      /// reference | inclusion.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Where to find dependency
+      /// Where to find dependency.
       /// </summary>
       [FhirElement("uri", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImplementationGuide.package"; } }
 
       /// <summary>
-      /// Name used .page.package
+      /// Name used .page.package.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Human readable text describing the package
+      /// Human readable text describing the package.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Resource in the implementation guide
+      /// Resource in the implementation guide.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImplementationGuide.package.resource"; } }
 
       /// <summary>
-      /// If not an example, has its normal meaning
+      /// If not an example, has its normal meaning.
       /// </summary>
       [FhirElement("example", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Human Name for the resource
+      /// Human Name for the resource.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reason why included in guide
+      /// Reason why included in guide.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Short code to identify the resource
+      /// Short code to identify the resource.
       /// </summary>
       [FhirElement("acronym", Order=70)]
       [DataMember]
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Location of the resource
+      /// Location of the resource.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Source;
 
       /// <summary>
-      /// Resource this is an example of (if applicable)
+      /// Resource this is an example of (if applicable).
       /// </summary>
       [FhirElement("exampleFor", Order=90)]
       [CLSCompliant(false)]
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImplementationGuide.global"; } }
 
       /// <summary>
-      /// Type this profiles applies to
+      /// Type this profiles applies to.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Profile that all resources must conform to
+      /// Profile that all resources must conform to.
       /// </summary>
       [FhirElement("profile", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImplementationGuide.page"; } }
 
       /// <summary>
-      /// Where to find that page
+      /// Where to find that page.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -998,7 +998,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Short title shown for navigational assistance
+      /// Short title shown for navigational assistance.
       /// </summary>
       [FhirElement("title", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// page | example | list | include | directory | dictionary | toc | resource
+      /// page | example | list | include | directory | dictionary | toc | resource.
       /// </summary>
       [FhirElement("kind", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Kind of resource to include in the list
+      /// Kind of resource to include in the list.
       /// </summary>
       [FhirElement("type", Order=70)]
       [DeclaredType(Type = typeof(Code))]
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Name of package to include
+      /// Name of package to include.
       /// </summary>
       [FhirElement("package", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Format of the page (e.g. html, markdown, etc.)
+      /// Format of the page (e.g. html, markdown, etc.).
       /// </summary>
       [FhirElement("format", Order=90)]
       [Binding("MimeType")]
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Nested Pages / Sections
+      /// Nested Pages / Sections.
       /// </summary>
       [FhirElement("page", Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -1312,7 +1312,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Logical URI to reference this implementation guide (globally unique)
+    /// Logical URI to reference this implementation guide (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
@@ -1344,7 +1344,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business version of the implementation guide
+    /// Business version of the implementation guide.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
@@ -1375,7 +1375,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this implementation guide (computer friendly)
+    /// Name for this implementation guide (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
@@ -1407,7 +1407,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1441,7 +1441,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
@@ -1472,7 +1472,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date this was last changed
+    /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
@@ -1503,7 +1503,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
@@ -1534,7 +1534,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -1548,7 +1548,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the implementation guide
+    /// Natural language description of the implementation guide.
     /// </summary>
     [FhirElement("description", Order=170)]
     [DataMember]
@@ -1579,7 +1579,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Context the content is intended to support
+    /// Context the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -1593,7 +1593,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for implementation guide (if applicable)
+    /// Intended jurisdiction for implementation guide (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
@@ -1608,7 +1608,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=200)]
     [DataMember]
@@ -1639,7 +1639,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// FHIR Version this Implementation Guide targets
+    /// FHIR Version this Implementation Guide targets.
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=210)]
     [DataMember]
@@ -1670,7 +1670,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Another Implementation guide this depends on
+    /// Another Implementation guide this depends on.
     /// </summary>
     [FhirElement("dependency", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -1684,7 +1684,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> _Dependency;
 
     /// <summary>
-    /// Group of resources as used in .page.package
+    /// Group of resources as used in .page.package.
     /// </summary>
     [FhirElement("package", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -1698,7 +1698,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> _Package;
 
     /// <summary>
-    /// Profiles that apply globally
+    /// Profiles that apply globally.
     /// </summary>
     [FhirElement("global", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -1744,7 +1744,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Page/Section in the Guide
+    /// Page/Section in the Guide.
     /// </summary>
     [FhirElement("page", InSummary=true, Order=260)]
     [DataMember]

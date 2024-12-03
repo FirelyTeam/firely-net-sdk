@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "BiologicallyDerivedProductDispense.performer"; } }
 
       /// <summary>
-      /// Identifies the function of the performer during the dispense
+      /// Identifies the function of the performer during the dispense.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("BiologicallyDerivedProductDispensPerformerFunction")]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Who performed the action
+      /// Who performed the action.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier for this dispense
+    /// Business identifier for this dispense.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// The order or request that this dispense is fulfilling
+    /// The order or request that this dispense is fulfilling.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Short description
+    /// Short description.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
 
     /// <summary>
-    /// preparation | in-progress | allocated | issued | unfulfilled | returned | entered-in-error | unknown
+    /// preparation | in-progress | allocated | issued | unfulfilled | returned | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Relationship between the donor and intended recipient
+    /// Relationship between the donor and intended recipient.
     /// </summary>
     [FhirElement("originRelationshipType", InSummary=true, Order=130)]
     [Binding("BiologicallyDerivedProductDispenseOriginRelationship")]
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _OriginRelationshipType;
 
     /// <summary>
-    /// The BiologicallyDerivedProduct that is dispensed
+    /// The BiologicallyDerivedProduct that is dispensed.
     /// </summary>
     [FhirElement("product", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Product;
 
     /// <summary>
-    /// The intended recipient of the dispensed product
+    /// The intended recipient of the dispensed product.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=150)]
     [CLSCompliant(false)]
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Indicates the type of matching associated with the dispense
+    /// Indicates the type of matching associated with the dispense.
     /// </summary>
     [FhirElement("matchStatus", InSummary=true, Order=160)]
     [Binding("BiologicallyDerivedProductDispenseMatchStatus")]
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _MatchStatus;
 
     /// <summary>
-    /// Indicates who or what performed an action
+    /// Indicates who or what performed an action.
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.PerformerComponent> _Performer;
 
     /// <summary>
-    /// Where the dispense occurred
+    /// Where the dispense occurred.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Amount dispensed
+    /// Amount dispensed.
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=190)]
     [DataMember]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Quantity;
 
     /// <summary>
-    /// When product was selected/matched
+    /// When product was selected/matched.
     /// </summary>
     [FhirElement("preparedDate", InSummary=true, Order=200)]
     [DataMember]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the product was dispatched
+    /// When the product was dispatched.
     /// </summary>
     [FhirElement("whenHandedOver", InSummary=true, Order=210)]
     [DataMember]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the product was dispatched to
+    /// Where the product was dispatched to.
     /// </summary>
     [FhirElement("destination", InSummary=true, Order=220)]
     [CLSCompliant(false)]
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Destination;
 
     /// <summary>
-    /// Additional notes
+    /// Additional notes.
     /// </summary>
     [FhirElement("note", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Specific instructions for use
+    /// Specific instructions for use.
     /// </summary>
     [FhirElement("usageInstruction", InSummary=true, Order=240)]
     [DataMember]

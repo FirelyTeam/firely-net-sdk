@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for research subject in a study
+    /// Business Identifier for research subject in a study.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
+    /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Start and end of participation
+    /// Start and end of participation.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.planned")]
     [DataMember]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Study subject is part of
+    /// Study subject is part of.
     /// </summary>
     [FhirElement("study", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Study;
 
     /// <summary>
-    /// Who is part of study
+    /// Who is part of study.
     /// </summary>
     [FhirElement("individual", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Individual;
 
     /// <summary>
-    /// What path should be followed
+    /// What path should be followed.
     /// </summary>
     [FhirElement("assignedArm", Order=140)]
     [DataMember]
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What path was followed
+    /// What path was followed.
     /// </summary>
     [FhirElement("actualArm", Order=150)]
     [DataMember]
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Agreement to participate in study
+    /// Agreement to participate in study.
     /// </summary>
     [FhirElement("consent", Order=160)]
     [CLSCompliant(false)]

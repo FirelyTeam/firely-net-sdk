@@ -18,30 +18,33 @@ public class RoundTripAttachments
 
         private static IEnumerable<object[]> attachmentSource()
         {
-            yield return new object[] { "{\"size\":\"12\", \"title\": \"Correct Attachment\"}", 12L, null! };
-            yield return new object[] { "{\"size\":12, \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE };
-            yield return new object[] { "{\"size\":25.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE };
-            yield return new object[] { "{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_CANNOT_BE_PARSED_CODE };
+            yield return ["{\"size\":\"12\", \"title\": \"Correct Attachment\"}", 12L, null!];
+            yield return ["{\"size\":12, \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE
+            ];
+            yield return ["{\"size\":25.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE
+            ];
+            yield return ["{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_CANNOT_BE_PARSED_CODE
+            ];
         }
 #else
     private readonly string _attachmentJson = "{\"size\":12}";
 
     private static IEnumerable<object[]> attachmentSource()
     {
-        yield return new object[] { "{\"size\":12, \"title\": \"Correct Attachment\"}", 12L, null! };
-        yield return new object[]
-        {
+        yield return ["{\"size\":12, \"title\": \"Correct Attachment\"}", 12, null!];
+        yield return
+        [
             "{\"size\":12.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE
-        };
-        yield return new object[]
-        {
-            "{\"size\":\"12\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE
-        };
-        yield return new object[]
-        {
+        ];
+        yield return
+        [
+            "{\"size\":\"12\", \"title\": \"An incorrect Attachment\"}", null!, ERR.UNEXPECTED_JSON_TOKEN_CODE
+        ];
+        yield return
+        [
             "{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!,
-            ERR.LONG_INCORRECT_FORMAT_CODE
-        };
+            ERR.UNEXPECTED_JSON_TOKEN_CODE
+        ];
     }
 #endif
 
@@ -50,8 +53,12 @@ public class RoundTripAttachments
     public void RoundTripAttachmentWithSize()
     {
         var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
-        var attachment = JsonSerializer.Deserialize<Attachment>(_attachmentJson, options);
-        attachment.Should().BeOfType<Attachment>().Subject.Size.Should().Be(12L);
+        var attachment = JsonSerializer.Deserialize<Attachment>(_attachmentJson, options)!;
+#if R5
+        attachment.Size.Should().Be(12L);
+#else
+        attachment.SizeUnsignedInt.Should().Be(12);
+#endif
         var json = JsonSerializer.Serialize(attachment, options);
         json.Should().Be(_attachmentJson);
     }
@@ -61,7 +68,11 @@ public class RoundTripAttachments
     {
         var parser = new FhirJsonParser(new ParserSettings() { PermissiveParsing = false });
         var attachment = parser.Parse<Attachment>(_attachmentJson);
+#if R5
         attachment.Size.Should().Be(12L);
+#else
+        attachment.SizeUnsignedInt.Should().Be(12);
+#endif
         var serializer = new FhirJsonSerializer();
         var result = serializer.SerializeToString(attachment);
         result.Should().Be(_attachmentJson);
@@ -69,7 +80,7 @@ public class RoundTripAttachments
 
     [DataTestMethod]
     [DynamicData(nameof(attachmentSource), DynamicDataSourceType.Method)]
-    public void ParseAttachment(string input, long? expectedAttachmentSize, string? errorCode)
+    public void ParseAttachment(string input, object? expectedAttachmentSize, string? errorCode)
     {
         var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
         if (errorCode is not null)
@@ -81,9 +92,14 @@ public class RoundTripAttachments
         }
         else
         {
-            var attachment = JsonSerializer.Deserialize<Attachment>(input, options);
+            var attachment = JsonSerializer.Deserialize<Attachment>(input, options)!;
             attachment.Should().NotBeNull();
-            attachment!.Size.Should().Be(expectedAttachmentSize!.Value);
+#if R5
+            attachment.Size.Should().Be((long)expectedAttachmentSize!);
+#else
+            attachment.SizeUnsignedInt.Should().Be((int)expectedAttachmentSize!);
+#endif
+
         }
     }
 }

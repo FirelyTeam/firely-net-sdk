@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Numerical value (with implicit precision)
+    /// Numerical value (with implicit precision).
     /// </summary>
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// &lt; | &lt;= | &gt;= | &gt; | ad - how to understand the value
+    /// &lt; | &lt;= | &gt;= | &gt; | ad - how to understand the value.
     /// </summary>
     [FhirElement("comparator", InSummary=true, IsModifier=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unit representation
+    /// Unit representation.
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=50)]
     [DataMember]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// System that defines coded unit form
+    /// System that defines coded unit form.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=60)]
     [DataMember]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Coded form of the unit
+    /// Coded form of the unit.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=70)]
     [DataMember]

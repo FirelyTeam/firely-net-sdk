@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubscriptionTopic.resourceTrigger"; } }
 
       /// <summary>
-      /// Text representation of the resource trigger
+      /// Text representation of the resource trigger.
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Data Type or Resource (reference to definition) for this trigger definition
+      /// Data Type or Resource (reference to definition) for this trigger definition.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
       [Binding("FHIRDefinedTypeExt")]
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// create | update | delete
+      /// create | update | delete.
       /// </summary>
       [FhirElement("supportedInteraction", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Query based trigger rule
+      /// Query based trigger rule.
       /// </summary>
       [FhirElement("queryCriteria", InSummary=true, Order=70)]
       [DataMember]
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.SubscriptionTopic.QueryCriteriaComponent _QueryCriteria;
 
       /// <summary>
-      /// FHIRPath based trigger rule
+      /// FHIRPath based trigger rule.
       /// </summary>
       [FhirElement("fhirPathCriteria", InSummary=true, Order=80)]
       [DataMember]
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubscriptionTopic.resourceTrigger.queryCriteria"; } }
 
       /// <summary>
-      /// Rule applied to previous resource state
+      /// Rule applied to previous resource state.
       /// </summary>
       [FhirElement("previous", InSummary=true, Order=40)]
       [DataMember]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// test-passes | test-fails
+      /// test-passes | test-fails.
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Rule applied to current resource state
+      /// Rule applied to current resource state.
       /// </summary>
       [FhirElement("current", InSummary=true, Order=60)]
       [DataMember]
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// test-passes | test-fails
+      /// test-passes | test-fails.
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Both must be true flag
+      /// Both must be true flag.
       /// </summary>
       [FhirElement("requireBoth", InSummary=true, Order=80)]
       [DataMember]
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubscriptionTopic.eventTrigger"; } }
 
       /// <summary>
-      /// Text representation of the event trigger
+      /// Text representation of the event trigger.
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Event which can trigger a notification from the SubscriptionTopic
+      /// Event which can trigger a notification from the SubscriptionTopic.
       /// </summary>
       [FhirElement("event", InSummary=true, Order=50)]
       [Binding("SubscriptionTopicEventTrigger")]
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Event;
 
       /// <summary>
-      /// Data Type or Resource (reference to definition) for this trigger definition
+      /// Data Type or Resource (reference to definition) for this trigger definition.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60)]
       [Binding("FHIRDefinedTypeExt")]
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubscriptionTopic.canFilterBy"; } }
 
       /// <summary>
-      /// Description of this filter parameter
+      /// Description of this filter parameter.
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
@@ -1013,7 +1013,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// URL of the triggering Resource that this filter applies to
+      /// URL of the triggering Resource that this filter applies to.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
       [Binding("FHIRDefinedTypeExt")]
@@ -1045,7 +1045,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Human-readable and computation-friendly name for a filter parameter usable by subscriptions on this topic, via Subscription.filterBy.filterParameter
+      /// Human-readable and computation-friendly name for a filter parameter usable by subscriptions on this topic, via Subscription.filterBy.filterParameter.
       /// </summary>
       [FhirElement("filterParameter", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Canonical URL for a filterParameter definition
+      /// Canonical URL for a filterParameter definition.
       /// </summary>
       [FhirElement("filterDefinition", InSummary=true, Order=70)]
       [DataMember]
@@ -1108,7 +1108,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type
+      /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type.
       /// </summary>
       [FhirElement("modifier", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubscriptionTopic.notificationShape"; } }
 
       /// <summary>
-      /// URL of the Resource that is the focus (main) resource in a notification shape
+      /// URL of the Resource that is the focus (main) resource in a notification shape.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=40)]
       [Binding("FHIRDefinedTypeExt")]
@@ -1307,7 +1307,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Include directives, rooted in the resource for this shape
+      /// Include directives, rooted in the resource for this shape.
       /// </summary>
       [FhirElement("include", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1339,7 +1339,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reverse include directives, rooted in the resource for this shape
+      /// Reverse include directives, rooted in the resource for this shape.
       /// </summary>
       [FhirElement("revInclude", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1467,7 +1467,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this subscription topic definition, represented as a URI (globally unique)
+    /// Canonical identifier for this subscription topic definition, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
@@ -1499,7 +1499,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for this subscription topic
+    /// Business Identifier for this subscription topic.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1513,7 +1513,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the subscription topic
+    /// Business version of the subscription topic.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -1544,7 +1544,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this subscription topic (Human friendly)
+    /// Name for this subscription topic (Human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
@@ -1575,7 +1575,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Based on FHIR protocol or definition
+    /// Based on FHIR protocol or definition.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -1607,7 +1607,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1641,7 +1641,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// If for testing purposes, not real usage
+    /// If for testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.class")]
     [DataMember]
@@ -1672,7 +1672,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date status first applied
+    /// Date status first applied.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1703,7 +1703,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The name of the individual or organization that published the SubscriptionTopic
+    /// The name of the individual or organization that published the SubscriptionTopic.
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [DataMember]
@@ -1734,7 +1734,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -1748,7 +1748,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the SubscriptionTopic
+    /// Natural language description of the SubscriptionTopic.
     /// </summary>
     [FhirElement("description", Order=190)]
     [DataMember]
@@ -1779,7 +1779,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Content intends to support these contexts
+    /// Content intends to support these contexts.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1793,7 +1793,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction of the SubscriptionTopic (if applicable)
+    /// Intended jurisdiction of the SubscriptionTopic (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
@@ -1808,7 +1808,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this SubscriptionTopic is defined
+    /// Why this SubscriptionTopic is defined.
     /// </summary>
     [FhirElement("purpose", Order=220, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -1839,7 +1839,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=230)]
     [DataMember]
@@ -1870,7 +1870,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When SubscriptionTopic is/was approved by publisher
+    /// When SubscriptionTopic is/was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=240)]
     [DataMember]
@@ -1901,7 +1901,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date the Subscription Topic was last reviewed by the publisher
+    /// Date the Subscription Topic was last reviewed by the publisher.
     /// </summary>
     [FhirElement("lastReviewDate", Order=250)]
     [DataMember]
@@ -1932,7 +1932,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The effective date range for the SubscriptionTopic
+    /// The effective date range for the SubscriptionTopic.
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=260)]
     [DataMember]
@@ -1945,7 +1945,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _EffectivePeriod;
 
     /// <summary>
-    /// Definition of a resource-based trigger for the subscription topic
+    /// Definition of a resource-based trigger for the subscription topic.
     /// </summary>
     [FhirElement("resourceTrigger", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -1959,7 +1959,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubscriptionTopic.ResourceTriggerComponent> _ResourceTrigger;
 
     /// <summary>
-    /// Event definitions the SubscriptionTopic
+    /// Event definitions the SubscriptionTopic.
     /// </summary>
     [FhirElement("eventTrigger", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
@@ -1973,7 +1973,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubscriptionTopic.EventTriggerComponent> _EventTrigger;
 
     /// <summary>
-    /// Properties by which a Subscription can filter notifications from the SubscriptionTopic
+    /// Properties by which a Subscription can filter notifications from the SubscriptionTopic.
     /// </summary>
     [FhirElement("canFilterBy", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -1987,7 +1987,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubscriptionTopic.CanFilterByComponent> _CanFilterBy;
 
     /// <summary>
-    /// Properties for describing the shape of notifications generated by this topic
+    /// Properties for describing the shape of notifications generated by this topic.
     /// </summary>
     [FhirElement("notificationShape", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]

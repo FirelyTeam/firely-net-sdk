@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.origin"; } }
 
       /// <summary>
-      /// The index of the abstract origin server starting at 1
+      /// The index of the abstract origin server starting at 1.
       /// </summary>
       [FhirElement("index", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// FHIR-Client | FHIR-SDC-FormFiller
+      /// FHIR-Client | FHIR-SDC-FormFiller.
       /// </summary>
       [FhirElement("profile", Order=50)]
       [Binding("TestScriptProfileOriginType")]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Profile;
 
       /// <summary>
-      /// The url path of the origin server
+      /// The url path of the origin server.
       /// </summary>
       [FhirElement("url", Order=60)]
       [DataMember]
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.destination"; } }
 
       /// <summary>
-      /// The index of the abstract destination server starting at 1
+      /// The index of the abstract destination server starting at 1.
       /// </summary>
       [FhirElement("index", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// FHIR-Server | FHIR-SDC-FormManager | FHIR-SDC-FormReceiver | FHIR-SDC-FormProcessor
+      /// FHIR-Server | FHIR-SDC-FormManager | FHIR-SDC-FormReceiver | FHIR-SDC-FormProcessor.
       /// </summary>
       [FhirElement("profile", Order=50)]
       [Binding("TestScriptProfileDestinationType")]
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Profile;
 
       /// <summary>
-      /// The url path of the destination server
+      /// The url path of the destination server.
       /// </summary>
       [FhirElement("url", Order=60)]
       [DataMember]
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.metadata"; } }
 
       /// <summary>
-      /// Links to the FHIR specification
+      /// Links to the FHIR specification.
       /// </summary>
       [FhirElement("link", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -936,7 +936,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TestScript.LinkComponent> _Link;
 
       /// <summary>
-      /// Capabilities  that are assumed to function correctly on the FHIR server being tested
+      /// Capabilities  that are assumed to function correctly on the FHIR server being tested.
       /// </summary>
       [FhirElement("capability", Order=50)]
       [Cardinality(Min=1,Max=-1)]
@@ -1052,7 +1052,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.metadata.link"; } }
 
       /// <summary>
-      /// URL to the specification
+      /// URL to the specification.
       /// </summary>
       [FhirElement("url", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Short description
+      /// Short description.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -1218,7 +1218,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.metadata.capability"; } }
 
       /// <summary>
-      /// Are the capabilities required?
+      /// Are the capabilities required?.
       /// </summary>
       [FhirElement("required", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1250,7 +1250,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Are the capabilities validated?
+      /// Are the capabilities validated?.
       /// </summary>
       [FhirElement("validated", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1282,7 +1282,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The expected capabilities of the server
+      /// The expected capabilities of the server.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -1313,7 +1313,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Which origin server these requirements apply to
+      /// Which origin server these requirements apply to.
       /// </summary>
       [FhirElement("origin", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -1345,7 +1345,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Which server these requirements apply to
+      /// Which server these requirements apply to.
       /// </summary>
       [FhirElement("destination", Order=80)]
       [DataMember]
@@ -1376,7 +1376,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Links to the FHIR specification
+      /// Links to the FHIR specification.
       /// </summary>
       [FhirElement("link", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -1408,7 +1408,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Required Capability Statement
+      /// Required Capability Statement.
       /// </summary>
       [FhirElement("capabilities", Order=100)]
       [Cardinality(Min=1,Max=1)]
@@ -1592,7 +1592,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.scope"; } }
 
       /// <summary>
-      /// The specific conformance artifact being tested
+      /// The specific conformance artifact being tested.
       /// </summary>
       [FhirElement("artifact", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1624,7 +1624,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// required | optional | strict
+      /// required | optional | strict.
       /// </summary>
       [FhirElement("conformance", Order=50)]
       [Binding("TestScriptScopeConformanceType")]
@@ -1638,7 +1638,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Conformance;
 
       /// <summary>
-      /// unit | integration | production
+      /// unit | integration | production.
       /// </summary>
       [FhirElement("phase", Order=60)]
       [Binding("TestScriptScopePhaseType")]
@@ -1764,7 +1764,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.fixture"; } }
 
       /// <summary>
-      /// Whether or not to implicitly create the fixture during setup
+      /// Whether or not to implicitly create the fixture during setup.
       /// </summary>
       [FhirElement("autocreate", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1796,7 +1796,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether or not to implicitly delete the fixture during teardown
+      /// Whether or not to implicitly delete the fixture during teardown.
       /// </summary>
       [FhirElement("autodelete", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1828,7 +1828,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reference of the resource
+      /// Reference of the resource.
       /// </summary>
       [FhirElement("resource", Order=60)]
       [CLSCompliant(false)]
@@ -1956,7 +1956,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.variable"; } }
 
       /// <summary>
-      /// Descriptive name for this variable
+      /// Descriptive name for this variable.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1988,7 +1988,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Default, hard-coded, or user-defined value for this variable
+      /// Default, hard-coded, or user-defined value for this variable.
       /// </summary>
       [FhirElement("defaultValue", Order=50)]
       [DataMember]
@@ -2019,7 +2019,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Natural language description of the variable
+      /// Natural language description of the variable.
       /// </summary>
       [FhirElement("description", Order=60)]
       [DataMember]
@@ -2050,7 +2050,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The FHIRPath expression against the fixture body
+      /// The FHIRPath expression against the fixture body.
       /// </summary>
       [FhirElement("expression", Order=70)]
       [DataMember]
@@ -2081,7 +2081,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// HTTP header field name for source
+      /// HTTP header field name for source.
       /// </summary>
       [FhirElement("headerField", Order=80)]
       [DataMember]
@@ -2112,7 +2112,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Hint help text for default value to enter
+      /// Hint help text for default value to enter.
       /// </summary>
       [FhirElement("hint", Order=90)]
       [DataMember]
@@ -2143,7 +2143,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// XPath or JSONPath against the fixture body
+      /// XPath or JSONPath against the fixture body.
       /// </summary>
       [FhirElement("path", Order=100)]
       [DataMember]
@@ -2174,7 +2174,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Fixture Id of source expression or headerField within this variable
+      /// Fixture Id of source expression or headerField within this variable.
       /// </summary>
       [FhirElement("sourceId", Order=110)]
       [DataMember]
@@ -2364,7 +2364,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.setup"; } }
 
       /// <summary>
-      /// A setup operation or assert to perform
+      /// A setup operation or assert to perform.
       /// </summary>
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
@@ -2471,7 +2471,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.setup.action"; } }
 
       /// <summary>
-      /// The setup operation to perform
+      /// The setup operation to perform.
       /// </summary>
       [FhirElement("operation", Order=40)]
       [DataMember]
@@ -2484,7 +2484,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.TestScript.OperationComponent _Operation;
 
       /// <summary>
-      /// The assertion to perform
+      /// The assertion to perform.
       /// </summary>
       [FhirElement("assert", Order=50)]
       [DataMember]
@@ -2599,7 +2599,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.setup.action.operation"; } }
 
       /// <summary>
-      /// The operation code type that will be executed
+      /// The operation code type that will be executed.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("TestScriptOperationCode")]
@@ -2613,7 +2613,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Type;
 
       /// <summary>
-      /// Resource type
+      /// Resource type.
       /// </summary>
       [FhirElement("resource", Order=50)]
       [Binding("FHIRConcreteTypes")]
@@ -2645,7 +2645,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Tracking/logging operation label
+      /// Tracking/logging operation label.
       /// </summary>
       [FhirElement("label", Order=60)]
       [DataMember]
@@ -2676,7 +2676,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Tracking/reporting operation description
+      /// Tracking/reporting operation description.
       /// </summary>
       [FhirElement("description", Order=70)]
       [DataMember]
@@ -2707,7 +2707,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Mime type to accept in the payload of the response, with charset etc
+      /// Mime type to accept in the payload of the response, with charset etc.
       /// </summary>
       [FhirElement("accept", Order=80)]
       [Binding("MimeType")]
@@ -2739,7 +2739,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Mime type of the request payload contents, with charset etc
+      /// Mime type of the request payload contents, with charset etc.
       /// </summary>
       [FhirElement("contentType", Order=90)]
       [Binding("MimeType")]
@@ -2771,7 +2771,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Server responding to the request
+      /// Server responding to the request.
       /// </summary>
       [FhirElement("destination", Order=100)]
       [DataMember]
@@ -2802,7 +2802,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Whether or not to send the request url in encoded format
+      /// Whether or not to send the request url in encoded format.
       /// </summary>
       [FhirElement("encodeRequestUrl", Order=110)]
       [Cardinality(Min=1,Max=1)]
@@ -2834,7 +2834,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// delete | get | options | patch | post | put | head
+      /// delete | get | options | patch | post | put | head.
       /// </summary>
       [FhirElement("method", Order=120)]
       [DeclaredType(Type = typeof(Code))]
@@ -2867,7 +2867,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Server initiating the request
+      /// Server initiating the request.
       /// </summary>
       [FhirElement("origin", Order=130)]
       [DataMember]
@@ -2898,7 +2898,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Explicitly defined path parameters
+      /// Explicitly defined path parameters.
       /// </summary>
       [FhirElement("params", Order=140)]
       [DataMember]
@@ -2929,7 +2929,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Each operation can have one or more header elements
+      /// Each operation can have one or more header elements.
       /// </summary>
       [FhirElement("requestHeader", Order=150)]
       [Cardinality(Min=0,Max=-1)]
@@ -2943,7 +2943,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> _RequestHeader;
 
       /// <summary>
-      /// Fixture Id of mapped request
+      /// Fixture Id of mapped request.
       /// </summary>
       [FhirElement("requestId", Order=160)]
       [DataMember]
@@ -2974,7 +2974,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Fixture Id of mapped response
+      /// Fixture Id of mapped response.
       /// </summary>
       [FhirElement("responseId", Order=170)]
       [DataMember]
@@ -3005,7 +3005,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Fixture Id of body for PUT and POST requests
+      /// Fixture Id of body for PUT and POST requests.
       /// </summary>
       [FhirElement("sourceId", Order=180)]
       [DataMember]
@@ -3036,7 +3036,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Id of fixture used for extracting the [id],  [type], and [vid] for GET requests
+      /// Id of fixture used for extracting the [id],  [type], and [vid] for GET requests.
       /// </summary>
       [FhirElement("targetId", Order=190)]
       [DataMember]
@@ -3067,7 +3067,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Request URL
+      /// Request URL.
       /// </summary>
       [FhirElement("url", Order=200)]
       [DataMember]
@@ -3351,7 +3351,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.setup.action.operation.requestHeader"; } }
 
       /// <summary>
-      /// HTTP header field name
+      /// HTTP header field name.
       /// </summary>
       [FhirElement("field", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -3383,7 +3383,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// HTTP headerfield value
+      /// HTTP headerfield value.
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -3518,7 +3518,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.setup.action.assert"; } }
 
       /// <summary>
-      /// Tracking/logging assertion label
+      /// Tracking/logging assertion label.
       /// </summary>
       [FhirElement("label", Order=40)]
       [DataMember]
@@ -3549,7 +3549,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Tracking/reporting assertion description
+      /// Tracking/reporting assertion description.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -3580,7 +3580,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// response | request
+      /// response | request.
       /// </summary>
       [FhirElement("direction", Order=60)]
       [DeclaredType(Type = typeof(Code))]
@@ -3613,7 +3613,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Id of the source fixture to be evaluated
+      /// Id of the source fixture to be evaluated.
       /// </summary>
       [FhirElement("compareToSourceId", Order=70)]
       [DataMember]
@@ -3644,7 +3644,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The FHIRPath expression to evaluate against the source fixture
+      /// The FHIRPath expression to evaluate against the source fixture.
       /// </summary>
       [FhirElement("compareToSourceExpression", Order=80)]
       [DataMember]
@@ -3675,7 +3675,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// XPath or JSONPath expression to evaluate against the source fixture
+      /// XPath or JSONPath expression to evaluate against the source fixture.
       /// </summary>
       [FhirElement("compareToSourcePath", Order=90)]
       [DataMember]
@@ -3706,7 +3706,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Mime type to compare against the 'Content-Type' header
+      /// Mime type to compare against the 'Content-Type' header.
       /// </summary>
       [FhirElement("contentType", Order=100)]
       [Binding("MimeType")]
@@ -3738,7 +3738,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// fail | pass | skip | stop
+      /// fail | pass | skip | stop.
       /// </summary>
       [FhirElement("defaultManualCompletion", Order=110)]
       [DeclaredType(Type = typeof(Code))]
@@ -3771,7 +3771,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The FHIRPath expression to be evaluated
+      /// The FHIRPath expression to be evaluated.
       /// </summary>
       [FhirElement("expression", Order=120)]
       [DataMember]
@@ -3802,7 +3802,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// HTTP header field name
+      /// HTTP header field name.
       /// </summary>
       [FhirElement("headerField", Order=130)]
       [DataMember]
@@ -3833,7 +3833,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Fixture Id of minimum content resource
+      /// Fixture Id of minimum content resource.
       /// </summary>
       [FhirElement("minimumId", Order=140)]
       [DataMember]
@@ -3864,7 +3864,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Perform validation on navigation links?
+      /// Perform validation on navigation links?.
       /// </summary>
       [FhirElement("navigationLinks", Order=150)]
       [DataMember]
@@ -3895,7 +3895,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval | manualEval
+      /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval | manualEval.
       /// </summary>
       [FhirElement("operator", Order=160)]
       [DeclaredType(Type = typeof(Code))]
@@ -3928,7 +3928,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// XPath or JSONPath expression
+      /// XPath or JSONPath expression.
       /// </summary>
       [FhirElement("path", Order=170)]
       [DataMember]
@@ -3959,7 +3959,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// delete | get | options | patch | post | put | head
+      /// delete | get | options | patch | post | put | head.
       /// </summary>
       [FhirElement("requestMethod", Order=180)]
       [DeclaredType(Type = typeof(Code))]
@@ -3992,7 +3992,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Request URL comparison value
+      /// Request URL comparison value.
       /// </summary>
       [FhirElement("requestURL", Order=190)]
       [DataMember]
@@ -4023,7 +4023,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Resource type
+      /// Resource type.
       /// </summary>
       [FhirElement("resource", Order=200)]
       [Binding("FHIRConcreteType")]
@@ -4055,7 +4055,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// continue | switchingProtocols | okay | created | accepted | nonAuthoritativeInformation | noContent | resetContent | partialContent | multipleChoices | movedPermanently | found | seeOther | notModified | useProxy | temporaryRedirect | permanentRedirect | badRequest | unauthorized | paymentRequired | forbidden | notFound | methodNotAllowed | notAcceptable | proxyAuthenticationRequired | requestTimeout | conflict | gone | lengthRequired | preconditionFailed | contentTooLarge | uriTooLong | unsupportedMediaType | rangeNotSatisfiable | expectationFailed | misdirectedRequest | unprocessableContent | upgradeRequired | internalServerError | notImplemented | badGateway | serviceUnavailable | gatewayTimeout | httpVersionNotSupported
+      /// continue | switchingProtocols | okay | created | accepted | nonAuthoritativeInformation | noContent | resetContent | partialContent | multipleChoices | movedPermanently | found | seeOther | notModified | useProxy | temporaryRedirect | permanentRedirect | badRequest | unauthorized | paymentRequired | forbidden | notFound | methodNotAllowed | notAcceptable | proxyAuthenticationRequired | requestTimeout | conflict | gone | lengthRequired | preconditionFailed | contentTooLarge | uriTooLong | unsupportedMediaType | rangeNotSatisfiable | expectationFailed | misdirectedRequest | unprocessableContent | upgradeRequired | internalServerError | notImplemented | badGateway | serviceUnavailable | gatewayTimeout | httpVersionNotSupported.
       /// </summary>
       [FhirElement("response", Order=210)]
       [DeclaredType(Type = typeof(Code))]
@@ -4088,7 +4088,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// HTTP response code to test
+      /// HTTP response code to test.
       /// </summary>
       [FhirElement("responseCode", Order=220)]
       [DataMember]
@@ -4119,7 +4119,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Fixture Id of source expression or headerField
+      /// Fixture Id of source expression or headerField.
       /// </summary>
       [FhirElement("sourceId", Order=230)]
       [DataMember]
@@ -4150,7 +4150,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If this assert fails, will the current test execution stop?
+      /// If this assert fails, will the current test execution stop?.
       /// </summary>
       [FhirElement("stopTestOnFail", Order=240)]
       [Cardinality(Min=1,Max=1)]
@@ -4182,7 +4182,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Profile Id of validation profile reference
+      /// Profile Id of validation profile reference.
       /// </summary>
       [FhirElement("validateProfileId", Order=250)]
       [DataMember]
@@ -4213,7 +4213,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The value to compare to
+      /// The value to compare to.
       /// </summary>
       [FhirElement("value", Order=260)]
       [DataMember]
@@ -4244,7 +4244,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Will this assert produce a warning only on error?
+      /// Will this assert produce a warning only on error?.
       /// </summary>
       [FhirElement("warningOnly", Order=270)]
       [Cardinality(Min=1,Max=1)]
@@ -4276,7 +4276,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Links or references to the testing requirements
+      /// Links or references to the testing requirements.
       /// </summary>
       [FhirElement("requirement", Order=280)]
       [Cardinality(Min=0,Max=-1)]
@@ -4623,7 +4623,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.setup.action.assert.requirement"; } }
 
       /// <summary>
-      /// Link or reference to the testing requirement
+      /// Link or reference to the testing requirement.
       /// </summary>
       [FhirElement("link", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -4727,7 +4727,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.test"; } }
 
       /// <summary>
-      /// Tracking/logging name of this test
+      /// Tracking/logging name of this test.
       /// </summary>
       [FhirElement("name", Order=40)]
       [DataMember]
@@ -4758,7 +4758,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Tracking/reporting short description of the test
+      /// Tracking/reporting short description of the test.
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
@@ -4789,7 +4789,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A test operation or assert to perform
+      /// A test operation or assert to perform.
       /// </summary>
       [FhirElement("action", Order=60)]
       [Cardinality(Min=1,Max=-1)]
@@ -4916,7 +4916,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.test.action"; } }
 
       /// <summary>
-      /// The setup operation to perform
+      /// The setup operation to perform.
       /// </summary>
       [FhirElement("operation", Order=40)]
       [DataMember]
@@ -4929,7 +4929,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.TestScript.OperationComponent _Operation;
 
       /// <summary>
-      /// The setup assertion to perform
+      /// The setup assertion to perform.
       /// </summary>
       [FhirElement("assert", Order=50)]
       [DataMember]
@@ -5044,7 +5044,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.teardown"; } }
 
       /// <summary>
-      /// One or more teardown operations to perform
+      /// One or more teardown operations to perform.
       /// </summary>
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
@@ -5151,7 +5151,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestScript.teardown.action"; } }
 
       /// <summary>
-      /// The teardown operation to perform
+      /// The teardown operation to perform.
       /// </summary>
       [FhirElement("operation", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -5241,7 +5241,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this test script, represented as a URI (globally unique)
+    /// Canonical identifier for this test script, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -5272,7 +5272,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the test script
+    /// Additional identifier for the test script.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -5286,7 +5286,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the test script
+    /// Business version of the test script.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -5317,7 +5317,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -5332,7 +5332,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this test script (computer friendly)
+    /// Name for this test script (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
@@ -5364,7 +5364,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this test script (human friendly)
+    /// Name for this test script (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
@@ -5395,7 +5395,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -5429,7 +5429,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
@@ -5460,7 +5460,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -5491,7 +5491,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -5522,7 +5522,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -5536,7 +5536,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the test script
+    /// Natural language description of the test script.
     /// </summary>
     [FhirElement("description", Order=200)]
     [DataMember]
@@ -5567,7 +5567,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -5581,7 +5581,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for test script (if applicable)
+    /// Intended jurisdiction for test script (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
@@ -5596,7 +5596,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this test script is defined
+    /// Why this test script is defined.
     /// </summary>
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -5627,7 +5627,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
@@ -5658,7 +5658,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
@@ -5689,7 +5689,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// An abstract server representing a client or sender in a message exchange
+    /// An abstract server representing a client or sender in a message exchange.
     /// </summary>
     [FhirElement("origin", Order=260)]
     [Cardinality(Min=0,Max=-1)]
@@ -5703,7 +5703,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestScript.OriginComponent> _Origin;
 
     /// <summary>
-    /// An abstract server representing a destination or receiver in a message exchange
+    /// An abstract server representing a destination or receiver in a message exchange.
     /// </summary>
     [FhirElement("destination", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -5717,7 +5717,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestScript.DestinationComponent> _Destination;
 
     /// <summary>
-    /// Required capability that is assumed to function correctly on the FHIR server being tested
+    /// Required capability that is assumed to function correctly on the FHIR server being tested.
     /// </summary>
     [FhirElement("metadata", Order=280)]
     [DataMember]
@@ -5730,7 +5730,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TestScript.MetadataComponent _Metadata;
 
     /// <summary>
-    /// Indication of the artifact(s) that are tested by this test case
+    /// Indication of the artifact(s) that are tested by this test case.
     /// </summary>
     [FhirElement("scope", Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -5744,7 +5744,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestScript.ScopeComponent> _Scope;
 
     /// <summary>
-    /// Fixture in the test script - by reference (uri)
+    /// Fixture in the test script - by reference (uri).
     /// </summary>
     [FhirElement("fixture", Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -5758,7 +5758,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestScript.FixtureComponent> _Fixture;
 
     /// <summary>
-    /// Reference of the validation profile
+    /// Reference of the validation profile.
     /// </summary>
     [FhirElement("profile", Order=310)]
     [Cardinality(Min=0,Max=-1)]
@@ -5790,7 +5790,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Placeholder for evaluated elements
+    /// Placeholder for evaluated elements.
     /// </summary>
     [FhirElement("variable", Order=320)]
     [Cardinality(Min=0,Max=-1)]
@@ -5804,7 +5804,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestScript.VariableComponent> _Variable;
 
     /// <summary>
-    /// A series of required setup operations before tests are executed
+    /// A series of required setup operations before tests are executed.
     /// </summary>
     [FhirElement("setup", Order=330)]
     [DataMember]
@@ -5817,7 +5817,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.TestScript.SetupComponent _Setup;
 
     /// <summary>
-    /// A test in this script
+    /// A test in this script.
     /// </summary>
     [FhirElement("test", Order=340)]
     [Cardinality(Min=0,Max=-1)]
@@ -5831,7 +5831,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestScript.TestComponent> _Test;
 
     /// <summary>
-    /// A series of required clean up steps
+    /// A series of required clean up steps.
     /// </summary>
     [FhirElement("teardown", Order=350)]
     [DataMember]

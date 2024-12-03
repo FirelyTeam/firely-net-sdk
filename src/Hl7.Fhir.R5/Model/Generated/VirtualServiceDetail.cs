@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "VirtualServiceDetail"; } }
 
     /// <summary>
-    /// Channel Type
+    /// Channel Type.
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=30)]
     [Binding("VirtualServiceType")]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coding _ChannelType;
 
     /// <summary>
-    /// Contact address/number
+    /// Contact address/number.
     /// </summary>
     [FhirElement("address", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Address;
 
     /// <summary>
-    /// Address to see alternative connection details
+    /// Address to see alternative connection details.
     /// </summary>
     [FhirElement("additionalInfo", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Maximum number of participants supported by the virtual service
+    /// Maximum number of participants supported by the virtual service.
     /// </summary>
     [FhirElement("maxParticipants", InSummary=true, Order=60)]
     [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Session Key required by the virtual service
+    /// Session Key required by the virtual service.
     /// </summary>
     [FhirElement("sessionKey", InSummary=true, Order=70)]
     [DataMember]

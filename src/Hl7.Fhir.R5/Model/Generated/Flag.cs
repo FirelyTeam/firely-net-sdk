@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | inactive | entered-in-error
+    /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Clinical, administrative, etc
+    /// Clinical, administrative, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("FlagCategory")]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Coded or textual message to display to user
+    /// Coded or textual message to display to user.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Binding("FlagCode")]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Who/What is flag about?
+    /// Who/What is flag about?.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Time period when flag is active
+    /// Time period when flag is active.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=140, FiveWs="FiveWs.context")]
     [DataMember]
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Alert relevant during encounter
+    /// Alert relevant during encounter.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Flag creator
+    /// Flag creator.
     /// </summary>
     [FhirElement("author", InSummary=true, Order=160, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]

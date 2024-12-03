@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Introspection
             var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
 
             var fhirTypes = allowedTypes?.Types?.Any() == true ?
-                allowedTypes.Types : new[] { fhirType };
+                allowedTypes.Types : [fhirType];
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 

@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "VerificationResult.primarySource"; } }
 
       /// <summary>
-      /// Reference to the primary source
+      /// Reference to the primary source.
       /// </summary>
       [FhirElement("who", Order=40, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Who;
 
       /// <summary>
-      /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
+      /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source).
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("primary-source-type")]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Method for exchanging information with the primary source
+      /// Method for exchanging information with the primary source.
       /// </summary>
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
       [Binding("communication-method")]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _CommunicationMethod;
 
       /// <summary>
-      /// successful | failed | unknown
+      /// successful | failed | unknown.
       /// </summary>
       [FhirElement("validationStatus", Order=70)]
       [Binding("validation-status")]
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ValidationStatus;
 
       /// <summary>
-      /// When the target was validated against the primary source
+      /// When the target was validated against the primary source.
       /// </summary>
       [FhirElement("validationDate", Order=80)]
       [DataMember]
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// yes | no | undetermined
+      /// yes | no | undetermined.
       /// </summary>
       [FhirElement("canPushUpdates", InSummary=true, Order=90)]
       [Binding("can-push-updates")]
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _CanPushUpdates;
 
       /// <summary>
-      /// specific | any | source
+      /// specific | any | source.
       /// </summary>
       [FhirElement("pushTypeAvailable", Order=100)]
       [Binding("push-type-available")]
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "VerificationResult.attestation"; } }
 
       /// <summary>
-      /// The individual or organization attesting to information
+      /// The individual or organization attesting to information.
       /// </summary>
       [FhirElement("who", InSummary=true, Order=40)]
       [CLSCompliant(false)]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Who;
 
       /// <summary>
-      /// When the who is asserting on behalf of another (organization or individual)
+      /// When the who is asserting on behalf of another (organization or individual).
       /// </summary>
       [FhirElement("onBehalfOf", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
 
       /// <summary>
-      /// The method by which attested information was submitted/retrieved
+      /// The method by which attested information was submitted/retrieved.
       /// </summary>
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
       [Binding("communication-method")]
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _CommunicationMethod;
 
       /// <summary>
-      /// The date the information was attested to
+      /// The date the information was attested to.
       /// </summary>
       [FhirElement("date", InSummary=true, Order=70)]
       [DataMember]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A digital identity certificate associated with the attestation source
+      /// A digital identity certificate associated with the attestation source.
       /// </summary>
       [FhirElement("sourceIdentityCertificate", Order=80)]
       [DataMember]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A digital identity certificate associated with the proxy entity submitting attested information on behalf of the attestation source
+      /// A digital identity certificate associated with the proxy entity submitting attested information on behalf of the attestation source.
       /// </summary>
       [FhirElement("proxyIdentityCertificate", Order=90)]
       [DataMember]
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Proxy signature (digital or image)
+      /// Proxy signature (digital or image).
       /// </summary>
       [FhirElement("proxySignature", Order=100)]
       [DataMember]
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Signature _ProxySignature;
 
       /// <summary>
-      /// Attester signature (digital or image)
+      /// Attester signature (digital or image).
       /// </summary>
       [FhirElement("sourceSignature", Order=110)]
       [DataMember]
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "VerificationResult.validator"; } }
 
       /// <summary>
-      /// Reference to the organization validating information
+      /// Reference to the organization validating information.
       /// </summary>
       [FhirElement("organization", Order=40)]
       [CLSCompliant(false)]
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Organization;
 
       /// <summary>
-      /// A digital identity certificate associated with the validator
+      /// A digital identity certificate associated with the validator.
       /// </summary>
       [FhirElement("identityCertificate", Order=50)]
       [DataMember]
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Validator signature (digital or image)
+      /// Validator signature (digital or image).
       /// </summary>
       [FhirElement("attestationSignature", Order=60)]
       [DataMember]
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A resource that was validated
+    /// A resource that was validated.
     /// </summary>
     [FhirElement("target", InSummary=true, Order=90)]
     [CLSCompliant(false)]
@@ -884,7 +884,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Target;
 
     /// <summary>
-    /// The fhirpath location(s) within the resource that was validated
+    /// The fhirpath location(s) within the resource that was validated.
     /// </summary>
     [FhirElement("targetLocation", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// none | initial | periodic
+    /// none | initial | periodic.
     /// </summary>
     [FhirElement("need", InSummary=true, Order=110)]
     [Binding("need")]
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Need;
 
     /// <summary>
-    /// attested | validated | in-process | req-revalid | val-fail | reval-fail | entered-in-error
+    /// attested | validated | in-process | req-revalid | val-fail | reval-fail | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the validation status was updated
+    /// When the validation status was updated.
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=130)]
     [DataMember]
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// nothing | primary | multiple
+    /// nothing | primary | multiple.
     /// </summary>
     [FhirElement("validationType", InSummary=true, Order=140)]
     [Binding("validation-type")]
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ValidationType;
 
     /// <summary>
-    /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
+    /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context).
     /// </summary>
     [FhirElement("validationProcess", InSummary=true, Order=150)]
     [Binding("validation-process")]
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ValidationProcess;
 
     /// <summary>
-    /// Frequency of revalidation
+    /// Frequency of revalidation.
     /// </summary>
     [FhirElement("frequency", Order=160)]
     [DataMember]
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Timing _Frequency;
 
     /// <summary>
-    /// The date/time validation was last completed (including failed validations)
+    /// The date/time validation was last completed (including failed validations).
     /// </summary>
     [FhirElement("lastPerformed", Order=170)]
     [DataMember]
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The date when target is next validated, if appropriate
+    /// The date when target is next validated, if appropriate.
     /// </summary>
     [FhirElement("nextScheduled", Order=180)]
     [DataMember]
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// fatal | warn | rec-only | none
+    /// fatal | warn | rec-only | none.
     /// </summary>
     [FhirElement("failureAction", InSummary=true, Order=190)]
     [Binding("failure-action")]
@@ -1113,7 +1113,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _FailureAction;
 
     /// <summary>
-    /// Information about the primary source(s) involved in validation
+    /// Information about the primary source(s) involved in validation.
     /// </summary>
     [FhirElement("primarySource", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent> _PrimarySource;
 
     /// <summary>
-    /// Information about the entity attesting to information
+    /// Information about the entity attesting to information.
     /// </summary>
     [FhirElement("attestation", Order=210)]
     [DataMember]
@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.VerificationResult.AttestationComponent _Attestation;
 
     /// <summary>
-    /// Information about the entity validating information
+    /// Information about the entity validating information.
     /// </summary>
     [FhirElement("validator", Order=220)]
     [Cardinality(Min=0,Max=-1)]

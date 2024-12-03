@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.coverage"; } }
 
       /// <summary>
-      /// The party(s), such as insurances, that may contribute to the payment of this account
+      /// The party(s), such as insurances, that may contribute to the payment of this account.
       /// </summary>
       [FhirElement("coverage", InSummary=true, Order=40)]
       [CLSCompliant(false)]
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Coverage;
 
       /// <summary>
-      /// The priority of the coverage in the context of this account
+      /// The priority of the coverage in the context of this account.
       /// </summary>
       [FhirElement("priority", InSummary=true, Order=50)]
       [DataMember]
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.guarantor"; } }
 
       /// <summary>
-      /// Responsible entity
+      /// Responsible entity.
       /// </summary>
       [FhirElement("party", Order=40)]
       [CLSCompliant(false)]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Party;
 
       /// <summary>
-      /// Credit or other hold applied
+      /// Credit or other hold applied.
       /// </summary>
       [FhirElement("onHold", Order=50)]
       [DataMember]
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Guarantee account during
+      /// Guarantee account during.
       /// </summary>
       [FhirElement("period", Order=60)]
       [DataMember]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.diagnosis"; } }
 
       /// <summary>
-      /// Ranking of the diagnosis (for each type)
+      /// Ranking of the diagnosis (for each type).
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [DataMember]
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The diagnosis relevant to the account
+      /// The diagnosis relevant to the account.
       /// </summary>
       [FhirElement("condition", InSummary=true, Order=50)]
       [Binding("condition-code")]
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableReference _Condition;
 
       /// <summary>
-      /// Date of the diagnosis (when coded diagnosis)
+      /// Date of the diagnosis (when coded diagnosis).
       /// </summary>
       [FhirElement("dateOfDiagnosis", Order=60)]
       [DataMember]
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Type that this diagnosis has relevant to the account (e.g. admission, billing, discharge …)
+      /// Type that this diagnosis has relevant to the account (e.g. admission, billing, discharge …).
       /// </summary>
       [FhirElement("type", Order=70)]
       [Binding("DiagnosisUse")]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Diagnosis present on Admission
+      /// Diagnosis present on Admission.
       /// </summary>
       [FhirElement("onAdmission", Order=80)]
       [DataMember]
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Package Code specific for billing
+      /// Package Code specific for billing.
       /// </summary>
       [FhirElement("packageCode", Order=90)]
       [Binding("diagnosis-package-code")]
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.procedure"; } }
 
       /// <summary>
-      /// Ranking of the procedure (for each type)
+      /// Ranking of the procedure (for each type).
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [DataMember]
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The procedure relevant to the account
+      /// The procedure relevant to the account.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableReference _Code;
 
       /// <summary>
-      /// Date of the procedure (when coded procedure)
+      /// Date of the procedure (when coded procedure).
       /// </summary>
       [FhirElement("dateOfService", Order=60)]
       [DataMember]
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How this procedure value should be used in charging the account
+      /// How this procedure value should be used in charging the account.
       /// </summary>
       [FhirElement("type", Order=70)]
       [Binding("procedure-type")]
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Package Code specific for billing
+      /// Package Code specific for billing.
       /// </summary>
       [FhirElement("packageCode", Order=80)]
       [Binding("procedure-package-code")]
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _PackageCode;
 
       /// <summary>
-      /// Any devices that were associated with the procedure
+      /// Any devices that were associated with the procedure.
       /// </summary>
       [FhirElement("device", InSummary=true, Order=90)]
       [CLSCompliant(false)]
@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.relatedAccount"; } }
 
       /// <summary>
-      /// Relationship of the associated Account
+      /// Relationship of the associated Account.
       /// </summary>
       [FhirElement("relationship", Order=40)]
       [Binding("AccountRelationship")]
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
       /// <summary>
-      /// Reference to an associated Account
+      /// Reference to an associated Account.
       /// </summary>
       [FhirElement("account", Order=50)]
       [CLSCompliant(false)]
@@ -1113,7 +1113,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Account.balance"; } }
 
       /// <summary>
-      /// Who is expected to pay this part of the balance
+      /// Who is expected to pay this part of the balance.
       /// </summary>
       [FhirElement("aggregate", Order=40)]
       [Binding("AccountAggregate")]
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Aggregate;
 
       /// <summary>
-      /// current | 30 | 60 | 90 | 120
+      /// current | 30 | 60 | 90 | 120.
       /// </summary>
       [FhirElement("term", Order=50)]
       [Binding("AccountBalanceTerm")]
@@ -1141,7 +1141,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Term;
 
       /// <summary>
-      /// Estimated balance
+      /// Estimated balance.
       /// </summary>
       [FhirElement("estimate", Order=60)]
       [DataMember]
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Calculated amount
+      /// Calculated amount.
       /// </summary>
       [FhirElement("amount", Order=70)]
       [Cardinality(Min=1,Max=1)]
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Account number
+    /// Account number.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | inactive | entered-in-error | on-hold | unknown
+    /// active | inactive | entered-in-error | on-hold | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Tracks the lifecycle of the account through the billing process
+    /// Tracks the lifecycle of the account through the billing process.
     /// </summary>
     [FhirElement("billingStatus", InSummary=true, Order=110)]
     [Binding("AccountBillingStatus")]
@@ -1354,7 +1354,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BillingStatus;
 
     /// <summary>
-    /// E.g. patient, expense, depreciation
+    /// E.g. patient, expense, depreciation.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("AccountType")]
@@ -1368,7 +1368,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Human-readable label
+    /// Human-readable label.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1399,7 +1399,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The entity that caused the expenses
+    /// The entity that caused the expenses.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Subject;
 
     /// <summary>
-    /// Transaction window
+    /// Transaction window.
     /// </summary>
     [FhirElement("servicePeriod", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -1428,7 +1428,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _ServicePeriod;
 
     /// <summary>
-    /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
+    /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account.
     /// </summary>
     [FhirElement("coverage", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -1442,7 +1442,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.CoverageComponent> _Coverage;
 
     /// <summary>
-    /// Entity managing the Account
+    /// Entity managing the Account.
     /// </summary>
     [FhirElement("owner", InSummary=true, Order=170)]
     [CLSCompliant(false)]
@@ -1457,7 +1457,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Owner;
 
     /// <summary>
-    /// Explanation of purpose/use
+    /// Explanation of purpose/use.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
@@ -1488,7 +1488,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The parties ultimately responsible for balancing the Account
+    /// The parties ultimately responsible for balancing the Account.
     /// </summary>
     [FhirElement("guarantor", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1502,7 +1502,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.GuarantorComponent> _Guarantor;
 
     /// <summary>
-    /// The list of diagnoses relevant to this account
+    /// The list of diagnoses relevant to this account.
     /// </summary>
     [FhirElement("diagnosis", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1516,7 +1516,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.DiagnosisComponent> _Diagnosis;
 
     /// <summary>
-    /// The list of procedures relevant to this account
+    /// The list of procedures relevant to this account.
     /// </summary>
     [FhirElement("procedure", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -1530,7 +1530,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.ProcedureComponent> _Procedure;
 
     /// <summary>
-    /// Other associated accounts related to this account
+    /// Other associated accounts related to this account.
     /// </summary>
     [FhirElement("relatedAccount", Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -1544,7 +1544,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.RelatedAccountComponent> _RelatedAccount;
 
     /// <summary>
-    /// The base or default currency
+    /// The base or default currency.
     /// </summary>
     [FhirElement("currency", Order=230)]
     [Binding("AccountCurrency")]
@@ -1558,7 +1558,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Currency;
 
     /// <summary>
-    /// Calculated account balance(s)
+    /// Calculated account balance(s).
     /// </summary>
     [FhirElement("balance", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -1572,7 +1572,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Account.BalanceComponent> _Balance;
 
     /// <summary>
-    /// Time the balance amount was calculated
+    /// Time the balance amount was calculated.
     /// </summary>
     [FhirElement("calculatedAt", Order=250)]
     [DataMember]

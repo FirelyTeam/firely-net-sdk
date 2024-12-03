@@ -954,40 +954,67 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Bundle.link"; } }
 
       /// <summary>
-      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1.
       /// </summary>
+      /// <remarks>
+      /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Code starting from R5.
+      /// </remarks>
       [FhirElement("relation", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code), Since = FhirRelease.R5)]
+      [CLSCompliant(false)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Code))]
+      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
+      // [AllowedTypes(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
+      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
+      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString RelationElement
+      public Hl7.Fhir.Model.PrimitiveType RelationElement
       {
         get { return _RelationElement; }
         set { _RelationElement = value; OnPropertyChanged("RelationElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _RelationElement;
+      private Hl7.Fhir.Model.PrimitiveType _RelationElement;
 
       /// <summary>
-      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1. Use this property in STU3, R4 and R4B.
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Relation
+      public string RelationString
       {
-        get { return RelationElement != null ? RelationElement.Value : null; }
+        get { return RelationElement != null ? ((IValue<string>)RelationElement).Value : null; }
         set
         {
           if (value == null)
             RelationElement = null;
           else
             RelationElement = new Hl7.Fhir.Model.FhirString(value);
+          OnPropertyChanged("RelationString");
+        }
+      }
+
+      /// <summary>
+      /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1. Use this property starting from R5.
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Relation
+      {
+        get { return RelationElement != null ? ((IValue<string>)RelationElement).Value : null; }
+        set
+        {
+          if (value == null)
+            RelationElement = null;
+          else
+            RelationElement = new Hl7.Fhir.Model.Code(value);
           OnPropertyChanged("Relation");
         }
       }
 
       /// <summary>
-      /// Reference details for the link
+      /// Reference details for the link.
       /// </summary>
       [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1028,7 +1055,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(RelationElement != null) dest.RelationElement = (Hl7.Fhir.Model.FhirString)RelationElement.DeepCopy();
+        if(RelationElement != null) dest.RelationElement = (Hl7.Fhir.Model.PrimitiveType)RelationElement.DeepCopy();
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         return dest;
       }
@@ -1084,7 +1111,7 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "relation":
-            RelationElement = (Hl7.Fhir.Model.FhirString)value;
+            RelationElement = (Hl7.Fhir.Model.PrimitiveType)value;
             return this;
           case "url":
             UrlElement = (Hl7.Fhir.Model.FhirUri)value;
@@ -1121,7 +1148,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Bundle.entry"; } }
 
       /// <summary>
-      /// Links related to this entry
+      /// Links related to this entry.
       /// </summary>
       [FhirElement("link", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -1135,7 +1162,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Bundle.LinkComponent> _Link;
 
       /// <summary>
-      /// URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.)
+      /// URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.).
       /// </summary>
       [FhirElement("fullUrl", InSummary=true, Order=50)]
       [DataMember]
@@ -1166,7 +1193,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A resource in the bundle
+      /// A resource in the bundle.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
@@ -1181,7 +1208,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Resource _Resource;
 
       /// <summary>
-      /// Search related information
+      /// Search related information.
       /// </summary>
       [FhirElement("search", InSummary=true, Order=70)]
       [DataMember]
@@ -1194,7 +1221,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Bundle.SearchComponent _Search;
 
       /// <summary>
-      /// Additional execution information (transaction/batch/history)
+      /// Additional execution information (transaction/batch/history).
       /// </summary>
       [FhirElement("request", InSummary=true, Order=80)]
       [DataMember]
@@ -1207,7 +1234,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Bundle.RequestComponent _Request;
 
       /// <summary>
-      /// Results of execution (transaction/batch/history)
+      /// Results of execution (transaction/batch/history).
       /// </summary>
       [FhirElement("response", InSummary=true, Order=90)]
       [DataMember]
@@ -1362,7 +1389,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Bundle.entry.search"; } }
 
       /// <summary>
-      /// match | include - why this is in the result set
+      /// match | include - why this is in the result set.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -1395,7 +1422,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Search ranking (between 0 and 1)
+      /// Search ranking (between 0 and 1).
       /// </summary>
       [FhirElement("score", InSummary=true, Order=50)]
       [DataMember]
@@ -1528,7 +1555,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Bundle.entry.request"; } }
 
       /// <summary>
-      /// GET | HEAD | POST | PUT | DELETE | PATCH
+      /// GET | HEAD | POST | PUT | DELETE | PATCH.
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -1562,7 +1589,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// URL for HTTP equivalent of this entry
+      /// URL for HTTP equivalent of this entry.
       /// </summary>
       [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -1594,7 +1621,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// For managing cache validation
+      /// For managing cache validation.
       /// </summary>
       [FhirElement("ifNoneMatch", InSummary=true, Order=60)]
       [DataMember]
@@ -1625,7 +1652,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// For managing cache currency
+      /// For managing cache currency.
       /// </summary>
       [FhirElement("ifModifiedSince", InSummary=true, Order=70)]
       [DataMember]
@@ -1656,7 +1683,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// For managing update contention
+      /// For managing update contention.
       /// </summary>
       [FhirElement("ifMatch", InSummary=true, Order=80)]
       [DataMember]
@@ -1687,7 +1714,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// For conditional creates
+      /// For conditional creates.
       /// </summary>
       [FhirElement("ifNoneExist", InSummary=true, Order=90)]
       [DataMember]
@@ -1860,7 +1887,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Bundle.entry.response"; } }
 
       /// <summary>
-      /// Status response code (text optional)
+      /// Status response code (text optional).
       /// </summary>
       [FhirElement("status", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1892,7 +1919,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The location (if the operation returns a location)
+      /// The location (if the operation returns a location).
       /// </summary>
       [FhirElement("location", InSummary=true, Order=50)]
       [DataMember]
@@ -1923,7 +1950,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The Etag for the resource (if relevant)
+      /// The Etag for the resource (if relevant).
       /// </summary>
       [FhirElement("etag", InSummary=true, Order=60)]
       [DataMember]
@@ -1954,7 +1981,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Server's date time modified
+      /// Server's date time modified.
       /// </summary>
       [FhirElement("lastModified", InSummary=true, Order=70)]
       [DataMember]
@@ -1985,7 +2012,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// OperationOutcome with hints and warnings (for batch/transaction)
+      /// OperationOutcome with hints and warnings (for batch/transaction).
       /// </summary>
       [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
@@ -2116,7 +2143,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Persistent identifier for the bundle
+    /// Persistent identifier for the bundle.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -2129,7 +2156,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification
+    /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -2163,8 +2190,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the bundle was assembled. Note: Element was introduced in R4, do not use when working with older releases.
+    /// When the bundle was assembled.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R4, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("timestamp", InSummary=true, Order=70, FiveWs="FiveWs.init", Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Instant TimestampElement
@@ -2194,7 +2224,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// If search, the total number of matches
+    /// If search, the total number of matches.
     /// </summary>
     [FhirElement("total", InSummary=true, Order=80)]
     [DataMember]
@@ -2225,7 +2255,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Links related to this Bundle
+    /// Links related to this Bundle.
     /// </summary>
     [FhirElement("link", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -2239,7 +2269,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Bundle.LinkComponent> _Link;
 
     /// <summary>
-    /// Entry in the bundle - will have a resource or information
+    /// Entry in the bundle - will have a resource or information.
     /// </summary>
     [FhirElement("entry", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -2253,7 +2283,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Bundle.EntryComponent> _Entry;
 
     /// <summary>
-    /// Digital Signature
+    /// Digital Signature.
     /// </summary>
     [FhirElement("signature", InSummary=true, Order=110)]
     [DataMember]
@@ -2266,8 +2296,11 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Signature _Signature;
 
     /// <summary>
-    /// Issues with the Bundle. Note: Element was introduced in R5, do not use when working with older releases.
+    /// Issues with the Bundle.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R5, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]

@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Availability.availableTime"; } }
 
       /// <summary>
-      /// mon | tue | wed | thu | fri | sat | sun
+      /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("daysOfWeek", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Always available? i.e. 24 hour service
+      /// Always available? i.e. 24 hour service.
       /// </summary>
       [FhirElement("allDay", InSummary=true, Order=40)]
       [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Opening time of day (ignored if allDay = true)
+      /// Opening time of day (ignored if allDay = true).
       /// </summary>
       [FhirElement("availableStartTime", InSummary=true, Order=50)]
       [DataMember]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Closing time of day (ignored if allDay = true)
+      /// Closing time of day (ignored if allDay = true).
       /// </summary>
       [FhirElement("availableEndTime", InSummary=true, Order=60)]
       [DataMember]
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Availability.notAvailableTime"; } }
 
       /// <summary>
-      /// Reason presented to the user explaining why time not available
+      /// Reason presented to the user explaining why time not available.
       /// </summary>
       [FhirElement("description", InSummary=true, Order=30)]
       [DataMember]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Service not available during this period
+      /// Service not available during this period.
       /// </summary>
       [FhirElement("during", InSummary=true, Order=40)]
       [DataMember]
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Times the {item} is available
+    /// Times the {item} is available.
     /// </summary>
     [FhirElement("availableTime", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> _AvailableTime;
 
     /// <summary>
-    /// Not available during this time due to provided reason
+    /// Not available during this time due to provided reason.
     /// </summary>
     [FhirElement("notAvailableTime", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]

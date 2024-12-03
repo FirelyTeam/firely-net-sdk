@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// base | surcharge | deduction | discount | tax | informational
+    /// base | surcharge | deduction | discount | tax | informational.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Factor used for calculating this component
+    /// Factor used for calculating this component.
     /// </summary>
     [FhirElement("factor", InSummary=true, Order=50)]
     [DataMember]
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Explicit value amount to be used
+    /// Explicit value amount to be used.
     /// </summary>
     [FhirElement("amount", InSummary=true, Order=60)]
     [DataMember]
