@@ -103,7 +103,7 @@ namespace Hl7.Fhir.FhirPath
                 if (r is null)
                     return null;
 
-                var fhirValue = r.Annotation<IFhirValueProvider>();
+                var fhirValue = r.Annotation<IFhirValueProvider>() ?? r as IFhirValueProvider;
                 if (fhirValue != null)
                 {
                     return fhirValue.FhirValue;

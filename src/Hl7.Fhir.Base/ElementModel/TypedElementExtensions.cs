@@ -27,9 +27,15 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="modelInspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="rootName"></param>
         /// <returns></returns>
-        [TemporarilyChanged]
         public static ITypedElement ToTypedElement(this Base @base, ModelInspector modelInspector, string? rootName = null)
             => new PocoElementNode(modelInspector, @base, rootName: rootName);
+
+        /// <summary>
+        /// Converts a Poco to a new PocoElementNode.
+        /// </summary>
+        /// <param name="base">The Poco that should be converted to an <see cref="ITypedElement"/>.</param>
+        /// <param name="rootName"></param>
+        public static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null) => PocoElementNode2.Root(@base, rootName);
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements

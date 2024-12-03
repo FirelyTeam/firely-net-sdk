@@ -38,6 +38,13 @@ namespace Hl7.FhirPath
             return result is null || result.Value;
         }
 
+        /// <inheritdoc cref="Predicate(Hl7.FhirPath.CompiledExpression,Hl7.Fhir.Model.IScopedNode,Hl7.FhirPath.EvaluationContext)"/>
+        public static bool Predicate(this CompiledExpression evaluator, Base input, EvaluationContext ctx)
+        {
+            var result = evaluator(input.ToElementNode(), ctx).BooleanEval();
+            return result is null || result.Value;
+        }
+
         /// <summary>
         /// Evaluates an expression and returns true for expression being evaluated as true, and false if the expression returns false or empty.
         /// </summary>

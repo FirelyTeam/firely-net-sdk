@@ -139,9 +139,9 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public void TestImplicitQuantityCast()
         {
             var obs = new Observation { Value = new Hl7.Fhir.Model.Quantity(75m, "kg") };
-            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value > 74 'kg'"));
-            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value = 75 'kg'"));
-            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value ~ 75 'kg'"));
+            Assert.IsTrue(obs.Predicate("Observation.value > 74 'kg'"));
+            Assert.IsTrue(obs.Predicate("Observation.value = 75 'kg'"));
+            Assert.IsTrue(obs.Predicate("Observation.value ~ 75 'kg'"));
         }
 
         [TestMethod]

@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Model;
 using System.Runtime.CompilerServices;
 
@@ -17,7 +18,9 @@ namespace Hl7.Fhir.ElementModel
     {
         [TemporarilyChanged] // This should be restored to use the original ITE stack.
         public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
-            => @base.WithScopeInfo(@base.BuildRoot(rootName));
+            => toElementNode(@base, rootName);
+
+        private static SinglePocoElementNode toElementNode(this Base @base, string? rootName = null) => PocoElementNode2.Root(@base, rootName);
     }
 }
 #nullable restore
