@@ -46,20 +46,20 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
 
     public override IEnumerator<SinglePocoElementNode> GetEnumerator() => asList().GetEnumerator();
 
-    public string ShortPath => (Index, Parent) switch
+    string IShortPathGenerator.ShortPath => (Index, Parent) switch
     {
         // if we have an index, we have a parent.
-        ({ } idx, { } parent) => $"{parent.ShortPath}.{Name}[{idx}]",
+        ({ } idx, { } parent) => $"{((IShortPathGenerator)parent).ShortPath}.{Name}[{idx}]",
         // Note that we omit indices here.
-        (_, { } parent) => $"{parent.ShortPath}.{Name}",
+        (_, { } parent) => $"{((IShortPathGenerator)parent).ShortPath}.{Name}",
         // if we have neither, we are the root. Note that we omit indices here.
         _ => Name
     };
 
-    public Base FhirValue => Poco;
+    Base IFhirValueProvider.FhirValue => Poco;
 
-    public string? ResourceType => Poco is Resource
-        ? InstanceType
+    string? IResourceTypeSupplier.ResourceType => Poco is Resource
+        ? ((ITypedElement)this).InstanceType
         : null;
 
     public IEnumerable<object> Annotations(Type type)
@@ -75,7 +75,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
     
     #region ITypedElement
     
-    public string? InstanceType =>
+    string ITypedElement.InstanceType =>
         Poco switch
         {
             BackboneElement => "BackboneElement",
@@ -83,21 +83,23 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
             _ => Poco.TypeName
         };
 
-    // needed for ITE
-    public virtual object? Value => null;
+    object? ITypedElement.Value => ValueInternal;
 
-    public string Location => (Index, Parent) switch
+    // needed for ITE
+    protected virtual object? ValueInternal => null;
+
+    string ITypedElement.Location => (Index, Parent) switch
     {
         // if we have an index, write it
-        ({ } idx, { } parent) => $"{parent.Location}.{Name}[{idx}]",
+        ({ } idx, { } parent) => $"{((ITypedElement)parent).Location}.{Name}[{idx}]",
         // if we do not, write 0 as idx
-        (_, { } parent) => $"{parent.Location}.{Name}[0]",
+        (_, { } parent) => $"{((ITypedElement)parent).Location}.{Name}[0]",
         // if we have neither, we are the root.
         _ => Name
     };
 
     // needed for ITE
-    public IElementDefinitionSummary? Definition => null;
+    IElementDefinitionSummary? ITypedElement.Definition => null;
     
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children(name);
     
@@ -112,7 +114,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
         : Child(name) ?? Enumerable.Empty<SinglePocoElementNode>();
     
     [TemporarilyChanged] // we should investigate whether we want to even use this anymore. If we do, we should make this implementation explicit.
-    public NodeType Type => Poco switch
+    NodeType IScopedNode.Type => Poco switch
     {
         Bundle => NodeType.Bundle | NodeType.Resource,
         PrimitiveType => NodeType.Primitive,
@@ -123,7 +125,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
         _ => 0
     };
     
-    public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
+    bool IScopedNode.TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
     {
         result = Poco is Bundle
             ? this
@@ -135,7 +137,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
         return result is not null;
     }
 
-    public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
+    bool IScopedNode.TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
     {
         result = Poco is DomainResource
             ? this
@@ -178,7 +180,7 @@ public record SinglePrimitiveElementNode(PrimitiveType Primitive, string? Name =
     
     public static implicit operator SinglePrimitiveElementNode(PrimitiveType primitive) => new(primitive);
     
-    public override object? Value => Primitive.ToITypedElementValue();
+    protected override object? ValueInternal => Primitive.ToITypedElementValue();
 }
 
 public record RepeatingPrimitiveElementNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : RepeatingPocoElementNode(Primitives, null, Name ?? "value")
