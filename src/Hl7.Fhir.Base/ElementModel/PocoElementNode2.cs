@@ -53,8 +53,8 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
     private PocoElementNode2 nodeFor(string name, object value) =>
         value switch
         {
-            PrimitiveType primitive => new SinglePrimitiveElementNode(primitive, name),
-            Base b => new SinglePocoElementNode(b, null, null, name),
+            PrimitiveType primitive => new SinglePrimitiveElementNode(primitive, name) { Parent = this },
+            Base b => new SinglePocoElementNode(b, this, null, name),
             IEnumerable<PrimitiveType> primitiveList => new RepeatingPrimitiveElementNode(primitiveList.ToList(), name) { Parent = this },
             IEnumerable<Base> list => new RepeatingPocoElementNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
