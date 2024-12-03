@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "MedicinalProductManufactured"; } }
 
     /// <summary>
-    /// Dose form as manufactured and before any transformation into the pharmaceutical product
+    /// Dose form as manufactured and before any transformation into the pharmaceutical product.
     /// </summary>
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ManufacturedDoseForm;
 
     /// <summary>
-    /// The “real world” units in which the quantity of the manufactured item is described
+    /// The “real world” units in which the quantity of the manufactured item is described.
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=100)]
     [DataMember]
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
 
     /// <summary>
-    /// The quantity or "count number" of the manufactured item
+    /// The quantity or "count number" of the manufactured item.
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Quantity;
 
     /// <summary>
-    /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
+    /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues).
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
 
     /// <summary>
-    /// Ingredient
+    /// Ingredient.
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ProdCharacteristic _PhysicalCharacteristics;
 
     /// <summary>
-    /// Other codeable characteristics
+    /// Other codeable characteristics.
     /// </summary>
     [FhirElement("otherCharacteristics", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]

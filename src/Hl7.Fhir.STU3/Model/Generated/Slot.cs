@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this item
+    /// External Ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// A broad categorisation of the service that is to be performed during this appointment
+    /// A broad categorisation of the service that is to be performed during this appointment.
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=100, FiveWs="class")]
     [Binding("service-category")]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
 
     /// <summary>
-    /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
+    /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource.
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=110, FiveWs="class")]
     [Binding("service-type")]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
 
     /// <summary>
-    /// The specialty of a practitioner that would be required to perform the service requested in this appointment
+    /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=120, FiveWs="class")]
     [Binding("specialty")]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// The style of appointment or patient that may be booked in the slot (not service type)
+    /// The style of appointment or patient that may be booked in the slot (not service type).
     /// </summary>
     [FhirElement("appointmentType", InSummary=true, Order=130, FiveWs="class")]
     [Binding("appointment-type")]
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _AppointmentType;
 
     /// <summary>
-    /// The schedule resource that this slot defines an interval of status information
+    /// The schedule resource that this slot defines an interval of status information.
     /// </summary>
     [FhirElement("schedule", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Schedule;
 
     /// <summary>
-    /// busy | free | busy-unavailable | busy-tentative | entered-in-error
+    /// busy | free | busy-unavailable | busy-tentative | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date/Time that the slot is to begin
+    /// Date/Time that the slot is to begin.
     /// </summary>
     [FhirElement("start", InSummary=true, Order=160, FiveWs="when.planned")]
     [Cardinality(Min=1,Max=1)]
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date/Time that the slot is to conclude
+    /// Date/Time that the slot is to conclude.
     /// </summary>
     [FhirElement("end", InSummary=true, Order=170, FiveWs="when.planned")]
     [Cardinality(Min=1,Max=1)]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// This slot has already been overbooked, appointments are unlikely to be accepted for this time
+    /// This slot has already been overbooked, appointments are unlikely to be accepted for this time.
     /// </summary>
     [FhirElement("overbooked", Order=180)]
     [DataMember]
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Comments on the slot to describe any extended information. Such as custom constraints on the slot
+    /// Comments on the slot to describe any extended information. Such as custom constraints on the slot.
     /// </summary>
     [FhirElement("comment", Order=190)]
     [DataMember]

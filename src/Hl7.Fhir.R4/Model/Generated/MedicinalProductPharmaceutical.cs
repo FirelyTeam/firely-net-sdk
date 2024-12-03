@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicinalProductPharmaceutical.characteristics"; } }
 
       /// <summary>
-      /// A coded characteristic
+      /// A coded characteristic.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// The status of characteristic e.g. assigned or pending
+      /// The status of characteristic e.g. assigned or pending.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
       [DataMember]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration"; } }
 
       /// <summary>
-      /// Coded expression for the route
+      /// Coded expression for the route.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// The first dose (dose quantity) administered in humans can be specified, for a product under investigation, using a numerical value and its unit of measurement
+      /// The first dose (dose quantity) administered in humans can be specified, for a product under investigation, using a numerical value and its unit of measurement.
       /// </summary>
       [FhirElement("firstDose", InSummary=true, Order=50)]
       [DataMember]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _FirstDose;
 
       /// <summary>
-      /// The maximum single dose that can be administered as per the protocol of a clinical trial can be specified using a numerical value and its unit of measurement
+      /// The maximum single dose that can be administered as per the protocol of a clinical trial can be specified using a numerical value and its unit of measurement.
       /// </summary>
       [FhirElement("maxSingleDose", InSummary=true, Order=60)]
       [DataMember]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _MaxSingleDose;
 
       /// <summary>
-      /// The maximum dose per day (maximum dose quantity to be administered in any one 24-h period) that can be administered as per the protocol referenced in the clinical trial authorisation
+      /// The maximum dose per day (maximum dose quantity to be administered in any one 24-h period) that can be administered as per the protocol referenced in the clinical trial authorisation.
       /// </summary>
       [FhirElement("maxDosePerDay", InSummary=true, Order=70)]
       [DataMember]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _MaxDosePerDay;
 
       /// <summary>
-      /// The maximum dose per treatment period that can be administered as per the protocol referenced in the clinical trial authorisation
+      /// The maximum dose per treatment period that can be administered as per the protocol referenced in the clinical trial authorisation.
       /// </summary>
       [FhirElement("maxDosePerTreatmentPeriod", InSummary=true, Order=80)]
       [DataMember]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Ratio _MaxDosePerTreatmentPeriod;
 
       /// <summary>
-      /// The maximum treatment period during which an Investigational Medicinal Product can be administered as per the protocol referenced in the clinical trial authorisation
+      /// The maximum treatment period during which an Investigational Medicinal Product can be administered as per the protocol referenced in the clinical trial authorisation.
       /// </summary>
       [FhirElement("maxTreatmentPeriod", InSummary=true, Order=90)]
       [DataMember]
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Duration _MaxTreatmentPeriod;
 
       /// <summary>
-      /// A species for which this route applies
+      /// A species for which this route applies.
       /// </summary>
       [FhirElement("targetSpecies", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies"; } }
 
       /// <summary>
-      /// Coded expression for the species
+      /// Coded expression for the species.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// A species specific time during which consumption of animal product is not appropriate
+      /// A species specific time during which consumption of animal product is not appropriate.
       /// </summary>
       [FhirElement("withdrawalPeriod", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod"; } }
 
       /// <summary>
-      /// Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk
+      /// Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk.
       /// </summary>
       [FhirElement("tissue", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Tissue;
 
       /// <summary>
-      /// A value for the time
+      /// A value for the time.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _Value;
 
       /// <summary>
-      /// Extra information about the withdrawal period
+      /// Extra information about the withdrawal period.
       /// </summary>
       [FhirElement("supportingInformation", InSummary=true, Order=60)]
       [DataMember]
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// An identifier for the pharmaceutical medicinal product
+    /// An identifier for the pharmaceutical medicinal product.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// The administrable dose form, after necessary reconstitution
+    /// The administrable dose form, after necessary reconstitution.
     /// </summary>
     [FhirElement("administrableDoseForm", InSummary=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
@@ -748,7 +748,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _AdministrableDoseForm;
 
     /// <summary>
-    /// Todo
+    /// Todo.
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=110)]
     [DataMember]
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
 
     /// <summary>
-    /// Ingredient
+    /// Ingredient.
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Ingredient;
 
     /// <summary>
-    /// Accompanying device
+    /// Accompanying device.
     /// </summary>
     [FhirElement("device", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Device;
 
     /// <summary>
-    /// Characteristics e.g. a products onset of action
+    /// Characteristics e.g. a products onset of action.
     /// </summary>
     [FhirElement("characteristics", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent> _Characteristics;
 
     /// <summary>
-    /// The path by which the pharmaceutical product is taken into or makes contact with the body
+    /// The path by which the pharmaceutical product is taken into or makes contact with the body.
     /// </summary>
     [FhirElement("routeOfAdministration", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=-1)]

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.dependency"; } }
 
       /// <summary>
-      /// Description of the dependency criterium
+      /// Description of the dependency criterium.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Link to predecessor test plans
+      /// Link to predecessor test plans.
       /// </summary>
       [FhirElement("predecessor", Order=50)]
       [DataMember]
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.testCase"; } }
 
       /// <summary>
-      /// Sequence of test case in the test plan
+      /// Sequence of test case in the test plan.
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [DataMember]
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The scope or artifact covered by the case
+      /// The scope or artifact covered by the case.
       /// </summary>
       [FhirElement("scope", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Scope;
 
       /// <summary>
-      /// Required criteria to execute the test case
+      /// Required criteria to execute the test case.
       /// </summary>
       [FhirElement("dependency", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TestPlan.TestCaseDependencyComponent> _Dependency;
 
       /// <summary>
-      /// The actual test to be executed
+      /// The actual test to be executed.
       /// </summary>
       [FhirElement("testRun", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TestPlan.TestRunComponent> _TestRun;
 
       /// <summary>
-      /// The test data used in the test case
+      /// The test data used in the test case.
       /// </summary>
       [FhirElement("testData", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.TestPlan.TestDataComponent> _TestData;
 
       /// <summary>
-      /// Test assertions or expectations
+      /// Test assertions or expectations.
       /// </summary>
       [FhirElement("assertion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.testCase.dependency"; } }
 
       /// <summary>
-      /// Description of the criteria
+      /// Description of the criteria.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Link to predecessor test plans
+      /// Link to predecessor test plans.
       /// </summary>
       [FhirElement("predecessor", Order=50)]
       [DataMember]
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.testCase.testRun"; } }
 
       /// <summary>
-      /// The narrative description of the tests
+      /// The narrative description of the tests.
       /// </summary>
       [FhirElement("narrative", Order=40)]
       [DataMember]
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The test cases in a structured language e.g. gherkin, Postman, or FHIR TestScript
+      /// The test cases in a structured language e.g. gherkin, Postman, or FHIR TestScript.
       /// </summary>
       [FhirElement("script", Order=50)]
       [DataMember]
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.testCase.testRun.script"; } }
 
       /// <summary>
-      /// The language for the test cases e.g. 'gherkin', 'testscript'
+      /// The language for the test cases e.g. 'gherkin', 'testscript'.
       /// </summary>
       [FhirElement("language", Order=40)]
       [DataMember]
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Language;
 
       /// <summary>
-      /// The actual content of the cases - references to TestScripts or externally defined content
+      /// The actual content of the cases - references to TestScripts or externally defined content.
       /// </summary>
       [FhirElement("source", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.testCase.testData"; } }
 
       /// <summary>
-      /// The type of test data description, e.g. 'synthea'
+      /// The type of test data description, e.g. 'synthea'.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -892,7 +892,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Type;
 
       /// <summary>
-      /// The actual test resources when they exist
+      /// The actual test resources when they exist.
       /// </summary>
       [FhirElement("content", Order=50)]
       [DataMember]
@@ -905,7 +905,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Content;
 
       /// <summary>
-      /// Pointer to a definition of test resources - narrative or structured e.g. synthetic data generation, etc
+      /// Pointer to a definition of test resources - narrative or structured e.g. synthetic data generation, etc.
       /// </summary>
       [FhirElement("source", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "TestPlan.testCase.assertion"; } }
 
       /// <summary>
-      /// Assertion type - for example 'informative' or 'required'
+      /// Assertion type - for example 'informative' or 'required' .
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -1046,7 +1046,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// The focus or object of the assertion
+      /// The focus or object of the assertion.
       /// </summary>
       [FhirElement("object", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Object;
 
       /// <summary>
-      /// The actual result assertion
+      /// The actual result assertion.
       /// </summary>
       [FhirElement("result", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this test plan, represented as a URI (globally unique)
+    /// Canonical identifier for this test plan, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier identifier for the test plan
+    /// Business identifier identifier for the test plan.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1215,7 +1215,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the test plan
+    /// Business version of the test plan.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -1246,7 +1246,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -1261,7 +1261,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this test plan (computer friendly)
+    /// Name for this test plan (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this test plan (human friendly)
+    /// Name for this test plan (human friendly).
     /// </summary>
     [FhirElement("title", Order=140)]
     [DataMember]
@@ -1323,7 +1323,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
@@ -1388,7 +1388,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1419,7 +1419,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -1450,7 +1450,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1464,7 +1464,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the test plan
+    /// Natural language description of the test plan.
     /// </summary>
     [FhirElement("description", Order=200)]
     [DataMember]
@@ -1495,7 +1495,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -1509,7 +1509,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction where the test plan applies (if applicable)
+    /// Intended jurisdiction where the test plan applies (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
@@ -1524,7 +1524,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this test plan is defined
+    /// Why this test plan is defined.
     /// </summary>
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
@@ -1555,7 +1555,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
@@ -1586,7 +1586,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
@@ -1617,7 +1617,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The category of the Test Plan - can be acceptance, unit, performance
+    /// The category of the Test Plan - can be acceptance, unit, performance.
     /// </summary>
     [FhirElement("category", Order=260)]
     [Binding("TestPlanCategory")]
@@ -1632,7 +1632,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// What is being tested with this Test Plan - a conformance resource, or narrative criteria, or an external reference
+    /// What is being tested with this Test Plan - a conformance resource, or narrative criteria, or an external reference.
     /// </summary>
     [FhirElement("scope", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -1646,7 +1646,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Scope;
 
     /// <summary>
-    /// A description of test tools to be used in the test plan - narrative for now
+    /// A description of test tools to be used in the test plan - narrative for now.
     /// </summary>
     [FhirElement("testTools", Order=280)]
     [DataMember]
@@ -1677,7 +1677,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The required criteria to execute the test plan - e.g. preconditions, previous tests
+    /// The required criteria to execute the test plan - e.g. preconditions, previous tests.
     /// </summary>
     [FhirElement("dependency", Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -1691,7 +1691,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.TestPlan.DependencyComponent> _Dependency;
 
     /// <summary>
-    /// The threshold or criteria for the test plan to be considered successfully executed - narrative
+    /// The threshold or criteria for the test plan to be considered successfully executed - narrative.
     /// </summary>
     [FhirElement("exitCriteria", Order=300)]
     [DataMember]
@@ -1722,7 +1722,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The test cases that constitute this plan
+    /// The test cases that constitute this plan.
     /// </summary>
     [FhirElement("testCase", Order=310)]
     [Cardinality(Min=0,Max=-1)]

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   public abstract partial class BackboneType : Hl7.Fhir.Model.DataType, Hl7.Fhir.Model.IModifierExtendable
   {
     /// <summary>
-    /// Extensions that cannot be ignored even if unrecognized
+    /// Extensions that cannot be ignored even if unrecognized.
     /// </summary>
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]

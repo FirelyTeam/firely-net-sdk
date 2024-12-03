@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "BodyStructure.includedStructure"; } }
 
       /// <summary>
-      /// Code that represents the included structure
+      /// Code that represents the included structure.
       /// </summary>
       [FhirElement("structure", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("BodySite")]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Structure;
 
       /// <summary>
-      /// Code that represents the included structure laterality
+      /// Code that represents the included structure laterality.
       /// </summary>
       [FhirElement("laterality", Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("BodyStructureQualifier")]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Laterality;
 
       /// <summary>
-      /// Landmark relative location
+      /// Landmark relative location.
       /// </summary>
       [FhirElement("bodyLandmarkOrientation", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> _BodyLandmarkOrientation;
 
       /// <summary>
-      /// Cartesian reference for structure
+      /// Cartesian reference for structure.
       /// </summary>
       [FhirElement("spatialReference", Order=70, FiveWs="FiveWs.where[x]")]
       [CLSCompliant(false)]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _SpatialReference;
 
       /// <summary>
-      /// Code that represents the included structure qualifier
+      /// Code that represents the included structure qualifier.
       /// </summary>
       [FhirElement("qualifier", Order=80, FiveWs="FiveWs.what[x]")]
       [Binding("BodyStructureQualifier")]
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "BodyStructure.includedStructure.bodyLandmarkOrientation"; } }
 
       /// <summary>
-      /// Body ]andmark description
+      /// Body ]andmark description.
       /// </summary>
       [FhirElement("landmarkDescription", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("bodyLandmarkOrientationLandmarkDescription")]
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _LandmarkDescription;
 
       /// <summary>
-      /// Clockface orientation
+      /// Clockface orientation.
       /// </summary>
       [FhirElement("clockFacePosition", Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("bodyLandmarkOrientationClockFacePosition")]
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _ClockFacePosition;
 
       /// <summary>
-      /// Landmark relative location
+      /// Landmark relative location.
       /// </summary>
       [FhirElement("distanceFromLandmark", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> _DistanceFromLandmark;
 
       /// <summary>
-      /// Relative landmark surface orientation
+      /// Relative landmark surface orientation.
       /// </summary>
       [FhirElement("surfaceOrientation", Order=70, FiveWs="FiveWs.what[x]")]
       [Binding("bodyLandmarkOrientationSurfaceOrientation")]
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark"; } }
 
       /// <summary>
-      /// Measurement device
+      /// Measurement device.
       /// </summary>
       [FhirElement("device", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("DeviceType")]
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableReference> _Device;
 
       /// <summary>
-      /// Measured distance from body landmark
+      /// Measured distance from body landmark.
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Bodystructure identifier
+    /// Bodystructure identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this record is in active use
+    /// Whether this record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of Structure
+    /// Kind of Structure.
     /// </summary>
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureCode")]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Morphology;
 
     /// <summary>
-    /// Included anatomic location(s)
+    /// Included anatomic location(s).
     /// </summary>
     [FhirElement("includedStructure", Order=120)]
     [Cardinality(Min=1,Max=-1)]
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> _IncludedStructure;
 
     /// <summary>
-    /// Excluded anatomic locations(s)
+    /// Excluded anatomic locations(s).
     /// </summary>
     [FhirElement("excludedStructure", Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> _ExcludedStructure;
 
     /// <summary>
-    /// Text description
+    /// Text description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Attached images
+    /// Attached images.
     /// </summary>
     [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Image;
 
     /// <summary>
-    /// Who this is about
+    /// Who this is about.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]

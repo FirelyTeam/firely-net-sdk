@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Goal.target"; } }
 
       /// <summary>
-      /// The parameter whose value is being tracked
+      /// The parameter whose value is being tracked.
       /// </summary>
       [FhirElement("measure", InSummary=true, Order=40)]
       [Binding("GoalTargetMeasure")]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Measure;
 
       /// <summary>
-      /// The target value to be achieved
+      /// The target value to be achieved.
       /// </summary>
       [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("GoalTargetDetail")]
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Detail;
 
       /// <summary>
-      /// Reach goal on or before
+      /// Reach goal on or before.
       /// </summary>
       [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this goal
+    /// External Ids for this goal.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
+    /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected.
     /// </summary>
     [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
+    /// in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable.
     /// </summary>
     [FhirElement("achievementStatus", InSummary=true, Order=110)]
     [Binding("GoalAchievementStatus")]
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _AchievementStatus;
 
     /// <summary>
-    /// E.g. Treatment, dietary, behavioral, etc
+    /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("GoalCategory")]
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// After meeting the goal, ongoing activity is needed to sustain the goal objective
+    /// After meeting the goal, ongoing activity is needed to sustain the goal objective.
     /// </summary>
     [FhirElement("continuous", Order=130)]
     [DataMember]
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// high-priority | medium-priority | low-priority
+    /// high-priority | medium-priority | low-priority.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [Binding("GoalPriority")]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Priority;
 
     /// <summary>
-    /// Code or text describing goal
+    /// Code or text describing goal.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Binding("GoalDescription")]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Description;
 
     /// <summary>
-    /// Who this goal is intended for
+    /// Who this goal is intended for.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// When goal pursuit begins
+    /// When goal pursuit begins.
     /// </summary>
     [FhirElement("start", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [Binding("GoalStartEvent")]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Start;
 
     /// <summary>
-    /// Target outcome for the goal
+    /// Target outcome for the goal.
     /// </summary>
     [FhirElement("target", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Goal.TargetComponent> _Target;
 
     /// <summary>
-    /// When goal status took effect
+    /// When goal status took effect.
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason for current status
+    /// Reason for current status.
     /// </summary>
     [FhirElement("statusReason", Order=200)]
     [DataMember]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who's responsible for creating Goal?
+    /// Who's responsible for creating Goal?.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=210, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Source;
 
     /// <summary>
-    /// Issues addressed by this goal
+    /// Issues addressed by this goal.
     /// </summary>
     [FhirElement("addresses", Order=220, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Addresses;
 
     /// <summary>
-    /// Comments about the goal
+    /// Comments about the goal.
     /// </summary>
     [FhirElement("note", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// What result was achieved regarding the goal?
+    /// What result was achieved regarding the goal?.
     /// </summary>
     [FhirElement("outcome", Order=240)]
     [Binding("GoalOutcome")]

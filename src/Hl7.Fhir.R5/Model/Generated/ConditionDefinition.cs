@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ConditionDefinition.observation"; } }
 
       /// <summary>
-      /// Category that is relevant
+      /// Category that is relevant.
       /// </summary>
       [FhirElement("category", Order=40)]
       [Binding("ObservationCategory")]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Code for relevant Observation
+      /// Code for relevant Observation.
       /// </summary>
       [FhirElement("code", Order=50)]
       [Binding("ObservationCode")]
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ConditionDefinition.medication"; } }
 
       /// <summary>
-      /// Category that is relevant
+      /// Category that is relevant.
       /// </summary>
       [FhirElement("category", Order=40)]
       [Binding("MedicationRequestCategory")]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Code for relevant Medication
+      /// Code for relevant Medication.
       /// </summary>
       [FhirElement("code", Order=50)]
       [Binding("MedicationCode")]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ConditionDefinition.precondition"; } }
 
       /// <summary>
-      /// sensitive | specific
+      /// sensitive | specific.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Code for relevant Observation
+      /// Code for relevant Observation.
       /// </summary>
       [FhirElement("code", Order=50)]
       [Binding("ObservationCode")]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Value of Observation
+      /// Value of Observation.
       /// </summary>
       [FhirElement("value", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ConditionDefinition.questionnaire"; } }
 
       /// <summary>
-      /// preadmit | diff-diagnosis | outcome
+      /// preadmit | diff-diagnosis | outcome.
       /// </summary>
       [FhirElement("purpose", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific Questionnaire
+      /// Specific Questionnaire.
       /// </summary>
       [FhirElement("reference", Order=50)]
       [CLSCompliant(false)]
@@ -702,7 +702,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ConditionDefinition.plan"; } }
 
       /// <summary>
-      /// Use for the plan
+      /// Use for the plan.
       /// </summary>
       [FhirElement("role", Order=40)]
       [DataMember]
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Role;
 
       /// <summary>
-      /// The actual plan
+      /// The actual plan.
       /// </summary>
       [FhirElement("reference", Order=50)]
       [CLSCompliant(false)]
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this condition definition, represented as a URI (globally unique)
+    /// Canonical identifier for this condition definition, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the condition definition
+    /// Additional identifier for the condition definition.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the condition definition
+    /// Business version of the condition definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -893,7 +893,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this condition definition (computer friendly)
+    /// Name for this condition definition (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this condition definition (human friendly)
+    /// Name for this condition definition (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Subordinate title of the event definition
+    /// Subordinate title of the event definition.
     /// </summary>
     [FhirElement("subtitle", Order=150)]
     [DataMember]
@@ -1001,7 +1001,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1097,7 +1097,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=190, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1142,7 +1142,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the condition definition
+    /// Natural language description of the condition definition.
     /// </summary>
     [FhirElement("description", Order=210)]
     [DataMember]
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -1187,7 +1187,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for condition definition (if applicable)
+    /// Intended jurisdiction for condition definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
     [Binding("Jurisdiction")]
@@ -1202,7 +1202,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Identification of the condition, problem or diagnosis
+    /// Identification of the condition, problem or diagnosis.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=240)]
     [Binding("ConditionKind")]
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Subjective severity of condition
+    /// Subjective severity of condition.
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=250)]
     [Binding("ConditionSeverity")]
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Severity;
 
     /// <summary>
-    /// Anatomical location, if relevant
+    /// Anatomical location, if relevant.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=260)]
     [Binding("BodySite")]
@@ -1245,7 +1245,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _BodySite;
 
     /// <summary>
-    /// Stage/grade, usually assessed formally
+    /// Stage/grade, usually assessed formally.
     /// </summary>
     [FhirElement("stage", InSummary=true, Order=270)]
     [Binding("ConditionStage")]
@@ -1259,7 +1259,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Stage;
 
     /// <summary>
-    /// Whether Severity is appropriate
+    /// Whether Severity is appropriate.
     /// </summary>
     [FhirElement("hasSeverity", Order=280)]
     [DataMember]
@@ -1290,7 +1290,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Whether bodySite is appropriate
+    /// Whether bodySite is appropriate.
     /// </summary>
     [FhirElement("hasBodySite", Order=290)]
     [DataMember]
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Whether stage is appropriate
+    /// Whether stage is appropriate.
     /// </summary>
     [FhirElement("hasStage", Order=300)]
     [DataMember]
@@ -1352,7 +1352,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Formal Definition for the condition
+    /// Formal Definition for the condition.
     /// </summary>
     [FhirElement("definition", Order=310)]
     [Cardinality(Min=0,Max=-1)]
@@ -1384,7 +1384,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Observations particularly relevant to this condition
+    /// Observations particularly relevant to this condition.
     /// </summary>
     [FhirElement("observation", Order=320)]
     [Cardinality(Min=0,Max=-1)]
@@ -1398,7 +1398,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ConditionDefinition.ObservationComponent> _Observation;
 
     /// <summary>
-    /// Medications particularly relevant for this condition
+    /// Medications particularly relevant for this condition.
     /// </summary>
     [FhirElement("medication", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -1412,7 +1412,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ConditionDefinition.MedicationComponent> _Medication;
 
     /// <summary>
-    /// Observation that suggets this condition
+    /// Observation that suggets this condition.
     /// </summary>
     [FhirElement("precondition", Order=340)]
     [Cardinality(Min=0,Max=-1)]
@@ -1426,7 +1426,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ConditionDefinition.PreconditionComponent> _Precondition;
 
     /// <summary>
-    /// Appropriate team for this condition
+    /// Appropriate team for this condition.
     /// </summary>
     [FhirElement("team", Order=350)]
     [CLSCompliant(false)]
@@ -1442,7 +1442,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Team;
 
     /// <summary>
-    /// Questionnaire for this condition
+    /// Questionnaire for this condition.
     /// </summary>
     [FhirElement("questionnaire", Order=360)]
     [Cardinality(Min=0,Max=-1)]
@@ -1456,7 +1456,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ConditionDefinition.QuestionnaireComponent> _Questionnaire;
 
     /// <summary>
-    /// Plan that is appropriate
+    /// Plan that is appropriate.
     /// </summary>
     [FhirElement("plan", Order=370)]
     [Cardinality(Min=0,Max=-1)]

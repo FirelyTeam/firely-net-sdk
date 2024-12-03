@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business identifier
+    /// Business identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// completed | entered-in-error
+    /// completed | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who this evaluation is for
+    /// Who this evaluation is for.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Date evaluation was performed
+    /// Date evaluation was performed.
     /// </summary>
     [FhirElement("date", Order=120, FiveWs="FiveWs.init")]
     [DataMember]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who is responsible for publishing the recommendations
+    /// Who is responsible for publishing the recommendations.
     /// </summary>
     [FhirElement("authority", Order=130)]
     [CLSCompliant(false)]
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Authority;
 
     /// <summary>
-    /// The vaccine preventable disease schedule being evaluated
+    /// The vaccine preventable disease schedule being evaluated.
     /// </summary>
     [FhirElement("targetDisease", InSummary=true, Order=140)]
     [Binding("EvaluationTargetDisease")]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _TargetDisease;
 
     /// <summary>
-    /// Immunization being evaluated
+    /// Immunization being evaluated.
     /// </summary>
     [FhirElement("immunizationEvent", InSummary=true, Order=150)]
     [CLSCompliant(false)]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ImmunizationEvent;
 
     /// <summary>
-    /// Status of the dose relative to published recommendations
+    /// Status of the dose relative to published recommendations.
     /// </summary>
     [FhirElement("doseStatus", InSummary=true, Order=160)]
     [Binding("EvaluationDoseStatus")]
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _DoseStatus;
 
     /// <summary>
-    /// Reason why the doese is considered valid, invalid or some other status
+    /// Reason why the doese is considered valid, invalid or some other status.
     /// </summary>
     [FhirElement("doseStatusReason", Order=170)]
     [Binding("EvaluationDoseStatusReason")]
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _DoseStatusReason;
 
     /// <summary>
-    /// Evaluation notes
+    /// Evaluation notes.
     /// </summary>
     [FhirElement("description", Order=180)]
     [DataMember]
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of vaccine series
+    /// Name of vaccine series.
     /// </summary>
     [FhirElement("series", Order=190)]
     [DataMember]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Dose number within series
+    /// Dose number within series.
     /// </summary>
     [FhirElement("doseNumber", Order=200)]
     [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Recommended number of doses for immunity
+    /// Recommended number of doses for immunity.
     /// </summary>
     [FhirElement("seriesDoses", Order=210)]
     [DataMember]

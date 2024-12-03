@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Ratio"; } }
 
     /// <summary>
-    /// Numerator value
+    /// Numerator value.
     /// </summary>
     [FhirElement("numerator", InSummary=true, Order=30)]
     [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _Numerator;
 
     /// <summary>
-    /// Denominator value
+    /// Denominator value.
     /// </summary>
     [FhirElement("denominator", InSummary=true, Order=40)]
     [DataMember]

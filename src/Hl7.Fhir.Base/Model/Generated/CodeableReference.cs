@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "CodeableReference"; } }
 
     /// <summary>
-    /// Reference to a concept (by class)
+    /// Reference to a concept (by class).
     /// </summary>
     [FhirElement("concept", InSummary=true, Order=30)]
     [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Concept;
 
     /// <summary>
-    /// Reference to a resource (by instance)
+    /// Reference to a resource (by instance).
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=40)]
     [DataMember]

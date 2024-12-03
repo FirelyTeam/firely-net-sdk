@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ChargeItemDefinition.applicability"; } }
 
       /// <summary>
-      /// Natural language description of the condition
+      /// Natural language description of the condition.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Language of the expression
+      /// Language of the expression.
       /// </summary>
       [FhirElement("language", Order=50)]
       [DataMember]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Boolean-valued expression
+      /// Boolean-valued expression.
       /// </summary>
       [FhirElement("expression", Order=60)]
       [DataMember]
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ChargeItemDefinition.propertyGroup"; } }
 
       /// <summary>
-      /// Conditions under which the priceComponent is applicable
+      /// Conditions under which the priceComponent is applicable.
       /// </summary>
       [FhirElement("applicability", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent> _Applicability;
 
       /// <summary>
-      /// Components of total line item price
+      /// Components of total line item price.
       /// </summary>
       [FhirElement("priceComponent", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ChargeItemDefinition.propertyGroup.priceComponent"; } }
 
       /// <summary>
-      /// base | surcharge | deduction | discount | tax | informational
+      /// base | surcharge | deduction | discount | tax | informational.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Code identifying the specific component
+      /// Code identifying the specific component.
       /// </summary>
       [FhirElement("code", Order=50)]
       [DataMember]
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Factor used for calculating this component
+      /// Factor used for calculating this component.
       /// </summary>
       [FhirElement("factor", Order=60)]
       [DataMember]
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Monetary amount associated with this component
+      /// Monetary amount associated with this component.
       /// </summary>
       [FhirElement("amount", Order=70)]
       [DataMember]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this charge item definition, represented as a URI (globally unique)
+    /// Canonical identifier for this charge item definition, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the charge item definition
+    /// Additional identifier for the charge item definition.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the charge item definition
+    /// Business version of the charge item definition.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this charge item definition (human friendly)
+    /// Name for this charge item definition (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Underlying externally-defined charge item definition
+    /// Underlying externally-defined charge item definition.
     /// </summary>
     [FhirElement("derivedFromUri", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A larger definition of which this particular definition is a component or step
+    /// A larger definition of which this particular definition is a component or step.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Completed or terminated request(s) whose function is taken by this new request
+    /// Completed or terminated request(s) whose function is taken by this new request.
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=190, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -940,7 +940,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the charge item definition
+    /// Natural language description of the charge item definition.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=210)]
     [DataMember]
@@ -985,7 +985,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -999,7 +999,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for charge item definition (if applicable)
+    /// Intended jurisdiction for charge item definition (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
     [Binding("Jurisdiction")]
@@ -1014,7 +1014,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
@@ -1045,7 +1045,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the charge item definition was approved by publisher
+    /// When the charge item definition was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=250)]
     [DataMember]
@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the charge item definition was last reviewed
+    /// When the charge item definition was last reviewed.
     /// </summary>
     [FhirElement("lastReviewDate", Order=260)]
     [DataMember]
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the charge item definition is expected to be used
+    /// When the charge item definition is expected to be used.
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=270)]
     [DataMember]
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _EffectivePeriod;
 
     /// <summary>
-    /// Billing codes or product types this definition applies to
+    /// Billing codes or product types this definition applies to.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=280)]
     [Binding("ChargeItemDefinitionCode")]
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Instances this definition applies to
+    /// Instances this definition applies to.
     /// </summary>
     [FhirElement("instance", Order=290)]
     [CLSCompliant(false)]
@@ -1150,7 +1150,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Instance;
 
     /// <summary>
-    /// Whether or not the billing code is applicable
+    /// Whether or not the billing code is applicable.
     /// </summary>
     [FhirElement("applicability", Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent> _Applicability;
 
     /// <summary>
-    /// Group of properties which are applicable under the same conditions
+    /// Group of properties which are applicable under the same conditions.
     /// </summary>
     [FhirElement("propertyGroup", Order=310)]
     [Cardinality(Min=0,Max=-1)]

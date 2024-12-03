@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "CommunicationRequest.payload"; } }
 
       /// <summary>
-      /// Message part content
+      /// Message part content.
       /// </summary>
       [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Unique identifier
+    /// Unique identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Fulfills plan or proposal
+    /// Fulfills plan or proposal.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Request(s) replaced by this request
+    /// Request(s) replaced by this request.
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=110)]
     [CLSCompliant(false)]
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
 
     /// <summary>
-    /// Composite request this is part of
+    /// Composite request this is part of.
     /// </summary>
     [FhirElement("groupIdentifier", InSummary=true, Order=120)]
     [DataMember]
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _GroupIdentifier;
 
     /// <summary>
-    /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
+    /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Reason for current status
+    /// Reason for current status.
     /// </summary>
     [FhirElement("statusReason", Order=140)]
     [Binding("CommunicationRequestStatusReason")]
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _StatusReason;
 
     /// <summary>
-    /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+    /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Message category
+    /// Message category.
     /// </summary>
     [FhirElement("category", Order=160, FiveWs="FiveWs.class")]
     [Binding("CommunicationCategory")]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// routine | urgent | asap | stat
+    /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// True if request is prohibiting action
+    /// True if request is prohibiting action.
     /// </summary>
     [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=180)]
     [DataMember]
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A channel of communication
+    /// A channel of communication.
     /// </summary>
     [FhirElement("medium", Order=190)]
     [Binding("CommunicationMedium")]
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
 
     /// <summary>
-    /// Focus of message
+    /// Focus of message.
     /// </summary>
     [FhirElement("subject", Order=200, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Resources that pertain to this communication request
+    /// Resources that pertain to this communication request.
     /// </summary>
     [FhirElement("about", Order=210, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _About;
 
     /// <summary>
-    /// The Encounter during which this CommunicationRequest was created
+    /// The Encounter during which this CommunicationRequest was created.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=220, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Message payload
+    /// Message payload.
     /// </summary>
     [FhirElement("payload", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent> _Payload;
 
     /// <summary>
-    /// When scheduled
+    /// When scheduled.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=240, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [CLSCompliant(false)]
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// When request transitioned to being actionable
+    /// When request transitioned to being actionable.
     /// </summary>
     [FhirElement("authoredOn", InSummary=true, Order=250, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who asks for the information to be shared
+    /// Who asks for the information to be shared.
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=260, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Requester;
 
     /// <summary>
-    /// Who to share the information with
+    /// Who to share the information with.
     /// </summary>
     [FhirElement("recipient", Order=270, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
 
     /// <summary>
-    /// Who should share the information
+    /// Who should share the information.
     /// </summary>
     [FhirElement("informationProvider", InSummary=true, Order=280, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _InformationProvider;
 
     /// <summary>
-    /// Why is communication needed?
+    /// Why is communication needed?.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
     [Binding("CommunicationReason")]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Reason;
 
     /// <summary>
-    /// Comments made about communication request
+    /// Comments made about communication request.
     /// </summary>
     [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]

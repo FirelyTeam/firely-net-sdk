@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Endpoint.payload"; } }
 
       /// <summary>
-      /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
+      /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries).
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("PayloadType")]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
+      /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this).
       /// </summary>
       [FhirElement("mimeType", InSummary=true, Order=50)]
       [Binding("MimeType")]
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifies this endpoint across multiple systems
+    /// Identifies this endpoint across multiple systems.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | suspended | error | off | entered-in-error | test
+    /// active | suspended | error | off | entered-in-error | test.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Protocol/Profile/Standard to be used with this endpoint connection
+    /// Protocol/Profile/Standard to be used with this endpoint connection.
     /// </summary>
     [FhirElement("connectionType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("endpoint-contype")]
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ConnectionType;
 
     /// <summary>
-    /// A name that this endpoint can be identified by
+    /// A name that this endpoint can be identified by.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional details about the endpoint that could be displayed as further information to identify the description beyond its name
+    /// Additional details about the endpoint that could be displayed as further information to identify the description beyond its name.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The type of environment(s) exposed at this endpoint
+    /// The type of environment(s) exposed at this endpoint.
     /// </summary>
     [FhirElement("environmentType", InSummary=true, Order=140)]
     [Binding("endpoint-environment-type")]
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _EnvironmentType;
 
     /// <summary>
-    /// Organization that manages this endpoint (might not be the organization that exposes the endpoint)
+    /// Organization that manages this endpoint (might not be the organization that exposes the endpoint).
     /// </summary>
     [FhirElement("managingOrganization", InSummary=true, Order=150)]
     [CLSCompliant(false)]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
 
     /// <summary>
-    /// Contact details for source (e.g. troubleshooting)
+    /// Contact details for source (e.g. troubleshooting).
     /// </summary>
     [FhirElement("contact", Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Contact;
 
     /// <summary>
-    /// Interval the endpoint is expected to be operational
+    /// Interval the endpoint is expected to be operational.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=170, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _Period;
 
     /// <summary>
-    /// Set of payloads that are provided by this endpoint
+    /// Set of payloads that are provided by this endpoint.
     /// </summary>
     [FhirElement("payload", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Endpoint.PayloadComponent> _Payload;
 
     /// <summary>
-    /// The technical base address for connecting to this endpoint
+    /// The technical base address for connecting to this endpoint.
     /// </summary>
     [FhirElement("address", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Usage depends on the channel type
+    /// Usage depends on the channel type.
     /// </summary>
     [FhirElement("header", Order=200)]
     [Cardinality(Min=0,Max=-1)]

@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceNucleicAcid.subunit"; } }
 
       /// <summary>
-      /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
+      /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts.
       /// </summary>
       [FhirElement("subunit", InSummary=true, Order=40)]
       [DataMember]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Actual nucleotide sequence notation from 5' to 3' end using standard single letter codes. In addition to the base sequence, sugar and type of phosphate or non-phosphate linkage should also be captured
+      /// Actual nucleotide sequence notation from 5' to 3' end using standard single letter codes. In addition to the base sequence, sugar and type of phosphate or non-phosphate linkage should also be captured.
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=50)]
       [DataMember]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The length of the sequence shall be captured
+      /// The length of the sequence shall be captured.
       /// </summary>
       [FhirElement("length", InSummary=true, Order=60)]
       [DataMember]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// (TBC)
+      /// (TBC).
       /// </summary>
       [FhirElement("sequenceAttachment", InSummary=true, Order=70)]
       [DataMember]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Attachment _SequenceAttachment;
 
       /// <summary>
-      /// The nucleotide present at the 5’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the first position in the sequence. A separate representation would be redundant
+      /// The nucleotide present at the 5’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the first position in the sequence. A separate representation would be redundant.
       /// </summary>
       [FhirElement("fivePrime", InSummary=true, Order=80)]
       [DataMember]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _FivePrime;
 
       /// <summary>
-      /// The nucleotide present at the 3’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the last position in the sequence. A separate representation would be redundant
+      /// The nucleotide present at the 3’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the last position in the sequence. A separate representation would be redundant.
       /// </summary>
       [FhirElement("threePrime", InSummary=true, Order=90)]
       [DataMember]
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _ThreePrime;
 
       /// <summary>
-      /// The linkages between sugar residues will also be captured
+      /// The linkages between sugar residues will also be captured.
       /// </summary>
       [FhirElement("linkage", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent> _Linkage;
 
       /// <summary>
-      /// 5.3.6.8.1 Sugar ID (Mandatory)
+      /// 5.3.6.8.1 Sugar ID (Mandatory).
       /// </summary>
       [FhirElement("sugar", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceNucleicAcid.subunit.linkage"; } }
 
       /// <summary>
-      /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified
+      /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified.
       /// </summary>
       [FhirElement("connectivity", InSummary=true, Order=40)]
       [DataMember]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Each linkage will be registered as a fragment and have an ID
+      /// Each linkage will be registered as a fragment and have an ID.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=50)]
       [DataMember]
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Identifier;
 
       /// <summary>
-      /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage
+      /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Residues shall be captured as described in 5.3.6.8.3
+      /// Residues shall be captured as described in 5.3.6.8.3.
       /// </summary>
       [FhirElement("residueSite", InSummary=true, Order=70)]
       [DataMember]
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceNucleicAcid.subunit.sugar"; } }
 
       /// <summary>
-      /// The Substance ID of the sugar or sugar-like component that make up the nucleotide
+      /// The Substance ID of the sugar or sugar-like component that make up the nucleotide.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Identifier;
 
       /// <summary>
-      /// The name of the sugar or sugar-like component that make up the nucleotide
+      /// The name of the sugar or sugar-like component that make up the nucleotide.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The residues that contain a given sugar will be captured. The order of given residues will be captured in the 5‘-3‘direction consistent with the base sequences listed above
+      /// The residues that contain a given sugar will be captured. The order of given residues will be captured in the 5‘-3‘direction consistent with the base sequences listed above.
       /// </summary>
       [FhirElement("residueSite", InSummary=true, Order=60)]
       [DataMember]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The type of the sequence shall be specified based on a controlled vocabulary
+    /// The type of the sequence shall be specified based on a controlled vocabulary.
     /// </summary>
     [FhirElement("sequenceType", InSummary=true, Order=90)]
     [DataMember]
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _SequenceType;
 
     /// <summary>
-    /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit
+    /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit.
     /// </summary>
     [FhirElement("numberOfSubunits", InSummary=true, Order=100)]
     [DataMember]
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The area of hybridisation shall be described if applicable for double stranded RNA or DNA. The number associated with the subunit followed by the number associated to the residue shall be specified in increasing order. The underscore “” shall be used as separator as follows: “Subunitnumber Residue”
+    /// The area of hybridisation shall be described if applicable for double stranded RNA or DNA. The number associated with the subunit followed by the number associated to the residue shall be specified in increasing order. The underscore “” shall be used as separator as follows: “Subunitnumber Residue”.
     /// </summary>
     [FhirElement("areaOfHybridisation", InSummary=true, Order=110)]
     [DataMember]
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// (TBC)
+    /// (TBC).
     /// </summary>
     [FhirElement("oligoNucleotideType", InSummary=true, Order=120)]
     [DataMember]
@@ -873,7 +873,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _OligoNucleotideType;
 
     /// <summary>
-    /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times
+    /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times.
     /// </summary>
     [FhirElement("subunit", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]

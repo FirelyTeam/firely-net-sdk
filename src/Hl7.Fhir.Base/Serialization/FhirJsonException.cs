@@ -45,17 +45,19 @@ namespace Hl7.Fhir.Serialization
         public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
         public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118";
 
-        [Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
-        public const string RESOURCETYPE_UNEXPECTED_CODE = "JSON119";
+        //[Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
+        //public const string RESOURCETYPE_UNEXPECTED_CODE = "JSON119";
         public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
         public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
         public const string LONG_CANNOT_BE_PARSED_CODE = "JSON122";
         public const string LONG_INCORRECT_FORMAT_CODE = "JSON123";
 
-        [Obsolete("According to the latest updates of the Json format, primitive arrays of different sizes are no longer considered an error.")]
-        public const string PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE = "JSON122";
+        //[Obsolete("According to the latest updates of the Json format, primitive arrays of different sizes are no longer considered an error.")]
+        //public const string PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE = "JSON122";
 
         public const string PRIMITIVE_ARRAYS_ONLY_NULL_CODE = "JSON125";
+
+        // Cannot happen anymore since 6.0 since the simple values Element.id and Extension.url are gone.
         //public const string INCOMPATIBLE_SIMPLE_VALUE_CODE = "JSON126";
         public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
 
@@ -107,8 +109,8 @@ namespace Hl7.Fhir.Serialization
 
         // The serialization contained a superfluous 'resourceType' property, but we have read all data anyway.
         // Note, this is no longer considered an error, since there are Resources using an element named "resourceType" (Subscription.filterBy for example).
-        [Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
-        internal static FhirJsonException RESOURCETYPE_UNEXPECTED(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, RESOURCETYPE_UNEXPECTED_CODE, "The 'resourceType' property should only be used in resources.", OO_Sev.Warning, OO_Typ.Structure);
+        //[Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
+        //internal static FhirJsonException RESOURCETYPE_UNEXPECTED(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, RESOURCETYPE_UNEXPECTED_CODE, "The 'resourceType' property should only be used in resources.", OO_Sev.Warning, OO_Typ.Structure);
 
         // Empty objects and arrays can be ignored without discarding data
         internal static FhirJsonException OBJECTS_CANNOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, OBJECTS_CANNOT_BE_EMPTY_CODE, "An object needs to have at least one property.", OO_Sev.Warning, OO_Typ.Structure);
@@ -137,10 +139,10 @@ namespace Hl7.Fhir.Serialization
             LONG_INCORRECT_FORMAT_CODE,
             EXPECTED_START_OF_ARRAY_CODE,
             USE_OF_UNDERSCORE_ILLEGAL_CODE,
-            RESOURCETYPE_UNEXPECTED_CODE,
+          //  RESOURCETYPE_UNEXPECTED_CODE,
             OBJECTS_CANNOT_BE_EMPTY_CODE,
             ARRAYS_CANNOT_BE_EMPTY_CODE,
-            PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE,
+          //  PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE,
             PRIMITIVE_ARRAYS_ONLY_NULL_CODE,
             PROPERTY_MAY_NOT_BE_EMPTY_CODE,
             DUPLICATE_ARRAY_CODE

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Population"; } }
 
     /// <summary>
-    /// The age of the specific population
+    /// The age of the specific population.
     /// </summary>
     [FhirElement("age", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Age;
 
     /// <summary>
-    /// The gender of the specific population
+    /// The gender of the specific population.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=50)]
     [DataMember]
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Gender;
 
     /// <summary>
-    /// Race of the specific population
+    /// Race of the specific population.
     /// </summary>
     [FhirElement("race", InSummary=true, Order=60)]
     [DataMember]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Race;
 
     /// <summary>
-    /// The existing physiological conditions of the specific population to which this applies
+    /// The existing physiological conditions of the specific population to which this applies.
     /// </summary>
     [FhirElement("physiologicalCondition", InSummary=true, Order=70)]
     [DataMember]

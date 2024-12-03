@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingSelection.performer"; } }
 
       /// <summary>
-      /// Type of performer
+      /// Type of performer.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("EventPerformerFunction")]
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Author (human or machine)
+      /// Author (human or machine).
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingSelection.instance"; } }
 
       /// <summary>
-      /// DICOM SOP Instance UID
+      /// DICOM SOP Instance UID.
       /// </summary>
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// DICOM Instance Number
+      /// DICOM Instance Number.
       /// </summary>
       [FhirElement("number", InSummary=true, Order=50)]
       [DataMember]
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// DICOM SOP Class UID
+      /// DICOM SOP Class UID.
       /// </summary>
       [FhirElement("sopClass", Order=60)]
       [Binding("sopClass")]
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _SopClass;
 
       /// <summary>
-      /// The selected subset of the SOP Instance
+      /// The selected subset of the SOP Instance.
       /// </summary>
       [FhirElement("subset", Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A specific 2D region in a DICOM image / frame
+      /// A specific 2D region in a DICOM image / frame.
       /// </summary>
       [FhirElement("imageRegion2D", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent> _ImageRegion2D;
 
       /// <summary>
-      /// A specific 3D region in a DICOM frame of reference
+      /// A specific 3D region in a DICOM frame of reference.
       /// </summary>
       [FhirElement("imageRegion3D", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingSelection.instance.imageRegion2D"; } }
 
       /// <summary>
-      /// point | polyline | interpolated | circle | ellipse
+      /// point | polyline | interpolated | circle | ellipse.
       /// </summary>
       [FhirElement("regionType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specifies the coordinates that define the image region
+      /// Specifies the coordinates that define the image region.
       /// </summary>
       [FhirElement("coordinate", Order=50)]
       [Cardinality(Min=1,Max=-1)]
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingSelection.instance.imageRegion3D"; } }
 
       /// <summary>
-      /// point | multipoint | polyline | polygon | ellipse | ellipsoid
+      /// point | multipoint | polyline | polygon | ellipse | ellipsoid.
       /// </summary>
       [FhirElement("regionType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specifies the coordinates that define the image region
+      /// Specifies the coordinates that define the image region.
       /// </summary>
       [FhirElement("coordinate", Order=50)]
       [Cardinality(Min=1,Max=-1)]
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Business Identifier for Imaging Selection
+    /// Business Identifier for Imaging Selection.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// available | entered-in-error | unknown
+    /// available | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Subject of the selected instances
+    /// Subject of the selected instances.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -984,7 +984,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Date / Time when this imaging selection was created
+    /// Date / Time when this imaging selection was created.
     /// </summary>
     [FhirElement("issued", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Selector of the instances (human or machine)
+    /// Selector of the instances (human or machine).
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> _Performer;
 
     /// <summary>
-    /// Associated request
+    /// Associated request.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=140, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
@@ -1045,7 +1045,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// Classifies the imaging selection
+    /// Classifies the imaging selection.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=150)]
     [Binding("ImagingSelectionCode")]
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Imaging Selection purpose text or code
+    /// Imaging Selection purpose text or code.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=160)]
     [Binding("ImagingSelectionCode")]
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// DICOM Study Instance UID
+    /// DICOM Study Instance UID.
     /// </summary>
     [FhirElement("studyUid", InSummary=true, Order=170)]
     [DataMember]
@@ -1106,7 +1106,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The imaging study from which the imaging selection is derived
+    /// The imaging study from which the imaging selection is derived.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -1122,7 +1122,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
 
     /// <summary>
-    /// The network service providing retrieval for the images referenced in the imaging selection
+    /// The network service providing retrieval for the images referenced in the imaging selection.
     /// </summary>
     [FhirElement("endpoint", InSummary=true, Order=190)]
     [CLSCompliant(false)]
@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
 
     /// <summary>
-    /// DICOM Series Instance UID
+    /// DICOM Series Instance UID.
     /// </summary>
     [FhirElement("seriesUid", InSummary=true, Order=200)]
     [DataMember]
@@ -1169,7 +1169,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// DICOM Series Number
+    /// DICOM Series Number.
     /// </summary>
     [FhirElement("seriesNumber", InSummary=true, Order=210)]
     [DataMember]
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The Frame of Reference UID for the selected images
+    /// The Frame of Reference UID for the selected images.
     /// </summary>
     [FhirElement("frameOfReferenceUid", InSummary=true, Order=220)]
     [DataMember]
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Body part examined
+    /// Body part examined.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=230)]
     [Binding("BodySite")]
@@ -1245,7 +1245,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableReference _BodySite;
 
     /// <summary>
-    /// Related resource that is the focus for the imaging selection
+    /// Related resource that is the focus for the imaging selection.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=240)]
     [CLSCompliant(false)]
@@ -1261,7 +1261,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Focus;
 
     /// <summary>
-    /// The selected instances
+    /// The selected instances.
     /// </summary>
     [FhirElement("instance", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]

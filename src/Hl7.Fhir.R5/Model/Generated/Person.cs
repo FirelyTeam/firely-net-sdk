@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Person.communication"; } }
 
       /// <summary>
-      /// The language which can be used to communicate with the person about his or her health
+      /// The language which can be used to communicate with the person about his or her health.
       /// </summary>
       [FhirElement("language", Order=40)]
       [Binding("Language")]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Language;
 
       /// <summary>
-      /// Language preference indicator
+      /// Language preference indicator.
       /// </summary>
       [FhirElement("preferred", Order=50)]
       [DataMember]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Person.link"; } }
 
       /// <summary>
-      /// The resource to which this actual person is associated
+      /// The resource to which this actual person is associated.
       /// </summary>
       [FhirElement("target", Order=40)]
       [CLSCompliant(false)]
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Target;
 
       /// <summary>
-      /// level1 | level2 | level3 | level4
+      /// level1 | level2 | level3 | level4.
       /// </summary>
       [FhirElement("assurance", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A human identifier for this person
+    /// A human identifier for this person.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// This person's record is in active use
+    /// This person's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A name associated with the person
+    /// A name associated with the person.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.HumanName> _Name;
 
     /// <summary>
-    /// A contact detail for the person
+    /// A contact detail for the person.
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// male | female | other | unknown
+    /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The date on which the person was born
+    /// The date on which the person was born.
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=140)]
     [DataMember]
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Indicates if the individual is deceased or not
+    /// Indicates if the individual is deceased or not.
     /// </summary>
     [FhirElement("deceased", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Deceased;
 
     /// <summary>
-    /// One or more addresses for the person
+    /// One or more addresses for the person.
     /// </summary>
     [FhirElement("address", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Address> _Address;
 
     /// <summary>
-    /// Marital (civil) status of a person
+    /// Marital (civil) status of a person.
     /// </summary>
     [FhirElement("maritalStatus", Order=170)]
     [Binding("MaritalStatus")]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _MaritalStatus;
 
     /// <summary>
-    /// Image of the person
+    /// Image of the person.
     /// </summary>
     [FhirElement("photo", Order=180)]
     [Cardinality(Min=0,Max=-1)]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Attachment> _Photo;
 
     /// <summary>
-    /// A language which may be used to communicate with the person about his or her health
+    /// A language which may be used to communicate with the person about his or her health.
     /// </summary>
     [FhirElement("communication", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Person.CommunicationComponent> _Communication;
 
     /// <summary>
-    /// The organization that is the custodian of the person record
+    /// The organization that is the custodian of the person record.
     /// </summary>
     [FhirElement("managingOrganization", InSummary=true, Order=200)]
     [CLSCompliant(false)]
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
 
     /// <summary>
-    /// Link to a resource that concerns the same actual person
+    /// Link to a resource that concerns the same actual person.
     /// </summary>
     [FhirElement("link", Order=210)]
     [Cardinality(Min=0,Max=-1)]

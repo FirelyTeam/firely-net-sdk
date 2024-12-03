@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "BiologicallyDerivedProduct.collection"; } }
 
       /// <summary>
-      /// Individual performing collection
+      /// Individual performing collection.
       /// </summary>
       [FhirElement("collector", Order=40)]
       [CLSCompliant(false)]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Collector;
 
       /// <summary>
-      /// The patient who underwent the medical procedure to collect the product or the organization that facilitated the collection
+      /// The patient who underwent the medical procedure to collect the product or the organization that facilitated the collection.
       /// </summary>
       [FhirElement("source", Order=50)]
       [CLSCompliant(false)]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Source;
 
       /// <summary>
-      /// Time of product collection
+      /// Time of product collection.
       /// </summary>
       [FhirElement("collected", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "BiologicallyDerivedProduct.property"; } }
 
       /// <summary>
-      /// Code that specifies the property
+      /// Code that specifies the property.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("BiologicallyDerivedProductPropertyTypeCodes")]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Property values
+      /// Property values.
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// organ | tissue | fluid | cells | biologicalAgent
+    /// organ | tissue | fluid | cells | biologicalAgent.
     /// </summary>
     [FhirElement("productCategory", Order=90)]
     [Binding("BiologicallyDerivedProductCategory")]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coding _ProductCategory;
 
     /// <summary>
-    /// A code that identifies the kind of this biologically derived product
+    /// A code that identifies the kind of this biologically derived product.
     /// </summary>
     [FhirElement("productCode", Order=100)]
     [Binding("BiologicallyDerivedProductCodes")]
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ProductCode;
 
     /// <summary>
-    /// The parent biologically-derived product
+    /// The parent biologically-derived product.
     /// </summary>
     [FhirElement("parent", Order=110)]
     [CLSCompliant(false)]
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Parent;
 
     /// <summary>
-    /// Request to obtain and/or infuse this product
+    /// Request to obtain and/or infuse this product.
     /// </summary>
     [FhirElement("request", Order=120)]
     [CLSCompliant(false)]
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Request;
 
     /// <summary>
-    /// Instance identifier
+    /// Instance identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=130, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// An identifier that supports traceability to the event during which material in this product from one or more biological entities was obtained or pooled
+    /// An identifier that supports traceability to the event during which material in this product from one or more biological entities was obtained or pooled.
     /// </summary>
     [FhirElement("biologicalSourceEvent", InSummary=true, Order=140, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _BiologicalSourceEvent;
 
     /// <summary>
-    /// Processing facilities responsible for the labeling and distribution of this biologically derived product
+    /// Processing facilities responsible for the labeling and distribution of this biologically derived product.
     /// </summary>
     [FhirElement("processingFacility", Order=150)]
     [CLSCompliant(false)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ProcessingFacility;
 
     /// <summary>
-    /// A unique identifier for an aliquot of a product
+    /// A unique identifier for an aliquot of a product.
     /// </summary>
     [FhirElement("division", Order=160)]
     [DataMember]
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// available | unavailable
+    /// available | unavailable.
     /// </summary>
     [FhirElement("productStatus", Order=170)]
     [Binding("BiologicallyDerivedProductStatus")]
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Coding _ProductStatus;
 
     /// <summary>
-    /// Date, and where relevant time, of expiration
+    /// Date, and where relevant time, of expiration.
     /// </summary>
     [FhirElement("expirationDate", Order=180)]
     [DataMember]
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How this product was collected
+    /// How this product was collected.
     /// </summary>
     [FhirElement("collection", Order=190)]
     [DataMember]
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent _Collection;
 
     /// <summary>
-    /// Product storage temperature requirements
+    /// Product storage temperature requirements.
     /// </summary>
     [FhirElement("storageTempRequirements", Order=200)]
     [DataMember]
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Range _StorageTempRequirements;
 
     /// <summary>
-    /// A property that is specific to this BiologicallyDerviedProduct instance
+    /// A property that is specific to this BiologicallyDerviedProduct instance.
     /// </summary>
     [FhirElement("property", Order=210)]
     [Cardinality(Min=0,Max=-1)]

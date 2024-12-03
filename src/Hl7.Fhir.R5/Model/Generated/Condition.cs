@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Condition.participant"; } }
 
       /// <summary>
-      /// Type of involvement
+      /// Type of involvement.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("ConditionParticipantFunction")]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Who or what participated in the activities related to the condition
+      /// Who or what participated in the activities related to the condition.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Condition.stage"; } }
 
       /// <summary>
-      /// Simple summary (disease specific)
+      /// Simple summary (disease specific).
       /// </summary>
       [FhirElement("summary", Order=40)]
       [Binding("ConditionStage")]
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Summary;
 
       /// <summary>
-      /// Formal record of assessment
+      /// Formal record of assessment.
       /// </summary>
       [FhirElement("assessment", Order=50)]
       [CLSCompliant(false)]
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
 
       /// <summary>
-      /// Kind of staging
+      /// Kind of staging.
       /// </summary>
       [FhirElement("type", Order=60)]
       [Binding("ConditionStageType")]
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this condition
+    /// External Ids for this condition.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | recurrence | relapse | inactive | remission | resolved | unknown
+    /// active | recurrence | relapse | inactive | remission | resolved | unknown.
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [Binding("ConditionClinicalStatus")]
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ClinicalStatus;
 
     /// <summary>
-    /// unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
+    /// unconfirmed | provisional | differential | confirmed | refuted | entered-in-error.
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [Binding("ConditionVerificationStatus")]
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _VerificationStatus;
 
     /// <summary>
-    /// problem-list-item | encounter-diagnosis
+    /// problem-list-item | encounter-diagnosis.
     /// </summary>
     [FhirElement("category", Order=120, FiveWs="FiveWs.class")]
     [Binding("ConditionCategory")]
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Subjective severity of condition
+    /// Subjective severity of condition.
     /// </summary>
     [FhirElement("severity", Order=130, FiveWs="FiveWs.grade")]
     [Binding("ConditionSeverity")]
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Severity;
 
     /// <summary>
-    /// Identification of the condition, problem or diagnosis
+    /// Identification of the condition, problem or diagnosis.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Binding("ConditionKind")]
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Anatomical location, if relevant
+    /// Anatomical location, if relevant.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=150)]
     [Binding("BodySite")]
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
 
     /// <summary>
-    /// Who has the condition?
+    /// Who has the condition?.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The Encounter during which this Condition was created
+    /// The Encounter during which this Condition was created.
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// Estimated or actual date,  date-time, or age
+    /// Estimated or actual date,  date-time, or age.
     /// </summary>
     [FhirElement("onset", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.init")]
     [CLSCompliant(false)]
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Onset;
 
     /// <summary>
-    /// When in resolution/remission
+    /// When in resolution/remission.
     /// </summary>
     [FhirElement("abatement", Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Abatement;
 
     /// <summary>
-    /// Date condition was first recorded
+    /// Date condition was first recorded.
     /// </summary>
     [FhirElement("recordedDate", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who or what participated in the activities related to the condition and how they were involved
+    /// Who or what participated in the activities related to the condition and how they were involved.
     /// </summary>
     [FhirElement("participant", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Condition.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// Stage/grade, usually assessed formally
+    /// Stage/grade, usually assessed formally.
     /// </summary>
     [FhirElement("stage", Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Condition.StageComponent> _Stage;
 
     /// <summary>
-    /// Supporting evidence for the verification status
+    /// Supporting evidence for the verification status.
     /// </summary>
     [FhirElement("evidence", InSummary=true, Order=230)]
     [Binding("ManifestationOrSymptom")]
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Evidence;
 
     /// <summary>
-    /// Additional information about the Condition
+    /// Additional information about the Condition.
     /// </summary>
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]

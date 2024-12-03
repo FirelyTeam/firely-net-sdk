@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   public abstract partial class Resource : Hl7.Fhir.Model.Base
   {
     /// <summary>
-    /// Logical id of this artifact
+    /// Logical id of this artifact.
     /// </summary>
     [FhirElement("id", InSummary=true, Order=10)]
     [DataMember]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Metadata about the resource
+    /// Metadata about the resource.
     /// </summary>
     [FhirElement("meta", InSummary=true, Order=20)]
     [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Meta _Meta;
 
     /// <summary>
-    /// A set of rules under which this content was created
+    /// A set of rules under which this content was created.
     /// </summary>
     [FhirElement("implicitRules", InSummary=true, IsModifier=true, Order=30)]
     [DataMember]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Language of the resource content
+    /// Language of the resource content.
     /// </summary>
     [FhirElement("language", Order=40)]
     [Binding("Language")]

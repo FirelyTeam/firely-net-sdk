@@ -3041,7 +3041,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Appointment.participant"; } }
 
       /// <summary>
-      /// Role of participant in the appointment
+      /// Role of participant in the appointment.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ParticipantType")]
@@ -3056,7 +3056,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// Participation period of the actor
+      /// Participation period of the actor.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
@@ -3069,7 +3069,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// The individual, device, location, or service participating in the appointment
+      /// The individual, device, location, or service participating in the appointment.
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=60, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
@@ -3084,7 +3084,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Actor;
 
       /// <summary>
-      /// The participant is required to attend (optional when false)
+      /// The participant is required to attend (optional when false).
       /// </summary>
       [FhirElement("required", InSummary=true, Order=70)]
       [DataMember]
@@ -3115,7 +3115,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// accepted | declined | tentative | needs-action
+      /// accepted | declined | tentative | needs-action.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
@@ -3281,7 +3281,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Appointment.recurrenceTemplate"; } }
 
       /// <summary>
-      /// The timezone of the occurrences
+      /// The timezone of the occurrences.
       /// </summary>
       [FhirElement("timezone", Order=40)]
       [Binding("IANATimezone")]
@@ -3295,7 +3295,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Timezone;
 
       /// <summary>
-      /// The frequency of the recurrence
+      /// The frequency of the recurrence.
       /// </summary>
       [FhirElement("recurrenceType", Order=50)]
       [Binding("AppointmentRecurrenceType")]
@@ -3310,7 +3310,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _RecurrenceType;
 
       /// <summary>
-      /// The date when the recurrence should end
+      /// The date when the recurrence should end.
       /// </summary>
       [FhirElement("lastOccurrenceDate", Order=60)]
       [DataMember]
@@ -3341,7 +3341,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The number of planned occurrences
+      /// The number of planned occurrences.
       /// </summary>
       [FhirElement("occurrenceCount", Order=70)]
       [DataMember]
@@ -3372,7 +3372,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specific dates for a recurring set of appointments (no template)
+      /// Specific dates for a recurring set of appointments (no template).
       /// </summary>
       [FhirElement("occurrenceDate", Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -3404,7 +3404,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Information about weekly recurring appointments
+      /// Information about weekly recurring appointments.
       /// </summary>
       [FhirElement("weeklyTemplate", Order=90)]
       [DataMember]
@@ -3417,7 +3417,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent _WeeklyTemplate;
 
       /// <summary>
-      /// Information about monthly recurring appointments
+      /// Information about monthly recurring appointments.
       /// </summary>
       [FhirElement("monthlyTemplate", Order=100)]
       [DataMember]
@@ -3430,7 +3430,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent _MonthlyTemplate;
 
       /// <summary>
-      /// Information about yearly recurring appointments
+      /// Information about yearly recurring appointments.
       /// </summary>
       [FhirElement("yearlyTemplate", Order=110)]
       [DataMember]
@@ -3443,7 +3443,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Appointment.YearlyTemplateComponent _YearlyTemplate;
 
       /// <summary>
-      /// Any dates that should be excluded from the series
+      /// Any dates that should be excluded from the series.
       /// </summary>
       [FhirElement("excludingDate", Order=120)]
       [Cardinality(Min=0,Max=-1)]
@@ -3475,7 +3475,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Any recurrence IDs that should be excluded from the recurrence
+      /// Any recurrence IDs that should be excluded from the recurrence.
       /// </summary>
       [FhirElement("excludingRecurrenceId", Order=130)]
       [Cardinality(Min=0,Max=-1)]
@@ -3686,7 +3686,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Appointment.recurrenceTemplate.weeklyTemplate"; } }
 
       /// <summary>
-      /// Recurs on Mondays
+      /// Recurs on Mondays.
       /// </summary>
       [FhirElement("monday", Order=40)]
       [DataMember]
@@ -3717,7 +3717,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs on Tuesday
+      /// Recurs on Tuesday.
       /// </summary>
       [FhirElement("tuesday", Order=50)]
       [DataMember]
@@ -3748,7 +3748,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs on Wednesday
+      /// Recurs on Wednesday.
       /// </summary>
       [FhirElement("wednesday", Order=60)]
       [DataMember]
@@ -3779,7 +3779,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs on Thursday
+      /// Recurs on Thursday.
       /// </summary>
       [FhirElement("thursday", Order=70)]
       [DataMember]
@@ -3810,7 +3810,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs on Friday
+      /// Recurs on Friday.
       /// </summary>
       [FhirElement("friday", Order=80)]
       [DataMember]
@@ -3841,7 +3841,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs on Saturday
+      /// Recurs on Saturday.
       /// </summary>
       [FhirElement("saturday", Order=90)]
       [DataMember]
@@ -3872,7 +3872,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs on Sunday
+      /// Recurs on Sunday.
       /// </summary>
       [FhirElement("sunday", Order=100)]
       [DataMember]
@@ -3903,7 +3903,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Recurs every nth week
+      /// Recurs every nth week.
       /// </summary>
       [FhirElement("weekInterval", Order=110)]
       [DataMember]
@@ -4093,7 +4093,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Appointment.recurrenceTemplate.monthlyTemplate"; } }
 
       /// <summary>
-      /// Recurs on a specific day of the month
+      /// Recurs on a specific day of the month.
       /// </summary>
       [FhirElement("dayOfMonth", Order=40)]
       [DataMember]
@@ -4124,7 +4124,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Indicates which week of the month the appointment should occur
+      /// Indicates which week of the month the appointment should occur.
       /// </summary>
       [FhirElement("nthWeekOfMonth", Order=50)]
       [Binding("WeekOfMonth")]
@@ -4138,7 +4138,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _NthWeekOfMonth;
 
       /// <summary>
-      /// Indicates which day of the week the appointment should occur
+      /// Indicates which day of the week the appointment should occur.
       /// </summary>
       [FhirElement("dayOfWeek", Order=60)]
       [Binding("DaysOfWeek")]
@@ -4152,7 +4152,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _DayOfWeek;
 
       /// <summary>
-      /// Recurs every nth month
+      /// Recurs every nth month.
       /// </summary>
       [FhirElement("monthInterval", Order=70)]
       [Cardinality(Min=1,Max=1)]
@@ -4303,7 +4303,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Appointment.recurrenceTemplate.yearlyTemplate"; } }
 
       /// <summary>
-      /// Recurs every nth year
+      /// Recurs every nth year.
       /// </summary>
       [FhirElement("yearInterval", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -4411,7 +4411,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this item
+    /// External Ids for this item.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -4425,7 +4425,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
+    /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -4459,7 +4459,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The coded reason for the appointment being cancelled
+    /// The coded reason for the appointment being cancelled.
     /// </summary>
     [FhirElement("cancellationReason", InSummary=true, Order=110)]
     [Binding("cancellation-reason")]
@@ -4473,7 +4473,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _CancellationReason;
 
     /// <summary>
-    /// Classification when becoming an encounter
+    /// Classification when becoming an encounter.
     /// </summary>
     [FhirElement("class", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("EncounterClass")]
@@ -4488,7 +4488,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Class;
 
     /// <summary>
-    /// A broad categorization of the service that is to be performed during this appointment
+    /// A broad categorization of the service that is to be performed during this appointment.
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=130)]
     [Binding("service-category")]
@@ -4503,7 +4503,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCategory;
 
     /// <summary>
-    /// The specific service that is to be performed during this appointment
+    /// The specific service that is to be performed during this appointment.
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=140)]
     [Binding("service-type")]
@@ -4518,7 +4518,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _ServiceType;
 
     /// <summary>
-    /// The specialty of a practitioner that would be required to perform the service requested in this appointment
+    /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [Binding("specialty")]
@@ -4533,7 +4533,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// The style of appointment or patient that has been booked in the slot (not service type)
+    /// The style of appointment or patient that has been booked in the slot (not service type).
     /// </summary>
     [FhirElement("appointmentType", InSummary=true, Order=160)]
     [Binding("appointment-type")]
@@ -4547,7 +4547,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _AppointmentType;
 
     /// <summary>
-    /// Reason this appointment is scheduled
+    /// Reason this appointment is scheduled.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=170)]
     [Binding("ApptReason")]
@@ -4562,7 +4562,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _Reason;
 
     /// <summary>
-    /// Used to make informed decisions if needing to re-prioritize
+    /// Used to make informed decisions if needing to re-prioritize.
     /// </summary>
     [FhirElement("priority", Order=180, FiveWs="FiveWs.class")]
     [Binding("Priority")]
@@ -4576,7 +4576,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Priority;
 
     /// <summary>
-    /// Shown on a subject line in a meeting request, or appointment list
+    /// Shown on a subject line in a meeting request, or appointment list.
     /// </summary>
     [FhirElement("description", Order=190)]
     [DataMember]
@@ -4607,7 +4607,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Appointment replaced by this Appointment
+    /// Appointment replaced by this Appointment.
     /// </summary>
     [FhirElement("replaces", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -4623,7 +4623,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
 
     /// <summary>
-    /// Connection details of a virtual service (e.g. conference call)
+    /// Connection details of a virtual service (e.g. conference call).
     /// </summary>
     [FhirElement("virtualService", Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -4637,7 +4637,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.VirtualServiceDetail> _VirtualService;
 
     /// <summary>
-    /// Additional information to support the appointment
+    /// Additional information to support the appointment.
     /// </summary>
     [FhirElement("supportingInformation", Order=220, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -4653,7 +4653,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
 
     /// <summary>
-    /// The previous appointment in a series
+    /// The previous appointment in a series.
     /// </summary>
     [FhirElement("previousAppointment", Order=230, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -4668,7 +4668,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PreviousAppointment;
 
     /// <summary>
-    /// The originating appointment in a recurring set of appointments
+    /// The originating appointment in a recurring set of appointments.
     /// </summary>
     [FhirElement("originatingAppointment", Order=240, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
@@ -4683,7 +4683,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _OriginatingAppointment;
 
     /// <summary>
-    /// When appointment is to take place
+    /// When appointment is to take place.
     /// </summary>
     [FhirElement("start", InSummary=true, Order=250, FiveWs="FiveWs.init")]
     [DataMember]
@@ -4714,7 +4714,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When appointment is to conclude
+    /// When appointment is to conclude.
     /// </summary>
     [FhirElement("end", InSummary=true, Order=260, FiveWs="FiveWs.done[x]")]
     [DataMember]
@@ -4745,7 +4745,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Can be less than start/end (e.g. estimate)
+    /// Can be less than start/end (e.g. estimate).
     /// </summary>
     [FhirElement("minutesDuration", Order=270)]
     [DataMember]
@@ -4776,7 +4776,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Potential date/time interval(s) requested to allocate the appointment within
+    /// Potential date/time interval(s) requested to allocate the appointment within.
     /// </summary>
     [FhirElement("requestedPeriod", Order=280)]
     [Cardinality(Min=0,Max=-1)]
@@ -4790,7 +4790,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
 
     /// <summary>
-    /// The slots that this appointment is filling
+    /// The slots that this appointment is filling.
     /// </summary>
     [FhirElement("slot", Order=290)]
     [CLSCompliant(false)]
@@ -4806,7 +4806,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Slot;
 
     /// <summary>
-    /// The set of accounts that may be used for billing for this Appointment
+    /// The set of accounts that may be used for billing for this Appointment.
     /// </summary>
     [FhirElement("account", Order=300)]
     [CLSCompliant(false)]
@@ -4822,7 +4822,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Account;
 
     /// <summary>
-    /// The date that this appointment was initially created
+    /// The date that this appointment was initially created.
     /// </summary>
     [FhirElement("created", Order=310)]
     [DataMember]
@@ -4853,7 +4853,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the appointment was cancelled
+    /// When the appointment was cancelled.
     /// </summary>
     [FhirElement("cancellationDate", Order=320)]
     [DataMember]
@@ -4884,7 +4884,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional comments
+    /// Additional comments.
     /// </summary>
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -4898,7 +4898,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Detailed information and instructions for the patient
+    /// Detailed information and instructions for the patient.
     /// </summary>
     [FhirElement("patientInstruction", Order=340)]
     [Cardinality(Min=0,Max=-1)]
@@ -4912,7 +4912,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableReference> _PatientInstruction;
 
     /// <summary>
-    /// The request this appointment is allocated to assess
+    /// The request this appointment is allocated to assess.
     /// </summary>
     [FhirElement("basedOn", Order=350)]
     [CLSCompliant(false)]
@@ -4928,7 +4928,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// The patient or group associated with the appointment
+    /// The patient or group associated with the appointment.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=360, FiveWs="FiveWs.who")]
     [CLSCompliant(false)]
@@ -4943,7 +4943,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Participants involved in appointment
+    /// Participants involved in appointment.
     /// </summary>
     [FhirElement("participant", Order=370)]
     [Cardinality(Min=1,Max=-1)]
@@ -4957,7 +4957,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// The sequence number in the recurrence
+    /// The sequence number in the recurrence.
     /// </summary>
     [FhirElement("recurrenceId", Order=380)]
     [DataMember]
@@ -4988,7 +4988,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Indicates that this appointment varies from a recurrence pattern
+    /// Indicates that this appointment varies from a recurrence pattern.
     /// </summary>
     [FhirElement("occurrenceChanged", Order=390)]
     [DataMember]
@@ -5019,7 +5019,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Details of the recurrence pattern/template used to generate occurrences
+    /// Details of the recurrence pattern/template used to generate occurrences.
     /// </summary>
     [FhirElement("recurrenceTemplate", Order=400)]
     [Cardinality(Min=0,Max=-1)]

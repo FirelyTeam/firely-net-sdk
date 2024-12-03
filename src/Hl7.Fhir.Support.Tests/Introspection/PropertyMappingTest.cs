@@ -55,7 +55,7 @@ public class ModelInspectorMembersTest
     [TestMethod]
     public void TestVersionSpecificMapping()
     {
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(Meta), out var mapping, Specification.FhirRelease.DSTU1));
+        Assert.IsTrue(ClassMapping.TryCreate(typeof(Meta), out var mapping, Specification.FhirRelease.STU3));
         Assert.IsNull(mapping.FindMappedElementByName("source"));
         var profile = mapping.FindMappedElementByName("profile");
         Assert.IsNotNull(profile);

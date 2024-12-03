@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Subscription.channel"; } }
 
       /// <summary>
-      /// rest-hook | websocket | email | sms | message
+      /// rest-hook | websocket | email | sms | message.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Where the channel points to
+      /// Where the channel points to.
       /// </summary>
       [FhirElement("endpoint", InSummary=true, Order=50)]
       [DataMember]
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Mimetype to send, or omit for no payload
+      /// Mimetype to send, or omit for no payload.
       /// </summary>
       [FhirElement("payload", InSummary=true, Order=60)]
       [DataMember]
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Usage depends on the channel type
+      /// Usage depends on the channel type.
       /// </summary>
       [FhirElement("header", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// requested | active | error | off
+    /// requested | active | error | off.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for source (e.g. troubleshooting)
+    /// Contact details for source (e.g. troubleshooting).
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=100, FiveWs="who.focus")]
     [Cardinality(Min=0,Max=-1)]
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Contact;
 
     /// <summary>
-    /// When to automatically delete the subscription
+    /// When to automatically delete the subscription.
     /// </summary>
     [FhirElement("end", InSummary=true, Order=110, FiveWs="when.done")]
     [DataMember]
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Description of why this subscription was created
+    /// Description of why this subscription was created.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=120, FiveWs="why")]
     [Cardinality(Min=1,Max=1)]
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Rule for server push criteria
+    /// Rule for server push criteria.
     /// </summary>
     [FhirElement("criteria", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Latest error note
+    /// Latest error note.
     /// </summary>
     [FhirElement("error", InSummary=true, Order=140)]
     [DataMember]
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The channel on which to report matches to the criteria
+    /// The channel on which to report matches to the criteria.
     /// </summary>
     [FhirElement("channel", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=1)]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Subscription.ChannelComponent _Channel;
 
     /// <summary>
-    /// A tag to add to matching resources
+    /// A tag to add to matching resources.
     /// </summary>
     [FhirElement("tag", InSummary=true, Order=160)]
     [Binding("SubscriptionTag")]

@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingManifest.study"; } }
 
       /// <summary>
-      /// Study instance UID
+      /// Study instance UID.
       /// </summary>
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Reference to ImagingStudy
+      /// Reference to ImagingStudy.
       /// </summary>
       [FhirElement("imagingStudy", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _ImagingStudy;
 
       /// <summary>
-      /// Study access service endpoint
+      /// Study access service endpoint.
       /// </summary>
       [FhirElement("endpoint", InSummary=true, Order=60)]
       [CLSCompliant(false)]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
 
       /// <summary>
-      /// Series identity of the selected instances
+      /// Series identity of the selected instances.
       /// </summary>
       [FhirElement("series", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=-1)]
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingManifest.study.series"; } }
 
       /// <summary>
-      /// Series instance UID
+      /// Series instance UID.
       /// </summary>
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Series access endpoint
+      /// Series access endpoint.
       /// </summary>
       [FhirElement("endpoint", InSummary=true, Order=50)]
       [CLSCompliant(false)]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
 
       /// <summary>
-      /// The selected instance
+      /// The selected instance.
       /// </summary>
       [FhirElement("instance", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ImagingManifest.study.series.instance"; } }
 
       /// <summary>
-      /// SOP class UID of instance
+      /// SOP class UID of instance.
       /// </summary>
       [FhirElement("sopClass", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Selected instance UID
+      /// Selected instance UID.
       /// </summary>
       [FhirElement("uid", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// SOP Instance UID
+    /// SOP Instance UID.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Patient of the selected objects
+    /// Patient of the selected objects.
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Time when the selection of instances was made
+    /// Time when the selection of instances was made.
     /// </summary>
     [FhirElement("authoringTime", InSummary=true, Order=110, FiveWs="when.recorded")]
     [DataMember]
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Author (human or machine)
+    /// Author (human or machine).
     /// </summary>
     [FhirElement("author", InSummary=true, Order=120, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Author;
 
     /// <summary>
-    /// Description text
+    /// Description text.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Study identity of the selected instances
+    /// Study identity of the selected instances.
     /// </summary>
     [FhirElement("study", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=-1)]

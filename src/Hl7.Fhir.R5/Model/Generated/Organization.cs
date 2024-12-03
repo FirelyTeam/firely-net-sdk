@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Organization.qualification"; } }
 
       /// <summary>
-      /// An identifier for this qualification for the organization
+      /// An identifier for this qualification for the organization.
       /// </summary>
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
       /// <summary>
-      /// Coded representation of the qualification
+      /// Coded representation of the qualification.
       /// </summary>
       [FhirElement("code", Order=50)]
       [Binding("Qualification")]
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Period during which the qualification is valid
+      /// Period during which the qualification is valid.
       /// </summary>
       [FhirElement("period", Order=60)]
       [DataMember]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Period _Period;
 
       /// <summary>
-      /// Organization that regulates and issues the qualification
+      /// Organization that regulates and issues the qualification.
       /// </summary>
       [FhirElement("issuer", Order=70)]
       [CLSCompliant(false)]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifies this organization  across multiple systems
+    /// Identifies this organization  across multiple systems.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether the organization's record is still in active use
+    /// Whether the organization's record is still in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Kind of organization
+    /// Kind of organization.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("OrganizationType")]
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
     /// <summary>
-    /// Name used for the organization
+    /// Name used for the organization.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A list of alternate names that the organization is known as, or was known as in the past
+    /// A list of alternate names that the organization is known as, or was known as in the past.
     /// </summary>
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional details about the Organization that could be displayed as further information to identify the Organization beyond its name
+    /// Additional details about the Organization that could be displayed as further information to identify the Organization beyond its name.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=140)]
     [DataMember]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Official contact details for the Organization
+    /// Official contact details for the Organization.
     /// </summary>
     [FhirElement("contact", Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ExtendedContactDetail> _Contact;
 
     /// <summary>
-    /// The organization of which this organization forms a part
+    /// The organization of which this organization forms a part.
     /// </summary>
     [FhirElement("partOf", InSummary=true, Order=160)]
     [CLSCompliant(false)]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _PartOf;
 
     /// <summary>
-    /// Technical endpoints providing access to services operated for the organization
+    /// Technical endpoints providing access to services operated for the organization.
     /// </summary>
     [FhirElement("endpoint", Order=170)]
     [CLSCompliant(false)]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
 
     /// <summary>
-    /// Qualifications, certifications, accreditations, licenses, training, etc. pertaining to the provision of care
+    /// Qualifications, certifications, accreditations, licenses, training, etc. pertaining to the provision of care.
     /// </summary>
     [FhirElement("qualification", Order=180)]
     [Cardinality(Min=0,Max=-1)]

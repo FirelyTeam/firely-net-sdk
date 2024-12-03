@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "CodeableConcept"; } }
 
     /// <summary>
-    /// Code defined by a terminology system
+    /// Code defined by a terminology system.
     /// </summary>
     [FhirElement("coding", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Coding> _Coding;
 
     /// <summary>
-    /// Plain text representation of the concept
+    /// Plain text representation of the concept.
     /// </summary>
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]

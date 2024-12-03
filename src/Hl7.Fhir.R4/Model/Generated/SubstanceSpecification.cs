@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.moiety"; } }
 
       /// <summary>
-      /// Role that the moiety is playing
+      /// Role that the moiety is playing.
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DataMember]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Role;
 
       /// <summary>
-      /// Identifier by which this moiety substance is known
+      /// Identifier by which this moiety substance is known.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=50)]
       [DataMember]
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Identifier;
 
       /// <summary>
-      /// Textual name for this moiety substance
+      /// Textual name for this moiety substance.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Stereochemistry type
+      /// Stereochemistry type.
       /// </summary>
       [FhirElement("stereochemistry", InSummary=true, Order=70)]
       [DataMember]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Stereochemistry;
 
       /// <summary>
-      /// Optical activity type
+      /// Optical activity type.
       /// </summary>
       [FhirElement("opticalActivity", InSummary=true, Order=80)]
       [DataMember]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _OpticalActivity;
 
       /// <summary>
-      /// Molecular formula
+      /// Molecular formula.
       /// </summary>
       [FhirElement("molecularFormula", InSummary=true, Order=90)]
       [DataMember]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Quantitative value for this moiety
+      /// Quantitative value for this moiety.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.property"; } }
 
       /// <summary>
-      /// A category for this property, e.g. Physical, Chemical, Enzymatic
+      /// A category for this property, e.g. Physical, Chemical, Enzymatic.
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
       [DataMember]
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Category;
 
       /// <summary>
-      /// Property type e.g. viscosity, pH, isoelectric point
+      /// Property type e.g. viscosity, pH, isoelectric point.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DataMember]
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Parameters that were used in the measurement of a property (e.g. for viscosity: measured at 20C with a pH of 7.1)
+      /// Parameters that were used in the measurement of a property (e.g. for viscosity: measured at 20C with a pH of 7.1).
       /// </summary>
       [FhirElement("parameters", InSummary=true, Order=60)]
       [DataMember]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A substance upon which a defining property depends (e.g. for solubility: in water, in alcohol)
+      /// A substance upon which a defining property depends (e.g. for solubility: in water, in alcohol).
       /// </summary>
       [FhirElement("definingSubstance", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _DefiningSubstance;
 
       /// <summary>
-      /// Quantitative value for this property
+      /// Quantitative value for this property.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.structure"; } }
 
       /// <summary>
-      /// Stereochemistry type
+      /// Stereochemistry type.
       /// </summary>
       [FhirElement("stereochemistry", InSummary=true, Order=40)]
       [DataMember]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Stereochemistry;
 
       /// <summary>
-      /// Optical activity type
+      /// Optical activity type.
       /// </summary>
       [FhirElement("opticalActivity", InSummary=true, Order=50)]
       [DataMember]
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _OpticalActivity;
 
       /// <summary>
-      /// Molecular formula
+      /// Molecular formula.
       /// </summary>
       [FhirElement("molecularFormula", InSummary=true, Order=60)]
       [DataMember]
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Specified per moiety according to the Hill system, i.e. first C, then H, then alphabetical, each moiety separated by a dot
+      /// Specified per moiety according to the Hill system, i.e. first C, then H, then alphabetical, each moiety separated by a dot.
       /// </summary>
       [FhirElement("molecularFormulaByMoiety", InSummary=true, Order=70)]
       [DataMember]
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Applicable for single substances that contain a radionuclide or a non-natural isotopic ratio
+      /// Applicable for single substances that contain a radionuclide or a non-natural isotopic ratio.
       /// </summary>
       [FhirElement("isotope", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent> _Isotope;
 
       /// <summary>
-      /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
+      /// The molecular weight or weight range (for proteins, polymers or nucleic acids).
       /// </summary>
       [FhirElement("molecularWeight", InSummary=true, Order=90)]
       [DataMember]
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent _MolecularWeight;
 
       /// <summary>
-      /// Supporting literature
+      /// Supporting literature.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=100)]
       [CLSCompliant(false)]
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ResourceReference> _Source;
 
       /// <summary>
-      /// Molecular structural representation
+      /// Molecular structural representation.
       /// </summary>
       [FhirElement("representation", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.structure.isotope"; } }
 
       /// <summary>
-      /// Substance identifier for each non-natural or radioisotope
+      /// Substance identifier for each non-natural or radioisotope.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Identifier;
 
       /// <summary>
-      /// Substance name for each non-natural or radioisotope
+      /// Substance name for each non-natural or radioisotope.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
@@ -895,7 +895,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Name;
 
       /// <summary>
-      /// The type of isotopic substitution present in a single substance
+      /// The type of isotopic substitution present in a single substance.
       /// </summary>
       [FhirElement("substitution", InSummary=true, Order=60)]
       [DataMember]
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Substitution;
 
       /// <summary>
-      /// Half life - for a non-natural nuclide
+      /// Half life - for a non-natural nuclide.
       /// </summary>
       [FhirElement("halfLife", InSummary=true, Order=70)]
       [DataMember]
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Quantity _HalfLife;
 
       /// <summary>
-      /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
+      /// The molecular weight or weight range (for proteins, polymers or nucleic acids).
       /// </summary>
       [FhirElement("molecularWeight", InSummary=true, Order=80)]
       [DataMember]
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.structure.isotope.molecularWeight"; } }
 
       /// <summary>
-      /// The method by which the molecular weight was determined
+      /// The method by which the molecular weight was determined.
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
       [DataMember]
@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Method;
 
       /// <summary>
-      /// Type of molecular weight such as exact, average (also known as. number average), weight average
+      /// Type of molecular weight such as exact, average (also known as. number average), weight average.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
+      /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=60)]
       [DataMember]
@@ -1211,7 +1211,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.structure.representation"; } }
 
       /// <summary>
-      /// The type of structure (e.g. Full, Partial, Representative)
+      /// The type of structure (e.g. Full, Partial, Representative).
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
@@ -1224,7 +1224,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The structural representation as text string in a format e.g. InChI, SMILES, MOLFILE, CDX
+      /// The structural representation as text string in a format e.g. InChI, SMILES, MOLFILE, CDX.
       /// </summary>
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
@@ -1255,7 +1255,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// An attached file with the structural representation
+      /// An attached file with the structural representation.
       /// </summary>
       [FhirElement("attachment", InSummary=true, Order=60)]
       [DataMember]
@@ -1377,7 +1377,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.code"; } }
 
       /// <summary>
-      /// The specific code
+      /// The specific code.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DataMember]
@@ -1390,7 +1390,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Status of the code assignment
+      /// Status of the code assignment.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
       [DataMember]
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Status;
 
       /// <summary>
-      /// The date at which the code status is changed as part of the terminology maintenance
+      /// The date at which the code status is changed as part of the terminology maintenance.
       /// </summary>
       [FhirElement("statusDate", InSummary=true, Order=60)]
       [DataMember]
@@ -1434,7 +1434,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Any comment can be provided in this field, if necessary
+      /// Any comment can be provided in this field, if necessary.
       /// </summary>
       [FhirElement("comment", InSummary=true, Order=70)]
       [DataMember]
@@ -1465,7 +1465,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Supporting literature
+      /// Supporting literature.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=80)]
       [CLSCompliant(false)]
@@ -1610,7 +1610,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.name"; } }
 
       /// <summary>
-      /// The actual name
+      /// The actual name.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -1642,7 +1642,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Name type
+      /// Name type.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The status of the name
+      /// The status of the name.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=60)]
       [DataMember]
@@ -1668,7 +1668,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Status;
 
       /// <summary>
-      /// If this is the preferred name for this substance
+      /// If this is the preferred name for this substance.
       /// </summary>
       [FhirElement("preferred", InSummary=true, Order=70)]
       [DataMember]
@@ -1699,7 +1699,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Language of the name
+      /// Language of the name.
       /// </summary>
       [FhirElement("language", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
@@ -1713,7 +1713,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Language;
 
       /// <summary>
-      /// The use context of this name for example if there is a different name a drug active ingredient as opposed to a food colour additive
+      /// The use context of this name for example if there is a different name a drug active ingredient as opposed to a food colour additive.
       /// </summary>
       [FhirElement("domain", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -1727,7 +1727,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Domain;
 
       /// <summary>
-      /// The jurisdiction where this name applies
+      /// The jurisdiction where this name applies.
       /// </summary>
       [FhirElement("jurisdiction", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
@@ -1741,7 +1741,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
       /// <summary>
-      /// A synonym of this name
+      /// A synonym of this name.
       /// </summary>
       [FhirElement("synonym", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
@@ -1755,7 +1755,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Synonym;
 
       /// <summary>
-      /// A translation for this name
+      /// A translation for this name.
       /// </summary>
       [FhirElement("translation", InSummary=true, Order=120)]
       [Cardinality(Min=0,Max=-1)]
@@ -1769,7 +1769,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Translation;
 
       /// <summary>
-      /// Details of the official nature of this name
+      /// Details of the official nature of this name.
       /// </summary>
       [FhirElement("official", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
@@ -1783,7 +1783,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent> _Official;
 
       /// <summary>
-      /// Supporting literature
+      /// Supporting literature.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=140)]
       [CLSCompliant(false)]
@@ -1988,7 +1988,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.name.official"; } }
 
       /// <summary>
-      /// Which authority uses this official name
+      /// Which authority uses this official name.
       /// </summary>
       [FhirElement("authority", InSummary=true, Order=40)]
       [DataMember]
@@ -2001,7 +2001,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Authority;
 
       /// <summary>
-      /// The status of the official name
+      /// The status of the official name.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
       [DataMember]
@@ -2014,7 +2014,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Status;
 
       /// <summary>
-      /// Date of official name change
+      /// Date of official name change.
       /// </summary>
       [FhirElement("date", InSummary=true, Order=60)]
       [DataMember]
@@ -2154,7 +2154,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "SubstanceSpecification.relationship"; } }
 
       /// <summary>
-      /// A pointer to another substance, as a resource or just a representational code
+      /// A pointer to another substance, as a resource or just a representational code.
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -2170,7 +2170,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Substance;
 
       /// <summary>
-      /// For example "salt to parent", "active moiety", "starting material"
+      /// For example "salt to parent", "active moiety", "starting material".
       /// </summary>
       [FhirElement("relationship", InSummary=true, Order=50)]
       [DataMember]
@@ -2183,7 +2183,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Relationship;
 
       /// <summary>
-      /// For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible substance relationships
+      /// For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible substance relationships.
       /// </summary>
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
@@ -2214,7 +2214,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A numeric factor for the relationship, for instance to express that the salt of a substance has some percentage of the active substance in relation to some other
+      /// A numeric factor for the relationship, for instance to express that the salt of a substance has some percentage of the active substance in relation to some other.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -2229,7 +2229,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Amount;
 
       /// <summary>
-      /// For use when the numeric
+      /// For use when the numeric.
       /// </summary>
       [FhirElement("amountRatioLowLimit", InSummary=true, Order=80)]
       [DataMember]
@@ -2242,7 +2242,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Ratio _AmountRatioLowLimit;
 
       /// <summary>
-      /// An operator for the amount, for example "average", "approximately", "less than"
+      /// An operator for the amount, for example "average", "approximately", "less than".
       /// </summary>
       [FhirElement("amountType", InSummary=true, Order=90)]
       [DataMember]
@@ -2255,7 +2255,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _AmountType;
 
       /// <summary>
-      /// Supporting literature
+      /// Supporting literature.
       /// </summary>
       [FhirElement("source", InSummary=true, Order=100)]
       [CLSCompliant(false)]
@@ -2407,7 +2407,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifier by which this substance is known
+    /// Identifier by which this substance is known.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
@@ -2420,7 +2420,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// High level categorization, e.g. polymer or nucleic acid
+    /// High level categorization, e.g. polymer or nucleic acid.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DataMember]
@@ -2433,7 +2433,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Status of substance within the catalogue e.g. approved
+    /// Status of substance within the catalogue e.g. approved.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
     [DataMember]
@@ -2446,7 +2446,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Status;
 
     /// <summary>
-    /// If the substance applies to only human or veterinary use
+    /// If the substance applies to only human or veterinary use.
     /// </summary>
     [FhirElement("domain", InSummary=true, Order=120)]
     [DataMember]
@@ -2459,7 +2459,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Domain;
 
     /// <summary>
-    /// Textual description of the substance
+    /// Textual description of the substance.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
@@ -2490,7 +2490,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Supporting literature
+    /// Supporting literature.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -2506,7 +2506,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Source;
 
     /// <summary>
-    /// Textual comment about this record of a substance
+    /// Textual comment about this record of a substance.
     /// </summary>
     [FhirElement("comment", InSummary=true, Order=150)]
     [DataMember]
@@ -2537,7 +2537,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Moiety, for structural modifications
+    /// Moiety, for structural modifications.
     /// </summary>
     [FhirElement("moiety", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
@@ -2551,7 +2551,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent> _Moiety;
 
     /// <summary>
-    /// General specifications for this substance, including how it is related to other substances
+    /// General specifications for this substance, including how it is related to other substances.
     /// </summary>
     [FhirElement("property", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -2565,7 +2565,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent> _Property;
 
     /// <summary>
-    /// General information detailing this substance
+    /// General information detailing this substance.
     /// </summary>
     [FhirElement("referenceInformation", InSummary=true, Order=180)]
     [CLSCompliant(false)]
@@ -2580,7 +2580,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ReferenceInformation;
 
     /// <summary>
-    /// Structural information
+    /// Structural information.
     /// </summary>
     [FhirElement("structure", InSummary=true, Order=190)]
     [DataMember]
@@ -2593,7 +2593,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.SubstanceSpecification.StructureComponent _Structure;
 
     /// <summary>
-    /// Codes associated with the substance
+    /// Codes associated with the substance.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -2607,7 +2607,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent> _Code;
 
     /// <summary>
-    /// Names applicable to this substance
+    /// Names applicable to this substance.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
@@ -2621,7 +2621,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Name;
 
     /// <summary>
-    /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
+    /// The molecular weight or weight range (for proteins, polymers or nucleic acids).
     /// </summary>
     [FhirElement("molecularWeight", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
@@ -2635,7 +2635,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent> _MolecularWeight;
 
     /// <summary>
-    /// A link between this substance and another, with details of the relationship
+    /// A link between this substance and another, with details of the relationship.
     /// </summary>
     [FhirElement("relationship", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -2649,7 +2649,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent> _Relationship;
 
     /// <summary>
-    /// Data items specific to nucleic acids
+    /// Data items specific to nucleic acids.
     /// </summary>
     [FhirElement("nucleicAcid", InSummary=true, Order=240)]
     [CLSCompliant(false)]
@@ -2664,7 +2664,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _NucleicAcid;
 
     /// <summary>
-    /// Data items specific to polymers
+    /// Data items specific to polymers.
     /// </summary>
     [FhirElement("polymer", InSummary=true, Order=250)]
     [CLSCompliant(false)]
@@ -2679,7 +2679,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Polymer;
 
     /// <summary>
-    /// Data items specific to proteins
+    /// Data items specific to proteins.
     /// </summary>
     [FhirElement("protein", InSummary=true, Order=260)]
     [CLSCompliant(false)]
@@ -2694,7 +2694,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Protein;
 
     /// <summary>
-    /// Material or taxonomic/anatomical source for the substance
+    /// Material or taxonomic/anatomical source for the substance.
     /// </summary>
     [FhirElement("sourceMaterial", InSummary=true, Order=270)]
     [CLSCompliant(false)]

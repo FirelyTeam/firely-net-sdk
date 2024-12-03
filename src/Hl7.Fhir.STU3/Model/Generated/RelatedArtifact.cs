@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
+    /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Brief description of the related artifact
+    /// Brief description of the related artifact.
     /// </summary>
     [FhirElement("display", InSummary=true, Order=40)]
     [DataMember]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Bibliographic citation for the artifact
+    /// Bibliographic citation for the artifact.
     /// </summary>
     [FhirElement("citation", InSummary=true, Order=50)]
     [DataMember]
@@ -215,8 +215,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the artifact can be accessed. Note: Element is deprecated since R5, do not use with R5 and newer releases.
+    /// Where the artifact can be accessed.
     /// </summary>
+    /// <remarks>
+    /// Element is deprecated since R5, do not use with R5 and newer releases.
+    /// </remarks>
     [FhirElement("url", InSummary=true, Order=60)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
@@ -247,7 +250,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What document is being referenced
+    /// What document is being referenced.
     /// </summary>
     [FhirElement("document", InSummary=true, Order=70)]
     [DataMember]
@@ -260,7 +263,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Attachment _Document;
 
     /// <summary>
-    /// What resource is being referenced
+    /// What resource is being referenced.
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=80)]
     [CLSCompliant(false)]

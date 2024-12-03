@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Condition.stage"; } }
 
       /// <summary>
-      /// Simple summary (disease specific)
+      /// Simple summary (disease specific).
       /// </summary>
       [FhirElement("summary", Order=40)]
       [Binding("ConditionStage")]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Summary;
 
       /// <summary>
-      /// Formal record of assessment
+      /// Formal record of assessment.
       /// </summary>
       [FhirElement("assessment", Order=50)]
       [CLSCompliant(false)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Condition.evidence"; } }
 
       /// <summary>
-      /// Manifestation/symptom
+      /// Manifestation/symptom.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="why")]
       [Binding("ManifestationOrSymptom")]
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Code;
 
       /// <summary>
-      /// Supporting information found elsewhere
+      /// Supporting information found elsewhere.
       /// </summary>
       [FhirElement("detail", InSummary=true, Order=50, FiveWs="why")]
       [CLSCompliant(false)]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External Ids for this condition
+    /// External Ids for this condition.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | recurrence | inactive | remission | resolved
+    /// active | recurrence | inactive | remission | resolved.
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// provisional | differential | confirmed | refuted | entered-in-error | unknown
+    /// provisional | differential | confirmed | refuted | entered-in-error | unknown.
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// problem-list-item | encounter-diagnosis
+    /// problem-list-item | encounter-diagnosis.
     /// </summary>
     [FhirElement("category", Order=120, FiveWs="class")]
     [Binding("ConditionCategory")]
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Subjective severity of condition
+    /// Subjective severity of condition.
     /// </summary>
     [FhirElement("severity", Order=130, FiveWs="grade")]
     [Binding("ConditionSeverity")]
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Severity;
 
     /// <summary>
-    /// Identification of the condition, problem or diagnosis
+    /// Identification of the condition, problem or diagnosis.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="what")]
     [Binding("ConditionKind")]
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Anatomical location, if relevant
+    /// Anatomical location, if relevant.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=150)]
     [Binding("BodySite")]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
 
     /// <summary>
-    /// Who has the condition?
+    /// Who has the condition?.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="who.focus")]
     [CLSCompliant(false)]
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter or episode when condition first asserted
+    /// Encounter or episode when condition first asserted.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=170, FiveWs="context")]
     [CLSCompliant(false)]
@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// Estimated or actual date,  date-time, or age
+    /// Estimated or actual date,  date-time, or age.
     /// </summary>
     [FhirElement("onset", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="when.init")]
     [CLSCompliant(false)]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Onset;
 
     /// <summary>
-    /// If/when in resolution/remission
+    /// If/when in resolution/remission.
     /// </summary>
     [FhirElement("abatement", Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Abatement;
 
     /// <summary>
-    /// Date record was believed accurate
+    /// Date record was believed accurate.
     /// </summary>
     [FhirElement("assertedDate", InSummary=true, Order=200, FiveWs="when.recorded")]
     [DataMember]
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Person who asserts this condition
+    /// Person who asserts this condition.
     /// </summary>
     [FhirElement("asserter", InSummary=true, Order=210, FiveWs="who.author")]
     [CLSCompliant(false)]
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Asserter;
 
     /// <summary>
-    /// Stage/grade, usually assessed formally
+    /// Stage/grade, usually assessed formally.
     /// </summary>
     [FhirElement("stage", Order=220)]
     [DataMember]
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Condition.StageComponent _Stage;
 
     /// <summary>
-    /// Supporting evidence
+    /// Supporting evidence.
     /// </summary>
     [FhirElement("evidence", Order=230)]
     [Cardinality(Min=0,Max=-1)]
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Condition.EvidenceComponent> _Evidence;
 
     /// <summary>
-    /// Additional information about the Condition
+    /// Additional information about the Condition.
     /// </summary>
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]

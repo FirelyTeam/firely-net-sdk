@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of | part-of | amends | amended-with | appends | appended-with | cites | cited-by | comments-on | comment-in | contains | contained-in | corrects | correction-in | replaces | replaced-with | retracts | retracted-by | signs | similar-to | supports | supported-with | transforms | transformed-into | transformed-with | documents | specification-of | created-with | cite-as
+    /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of | part-of | amends | amended-with | appends | appended-with | cites | cited-by | comments-on | comment-in | contains | contained-in | corrects | correction-in | replaces | replaced-with | retracts | retracted-by | signs | similar-to | supports | supported-with | transforms | transformed-into | transformed-with | documents | specification-of | created-with | cite-as.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -321,8 +321,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional classifiers. Note: Element was introduced in R5, do not use when working with older releases.
+    /// Additional classifiers.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R5, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("classifier", InSummary=true, Order=40, Since=FhirRelease.R5)]
     [Binding("RelatedArtifactClassifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -336,7 +339,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Classifier;
 
     /// <summary>
-    /// Short label
+    /// Short label.
     /// </summary>
     [FhirElement("label", InSummary=true, Order=50)]
     [DataMember]
@@ -367,7 +370,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Brief description of the related artifact
+    /// Brief description of the related artifact.
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
@@ -398,7 +401,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Bibliographic citation for the artifact
+    /// Bibliographic citation for the artifact.
     /// </summary>
     [FhirElement("citation", InSummary=true, Order=70)]
     [DataMember]
@@ -429,8 +432,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the artifact can be accessed. Note: Element is deprecated since R5, do not use with R5 and newer releases.
+    /// Where the artifact can be accessed.
     /// </summary>
+    /// <remarks>
+    /// Element is deprecated since R5, do not use with R5 and newer releases.
+    /// </remarks>
     [FhirElement("url", InSummary=true, Order=80)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
@@ -461,7 +467,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What document is being referenced
+    /// What document is being referenced.
     /// </summary>
     [FhirElement("document", InSummary=true, Order=90)]
     [DataMember]
@@ -474,7 +480,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Attachment _Document;
 
     /// <summary>
-    /// What artifact is being referenced
+    /// What artifact is being referenced.
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=100)]
     [DataMember]
@@ -505,8 +511,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What artifact, if not a conformance resource. Note: Element was introduced in R5, do not use when working with older releases.
+    /// What artifact, if not a conformance resource.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R5, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("resourceReference", InSummary=true, Order=110, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
     [References("Resource")]
@@ -520,8 +529,11 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ResourceReference;
 
     /// <summary>
-    /// draft | active | retired | unknown. Note: Element was introduced in R5, do not use when working with older releases.
+    /// draft | active | retired | unknown.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R5, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("publicationStatus", InSummary=true, Order=120, Since=FhirRelease.R5)]
     [DeclaredType(Type = typeof(Code))]
     [Binding("RelatedArtifactPublicationStatus")]
@@ -553,8 +565,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date of publication of the artifact being referred to. Note: Element was introduced in R5, do not use when working with older releases.
+    /// Date of publication of the artifact being referred to.
     /// </summary>
+    /// <remarks>
+    /// Element was introduced in R5, do not use when working with older releases.
+    /// </remarks>
     [FhirElement("publicationDate", InSummary=true, Order=130, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date PublicationDateElement

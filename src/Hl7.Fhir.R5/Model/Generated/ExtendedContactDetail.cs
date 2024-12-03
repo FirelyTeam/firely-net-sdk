@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ExtendedContactDetail"; } }
 
     /// <summary>
-    /// The type of contact
+    /// The type of contact.
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=30)]
     [Binding("Purpose")]
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Purpose;
 
     /// <summary>
-    /// Name of an individual to contact
+    /// Name of an individual to contact.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.HumanName> _Name;
 
     /// <summary>
-    /// Contact details (e.g.phone/fax/url)
+    /// Contact details (e.g.phone/fax/url).
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// Address for the contact
+    /// Address for the contact.
     /// </summary>
     [FhirElement("address", InSummary=true, Order=60)]
     [DataMember]
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Address _Address;
 
     /// <summary>
-    /// This contact detail is handled/monitored by a specific organization
+    /// This contact detail is handled/monitored by a specific organization.
     /// </summary>
     [FhirElement("organization", InSummary=true, Order=70)]
     [CLSCompliant(false)]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Period that this contact was valid for usage
+    /// Period that this contact was valid for usage.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=80)]
     [DataMember]

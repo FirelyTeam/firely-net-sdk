@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ContactDetail"; } }
 
     /// <summary>
-    /// Name of an individual to contact
+    /// Name of an individual to contact.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for individual or organization
+    /// Contact details for individual or organization.
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]

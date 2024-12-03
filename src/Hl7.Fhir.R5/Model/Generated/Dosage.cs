@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Dosage.doseAndRate"; } }
 
       /// <summary>
-      /// The kind of dose or rate specified
+      /// The kind of dose or rate specified.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
       [Binding("DoseAndRateType")]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Amount of medication per dose
+      /// Amount of medication per dose.
       /// </summary>
       [FhirElement("dose", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.DataType _Dose;
 
       /// <summary>
-      /// Amount of medication per unit of time
+      /// Amount of medication per unit of time.
       /// </summary>
       [FhirElement("rate", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The order of the dosage instructions
+    /// The order of the dosage instructions.
     /// </summary>
     [FhirElement("sequence", InSummary=true, Order=40)]
     [DataMember]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Free text dosage instructions e.g. SIG
+    /// Free text dosage instructions e.g. SIG.
     /// </summary>
     [FhirElement("text", InSummary=true, Order=50)]
     [DataMember]
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
+    /// Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness".
     /// </summary>
     [FhirElement("additionalInstruction", InSummary=true, Order=60)]
     [Binding("AdditionalInstruction")]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _AdditionalInstruction;
 
     /// <summary>
-    /// Patient or consumer oriented instructions
+    /// Patient or consumer oriented instructions.
     /// </summary>
     [FhirElement("patientInstruction", InSummary=true, Order=70)]
     [DataMember]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When medication should be administered
+    /// When medication should be administered.
     /// </summary>
     [FhirElement("timing", InSummary=true, Order=80)]
     [DataMember]
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Timing _Timing;
 
     /// <summary>
-    /// Take "as needed"
+    /// Take "as needed".
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=90)]
     [DataMember]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Take "as needed" (for x)
+    /// Take "as needed" (for x).
     /// </summary>
     [FhirElement("asNeededFor", InSummary=true, Order=100)]
     [Binding("MedicationAsNeededReason")]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _AsNeededFor;
 
     /// <summary>
-    /// Body site to administer to
+    /// Body site to administer to.
     /// </summary>
     [FhirElement("site", InSummary=true, Order=110)]
     [Binding("MedicationAdministrationSite")]
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Site;
 
     /// <summary>
-    /// How drug should enter body
+    /// How drug should enter body.
     /// </summary>
     [FhirElement("route", InSummary=true, Order=120)]
     [Binding("RouteOfAdministration")]
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Route;
 
     /// <summary>
-    /// Technique for administering medication
+    /// Technique for administering medication.
     /// </summary>
     [FhirElement("method", InSummary=true, Order=130)]
     [Binding("MedicationAdministrationMethod")]
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Method;
 
     /// <summary>
-    /// Amount of medication administered, to be administered or typical amount to be administered
+    /// Amount of medication administered, to be administered or typical amount to be administered.
     /// </summary>
     [FhirElement("doseAndRate", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> _DoseAndRate;
 
     /// <summary>
-    /// Upper limit on medication per unit of time
+    /// Upper limit on medication per unit of time.
     /// </summary>
     [FhirElement("maxDosePerPeriod", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Ratio> _MaxDosePerPeriod;
 
     /// <summary>
-    /// Upper limit on medication per administration
+    /// Upper limit on medication per administration.
     /// </summary>
     [FhirElement("maxDosePerAdministration", InSummary=true, Order=160)]
     [DataMember]
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Quantity _MaxDosePerAdministration;
 
     /// <summary>
-    /// Upper limit on medication per lifetime of the patient
+    /// Upper limit on medication per lifetime of the patient.
     /// </summary>
     [FhirElement("maxDosePerLifetime", InSummary=true, Order=170)]
     [DataMember]

@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EffectEvidenceSynthesis.sampleSize"; } }
 
       /// <summary>
-      /// Description of sample size
+      /// Description of sample size.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How many studies?
+      /// How many studies?.
       /// </summary>
       [FhirElement("numberOfStudies", Order=50)]
       [DataMember]
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// How many participants?
+      /// How many participants?.
       /// </summary>
       [FhirElement("numberOfParticipants", Order=60)]
       [DataMember]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EffectEvidenceSynthesis.resultsByExposure"; } }
 
       /// <summary>
-      /// Description of results by exposure
+      /// Description of results by exposure.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// exposure | exposure-alternative
+      /// exposure | exposure-alternative.
       /// </summary>
       [FhirElement("exposureState", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Variant exposure states
+      /// Variant exposure states.
       /// </summary>
       [FhirElement("variantState", Order=60)]
       [Binding("EvidenceVariantState")]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _VariantState;
 
       /// <summary>
-      /// Risk evidence synthesis
+      /// Risk evidence synthesis.
       /// </summary>
       [FhirElement("riskEvidenceSynthesis", Order=70)]
       [CLSCompliant(false)]
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EffectEvidenceSynthesis.effectEstimate"; } }
 
       /// <summary>
-      /// Description of effect estimate
+      /// Description of effect estimate.
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Type of efffect estimate
+      /// Type of efffect estimate.
       /// </summary>
       [FhirElement("type", Order=50)]
       [Binding("EffectEstimateType")]
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Variant exposure states
+      /// Variant exposure states.
       /// </summary>
       [FhirElement("variantState", Order=60)]
       [Binding("EvidenceVariantState")]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _VariantState;
 
       /// <summary>
-      /// Point estimate
+      /// Point estimate.
       /// </summary>
       [FhirElement("value", Order=70)]
       [DataMember]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What unit is the outcome described in?
+      /// What unit is the outcome described in?.
       /// </summary>
       [FhirElement("unitOfMeasure", Order=80)]
       [Binding("UCUMUnits")]
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _UnitOfMeasure;
 
       /// <summary>
-      /// How precise the estimate is
+      /// How precise the estimate is.
       /// </summary>
       [FhirElement("precisionEstimate", Order=90)]
       [Cardinality(Min=0,Max=-1)]
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EffectEvidenceSynthesis.effectEstimate.precisionEstimate"; } }
 
       /// <summary>
-      /// Type of precision estimate
+      /// Type of precision estimate.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("PrecisionEstimateType")]
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Level of confidence interval
+      /// Level of confidence interval.
       /// </summary>
       [FhirElement("level", Order=50)]
       [DataMember]
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Lower bound
+      /// Lower bound.
       /// </summary>
       [FhirElement("from", Order=60)]
       [DataMember]
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Upper bound
+      /// Upper bound.
       /// </summary>
       [FhirElement("to", Order=70)]
       [DataMember]
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EffectEvidenceSynthesis.certainty"; } }
 
       /// <summary>
-      /// Certainty rating
+      /// Certainty rating.
       /// </summary>
       [FhirElement("rating", Order=40)]
       [Binding("QualityOfEvidenceRating")]
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Rating;
 
       /// <summary>
-      /// Used for footnotes or explanatory notes
+      /// Used for footnotes or explanatory notes.
       /// </summary>
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Annotation> _Note;
 
       /// <summary>
-      /// A component that contributes to the overall certainty
+      /// A component that contributes to the overall certainty.
       /// </summary>
       [FhirElement("certaintySubcomponent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "EffectEvidenceSynthesis.certainty.certaintySubcomponent"; } }
 
       /// <summary>
-      /// Type of subcomponent of certainty rating
+      /// Type of subcomponent of certainty rating.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("CertaintySubcomponentType")]
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Subcomponent certainty rating
+      /// Subcomponent certainty rating.
       /// </summary>
       [FhirElement("rating", Order=50)]
       [Binding("CertaintySubcomponentRating")]
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.CodeableConcept> _Rating;
 
       /// <summary>
-      /// Used for footnotes or explanatory notes
+      /// Used for footnotes or explanatory notes.
       /// </summary>
       [FhirElement("note", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1302,7 +1302,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Canonical identifier for this effect evidence synthesis, represented as a URI (globally unique)
+    /// Canonical identifier for this effect evidence synthesis, represented as a URI (globally unique).
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
@@ -1333,7 +1333,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the effect evidence synthesis
+    /// Additional identifier for the effect evidence synthesis.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1347,7 +1347,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the effect evidence synthesis
+    /// Business version of the effect evidence synthesis.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
@@ -1378,7 +1378,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this effect evidence synthesis (computer friendly)
+    /// Name for this effect evidence synthesis (computer friendly).
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
@@ -1409,7 +1409,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name for this effect evidence synthesis (human friendly)
+    /// Name for this effect evidence synthesis (human friendly).
     /// </summary>
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1474,7 +1474,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
@@ -1505,7 +1505,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of the publisher (organization or individual)
+    /// Name of the publisher (organization or individual).
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=160, FiveWs="FiveWs.witness")]
     [DataMember]
@@ -1536,7 +1536,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -1550,7 +1550,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the effect evidence synthesis
+    /// Natural language description of the effect evidence synthesis.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
@@ -1581,7 +1581,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Used for footnotes or explanatory notes
+    /// Used for footnotes or explanatory notes.
     /// </summary>
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
@@ -1595,7 +1595,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1609,7 +1609,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for effect evidence synthesis (if applicable)
+    /// Intended jurisdiction for effect evidence synthesis (if applicable).
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
@@ -1624,7 +1624,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=220)]
     [DataMember]
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the effect evidence synthesis was approved by publisher
+    /// When the effect evidence synthesis was approved by publisher.
     /// </summary>
     [FhirElement("approvalDate", Order=230)]
     [DataMember]
@@ -1686,7 +1686,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the effect evidence synthesis was last reviewed
+    /// When the effect evidence synthesis was last reviewed.
     /// </summary>
     [FhirElement("lastReviewDate", Order=240)]
     [DataMember]
@@ -1717,7 +1717,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the effect evidence synthesis is expected to be used
+    /// When the effect evidence synthesis is expected to be used.
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=250)]
     [DataMember]
@@ -1745,7 +1745,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Topic;
 
     /// <summary>
-    /// Who authored the content
+    /// Who authored the content.
     /// </summary>
     [FhirElement("author", Order=270)]
     [Cardinality(Min=0,Max=-1)]
@@ -1759,7 +1759,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Author;
 
     /// <summary>
-    /// Who edited the content
+    /// Who edited the content.
     /// </summary>
     [FhirElement("editor", Order=280)]
     [Cardinality(Min=0,Max=-1)]
@@ -1773,7 +1773,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Editor;
 
     /// <summary>
-    /// Who reviewed the content
+    /// Who reviewed the content.
     /// </summary>
     [FhirElement("reviewer", Order=290)]
     [Cardinality(Min=0,Max=-1)]
@@ -1787,7 +1787,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Reviewer;
 
     /// <summary>
-    /// Who endorsed the content
+    /// Who endorsed the content.
     /// </summary>
     [FhirElement("endorser", Order=300)]
     [Cardinality(Min=0,Max=-1)]
@@ -1815,7 +1815,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
 
     /// <summary>
-    /// Type of synthesis
+    /// Type of synthesis.
     /// </summary>
     [FhirElement("synthesisType", Order=320)]
     [Binding("SynthesisType")]
@@ -1829,7 +1829,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _SynthesisType;
 
     /// <summary>
-    /// Type of study
+    /// Type of study.
     /// </summary>
     [FhirElement("studyType", Order=330)]
     [Binding("StudyType")]
@@ -1843,7 +1843,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _StudyType;
 
     /// <summary>
-    /// What population?
+    /// What population?.
     /// </summary>
     [FhirElement("population", InSummary=true, Order=340)]
     [CLSCompliant(false)]
@@ -1859,7 +1859,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Population;
 
     /// <summary>
-    /// What exposure?
+    /// What exposure?.
     /// </summary>
     [FhirElement("exposure", InSummary=true, Order=350)]
     [CLSCompliant(false)]
@@ -1875,7 +1875,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Exposure;
 
     /// <summary>
-    /// What comparison exposure?
+    /// What comparison exposure?.
     /// </summary>
     [FhirElement("exposureAlternative", InSummary=true, Order=360)]
     [CLSCompliant(false)]
@@ -1891,7 +1891,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ExposureAlternative;
 
     /// <summary>
-    /// What outcome?
+    /// What outcome?.
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=370)]
     [CLSCompliant(false)]
@@ -1907,7 +1907,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Outcome;
 
     /// <summary>
-    /// What sample size was involved?
+    /// What sample size was involved?.
     /// </summary>
     [FhirElement("sampleSize", Order=380)]
     [DataMember]
@@ -1920,7 +1920,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.EffectEvidenceSynthesis.SampleSizeComponent _SampleSize;
 
     /// <summary>
-    /// What was the result per exposure?
+    /// What was the result per exposure?.
     /// </summary>
     [FhirElement("resultsByExposure", Order=390)]
     [Cardinality(Min=0,Max=-1)]
@@ -1934,7 +1934,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.EffectEvidenceSynthesis.ResultsByExposureComponent> _ResultsByExposure;
 
     /// <summary>
-    /// What was the estimated effect
+    /// What was the estimated effect.
     /// </summary>
     [FhirElement("effectEstimate", InSummary=true, Order=400)]
     [Cardinality(Min=0,Max=-1)]
@@ -1948,7 +1948,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.EffectEvidenceSynthesis.EffectEstimateComponent> _EffectEstimate;
 
     /// <summary>
-    /// How certain is the effect
+    /// How certain is the effect.
     /// </summary>
     [FhirElement("certainty", Order=410)]
     [Cardinality(Min=0,Max=-1)]

@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Person.link"; } }
 
       /// <summary>
-      /// The resource to which this actual person is associated
+      /// The resource to which this actual person is associated.
       /// </summary>
       [FhirElement("target", Order=40)]
       [CLSCompliant(false)]
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.ResourceReference _Target;
 
       /// <summary>
-      /// level1 | level2 | level3 | level4
+      /// level1 | level2 | level3 | level4.
       /// </summary>
       [FhirElement("assurance", Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// A human identifier for this person
+    /// A human identifier for this person.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// A name associated with the person
+    /// A name associated with the person.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.HumanName> _Name;
 
     /// <summary>
-    /// A contact detail for the person
+    /// A contact detail for the person.
     /// </summary>
     [FhirElement("telecom", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
 
     /// <summary>
-    /// male | female | other | unknown
+    /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The date on which the person was born
+    /// The date on which the person was born.
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=130)]
     [DataMember]
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// One or more addresses for the person
+    /// One or more addresses for the person.
     /// </summary>
     [FhirElement("address", Order=140)]
     [Cardinality(Min=0,Max=-1)]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Address> _Address;
 
     /// <summary>
-    /// Image of the person
+    /// Image of the person.
     /// </summary>
     [FhirElement("photo", Order=150)]
     [DataMember]
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Attachment _Photo;
 
     /// <summary>
-    /// The organization that is the custodian of the person record
+    /// The organization that is the custodian of the person record.
     /// </summary>
     [FhirElement("managingOrganization", InSummary=true, Order=160)]
     [CLSCompliant(false)]
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
 
     /// <summary>
-    /// This person's record is in active use
+    /// This person's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=170, FiveWs="status")]
     [DataMember]
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Link to a resource that concerns the same actual person
+    /// Link to a resource that concerns the same actual person.
     /// </summary>
     [FhirElement("link", Order=180)]
     [Cardinality(Min=0,Max=-1)]

@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Device.udiCarrier"; } }
 
       /// <summary>
-      /// Mandatory fixed portion of UDI
+      /// Mandatory fixed portion of UDI.
       /// </summary>
       [FhirElement("deviceIdentifier", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// UDI Issuing Organization
+      /// UDI Issuing Organization.
       /// </summary>
       [FhirElement("issuer", Order=50)]
       [DataMember]
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Regional UDI authority
+      /// Regional UDI authority.
       /// </summary>
       [FhirElement("jurisdiction", Order=60)]
       [DataMember]
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// UDI Machine Readable Barcode String
+      /// UDI Machine Readable Barcode String.
       /// </summary>
       [FhirElement("carrierAIDC", InSummary=true, Order=70)]
       [DataMember]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// UDI Human Readable Barcode String
+      /// UDI Human Readable Barcode String.
       /// </summary>
       [FhirElement("carrierHRF", InSummary=true, Order=80)]
       [DataMember]
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// barcode | rfid | manual +
+      /// barcode | rfid | manual +.
       /// </summary>
       [FhirElement("entryType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Device.deviceName"; } }
 
       /// <summary>
-      /// The name that identifies the device
+      /// The name that identifies the device.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other
+      /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other.
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Device.specialization"; } }
 
       /// <summary>
-      /// The standard that is used to operate and communicate
+      /// The standard that is used to operate and communicate.
       /// </summary>
       [FhirElement("systemType", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _SystemType;
 
       /// <summary>
-      /// The version of the standard that is used to operate and communicate
+      /// The version of the standard that is used to operate and communicate.
       /// </summary>
       [FhirElement("version", Order=50, FiveWs="FiveWs.what[x]")]
       [DataMember]
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Device.version"; } }
 
       /// <summary>
-      /// The type of the device version, e.g. manufacturer, approved, internal
+      /// The type of the device version, e.g. manufacturer, approved, internal.
       /// </summary>
       [FhirElement("type", Order=40)]
       [DataMember]
@@ -809,7 +809,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// A single component of the device version
+      /// A single component of the device version.
       /// </summary>
       [FhirElement("component", Order=50, FiveWs="FiveWs.what[x]")]
       [DataMember]
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _Component;
 
       /// <summary>
-      /// The version text
+      /// The version text.
       /// </summary>
       [FhirElement("value", Order=60)]
       [Cardinality(Min=1,Max=1)]
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "Device.property"; } }
 
       /// <summary>
-      /// Code that specifies the property DeviceDefinitionPropetyCode (Extensible)
+      /// Code that specifies the property DeviceDefinitionPropetyCode (Extensible).
       /// </summary>
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// Property value as a quantity
+      /// Property value as a quantity.
       /// </summary>
       [FhirElement("valueQuantity", Order=50)]
       [Cardinality(Min=0,Max=-1)]
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.Quantity> _ValueQuantity;
 
       /// <summary>
-      /// Property value as a code, e.g., NTP4 (synced to NTP)
+      /// Property value as a code, e.g., NTP4 (synced to NTP).
       /// </summary>
       [FhirElement("valueCode", Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -1101,7 +1101,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Instance identifier
+    /// Instance identifier.
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1115,7 +1115,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// The reference to the definition for the device
+    /// The reference to the definition for the device.
     /// </summary>
     [FhirElement("definition", Order=100)]
     [CLSCompliant(false)]
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Definition;
 
     /// <summary>
-    /// Unique Device Identifier (UDI) Barcode string
+    /// Unique Device Identifier (UDI) Barcode string.
     /// </summary>
     [FhirElement("udiCarrier", InSummary=true, Order=110, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Device.UdiCarrierComponent> _UdiCarrier;
 
     /// <summary>
-    /// active | inactive | entered-in-error | unknown
+    /// active | inactive | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
+    /// online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off.
     /// </summary>
     [FhirElement("statusReason", Order=130, FiveWs="FiveWs.status")]
     [Binding("FHIRDeviceStatusReason")]
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _StatusReason;
 
     /// <summary>
-    /// The distinct identification string
+    /// The distinct identification string.
     /// </summary>
     [FhirElement("distinctIdentifier", Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1223,7 +1223,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Name of device manufacturer
+    /// Name of device manufacturer.
     /// </summary>
     [FhirElement("manufacturer", Order=150, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date when the device was made
+    /// Date when the device was made.
     /// </summary>
     [FhirElement("manufactureDate", Order=160, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1285,7 +1285,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date and time of expiry of this device (if applicable)
+    /// Date and time of expiry of this device (if applicable).
     /// </summary>
     [FhirElement("expirationDate", Order=170, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1316,7 +1316,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Lot number of manufacture
+    /// Lot number of manufacture.
     /// </summary>
     [FhirElement("lotNumber", Order=180, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1347,7 +1347,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Serial number assigned by the manufacturer
+    /// Serial number assigned by the manufacturer.
     /// </summary>
     [FhirElement("serialNumber", Order=190, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1378,7 +1378,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The name of the device as given by the manufacturer
+    /// The name of the device as given by the manufacturer.
     /// </summary>
     [FhirElement("deviceName", Order=200)]
     [Cardinality(Min=0,Max=-1)]
@@ -1392,7 +1392,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Device.DeviceNameComponent> _DeviceName;
 
     /// <summary>
-    /// The manufacturer's model number for the device
+    /// The manufacturer's model number for the device.
     /// </summary>
     [FhirElement("modelNumber", Order=210, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1423,7 +1423,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The part number or catalog number of the device
+    /// The part number or catalog number of the device.
     /// </summary>
     [FhirElement("partNumber", Order=220, FiveWs="FiveWs.what[x]")]
     [DataMember]
@@ -1454,7 +1454,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The kind or type of device
+    /// The kind or type of device.
     /// </summary>
     [FhirElement("type", Order=230)]
     [Binding("DeviceType")]
@@ -1468,7 +1468,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
+    /// The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication.
     /// </summary>
     [FhirElement("specialization", Order=240)]
     [Cardinality(Min=0,Max=-1)]
@@ -1482,7 +1482,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Device.SpecializationComponent> _Specialization;
 
     /// <summary>
-    /// The actual design of the device or software version running on the device
+    /// The actual design of the device or software version running on the device.
     /// </summary>
     [FhirElement("version", Order=250)]
     [Cardinality(Min=0,Max=-1)]
@@ -1496,7 +1496,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Device.VersionComponent> _Version;
 
     /// <summary>
-    /// The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
+    /// The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties.
     /// </summary>
     [FhirElement("property", Order=260)]
     [Cardinality(Min=0,Max=-1)]
@@ -1510,7 +1510,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Device.PropertyComponent> _Property;
 
     /// <summary>
-    /// Patient to whom Device is affixed
+    /// Patient to whom Device is affixed.
     /// </summary>
     [FhirElement("patient", Order=270, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
@@ -1525,7 +1525,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Organization responsible for device
+    /// Organization responsible for device.
     /// </summary>
     [FhirElement("owner", Order=280, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
@@ -1540,7 +1540,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Owner;
 
     /// <summary>
-    /// Details for human/organization for support
+    /// Details for human/organization for support.
     /// </summary>
     [FhirElement("contact", Order=290, FiveWs="FiveWs.source")]
     [Cardinality(Min=0,Max=-1)]
@@ -1554,7 +1554,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactPoint> _Contact;
 
     /// <summary>
-    /// Where the device is found
+    /// Where the device is found.
     /// </summary>
     [FhirElement("location", Order=300, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
@@ -1569,7 +1569,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Network address to contact device
+    /// Network address to contact device.
     /// </summary>
     [FhirElement("url", Order=310, FiveWs="FiveWs.where[x]")]
     [DataMember]
@@ -1600,7 +1600,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Device notes and comments
+    /// Device notes and comments.
     /// </summary>
     [FhirElement("note", Order=320)]
     [Cardinality(Min=0,Max=-1)]
@@ -1614,7 +1614,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Safety Characteristics of Device
+    /// Safety Characteristics of Device.
     /// </summary>
     [FhirElement("safety", InSummary=true, Order=330)]
     [Cardinality(Min=0,Max=-1)]
@@ -1628,7 +1628,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Safety;
 
     /// <summary>
-    /// The device that this device is attached to or is part of
+    /// The device that this device is attached to or is part of.
     /// </summary>
     [FhirElement("parent", Order=340)]
     [CLSCompliant(false)]

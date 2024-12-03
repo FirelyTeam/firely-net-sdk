@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, Hl7.Fhir.Model.IModifierExtendable
   {
     /// <summary>
-    /// Text summary of the resource, for human interpretation
+    /// Text summary of the resource, for human interpretation.
     /// </summary>
     [FhirElement("text", Order=50)]
     [DataMember]
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Narrative _Text;
 
     /// <summary>
-    /// Contained, inline Resources
+    /// Contained, inline Resources.
     /// </summary>
     [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
     [CLSCompliant(false)]
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Resource> _Contained;
 
     /// <summary>
-    /// Additional content defined by implementations
+    /// Additional content defined by implementations.
     /// </summary>
     [FhirElement("extension", Order=70)]
     [Cardinality(Min=0,Max=-1)]
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Extension> _Extension;
 
     /// <summary>
-    /// Extensions that cannot be ignored
+    /// Extensions that cannot be ignored.
     /// </summary>
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]

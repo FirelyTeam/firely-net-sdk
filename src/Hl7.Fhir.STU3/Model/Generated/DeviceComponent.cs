@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DeviceComponent.productionSpecification"; } }
 
       /// <summary>
-      /// Type or kind of production specification, for example serial number or software revision
+      /// Type or kind of production specification, for example serial number or software revision.
       /// </summary>
       [FhirElement("specType", InSummary=true, Order=40)]
       [Binding("DeviceSpecificationSpecType")]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.CodeableConcept _SpecType;
 
       /// <summary>
-      /// Internal component unique identification
+      /// Internal component unique identification.
       /// </summary>
       [FhirElement("componentId", InSummary=true, Order=50)]
       [DataMember]
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Identifier _ComponentId;
 
       /// <summary>
-      /// A printable string defining the component
+      /// A printable string defining the component.
       /// </summary>
       [FhirElement("productionSpec", InSummary=true, Order=60)]
       [DataMember]
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Instance id assigned by the software stack
+    /// Instance id assigned by the software stack.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// What kind of component it is
+    /// What kind of component it is.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
     [Binding("ComponentType")]
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// Recent system change timestamp
+    /// Recent system change timestamp.
     /// </summary>
     [FhirElement("lastSystemChange", InSummary=true, Order=110, FiveWs="when.init")]
     [DataMember]
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Top-level device resource link
+    /// Top-level device resource link.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=120)]
     [CLSCompliant(false)]
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Source;
 
     /// <summary>
-    /// Parent resource link
+    /// Parent resource link.
     /// </summary>
     [FhirElement("parent", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Parent;
 
     /// <summary>
-    /// Current operational status of the component, for example On, Off or Standby
+    /// Current operational status of the component, for example On, Off or Standby.
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=140)]
     [Binding("DeviceComponentOperationalStatus")]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _OperationalStatus;
 
     /// <summary>
-    /// Current supported parameter group
+    /// Current supported parameter group.
     /// </summary>
     [FhirElement("parameterGroup", InSummary=true, Order=150)]
     [Binding("DeviceComponentParameterGroup")]
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.CodeableConcept _ParameterGroup;
 
     /// <summary>
-    /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
+    /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+.
     /// </summary>
     [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Specification details such as Component Revisions, or Serial Numbers
+    /// Specification details such as Component Revisions, or Serial Numbers.
     /// </summary>
     [FhirElement("productionSpecification", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> _ProductionSpecification;
 
     /// <summary>
-    /// Language code for the human-readable text strings produced by the device
+    /// Language code for the human-readable text strings produced by the device.
     /// </summary>
     [FhirElement("languageCode", InSummary=true, Order=180)]
     [Binding("Language")]

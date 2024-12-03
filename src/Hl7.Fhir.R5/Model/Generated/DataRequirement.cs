@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DataRequirement.codeFilter"; } }
 
       /// <summary>
-      /// A code-valued attribute to filter on
+      /// A code-valued attribute to filter on.
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A coded (token) parameter to search on
+      /// A coded (token) parameter to search on.
       /// </summary>
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// ValueSet for the filter
+      /// ValueSet for the filter.
       /// </summary>
       [FhirElement("valueSet", InSummary=true, Order=50)]
       [DataMember]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// What code is expected
+      /// What code is expected.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DataRequirement.dateFilter"; } }
 
       /// <summary>
-      /// A date-valued attribute to filter on
+      /// A date-valued attribute to filter on.
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A date valued parameter to search on
+      /// A date valued parameter to search on.
       /// </summary>
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The value of the filter, as a Period, DateTime, or Duration value
+      /// The value of the filter, as a Period, DateTime, or Duration value.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DataRequirement.valueFilter"; } }
 
       /// <summary>
-      /// An attribute to filter on
+      /// An attribute to filter on.
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A parameter to search on
+      /// A parameter to search on.
       /// </summary>
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// eq | gt | lt | ge | le | sa | eb
+      /// eq | gt | lt | ge | le | sa | eb.
       /// </summary>
       [FhirElement("comparator", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The value of the filter, as a Period, DateTime, or Duration value
+      /// The value of the filter, as a Period, DateTime, or Duration value.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "DataRequirement.sort"; } }
 
       /// <summary>
-      /// The name of the attribute to perform the sort
+      /// The name of the attribute to perform the sort.
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// ascending | descending
+      /// ascending | descending.
       /// </summary>
       [FhirElement("direction", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The type of the required data
+    /// The type of the required data.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The profile of the required data
+    /// The profile of the required data.
     /// </summary>
     [FhirElement("profile", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+    /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Subject;
 
     /// <summary>
-    /// Indicates specific structure elements that are referenced by the knowledge module
+    /// Indicates specific structure elements that are referenced by the knowledge module.
     /// </summary>
     [FhirElement("mustSupport", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What codes are expected
+    /// What codes are expected.
     /// </summary>
     [FhirElement("codeFilter", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
@@ -1082,7 +1082,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> _CodeFilter;
 
     /// <summary>
-    /// What dates/date ranges are expected
+    /// What dates/date ranges are expected.
     /// </summary>
     [FhirElement("dateFilter", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
@@ -1096,7 +1096,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> _DateFilter;
 
     /// <summary>
-    /// What values are expected
+    /// What values are expected.
     /// </summary>
     [FhirElement("valueFilter", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent> _ValueFilter;
 
     /// <summary>
-    /// Number of results
+    /// Number of results.
     /// </summary>
     [FhirElement("limit", InSummary=true, Order=100)]
     [DataMember]
@@ -1141,7 +1141,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Order of the results
+    /// Order of the results.
     /// </summary>
     [FhirElement("sort", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]

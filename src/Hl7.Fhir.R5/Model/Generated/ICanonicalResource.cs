@@ -55,12 +55,12 @@ namespace Hl7.Fhir.Model
     string Url { get; set; }
 
     /// <summary>
-    /// Canonical identifier for this CanonicalResource, represented as an absolute URI (globally unique)
+    /// Canonical identifier for this CanonicalResource, represented as an absolute URI (globally unique).
     /// </summary>
     Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
 
     /// <summary>
-    /// Additional identifier for the CanonicalResource
+    /// Additional identifier for the CanonicalResource.
     /// </summary>
     List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
@@ -71,12 +71,12 @@ namespace Hl7.Fhir.Model
     string Version { get; set; }
 
     /// <summary>
-    /// Business version of the CanonicalResource
+    /// Business version of the CanonicalResource.
     /// </summary>
     Hl7.Fhir.Model.FhirString VersionElement { get; set; }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions.
     /// </summary>
     Hl7.Fhir.Model.DataType VersionAlgorithm { get; set; }
 
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
     string Name { get; set; }
 
     /// <summary>
-    /// Name for this CanonicalResource (computer friendly)
+    /// Name for this CanonicalResource (computer friendly).
     /// </summary>
     Hl7.Fhir.Model.FhirString NameElement { get; set; }
 
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
     string Title { get; set; }
 
     /// <summary>
-    /// Name for this CanonicalResource (human friendly)
+    /// Name for this CanonicalResource (human friendly).
     /// </summary>
     Hl7.Fhir.Model.FhirString TitleElement { get; set; }
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.PublicationStatus? Status { get; set; }
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
 
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     bool? Experimental { get; set; }
 
     /// <summary>
-    /// For testing purposes, not real usage
+    /// For testing purposes, not real usage.
     /// </summary>
     Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
 
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     string Date { get; set; }
 
     /// <summary>
-    /// Date last changed
+    /// Date last changed.
     /// </summary>
     Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
@@ -142,12 +142,12 @@ namespace Hl7.Fhir.Model
     string Publisher { get; set; }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual)
+    /// Name of the publisher/steward (organization or individual).
     /// </summary>
     Hl7.Fhir.Model.FhirString PublisherElement { get; set; }
 
     /// <summary>
-    /// Contact details for the publisher
+    /// Contact details for the publisher.
     /// </summary>
     List<Hl7.Fhir.Model.ContactDetail> Contact { get; set; }
 
@@ -158,17 +158,17 @@ namespace Hl7.Fhir.Model
     string Description { get; set; }
 
     /// <summary>
-    /// Natural language description of the CanonicalResource
+    /// Natural language description of the CanonicalResource.
     /// </summary>
     Hl7.Fhir.Model.Markdown DescriptionElement { get; set; }
 
     /// <summary>
-    /// The context that the content is intended to support
+    /// The context that the content is intended to support.
     /// </summary>
     List<Hl7.Fhir.Model.UsageContext> UseContext { get; set; }
 
     /// <summary>
-    /// Intended jurisdiction for CanonicalResource (if applicable)
+    /// Intended jurisdiction for CanonicalResource (if applicable).
     /// </summary>
     List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction { get; set; }
 
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     string Purpose { get; set; }
 
     /// <summary>
-    /// Why this CanonicalResource is defined
+    /// Why this CanonicalResource is defined.
     /// </summary>
     Hl7.Fhir.Model.Markdown PurposeElement { get; set; }
 
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
     string Copyright { get; set; }
 
     /// <summary>
-    /// Use and/or publishing restrictions
+    /// Use and/or publishing restrictions.
     /// </summary>
     Hl7.Fhir.Model.Markdown CopyrightElement { get; set; }
 
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
     string CopyrightLabel { get; set; }
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s).
     /// </summary>
     Hl7.Fhir.Model.FhirString CopyrightLabelElement { get; set; }
 
@@ -1840,14 +1840,14 @@ namespace Hl7.Fhir.Model
     }
 
     /// <remarks>
-    /// MedicationKnowledge.NameElement (ListTypeReference { Name = List, PropertyTypeString = List&lt;Hl7.Fhir.Model.FhirString&gt;, Element = PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string } }) is incompatible with
-    /// ICanonicalResource.name (PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string })
+    /// MedicationKnowledge.NameElement (List&lt;Hl7.Fhir.Model.FhirString&gt;) is incompatible with
+    /// ICanonicalResource.name (Hl7.Fhir.Model.FhirString)
     /// </remarks>
     [IgnoreDataMember]
     Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement
     {
       get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.NameElement (ListTypeReference { Name = List, PropertyTypeString = List<Hl7.Fhir.Model.FhirString>, Element = PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string } }) is incompatible with ICanonicalResource.name (PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string })");}
+      set { throw new NotImplementedException("MedicationKnowledge.NameElement (List<Hl7.Fhir.Model.FhirString>) is incompatible with ICanonicalResource.name (Hl7.Fhir.Model.FhirString)");}
     }
 
     // MedicationKnowledge.NameElement () is incompatible with ICanonicalResource.name (string)
@@ -1873,14 +1873,14 @@ namespace Hl7.Fhir.Model
     }
 
     /// <remarks>
-    /// MedicationKnowledge.StatusElement (CodedTypeReference { Name = code, PropertyTypeString = Code&lt;Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes&gt;, PocoTypeName = MedicationKnowledgeStatusCodes, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?, EnumName = MedicationKnowledgeStatusCodes, EnumClassName = MedicationKnowledge }) is incompatible with
-    /// ICanonicalResource.status (CodedTypeReference { Name = code, PropertyTypeString = Code&lt;Hl7.Fhir.Model.PublicationStatus&gt;, PocoTypeName = PublicationStatus, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.PublicationStatus?, EnumName = PublicationStatus, EnumClassName =  })
+    /// MedicationKnowledge.StatusElement (Code&lt;Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes&gt;) is incompatible with
+    /// ICanonicalResource.status (Code&lt;Hl7.Fhir.Model.PublicationStatus&gt;)
     /// </remarks>
     [IgnoreDataMember]
     Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement
     {
       get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.StatusElement (CodedTypeReference { Name = code, PropertyTypeString = Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>, PocoTypeName = MedicationKnowledgeStatusCodes, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?, EnumName = MedicationKnowledgeStatusCodes, EnumClassName = MedicationKnowledge }) is incompatible with ICanonicalResource.status (CodedTypeReference { Name = code, PropertyTypeString = Code<Hl7.Fhir.Model.PublicationStatus>, PocoTypeName = PublicationStatus, ConveniencePropertyType = System.Enum, ConveniencePropertyTypeString = Hl7.Fhir.Model.PublicationStatus?, EnumName = PublicationStatus, EnumClassName =  })");}
+      set { throw new NotImplementedException("MedicationKnowledge.StatusElement (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>) is incompatible with ICanonicalResource.status (Code<Hl7.Fhir.Model.PublicationStatus>)");}
     }
 
     // MedicationKnowledge.StatusElement (Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?) is incompatible with ICanonicalResource.status (Hl7.Fhir.Model.PublicationStatus?)

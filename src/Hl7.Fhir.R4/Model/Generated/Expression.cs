@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Expression"; } }
 
     /// <summary>
-    /// Natural language description of the condition
+    /// Natural language description of the condition.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=30)]
     [DataMember]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Short name assigned to expression for reuse
+    /// Short name assigned to expression for reuse.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Expression in specified language
+    /// Expression in specified language.
     /// </summary>
     [FhirElement("expression", InSummary=true, Order=60)]
     [DataMember]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the expression is found
+    /// Where the expression is found.
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=70)]
     [DataMember]
