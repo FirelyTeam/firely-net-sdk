@@ -31,10 +31,10 @@ public abstract record PocoElementNode2(PocoElementNode2? Parent, string Name) :
         new SinglePrimitiveElementNode(new T { ObjectValue = value });
     
     public static IEnumerable<SinglePocoElementNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => 
-        new RepeatingPrimitiveElementNode(primitives.ToList());
+        primitives.Select(ForPrimitive);
     
     public static IEnumerable<SinglePocoElementNode> FromList<T>(IEnumerable<object> values) where T : PrimitiveType, new() => 
-        new RepeatingPrimitiveElementNode(values.Select(v => new T { ObjectValue = v }).ToList());
+        values.Select(ForPrimitive<T>);
 }
 
 public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? Index, string? Name)
@@ -80,7 +80,7 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
         ? ((ITypedElement)this).InstanceType
         : null;
 
-    public IEnumerable<object> Annotations(Type type)
+    IEnumerable<object> IAnnotated.Annotations(Type type)
     {
         if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
             return [this];
