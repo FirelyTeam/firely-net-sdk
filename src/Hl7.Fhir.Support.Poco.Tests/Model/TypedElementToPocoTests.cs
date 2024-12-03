@@ -116,7 +116,7 @@ public class TypedElementToPocoTests
             };
 
         var poco = toPoco(subject);
-        poco.Should().BeEquivalentTo(subject);
+        poco.IsExactly(subject).Should().BeTrue();
     }
 
 

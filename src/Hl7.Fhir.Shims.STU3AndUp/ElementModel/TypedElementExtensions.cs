@@ -20,7 +20,7 @@ namespace Hl7.Fhir.ElementModel
         public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
             => ToElementNode(@base, rootName);
 
-        public static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null)
+        private static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null)
             => @base is PrimitiveType primitive 
                 ? new SinglePrimitiveElementNode(primitive, rootName) 
                 : new SinglePocoElementNode(@base, null, null, rootName);

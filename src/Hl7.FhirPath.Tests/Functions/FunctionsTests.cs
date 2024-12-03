@@ -500,7 +500,7 @@ namespace HL7.FhirPath.Tests
         [DynamicData(nameof(AllFunctionTestcases), DynamicDataSourceType.Method)]
         public void AssertTestcases(string expression, bool expected, bool invalid = false)
         {
-            IScopedNode dummy = SinglePrimitiveElementNode.FromSystemPrimitive<FhirBoolean>(true);
+            IScopedNode dummy = PocoElementNode2.ForPrimitive<FhirBoolean>(true);
 
             if (invalid)
             {
@@ -541,7 +541,7 @@ namespace HL7.FhirPath.Tests
             {
                 iterations++;
 
-                return 1;
+                return PocoElementNode2.ForPrimitive<Integer>(iterations);
             });
 
             var expression = new FhirPathCompiler(symbols).Compile("once()");

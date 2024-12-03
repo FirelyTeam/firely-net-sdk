@@ -627,10 +627,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var rule = test.Rule[i];
             Console.WriteLine($"Verify rule {i}: '{rule.Text}'");
-
-            var nav = output;
+            
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
-            Assert.IsTrue(expr.Predicate(nav.ToElementNode(), ctx), $"FAILED Rule {i}: '{rule.Text}'");
+            Assert.IsTrue(expr.Predicate(output, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
 
         StructureDefinition Load(string id, string fileNameFormat)

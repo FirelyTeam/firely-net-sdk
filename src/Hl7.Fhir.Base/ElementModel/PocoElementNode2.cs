@@ -4,6 +4,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,14 +13,24 @@ namespace Hl7.Fhir.ElementModel;
 
 #nullable enable
 
-public abstract record PocoElementNode2(SinglePocoElementNode? Parent, string Name) : IEnumerable<SinglePocoElementNode>
+public abstract record PocoElementNode2(PocoElementNode2? Parent, string Name) : IEnumerable<SinglePocoElementNode>
 {
-    
     public abstract IEnumerator<SinglePocoElementNode> GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public static SinglePocoElementNode Root(Base @base, string? name = null) => @base switch
+    {
+        PrimitiveType primitive => new SinglePrimitiveElementNode(primitive, name),
+        { } b => new SinglePocoElementNode(b, null, null, name)
+    };
+    
+    public static SinglePocoElementNode ForPrimitive(PrimitiveType primitive) => new SinglePrimitiveElementNode(primitive);
+    public static SinglePocoElementNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => new SinglePrimitiveElementNode(new T { ObjectValue = value });
+    public static IEnumerable<SinglePocoElementNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => new RepeatingPrimitiveElementNode(primitives.ToList());
+    public static IEnumerable<SinglePocoElementNode> FromList<T>(IEnumerable<object> values) where T : PrimitiveType, new() => new RepeatingPrimitiveElementNode(values.Select(v => new T { ObjectValue = v }).ToList());
 }
 
-public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, int? Index, string? Name)
+public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? Index, string? Name)
     : PocoElementNode2(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotated
 {
     public IEnumerable<PocoElementNode2> Children() =>
@@ -35,8 +46,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
     private PocoElementNode2 nodeFor(string name, object value) =>
         value switch
         {
-            PrimitiveType primitive => new SinglePrimitiveElementNode(primitive, name) { Parent = this },
-            Base b => new SinglePocoElementNode(b, this, null, name),
+            
             IEnumerable<PrimitiveType> primitiveList => new RepeatingPrimitiveElementNode(primitiveList.ToList(), name) { Parent = this },
             IEnumerable<Base> list => new RepeatingPocoElementNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
@@ -107,7 +117,12 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
     
     #region IScopedNode
     
-    IScopedNode? IScopedNode.Parent => Parent;
+    IScopedNode? IScopedNode.Parent => Parent switch
+    {
+        RepeatingPocoElementNode rpen => rpen[Index!.Value],
+        SinglePocoElementNode spen => spen,
+        _ => null
+    };
 
     IEnumerable<IScopedNode> IScopedNode.Children(string? name) => name is null
         ? Children().SelectMany(node => node)
@@ -150,7 +165,7 @@ public record SinglePocoElementNode(Base Poco, SinglePocoElementNode? Parent, in
     #endregion
 }
 
-public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, SinglePocoElementNode? Parent, string Name) : PocoElementNode2(Parent, Name)
+public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, PocoElementNode2? Parent, string Name) : PocoElementNode2(Parent, Name)
 {
     public SinglePocoElementNode this[int index] => new(Pocos[index], Parent, index, Name);
 
@@ -173,22 +188,11 @@ public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, SinglePocoElem
 
 public record SinglePrimitiveElementNode(PrimitiveType Primitive, string? Name = null) : SinglePocoElementNode(Primitive, null, null, Name)
 {
-    public static SinglePrimitiveElementNode FromSystemPrimitive<TTo>(object primitive, string? name = null) where TTo : PrimitiveType, new()
-    {
-        return new SinglePrimitiveElementNode(new TTo { ObjectValue = primitive }, name);
-    }
-    
-    public static implicit operator SinglePrimitiveElementNode(PrimitiveType primitive) => new(primitive);
-    
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
 }
 
-public record RepeatingPrimitiveElementNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : RepeatingPocoElementNode(Primitives, null, Name ?? "value")
-{ public static RepeatingPrimitiveElementNode FromSystemPrimitives<TTo>(IEnumerable<object> values, string? name = null) where TTo : PrimitiveType, new()
-    {
-        return new RepeatingPrimitiveElementNode(values.Select(v => new TTo { ObjectValue = v }).ToList(), name);
-    }
-
+internal record RepeatingPrimitiveElementNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : RepeatingPocoElementNode(Primitives, null, Name ?? "value")
+{
     public override IEnumerator<SinglePocoElementNode> GetEnumerator() =>
         Primitives.Select((primitive, index) => new SinglePrimitiveElementNode(primitive, Name) { Index = index }).GetEnumerator();
 }
