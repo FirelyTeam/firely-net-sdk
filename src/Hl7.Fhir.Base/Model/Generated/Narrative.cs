@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// generated | extensions | additional | empty.
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=30)]
+    [FhirElement("status", Order=30)]
     [DeclaredType(Type = typeof(Code))]
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Limited xhtml content.
     /// </summary>
-    [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, InSummary=true, Order=40)]
+    [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.XHtml DivElement
