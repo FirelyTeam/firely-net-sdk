@@ -18,12 +18,9 @@ namespace Hl7.Fhir.ElementModel
     {
         [TemporarilyChanged] // This should be restored to use the original ITE stack.
         public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
-            => ToElementNode(@base, rootName);
+            => toElementNode(@base, rootName);
 
-        private static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null)
-            => @base is PrimitiveType primitive 
-                ? new SinglePrimitiveElementNode(primitive, rootName) 
-                : new SinglePocoElementNode(@base, null, null, rootName);
+        private static SinglePocoElementNode toElementNode(this Base @base, string? rootName = null) => PocoElementNode2.Root(@base, rootName);
     }
 }
 #nullable restore

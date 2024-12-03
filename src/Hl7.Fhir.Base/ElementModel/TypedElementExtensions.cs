@@ -35,10 +35,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="base">The Poco that should be converted to an <see cref="ITypedElement"/>.</param>
         /// <param name="rootName"></param>
-        public static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null)
-            => @base is PrimitiveType primitive 
-                ? new SinglePrimitiveElementNode(primitive, rootName) 
-                : new SinglePocoElementNode(@base, null, null, rootName);
+        public static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null) => PocoElementNode2.Root(@base, rootName);
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements

@@ -24,10 +24,17 @@ public abstract record PocoElementNode2(PocoElementNode2? Parent, string Name) :
         { } b => new SinglePocoElementNode(b, null, null, name)
     };
     
-    public static SinglePocoElementNode ForPrimitive(PrimitiveType primitive) => new SinglePrimitiveElementNode(primitive);
-    public static SinglePocoElementNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => new SinglePrimitiveElementNode(new T { ObjectValue = value });
-    public static IEnumerable<SinglePocoElementNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => new RepeatingPrimitiveElementNode(primitives.ToList());
-    public static IEnumerable<SinglePocoElementNode> FromList<T>(IEnumerable<object> values) where T : PrimitiveType, new() => new RepeatingPrimitiveElementNode(values.Select(v => new T { ObjectValue = v }).ToList());
+    public static SinglePocoElementNode ForPrimitive(PrimitiveType primitive) => 
+        new SinglePrimitiveElementNode(primitive);
+    
+    public static SinglePocoElementNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
+        new SinglePrimitiveElementNode(new T { ObjectValue = value });
+    
+    public static IEnumerable<SinglePocoElementNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => 
+        new RepeatingPrimitiveElementNode(primitives.ToList());
+    
+    public static IEnumerable<SinglePocoElementNode> FromList<T>(IEnumerable<object> values) where T : PrimitiveType, new() => 
+        new RepeatingPrimitiveElementNode(values.Select(v => new T { ObjectValue = v }).ToList());
 }
 
 public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? Index, string? Name)
@@ -35,7 +42,7 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
 {
     public IEnumerable<PocoElementNode2> Children() =>
         Poco.GetElementPairs()
-            .Select<KeyValuePair<string, object>, PocoElementNode2>(ep =>
+            .Select(ep =>
                 nodeFor(ep.Key, ep.Value)
             );
 
@@ -46,7 +53,8 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
     private PocoElementNode2 nodeFor(string name, object value) =>
         value switch
         {
-            
+            PrimitiveType primitive => new SinglePrimitiveElementNode(primitive, name),
+            Base b => new SinglePocoElementNode(b, null, null, name),
             IEnumerable<PrimitiveType> primitiveList => new RepeatingPrimitiveElementNode(primitiveList.ToList(), name) { Parent = this },
             IEnumerable<Base> list => new RepeatingPocoElementNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
