@@ -173,7 +173,7 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
     #endregion
 }
 
-public record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, PocoElementNode2? Parent, string Name) : PocoElementNode2(Parent, Name)
+internal record RepeatingPocoElementNode(IReadOnlyList<Base> Pocos, PocoElementNode2? Parent, string Name) : PocoElementNode2(Parent, Name)
 {
     public SinglePocoElementNode this[int index] => new(Pocos[index], Parent, index, Name);
 
