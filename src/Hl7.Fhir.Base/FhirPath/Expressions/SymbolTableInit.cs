@@ -397,8 +397,7 @@ namespace Hl7.FhirPath.Expressions
                 }
             }
         }
-
-        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode]
+        
         private static IEnumerable<IScopedNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();

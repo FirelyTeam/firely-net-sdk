@@ -43,7 +43,7 @@ public partial interface IScopedNode : ITypedElement, IShortPathGenerator
     /// <summary>
     /// A flag enum indicating the type of the node.
     /// </summary>
-    [TemporarilyChanged] // we need this for now. we will remove it when we refactor FP
+    [TemporarilyChanged] // will be removed in the very near future
     NodeType Type { get; }
     
     new IEnumerable<IScopedNode> Children(string? name = null);

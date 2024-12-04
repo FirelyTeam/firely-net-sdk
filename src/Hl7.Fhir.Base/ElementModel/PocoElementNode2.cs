@@ -136,7 +136,7 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
         ? Children().SelectMany(node => node)
         : Child(name) ?? Enumerable.Empty<SinglePocoElementNode>();
     
-    [TemporarilyChanged] // we should investigate whether we want to even use this anymore. If we do, we should make this implementation explicit.
+    [TemporarilyChanged] // will be removed soon
     NodeType IScopedNode.Type => Poco switch
     {
         Bundle => NodeType.Bundle | NodeType.Resource,

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonBuilder(settings).Build(source);
 
         /// <inheritdoc cref="ToJsonAsync(ITypedElement, FhirJsonSerializationSettings)" />
-        [TemporarilyChanged]
+        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
             if (source is not SinglePocoElementNode {Poco: Resource resource})
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Serialization
             return engine.SerializeToJson(resource);
         }
 
-        [TemporarilyChanged]
+        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
             if (source is not SinglePocoElementNode {Poco: Resource resource})

@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Serialization
             => await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
 
         /// <inheritdoc cref="ToXmlAsync(ITypedElement, FhirXmlSerializationSettings)" />
-        [TemporarilyChanged]
+        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static string ToXml(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
             if (source is not SinglePocoElementNode {Poco: {} b})
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Serialization
             return serializer.SerializeToString(b);
         }
 
-        [TemporarilyChanged]
+        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static async Task<string> ToXmlAsync(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
             if (source is not SinglePocoElementNode {Poco: {} b})
