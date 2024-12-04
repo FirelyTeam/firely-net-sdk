@@ -43,24 +43,24 @@ namespace Hl7.Fhir.Test.Rest
 
 
         [TestMethod]
-        [DataRow("DiagnosticReport", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "05bfc4f1d0a4568ca405e248c055a8a16d857ffb")]
-        [DataRow("RiskAssessment", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("List", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("VisionPrescription", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("ServiceRequest", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("Flag", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("Observation", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("NutritionOrder", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("Composition", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("DeviceRequest", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        [DataRow("Procedure", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare, "3b071d478ff3cb744cb6668ac8512dc7362e6737")]
-        public void CheckManualFixesOfTemplateModelInfo(string resource, string spName, VersionIndependentResourceTypesAll targetResource, string commit)
+        [DataRow("DiagnosticReport", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("RiskAssessment", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("List", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("VisionPrescription", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("ServiceRequest", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("Flag", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("Observation", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("NutritionOrder", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("Composition", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("DeviceRequest", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        [DataRow("Procedure", "encounter", VersionIndependentResourceTypesAll.EpisodeOfCare)]
+        public void CheckFixesOfTemplateModelInfo(string resource, string spName, VersionIndependentResourceTypesAll targetResource)
         {
             var sp = ModelInfo.SearchParameters.FirstOrDefault(s => s.Resource == resource && s.Name == spName);
             if (sp is not null)
             {
                 Assert.IsFalse(sp.Target?.Contains(targetResource),
-                    $"Manualy removed target {targetResource} from searchparameter {resource}.{spName}. Commit: {commit}");
+                    $"Target {targetResource} should have been removed from searchparameter {resource}.{spName} by generator.");
             }
         }
     }
