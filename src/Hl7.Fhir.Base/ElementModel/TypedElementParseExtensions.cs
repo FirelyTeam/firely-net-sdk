@@ -9,7 +9,6 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support.Poco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,14 +46,14 @@ namespace Hl7.Fhir.ElementModel
         {
             return instance.InstanceType switch
             {
-                FhirTypeConstants.CODE => instance.ParsePrimitiveInternal<Code>(),
-                FhirTypeConstants.STRING => new Code(instance.ParsePrimitiveInternal<FhirString>().Value),
-                FhirTypeConstants.URI => new Code(instance.ParsePrimitiveInternal<FhirUri>().Value),
-                FhirTypeConstants.CODING => instance.ParseCodingInternal(),
-                FhirTypeConstants.CODEABLE_CONCEPT => instance.ParseCodeableConceptInternal(),
-                FhirTypeConstants.QUANTITY => parseQuantity(),
-                FhirTypeConstants.EXTENSION => parseExtension(),
-                FhirTypeConstants.CODEABLEREFERENCE => parseCodeableReference(), 
+                FhirTypeNames.CODE => instance.ParsePrimitiveInternal<Code>(),
+                FhirTypeNames.STRING => new Code(instance.ParsePrimitiveInternal<FhirString>().Value),
+                FhirTypeNames.URI => new Code(instance.ParsePrimitiveInternal<FhirUri>().Value),
+                FhirTypeNames.CODING => instance.ParseCodingInternal(),
+                FhirTypeNames.CODEABLE_CONCEPT => instance.ParseCodeableConceptInternal(),
+                FhirTypeNames.QUANTITY => parseQuantity(),
+                FhirTypeNames.EXTENSION => parseExtension(),
+                FhirTypeNames.CODEABLEREFERENCE => parseCodeableReference(),
                 _ => null,
             };
 
