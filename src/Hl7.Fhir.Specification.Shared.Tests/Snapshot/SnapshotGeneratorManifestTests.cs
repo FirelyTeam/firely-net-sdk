@@ -627,10 +627,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var rule = test.Rule[i];
             Console.WriteLine($"Verify rule {i}: '{rule.Text}'");
-
-            var nav = output;
+            
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
-            Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
+            Assert.IsTrue(expr.Predicate(output, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
 
         StructureDefinition Load(string id, string fileNameFormat)
@@ -794,8 +793,8 @@ namespace Hl7.Fhir.Specification.Tests
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
                 if (input is null) { throw new ArgumentNullException(nameof(input)); }
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
-                Input = input;
-                Generated = generated;
+                Input = input.ToElementNode();
+                Generated = generated.ToElementNode();
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
@@ -842,7 +841,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         filePath = Path.ChangeExtension(filePath, "json");
                     }
-                    return Load(filePath);
+                    return Load(filePath).ToElementNode();
                 }
 
                 // Otherwise assume name refers to a core resource, e.g. 'patient'
@@ -851,7 +850,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (!(typeName is null))
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    return TestResolver.FindStructureDefinitionForCoreType(typeName);
+                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToElementNode();
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
 

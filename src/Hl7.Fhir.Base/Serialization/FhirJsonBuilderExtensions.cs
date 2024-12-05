@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization
         [TemporarilyChanged]
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
-            if (source is not Resource resource)
+            if (source is not SinglePocoElementNode {Poco: Resource resource})
                 return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
             
             var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Serialization
         [TemporarilyChanged]
         public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
-            if (source is not Resource resource)
+            if (source is not SinglePocoElementNode {Poco: Resource resource})
                 return await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
             
             var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));

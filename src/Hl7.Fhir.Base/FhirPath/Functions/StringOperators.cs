@@ -36,11 +36,11 @@ namespace Hl7.FhirPath.Functions
 
         public static IScopedNode FpIndexOf(this string me, string fragment)
         {
-            return new Integer(me.IndexOf(fragment, StringComparison.Ordinal));
+            return PocoElementNode2.ForPrimitive<Integer>(me.IndexOf(fragment, StringComparison.Ordinal));
         }
 
         public static IEnumerable<IScopedNode> ToChars(this string me) =>
-            me.Select(c => new FhirString(c.ToString()));
+            PocoElementNode2.FromList<FhirString>(me.Select(c => c.ToString()));
 
         public static string FpReplace(this string me, string find, string replace)
         {
@@ -56,8 +56,8 @@ namespace Hl7.FhirPath.Functions
 
         public static IEnumerable<IScopedNode> FpSplit(this string me, string seperator)
         {
-            var results = me.Split(new[] { seperator }, StringSplitOptions.None);
-            return results.Select(s => new FhirString(s));
+            var results = me.Split(new[] { seperator }, StringSplitOptions.None).ToArray<object>();
+            return PocoElementNode2.FromList<FhirString>(results);
         }
 
         public static string FpEncode(this string me, string encoding)

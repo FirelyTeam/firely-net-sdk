@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,14 +14,15 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void Intersect()
         {
-            var a = ElementNode.ForPrimitive("A");
-            var b1 = ElementNode.ForPrimitive("B");
-            var c = ElementNode.ForPrimitive("C");
-            var b2 = ElementNode.ForPrimitive("B");
+            var a = PocoElementNode2.ForPrimitive<FhirString>("A");
+            var b1 = PocoElementNode2.ForPrimitive<FhirString>("B");
+            var c = PocoElementNode2.ForPrimitive<FhirString>("C");
+            var b2 = PocoElementNode2.ForPrimitive<FhirString>("B");
+            
 
-            var col1 = new ITypedElement[] { a, b1 };
-            var col2 = new ITypedElement[] { c, b2 };
-            var col3 = new ITypedElement[] { c };
+            var col1 = new IScopedNode[] { a, b1 };
+            var col2 = new IScopedNode[] { c, b2 };
+            var col3 = new IScopedNode[] { c };
 
             var result = col1.Intersect(col2);
             Assert.IsNotNull(result);
@@ -39,30 +41,19 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestIntersect()
         {
-            var left = ElementNode.CreateList(1, 3, 3, 5, 6);
-            var right = ElementNode.CreateList(3, 5, 5, 6, 8);
-            CollectionAssert.AreEqual(ElementNode.CreateList(3, 5, 6).ToList(),
-                    left.Intersect(right).ToList());
+            IEnumerable<IScopedNode> left = PocoElementNode2.FromList<Integer>([1, 3, 3, 5, 6]);
+            IEnumerable<IScopedNode> right = PocoElementNode2.FromList<Integer>([3, 5, 5, 6, 8]);
+            PocoElementNode2.FromList<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
         }
 
         [TestMethod]
         public void TestExclude()
         {
-            IEnumerable<IScopedNode> left = 
-            [
-                new Integer(1),
-                new Integer(3),
-                new Integer(3),
-                new Integer(5),
-                new Integer(6)
-            ];
-            IEnumerable<IScopedNode> right = 
-            [
-                new Integer(5),
-                new Integer(6)
-            ];
-            CollectionAssert.AreEqual(ElementNode.CreateList(1, 3, 3).ToList(),
-                    left.Exclude(right).ToList());
+            IEnumerable<IScopedNode> left =
+                PocoElementNode2.FromList<Integer>([1, 3, 3, 5, 6]);
+            IEnumerable<IScopedNode> right =
+                PocoElementNode2.FromList<Integer>([5, 6]);
+            PocoElementNode2.FromList<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
         }
     }
 }

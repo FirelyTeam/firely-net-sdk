@@ -66,11 +66,7 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable, IAnnotatabl
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
-                    return [this];
-            else if (type == typeof(IFhirValueProvider))
-                return [this];
-            else if (type == typeof(IResourceTypeSupplier))
+            if (type == typeof(IFhirValueProvider))
                 return [this];
             else
                 return annotations.OfType(type);

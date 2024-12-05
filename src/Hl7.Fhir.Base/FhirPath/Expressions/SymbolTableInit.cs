@@ -360,10 +360,10 @@ namespace Hl7.FhirPath.Expressions
 
                 foreach (IScopedNode element in focus)
                 {
-                    IEnumerable<IScopedNode> newFocus = [element];
+                    IScopedNode[] newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex([new Integer(index)]);
+                    newContext.SetIndex(PocoElementNode2.ForPrimitive<Integer>(index));
                     index++;
 
                     if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
@@ -388,7 +388,7 @@ namespace Hl7.FhirPath.Expressions
                     IEnumerable<IScopedNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex([new Integer(index)]);
+                    newContext.SetIndex(PocoElementNode2.ForPrimitive<Integer>(index));
                     index++;
 
                     var result = lambda(newContext, InvokeeFactory.EmptyArgs);
@@ -417,7 +417,7 @@ namespace Hl7.FhirPath.Expressions
                     IEnumerable<IScopedNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex([new Integer(index)]);
+                    newContext.SetIndex(PocoElementNode2.ForPrimitive<Integer>(index));
                     index++;
 
                     var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
@@ -443,15 +443,15 @@ namespace Hl7.FhirPath.Expressions
                 IEnumerable<IScopedNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
-                newContext.SetIndex([new Integer(index)]);
+                newContext.SetIndex(PocoElementNode2.ForPrimitive<Integer>(index));
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
                 if (result == null) return [];
-                if (result == false) return [new FhirBoolean(false)];
+                if (result == false) return PocoElementNode2.ForPrimitive<FhirBoolean>(false);
             }
 
-            return [new FhirBoolean(true)];
+            return PocoElementNode2.ForPrimitive<FhirBoolean>(true);
         }
 
         private static IEnumerable<IScopedNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
@@ -465,14 +465,15 @@ namespace Hl7.FhirPath.Expressions
                 IEnumerable<IScopedNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
-                newContext.SetIndex([new Integer(index)]);
+                newContext.SetIndex(PocoElementNode2.ForPrimitive<Integer>(index));
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-                if (result == true) return [new FhirBoolean(true)];
+                if (result == true) return PocoElementNode2.ForPrimitive<FhirBoolean>(true);
             }
 
-            return [new FhirBoolean(false)];
+            //return PocoElementNode2.ForPrimitive<FhirBoolean>(false);
+            return PocoElementNode2.Root(new FhirBoolean(false));
         }
     }
 }

@@ -16,9 +16,10 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.ElementModel.Tests
 {
     [TestClass]
+    [TemporarilyChanged] // We should refactor these tests against PocoElementNode2
     public class ScopedNodeOnBaseTests
     {
-        private IScopedNode _bundleNode;
+        private SinglePocoElementNode _bundleNode;
 
         [TestInitialize]
         public void SetupSource()
@@ -27,29 +28,30 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
-            _bundleNode = bundle.ToScopedNode();
+            _bundleNode = bundle.ToElementNode();
         }
 
         [TestMethod]
+        [TemporarilyChanged] // This test will be improved once ContainedResources and BundledResources are implemented on PocoElementNode2, not IScopedNode
         public void GetContainedAndBundledResources()
         {
             Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
-
-            var entries = _bundleNode.BundledResources().OfType<Bundle.EntryComponent>().ToList();
+            
+            var entries = _bundleNode.Child<RepeatingPocoElementNode>("entry")?.Pocos.OfType<Bundle.EntryComponent>().ToList();
             Assert.AreEqual(7, entries.Count);
 
             Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d", entries[1].FullUrl);
             Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
 
-            Assert.IsFalse(entries[1].Resource!.ToScopedNode().ContainedResources().Any());
-            Assert.IsNotNull(entries[1].Resource!.ToScopedNode().Children().First());
+            Assert.IsFalse(entries[1].Resource!.ToElementNode().ContainedResources().Any());
+            Assert.IsNotNull(entries[1].Resource!.ToElementNode().Children().First());
 
             Assert.AreEqual("a", entries[2].Resource!.Id);
 
             var entry6 = entries[6].Resource;
-            Assert.AreEqual(2, entry6!.ContainedResources().Count());
-            Assert.IsFalse(entry6.BundledResources().Any());
-            Assert.AreEqual("orgY", (entry6.ContainedResources().Skip(1).First() as Resource)!.Id);
+            Assert.AreEqual(2, entry6!.ToElementNode().ContainedResources().Count());
+            Assert.IsFalse(entry6.ToElementNode().BundledResources().Any());
+            Assert.AreEqual("orgY", (entry6.ToElementNode().ContainedResources().Skip(1).First().Children("id").First().Value));
         }
 
         [TestMethod]
@@ -132,7 +134,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
             Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
 
-            IScopedNode externalResolve(string url)
+            IScopedNode? externalResolve(string url)
             {
                 lastUrlResolved = url;
                 return null;
