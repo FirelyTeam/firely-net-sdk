@@ -3700,13 +3700,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("summary", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent> Summary
+      public List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent> Summary
       {
-        get { if(_Summary==null) _Summary = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>(); return _Summary; }
+        get { if(_Summary==null) _Summary = new List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>(); return _Summary; }
         set { _Summary = value; OnPropertyChanged("Summary"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent> _Summary;
+      private List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent> _Summary;
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -3720,7 +3720,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(CompleteElement != null) dest.CompleteElement = (Hl7.Fhir.Model.FhirBoolean)CompleteElement.DeepCopy();
         if(Entry.Any()) dest.Entry = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>(Entry.DeepCopy());
-        if(Summary.Any()) dest.Summary = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>(Summary.DeepCopy());
+        if(Summary.Any()) dest.Summary = new List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>(Summary.DeepCopy());
         return dest;
       }
 
@@ -3772,7 +3772,7 @@ namespace Hl7.Fhir.Model
             Entry = (List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>)value;
             return this;
           case "summary":
-            Summary = (List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>)value;
+            Summary = (List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -4518,7 +4518,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation.citedArtifact.contributorship.summary", IsBackboneType=true)]
-    public partial class CitedArtifactContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
+    public partial class ContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
@@ -4601,7 +4601,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as CitedArtifactContributorshipSummaryComponent;
+        var dest = other as ContributorshipSummaryComponent;
 
         if (dest == null)
         {
@@ -4618,12 +4618,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new CitedArtifactContributorshipSummaryComponent());
+        return CopyTo(new ContributorshipSummaryComponent());
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CitedArtifactContributorshipSummaryComponent;
+        var otherT = other as ContributorshipSummaryComponent;
         if(otherT == null) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;

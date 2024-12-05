@@ -40,8 +40,8 @@ using System.Threading;
 
 namespace Hl7.Fhir.Model;
 
-public abstract partial class Base : IDeepCopyable,
-    IAnnotated, IAnnotatable, IValidatableObject, INotifyPropertyChanged
+public abstract partial class Base : IDeepCopyable, IAnnotatable,
+    IValidatableObject, INotifyPropertyChanged
 {
     /// <summary>
     /// FHIR Type Name
