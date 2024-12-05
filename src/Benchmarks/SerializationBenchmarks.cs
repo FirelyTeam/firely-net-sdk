@@ -44,13 +44,17 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public string TypedElementSerializerJson()
         {
+#pragma warning disable SDK0001
             return Patient.ToTypedElement().ToJson();
+#pragma warning restore SDK0001
         }
 
         [Benchmark]
         public string TypedElementSerializerXml()
         {
+#pragma warning disable SDK0001
             return Patient.ToTypedElement().ToXml();
+#pragma warning restore SDK0001
         }
     }
 }

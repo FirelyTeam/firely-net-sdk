@@ -15,8 +15,7 @@ using Hl7.Fhir.Utility;
 using System.Runtime.CompilerServices;
 
 namespace Hl7.FhirPath.Functions
-{
-    [TemporarilyChanged] // we should keep this attribute, since we need this to be refactored against poco soon
+{ 
     internal static class TypeOperators
     {
         public static bool Is(this IScopedNode focus, string type)

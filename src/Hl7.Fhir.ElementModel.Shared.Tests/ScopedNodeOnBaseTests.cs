@@ -8,6 +8,7 @@ using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,7 +20,7 @@ namespace Hl7.Fhir.ElementModel.Tests
     [TemporarilyChanged] // We should refactor these tests against PocoElementNode2
     public class ScopedNodeOnBaseTests
     {
-        private SinglePocoElementNode _bundleNode;
+        private PocoNode _bundleNode;
 
         [TestInitialize]
         public void SetupSource()
@@ -32,12 +33,12 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        [TemporarilyChanged] // This test will be improved once ContainedResources and BundledResources are implemented on PocoElementNode2, not IScopedNode
+        [TemporarilyChanged] // This test will be improved once ContainedResources and BundledResources are implemented on PocoNodeOrList, not IScopedNode
         public void GetContainedAndBundledResources()
         {
             Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
             
-            var entries = _bundleNode.Child<RepeatingPocoElementNode>("entry")?.Pocos.OfType<Bundle.EntryComponent>().ToList();
+            var entries = _bundleNode.Child<PocoListNode>("entry")?.Pocos.OfType<Bundle.EntryComponent>().ToList();
             Assert.AreEqual(7, entries.Count);
 
             Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d", entries[1].FullUrl);
@@ -141,23 +142,9 @@ namespace Hl7.Fhir.ElementModel.Tests
             }
         }
 
-        [TestMethod]
-        [TemporarilyChanged] // this test is strange. We cannot support it on pocos (yet)
-        [Ignore]
-        public void AtResourceWithoutDefinition()
-        {
-            // var provider = new NoTypeProvider();
-            // var elementNode = ElementNode.Root(provider, "Patient");
-            // elementNode.Add(provider, "active", true, "boolean");
-            //
-            // var node = elementNode.ToPoco().ToScopedNode();
-            //
-            // Assert.IsTrue(node.Type.HasFlag(NodeType.Resource));
-            // var inner = node.Children().First();
-            // Assert.IsFalse(inner.Type.HasFlag(NodeType.Resource));
-        }
         
         [TestMethod]
+        [Experimental("ExperimentalApi")]
         public void Bundle_WithEntryWithoutFullUrl_ShouldNotThrow()
         {
             var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();

@@ -14,10 +14,10 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void Intersect()
         {
-            var a = PocoElementNode2.ForPrimitive<FhirString>("A");
-            var b1 = PocoElementNode2.ForPrimitive<FhirString>("B");
-            var c = PocoElementNode2.ForPrimitive<FhirString>("C");
-            var b2 = PocoElementNode2.ForPrimitive<FhirString>("B");
+            var a = PocoNodeOrList.ForPrimitive<FhirString>("A");
+            var b1 = PocoNodeOrList.ForPrimitive<FhirString>("B");
+            var c = PocoNodeOrList.ForPrimitive<FhirString>("C");
+            var b2 = PocoNodeOrList.ForPrimitive<FhirString>("B");
             
 
             var col1 = new IScopedNode[] { a, b1 };
@@ -41,19 +41,19 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestIntersect()
         {
-            IEnumerable<IScopedNode> left = PocoElementNode2.FromList<Integer>([1, 3, 3, 5, 6]);
-            IEnumerable<IScopedNode> right = PocoElementNode2.FromList<Integer>([3, 5, 5, 6, 8]);
-            PocoElementNode2.FromList<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
+            IEnumerable<IScopedNode> left = PocoNodeOrList.FromList<Integer>([1, 3, 3, 5, 6]);
+            IEnumerable<IScopedNode> right = PocoNodeOrList.FromList<Integer>([3, 5, 5, 6, 8]);
+            PocoNodeOrList.FromList<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
         }
 
         [TestMethod]
         public void TestExclude()
         {
             IEnumerable<IScopedNode> left =
-                PocoElementNode2.FromList<Integer>([1, 3, 3, 5, 6]);
+                PocoNodeOrList.FromList<Integer>([1, 3, 3, 5, 6]);
             IEnumerable<IScopedNode> right =
-                PocoElementNode2.FromList<Integer>([5, 6]);
-            PocoElementNode2.FromList<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
+                PocoNodeOrList.FromList<Integer>([5, 6]);
+            PocoNodeOrList.FromList<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
         }
     }
 }
