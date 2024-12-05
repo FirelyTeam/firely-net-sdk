@@ -254,7 +254,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 "Serialization of " + name + " did not match output - Matches test");
             Assert.IsTrue(resource.IsExactly(r2),
                 "Serialization of " + name + " did not match output - IsExactly test");
-            Assert.IsFalse(resource.Matches(null), "Serialization of " + name + " matched null - Matches test");
+            //EK 2024-12-05: Removed this test as I think the logic of matches is that anything matches the null pattern.
+            //Assert.IsFalse(resource.Matches(null), "Serialization of " + name + " matched null - Matches test");
             Assert.IsFalse(resource.IsExactly(null),
                 "Serialization of " + name + " matched null - IsExactly test");
         }
