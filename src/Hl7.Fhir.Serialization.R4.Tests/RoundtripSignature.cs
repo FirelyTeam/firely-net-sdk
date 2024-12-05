@@ -45,8 +45,6 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [Ignore("We stopped supporting ITypedElement.Definition on POCO.ToTypedElement")]
-        [TemporarilyChanged] // remove when we add definition
         public void TypedElementHasCorrectInfo()
         {
             var cls = new Signature() { Who = new ResourceReference("http://nu.nl") }.ToTypedElement();
@@ -58,8 +56,6 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [Ignore("Doesn't work for our ModelInspector.ForType() hack")]
-        [TemporarilyChanged] // remove when we add definition
         public void WorksWithTypedElementSerializers()
         {
             var sig = new Bundle { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };

@@ -129,8 +129,6 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        [Ignore("Masking node is not supported for serialization of the new poco interfaces")]
-        [TemporarilyChanged] // remove when we implement definition on poconode
         public async Tasks.Task TestIncludeMandatory()
         {
             var l = new Library();

@@ -106,20 +106,26 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
         // if we have neither, we are the root.
         _ => Name
     };
-
-    // needed for ITE
+    
+    [TemporarilyChanged] // Parent should return PocoNode, not PocoNodeOrList. This will be solved in another branch.
     IElementDefinitionSummary? ITypedElement.Definition
     {
         get
         {
-            throw new NotImplementedException("TODO");
-            if ((this as IAnnotated).Annotation<ModelInspector>() is not { } inspector)
+            if (findInspector() is not { } inspector)
                 return null;
-            var _myClassMapping = inspector.FindOrImportClassMapping(Poco.GetType())!;
-            throw new NotImplementedException("TODO");
+
+            if ((this as IScopedNode).Parent is not PocoNode node) 
+                return ElementDefinitionSummary.ForRoot(inspector.FindOrImportClassMapping(Poco.GetType()), Name);
+            
+            var classMapping = inspector.FindOrImportClassMapping(node.Poco.GetType());
+            return classMapping?.FindMappedElementByName(Name);
         }
     }
 
+    [TemporarilyChanged] // I am refactoring the extensions in another branch. This should go into those extensions. To avoid conflicts, I implement it here for now.
+    internal ModelInspector? findInspector() => ((IAnnotated)this).Annotation<ModelInspector>() ?? Parent?.SingleOrDefault()?.findInspector();
+    
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children(name);
     
     #endregion

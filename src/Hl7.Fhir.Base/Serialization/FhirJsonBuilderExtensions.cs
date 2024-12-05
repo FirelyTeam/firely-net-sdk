@@ -58,20 +58,20 @@ namespace Hl7.Fhir.Serialization
         [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
-            if (source is not PocoNode {Poco: Resource resource})
+            if (source is not PocoNode {Poco: Resource resource} node)
                 return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
             
-            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
+            var engine = FhirSerializationEngineFactory.Strict(node.findInspector() ?? ModelInspector.ForType(resource.GetType()));
             return engine.SerializeToJson(resource);
         }
 
         [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
-            if (source is not PocoNode {Poco: Resource resource})
+            if (source is not PocoNode {Poco: Resource resource} node)
                 return await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
             
-            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
+            var engine = FhirSerializationEngineFactory.Strict(node.findInspector() ?? ModelInspector.ForType(resource.GetType()));
             return engine.SerializeToJson(resource);
         }
 
