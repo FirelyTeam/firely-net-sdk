@@ -241,8 +241,8 @@ public partial class BaseFhirClient : IDisposable
 
         var upd = new TransactionBuilder(Endpoint);
 
-        if (versionAware && resource.HasVersionId)
-            upd.Update(resource.Id, resource, versionId: resource.VersionId);
+        if (versionAware && resource.VersionId is { } vid)
+            upd.Update(resource.Id, resource, versionId: vid);
         else
             upd.Update(resource.Id, resource);
 
@@ -267,8 +267,8 @@ public partial class BaseFhirClient : IDisposable
 
         var upd = new TransactionBuilder(Endpoint);
 
-        if (versionAware && resource.HasVersionId)
-            upd.ConditionalUpdate(condition, resource, versionId: resource.VersionId);
+        if (versionAware && resource.VersionId is {} vid)
+            upd.ConditionalUpdate(condition, resource, versionId: vid);
         else
             upd.ConditionalUpdate(condition, resource);
 
