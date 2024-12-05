@@ -73,3 +73,13 @@ public static class EvaluationContextExtensions
         return context;
     }
 }
+
+public static class EvaluationContextExtensions
+{
+    public static T WithResourceOverrides<T>(this T context, ITypedElement? resource, ITypedElement? rootResource = null) where T : EvaluationContext
+    {
+        context.Resource = resource;
+        context.RootResource = rootResource ?? resource;
+        return context;
+    }
+}
