@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             //static bool matchExactly<T>(T x, T y) where T : class, IDeepComparable => !(x is null) && x.IsExactly(y);
-            static bool matchExactly(IDeepComparable x, IDeepComparable y) => !(x is null) && x.IsExactly(y);
+            static bool matchExactly(Base x, Base y) => !(x is null) && x.IsExactly(y);
 
             //static bool matchExtensions<T>(T x, T y) where T : Extension => !(x is null) && !(y is null) && IsEqualString(x.Url, y.Url);
             static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && IsEqualUri(x.Url, y.Url);

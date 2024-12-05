@@ -51,7 +51,7 @@ public class PocoDictionaryTests
 
         pat["name"] = null!;
         pat["weight"] = null!;
-        pat.GetElementPairs().Should().BeEmpty();
+        pat.EnumerateElements().Should().BeEmpty();
     }
 
     [TestMethod]

@@ -567,54 +567,30 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Attachment());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Attachment;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
-      if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
-      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.Matches(SizeElement, otherT.SizeElement)) return false;
-      if( !DeepComparable.Matches(HashElement, otherT.HashElement)) return false;
-      if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-      if( !DeepComparable.Matches(CreationElement, otherT.CreationElement)) return false;
-      if( !DeepComparable.Matches(HeightElement, otherT.HeightElement)) return false;
-      if( !DeepComparable.Matches(WidthElement, otherT.WidthElement)) return false;
-      if( !DeepComparable.Matches(FramesElement, otherT.FramesElement)) return false;
-      if( !DeepComparable.Matches(DurationElement, otherT.DurationElement)) return false;
-      if( !DeepComparable.Matches(PagesElement, otherT.PagesElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(ContentTypeElement, otherT.ContentTypeElement)) return false;
+      if(!comparer.Equals(LanguageElement, otherT.LanguageElement)) return false;
+      if(!comparer.Equals(DataElement, otherT.DataElement)) return false;
+      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
+      if(!comparer.Equals(SizeElement, otherT.SizeElement)) return false;
+      if(!comparer.Equals(HashElement, otherT.HashElement)) return false;
+      if(!comparer.Equals(TitleElement, otherT.TitleElement)) return false;
+      if(!comparer.Equals(CreationElement, otherT.CreationElement)) return false;
+      if(!comparer.Equals(HeightElement, otherT.HeightElement)) return false;
+      if(!comparer.Equals(WidthElement, otherT.WidthElement)) return false;
+      if(!comparer.Equals(FramesElement, otherT.FramesElement)) return false;
+      if(!comparer.Equals(DurationElement, otherT.DurationElement)) return false;
+      if(!comparer.Equals(PagesElement, otherT.PagesElement)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Attachment;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
-      if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
-      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.IsExactly(SizeElement, otherT.SizeElement)) return false;
-      if( !DeepComparable.IsExactly(HashElement, otherT.HashElement)) return false;
-      if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-      if( !DeepComparable.IsExactly(CreationElement, otherT.CreationElement)) return false;
-      if( !DeepComparable.IsExactly(HeightElement, otherT.HeightElement)) return false;
-      if( !DeepComparable.IsExactly(WidthElement, otherT.WidthElement)) return false;
-      if( !DeepComparable.IsExactly(FramesElement, otherT.FramesElement)) return false;
-      if( !DeepComparable.IsExactly(DurationElement, otherT.DurationElement)) return false;
-      if( !DeepComparable.IsExactly(PagesElement, otherT.PagesElement)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -663,7 +639,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -712,9 +688,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
       if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
       if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);

@@ -339,56 +339,31 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Dosage());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Dosage;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
-      if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-      if( !DeepComparable.Matches(AdditionalInstruction, otherT.AdditionalInstruction)) return false;
-      if( !DeepComparable.Matches(PatientInstructionElement, otherT.PatientInstructionElement)) return false;
-      if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
-      if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
-      if( !DeepComparable.Matches(Site, otherT.Site)) return false;
-      if( !DeepComparable.Matches(Route, otherT.Route)) return false;
-      if( !DeepComparable.Matches(Method, otherT.Method)) return false;
-      if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
-      if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
-      if( !DeepComparable.Matches(MaxDosePerAdministration, otherT.MaxDosePerAdministration)) return false;
-      if( !DeepComparable.Matches(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
-      if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(SequenceElement, otherT.SequenceElement)) return false;
+      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
+      if(!comparer.ListEquals(AdditionalInstruction, otherT.AdditionalInstruction)) return false;
+      if(!comparer.Equals(PatientInstructionElement, otherT.PatientInstructionElement)) return false;
+      if(!comparer.Equals(Timing, otherT.Timing)) return false;
+      if(!comparer.Equals(AsNeeded, otherT.AsNeeded)) return false;
+      if(!comparer.Equals(Site, otherT.Site)) return false;
+      if(!comparer.Equals(Route, otherT.Route)) return false;
+      if(!comparer.Equals(Method, otherT.Method)) return false;
+      if(!comparer.Equals(Dose, otherT.Dose)) return false;
+      if(!comparer.Equals(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
+      if(!comparer.Equals(MaxDosePerAdministration, otherT.MaxDosePerAdministration)) return false;
+      if(!comparer.Equals(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
+      if(!comparer.Equals(Rate, otherT.Rate)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Dosage;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
-      if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-      if( !DeepComparable.IsExactly(AdditionalInstruction, otherT.AdditionalInstruction)) return false;
-      if( !DeepComparable.IsExactly(PatientInstructionElement, otherT.PatientInstructionElement)) return false;
-      if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
-      if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
-      if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
-      if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
-      if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
-      if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
-      if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
-      if( !DeepComparable.IsExactly(MaxDosePerAdministration, otherT.MaxDosePerAdministration)) return false;
-      if( !DeepComparable.IsExactly(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
-      if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -440,7 +415,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -492,9 +467,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
       if (AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",AdditionalInstruction);

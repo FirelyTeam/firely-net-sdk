@@ -341,42 +341,24 @@ namespace Hl7.Fhir.Model
       return CopyTo(new HumanName());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as HumanName;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
-      if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-      if( !DeepComparable.Matches(FamilyElement, otherT.FamilyElement)) return false;
-      if( !DeepComparable.Matches(GivenElement, otherT.GivenElement)) return false;
-      if( !DeepComparable.Matches(PrefixElement, otherT.PrefixElement)) return false;
-      if( !DeepComparable.Matches(SuffixElement, otherT.SuffixElement)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(UseElement, otherT.UseElement)) return false;
+      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
+      if(!comparer.Equals(FamilyElement, otherT.FamilyElement)) return false;
+      if(!comparer.ListEquals(GivenElement, otherT.GivenElement)) return false;
+      if(!comparer.ListEquals(PrefixElement, otherT.PrefixElement)) return false;
+      if(!comparer.ListEquals(SuffixElement, otherT.SuffixElement)) return false;
+      if(!comparer.Equals(Period, otherT.Period)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as HumanName;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
-      if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-      if( !DeepComparable.IsExactly(FamilyElement, otherT.FamilyElement)) return false;
-      if( !DeepComparable.IsExactly(GivenElement, otherT.GivenElement)) return false;
-      if( !DeepComparable.IsExactly(PrefixElement, otherT.PrefixElement)) return false;
-      if( !DeepComparable.IsExactly(SuffixElement, otherT.SuffixElement)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -407,7 +389,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -438,9 +420,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
       if (FamilyElement is not null) yield return new KeyValuePair<string,object>("family",FamilyElement);

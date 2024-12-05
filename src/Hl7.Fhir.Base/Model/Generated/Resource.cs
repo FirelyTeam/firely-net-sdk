@@ -178,36 +178,21 @@ namespace Hl7.Fhir.Model
       return dest;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Resource;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(IdElement, otherT.IdElement)) return false;
-      if( !DeepComparable.Matches(Meta, otherT.Meta)) return false;
-      if( !DeepComparable.Matches(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
-      if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(IdElement, otherT.IdElement)) return false;
+      if(!comparer.Equals(Meta, otherT.Meta)) return false;
+      if(!comparer.Equals(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
+      if(!comparer.Equals(LanguageElement, otherT.LanguageElement)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Resource;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(IdElement, otherT.IdElement)) return false;
-      if( !DeepComparable.IsExactly(Meta, otherT.Meta)) return false;
-      if( !DeepComparable.IsExactly(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
-      if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -229,7 +214,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -251,9 +236,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (IdElement is not null) yield return new KeyValuePair<string,object>("id",IdElement);
       if (Meta is not null) yield return new KeyValuePair<string,object>("meta",Meta);
       if (ImplicitRulesElement is not null) yield return new KeyValuePair<string,object>("implicitRules",ImplicitRulesElement);

@@ -40,7 +40,7 @@ using System.Threading;
 
 namespace Hl7.Fhir.Model;
 
-public abstract partial class Base : IDeepCopyable, IDeepComparable,
+public abstract partial class Base : IDeepCopyable,
     IAnnotated, IAnnotatable, IValidatableObject, INotifyPropertyChanged
 {
     /// <summary>
@@ -87,7 +87,17 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
 
     #endregion
 
-    internal protected virtual Base SetValue(string key, object? value)
+    /// <summary>
+    /// Sets the value of an element in the POCO, or, if the element is not defined, in the overflow dictionary.
+    /// </summary>
+    /// <param name="key">The name of the element.</param>
+    /// <param name="value">Either a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</param>
+    /// <returns>The currect object, so the calls can be chained fluently.</returns>
+    /// <exception cref="InvalidCastException">Thrown if the value is not a <c>Base</c> or <c>IReadOnlyList&lt;Base&gt;</c>.</exception>
+    /// <remarks>If the value is set to <c>null</c>, the property is set to null, or, if not defined, the
+    /// element is removed from the overflow dictionary. If the key refers to an existing property, the value
+    /// must be compatible with the type of the property in the POCO, otherwise an <see cref="InvalidCastException"/> is thrown.</remarks>
+    public virtual Base SetValue(string key, object? value)
     {
         if (value is null)
             Overflow.Remove(key);
@@ -101,7 +111,13 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
         return this;
     }
 
-    internal object this[string key]
+    /// <summary>
+    /// /// Gets the value of an element in the POCO, or, if the element is not defined, in the overflow dictionary.
+    /// </summary>
+    /// <param name="key">The name of the element.</param>
+    /// <returns>A <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</returns>
+    /// <exception cref="KeyNotFoundException">If the element is not set, or is an empty list.</exception>
+    public object this[string key]
     {
         get => this.TryGetValue(key, out var value)
             ? value
@@ -109,8 +125,28 @@ public abstract partial class Base : IDeepCopyable, IDeepComparable,
         set => SetValue(key, value);
     }
 
-    internal protected virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) =>
-        Overflow.TryGetValue(key, out value);
+    /// <summary>
+    /// Gets the value of an element in the POCO, or, if the element is not defined, in the overflow dictionary.
+    /// </summary>
+    /// <param name="key">The name of the element.</param>
+    /// <param name="value">Will be a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</param>
+    /// <returns><c>true</c> if the given value was set in the POCO or present in the overflow dictionary, <c>false</c> otherwise.
+    /// For lists, this means they should not be empty.</returns>
+    public virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) =>
+        Overflow.TryGetValue(key, out value) && (value is not IReadOnlyList<Base> list || list.Count > 0);
 
-    internal protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Overflow;
+    /// <summary>
+    /// Enumerates all non-empty elements in the POCO and the overflow dictionary.
+    /// </summary>
+    /// <returns>A <see cref="KeyValuePair{TKey,TValue}" /> containing the key and the value, which is
+    /// either a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</returns>
+    public virtual IEnumerable<KeyValuePair<string, object>> EnumerateElements() => Overflow;
+
+
+    /// <summary>
+    /// Compare the children of this Base object with the children of another Base object using the specified comparer.
+    /// </summary>
+    /// <remarks>The <paramref name="comparer"/> must implement both <c>IEqualityComparer&lt;Base&gt;</c> and
+    /// <c>IEqualityComparer&lt;IEnumerable&lt;Base&gt;&gt;</c>.</remarks>
+    public virtual bool CompareChildren(Base other, IEqualityComparer<Base> comparer) => true;
 }

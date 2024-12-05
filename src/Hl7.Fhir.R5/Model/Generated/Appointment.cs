@@ -3171,38 +3171,22 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParticipantComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ParticipantComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-        if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
-        if( !DeepComparable.Matches(RequiredElement, otherT.RequiredElement)) return false;
-        if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.ListEquals(Type, otherT.Type)) return false;
+        if(!comparer.Equals(Period, otherT.Period)) return false;
+        if(!comparer.Equals(Actor, otherT.Actor)) return false;
+        if(!comparer.Equals(RequiredElement, otherT.RequiredElement)) return false;
+        if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ParticipantComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-        if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
-        if( !DeepComparable.IsExactly(RequiredElement, otherT.RequiredElement)) return false;
-        if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -3227,7 +3211,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -3252,9 +3236,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
@@ -3534,48 +3518,27 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RecurrenceTemplateComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as RecurrenceTemplateComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Timezone, otherT.Timezone)) return false;
-        if( !DeepComparable.Matches(RecurrenceType, otherT.RecurrenceType)) return false;
-        if( !DeepComparable.Matches(LastOccurrenceDateElement, otherT.LastOccurrenceDateElement)) return false;
-        if( !DeepComparable.Matches(OccurrenceCountElement, otherT.OccurrenceCountElement)) return false;
-        if( !DeepComparable.Matches(OccurrenceDateElement, otherT.OccurrenceDateElement)) return false;
-        if( !DeepComparable.Matches(WeeklyTemplate, otherT.WeeklyTemplate)) return false;
-        if( !DeepComparable.Matches(MonthlyTemplate, otherT.MonthlyTemplate)) return false;
-        if( !DeepComparable.Matches(YearlyTemplate, otherT.YearlyTemplate)) return false;
-        if( !DeepComparable.Matches(ExcludingDateElement, otherT.ExcludingDateElement)) return false;
-        if( !DeepComparable.Matches(ExcludingRecurrenceIdElement, otherT.ExcludingRecurrenceIdElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Timezone, otherT.Timezone)) return false;
+        if(!comparer.Equals(RecurrenceType, otherT.RecurrenceType)) return false;
+        if(!comparer.Equals(LastOccurrenceDateElement, otherT.LastOccurrenceDateElement)) return false;
+        if(!comparer.Equals(OccurrenceCountElement, otherT.OccurrenceCountElement)) return false;
+        if(!comparer.ListEquals(OccurrenceDateElement, otherT.OccurrenceDateElement)) return false;
+        if(!comparer.Equals(WeeklyTemplate, otherT.WeeklyTemplate)) return false;
+        if(!comparer.Equals(MonthlyTemplate, otherT.MonthlyTemplate)) return false;
+        if(!comparer.Equals(YearlyTemplate, otherT.YearlyTemplate)) return false;
+        if(!comparer.ListEquals(ExcludingDateElement, otherT.ExcludingDateElement)) return false;
+        if(!comparer.ListEquals(ExcludingRecurrenceIdElement, otherT.ExcludingRecurrenceIdElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RecurrenceTemplateComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Timezone, otherT.Timezone)) return false;
-        if( !DeepComparable.IsExactly(RecurrenceType, otherT.RecurrenceType)) return false;
-        if( !DeepComparable.IsExactly(LastOccurrenceDateElement, otherT.LastOccurrenceDateElement)) return false;
-        if( !DeepComparable.IsExactly(OccurrenceCountElement, otherT.OccurrenceCountElement)) return false;
-        if( !DeepComparable.IsExactly(OccurrenceDateElement, otherT.OccurrenceDateElement)) return false;
-        if( !DeepComparable.IsExactly(WeeklyTemplate, otherT.WeeklyTemplate)) return false;
-        if( !DeepComparable.IsExactly(MonthlyTemplate, otherT.MonthlyTemplate)) return false;
-        if( !DeepComparable.IsExactly(YearlyTemplate, otherT.YearlyTemplate)) return false;
-        if( !DeepComparable.IsExactly(ExcludingDateElement, otherT.ExcludingDateElement)) return false;
-        if( !DeepComparable.IsExactly(ExcludingRecurrenceIdElement, otherT.ExcludingRecurrenceIdElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -3615,7 +3578,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -3655,9 +3618,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Timezone is not null) yield return new KeyValuePair<string,object>("timezone",Timezone);
         if (RecurrenceType is not null) yield return new KeyValuePair<string,object>("recurrenceType",RecurrenceType);
         if (LastOccurrenceDateElement is not null) yield return new KeyValuePair<string,object>("lastOccurrenceDate",LastOccurrenceDateElement);
@@ -3959,44 +3922,25 @@ namespace Hl7.Fhir.Model
         return CopyTo(new WeeklyTemplateComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as WeeklyTemplateComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(MondayElement, otherT.MondayElement)) return false;
-        if( !DeepComparable.Matches(TuesdayElement, otherT.TuesdayElement)) return false;
-        if( !DeepComparable.Matches(WednesdayElement, otherT.WednesdayElement)) return false;
-        if( !DeepComparable.Matches(ThursdayElement, otherT.ThursdayElement)) return false;
-        if( !DeepComparable.Matches(FridayElement, otherT.FridayElement)) return false;
-        if( !DeepComparable.Matches(SaturdayElement, otherT.SaturdayElement)) return false;
-        if( !DeepComparable.Matches(SundayElement, otherT.SundayElement)) return false;
-        if( !DeepComparable.Matches(WeekIntervalElement, otherT.WeekIntervalElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(MondayElement, otherT.MondayElement)) return false;
+        if(!comparer.Equals(TuesdayElement, otherT.TuesdayElement)) return false;
+        if(!comparer.Equals(WednesdayElement, otherT.WednesdayElement)) return false;
+        if(!comparer.Equals(ThursdayElement, otherT.ThursdayElement)) return false;
+        if(!comparer.Equals(FridayElement, otherT.FridayElement)) return false;
+        if(!comparer.Equals(SaturdayElement, otherT.SaturdayElement)) return false;
+        if(!comparer.Equals(SundayElement, otherT.SundayElement)) return false;
+        if(!comparer.Equals(WeekIntervalElement, otherT.WeekIntervalElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as WeeklyTemplateComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(MondayElement, otherT.MondayElement)) return false;
-        if( !DeepComparable.IsExactly(TuesdayElement, otherT.TuesdayElement)) return false;
-        if( !DeepComparable.IsExactly(WednesdayElement, otherT.WednesdayElement)) return false;
-        if( !DeepComparable.IsExactly(ThursdayElement, otherT.ThursdayElement)) return false;
-        if( !DeepComparable.IsExactly(FridayElement, otherT.FridayElement)) return false;
-        if( !DeepComparable.IsExactly(SaturdayElement, otherT.SaturdayElement)) return false;
-        if( !DeepComparable.IsExactly(SundayElement, otherT.SundayElement)) return false;
-        if( !DeepComparable.IsExactly(WeekIntervalElement, otherT.WeekIntervalElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -4030,7 +3974,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -4064,9 +4008,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (MondayElement is not null) yield return new KeyValuePair<string,object>("monday",MondayElement);
         if (TuesdayElement is not null) yield return new KeyValuePair<string,object>("tuesday",TuesdayElement);
         if (WednesdayElement is not null) yield return new KeyValuePair<string,object>("wednesday",WednesdayElement);
@@ -4205,36 +4149,21 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MonthlyTemplateComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as MonthlyTemplateComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(DayOfMonthElement, otherT.DayOfMonthElement)) return false;
-        if( !DeepComparable.Matches(NthWeekOfMonth, otherT.NthWeekOfMonth)) return false;
-        if( !DeepComparable.Matches(DayOfWeek, otherT.DayOfWeek)) return false;
-        if( !DeepComparable.Matches(MonthIntervalElement, otherT.MonthIntervalElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(DayOfMonthElement, otherT.DayOfMonthElement)) return false;
+        if(!comparer.Equals(NthWeekOfMonth, otherT.NthWeekOfMonth)) return false;
+        if(!comparer.Equals(DayOfWeek, otherT.DayOfWeek)) return false;
+        if(!comparer.Equals(MonthIntervalElement, otherT.MonthIntervalElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as MonthlyTemplateComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(DayOfMonthElement, otherT.DayOfMonthElement)) return false;
-        if( !DeepComparable.IsExactly(NthWeekOfMonth, otherT.NthWeekOfMonth)) return false;
-        if( !DeepComparable.IsExactly(DayOfWeek, otherT.DayOfWeek)) return false;
-        if( !DeepComparable.IsExactly(MonthIntervalElement, otherT.MonthIntervalElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -4256,7 +4185,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -4278,9 +4207,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (DayOfMonthElement is not null) yield return new KeyValuePair<string,object>("dayOfMonth",DayOfMonthElement);
         if (NthWeekOfMonth is not null) yield return new KeyValuePair<string,object>("nthWeekOfMonth",NthWeekOfMonth);
         if (DayOfWeek is not null) yield return new KeyValuePair<string,object>("dayOfWeek",DayOfWeek);
@@ -4353,30 +4282,18 @@ namespace Hl7.Fhir.Model
         return CopyTo(new YearlyTemplateComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as YearlyTemplateComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(YearIntervalElement, otherT.YearIntervalElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(YearIntervalElement, otherT.YearIntervalElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as YearlyTemplateComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(YearIntervalElement, otherT.YearIntervalElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -4389,7 +4306,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -4402,9 +4319,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (YearIntervalElement is not null) yield return new KeyValuePair<string,object>("yearInterval",YearIntervalElement);
       }
 
@@ -5084,92 +5001,49 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Appointment());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Appointment;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(CancellationReason, otherT.CancellationReason)) return false;
-      if( !DeepComparable.Matches(Class, otherT.Class)) return false;
-      if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
-      if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
-      if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
-      if( !DeepComparable.Matches(AppointmentType, otherT.AppointmentType)) return false;
-      if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-      if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
-      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.Matches(Replaces, otherT.Replaces)) return false;
-      if( !DeepComparable.Matches(VirtualService, otherT.VirtualService)) return false;
-      if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
-      if( !DeepComparable.Matches(PreviousAppointment, otherT.PreviousAppointment)) return false;
-      if( !DeepComparable.Matches(OriginatingAppointment, otherT.OriginatingAppointment)) return false;
-      if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
-      if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
-      if( !DeepComparable.Matches(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
-      if( !DeepComparable.Matches(RequestedPeriod, otherT.RequestedPeriod)) return false;
-      if( !DeepComparable.Matches(Slot, otherT.Slot)) return false;
-      if( !DeepComparable.Matches(Account, otherT.Account)) return false;
-      if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.Matches(CancellationDateElement, otherT.CancellationDateElement)) return false;
-      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-      if( !DeepComparable.Matches(PatientInstruction, otherT.PatientInstruction)) return false;
-      if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
-      if( !DeepComparable.Matches(RecurrenceIdElement, otherT.RecurrenceIdElement)) return false;
-      if( !DeepComparable.Matches(OccurrenceChangedElement, otherT.OccurrenceChangedElement)) return false;
-      if( !DeepComparable.Matches(RecurrenceTemplate, otherT.RecurrenceTemplate)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(CancellationReason, otherT.CancellationReason)) return false;
+      if(!comparer.ListEquals(Class, otherT.Class)) return false;
+      if(!comparer.ListEquals(ServiceCategory, otherT.ServiceCategory)) return false;
+      if(!comparer.ListEquals(ServiceType, otherT.ServiceType)) return false;
+      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
+      if(!comparer.Equals(AppointmentType, otherT.AppointmentType)) return false;
+      if(!comparer.ListEquals(Reason, otherT.Reason)) return false;
+      if(!comparer.Equals(Priority, otherT.Priority)) return false;
+      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+      if(!comparer.ListEquals(Replaces, otherT.Replaces)) return false;
+      if(!comparer.ListEquals(VirtualService, otherT.VirtualService)) return false;
+      if(!comparer.ListEquals(SupportingInformation, otherT.SupportingInformation)) return false;
+      if(!comparer.Equals(PreviousAppointment, otherT.PreviousAppointment)) return false;
+      if(!comparer.Equals(OriginatingAppointment, otherT.OriginatingAppointment)) return false;
+      if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
+      if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
+      if(!comparer.Equals(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
+      if(!comparer.ListEquals(RequestedPeriod, otherT.RequestedPeriod)) return false;
+      if(!comparer.ListEquals(Slot, otherT.Slot)) return false;
+      if(!comparer.ListEquals(Account, otherT.Account)) return false;
+      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
+      if(!comparer.Equals(CancellationDateElement, otherT.CancellationDateElement)) return false;
+      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      if(!comparer.ListEquals(PatientInstruction, otherT.PatientInstruction)) return false;
+      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
+      if(!comparer.Equals(Subject, otherT.Subject)) return false;
+      if(!comparer.ListEquals(Participant, otherT.Participant)) return false;
+      if(!comparer.Equals(RecurrenceIdElement, otherT.RecurrenceIdElement)) return false;
+      if(!comparer.Equals(OccurrenceChangedElement, otherT.OccurrenceChangedElement)) return false;
+      if(!comparer.ListEquals(RecurrenceTemplate, otherT.RecurrenceTemplate)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Appointment;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(CancellationReason, otherT.CancellationReason)) return false;
-      if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
-      if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
-      if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
-      if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
-      if( !DeepComparable.IsExactly(AppointmentType, otherT.AppointmentType)) return false;
-      if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-      if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
-      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.IsExactly(Replaces, otherT.Replaces)) return false;
-      if( !DeepComparable.IsExactly(VirtualService, otherT.VirtualService)) return false;
-      if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
-      if( !DeepComparable.IsExactly(PreviousAppointment, otherT.PreviousAppointment)) return false;
-      if( !DeepComparable.IsExactly(OriginatingAppointment, otherT.OriginatingAppointment)) return false;
-      if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
-      if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
-      if( !DeepComparable.IsExactly(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
-      if( !DeepComparable.IsExactly(RequestedPeriod, otherT.RequestedPeriod)) return false;
-      if( !DeepComparable.IsExactly(Slot, otherT.Slot)) return false;
-      if( !DeepComparable.IsExactly(Account, otherT.Account)) return false;
-      if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.IsExactly(CancellationDateElement, otherT.CancellationDateElement)) return false;
-      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-      if( !DeepComparable.IsExactly(PatientInstruction, otherT.PatientInstruction)) return false;
-      if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
-      if( !DeepComparable.IsExactly(RecurrenceIdElement, otherT.RecurrenceIdElement)) return false;
-      if( !DeepComparable.IsExactly(OccurrenceChangedElement, otherT.OccurrenceChangedElement)) return false;
-      if( !DeepComparable.IsExactly(RecurrenceTemplate, otherT.RecurrenceTemplate)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -5275,7 +5149,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -5381,9 +5255,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (CancellationReason is not null) yield return new KeyValuePair<string,object>("cancellationReason",CancellationReason);
