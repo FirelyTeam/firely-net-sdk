@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.Value = null;
             dft.TryToDateTimeOffset(out _).Should().BeFalse();
-            dft.ToDateTimeOffset().Should().BeNull();
+            Assert.ThrowsException<InvalidOperationException>(() => dft.ToDateTimeOffset());
         }
 
         [TestMethod]
