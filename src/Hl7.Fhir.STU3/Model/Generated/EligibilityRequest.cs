@@ -365,58 +365,32 @@ namespace Hl7.Fhir.Model
       return CopyTo(new EligibilityRequest());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as EligibilityRequest;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
-      if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-      if( !DeepComparable.Matches(Serviced, otherT.Serviced)) return false;
-      if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
-      if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
-      if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
-      if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
-      if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
-      if( !DeepComparable.Matches(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
-      if( !DeepComparable.Matches(BenefitCategory, otherT.BenefitCategory)) return false;
-      if( !DeepComparable.Matches(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(Priority, otherT.Priority)) return false;
+      if(!comparer.Equals(Patient, otherT.Patient)) return false;
+      if(!comparer.Equals(Serviced, otherT.Serviced)) return false;
+      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
+      if(!comparer.Equals(Enterer, otherT.Enterer)) return false;
+      if(!comparer.Equals(Provider, otherT.Provider)) return false;
+      if(!comparer.Equals(Organization, otherT.Organization)) return false;
+      if(!comparer.Equals(Insurer, otherT.Insurer)) return false;
+      if(!comparer.Equals(Facility, otherT.Facility)) return false;
+      if(!comparer.Equals(Coverage, otherT.Coverage)) return false;
+      if(!comparer.Equals(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+      if(!comparer.Equals(BenefitCategory, otherT.BenefitCategory)) return false;
+      if(!comparer.Equals(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as EligibilityRequest;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
-      if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-      if( !DeepComparable.IsExactly(Serviced, otherT.Serviced)) return false;
-      if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
-      if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
-      if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
-      if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
-      if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
-      if( !DeepComparable.IsExactly(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
-      if( !DeepComparable.IsExactly(BenefitCategory, otherT.BenefitCategory)) return false;
-      if( !DeepComparable.IsExactly(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -471,7 +445,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -526,9 +500,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);

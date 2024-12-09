@@ -156,5 +156,5 @@ public class TestDictionaryImplementation
 
 file static class TestDictionaryHelpers
 {
-    public static List<KeyValuePair<string, object>> GetElementList(this Base b) => b.GetElementPairs().ToList();
+    public static List<KeyValuePair<string, object>> GetElementList(this Base b) => b.EnumerateElements().ToList();
 }

@@ -138,32 +138,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LabelComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as LabelComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Type, otherT.Type)) return false;
+        if(!comparer.Equals(ValueElement, otherT.ValueElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as LabelComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -179,7 +166,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -195,9 +182,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
@@ -333,38 +320,22 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AssociatedPartyComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as AssociatedPartyComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.Matches(Role, otherT.Role)) return false;
-        if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-        if( !DeepComparable.Matches(Classifier, otherT.Classifier)) return false;
-        if( !DeepComparable.Matches(Party, otherT.Party)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+        if(!comparer.Equals(Role, otherT.Role)) return false;
+        if(!comparer.ListEquals(Period, otherT.Period)) return false;
+        if(!comparer.ListEquals(Classifier, otherT.Classifier)) return false;
+        if(!comparer.Equals(Party, otherT.Party)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as AssociatedPartyComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
-        if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-        if( !DeepComparable.IsExactly(Classifier, otherT.Classifier)) return false;
-        if( !DeepComparable.IsExactly(Party, otherT.Party)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -389,7 +360,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -414,9 +385,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
         if (Period?.Any() == true) yield return new KeyValuePair<string,object>("period",Period);
@@ -519,34 +490,20 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProgressStatusComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ProgressStatusComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(State, otherT.State)) return false;
-        if( !DeepComparable.Matches(ActualElement, otherT.ActualElement)) return false;
-        if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(State, otherT.State)) return false;
+        if(!comparer.Equals(ActualElement, otherT.ActualElement)) return false;
+        if(!comparer.Equals(Period, otherT.Period)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ProgressStatusComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(State, otherT.State)) return false;
-        if( !DeepComparable.IsExactly(ActualElement, otherT.ActualElement)) return false;
-        if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -565,7 +522,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -584,9 +541,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (State is not null) yield return new KeyValuePair<string,object>("state",State);
         if (ActualElement is not null) yield return new KeyValuePair<string,object>("actual",ActualElement);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
@@ -721,36 +678,21 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RecruitmentComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as RecruitmentComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(TargetNumberElement, otherT.TargetNumberElement)) return false;
-        if( !DeepComparable.Matches(ActualNumberElement, otherT.ActualNumberElement)) return false;
-        if( !DeepComparable.Matches(Eligibility, otherT.Eligibility)) return false;
-        if( !DeepComparable.Matches(ActualGroup, otherT.ActualGroup)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(TargetNumberElement, otherT.TargetNumberElement)) return false;
+        if(!comparer.Equals(ActualNumberElement, otherT.ActualNumberElement)) return false;
+        if(!comparer.Equals(Eligibility, otherT.Eligibility)) return false;
+        if(!comparer.Equals(ActualGroup, otherT.ActualGroup)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RecruitmentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(TargetNumberElement, otherT.TargetNumberElement)) return false;
-        if( !DeepComparable.IsExactly(ActualNumberElement, otherT.ActualNumberElement)) return false;
-        if( !DeepComparable.IsExactly(Eligibility, otherT.Eligibility)) return false;
-        if( !DeepComparable.IsExactly(ActualGroup, otherT.ActualGroup)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -772,7 +714,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -794,9 +736,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (TargetNumberElement is not null) yield return new KeyValuePair<string,object>("targetNumber",TargetNumberElement);
         if (ActualNumberElement is not null) yield return new KeyValuePair<string,object>("actualNumber",ActualNumberElement);
         if (Eligibility is not null) yield return new KeyValuePair<string,object>("eligibility",Eligibility);
@@ -985,40 +927,23 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ComparisonGroupComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ComparisonGroupComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
-        if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.Matches(IntendedExposure, otherT.IntendedExposure)) return false;
-        if( !DeepComparable.Matches(ObservedGroup, otherT.ObservedGroup)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(LinkIdElement, otherT.LinkIdElement)) return false;
+        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+        if(!comparer.Equals(Type, otherT.Type)) return false;
+        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+        if(!comparer.ListEquals(IntendedExposure, otherT.IntendedExposure)) return false;
+        if(!comparer.Equals(ObservedGroup, otherT.ObservedGroup)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ComparisonGroupComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
-        if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.IsExactly(IntendedExposure, otherT.IntendedExposure)) return false;
-        if( !DeepComparable.IsExactly(ObservedGroup, otherT.ObservedGroup)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -1046,7 +971,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -1074,9 +999,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (LinkIdElement is not null) yield return new KeyValuePair<string,object>("linkId",LinkIdElement);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
@@ -1200,34 +1125,20 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ObjectiveComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ObjectiveComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+        if(!comparer.Equals(Type, otherT.Type)) return false;
+        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ObjectiveComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -1246,7 +1157,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -1265,9 +1176,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
@@ -1406,36 +1317,21 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OutcomeMeasureComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as OutcomeMeasureComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+        if(!comparer.ListEquals(Type, otherT.Type)) return false;
+        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+        if(!comparer.Equals(Reference, otherT.Reference)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as OutcomeMeasureComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -1457,7 +1353,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -1479,9 +1375,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
@@ -2141,92 +2037,49 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ResearchStudy());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as ResearchStudy;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
-      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-      if( !DeepComparable.Matches(Label, otherT.Label)) return false;
-      if( !DeepComparable.Matches(Protocol, otherT.Protocol)) return false;
-      if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
-      if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
-      if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(PrimaryPurposeType, otherT.PrimaryPurposeType)) return false;
-      if( !DeepComparable.Matches(Phase, otherT.Phase)) return false;
-      if( !DeepComparable.Matches(StudyDesign, otherT.StudyDesign)) return false;
-      if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
-      if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
-      if( !DeepComparable.Matches(Keyword, otherT.Keyword)) return false;
-      if( !DeepComparable.Matches(Region, otherT.Region)) return false;
-      if( !DeepComparable.Matches(DescriptionSummaryElement, otherT.DescriptionSummaryElement)) return false;
-      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(Site, otherT.Site)) return false;
-      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-      if( !DeepComparable.Matches(Classifier, otherT.Classifier)) return false;
-      if( !DeepComparable.Matches(AssociatedParty, otherT.AssociatedParty)) return false;
-      if( !DeepComparable.Matches(ProgressStatus, otherT.ProgressStatus)) return false;
-      if( !DeepComparable.Matches(WhyStopped, otherT.WhyStopped)) return false;
-      if( !DeepComparable.Matches(Recruitment, otherT.Recruitment)) return false;
-      if( !DeepComparable.Matches(ComparisonGroup, otherT.ComparisonGroup)) return false;
-      if( !DeepComparable.Matches(Objective, otherT.Objective)) return false;
-      if( !DeepComparable.Matches(OutcomeMeasure, otherT.OutcomeMeasure)) return false;
-      if( !DeepComparable.Matches(Result, otherT.Result)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(VersionElement, otherT.VersionElement)) return false;
+      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+      if(!comparer.Equals(TitleElement, otherT.TitleElement)) return false;
+      if(!comparer.ListEquals(Label, otherT.Label)) return false;
+      if(!comparer.ListEquals(Protocol, otherT.Protocol)) return false;
+      if(!comparer.ListEquals(PartOf, otherT.PartOf)) return false;
+      if(!comparer.ListEquals(RelatedArtifact, otherT.RelatedArtifact)) return false;
+      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(PrimaryPurposeType, otherT.PrimaryPurposeType)) return false;
+      if(!comparer.Equals(Phase, otherT.Phase)) return false;
+      if(!comparer.ListEquals(StudyDesign, otherT.StudyDesign)) return false;
+      if(!comparer.ListEquals(Focus, otherT.Focus)) return false;
+      if(!comparer.ListEquals(Condition, otherT.Condition)) return false;
+      if(!comparer.ListEquals(Keyword, otherT.Keyword)) return false;
+      if(!comparer.ListEquals(Region, otherT.Region)) return false;
+      if(!comparer.Equals(DescriptionSummaryElement, otherT.DescriptionSummaryElement)) return false;
+      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+      if(!comparer.Equals(Period, otherT.Period)) return false;
+      if(!comparer.ListEquals(Site, otherT.Site)) return false;
+      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      if(!comparer.ListEquals(Classifier, otherT.Classifier)) return false;
+      if(!comparer.ListEquals(AssociatedParty, otherT.AssociatedParty)) return false;
+      if(!comparer.ListEquals(ProgressStatus, otherT.ProgressStatus)) return false;
+      if(!comparer.Equals(WhyStopped, otherT.WhyStopped)) return false;
+      if(!comparer.Equals(Recruitment, otherT.Recruitment)) return false;
+      if(!comparer.ListEquals(ComparisonGroup, otherT.ComparisonGroup)) return false;
+      if(!comparer.ListEquals(Objective, otherT.Objective)) return false;
+      if(!comparer.ListEquals(OutcomeMeasure, otherT.OutcomeMeasure)) return false;
+      if(!comparer.ListEquals(Result, otherT.Result)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ResearchStudy;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
-      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-      if( !DeepComparable.IsExactly(Label, otherT.Label)) return false;
-      if( !DeepComparable.IsExactly(Protocol, otherT.Protocol)) return false;
-      if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
-      if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
-      if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(PrimaryPurposeType, otherT.PrimaryPurposeType)) return false;
-      if( !DeepComparable.IsExactly(Phase, otherT.Phase)) return false;
-      if( !DeepComparable.IsExactly(StudyDesign, otherT.StudyDesign)) return false;
-      if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
-      if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
-      if( !DeepComparable.IsExactly(Keyword, otherT.Keyword)) return false;
-      if( !DeepComparable.IsExactly(Region, otherT.Region)) return false;
-      if( !DeepComparable.IsExactly(DescriptionSummaryElement, otherT.DescriptionSummaryElement)) return false;
-      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
-      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-      if( !DeepComparable.IsExactly(Classifier, otherT.Classifier)) return false;
-      if( !DeepComparable.IsExactly(AssociatedParty, otherT.AssociatedParty)) return false;
-      if( !DeepComparable.IsExactly(ProgressStatus, otherT.ProgressStatus)) return false;
-      if( !DeepComparable.IsExactly(WhyStopped, otherT.WhyStopped)) return false;
-      if( !DeepComparable.IsExactly(Recruitment, otherT.Recruitment)) return false;
-      if( !DeepComparable.IsExactly(ComparisonGroup, otherT.ComparisonGroup)) return false;
-      if( !DeepComparable.IsExactly(Objective, otherT.Objective)) return false;
-      if( !DeepComparable.IsExactly(OutcomeMeasure, otherT.OutcomeMeasure)) return false;
-      if( !DeepComparable.IsExactly(Result, otherT.Result)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -2332,7 +2185,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -2438,9 +2291,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);

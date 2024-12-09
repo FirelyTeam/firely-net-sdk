@@ -532,56 +532,31 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LensSpecificationComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as LensSpecificationComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Product, otherT.Product)) return false;
-        if( !DeepComparable.Matches(EyeElement, otherT.EyeElement)) return false;
-        if( !DeepComparable.Matches(SphereElement, otherT.SphereElement)) return false;
-        if( !DeepComparable.Matches(CylinderElement, otherT.CylinderElement)) return false;
-        if( !DeepComparable.Matches(AxisElement, otherT.AxisElement)) return false;
-        if( !DeepComparable.Matches(Prism, otherT.Prism)) return false;
-        if( !DeepComparable.Matches(AddElement, otherT.AddElement)) return false;
-        if( !DeepComparable.Matches(PowerElement, otherT.PowerElement)) return false;
-        if( !DeepComparable.Matches(BackCurveElement, otherT.BackCurveElement)) return false;
-        if( !DeepComparable.Matches(DiameterElement, otherT.DiameterElement)) return false;
-        if( !DeepComparable.Matches(Duration, otherT.Duration)) return false;
-        if( !DeepComparable.Matches(ColorElement, otherT.ColorElement)) return false;
-        if( !DeepComparable.Matches(BrandElement, otherT.BrandElement)) return false;
-        if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Product, otherT.Product)) return false;
+        if(!comparer.Equals(EyeElement, otherT.EyeElement)) return false;
+        if(!comparer.Equals(SphereElement, otherT.SphereElement)) return false;
+        if(!comparer.Equals(CylinderElement, otherT.CylinderElement)) return false;
+        if(!comparer.Equals(AxisElement, otherT.AxisElement)) return false;
+        if(!comparer.ListEquals(Prism, otherT.Prism)) return false;
+        if(!comparer.Equals(AddElement, otherT.AddElement)) return false;
+        if(!comparer.Equals(PowerElement, otherT.PowerElement)) return false;
+        if(!comparer.Equals(BackCurveElement, otherT.BackCurveElement)) return false;
+        if(!comparer.Equals(DiameterElement, otherT.DiameterElement)) return false;
+        if(!comparer.Equals(Duration, otherT.Duration)) return false;
+        if(!comparer.Equals(ColorElement, otherT.ColorElement)) return false;
+        if(!comparer.Equals(BrandElement, otherT.BrandElement)) return false;
+        if(!comparer.ListEquals(Note, otherT.Note)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as LensSpecificationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
-        if( !DeepComparable.IsExactly(EyeElement, otherT.EyeElement)) return false;
-        if( !DeepComparable.IsExactly(SphereElement, otherT.SphereElement)) return false;
-        if( !DeepComparable.IsExactly(CylinderElement, otherT.CylinderElement)) return false;
-        if( !DeepComparable.IsExactly(AxisElement, otherT.AxisElement)) return false;
-        if( !DeepComparable.IsExactly(Prism, otherT.Prism)) return false;
-        if( !DeepComparable.IsExactly(AddElement, otherT.AddElement)) return false;
-        if( !DeepComparable.IsExactly(PowerElement, otherT.PowerElement)) return false;
-        if( !DeepComparable.IsExactly(BackCurveElement, otherT.BackCurveElement)) return false;
-        if( !DeepComparable.IsExactly(DiameterElement, otherT.DiameterElement)) return false;
-        if( !DeepComparable.IsExactly(Duration, otherT.Duration)) return false;
-        if( !DeepComparable.IsExactly(ColorElement, otherT.ColorElement)) return false;
-        if( !DeepComparable.IsExactly(BrandElement, otherT.BrandElement)) return false;
-        if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -633,7 +608,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -685,9 +660,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
         if (EyeElement is not null) yield return new KeyValuePair<string,object>("eye",EyeElement);
         if (SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",SphereElement);
@@ -808,32 +783,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PrismComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as PrismComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(AmountElement, otherT.AmountElement)) return false;
-        if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(AmountElement, otherT.AmountElement)) return false;
+        if(!comparer.Equals(BaseElement, otherT.BaseElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as PrismComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(AmountElement, otherT.AmountElement)) return false;
-        if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -849,7 +811,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -865,9 +827,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (AmountElement is not null) yield return new KeyValuePair<string,object>("amount",AmountElement);
         if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
       }
@@ -1075,44 +1037,25 @@ namespace Hl7.Fhir.Model
       return CopyTo(new VisionPrescription());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as VisionPrescription;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-      if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
-      if( !DeepComparable.Matches(DateWrittenElement, otherT.DateWrittenElement)) return false;
-      if( !DeepComparable.Matches(Prescriber, otherT.Prescriber)) return false;
-      if( !DeepComparable.Matches(LensSpecification, otherT.LensSpecification)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
+      if(!comparer.Equals(Patient, otherT.Patient)) return false;
+      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
+      if(!comparer.Equals(DateWrittenElement, otherT.DateWrittenElement)) return false;
+      if(!comparer.Equals(Prescriber, otherT.Prescriber)) return false;
+      if(!comparer.ListEquals(LensSpecification, otherT.LensSpecification)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as VisionPrescription;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-      if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
-      if( !DeepComparable.IsExactly(DateWrittenElement, otherT.DateWrittenElement)) return false;
-      if( !DeepComparable.IsExactly(Prescriber, otherT.Prescriber)) return false;
-      if( !DeepComparable.IsExactly(LensSpecification, otherT.LensSpecification)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1146,7 +1089,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1180,9 +1123,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);

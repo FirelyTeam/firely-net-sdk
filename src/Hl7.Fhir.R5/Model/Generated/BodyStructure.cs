@@ -172,38 +172,22 @@ namespace Hl7.Fhir.Model
         return CopyTo(new IncludedStructureComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as IncludedStructureComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Structure, otherT.Structure)) return false;
-        if( !DeepComparable.Matches(Laterality, otherT.Laterality)) return false;
-        if( !DeepComparable.Matches(BodyLandmarkOrientation, otherT.BodyLandmarkOrientation)) return false;
-        if( !DeepComparable.Matches(SpatialReference, otherT.SpatialReference)) return false;
-        if( !DeepComparable.Matches(Qualifier, otherT.Qualifier)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Structure, otherT.Structure)) return false;
+        if(!comparer.Equals(Laterality, otherT.Laterality)) return false;
+        if(!comparer.ListEquals(BodyLandmarkOrientation, otherT.BodyLandmarkOrientation)) return false;
+        if(!comparer.ListEquals(SpatialReference, otherT.SpatialReference)) return false;
+        if(!comparer.ListEquals(Qualifier, otherT.Qualifier)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as IncludedStructureComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Structure, otherT.Structure)) return false;
-        if( !DeepComparable.IsExactly(Laterality, otherT.Laterality)) return false;
-        if( !DeepComparable.IsExactly(BodyLandmarkOrientation, otherT.BodyLandmarkOrientation)) return false;
-        if( !DeepComparable.IsExactly(SpatialReference, otherT.SpatialReference)) return false;
-        if( !DeepComparable.IsExactly(Qualifier, otherT.Qualifier)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -228,7 +212,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -253,9 +237,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
         if (Laterality is not null) yield return new KeyValuePair<string,object>("laterality",Laterality);
         if (BodyLandmarkOrientation?.Any() == true) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",BodyLandmarkOrientation);
@@ -362,36 +346,21 @@ namespace Hl7.Fhir.Model
         return CopyTo(new BodyLandmarkOrientationComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as BodyLandmarkOrientationComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(LandmarkDescription, otherT.LandmarkDescription)) return false;
-        if( !DeepComparable.Matches(ClockFacePosition, otherT.ClockFacePosition)) return false;
-        if( !DeepComparable.Matches(DistanceFromLandmark, otherT.DistanceFromLandmark)) return false;
-        if( !DeepComparable.Matches(SurfaceOrientation, otherT.SurfaceOrientation)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.ListEquals(LandmarkDescription, otherT.LandmarkDescription)) return false;
+        if(!comparer.ListEquals(ClockFacePosition, otherT.ClockFacePosition)) return false;
+        if(!comparer.ListEquals(DistanceFromLandmark, otherT.DistanceFromLandmark)) return false;
+        if(!comparer.ListEquals(SurfaceOrientation, otherT.SurfaceOrientation)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as BodyLandmarkOrientationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(LandmarkDescription, otherT.LandmarkDescription)) return false;
-        if( !DeepComparable.IsExactly(ClockFacePosition, otherT.ClockFacePosition)) return false;
-        if( !DeepComparable.IsExactly(DistanceFromLandmark, otherT.DistanceFromLandmark)) return false;
-        if( !DeepComparable.IsExactly(SurfaceOrientation, otherT.SurfaceOrientation)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -413,7 +382,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -435,9 +404,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (LandmarkDescription?.Any() == true) yield return new KeyValuePair<string,object>("landmarkDescription",LandmarkDescription);
         if (ClockFacePosition?.Any() == true) yield return new KeyValuePair<string,object>("clockFacePosition",ClockFacePosition);
         if (DistanceFromLandmark?.Any() == true) yield return new KeyValuePair<string,object>("distanceFromLandmark",DistanceFromLandmark);
@@ -511,32 +480,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DistanceFromLandmarkComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as DistanceFromLandmarkComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Device, otherT.Device)) return false;
-        if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.ListEquals(Device, otherT.Device)) return false;
+        if(!comparer.ListEquals(Value, otherT.Value)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as DistanceFromLandmarkComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
-        if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -552,7 +508,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -568,9 +524,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
         if (Value?.Any() == true) yield return new KeyValuePair<string,object>("value",Value);
       }
@@ -753,44 +709,25 @@ namespace Hl7.Fhir.Model
       return CopyTo(new BodyStructure());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as BodyStructure;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.Matches(Morphology, otherT.Morphology)) return false;
-      if( !DeepComparable.Matches(IncludedStructure, otherT.IncludedStructure)) return false;
-      if( !DeepComparable.Matches(ExcludedStructure, otherT.ExcludedStructure)) return false;
-      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.Matches(Image, otherT.Image)) return false;
-      if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
+      if(!comparer.Equals(Morphology, otherT.Morphology)) return false;
+      if(!comparer.ListEquals(IncludedStructure, otherT.IncludedStructure)) return false;
+      if(!comparer.ListEquals(ExcludedStructure, otherT.ExcludedStructure)) return false;
+      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+      if(!comparer.ListEquals(Image, otherT.Image)) return false;
+      if(!comparer.Equals(Patient, otherT.Patient)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as BodyStructure;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.IsExactly(Morphology, otherT.Morphology)) return false;
-      if( !DeepComparable.IsExactly(IncludedStructure, otherT.IncludedStructure)) return false;
-      if( !DeepComparable.IsExactly(ExcludedStructure, otherT.ExcludedStructure)) return false;
-      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.IsExactly(Image, otherT.Image)) return false;
-      if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -824,7 +761,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -858,9 +795,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Morphology is not null) yield return new KeyValuePair<string,object>("morphology",Morphology);

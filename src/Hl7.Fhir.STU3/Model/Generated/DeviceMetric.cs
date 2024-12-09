@@ -385,34 +385,20 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CalibrationComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as CalibrationComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-        if( !DeepComparable.Matches(StateElement, otherT.StateElement)) return false;
-        if( !DeepComparable.Matches(TimeElement, otherT.TimeElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
+        if(!comparer.Equals(StateElement, otherT.StateElement)) return false;
+        if(!comparer.Equals(TimeElement, otherT.TimeElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as CalibrationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-        if( !DeepComparable.IsExactly(StateElement, otherT.StateElement)) return false;
-        if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -431,7 +417,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -450,9 +436,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);
         if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
@@ -690,48 +676,27 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DeviceMetric());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as DeviceMetric;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Unit, otherT.Unit)) return false;
-      if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-      if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
-      if( !DeepComparable.Matches(OperationalStatusElement, otherT.OperationalStatusElement)) return false;
-      if( !DeepComparable.Matches(ColorElement, otherT.ColorElement)) return false;
-      if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
-      if( !DeepComparable.Matches(MeasurementPeriod, otherT.MeasurementPeriod)) return false;
-      if( !DeepComparable.Matches(Calibration, otherT.Calibration)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(Type, otherT.Type)) return false;
+      if(!comparer.Equals(Unit, otherT.Unit)) return false;
+      if(!comparer.Equals(Source, otherT.Source)) return false;
+      if(!comparer.Equals(Parent, otherT.Parent)) return false;
+      if(!comparer.Equals(OperationalStatusElement, otherT.OperationalStatusElement)) return false;
+      if(!comparer.Equals(ColorElement, otherT.ColorElement)) return false;
+      if(!comparer.Equals(CategoryElement, otherT.CategoryElement)) return false;
+      if(!comparer.Equals(MeasurementPeriod, otherT.MeasurementPeriod)) return false;
+      if(!comparer.ListEquals(Calibration, otherT.Calibration)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as DeviceMetric;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Unit, otherT.Unit)) return false;
-      if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-      if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
-      if( !DeepComparable.IsExactly(OperationalStatusElement, otherT.OperationalStatusElement)) return false;
-      if( !DeepComparable.IsExactly(ColorElement, otherT.ColorElement)) return false;
-      if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
-      if( !DeepComparable.IsExactly(MeasurementPeriod, otherT.MeasurementPeriod)) return false;
-      if( !DeepComparable.IsExactly(Calibration, otherT.Calibration)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -771,7 +736,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -811,9 +776,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
