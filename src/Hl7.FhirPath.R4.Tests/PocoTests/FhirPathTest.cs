@@ -22,7 +22,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Dataflow;
+using Vonk.FhirPath.R4.Tests;
 using P = Hl7.Fhir.ElementModel.Types;
+using ScopedNode = Hl7.Fhir.ElementModel.ScopedNode;
 
 namespace Hl7.Fhir.FhirPath.R4.Tests
 {

@@ -9,6 +9,7 @@ namespace Hl7.Fhir.Model
     public static class ParametersExtensions
     {
         private const string CODEATTRIBUTE = "code";
+        private const string URLATTRIBUTE = "url";
         private const string SYSTEMATTRIBUTE = "system";
         private const string CONTEXTATTRIBUTE = "context";
 
@@ -39,12 +40,13 @@ namespace Hl7.Fhir.Model
         {
             parameters.NoDuplicates();
 
-            //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.Parameter.Any(p => p.Name == CODEATTRIBUTE) && !(parameters.Parameter.Any(p => p.Name == SYSTEMATTRIBUTE) ||
+            //This error was changed from system to url. See: https://chat.fhir.org/#narrow/channel/179202-terminology/topic/Required.20.24validate-code.20parameters/near/482250225
+            //If a code is provided, a url or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
+            if (parameters.Parameter.Any(p => p.Name == CODEATTRIBUTE) && !(parameters.Parameter.Any(p => p.Name == URLATTRIBUTE) ||
                                                                                     parameters.Parameter.Any(p => p.Name == CONTEXTATTRIBUTE)))
             {
                 //422 Unproccesable Entity
-                throw new FhirOperationException($"If a code is provided, a system or a context must be provided", (HttpStatusCode)422);
+                throw new FhirOperationException($"If a code is provided, a url or a context must be provided", (HttpStatusCode)422);
             }
         }
     }

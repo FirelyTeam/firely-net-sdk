@@ -14,10 +14,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async Tasks.Task TestElementSnapshot()
         {
-            var zipSource = ZipSource.CreateValidationSource();
-            var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, new SnapshotGeneratorSettings{RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE});
             // Request core Element snapshot; verify recursion handling
+
+            var orgSource = ZipSource.CreateValidationSource();
+            var cachedSource = new CachedResolver(orgSource);
 
             // Assumption: source provides Element structure
             var sdCached = await cachedSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
@@ -28,9 +28,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Generate snapshot by calling SnapshotSource
             // Important! Specify flag to force re-generation (don't trust existing core snapshots...)
+            var snapSource = new SnapshotSource(cachedSource, true);
+
             var sd = await snapSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
             Assert.IsNotNull(sd);
-            Assert.AreEqual(sdCached, sd); // Expecting same (cached) object reference, with updated Snapshot component
+            Assert.AreEqual(sdCached, sd);   // Expecting same (cached) object reference, with updated Snapshot component
             Assert.IsTrue(sd.HasSnapshot);
             Assert.IsTrue(sd.Snapshot.IsCreatedBySnapshotGenerator());
 
@@ -73,8 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // STU3: Element.id has type code "string"
                 // R4: Element.id has no type code, only special "compiler magic" extensions
                 // => Element.id no longer inherits constraints from "Element", e.g. "ele-1"
-                if (elem.Type?.FirstOrDefault()?.Code is string typeName &&
-                    !typeName.StartsWith("http://hl7.org/fhirpath/System."))
+                if (elem.Type?.FirstOrDefault()?.Code is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
                 {
                     assert_ele1(elem);
                 }
@@ -84,54 +85,24 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void CannotCreateSnapshotGeneratorFromSnapshotSource()
         {
-            var zipSource = ZipSource.CreateValidationSource();
-            var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, regenerate:true);
+            var orgSource = ZipSource.CreateValidationSource();
+            var cachedSource = new CachedResolver(orgSource);
+            var src = new SnapshotSource(cachedSource);
 
             // Verify that SnapshotGenerator ctor rejects SnapshotSource arguments
-            Assert.ThrowsException<ArgumentException>(() => new SnapshotGenerator(snapSource));
+            Assert.ThrowsException<ArgumentException>(() => new SnapshotGenerator(src));
         }
 
         [TestMethod]
         public void CannotCreateNestedSnapshotSource()
         {
-            var zipSource = ZipSource.CreateValidationSource();
-            var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, regenerate:true);
+            var orgSource = ZipSource.CreateValidationSource();
+            var cachedSource = new CachedResolver(orgSource);
+            var src = new SnapshotSource(cachedSource);
 
             // Verify that SnapshotSource ctor rejects SnapshotSource arguments
-            Assert.ThrowsException<ArgumentException>(() => new SnapshotSource(snapSource));
+            Assert.ThrowsException<ArgumentException>(() => new SnapshotSource(src));
         }
 
-        [TestMethod]
-        public async Tasks.Task Generate_ForceRegenerate_DoesNotReuse_SnapshotCreatedByOthers()
-        {
-            var zipSource = ZipSource.CreateValidationSource();
-            var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, regenerate:true);
-
-            var original = await cachedSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
-            Assert.IsTrue(original.HasSnapshot);
-            var originalSnapshot = original.Snapshot;
-            var regenerated =
-                await snapSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
-            Assert.IsTrue(regenerated.HasSnapshot);
-            Assert.AreNotSame(originalSnapshot, regenerated.Snapshot);
-        }
-
-        [TestMethod]
-        public async Tasks.Task Generate_ForceRegenerate_Reuses_SelfCreatedSnapshot()
-        {
-            var zipSource = ZipSource.CreateValidationSource();
-            var cachedSource = new CachedResolver(zipSource);
-            var snapSource = new SnapshotSource(cachedSource, new SnapshotGeneratorSettings{RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE});
-
-            var first =
-                await snapSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
-            var firstSnapshot = first.Snapshot;
-            var second =
-                await snapSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
-            Assert.AreSame(firstSnapshot, second.Snapshot);
-        }
     }
 }
