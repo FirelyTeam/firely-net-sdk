@@ -13,11 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using P = Hl7.Fhir.ElementModel.Types;
-#pragma warning disable CS0612 // Type or member is obsolete
 
 namespace Hl7.FhirPath.Expressions
 {
-    [TemporarilyChanged] // Disabled pragmas until we have figured out an alternative to InstanceType
     internal static class Typecasts
     {
         public delegate object Cast(object source);

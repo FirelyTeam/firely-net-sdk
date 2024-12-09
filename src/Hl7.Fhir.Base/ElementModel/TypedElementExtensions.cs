@@ -12,7 +12,9 @@
 using EM=Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -27,15 +29,39 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="modelInspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="rootName"></param>
         /// <returns></returns>
-        public static ITypedElement ToTypedElement(this Base @base, ModelInspector modelInspector, string? rootName = null)
+        public static ITypedElement ToTypedElementLegacy(this Base @base, ModelInspector modelInspector, string? rootName = null)
             => new PocoElementNode(modelInspector, @base, rootName: rootName);
+        
+
+        /// <summary>
+        /// Creates an adapter which implements ITypedElement on top of a POCO instance, with explicit version-specific metadata.
+        /// </summary>
+        /// <param name="base">The POCO instance</param>
+        /// <param name="inspector">The ModelInspector instance supplying version-specific metadata for the instance</param>
+        /// <param name="rootName">The name you wish to have at the root of the tree. This will determine e.g. the root element name for serialization.
+        /// If none is given, the type of the underlying poco will be used.</param>
+        /// <remarks>The implementation of this method has changed. If you notice regressions, please let the SDK team know.
+        /// In the meantime, you can restore the old behaviour with a call to <see cref="ToTypedElementLegacy"/></remarks>
+#if NETSTANDARD2_1
+        [Obsolete("The implementation of this method has changed to use our new model stack. If you want to try the new behaviour, "+
+                  "either ignore this warning or call ToElementNode(). For reverting to the old behaviour, call .ToTypedElementLegacy()")]
+#else
+        [Experimental("SDK0001")]
+#endif
+        public static ITypedElement ToTypedElement(this Base @base, ModelInspector inspector, string? rootName = null)
+        {
+            var node = ToElementNode(@base, rootName);
+            ((IAnnotatable)node).AddAnnotation(inspector);
+            
+            return node;
+        }
 
         /// <summary>
         /// Converts a Poco to a new PocoElementNode.
         /// </summary>
         /// <param name="base">The Poco that should be converted to an <see cref="ITypedElement"/>.</param>
         /// <param name="rootName"></param>
-        public static SinglePocoElementNode ToElementNode(this Base @base, string? rootName = null) => PocoElementNode2.Root(@base, rootName);
+        public static PocoNode ToElementNode(this Base @base, string? rootName = null) => PocoNodeOrList.Root(@base, rootName);
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements

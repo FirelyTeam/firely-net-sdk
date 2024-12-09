@@ -36,8 +36,7 @@ namespace Hl7.FhirPath.Functions
             => focus.Count() > 1
             ? throw Error.InvalidOperation($"Operator {nameof(Not)} is not applicable for collections with more than one item.")
             : !focus.BooleanEval().Value;
-
-        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
+        
         public static IEnumerable<IScopedNode> DistinctUnion(this IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b)
             => a.Union(b, EqualityOperators.TypedElementEqualityComparer);
 
@@ -52,8 +51,7 @@ namespace Hl7.FhirPath.Functions
 
         public static bool Contains(this IEnumerable<IScopedNode> focus, IScopedNode value)
             => focus.Contains(value, EqualityOperators.TypedElementEqualityComparer);
-
-        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
+        
         public static IEnumerable<IScopedNode> Distinct(this IEnumerable<IScopedNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer);
 
@@ -62,8 +60,7 @@ namespace Hl7.FhirPath.Functions
 
         public static bool SubsetOf(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
             => focus.All(fitem => other.Contains(fitem));
-
-        [TemporarilyChanged] // We cast all of them to scoped nodes for now. This will not be necessary once we define a clear Equality operator for IScopedNode
+        
         public static IEnumerable<IScopedNode> Intersect(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
             => focus.Intersect(other, EqualityOperators.TypedElementEqualityComparer);
 

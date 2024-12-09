@@ -14,6 +14,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
 using System.Linq;
+#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable SDK0001
 
 namespace Hl7.Fhir.Serialization
 {

@@ -130,8 +130,6 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        [Ignore("This test uses masking node, which we cannot support on our new model")]
-        [TemporarilyChanged]
         public async Tasks.Task TestIncludeMandatory()
         {
             var l = new Library();

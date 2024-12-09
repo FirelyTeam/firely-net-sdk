@@ -11,6 +11,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -27,9 +28,12 @@ namespace Hl7.Fhir.ElementModel
 
         public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) =>
                new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
-
+        
         public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null) =>
-                @base.ToTypedElement(inspector, rootName).ToSourceNode();
-
+#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable SDK0001
+            @base.ToTypedElement(inspector, rootName).ToSourceNode();
+#pragma warning restore SDK0001
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }

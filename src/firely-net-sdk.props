@@ -50,7 +50,7 @@
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
 		<DebugType>portable</DebugType>
 		<DebugSymbols>True</DebugSymbols>
-		<NoWarn>1591</NoWarn>
+		<NoWarn>1591, SDK0001</NoWarn>
 		<Optimize>false</Optimize>
 		<DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
 	</PropertyGroup>
@@ -62,7 +62,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<NoWarn>1591</NoWarn> <!-- Missing XML comments -->
+		<NoWarn>1591, SDK0001</NoWarn> <!-- Missing XML comments -->
 	</PropertyGroup>
 
 </Project>

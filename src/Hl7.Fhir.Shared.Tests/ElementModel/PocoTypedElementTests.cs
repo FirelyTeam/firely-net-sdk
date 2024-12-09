@@ -48,10 +48,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         [TestMethod]
         public void PocoExtensionTest()
         {
-            Patient p = new Patient
-            {
-                Active = true
-            };
+            Patient p = new Patient { Active = true };
             p.ActiveElement.ElementId = "314";
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
@@ -166,6 +163,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             {
                 extract();
             }
+
             sw.Stop();
 
             Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5} micros");
@@ -197,9 +195,6 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
 
         [TestMethod]
-        [Ignore("We implemented ITypedElement on top of Base, but that does not track which version of FHIR the element is from," +
-                "so we cannot select the right type of the elements here since they diverge between versions.")]
-        [TemporarilyChanged]
         public void CheckTypeOfElementDefinitionMembers()
         {
 #if !R5
@@ -209,21 +204,34 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 #endif
             var ed = new ElementDefinition()
             {
-                Mapping = new System.Collections.Generic.List<ElementDefinition.MappingComponent>() {
-                            new ElementDefinition.MappingComponent() {
-                                Comment = "comment"
-                                }
-                            },
+                Mapping = new System.Collections.Generic.List<ElementDefinition.MappingComponent>()
+                {
+                    new ElementDefinition.MappingComponent()
+                    {
+#if !R5
+                        CommentString = "comment"
+#else
+                        Comment = "comment"
+#endif
+                    }
+                },
                 Binding = new ElementDefinition.ElementDefinitionBindingComponent()
                 {
+#if !R5
+                    DescriptionString = "description",
+#else
                     Description = "description",
-
+#endif
                 },
                 Constraint = new System.Collections.Generic.List<ElementDefinition.ConstraintComponent>()
                 {
                     new ElementDefinition.ConstraintComponent()
                     {
+#if !R5
+                        RequirementsString = "requirements"
+#else
                         Requirements = "requirements"
+#endif
                     }
                 }
             };
@@ -232,6 +240,5 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             element.Select("binding.description").First().InstanceType.Should().Be(resultType);
             element.Select("constraint.requirements").First().InstanceType.Should().Be(resultType);
         }
-
     }
 }
