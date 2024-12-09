@@ -105,7 +105,7 @@ public class BaseFhirXmlPocoSerializer
         // Make sure that elements with attributes are serialized first.
         // Add the special "value" attribute if this is a FhirPrimitive.
         var orderedMembers = element
-            .GetElementPairs()
+            .EnumerateElements()
             .Concat(element is PrimitiveType { ObjectValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
             .OrderBy(p => p.mapping?.SerializationHint != XmlRepresentation.XmlAttr);

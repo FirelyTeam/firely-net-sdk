@@ -454,48 +454,27 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Address());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Address;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
-      if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-      if( !DeepComparable.Matches(LineElement, otherT.LineElement)) return false;
-      if( !DeepComparable.Matches(CityElement, otherT.CityElement)) return false;
-      if( !DeepComparable.Matches(DistrictElement, otherT.DistrictElement)) return false;
-      if( !DeepComparable.Matches(StateElement, otherT.StateElement)) return false;
-      if( !DeepComparable.Matches(PostalCodeElement, otherT.PostalCodeElement)) return false;
-      if( !DeepComparable.Matches(CountryElement, otherT.CountryElement)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(UseElement, otherT.UseElement)) return false;
+      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
+      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
+      if(!comparer.ListEquals(LineElement, otherT.LineElement)) return false;
+      if(!comparer.Equals(CityElement, otherT.CityElement)) return false;
+      if(!comparer.Equals(DistrictElement, otherT.DistrictElement)) return false;
+      if(!comparer.Equals(StateElement, otherT.StateElement)) return false;
+      if(!comparer.Equals(PostalCodeElement, otherT.PostalCodeElement)) return false;
+      if(!comparer.Equals(CountryElement, otherT.CountryElement)) return false;
+      if(!comparer.Equals(Period, otherT.Period)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Address;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
-      if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-      if( !DeepComparable.IsExactly(LineElement, otherT.LineElement)) return false;
-      if( !DeepComparable.IsExactly(CityElement, otherT.CityElement)) return false;
-      if( !DeepComparable.IsExactly(DistrictElement, otherT.DistrictElement)) return false;
-      if( !DeepComparable.IsExactly(StateElement, otherT.StateElement)) return false;
-      if( !DeepComparable.IsExactly(PostalCodeElement, otherT.PostalCodeElement)) return false;
-      if( !DeepComparable.IsExactly(CountryElement, otherT.CountryElement)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -535,7 +514,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -575,9 +554,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);

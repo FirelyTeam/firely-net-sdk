@@ -115,32 +115,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ReferenceRangeComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ReferenceRangeComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(LowLimit, otherT.LowLimit)) return false;
-        if( !DeepComparable.Matches(HighLimit, otherT.HighLimit)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(LowLimit, otherT.LowLimit)) return false;
+        if(!comparer.Equals(HighLimit, otherT.HighLimit)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ReferenceRangeComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(LowLimit, otherT.LowLimit)) return false;
-        if( !DeepComparable.IsExactly(HighLimit, otherT.HighLimit)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -156,7 +143,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -172,9 +159,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (LowLimit is not null) yield return new KeyValuePair<string,object>("lowLimit",LowLimit);
         if (HighLimit is not null) yield return new KeyValuePair<string,object>("highLimit",HighLimit);
       }
@@ -275,36 +262,21 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstanceAmount());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as SubstanceAmount;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
-      if( !DeepComparable.Matches(AmountType, otherT.AmountType)) return false;
-      if( !DeepComparable.Matches(AmountTextElement, otherT.AmountTextElement)) return false;
-      if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(Amount, otherT.Amount)) return false;
+      if(!comparer.Equals(AmountType, otherT.AmountType)) return false;
+      if(!comparer.Equals(AmountTextElement, otherT.AmountTextElement)) return false;
+      if(!comparer.Equals(ReferenceRange, otherT.ReferenceRange)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as SubstanceAmount;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
-      if( !DeepComparable.IsExactly(AmountType, otherT.AmountType)) return false;
-      if( !DeepComparable.IsExactly(AmountTextElement, otherT.AmountTextElement)) return false;
-      if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -326,7 +298,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -348,9 +320,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
       if (AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",AmountTextElement);

@@ -227,36 +227,21 @@ namespace Hl7.Fhir.Model
       return CopyTo(new TriggerDefinition());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as TriggerDefinition;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.Matches(EventNameElement, otherT.EventNameElement)) return false;
-      if( !DeepComparable.Matches(EventTiming, otherT.EventTiming)) return false;
-      if( !DeepComparable.Matches(EventData, otherT.EventData)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
+      if(!comparer.Equals(EventNameElement, otherT.EventNameElement)) return false;
+      if(!comparer.Equals(EventTiming, otherT.EventTiming)) return false;
+      if(!comparer.Equals(EventData, otherT.EventData)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as TriggerDefinition;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.IsExactly(EventNameElement, otherT.EventNameElement)) return false;
-      if( !DeepComparable.IsExactly(EventTiming, otherT.EventTiming)) return false;
-      if( !DeepComparable.IsExactly(EventData, otherT.EventData)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -278,7 +263,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -300,9 +285,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",EventNameElement);
       if (EventTiming is not null) yield return new KeyValuePair<string,object>("eventTiming",EventTiming);

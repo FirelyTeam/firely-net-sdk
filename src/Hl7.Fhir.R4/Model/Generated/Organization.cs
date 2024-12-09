@@ -151,36 +151,21 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContactComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ContactComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
-        if( !DeepComparable.Matches(Name, otherT.Name)) return false;
-        if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-        if( !DeepComparable.Matches(Address, otherT.Address)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Purpose, otherT.Purpose)) return false;
+        if(!comparer.Equals(Name, otherT.Name)) return false;
+        if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
+        if(!comparer.Equals(Address, otherT.Address)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ContactComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
-        if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
-        if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-        if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -202,7 +187,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -224,9 +209,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
         if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
         if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
@@ -461,48 +446,27 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Organization());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Organization;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
-      if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.Matches(Address, otherT.Address)) return false;
-      if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
-      if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
+      if(!comparer.ListEquals(Type, otherT.Type)) return false;
+      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+      if(!comparer.ListEquals(AliasElement, otherT.AliasElement)) return false;
+      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
+      if(!comparer.ListEquals(Address, otherT.Address)) return false;
+      if(!comparer.Equals(PartOf, otherT.PartOf)) return false;
+      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
+      if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Organization;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
-      if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
-      if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
-      if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -542,7 +506,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -582,9 +546,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);

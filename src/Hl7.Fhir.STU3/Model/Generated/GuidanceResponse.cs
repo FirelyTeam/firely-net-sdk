@@ -399,56 +399,31 @@ namespace Hl7.Fhir.Model
       return CopyTo(new GuidanceResponse());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as GuidanceResponse;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(RequestIdElement, otherT.RequestIdElement)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(Module, otherT.Module)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(Context, otherT.Context)) return false;
-      if( !DeepComparable.Matches(OccurrenceDateTimeElement, otherT.OccurrenceDateTimeElement)) return false;
-      if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
-      if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-      if( !DeepComparable.Matches(EvaluationMessage, otherT.EvaluationMessage)) return false;
-      if( !DeepComparable.Matches(OutputParameters, otherT.OutputParameters)) return false;
-      if( !DeepComparable.Matches(Result, otherT.Result)) return false;
-      if( !DeepComparable.Matches(DataRequirement, otherT.DataRequirement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(RequestIdElement, otherT.RequestIdElement)) return false;
+      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(Module, otherT.Module)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(Subject, otherT.Subject)) return false;
+      if(!comparer.Equals(Context, otherT.Context)) return false;
+      if(!comparer.Equals(OccurrenceDateTimeElement, otherT.OccurrenceDateTimeElement)) return false;
+      if(!comparer.Equals(Performer, otherT.Performer)) return false;
+      if(!comparer.Equals(Reason, otherT.Reason)) return false;
+      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      if(!comparer.ListEquals(EvaluationMessage, otherT.EvaluationMessage)) return false;
+      if(!comparer.Equals(OutputParameters, otherT.OutputParameters)) return false;
+      if(!comparer.Equals(Result, otherT.Result)) return false;
+      if(!comparer.ListEquals(DataRequirement, otherT.DataRequirement)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as GuidanceResponse;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(RequestIdElement, otherT.RequestIdElement)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(Module, otherT.Module)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
-      if( !DeepComparable.IsExactly(OccurrenceDateTimeElement, otherT.OccurrenceDateTimeElement)) return false;
-      if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
-      if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-      if( !DeepComparable.IsExactly(EvaluationMessage, otherT.EvaluationMessage)) return false;
-      if( !DeepComparable.IsExactly(OutputParameters, otherT.OutputParameters)) return false;
-      if( !DeepComparable.IsExactly(Result, otherT.Result)) return false;
-      if( !DeepComparable.IsExactly(DataRequirement, otherT.DataRequirement)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -500,7 +475,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -552,9 +527,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (RequestIdElement is not null) yield return new KeyValuePair<string,object>("requestId",RequestIdElement);
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Module is not null) yield return new KeyValuePair<string,object>("module",Module);

@@ -37,6 +37,27 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.IElementList</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.StructureDefinition.DifferentialComponent</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.StructureDefinition.SnapshotComponent</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
     <DiagnosticId>CP0011</DiagnosticId>
     <Target>F:Hl7.Fhir.Model.ExplanationOfBenefit.ActInvoiceGroupCode.CPINV</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
@@ -249,6 +270,13 @@
   <Suppression>
     <DiagnosticId>CP0011</DiagnosticId>
     <Target>F:Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType.Url</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP1002</DiagnosticId>
+    <Target>Hl7.Fhir.Base, Version=6.0.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

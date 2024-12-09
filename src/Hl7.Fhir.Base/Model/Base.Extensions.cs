@@ -11,7 +11,7 @@ public static class BaseExtensions
               "be the same type, as they reflect the type in the actual POCO definition.")]
     public static IEnumerable<Base> Children(this Base instance)
     {
-        foreach (var element in instance.GetElementPairs())
+        foreach (var element in instance.EnumerateElements())
         {
             switch (element.Key, element.Value)
             {

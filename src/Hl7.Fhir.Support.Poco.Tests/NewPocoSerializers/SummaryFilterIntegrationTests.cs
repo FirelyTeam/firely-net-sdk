@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var (_, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary());
             var codeSystemCm = ModelInspector.ForAssembly(typeof(Patient).Assembly).FindClassMapping(typeof(CodeSystem))!;
 
-            summarized.GetElementPairs().All(element => codeSystemCm.FindMappedElementByName(element.Key)!.InSummary).Should().BeTrue();
+            summarized.EnumerateElements().All(element => codeSystemCm.FindMappedElementByName(element.Key)!.InSummary).Should().BeTrue();
             summarized.Count().Should().BeLessThan(codeSystemCm.PropertyMappings.Count(pm => pm.InSummary));
         }
 
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 (y.Value switch
                 {
                     ICollection array => array.Cast<object>().SelectMany(bsi => childrenAndMe(KeyValuePair.Create(y.Key, bsi))),
-                    Base obj => obj.GetElementPairs().SelectMany(childrenAndMe),
+                    Base obj => obj.EnumerateElements().SelectMany(childrenAndMe),
                     _ => []
                 }).Prepend(y).ToList();
         }
@@ -185,6 +185,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
     file static class EnumerableShim
     {
-        public static int Count(this Base b) => b.GetElementPairs().Count();
+        public static int Count(this Base b) => b.EnumerateElements().Count();
     }
 }

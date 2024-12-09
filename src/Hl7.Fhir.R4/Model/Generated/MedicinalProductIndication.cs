@@ -123,32 +123,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OtherTherapyComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as OtherTherapyComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(TherapyRelationshipType, otherT.TherapyRelationshipType)) return false;
-        if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(TherapyRelationshipType, otherT.TherapyRelationshipType)) return false;
+        if(!comparer.Equals(Medication, otherT.Medication)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as OtherTherapyComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(TherapyRelationshipType, otherT.TherapyRelationshipType)) return false;
-        if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -164,7 +151,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -180,9 +167,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",TherapyRelationshipType);
         if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
       }
@@ -342,46 +329,26 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductIndication());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as MedicinalProductIndication;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(DiseaseSymptomProcedure, otherT.DiseaseSymptomProcedure)) return false;
-      if( !DeepComparable.Matches(DiseaseStatus, otherT.DiseaseStatus)) return false;
-      if( !DeepComparable.Matches(Comorbidity, otherT.Comorbidity)) return false;
-      if( !DeepComparable.Matches(IntendedEffect, otherT.IntendedEffect)) return false;
-      if( !DeepComparable.Matches(Duration, otherT.Duration)) return false;
-      if( !DeepComparable.Matches(OtherTherapy, otherT.OtherTherapy)) return false;
-      if( !DeepComparable.Matches(UndesirableEffect, otherT.UndesirableEffect)) return false;
-      if( !DeepComparable.Matches(Population, otherT.Population)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Subject, otherT.Subject)) return false;
+      if(!comparer.Equals(DiseaseSymptomProcedure, otherT.DiseaseSymptomProcedure)) return false;
+      if(!comparer.Equals(DiseaseStatus, otherT.DiseaseStatus)) return false;
+      if(!comparer.ListEquals(Comorbidity, otherT.Comorbidity)) return false;
+      if(!comparer.Equals(IntendedEffect, otherT.IntendedEffect)) return false;
+      if(!comparer.Equals(Duration, otherT.Duration)) return false;
+      if(!comparer.ListEquals(OtherTherapy, otherT.OtherTherapy)) return false;
+      if(!comparer.ListEquals(UndesirableEffect, otherT.UndesirableEffect)) return false;
+      if(!comparer.ListEquals(Population, otherT.Population)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as MedicinalProductIndication;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(DiseaseSymptomProcedure, otherT.DiseaseSymptomProcedure)) return false;
-      if( !DeepComparable.IsExactly(DiseaseStatus, otherT.DiseaseStatus)) return false;
-      if( !DeepComparable.IsExactly(Comorbidity, otherT.Comorbidity)) return false;
-      if( !DeepComparable.IsExactly(IntendedEffect, otherT.IntendedEffect)) return false;
-      if( !DeepComparable.IsExactly(Duration, otherT.Duration)) return false;
-      if( !DeepComparable.IsExactly(OtherTherapy, otherT.OtherTherapy)) return false;
-      if( !DeepComparable.IsExactly(UndesirableEffect, otherT.UndesirableEffect)) return false;
-      if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -418,7 +385,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -455,9 +422,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
       if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);

@@ -241,34 +241,20 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PositionComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as PositionComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(LongitudeElement, otherT.LongitudeElement)) return false;
-        if( !DeepComparable.Matches(LatitudeElement, otherT.LatitudeElement)) return false;
-        if( !DeepComparable.Matches(AltitudeElement, otherT.AltitudeElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(LongitudeElement, otherT.LongitudeElement)) return false;
+        if(!comparer.Equals(LatitudeElement, otherT.LatitudeElement)) return false;
+        if(!comparer.Equals(AltitudeElement, otherT.AltitudeElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as PositionComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(LongitudeElement, otherT.LongitudeElement)) return false;
-        if( !DeepComparable.IsExactly(LatitudeElement, otherT.LatitudeElement)) return false;
-        if( !DeepComparable.IsExactly(AltitudeElement, otherT.AltitudeElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -287,7 +273,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -306,9 +292,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (LongitudeElement is not null) yield return new KeyValuePair<string,object>("longitude",LongitudeElement);
         if (LatitudeElement is not null) yield return new KeyValuePair<string,object>("latitude",LatitudeElement);
         if (AltitudeElement is not null) yield return new KeyValuePair<string,object>("altitude",AltitudeElement);
@@ -653,58 +639,32 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Location());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Location;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(OperationalStatus, otherT.OperationalStatus)) return false;
-      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
-      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.Matches(Address, otherT.Address)) return false;
-      if( !DeepComparable.Matches(PhysicalType, otherT.PhysicalType)) return false;
-      if( !DeepComparable.Matches(Position, otherT.Position)) return false;
-      if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
-      if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
-      if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(OperationalStatus, otherT.OperationalStatus)) return false;
+      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+      if(!comparer.ListEquals(AliasElement, otherT.AliasElement)) return false;
+      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+      if(!comparer.Equals(ModeElement, otherT.ModeElement)) return false;
+      if(!comparer.Equals(Type, otherT.Type)) return false;
+      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
+      if(!comparer.Equals(Address, otherT.Address)) return false;
+      if(!comparer.Equals(PhysicalType, otherT.PhysicalType)) return false;
+      if(!comparer.Equals(Position, otherT.Position)) return false;
+      if(!comparer.Equals(ManagingOrganization, otherT.ManagingOrganization)) return false;
+      if(!comparer.Equals(PartOf, otherT.PartOf)) return false;
+      if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Location;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(OperationalStatus, otherT.OperationalStatus)) return false;
-      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
-      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
-      if( !DeepComparable.IsExactly(PhysicalType, otherT.PhysicalType)) return false;
-      if( !DeepComparable.IsExactly(Position, otherT.Position)) return false;
-      if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
-      if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
-      if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -759,7 +719,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -814,9 +774,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (OperationalStatus is not null) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatus);
