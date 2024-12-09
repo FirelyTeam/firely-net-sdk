@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Test.Validation
             }
         }
 
-        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
+        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, SearchParamDefinition index, string key)
         {
             var results = resource.Select(index.Expression, new FhirEvaluationContext());
             if (results.Any())

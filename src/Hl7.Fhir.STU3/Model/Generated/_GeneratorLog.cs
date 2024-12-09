@@ -209,7 +209,7 @@
   // Used in model class (resource): SearchParameter.base
   // Used in model class (resource): SearchParameter.target
 
-// Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
+// Deferred generation of Shared Enumeration (will be generated in another subset): SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
