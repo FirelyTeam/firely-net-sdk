@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using PocoNode = Hl7.Fhir.ElementModel.PocoNode;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -70,28 +71,22 @@ namespace Hl7.Fhir.Serialization
         [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static string ToXml(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
-            if (source is not PocoNode {Poco: {} b})
+            if (source is not PocoNode {Poco: {} b} node)
                 return SerializationUtil.WriteXmlToString(source, (s,w) => s.WriteTo(w, settings),
                     settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
-
-            // Note that this code is temporary, as we the above code will be re-instated here. It's therefore
-            // allowed to instantiate the serializer with a ModelInspector.ForType here, while we know this has
-            // problems (e.g. if the type is from Base or Conformance, it will not deduce the correct FHIR version).
-            var serializer = new BaseFhirXmlPocoSerializer(ModelInspector.ForType(b.GetType()).FhirRelease);
+            
+            var serializer = new BaseFhirXmlPocoSerializer(node.FindInspector()?.FhirRelease ?? ModelInspector.ForType(b.GetType()).FhirRelease);
             return serializer.SerializeToString(b);
         }
 
         [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static async Task<string> ToXmlAsync(this ITypedElement source, FhirXmlSerializationSettings settings = null)
         {
-            if (source is not PocoNode {Poco: {} b})
+            if (source is not PocoNode {Poco: {} b} node)
                 return await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false,
                     settings?.AppendNewLine ?? false).ConfigureAwait(false);
             
-            // Note that this code is temporary, as we the above code will be re-instated here. It's therefore
-            // allowed to instantiate the serializer with a ModelInspector.ForType here, while we know this has
-            // problems (e.g. if the type is from Base or Conformance, it will not deduce the correct FHIR version).
-            var serializer = new BaseFhirXmlPocoSerializer(ModelInspector.ForType(b.GetType()).FhirRelease);
+            var serializer = new BaseFhirXmlPocoSerializer(node.FindInspector()?.FhirRelease ?? ModelInspector.ForType(b.GetType()).FhirRelease);
             return serializer.SerializeToString(b);
         }
 
