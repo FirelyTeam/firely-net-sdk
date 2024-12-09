@@ -40,7 +40,7 @@ public abstract record PocoNodeOrList(PocoNodeOrList? Parent, string Name) : IEn
 }
 
 public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Name)
-    : PocoNodeOrList(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
+    : PocoNodeOrList(Parent, Name ?? Poco.TypeName), IScopedNode, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
 {
     public IEnumerable<PocoNodeOrList> Children() =>
         Poco.GetElementPairs()
@@ -112,7 +112,7 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
     {
         get
         {
-            if (findInspector() is not { } inspector)
+            if (FindInspector() is not { } inspector)
                 return null;
 
             if ((this as IScopedNode).Parent is not PocoNode node) 
@@ -124,7 +124,7 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
     }
 
     [TemporarilyChanged] // I am refactoring the extensions in another branch. This should go into those extensions. To avoid conflicts, I implement it here for now.
-    internal ModelInspector? findInspector() => ((IAnnotated)this).Annotation<ModelInspector>() ?? Parent?.SingleOrDefault()?.findInspector();
+    internal ModelInspector? FindInspector() => ((IAnnotated)this).Annotation<ModelInspector>() ?? Parent?.SingleOrDefault()?.FindInspector();
     
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children(name);
     
@@ -141,7 +141,7 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
 
     IEnumerable<IScopedNode> IScopedNode.Children(string? name) => name is null
         ? Children().SelectMany(node => node)
-        : Child(name) ?? Enumerable.Empty<PocoNode>();
+        : Child(name) ?? [];
     
     [TemporarilyChanged] // will be removed soon
     NodeType IScopedNode.Type => Poco switch
@@ -179,11 +179,45 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
     
     #endregion
     
+    #region ISourceNode
+
+    protected virtual string? TextInternal => null; 
+    string? ISourceNode.Text => TextInternal;
+    
+    private Lazy<string> SourceName => new (() => 
+        Poco is DataType { TypeName: var tn } && 
+        ((ITypedElement)this).Definition!.IsChoiceElement 
+            ? Name + tn.Capitalize() 
+            : Name
+    );
+
+    string ISourceNode.Location =>
+        (Index, Parent) switch
+        {
+            // if we have an index, write it
+            ({ } idx, { } parent) => $"{((ITypedElement)parent).Location}.{SourceName.Value}[{idx}]",
+            // if we do not, write 0 as idx
+            (_, { } parent) => $"{((ITypedElement)parent).Location}.{SourceName.Value}[0]",
+            // if we have neither, we are the root.
+            _ => SourceName.Value
+        };
+
+    IEnumerable<ISourceNode> ISourceNode.Children(string? name)
+    {
+        if (name is null) return Children().SelectMany(node => node);
+        
+        var specNameIfExists = FindInspector()?.FindOrImportClassMapping(Poco.GetType())?.FindMappedElementByChoiceName(name)?.Name;
+        
+        return Child(specNameIfExists ?? name) ?? [];
+    }
+    
+    #endregion
+    
     #region << Annotations >>
 
-    private AnnotationList? _annotations = null;
+    private AnnotationList? _annotations;
 
-    private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
+    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => []);
 
     IEnumerable<object> IAnnotated.Annotations(Type type)
     {
@@ -193,12 +227,12 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
             return [this];
         if (type == typeof(IResourceTypeSupplier))
             return [this];
-        return annotations.OfType(type);
+        return Annotations.OfType(type);
     }
 
-    void IAnnotatable.AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
+    void IAnnotatable.AddAnnotation(object annotation) => Annotations.AddAnnotation(annotation);
 
-    void IAnnotatable.RemoveAnnotations(Type type) => annotations.RemoveAnnotations(type);
+    void IAnnotatable.RemoveAnnotations(Type type) => Annotations.RemoveAnnotations(type);
 
     #endregion
 }
@@ -227,6 +261,7 @@ internal record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? Parent, 
 public record PrimitivePocoNode(PrimitiveType Primitive, string? Name = null) : PocoNode(Primitive, null, null, Name)
 {
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
+    protected override string? TextInternal => Primitive.ToString();
 }
 
 internal record PrimitivePocoListNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : PocoListNode(Primitives, null, Name ?? "value")

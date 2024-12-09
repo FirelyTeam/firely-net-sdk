@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization
             if (source is not PocoNode {Poco: Resource resource} node)
                 return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
             
-            var engine = FhirSerializationEngineFactory.Strict(node.findInspector() ?? ModelInspector.ForType(resource.GetType()));
+            var engine = FhirSerializationEngineFactory.Strict(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
             return engine.SerializeToJson(resource);
         }
 
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
             if (source is not PocoNode {Poco: Resource resource} node)
                 return await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
             
-            var engine = FhirSerializationEngineFactory.Strict(node.findInspector() ?? ModelInspector.ForType(resource.GetType()));
+            var engine = FhirSerializationEngineFactory.Strict(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
             return engine.SerializeToJson(resource);
         }
 
