@@ -794,58 +794,32 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RepeatComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as RepeatComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Bounds, otherT.Bounds)) return false;
-        if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
-        if( !DeepComparable.Matches(CountMaxElement, otherT.CountMaxElement)) return false;
-        if( !DeepComparable.Matches(DurationElement, otherT.DurationElement)) return false;
-        if( !DeepComparable.Matches(DurationMaxElement, otherT.DurationMaxElement)) return false;
-        if( !DeepComparable.Matches(DurationUnitElement, otherT.DurationUnitElement)) return false;
-        if( !DeepComparable.Matches(FrequencyElement, otherT.FrequencyElement)) return false;
-        if( !DeepComparable.Matches(FrequencyMaxElement, otherT.FrequencyMaxElement)) return false;
-        if( !DeepComparable.Matches(PeriodElement, otherT.PeriodElement)) return false;
-        if( !DeepComparable.Matches(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
-        if( !DeepComparable.Matches(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
-        if( !DeepComparable.Matches(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
-        if( !DeepComparable.Matches(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
-        if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
-        if( !DeepComparable.Matches(OffsetElement, otherT.OffsetElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Bounds, otherT.Bounds)) return false;
+        if(!comparer.Equals(CountElement, otherT.CountElement)) return false;
+        if(!comparer.Equals(CountMaxElement, otherT.CountMaxElement)) return false;
+        if(!comparer.Equals(DurationElement, otherT.DurationElement)) return false;
+        if(!comparer.Equals(DurationMaxElement, otherT.DurationMaxElement)) return false;
+        if(!comparer.Equals(DurationUnitElement, otherT.DurationUnitElement)) return false;
+        if(!comparer.Equals(FrequencyElement, otherT.FrequencyElement)) return false;
+        if(!comparer.Equals(FrequencyMaxElement, otherT.FrequencyMaxElement)) return false;
+        if(!comparer.Equals(PeriodElement, otherT.PeriodElement)) return false;
+        if(!comparer.Equals(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
+        if(!comparer.Equals(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
+        if(!comparer.ListEquals(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
+        if(!comparer.ListEquals(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
+        if(!comparer.ListEquals(WhenElement, otherT.WhenElement)) return false;
+        if(!comparer.Equals(OffsetElement, otherT.OffsetElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepeatComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Bounds, otherT.Bounds)) return false;
-        if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
-        if( !DeepComparable.IsExactly(CountMaxElement, otherT.CountMaxElement)) return false;
-        if( !DeepComparable.IsExactly(DurationElement, otherT.DurationElement)) return false;
-        if( !DeepComparable.IsExactly(DurationMaxElement, otherT.DurationMaxElement)) return false;
-        if( !DeepComparable.IsExactly(DurationUnitElement, otherT.DurationUnitElement)) return false;
-        if( !DeepComparable.IsExactly(FrequencyElement, otherT.FrequencyElement)) return false;
-        if( !DeepComparable.IsExactly(FrequencyMaxElement, otherT.FrequencyMaxElement)) return false;
-        if( !DeepComparable.IsExactly(PeriodElement, otherT.PeriodElement)) return false;
-        if( !DeepComparable.IsExactly(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
-        if( !DeepComparable.IsExactly(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
-        if( !DeepComparable.IsExactly(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
-        if( !DeepComparable.IsExactly(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
-        if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
-        if( !DeepComparable.IsExactly(OffsetElement, otherT.OffsetElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -900,7 +874,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -955,9 +929,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Bounds is not null) yield return new KeyValuePair<string,object>("bounds",Bounds);
         if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
         if (CountMaxElement is not null) yield return new KeyValuePair<string,object>("countMax",CountMaxElement);
@@ -1057,34 +1031,20 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Timing());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Timing;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(EventElement, otherT.EventElement)) return false;
-      if( !DeepComparable.Matches(Repeat, otherT.Repeat)) return false;
-      if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(EventElement, otherT.EventElement)) return false;
+      if(!comparer.Equals(Repeat, otherT.Repeat)) return false;
+      if(!comparer.Equals(Code, otherT.Code)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Timing;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(EventElement, otherT.EventElement)) return false;
-      if( !DeepComparable.IsExactly(Repeat, otherT.Repeat)) return false;
-      if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1103,7 +1063,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1122,9 +1082,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (EventElement?.Any() == true) yield return new KeyValuePair<string,object>("event",EventElement);
       if (Repeat is not null) yield return new KeyValuePair<string,object>("repeat",Repeat);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);

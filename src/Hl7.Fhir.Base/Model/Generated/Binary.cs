@@ -202,36 +202,21 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Binary());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Binary;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if( !DeepComparable.Matches(SecurityContext, otherT.SecurityContext)) return false;
-      if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
-      if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(ContentTypeElement, otherT.ContentTypeElement)) return false;
+      if(!comparer.Equals(SecurityContext, otherT.SecurityContext)) return false;
+      if(!comparer.Equals(ContentElement, otherT.ContentElement)) return false;
+      if(!comparer.Equals(DataElement, otherT.DataElement)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Binary;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if( !DeepComparable.IsExactly(SecurityContext, otherT.SecurityContext)) return false;
-      if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
-      if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -253,7 +238,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -275,9 +260,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
       if (SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",SecurityContext);
       if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);

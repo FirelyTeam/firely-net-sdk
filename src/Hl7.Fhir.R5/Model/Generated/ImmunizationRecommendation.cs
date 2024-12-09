@@ -350,52 +350,29 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RecommendationComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as RecommendationComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(VaccineCode, otherT.VaccineCode)) return false;
-        if( !DeepComparable.Matches(TargetDisease, otherT.TargetDisease)) return false;
-        if( !DeepComparable.Matches(ContraindicatedVaccineCode, otherT.ContraindicatedVaccineCode)) return false;
-        if( !DeepComparable.Matches(ForecastStatus, otherT.ForecastStatus)) return false;
-        if( !DeepComparable.Matches(ForecastReason, otherT.ForecastReason)) return false;
-        if( !DeepComparable.Matches(DateCriterion, otherT.DateCriterion)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
-        if( !DeepComparable.Matches(DoseNumberElement, otherT.DoseNumberElement)) return false;
-        if( !DeepComparable.Matches(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
-        if( !DeepComparable.Matches(SupportingImmunization, otherT.SupportingImmunization)) return false;
-        if( !DeepComparable.Matches(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.ListEquals(VaccineCode, otherT.VaccineCode)) return false;
+        if(!comparer.ListEquals(TargetDisease, otherT.TargetDisease)) return false;
+        if(!comparer.ListEquals(ContraindicatedVaccineCode, otherT.ContraindicatedVaccineCode)) return false;
+        if(!comparer.Equals(ForecastStatus, otherT.ForecastStatus)) return false;
+        if(!comparer.ListEquals(ForecastReason, otherT.ForecastReason)) return false;
+        if(!comparer.ListEquals(DateCriterion, otherT.DateCriterion)) return false;
+        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+        if(!comparer.Equals(SeriesElement, otherT.SeriesElement)) return false;
+        if(!comparer.Equals(DoseNumberElement, otherT.DoseNumberElement)) return false;
+        if(!comparer.Equals(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
+        if(!comparer.ListEquals(SupportingImmunization, otherT.SupportingImmunization)) return false;
+        if(!comparer.ListEquals(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RecommendationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(VaccineCode, otherT.VaccineCode)) return false;
-        if( !DeepComparable.IsExactly(TargetDisease, otherT.TargetDisease)) return false;
-        if( !DeepComparable.IsExactly(ContraindicatedVaccineCode, otherT.ContraindicatedVaccineCode)) return false;
-        if( !DeepComparable.IsExactly(ForecastStatus, otherT.ForecastStatus)) return false;
-        if( !DeepComparable.IsExactly(ForecastReason, otherT.ForecastReason)) return false;
-        if( !DeepComparable.IsExactly(DateCriterion, otherT.DateCriterion)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
-        if( !DeepComparable.IsExactly(DoseNumberElement, otherT.DoseNumberElement)) return false;
-        if( !DeepComparable.IsExactly(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
-        if( !DeepComparable.IsExactly(SupportingImmunization, otherT.SupportingImmunization)) return false;
-        if( !DeepComparable.IsExactly(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -441,7 +418,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -487,9 +464,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (VaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
         if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
         if (ContraindicatedVaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
@@ -589,32 +566,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DateCriterionComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as DateCriterionComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-        if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Code, otherT.Code)) return false;
+        if(!comparer.Equals(ValueElement, otherT.ValueElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as DateCriterionComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-        if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -630,7 +594,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -646,9 +610,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
@@ -771,38 +735,22 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ImmunizationRecommendation());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as ImmunizationRecommendation;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-      if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
-      if( !DeepComparable.Matches(Recommendation, otherT.Recommendation)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(Patient, otherT.Patient)) return false;
+      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
+      if(!comparer.Equals(Authority, otherT.Authority)) return false;
+      if(!comparer.ListEquals(Recommendation, otherT.Recommendation)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ImmunizationRecommendation;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-      if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
-      if( !DeepComparable.IsExactly(Recommendation, otherT.Recommendation)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -827,7 +775,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -852,9 +800,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);

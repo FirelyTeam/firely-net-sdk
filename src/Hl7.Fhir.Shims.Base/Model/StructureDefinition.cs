@@ -26,39 +26,43 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 */
+
+#nullable enable
+
+using Hl7.Fhir.Introspection;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+// [WMR 20160803] Add common base interfaces
+public interface IElementList : IModifierExtendable, INotifyPropertyChanged, IDeepCopyable
 {
-    // [WMR 20160803] Add common base interfaces
-    public interface IElementList : IModifierExtendable, INotifyPropertyChanged, IDeepCopyable, IDeepComparable
-    {
-        List<ElementDefinition> Element { get; set; }
-    }
-
-    // [WMR 20161005] Added specific debugger display attribute that includes the canonical url
-    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}} Url={Url}")]
-    public partial class StructureDefinition
-    {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
-
-        public partial class SnapshotComponent : IElementList { }
-
-        public partial class DifferentialComponent : IElementList { }
-
-        public bool IsConstraint => Derivation == TypeDerivationRule.Constraint;
-
-        public bool IsExtension => Type == "Extension";
-
-        public bool HasSnapshot => Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
-
-        public bool IsCoreDefinition => Type == Id && Url == Canonical.CanonicalUriForFhirCoreType(Type).Value;
-
-    }
+    List<ElementDefinition> Element { get; set; }
 }
 
+// [WMR 20161005] Added specific debugger display attribute that includes the canonical url
+[DebuggerDisplay("/{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}} Url={Url}")]
+public partial class StructureDefinition
+{
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
 
+    public partial class SnapshotComponent : IElementList;
+
+    public partial class DifferentialComponent : IElementList;
+
+    [NotMapped]
+    public bool IsConstraint => Derivation == TypeDerivationRule.Constraint;
+
+    [NotMapped]
+    public bool IsExtension => Type == FhirTypeNames.EXTENSION_NAME;
+
+    [NotMapped]
+    public bool HasSnapshot => Snapshot is not null && Snapshot.Element.Any();
+
+    [NotMapped]
+    public bool IsCoreDefinition => Type == Id && Url == Canonical.CanonicalUriForFhirCoreType(Type);
+}

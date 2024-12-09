@@ -327,42 +327,24 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SuspectEntityComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as SuspectEntityComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
-        if( !DeepComparable.Matches(CausalityElement, otherT.CausalityElement)) return false;
-        if( !DeepComparable.Matches(CausalityAssessment, otherT.CausalityAssessment)) return false;
-        if( !DeepComparable.Matches(CausalityProductRelatednessElement, otherT.CausalityProductRelatednessElement)) return false;
-        if( !DeepComparable.Matches(CausalityMethod, otherT.CausalityMethod)) return false;
-        if( !DeepComparable.Matches(CausalityAuthor, otherT.CausalityAuthor)) return false;
-        if( !DeepComparable.Matches(CausalityResult, otherT.CausalityResult)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Instance, otherT.Instance)) return false;
+        if(!comparer.Equals(CausalityElement, otherT.CausalityElement)) return false;
+        if(!comparer.Equals(CausalityAssessment, otherT.CausalityAssessment)) return false;
+        if(!comparer.Equals(CausalityProductRelatednessElement, otherT.CausalityProductRelatednessElement)) return false;
+        if(!comparer.Equals(CausalityMethod, otherT.CausalityMethod)) return false;
+        if(!comparer.Equals(CausalityAuthor, otherT.CausalityAuthor)) return false;
+        if(!comparer.Equals(CausalityResult, otherT.CausalityResult)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as SuspectEntityComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
-        if( !DeepComparable.IsExactly(CausalityElement, otherT.CausalityElement)) return false;
-        if( !DeepComparable.IsExactly(CausalityAssessment, otherT.CausalityAssessment)) return false;
-        if( !DeepComparable.IsExactly(CausalityProductRelatednessElement, otherT.CausalityProductRelatednessElement)) return false;
-        if( !DeepComparable.IsExactly(CausalityMethod, otherT.CausalityMethod)) return false;
-        if( !DeepComparable.IsExactly(CausalityAuthor, otherT.CausalityAuthor)) return false;
-        if( !DeepComparable.IsExactly(CausalityResult, otherT.CausalityResult)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -393,7 +375,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -424,9 +406,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
         if (CausalityElement is not null) yield return new KeyValuePair<string,object>("causality",CausalityElement);
         if (CausalityAssessment is not null) yield return new KeyValuePair<string,object>("causalityAssessment",CausalityAssessment);
@@ -764,60 +746,33 @@ namespace Hl7.Fhir.Model
       return CopyTo(new AdverseEvent());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as AdverseEvent;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
-      if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-      if( !DeepComparable.Matches(Seriousness, otherT.Seriousness)) return false;
-      if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
-      if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
-      if( !DeepComparable.Matches(EventParticipant, otherT.EventParticipant)) return false;
-      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.Matches(SuspectEntity, otherT.SuspectEntity)) return false;
-      if( !DeepComparable.Matches(SubjectMedicalHistory, otherT.SubjectMedicalHistory)) return false;
-      if( !DeepComparable.Matches(ReferenceDocument, otherT.ReferenceDocument)) return false;
-      if( !DeepComparable.Matches(Study, otherT.Study)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(CategoryElement, otherT.CategoryElement)) return false;
+      if(!comparer.Equals(Type, otherT.Type)) return false;
+      if(!comparer.Equals(Subject, otherT.Subject)) return false;
+      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
+      if(!comparer.ListEquals(Reaction, otherT.Reaction)) return false;
+      if(!comparer.Equals(Location, otherT.Location)) return false;
+      if(!comparer.Equals(Seriousness, otherT.Seriousness)) return false;
+      if(!comparer.Equals(Outcome, otherT.Outcome)) return false;
+      if(!comparer.Equals(Recorder, otherT.Recorder)) return false;
+      if(!comparer.Equals(EventParticipant, otherT.EventParticipant)) return false;
+      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+      if(!comparer.ListEquals(SuspectEntity, otherT.SuspectEntity)) return false;
+      if(!comparer.ListEquals(SubjectMedicalHistory, otherT.SubjectMedicalHistory)) return false;
+      if(!comparer.ListEquals(ReferenceDocument, otherT.ReferenceDocument)) return false;
+      if(!comparer.ListEquals(Study, otherT.Study)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as AdverseEvent;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
-      if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-      if( !DeepComparable.IsExactly(Seriousness, otherT.Seriousness)) return false;
-      if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
-      if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
-      if( !DeepComparable.IsExactly(EventParticipant, otherT.EventParticipant)) return false;
-      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.IsExactly(SuspectEntity, otherT.SuspectEntity)) return false;
-      if( !DeepComparable.IsExactly(SubjectMedicalHistory, otherT.SubjectMedicalHistory)) return false;
-      if( !DeepComparable.IsExactly(ReferenceDocument, otherT.ReferenceDocument)) return false;
-      if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -875,7 +830,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -933,9 +888,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);

@@ -68,15 +68,12 @@ namespace Hl7.Fhir.Model
       return dest;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other) => IsExactly(other);
-
-    public override bool IsExactly(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as PrimitiveType;
       if(otherT == null) return false;
 
-      if(!base.IsExactly(otherT)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
 
       var otherValue = otherT.ObjectValue;
       if (ObjectValue is byte[] bytes && otherValue is byte[] bytesOther)

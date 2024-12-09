@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
