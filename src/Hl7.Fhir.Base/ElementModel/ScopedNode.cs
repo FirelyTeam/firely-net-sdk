@@ -87,19 +87,6 @@ namespace Hl7.Fhir.ElementModel
         /// <inheritdoc/>
         public string Name => Current.Name;
 
-        /// <summary>
-        /// Will be replaced by a different implementation in the future.
-        /// </summary>
-        public NodeType Type => this switch
-        {
-            { AtResource: true } when Current.Children("contained").Any() => NodeType.DomainResource | NodeType.Resource,
-            { InstanceType: FhirTypeNames.BUNDLE } => NodeType.Bundle | NodeType.Resource,
-            { AtResource: true } => NodeType.Resource,
-            { InstanceType: FhirTypeNames.REFERENCE or FhirTypeNames.CANONICAL or FhirTypeNames.CODEABLEREFERENCE } => NodeType.Reference,
-            { Value: not null } => NodeType.Primitive,
-            _ => 0
-        };
-
         /// <inheritdoc/>
         public string? InstanceType => Current.InstanceType;
 

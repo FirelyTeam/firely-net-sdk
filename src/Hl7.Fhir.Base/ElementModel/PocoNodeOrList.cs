@@ -1,4 +1,3 @@
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
@@ -9,28 +8,29 @@ using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace Hl7.Fhir.ElementModel;
 
 #nullable enable
 
-public abstract record PocoNodeOrList(PocoNodeOrList? Parent, string Name) : IEnumerable<PocoNode>
+public abstract record PocoNodeOrList(string Name) : IEnumerable<PocoNode>
 {
+    public abstract PocoNode? Parent { get; }
+    
     public abstract IEnumerator<PocoNode> GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public static PocoNode Root(Base @base, string? name = null) => @base switch
     {
-        PrimitiveType primitive => new PrimitivePocoNode(primitive, name),
+        PrimitiveType primitive => new PrimitiveNode(primitive, name),
         { } b => new PocoNode(b, null, null, name)
     };
     
     public static PocoNode ForPrimitive(PrimitiveType primitive) => 
-        new PrimitivePocoNode(primitive);
+        new PrimitiveNode(primitive);
     
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
-        new PrimitivePocoNode(new T { ObjectValue = value });
+        new PrimitiveNode(new T { ObjectValue = value });
     
     public static IEnumerable<PocoNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => 
         primitives.Select(ForPrimitive);
@@ -39,8 +39,8 @@ public abstract record PocoNodeOrList(PocoNodeOrList? Parent, string Name) : IEn
         values.Select(ForPrimitive<T>);
 }
 
-public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Name)
-    : PocoNodeOrList(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
+public record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index, string? Name)
+    : PocoNodeOrList(Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotated
 {
     public IEnumerable<PocoNodeOrList> Children() =>
         Poco.GetElementPairs()
@@ -48,16 +48,16 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
                 nodeFor(ep.Key, ep.Value)
             );
 
-    public IEnumerable<PocoNode>? Child(string name) => Poco.TryGetValue(name, out var result)
+    public PocoNodeOrList? Child(string name) => Poco.TryGetValue(name, out var result)
         ? nodeFor(name, result)
         : null;
 
     private PocoNodeOrList nodeFor(string name, object value) =>
         value switch
         {
-            PrimitiveType primitive => new PrimitivePocoNode(primitive, name) { Parent = this },
+            PrimitiveType primitive => new PrimitiveNode(primitive, name) { ParentNode = this },
             Base b => new PocoNode(b, this, null, name),
-            IEnumerable<PrimitiveType> primitiveList => new PrimitivePocoListNode(primitiveList.ToList(), name) { Parent = this },
+            IEnumerable<PrimitiveType> primitiveList => new PrimitiveListNode(primitiveList.ToList(), name) { ParentNode = this },
             IEnumerable<Base> list => new PocoListNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
         };
@@ -81,6 +81,17 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
     string? IResourceTypeSupplier.ResourceType => Poco is Resource
         ? ((ITypedElement)this).InstanceType
         : null;
+
+    IEnumerable<object> IAnnotated.Annotations(Type type)
+    {
+        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
+            return [this];
+        if (type == typeof(IFhirValueProvider))
+            return [this];
+        if (type == typeof(IResourceTypeSupplier))
+            return [this];
+        return Poco.Annotations(type);
+    }
     
     #region ITypedElement
     
@@ -106,104 +117,29 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
         // if we have neither, we are the root.
         _ => Name
     };
-    
-    [TemporarilyChanged] // Parent should return PocoNode, not PocoNodeOrList. This will be solved in another branch.
-    IElementDefinitionSummary? ITypedElement.Definition
-    {
-        get
-        {
-            if (findInspector() is not { } inspector)
-                return null;
 
-            if ((this as IScopedNode).Parent is not PocoNode node) 
-                return ElementDefinitionSummary.ForRoot(inspector.FindOrImportClassMapping(Poco.GetType()), Name);
-            
-            var classMapping = inspector.FindOrImportClassMapping(node.Poco.GetType());
-            return classMapping?.FindMappedElementByName(Name);
-        }
-    }
-
-    [TemporarilyChanged] // I am refactoring the extensions in another branch. This should go into those extensions. To avoid conflicts, I implement it here for now.
-    internal ModelInspector? findInspector() => ((IAnnotated)this).Annotation<ModelInspector>() ?? Parent?.SingleOrDefault()?.findInspector();
+    // needed for ITE
+    IElementDefinitionSummary? ITypedElement.Definition => null;
     
-    IEnumerable<ITypedElement> ITypedElement.Children(string? name) => (this as IScopedNode).Children(name);
+    IEnumerable<ITypedElement> ITypedElement.Children(string? name) => name is null
+        ? Children().SelectMany(node => node)
+        : Child(name) ?? Enumerable.Empty<PocoNode>();
     
     #endregion
     
     #region IScopedNode
     
-    IScopedNode? IScopedNode.Parent => Parent switch
+    public override PocoNode? Parent => ParentNode switch
     {
         PocoListNode rpen => rpen[Index!.Value],
         PocoNode spen => spen,
         _ => null
     };
-
-    IEnumerable<IScopedNode> IScopedNode.Children(string? name) => name is null
-        ? Children().SelectMany(node => node)
-        : Child(name) ?? Enumerable.Empty<PocoNode>();
     
-    [TemporarilyChanged] // will be removed soon
-    NodeType IScopedNode.Type => Poco switch
-    {
-        Bundle => NodeType.Bundle | NodeType.Resource,
-        PrimitiveType => NodeType.Primitive,
-        DomainResource => NodeType.DomainResource | NodeType.Resource,
-        Resource => NodeType.Resource,
-        ResourceReference or Canonical or CodeableReference => NodeType.Reference,
-        Quantity => NodeType.Quantity,
-        _ => 0
-    };
-    
-    bool IScopedNode.TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
-    {
-        result = Poco is Bundle
-            ? this
-                .Child<PocoListNode>("entry")
-                ?.FirstOrDefault<Bundle.EntryComponent>(entry =>
-                    entry.FullUrl == fullUrl)
-                ?.Child<PocoNode>("resource")
-            : null;
-        return result is not null;
-    }
-
-    bool IScopedNode.TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
-    {
-        result = Poco is DomainResource
-            ? this
-                .Child<PocoListNode>("contained")
-                ?.FirstOrDefault<Resource>(contained => $"#{contained.Id}" == id)
-            : null;
-        return result is not null;
-    }
-    
-    #endregion
-    
-    #region << Annotations >>
-
-    private AnnotationList? _annotations = null;
-
-    private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
-
-    IEnumerable<object> IAnnotated.Annotations(Type type)
-    {
-        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
-            return [this];
-        if (type == typeof(IFhirValueProvider))
-            return [this];
-        if (type == typeof(IResourceTypeSupplier))
-            return [this];
-        return annotations.OfType(type);
-    }
-
-    void IAnnotatable.AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
-
-    void IAnnotatable.RemoveAnnotations(Type type) => annotations.RemoveAnnotations(type);
-
     #endregion
 }
 
-internal record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? Parent, string Name) : PocoNodeOrList(Parent, Name)
+internal record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? ParentNode, string Name) : PocoNodeOrList(Name)
 {
     public PocoNode this[int index] => new(Pocos[index], Parent, index, Name);
 
@@ -221,18 +157,24 @@ internal record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? Parent, 
         return null;
     }
 
+    public bool Any() => Pocos.Any();
+
+    public override PocoNode? Parent => ParentNode as PocoNode;
     public override IEnumerator<PocoNode> GetEnumerator() => Pocos.Select((poco, index) => new PocoNode(poco, Parent, index, Name)).GetEnumerator();
 }
 
-public record PrimitivePocoNode(PrimitiveType Primitive, string? Name = null) : PocoNode(Primitive, null, null, Name)
+public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : PocoNode(Primitive, null, null, Name)
 {
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
+    internal object? Value => Primitive.ObjectValue;
 }
 
-internal record PrimitivePocoListNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : PocoListNode(Primitives, null, Name ?? "value")
+internal record PrimitiveListNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : PocoListNode(Primitives, null, Name ?? "value")
 {
     public override IEnumerator<PocoNode> GetEnumerator() =>
-        Primitives.Select((primitive, index) => new PrimitivePocoNode(primitive, Name) { Index = index }).GetEnumerator();
+        Primitives.Select((primitive, index) => new PrimitiveNode(primitive, Name) { Index = index }).GetEnumerator();
+
+    internal IEnumerable<object?> Values => Primitives.Select(p => p.ObjectValue);
 }
 
 public static class PocoElementNodeExtensions

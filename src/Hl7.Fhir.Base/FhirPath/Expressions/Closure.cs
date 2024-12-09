@@ -21,7 +21,7 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(IScopedNode root, EvaluationContext ctx = null)
+        public static Closure Root(PocoNodeOrList root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
 
@@ -32,17 +32,15 @@ namespace Hl7.FhirPath.Expressions
             
             var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 
-            var input = new[] { root };
-
             foreach (var assignment in newClosure.EvaluationContext.Environment)
             {
                 newClosure.SetValue(assignment.Key, assignment.Value);
             }
             
-            newClosure.SetThis(input);
-            newClosure.SetThat(input);
+            newClosure.SetThis(root);
+            newClosure.SetThat(root);
             newClosure.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(1));
-            newClosure.SetOriginalContext(input);
+            newClosure.SetOriginalContext(root);
             
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
             if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });

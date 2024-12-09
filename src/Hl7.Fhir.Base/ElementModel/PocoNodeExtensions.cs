@@ -12,23 +12,23 @@ namespace Hl7.Fhir.ElementModel;
 
 public static class PocoNodeExtensions
 {
-    private static bool TryResolveBundleEntry(this SinglePocoElementNode? node, string fullUrl, [NotNullWhen(true)] out SinglePocoElementNode? result)
+    private static bool TryResolveBundleEntry(this PocoNode? node, string fullUrl, [NotNullWhen(true)] out PocoNode? result)
     {
         result = node?.Poco is Bundle
             ? node
-                .Child<RepeatingPocoElementNode>("entry")
+                .Child<PocoListNode>("entry")
                 ?.FirstOrDefault<Bundle.EntryComponent>(entry =>
                     entry.FullUrl == fullUrl)
-                ?.Child<SinglePocoElementNode>("resource")
+                ?.Child<PocoNode>("resource")
             : null;
         return result is not null;
     }
 
-    private static bool TryResolveContainedEntry(this SinglePocoElementNode? node, string? id, [NotNullWhen(true)] out SinglePocoElementNode? result)
+    private static bool TryResolveContainedEntry(this PocoNode? node, string? id, [NotNullWhen(true)] out PocoNode? result)
     {
         result = node?.Poco is DomainResource
             ? node
-                .Child<RepeatingPocoElementNode>("contained")
+                .Child<PocoListNode>("contained")
                 ?.FirstOrDefault<Resource>(contained => $"#{contained.Id}" == id)
             : null;
         return result is not null;
@@ -42,7 +42,7 @@ public static class PocoNodeExtensions
     /// <param name="result">Contains the referenced instance, or null if the operation failed</param>
     /// <remarks>Does not create a copy. The resolved resource will be part of the IScopedNode-tree that was passed to this function</remarks>
     /// <returns>t</returns>
-    internal static bool TryResolveLocalReference(this SinglePocoElementNode? node, string url, [NotNullWhen(true)] out SinglePocoElementNode? result)
+    internal static bool TryResolveLocalReference(this PocoNode? node, string url, [NotNullWhen(true)] out PocoNode? result)
     {
         for(var scan = node; scan is not null; scan = scan.Parent)
         {
@@ -70,7 +70,7 @@ public static class PocoNodeExtensions
         return false;
     }
 
-    private static IEnumerable<SinglePocoElementNode> parents(this PocoElementNode2 node)
+    private static IEnumerable<PocoNode> parents(this PocoNodeOrList node)
     {
         for(var scan = node.Parent; scan is not null; scan = scan.Parent)
         {
@@ -78,7 +78,7 @@ public static class PocoNodeExtensions
         }
     }
     
-    private static SinglePocoElementNode? getContainer(this PocoElementNode2 node)
+    private static PocoNode? getContainer(this PocoNodeOrList node)
     {
         var scan = node;
         while(scan is not (null or { Name: "contained" }))
@@ -95,7 +95,7 @@ public static class PocoNodeExtensions
     /// <param name="node">A node representing a reference</param>
     /// <param name="externalResolver">An external resolver</param>
     /// <returns></returns>
-    public static SinglePocoElementNode? Resolve(this SinglePocoElementNode? node, Func<string, SinglePocoElementNode>? externalResolver = null)
+    public static PocoNode? Resolve(this PocoNode? node, Func<string, PocoNode>? externalResolver = null)
     {
         if (node is null) return null;
         
@@ -109,7 +109,7 @@ public static class PocoNodeExtensions
         return url is null ? null : Resolve(node, url, externalResolver);
     }
     
-    public static SinglePocoElementNode? Resolve(this SinglePocoElementNode? node, string url, Func<string, SinglePocoElementNode?>? externalResolver = null)
+    public static PocoNode? Resolve(this PocoNode? node, string url, Func<string, PocoNode?>? externalResolver = null)
     {
         if (node is null) return null;
         
@@ -124,18 +124,18 @@ public static class PocoNodeExtensions
     /// <summary>
     /// Extract the %resource variable from this IScopedNode
     /// </summary> 
-    internal static SinglePocoElementNode? GetResourceContext(this PocoElementNode2? node) => node switch
+    internal static PocoNode? GetResourceContext(this PocoNodeOrList? node) => node switch
     {
-        RepeatingPocoElementNode { Parent: null } => null, // if parent is null, do not go further. If we are repeating and we don't have a parent, something went seriously wrong
-        SinglePocoElementNode { Parent: null } single => single,
-        SinglePocoElementNode { Poco: Resource } single => single, // if resource, return itself
+        PocoListNode { Parent: null } => null, // if parent is null, do not go further. If we are repeating and we don't have a parent, something went seriously wrong
+        PocoNode { Parent: null } single => single,
+        PocoNode { Poco: Resource } single => single, // if resource, return itself
         _ => node?.Parent?.GetResourceContext() // otherwise, go to parent
     };
     
     /// <summary>
     /// Extract the %rootResource variable from this IScopedNode
     /// </summary>
-    internal static SinglePocoElementNode? GetRootResourceContext(this PocoElementNode2 node) => node.GetResourceContext() switch
+    internal static PocoNode? GetRootResourceContext(this PocoNodeOrList node) => node.GetResourceContext() switch
     {
         { Name : "contained" } containedResource => containedResource.Parent!, // if contained, return container
         { } resource => resource, // otherwise return %resource
@@ -147,16 +147,17 @@ public static class PocoNodeExtensions
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    internal static string? FindFullUrl(this PocoElementNode2 node)
+    internal static string? FindFullUrl(this PocoNodeOrList node)
     {
         var entry = node.parents().FirstOrDefault(n => n.Poco is Bundle.EntryComponent);
+        return entry?.Child<PrimitiveNode>("fullUrl")?.Value as string;
     }
     
     /// <summary>
     /// Turn a relative reference into an absolute url, based on the fullUrl of the parent resource
     /// </summary>
     /// <remarks>See https://www.hl7.org/fhir/bundle.html#references for more information</remarks>
-    internal static ResourceIdentity MakeAbsolute(this SinglePocoElementNode node, ResourceIdentity identity)
+    internal static ResourceIdentity MakeAbsolute(this PocoNode node, ResourceIdentity identity)
     {
         if (!identity.IsRelativeRestUrl) return identity;
         // Relocate the relative url on the base given in the fullUrl of the entry (if applicable)
@@ -176,17 +177,19 @@ public static class PocoNodeExtensions
         return identity;
     }
     
-    public static string MakeAbsolute(this SinglePocoElementNode node, string reference) =>
+    public static string MakeAbsolute(this PocoNode node, string reference) =>
         node.MakeAbsolute(new ResourceIdentity(reference)).ToString();
 
-    internal static SinglePocoElementNode? GetParentResource(this PocoElementNode2 node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
+    internal static PocoNode? GetParentResource(this PocoNodeOrList node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
 
-    internal static string GetLocalLocation(this IScopedNode node) =>
-        node.Parent is null 
-            ? node.Location 
-            : $"{node.GetParentResource()!.InstanceType}.{node.Location[(node.GetParentResource()!.Location.Length + 1)..]}";
-
-    public static IEnumerable<IScopedNode> ContainedResources(this IScopedNode node) => node.Children("contained");
+    internal static string GetLocation(this PocoNode node) => ((ITypedElement)node).Location;
     
-    public static IEnumerable<IScopedNode> BundledResources(this IScopedNode node) => node.Children("entry");
+    internal static string GetLocalLocation(this PocoNode node) =>
+        node.Parent is null 
+            ? node.GetLocation()
+            : $"{((IResourceTypeSupplier)node.GetParentResource()!).ResourceType}.{node.GetLocation()[(node.GetParentResource()!.GetLocation().Length + 1)..]}";
+
+    public static IEnumerable<PocoNode> ContainedResources(this PocoNode node) => node.Child("contained") ?? Enumerable.Empty<PocoNode>();
+    
+    public static IEnumerable<PocoNode> BundledResources(this PocoNode node) => node.Child("entry") ?? Enumerable.Empty<PocoNode>();
 }

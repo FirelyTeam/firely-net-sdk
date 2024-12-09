@@ -17,59 +17,59 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class CollectionOperators
     {
-        public static bool? BooleanEval(this IEnumerable<IScopedNode> focus)
+        public static bool? BooleanEval(this IEnumerable<PocoNode> focus)
         {
-            if (!focus.Any()) return null;
+            PocoNode[] enumerable = focus.ToArray();
+            if (!enumerable.Any()) return null;
 
-            if (focus.Count() == 1 && focus.Single().Value is bool boolean)
+            if (enumerable.Length == 1 && enumerable.Single() is PrimitiveNode {Value: bool boolean})
             {
                 return boolean;
             }
 
             // Otherwise, we have "some" content, which we'll consider "true"
-            else
-                return true;
+            return true;
         }
 
 
-        public static bool Not(this IEnumerable<IScopedNode> focus)
+        public static bool Not(this IEnumerable<PocoNode> focus)
             => focus.Count() > 1
             ? throw Error.InvalidOperation($"Operator {nameof(Not)} is not applicable for collections with more than one item.")
             : !focus.BooleanEval().Value;
         
-        public static IEnumerable<IScopedNode> DistinctUnion(this IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b)
+        public static IEnumerable<PocoNode> DistinctUnion(this IEnumerable<PocoNode> a, IEnumerable<PocoNode> b)
             => a.Union(b, EqualityOperators.TypedElementEqualityComparer);
 
-        public static IEnumerable<IScopedNode> Item(this IEnumerable<IScopedNode> focus, int index)
+        public static IEnumerable<PocoNode> Item(this IEnumerable<PocoNode> focus, int index)
             => focus.Skip(index).Take(1);
 
-        public static IScopedNode Last(this IEnumerable<IScopedNode> focus)
+        public static PocoNode Last(this IEnumerable<PocoNode> focus)
             => focus.Reverse().First();
 
-        public static IEnumerable<IScopedNode> Tail(this IEnumerable<IScopedNode> focus)
+        public static IEnumerable<PocoNode> Tail(this IEnumerable<PocoNode> focus)
             => focus.Skip(1);
 
-        public static bool Contains(this IEnumerable<IScopedNode> focus, IScopedNode value)
+        public static bool Contains(this IEnumerable<PocoNode> focus, PocoNode value)
             => focus.Contains(value, EqualityOperators.TypedElementEqualityComparer);
         
-        public static IEnumerable<IScopedNode> Distinct(this IEnumerable<IScopedNode> focus)
+        public static IEnumerable<PocoNode> Distinct(this IEnumerable<PocoNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer);
 
-        public static bool IsDistinct(this IEnumerable<IScopedNode> focus)
+        public static bool IsDistinct(this IEnumerable<PocoNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer).Count() == focus.Count();
 
-        public static bool SubsetOf(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
+        public static bool SubsetOf(this IEnumerable<PocoNode> focus, IEnumerable<PocoNode> other)
             => focus.All(fitem => other.Contains(fitem));
         
-        public static IEnumerable<IScopedNode> Intersect(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
+        public static IEnumerable<PocoNode> Intersect(this IEnumerable<PocoNode> focus, IEnumerable<PocoNode> other)
             => focus.Intersect(other, EqualityOperators.TypedElementEqualityComparer);
 
-        public static IEnumerable<IScopedNode> Exclude(this IEnumerable<IScopedNode> focus, IEnumerable<IScopedNode> other)
+        public static IEnumerable<PocoNode> Exclude(this IEnumerable<PocoNode> focus, IEnumerable<PocoNode> other)
             => focus.Where(f => !other.Contains(f));
 
-        public static int IndexOf(this IEnumerable<IScopedNode> focus, IScopedNode item, int start = 0)
+        public static int IndexOf(this IEnumerable<PocoNode> focus, PocoNode item, int start = 0)
         {
-            var typedElements = focus as IScopedNode[] ?? focus.ToArray();
+            var typedElements = focus as PocoNode[] ?? focus.ToArray();
             for (int i = start; i < typedElements.Length; i++)
             {
                 if (EqualityOperators.TypedElementEqualityComparer.Equals(typedElements[i], item))
@@ -80,9 +80,9 @@ namespace Hl7.FhirPath.Functions
             return -1;
         }
 
-        public static int LastIndexOf(this IEnumerable<IScopedNode> focus, IScopedNode item, int to = -1)
+        public static int LastIndexOf(this IEnumerable<PocoNode> focus, PocoNode item, int to = -1)
         {
-            var typedElements = focus as IScopedNode[] ?? focus.ToArray();
+            var typedElements = focus as PocoNode[] ?? focus.ToArray();
             to = to < 0 ? typedElements.Count() - 1 : to;
             for (int i = to; i >= 0; i--)
             {
@@ -95,10 +95,10 @@ namespace Hl7.FhirPath.Functions
         }
         
 
-        public static IEnumerable<IScopedNode> Navigate(this IEnumerable<IScopedNode> elements, string name)
+        public static IEnumerable<PocoNode> Navigate(this IEnumerable<PocoNode> elements, string name)
             => elements.SelectMany(e => e.Navigate(name));
 
-        public static IEnumerable<IScopedNode> Navigate(this IScopedNode element, string name)
+        public static IEnumerable<PocoNode> Navigate(this PocoNode element, string name)
         {
             if (char.IsUpper(name[0]))
             {
@@ -107,14 +107,14 @@ namespace Hl7.FhirPath.Functions
                 var baseClasses = new[] { "Resource", "DomainResource" };
                 if (element.InstanceType == name || baseClasses.Contains(name))
                 {
-                    return new List<IScopedNode>() { element };
+                    return new List<PocoNode>() { element };
                 }
             }
 
-            return element.Children(name);
+            return element.Child(name);
         }
 
-        public static string FpJoin(this IEnumerable<IScopedNode> collection, string separator = null)
+        public static string FpJoin(this IEnumerable<PocoNode> collection, string separator = null)
         {
             //if the collection is empty return the empty result
             if (!collection.Any())
