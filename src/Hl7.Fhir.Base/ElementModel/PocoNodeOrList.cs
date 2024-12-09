@@ -43,7 +43,7 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
     : PocoNodeOrList(Parent, Name ?? Poco.TypeName), IScopedNode, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
 {
     public IEnumerable<PocoNodeOrList> Children() =>
-        Poco.GetElementPairs()
+        Poco.EnumerateElements()
             .Select(ep =>
                 nodeFor(ep.Key, ep.Value)
             );
