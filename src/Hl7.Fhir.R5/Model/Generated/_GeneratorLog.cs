@@ -298,7 +298,7 @@
   // Used in model class (resource): Evidence.statistic.modelCharacteristic.variable.handling
   // Used in model class (resource): EvidenceVariable.handling
 
-// Generated Shared Enumeration: VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
+// Deferred generation of Shared Enumeration (will be generated in another subset): VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
   // Used in model class (resource): GraphDefinition.node.type
   // Used in model class (resource): OperationDefinition.resource
   // Used in model class (resource): SearchParameter.base
