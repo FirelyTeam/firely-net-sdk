@@ -72,11 +72,6 @@ namespace Hl7.Fhir.Model
     public virtual IDeepCopyable DeepCopy() =>
       CopyTo((IDeepCopyable)Activator.CreateInstance(GetType())!);
 
-    ///<inheritdoc />
-    public virtual bool Matches(IDeepComparable other) => other is Base;
-
-    public virtual bool IsExactly(IDeepComparable other) => other is Base;
-
   }
 
 }

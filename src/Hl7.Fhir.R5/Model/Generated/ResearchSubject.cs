@@ -308,40 +308,23 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProgressComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as ProgressComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(SubjectState, otherT.SubjectState)) return false;
-        if( !DeepComparable.Matches(Milestone, otherT.Milestone)) return false;
-        if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-        if( !DeepComparable.Matches(StartDateElement, otherT.StartDateElement)) return false;
-        if( !DeepComparable.Matches(EndDateElement, otherT.EndDateElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(Type, otherT.Type)) return false;
+        if(!comparer.Equals(SubjectState, otherT.SubjectState)) return false;
+        if(!comparer.Equals(Milestone, otherT.Milestone)) return false;
+        if(!comparer.Equals(Reason, otherT.Reason)) return false;
+        if(!comparer.Equals(StartDateElement, otherT.StartDateElement)) return false;
+        if(!comparer.Equals(EndDateElement, otherT.EndDateElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ProgressComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(SubjectState, otherT.SubjectState)) return false;
-        if( !DeepComparable.IsExactly(Milestone, otherT.Milestone)) return false;
-        if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-        if( !DeepComparable.IsExactly(StartDateElement, otherT.StartDateElement)) return false;
-        if( !DeepComparable.IsExactly(EndDateElement, otherT.EndDateElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -369,7 +352,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -397,9 +380,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (SubjectState is not null) yield return new KeyValuePair<string,object>("subjectState",SubjectState);
         if (Milestone is not null) yield return new KeyValuePair<string,object>("milestone",Milestone);
@@ -624,46 +607,26 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ResearchSubject());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as ResearchSubject;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Progress, otherT.Progress)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(Study, otherT.Study)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(AssignedComparisonGroupElement, otherT.AssignedComparisonGroupElement)) return false;
-      if( !DeepComparable.Matches(ActualComparisonGroupElement, otherT.ActualComparisonGroupElement)) return false;
-      if( !DeepComparable.Matches(Consent, otherT.Consent)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.ListEquals(Progress, otherT.Progress)) return false;
+      if(!comparer.Equals(Period, otherT.Period)) return false;
+      if(!comparer.Equals(Study, otherT.Study)) return false;
+      if(!comparer.Equals(Subject, otherT.Subject)) return false;
+      if(!comparer.Equals(AssignedComparisonGroupElement, otherT.AssignedComparisonGroupElement)) return false;
+      if(!comparer.Equals(ActualComparisonGroupElement, otherT.ActualComparisonGroupElement)) return false;
+      if(!comparer.ListEquals(Consent, otherT.Consent)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ResearchSubject;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Progress, otherT.Progress)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(AssignedComparisonGroupElement, otherT.AssignedComparisonGroupElement)) return false;
-      if( !DeepComparable.IsExactly(ActualComparisonGroupElement, otherT.ActualComparisonGroupElement)) return false;
-      if( !DeepComparable.IsExactly(Consent, otherT.Consent)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -700,7 +663,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -737,9 +700,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",Progress);

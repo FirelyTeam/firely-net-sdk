@@ -97,7 +97,7 @@ namespace Hl7.Fhir.ElementModel
 
             if (name is null)
             {
-                return Current.GetElementPairs().SelectMany(kvp
+                return Current.EnumerateElements().SelectMany(kvp
                     => createChildNodes(kvp.Key, kvp.Value));
             }
 

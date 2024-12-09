@@ -167,40 +167,23 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ExtendedContactDetail());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as ExtendedContactDetail;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
-      if( !DeepComparable.Matches(Name, otherT.Name)) return false;
-      if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.Matches(Address, otherT.Address)) return false;
-      if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(Purpose, otherT.Purpose)) return false;
+      if(!comparer.ListEquals(Name, otherT.Name)) return false;
+      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
+      if(!comparer.Equals(Address, otherT.Address)) return false;
+      if(!comparer.Equals(Organization, otherT.Organization)) return false;
+      if(!comparer.Equals(Period, otherT.Period)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ExtendedContactDetail;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
-      if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
-      if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
-      if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -228,7 +211,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -256,9 +239,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
       if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);

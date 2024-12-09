@@ -627,50 +627,28 @@ namespace Hl7.Fhir.Model
       return CopyTo(new RelatedArtifact());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as RelatedArtifact;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.Matches(Classifier, otherT.Classifier)) return false;
-      if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
-      if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
-      if( !DeepComparable.Matches(CitationElement, otherT.CitationElement)) return false;
-      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.Matches(Document, otherT.Document)) return false;
-      if( !DeepComparable.Matches(ResourceElement, otherT.ResourceElement)) return false;
-      if( !DeepComparable.Matches(ResourceReference, otherT.ResourceReference)) return false;
-      if( !DeepComparable.Matches(PublicationStatusElement, otherT.PublicationStatusElement)) return false;
-      if( !DeepComparable.Matches(PublicationDateElement, otherT.PublicationDateElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
+      if(!comparer.ListEquals(Classifier, otherT.Classifier)) return false;
+      if(!comparer.Equals(LabelElement, otherT.LabelElement)) return false;
+      if(!comparer.Equals(DisplayElement, otherT.DisplayElement)) return false;
+      if(!comparer.Equals(CitationElement, otherT.CitationElement)) return false;
+      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
+      if(!comparer.Equals(Document, otherT.Document)) return false;
+      if(!comparer.Equals(ResourceElement, otherT.ResourceElement)) return false;
+      if(!comparer.Equals(ResourceReference, otherT.ResourceReference)) return false;
+      if(!comparer.Equals(PublicationStatusElement, otherT.PublicationStatusElement)) return false;
+      if(!comparer.Equals(PublicationDateElement, otherT.PublicationDateElement)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as RelatedArtifact;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.IsExactly(Classifier, otherT.Classifier)) return false;
-      if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
-      if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
-      if( !DeepComparable.IsExactly(CitationElement, otherT.CitationElement)) return false;
-      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
-      if( !DeepComparable.IsExactly(ResourceElement, otherT.ResourceElement)) return false;
-      if( !DeepComparable.IsExactly(ResourceReference, otherT.ResourceReference)) return false;
-      if( !DeepComparable.IsExactly(PublicationStatusElement, otherT.PublicationStatusElement)) return false;
-      if( !DeepComparable.IsExactly(PublicationDateElement, otherT.PublicationDateElement)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -713,7 +691,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -756,9 +734,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",Classifier);
       if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);

@@ -104,7 +104,7 @@ public class BaseFhirJsonPocoSerializer
 
         filter?.EnterObject(element, mapping);
 
-        foreach (var member in element.GetElementPairs())
+        foreach (var member in element.EnumerateElements())
         {
             var propertyMapping = mapping?.FindMappedElementByName(member.Key);
 

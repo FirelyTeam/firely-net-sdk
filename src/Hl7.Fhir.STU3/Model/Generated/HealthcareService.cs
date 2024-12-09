@@ -222,36 +222,21 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AvailableTimeComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as AvailableTimeComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
-        if( !DeepComparable.Matches(AllDayElement, otherT.AllDayElement)) return false;
-        if( !DeepComparable.Matches(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
-        if( !DeepComparable.Matches(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.ListEquals(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
+        if(!comparer.Equals(AllDayElement, otherT.AllDayElement)) return false;
+        if(!comparer.Equals(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
+        if(!comparer.Equals(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as AvailableTimeComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
-        if( !DeepComparable.IsExactly(AllDayElement, otherT.AllDayElement)) return false;
-        if( !DeepComparable.IsExactly(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
-        if( !DeepComparable.IsExactly(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -273,7 +258,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -295,9 +280,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
         if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
         if (AvailableStartTimeElement is not null) yield return new KeyValuePair<string,object>("availableStartTime",AvailableStartTimeElement);
@@ -387,32 +372,19 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NotAvailableComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as NotAvailableComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.Matches(During, otherT.During)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
+        if(!comparer.Equals(During, otherT.During)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as NotAvailableComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.IsExactly(During, otherT.During)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -428,7 +400,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -444,9 +416,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (During is not null) yield return new KeyValuePair<string,object>("during",During);
       }
@@ -981,76 +953,41 @@ namespace Hl7.Fhir.Model
       return CopyTo(new HealthcareService());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as HealthcareService;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.Matches(ProvidedBy, otherT.ProvidedBy)) return false;
-      if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
-      if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-      if( !DeepComparable.Matches(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
-      if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
-      if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.Matches(CoverageArea, otherT.CoverageArea)) return false;
-      if( !DeepComparable.Matches(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
-      if( !DeepComparable.Matches(Eligibility, otherT.Eligibility)) return false;
-      if( !DeepComparable.Matches(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-      if( !DeepComparable.Matches(ProgramNameElement, otherT.ProgramNameElement)) return false;
-      if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
-      if( !DeepComparable.Matches(ReferralMethod, otherT.ReferralMethod)) return false;
-      if( !DeepComparable.Matches(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
-      if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
-      if( !DeepComparable.Matches(NotAvailable, otherT.NotAvailable)) return false;
-      if( !DeepComparable.Matches(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
-      if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
+      if(!comparer.Equals(ProvidedBy, otherT.ProvidedBy)) return false;
+      if(!comparer.Equals(Category, otherT.Category)) return false;
+      if(!comparer.ListEquals(Type, otherT.Type)) return false;
+      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
+      if(!comparer.ListEquals(Location, otherT.Location)) return false;
+      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
+      if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
+      if(!comparer.Equals(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
+      if(!comparer.Equals(Photo, otherT.Photo)) return false;
+      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
+      if(!comparer.ListEquals(CoverageArea, otherT.CoverageArea)) return false;
+      if(!comparer.ListEquals(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
+      if(!comparer.Equals(Eligibility, otherT.Eligibility)) return false;
+      if(!comparer.Equals(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
+      if(!comparer.ListEquals(ProgramNameElement, otherT.ProgramNameElement)) return false;
+      if(!comparer.ListEquals(Characteristic, otherT.Characteristic)) return false;
+      if(!comparer.ListEquals(ReferralMethod, otherT.ReferralMethod)) return false;
+      if(!comparer.Equals(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
+      if(!comparer.ListEquals(AvailableTime, otherT.AvailableTime)) return false;
+      if(!comparer.ListEquals(NotAvailable, otherT.NotAvailable)) return false;
+      if(!comparer.Equals(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
+      if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as HealthcareService;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.IsExactly(ProvidedBy, otherT.ProvidedBy)) return false;
-      if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
-      if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-      if( !DeepComparable.IsExactly(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
-      if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
-      if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-      if( !DeepComparable.IsExactly(CoverageArea, otherT.CoverageArea)) return false;
-      if( !DeepComparable.IsExactly(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
-      if( !DeepComparable.IsExactly(Eligibility, otherT.Eligibility)) return false;
-      if( !DeepComparable.IsExactly(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-      if( !DeepComparable.IsExactly(ProgramNameElement, otherT.ProgramNameElement)) return false;
-      if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
-      if( !DeepComparable.IsExactly(ReferralMethod, otherT.ReferralMethod)) return false;
-      if( !DeepComparable.IsExactly(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
-      if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
-      if( !DeepComparable.IsExactly(NotAvailable, otherT.NotAvailable)) return false;
-      if( !DeepComparable.IsExactly(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
-      if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -1132,7 +1069,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -1214,9 +1151,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (ProvidedBy is not null) yield return new KeyValuePair<string,object>("providedBy",ProvidedBy);

@@ -41,7 +41,7 @@ public record SinglePocoElementNode(Base Poco, PocoElementNode2? Parent, int? In
     : PocoElementNode2(Parent, Name ?? Poco.TypeName), IScopedNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotated
 {
     public IEnumerable<PocoElementNode2> Children() =>
-        Poco.GetElementPairs()
+        Poco.EnumerateElements()
             .Select(ep =>
                 nodeFor(ep.Key, ep.Value)
             );
