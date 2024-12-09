@@ -3950,64 +3950,6 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// Data types allowed to be used for search parameters.
-  /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
-  /// (system: http://hl7.org/fhir/search-param-type)
-  /// </summary>
-  [FhirEnumeration("SearchParamType", "http://hl7.org/fhir/ValueSet/search-param-type", "http://hl7.org/fhir/search-param-type")]
-  public enum SearchParamType
-  {
-    /// <summary>
-    /// Search parameter SHALL be a number (a whole number, or a decimal).
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("number"), Description("Number")]
-    Number,
-    /// <summary>
-    /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("date"), Description("Date/DateTime")]
-    Date,
-    /// <summary>
-    /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("string"), Description("String")]
-    String,
-    /// <summary>
-    /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a \"|\", depending on the modifier used.
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("token"), Description("Token")]
-    Token,
-    /// <summary>
-    /// A reference to another resource.
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("reference"), Description("Reference")]
-    Reference,
-    /// <summary>
-    /// A composite search parameter that combines a search on two values together.
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("composite"), Description("Composite")]
-    Composite,
-    /// <summary>
-    /// A search parameter that searches on a quantity.
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("quantity"), Description("Quantity")]
-    Quantity,
-    /// <summary>
-    /// A search parameter that searches on a URI (RFC 3986).
-    /// (system: http://hl7.org/fhir/search-param-type)
-    /// </summary>
-    [EnumLiteral("uri"), Description("URI")]
-    Uri,
-  }
-
-  /// <summary>
   /// Set of codes indicating the type of incident or accident.
   /// (url: http://hl7.org/fhir/ValueSet/v3-ActIncidentCode)
   /// (system: http://hl7.org/fhir/v3/ActCode)
