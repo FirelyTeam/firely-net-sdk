@@ -285,7 +285,7 @@
   // Used in model class (resource): Subscription.filterBy.modifier
   // Used in model class (resource): SubscriptionTopic.canFilterBy.modifier
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
+// Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
@@ -298,7 +298,7 @@
   // Used in model class (resource): Evidence.statistic.modelCharacteristic.variable.handling
   // Used in model class (resource): EvidenceVariable.handling
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
+// Generated Shared Enumeration: VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
   // Used in model class (resource): GraphDefinition.node.type
   // Used in model class (resource): OperationDefinition.resource
   // Used in model class (resource): SearchParameter.base
