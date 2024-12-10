@@ -206,9 +206,11 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
     {
         if (name is null) return Children().SelectMany(node => node);
         
-        var specNameIfExists = FindInspector()?.FindOrImportClassMapping(Poco.GetType())?.FindMappedElementByChoiceName(name)?.Name;
+        var trueElementName = FindInspector()?
+            .FindOrImportClassMapping(Poco.GetType())?
+            .FindMappedElementByChoiceName(name)?.Name;
         
-        return Child(specNameIfExists ?? name) ?? [];
+        return Child(trueElementName ?? name) ?? [];
     }
     
     #endregion
