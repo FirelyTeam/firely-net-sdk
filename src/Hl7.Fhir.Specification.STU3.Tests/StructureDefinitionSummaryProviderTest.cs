@@ -27,6 +27,18 @@ namespace Hl7.Fhir.Specification.Tests
 
                 AssertEqual(pocoSummary, sdSummary);
             }
+
+            foreach (var item in ModelInfo.OpenTypes)
+            {
+                if (item == typeof(Canonical)  //New datatype in R4, so this will fail for STU3
+                    || item == typeof(FhirUrl))  //New datatype in R4, so this will fail for STU3
+                    continue;
+                var canonicalResource = ModelInfo.CanonicalUriForFhirCoreType(item);
+                var pocoSummary = pocoSdProvider.Provide(canonicalResource);
+                var sdSummary = sdProvide.Provide(canonicalResource);
+
+                AssertEqual(pocoSummary, sdSummary);
+            }
         }
 
 
@@ -52,7 +64,9 @@ namespace Hl7.Fhir.Specification.Tests
                 context = string.Join('.', workStack.Reverse());
                 try
                 {
-                    left.IsAbstract.Should().Be(right.IsAbstract, context + ": Abstract differs");
+                    if (context != "DataRequirement.codeFilter.Element" && context != "DataRequirement.dateFilter.Element" && context != "Timing.repeat.Element") // Issue in the STU3 StructureDefinition for DataRequirement.codeFilter, DataRequirement.dateFilter, and Timing.repeat where the type is set to "Element" but not to "BackboneElement".
+                        left.IsAbstract.Should().Be(right.IsAbstract, context + ": Abstract differs");
+
                     left.IsResource.Should().Be(right.IsResource, context + ": IsResource differs");
                     left.TypeName.Should().Be(right.TypeName, context + ": TypeName differs");
                     areEqual(left.GetElements(), right.GetElements(), workStack);
@@ -125,7 +139,10 @@ namespace Hl7.Fhir.Specification.Tests
                 left.IsChoiceElement.Should().Be(right.IsChoiceElement, context + ": IsChoiceElement differs");
                 left.IsCollection.Should().Be(right.IsCollection, context + ": IsCollection differs");
 
-                if (context != "Binary.content") //because of issue #2821
+                if (context != "Binary.content" //because of issue #2821
+                    && context != "Signature.type" //This was required in STU3, but not in R4+, so kept it optional when moving to base.
+                    && context != "Signature.when" //This was required in STU3, but not in R4+, so kept it optional when moving to base.
+                    && !context.StartsWith("Signature.who"))  //This was required in STU3, but not in R4+, so kept it optional when moving to base.
                     left.IsRequired.Should().Be(right.IsRequired, context + ": IsRequired differs");
 
                 left.IsResource.Should().Be(right.IsResource, context + ": IsResource differs");
@@ -152,6 +169,10 @@ namespace Hl7.Fhir.Specification.Tests
                 // This is an exception: parameter.value can have all the types, but [AllowedTypes] is not generated, because not all the types
                 // are located in Common.
                 if (context == "Parameters.parameter.BackboneElement.value" || context == "Parameters.parameter.BackboneElement.part.BackboneElement.value")
+                    return;
+
+                // This is an exception because from R4+ UsageContext.value doesn't have choice type of Reference anymore, but we still have it in Base to accomodate STU3 users.
+                if (context == "UsageContext.value")
                     return;
 
                 left.Length.Should().Be(right.Length, context + ": nr. of elements differs.");

@@ -241,13 +241,6 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.FhirPath.FhirEvaluationContext.WithResourceOverrides(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.ElementModel.ITypedElement)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Introspection.ClassMapping.get_DefinitionPath</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -374,20 +367,6 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Rest.ContentType.BuildContentType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Rest.ContentType.BuildMediaType(Hl7.Fhir.Rest.ResourceFormat,System.String)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.BaseFhirJsonPocoSerializer.Serialize(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Text.Json.Utf8JsonWriter)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -452,6 +431,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.SerializationEngineExtensions.SerializeReaderToXml(Hl7.Fhir.Serialization.IFhirSerializationEngine,System.Xml.XmlReader)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Snapshot.SnapshotGeneratorExtensions.RemoveAllNonInheritableExtensions(Hl7.Fhir.Model.Element)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -570,7 +556,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.FhirPath.EvaluationContext.WithResourceOverrides(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.ElementModel.ITypedElement)</Target>
+    <Target>M:Hl7.FhirPath.EvaluationContextExtensions.WithResourceOverrides``1(``0,Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.ElementModel.ITypedElement)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

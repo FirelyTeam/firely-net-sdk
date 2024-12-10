@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
         {
-            RegenerationBehaviour = RegenerationSettings.REGENERATE_ONCE,
+            ForceRegenerateSnapshots = true,
             GenerateSnapshotForExternalProfiles = true
         };
 

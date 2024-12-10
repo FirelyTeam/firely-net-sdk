@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           UrlElement = null;
         else
-          UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
+          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
