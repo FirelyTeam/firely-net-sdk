@@ -8,17 +8,14 @@
 
 #nullable enable
 
-using Hl7.Fhir.ElementModel.Adapters;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public static class TypedElementExtensions
+    public static class ShimsTypedElementExtensions
     {
         /// <summary>
         /// Creates an adapter which implements ITypedElement on top of a POCO instance, using the legacy ElementNode stack.
@@ -27,8 +24,8 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="rootName">The name you wish to have at the root of the tree. This will determine e.g. the root element name for serialization.
         /// If none is given, the type of the underlying poco will be used.</param>
         public static ITypedElement ToTypedElementLegacy(this Base @base, string? rootName = null)
-            => new PocoElementNode(ModelInfo.ModelInspector, @base, rootName);
-        
+            => @base.ToTypedElementLegacy(ModelInfo.ModelInspector, rootName);
+
         /// <summary>
         /// Creates an adapter which implements ITypedElement on top of a POCO instance, with explicit version-specific metadata.
         /// </summary>
@@ -43,13 +40,8 @@ namespace Hl7.Fhir.ElementModel
 #else
         [Experimental("SDK0001")]
 #endif
-        public static ITypedElement ToTypedElement(this Base @base, string? rootName = null)
-        {
-            var node = PocoNodeOrList.Root(@base, rootName);
-            ((IAnnotatable)node).AddAnnotation(ModelInfo.ModelInspector);
-            
-            return node;
-        }
+        public static ITypedElement ToTypedElement(this Base @base, string? rootName = null) =>
+           @base.ToTypedElement(ModelInfo.ModelInspector, rootName);
     }
 }
 #nullable restore
