@@ -10,7 +10,9 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -28,8 +30,12 @@ namespace Hl7.Fhir.ElementModel
         public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) =>
                new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
 
-        public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null) =>
-                @base.ToTypedElement(inspector, rootName).ToSourceNode();
-
+        public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null)
+        {
+            var node = @base.ToElementNode(rootName);
+            ((IAnnotatable)node).AddAnnotation(inspector);
+            
+            return node;
+        }
     }
 }

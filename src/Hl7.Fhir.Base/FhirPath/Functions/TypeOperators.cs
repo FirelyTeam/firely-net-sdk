@@ -14,11 +14,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Runtime.CompilerServices;
 
-#pragma warning disable CS0612 // Type or member is obsolete
-
 namespace Hl7.FhirPath.Functions
-{
-    [TemporarilyChanged] // disabled obsolete warning
+{ 
     internal static class TypeOperators
     {
         public static bool Is(this IScopedNode focus, string type)

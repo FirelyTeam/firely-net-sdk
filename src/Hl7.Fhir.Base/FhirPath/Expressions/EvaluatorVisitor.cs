@@ -26,7 +26,7 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        [TemporarilyChanged] // we should refactor ConstantExpression to use IScopedNode too...
+        [TemporarilyChanged] // we should investigate here. We will need a way to handle "object" without a fhir type, and try to infer it from the object
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
             return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value).ToScopedNode());

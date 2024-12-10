@@ -15,7 +15,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -55,24 +57,24 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonBuilder(settings).Build(source);
 
         /// <inheritdoc cref="ToJsonAsync(ITypedElement, FhirJsonSerializationSettings)" />
-        [TemporarilyChanged]
+        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
-            if (source is not SinglePocoElementNode {Poco: Resource resource})
+            if (source is not PocoNode {Poco: Resource resource} node)
                 return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
             
-            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
-            return engine.SerializeToJson(resource);
+            var options = new JsonSerializerOptions{ WriteIndented = settings?.Pretty ?? false }.ForFhir(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
+            return JsonSerializer.Serialize(resource, options) + (settings?.AppendNewLine == true ? "\n" : "");
         }
 
-        [TemporarilyChanged]
+        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
         public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
         {
-            if (source is not SinglePocoElementNode {Poco: Resource resource})
+            if (source is not PocoNode {Poco: Resource resource} node)
                 return await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
             
-            var engine = FhirSerializationEngineFactory.Strict(ModelInspector.ForType(resource.GetType()));
-            return engine.SerializeToJson(resource);
+            var options = new JsonSerializerOptions{ WriteIndented = settings?.Pretty ?? false }.ForFhir(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
+            return JsonSerializer.Serialize(resource, options) + (settings?.AppendNewLine == true ? "\n" : "");
         }
 
         /// <inheritdoc cref="ToJsonAsync(ISourceNode, FhirJsonSerializationSettings)" />
