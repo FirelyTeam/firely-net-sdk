@@ -6,6 +6,7 @@
 
 	<PropertyGroup>
 		<AssemblyName>Hl7.Fhir.R4.Tests</AssemblyName>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<PropertyGroup>
