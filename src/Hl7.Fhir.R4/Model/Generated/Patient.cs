@@ -11,6 +11,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 
 /*
@@ -1257,38 +1258,24 @@ namespace Hl7.Fhir.Model
             if (Link?.Any() == true) yield return new KeyValuePair<string, object>("link", Link);
         }
 
-        public Span<long> ToSpan()
+        public unsafe Span<object> ToSpan()
         {
-            unsafe
-            {
-                fixed (Patient* ptr = this)
-                {
-                    fixed (List<LinkComponent>* linkPtr = &this._Link)
-                        return new Span<long>(ptr, (int)((long)linkPtr - (long)ptr) / sizeof(object));
-                }
-            }
-        }
+            var span = MemoryMarshal.CreateSpan(ref this._Identifier, 16);
+            var elements = MemoryMarshal.CreateSpan(ref Unsafe.AsRef<object>((void*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(span))), 16);
 
-        public unsafe ref Patient GetPinnableReference()
-        {
-            var copy = this;
-            return ref *(Patient*)*(void**)Unsafe.AsPointer(ref copy);
-        }
-
-        public unsafe ref List<LinkComponent> GetLinkPinnableReference()
-        {
-            var copy = this._Link;
-            return ref *(List<LinkComponent>*)*(void**)Unsafe.AsPointer(ref copy);
+            return elements;
         }
     }
 
-    public static class ListExtensions
+    public static class ObjectExtensions
     {
-        public static unsafe ref List<Patient.LinkComponent> GetPinnableReference(this List<Patient.LinkComponent> list)
-        {
-            var copy = list;
-            return ref *(List<Patient.LinkComponent>*)*(void**)Unsafe.AsPointer(ref copy);
-        }
+        // public static unsafe Span<object> ToSpan(this Base @base)
+        // {
+        //     var span = MemoryMarshal.CreateSpan(ref this._Identifier, 16);
+        //     var elements =MemoryMarshal.CreateSpan(ref Unsafe.AsRef<object>((void*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(span[1..]))), 16);
+        //
+        //     return elements;
+        // }
     }
 }
 
