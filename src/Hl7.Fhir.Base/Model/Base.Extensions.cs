@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Model;
 
-public static class BaseExtensions
+public static partial class BaseExtensions
 {
     [Obsolete("Use GetElementPairs() instead. Note that with GetElementPairs(), the elements are not guaranteed to " +
               "be the same type, as they reflect the type in the actual POCO definition.")]
