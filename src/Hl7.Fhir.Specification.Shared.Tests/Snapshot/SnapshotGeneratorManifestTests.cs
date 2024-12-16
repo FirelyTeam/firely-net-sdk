@@ -793,8 +793,8 @@ namespace Hl7.Fhir.Specification.Tests
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
                 if (input is null) { throw new ArgumentNullException(nameof(input)); }
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
-                Input = input.ToElementNode();
-                Generated = generated.ToElementNode();
+                Input = input.ToPocoNode();
+                Generated = generated.ToPocoNode();
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         filePath = Path.ChangeExtension(filePath, "json");
                     }
-                    return Load(filePath).ToElementNode();
+                    return Load(filePath).ToPocoNode();
                 }
 
                 // Otherwise assume name refers to a core resource, e.g. 'patient'
@@ -850,7 +850,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (!(typeName is null))
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToElementNode();
+                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToPocoNode();
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
 

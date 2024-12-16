@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel
         /// In the meantime, you can restore the old behaviour with a call to <see cref="ToTypedElementLegacy"/></remarks>
 #if NETSTANDARD2_1
         [Obsolete("The implementation of this method has changed to use our new model stack. If you want to try the new behaviour, "+
-                  "either ignore this warning or call ToElementNode(). For reverting to the old behaviour, call .ToTypedElementLegacy()")]
+                  "either ignore this warning or call ToPocoNode(). For reverting to the old behaviour, call .ToTypedElementLegacy()")]
 #else
         [Experimental("SDK0001")]
 #endif

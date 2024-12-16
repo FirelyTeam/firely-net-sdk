@@ -19,7 +19,7 @@ internal partial class PocoSerializationEngine
         _jsonDeserializer ??= new BaseFhirJsonPocoDeserializer(_inspector, _jsonDeserializerSettings!);
 
     private BaseFhirJsonPocoSerializer getJsonSerializer() =>
-        _jsonSerializer ??= new BaseFhirJsonPocoSerializer(_inspector.FhirRelease, _jsonSerializerSettings!);
+        _jsonSerializer ??= new BaseFhirJsonPocoSerializer(_inspector, _jsonSerializerSettings!);
     
     /// <inheritdoc />
     public Resource DeserializeFromJson(string data)

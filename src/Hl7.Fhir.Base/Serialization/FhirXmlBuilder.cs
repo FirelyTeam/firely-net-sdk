@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
             _settings = settings?.Clone() ?? new FhirXmlSerializationSettings();
         }
 
-        private FhirXmlSerializationSettings _settings;
+        private readonly FhirXmlSerializationSettings _settings;
         private bool _roundtripMode;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }

@@ -10,7 +10,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ public class BaseFhirJsonPocoSerializer
     /// <summary>
     /// Construct a new serializer for a specific release of FHIR.
     /// </summary>
-    public BaseFhirJsonPocoSerializer(FhirRelease release) : this(release, new())
+    public BaseFhirJsonPocoSerializer(ModelInspector inspector) : this(inspector, new FhirJsonPocoSerializerSettings())
     {
         // nothing
     }
@@ -40,16 +39,16 @@ public class BaseFhirJsonPocoSerializer
     /// <summary>
     /// Construct a new serializer for a specific release of FHIR.
     /// </summary>
-    public BaseFhirJsonPocoSerializer(FhirRelease release, FhirJsonPocoSerializerSettings settings)
+    public BaseFhirJsonPocoSerializer(ModelInspector inspector, FhirJsonPocoSerializerSettings settings)
     {
-        Release = release;
+        Inspector = inspector;
         Settings = settings;
     }
 
     /// <summary>
     /// The release of FHIR for which this serializer is configured.
     /// </summary>
-    public FhirRelease Release { get; }
+    public ModelInspector Inspector { get; }
 
     /// <summary>
     /// The settings that were passed to the constructor.
@@ -98,7 +97,7 @@ public class BaseFhirJsonPocoSerializer
             writer.WriteString("resourceType", r.TypeName);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
-        if (!ClassMapping.TryGetMappingForType(element.GetType(), Release, out var mapping))
+        if (Inspector.FindOrImportClassMapping(element.GetType()) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 
@@ -146,7 +145,7 @@ public class BaseFhirJsonPocoSerializer
                         break;
                     }
                 default:
-                    throw new InvalidOperationException($"GetElementPairs() returned a non-Base element of type {member.Value.GetType()}.");
+                    throw new InvalidOperationException($"{nameof(element.EnumerateElements)} returned a non-Base element of type {member.Value.GetType()}.");
             }
 
             filter?.LeaveMember(member.Key, member.Value, propertyMapping);

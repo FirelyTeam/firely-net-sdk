@@ -19,7 +19,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class BaseFhirSerializer
+    public abstract class BaseFhirSerializer
     {
         public readonly SerializerSettings Settings;
         private readonly ModelInspector _modelInspector;

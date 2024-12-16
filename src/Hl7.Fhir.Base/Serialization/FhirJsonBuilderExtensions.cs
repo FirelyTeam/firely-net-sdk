@@ -62,7 +62,8 @@ namespace Hl7.Fhir.Serialization
         {
             if (source is not PocoNode {Poco: Resource resource} node)
                 return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
-            
+
+            var ser = new BaseFhirJsonPocoSerializer(
             var options = new JsonSerializerOptions{ WriteIndented = settings?.Pretty ?? false }.ForFhir(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
             return JsonSerializer.Serialize(resource, options) + (settings?.AppendNewLine == true ? "\n" : "");
         }
