@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     [FhirType("codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
-    public class Code<T> : PrimitiveType, INullableValue<T>, ISystemAndCode where T : struct, Enum
+    public class Code<T> : Code, INullableValue<T>, ISystemAndCode where T : struct, Enum
     {
         static Code()
         {
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
         // Primitive value of element
         [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
         [DataMember]
-        public T? Value
+        new public T? Value
         {
             get => TryParseObjectValue(out var value)
                     ? value
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 
         string ISystemAndCode.Code => Value?.GetLiteral();
 
-        public S.Code ToSystemCode() => new(Value?.GetSystem(), Value?.GetLiteral(), display: null, version: null);
+        new public S.Code ToSystemCode() => new(Value?.GetSystem(), Value?.GetLiteral(), display: null, version: null);
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
