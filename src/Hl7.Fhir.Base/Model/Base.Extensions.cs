@@ -41,7 +41,7 @@ public static class BaseExtensions
     
     internal static IEnumerable<T> DeepCopyInternal<T>(this IEnumerable<T> source) where T : Base
     {
-        return source.Select(item => item.DeepCopy());
+        return source.Select(item => item.DeepCopy()).ToList();
     }
     
     internal static void CopyToInternal(this Dictionary<string, object> source, Dictionary<string, object> target)
