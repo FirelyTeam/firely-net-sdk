@@ -24,6 +24,13 @@ public class DynamicDataType : DataType, IDynamicType
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;
+    
+    protected internal override Base DeepCopyInternal()
+    {
+        var instance = new DynamicDataType();
+        CopyToInternal(instance);
+        return instance;
+    }
 }
 
 
@@ -39,6 +46,13 @@ public class DynamicResource : Resource, IDynamicType
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;
+    
+    protected internal override Base DeepCopyInternal()
+    {
+        var instance = new DynamicResource();
+        CopyToInternal(instance);
+        return instance;
+    }
 }
 
 
@@ -53,4 +67,11 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;
+    
+    protected internal override Base DeepCopyInternal()
+    {
+        var instance = new DynamicPrimitive();
+        CopyToInternal(instance);
+        return instance;
+    }
 }

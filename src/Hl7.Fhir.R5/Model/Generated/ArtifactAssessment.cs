@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> _Component;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ContentComponent;
 
@@ -452,23 +452,24 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(InformationTypeElement != null) dest.InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>)InformationTypeElement.DeepCopy();
-        if(SummaryElement != null) dest.SummaryElement = (Hl7.Fhir.Model.Markdown)SummaryElement.DeepCopy();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-        if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-        if(PathElement.Any()) dest.PathElement = new List<Hl7.Fhir.Model.FhirUri>(PathElement.DeepCopy());
-        if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
-        if(FreeToShareElement != null) dest.FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean)FreeToShareElement.DeepCopy();
-        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Component.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(InformationTypeElement != null) dest.InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>)InformationTypeElement.DeepCopyInternal();
+        if(SummaryElement != null) dest.SummaryElement = (Hl7.Fhir.Model.Markdown)SummaryElement.DeepCopyInternal();
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopyInternal());
+        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
+        if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopyInternal();
+        if(PathElement.Any()) dest.PathElement = new List<Hl7.Fhir.Model.FhirUri>(PathElement.DeepCopyInternal());
+        if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopyInternal());
+        if(FreeToShareElement != null) dest.FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean)FreeToShareElement.DeepCopyInternal();
+        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Component.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ContentComponent());
+        var instance = new ContentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -872,7 +873,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ArtifactAssessment;
 
@@ -881,24 +882,25 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(CiteAs != null) dest.CiteAs = (Hl7.Fhir.Model.DataType)CiteAs.DeepCopy();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-      if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
-      if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
-      if(Artifact != null) dest.Artifact = (Hl7.Fhir.Model.DataType)Artifact.DeepCopy();
-      if(Content.Any()) dest.Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Content.DeepCopy());
-      if(WorkflowStatusElement != null) dest.WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>)WorkflowStatusElement.DeepCopy();
-      if(DispositionElement != null) dest.DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>)DispositionElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopyInternal();
+      if(CiteAs != null) dest.CiteAs = (Hl7.Fhir.Model.DataType)CiteAs.DeepCopyInternal();
+      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
+      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopyInternal();
+      if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopyInternal();
+      if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopyInternal();
+      if(Artifact != null) dest.Artifact = (Hl7.Fhir.Model.DataType)Artifact.DeepCopyInternal();
+      if(Content.Any()) dest.Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Content.DeepCopyInternal());
+      if(WorkflowStatusElement != null) dest.WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>)WorkflowStatusElement.DeepCopyInternal();
+      if(DispositionElement != null) dest.DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>)DispositionElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ArtifactAssessment());
+      var instance = new ArtifactAssessment();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

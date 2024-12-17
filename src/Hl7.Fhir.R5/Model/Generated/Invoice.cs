@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.ResourceReference _Actor;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ParticipantComponent;
 
@@ -153,15 +153,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
+        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ParticipantComponent());
+        var instance = new ParticipantComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -310,7 +311,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.MonetaryComponent> _PriceComponent;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as LineItemComponent;
 
@@ -319,17 +320,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
-        if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
-        if(ChargeItem != null) dest.ChargeItem = (Hl7.Fhir.Model.DataType)ChargeItem.DeepCopy();
-        if(PriceComponent.Any()) dest.PriceComponent = new List<Hl7.Fhir.Model.MonetaryComponent>(PriceComponent.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopyInternal();
+        if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopyInternal();
+        if(ChargeItem != null) dest.ChargeItem = (Hl7.Fhir.Model.DataType)ChargeItem.DeepCopyInternal();
+        if(PriceComponent.Any()) dest.PriceComponent = new List<Hl7.Fhir.Model.MonetaryComponent>(PriceComponent.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LineItemComponent());
+        var instance = new LineItemComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -745,7 +747,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Invoice;
 
@@ -754,31 +756,32 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>)StatusElement.DeepCopy();
-      if(CancelledReasonElement != null) dest.CancelledReasonElement = (Hl7.Fhir.Model.FhirString)CancelledReasonElement.DeepCopy();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)Recipient.DeepCopy();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-      if(CreationElement != null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)CreationElement.DeepCopy();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.DataType)Period.DeepCopy();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(Participant.DeepCopy());
-      if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
-      if(Account != null) dest.Account = (Hl7.Fhir.Model.ResourceReference)Account.DeepCopy();
-      if(LineItem.Any()) dest.LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(LineItem.DeepCopy());
-      if(TotalPriceComponent.Any()) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.MonetaryComponent>(TotalPriceComponent.DeepCopy());
-      if(TotalNet != null) dest.TotalNet = (Hl7.Fhir.Model.Money)TotalNet.DeepCopy();
-      if(TotalGross != null) dest.TotalGross = (Hl7.Fhir.Model.Money)TotalGross.DeepCopy();
-      if(PaymentTermsElement != null) dest.PaymentTermsElement = (Hl7.Fhir.Model.Markdown)PaymentTermsElement.DeepCopy();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>)StatusElement.DeepCopyInternal();
+      if(CancelledReasonElement != null) dest.CancelledReasonElement = (Hl7.Fhir.Model.FhirString)CancelledReasonElement.DeepCopyInternal();
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)Recipient.DeepCopyInternal();
+      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
+      if(CreationElement != null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)CreationElement.DeepCopyInternal();
+      if(Period != null) dest.Period = (Hl7.Fhir.Model.DataType)Period.DeepCopyInternal();
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(Participant.DeepCopyInternal());
+      if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopyInternal();
+      if(Account != null) dest.Account = (Hl7.Fhir.Model.ResourceReference)Account.DeepCopyInternal();
+      if(LineItem.Any()) dest.LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(LineItem.DeepCopyInternal());
+      if(TotalPriceComponent.Any()) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.MonetaryComponent>(TotalPriceComponent.DeepCopyInternal());
+      if(TotalNet != null) dest.TotalNet = (Hl7.Fhir.Model.Money)TotalNet.DeepCopyInternal();
+      if(TotalGross != null) dest.TotalGross = (Hl7.Fhir.Model.Money)TotalGross.DeepCopyInternal();
+      if(PaymentTermsElement != null) dest.PaymentTermsElement = (Hl7.Fhir.Model.Markdown)PaymentTermsElement.DeepCopyInternal();
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Invoice());
+      var instance = new Invoice();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

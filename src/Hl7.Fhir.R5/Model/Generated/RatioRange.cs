@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Quantity _Denominator;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as RatioRange;
 
@@ -108,16 +108,17 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(LowNumerator != null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)LowNumerator.DeepCopy();
-      if(HighNumerator != null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)HighNumerator.DeepCopy();
-      if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(LowNumerator != null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)LowNumerator.DeepCopyInternal();
+      if(HighNumerator != null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)HighNumerator.DeepCopyInternal();
+      if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new RatioRange());
+      var instance = new RatioRange();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

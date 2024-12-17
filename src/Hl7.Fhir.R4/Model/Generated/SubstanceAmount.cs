@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Quantity _HighLimit;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ReferenceRangeComponent;
 
@@ -104,15 +104,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(LowLimit != null) dest.LowLimit = (Hl7.Fhir.Model.Quantity)LowLimit.DeepCopy();
-        if(HighLimit != null) dest.HighLimit = (Hl7.Fhir.Model.Quantity)HighLimit.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(LowLimit != null) dest.LowLimit = (Hl7.Fhir.Model.Quantity)LowLimit.DeepCopyInternal();
+        if(HighLimit != null) dest.HighLimit = (Hl7.Fhir.Model.Quantity)HighLimit.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ReferenceRangeComponent());
+        var instance = new ReferenceRangeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -240,7 +241,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent _ReferenceRange;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as SubstanceAmount;
 
@@ -249,17 +250,18 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
-      if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-      if(AmountTextElement != null) dest.AmountTextElement = (Hl7.Fhir.Model.FhirString)AmountTextElement.DeepCopy();
-      if(ReferenceRange != null) dest.ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent)ReferenceRange.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
+      if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopyInternal();
+      if(AmountTextElement != null) dest.AmountTextElement = (Hl7.Fhir.Model.FhirString)AmountTextElement.DeepCopyInternal();
+      if(ReferenceRange != null) dest.ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent)ReferenceRange.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new SubstanceAmount());
+      var instance = new SubstanceAmount();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

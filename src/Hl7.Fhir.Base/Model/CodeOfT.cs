@@ -54,6 +54,13 @@ namespace Hl7.Fhir.Model
                 throw new ArgumentException("T must be an enumerated type");
         }
 
+        protected internal override Base DeepCopyInternal()
+        {
+            var instance = new Code<T>();
+            CopyToInternal(instance);
+            return instance;
+        } 
+
         public override string TypeName => "code";
 
         public Code() : this(null) { }

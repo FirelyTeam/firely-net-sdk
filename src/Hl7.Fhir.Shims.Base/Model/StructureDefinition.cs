@@ -38,7 +38,7 @@ using System.Linq;
 namespace Hl7.Fhir.Model;
 
 // [WMR 20160803] Add common base interfaces
-public interface IElementList : IModifierExtendable, INotifyPropertyChanged, IDeepCopyable
+public interface IElementList : IModifierExtendable, INotifyPropertyChanged
 {
     List<ElementDefinition> Element { get; set; }
 }
