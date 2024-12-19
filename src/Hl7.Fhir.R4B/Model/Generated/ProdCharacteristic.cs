@@ -285,50 +285,28 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ProdCharacteristic());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as ProdCharacteristic;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Height, otherT.Height)) return false;
-      if( !DeepComparable.Matches(Width, otherT.Width)) return false;
-      if( !DeepComparable.Matches(Depth, otherT.Depth)) return false;
-      if( !DeepComparable.Matches(Weight, otherT.Weight)) return false;
-      if( !DeepComparable.Matches(NominalVolume, otherT.NominalVolume)) return false;
-      if( !DeepComparable.Matches(ExternalDiameter, otherT.ExternalDiameter)) return false;
-      if( !DeepComparable.Matches(ShapeElement, otherT.ShapeElement)) return false;
-      if( !DeepComparable.Matches(ColorElement, otherT.ColorElement)) return false;
-      if( !DeepComparable.Matches(ImprintElement, otherT.ImprintElement)) return false;
-      if( !DeepComparable.Matches(Image, otherT.Image)) return false;
-      if( !DeepComparable.Matches(Scoring, otherT.Scoring)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(Height, otherT.Height)) return false;
+      if(!comparer.Equals(Width, otherT.Width)) return false;
+      if(!comparer.Equals(Depth, otherT.Depth)) return false;
+      if(!comparer.Equals(Weight, otherT.Weight)) return false;
+      if(!comparer.Equals(NominalVolume, otherT.NominalVolume)) return false;
+      if(!comparer.Equals(ExternalDiameter, otherT.ExternalDiameter)) return false;
+      if(!comparer.Equals(ShapeElement, otherT.ShapeElement)) return false;
+      if(!comparer.ListEquals(ColorElement, otherT.ColorElement)) return false;
+      if(!comparer.ListEquals(ImprintElement, otherT.ImprintElement)) return false;
+      if(!comparer.ListEquals(Image, otherT.Image)) return false;
+      if(!comparer.Equals(Scoring, otherT.Scoring)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ProdCharacteristic;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Height, otherT.Height)) return false;
-      if( !DeepComparable.IsExactly(Width, otherT.Width)) return false;
-      if( !DeepComparable.IsExactly(Depth, otherT.Depth)) return false;
-      if( !DeepComparable.IsExactly(Weight, otherT.Weight)) return false;
-      if( !DeepComparable.IsExactly(NominalVolume, otherT.NominalVolume)) return false;
-      if( !DeepComparable.IsExactly(ExternalDiameter, otherT.ExternalDiameter)) return false;
-      if( !DeepComparable.IsExactly(ShapeElement, otherT.ShapeElement)) return false;
-      if( !DeepComparable.IsExactly(ColorElement, otherT.ColorElement)) return false;
-      if( !DeepComparable.IsExactly(ImprintElement, otherT.ImprintElement)) return false;
-      if( !DeepComparable.IsExactly(Image, otherT.Image)) return false;
-      if( !DeepComparable.IsExactly(Scoring, otherT.Scoring)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -371,7 +349,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -414,9 +392,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Height is not null) yield return new KeyValuePair<string,object>("height",Height);
       if (Width is not null) yield return new KeyValuePair<string,object>("width",Width);
       if (Depth is not null) yield return new KeyValuePair<string,object>("depth",Depth);

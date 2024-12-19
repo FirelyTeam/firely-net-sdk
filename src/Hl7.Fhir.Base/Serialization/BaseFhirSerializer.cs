@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization
 
         protected ITypedElement MakeElementStack(Base instance, SummaryType summary, string[]? elements, bool includeMandatoryInElementsSummary)
         {
-            if (summary == SummaryType.False && elements == null) return instance.ToTypedElement(_modelInspector);
+            if (summary == SummaryType.False && elements == null) return instance.ToTypedElementLegacy(_modelInspector);
 
             if (elements is not null && summary != SummaryType.False)
                 throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.False or summary is not specified at all.");
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Serialization
 
             addSubsetted(patchedInstance, atRoot: true);
 
-            var baseNav = new ScopedNode(patchedInstance.ToTypedElement(_modelInspector));
+            var baseNav = new ScopedNode(patchedInstance.ToTypedElementLegacy(_modelInspector));
 
             return summary switch
             {

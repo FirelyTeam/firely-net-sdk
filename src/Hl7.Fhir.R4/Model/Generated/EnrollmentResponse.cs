@@ -274,44 +274,25 @@ namespace Hl7.Fhir.Model
       return CopyTo(new EnrollmentResponse());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as EnrollmentResponse;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Request, otherT.Request)) return false;
-      if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
-      if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
-      if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(Request, otherT.Request)) return false;
+      if(!comparer.Equals(OutcomeElement, otherT.OutcomeElement)) return false;
+      if(!comparer.Equals(DispositionElement, otherT.DispositionElement)) return false;
+      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
+      if(!comparer.Equals(Organization, otherT.Organization)) return false;
+      if(!comparer.Equals(RequestProvider, otherT.RequestProvider)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as EnrollmentResponse;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
-      if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
-      if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
-      if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
-      if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -345,7 +326,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -379,9 +360,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);

@@ -114,32 +114,19 @@ namespace Hl7.Fhir.Model
       return dest;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as Element;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(ElementIdElement, otherT.ElementIdElement)) return false;
-      if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(ElementIdElement, otherT.ElementIdElement)) return false;
+      if(!comparer.ListEquals(Extension, otherT.Extension)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Element;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(ElementIdElement, otherT.ElementIdElement)) return false;
-      if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -155,7 +142,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -171,9 +158,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",ElementIdElement);
       if (Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",Extension);
     }

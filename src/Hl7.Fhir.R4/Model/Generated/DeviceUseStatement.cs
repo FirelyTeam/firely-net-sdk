@@ -369,54 +369,30 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DeviceUseStatement());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as DeviceUseStatement;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
-      if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
-      if( !DeepComparable.Matches(RecordedOnElement, otherT.RecordedOnElement)) return false;
-      if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-      if( !DeepComparable.Matches(Device, otherT.Device)) return false;
-      if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-      if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
-      if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
+      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+      if(!comparer.Equals(Subject, otherT.Subject)) return false;
+      if(!comparer.ListEquals(DerivedFrom, otherT.DerivedFrom)) return false;
+      if(!comparer.Equals(Timing, otherT.Timing)) return false;
+      if(!comparer.Equals(RecordedOnElement, otherT.RecordedOnElement)) return false;
+      if(!comparer.Equals(Source, otherT.Source)) return false;
+      if(!comparer.Equals(Device, otherT.Device)) return false;
+      if(!comparer.ListEquals(ReasonCode, otherT.ReasonCode)) return false;
+      if(!comparer.ListEquals(ReasonReference, otherT.ReasonReference)) return false;
+      if(!comparer.Equals(BodySite, otherT.BodySite)) return false;
+      if(!comparer.ListEquals(Note, otherT.Note)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as DeviceUseStatement;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
-      if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
-      if( !DeepComparable.IsExactly(RecordedOnElement, otherT.RecordedOnElement)) return false;
-      if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-      if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
-      if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-      if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
-      if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -465,7 +441,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -514,9 +490,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);

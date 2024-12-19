@@ -284,52 +284,29 @@ namespace Hl7.Fhir.Model
       return CopyTo(new OrganizationAffiliation());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as OrganizationAffiliation;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.Matches(ParticipatingOrganization, otherT.ParticipatingOrganization)) return false;
-      if( !DeepComparable.Matches(Network, otherT.Network)) return false;
-      if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-      if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
-      if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-      if( !DeepComparable.Matches(HealthcareService, otherT.HealthcareService)) return false;
-      if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
+      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
+      if(!comparer.Equals(Period, otherT.Period)) return false;
+      if(!comparer.Equals(Organization, otherT.Organization)) return false;
+      if(!comparer.Equals(ParticipatingOrganization, otherT.ParticipatingOrganization)) return false;
+      if(!comparer.ListEquals(Network, otherT.Network)) return false;
+      if(!comparer.ListEquals(Code, otherT.Code)) return false;
+      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
+      if(!comparer.ListEquals(Location, otherT.Location)) return false;
+      if(!comparer.ListEquals(HealthcareService, otherT.HealthcareService)) return false;
+      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
+      if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as OrganizationAffiliation;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-      if( !DeepComparable.IsExactly(ParticipatingOrganization, otherT.ParticipatingOrganization)) return false;
-      if( !DeepComparable.IsExactly(Network, otherT.Network)) return false;
-      if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-      if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
-      if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-      if( !DeepComparable.IsExactly(HealthcareService, otherT.HealthcareService)) return false;
-      if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -375,7 +352,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -421,9 +398,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);

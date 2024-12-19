@@ -67,23 +67,12 @@ namespace Hl7.Fhir.Model
       return dest;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as DataType;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-
-      return true;
-    }
-
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as DataType;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
 
       return true;
     }

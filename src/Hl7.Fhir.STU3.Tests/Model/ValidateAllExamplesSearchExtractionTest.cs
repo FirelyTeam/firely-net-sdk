@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Tests.Model
     [TestClass]
     public class ValidateSearchExtractionAllExamplesTest
     {
-        public ILookup<ResourceType, ModelInfo.SearchParamDefinition> SpList;
+        public ILookup<ResourceType, SearchParamDefinition> SpList;
 
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Tests.Model
             int errorCount = 0;
             int parserErrorCount = 0;
             int testFileCount = 0;
-            var exampleSearchValues = new Dictionary<ModelInfo.SearchParamDefinition, Holder>();
+            var exampleSearchValues = new Dictionary<SearchParamDefinition, Holder>();
             var zip = TestDataHelper.ReadTestZip("examples.zip");
 
             using (zip)
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(0, parserErrorCount, String.Format("Failed search parameter data extraction, {0} files failed parsing", parserErrorCount));
         }
 
-        private void ExtractValuesForSearchParameterFromFile(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource)
+        private void ExtractValuesForSearchParameterFromFile(Dictionary<SearchParamDefinition, Holder> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
             resource.TryDeriveResourceType(out var rt);
@@ -147,8 +147,8 @@ namespace Hl7.Fhir.Tests.Model
 
        
   
-        private static void ExtractExamplesFromResource(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource, 
-            ModelInfo.SearchParamDefinition index )
+        private static void ExtractExamplesFromResource(Dictionary<SearchParamDefinition, Holder> exampleSearchValues, Resource resource,
+            SearchParamDefinition index )
         {
             var resourceModel = resource.ToTypedElement();
 

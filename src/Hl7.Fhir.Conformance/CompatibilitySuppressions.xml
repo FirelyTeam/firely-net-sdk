@@ -3,7 +3,7 @@
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Hl7.Fhir.Specification.Snapshot.SnapshotGeneratorExtensions</Target>
+    <Target>T:Hl7.Fhir.Model.SearchParamType</Target>
     <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -32,6 +32,34 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.ElementDefinition.MappingComponent.get_CommentElement</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.IElementList</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.StructureDefinition.DifferentialComponent</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.StructureDefinition.SnapshotComponent</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP1002</DiagnosticId>
+    <Target>Hl7.Fhir.Base, Version=6.0.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3</Target>
     <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

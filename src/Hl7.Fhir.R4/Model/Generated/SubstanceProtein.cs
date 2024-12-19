@@ -289,44 +289,25 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SubunitComponent());
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
         var otherT = other as SubunitComponent;
         if(otherT == null) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(SubunitElement, otherT.SubunitElement)) return false;
-        if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
-        if( !DeepComparable.Matches(LengthElement, otherT.LengthElement)) return false;
-        if( !DeepComparable.Matches(SequenceAttachment, otherT.SequenceAttachment)) return false;
-        if( !DeepComparable.Matches(NTerminalModificationId, otherT.NTerminalModificationId)) return false;
-        if( !DeepComparable.Matches(NTerminalModificationElement, otherT.NTerminalModificationElement)) return false;
-        if( !DeepComparable.Matches(CTerminalModificationId, otherT.CTerminalModificationId)) return false;
-        if( !DeepComparable.Matches(CTerminalModificationElement, otherT.CTerminalModificationElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        if(!comparer.Equals(SubunitElement, otherT.SubunitElement)) return false;
+        if(!comparer.Equals(SequenceElement, otherT.SequenceElement)) return false;
+        if(!comparer.Equals(LengthElement, otherT.LengthElement)) return false;
+        if(!comparer.Equals(SequenceAttachment, otherT.SequenceAttachment)) return false;
+        if(!comparer.Equals(NTerminalModificationId, otherT.NTerminalModificationId)) return false;
+        if(!comparer.Equals(NTerminalModificationElement, otherT.NTerminalModificationElement)) return false;
+        if(!comparer.Equals(CTerminalModificationId, otherT.CTerminalModificationId)) return false;
+        if(!comparer.Equals(CTerminalModificationElement, otherT.CTerminalModificationElement)) return false;
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as SubunitComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(SubunitElement, otherT.SubunitElement)) return false;
-        if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
-        if( !DeepComparable.IsExactly(LengthElement, otherT.LengthElement)) return false;
-        if( !DeepComparable.IsExactly(SequenceAttachment, otherT.SequenceAttachment)) return false;
-        if( !DeepComparable.IsExactly(NTerminalModificationId, otherT.NTerminalModificationId)) return false;
-        if( !DeepComparable.IsExactly(NTerminalModificationElement, otherT.NTerminalModificationElement)) return false;
-        if( !DeepComparable.IsExactly(CTerminalModificationId, otherT.CTerminalModificationId)) return false;
-        if( !DeepComparable.IsExactly(CTerminalModificationElement, otherT.CTerminalModificationElement)) return false;
-
-        return true;
-      }
-
-      internal protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
@@ -360,7 +341,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object value)
       {
         switch (key)
         {
@@ -394,9 +375,9 @@ namespace Hl7.Fhir.Model
 
       }
 
-      internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",SubunitElement);
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
         if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
@@ -521,36 +502,21 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstanceProtein());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
       var otherT = other as SubstanceProtein;
       if(otherT == null) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(SequenceType, otherT.SequenceType)) return false;
-      if( !DeepComparable.Matches(NumberOfSubunitsElement, otherT.NumberOfSubunitsElement)) return false;
-      if( !DeepComparable.Matches(DisulfideLinkageElement, otherT.DisulfideLinkageElement)) return false;
-      if( !DeepComparable.Matches(Subunit, otherT.Subunit)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      if(!comparer.Equals(SequenceType, otherT.SequenceType)) return false;
+      if(!comparer.Equals(NumberOfSubunitsElement, otherT.NumberOfSubunitsElement)) return false;
+      if(!comparer.ListEquals(DisulfideLinkageElement, otherT.DisulfideLinkageElement)) return false;
+      if(!comparer.ListEquals(Subunit, otherT.Subunit)) return false;
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as SubstanceProtein;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(SequenceType, otherT.SequenceType)) return false;
-      if( !DeepComparable.IsExactly(NumberOfSubunitsElement, otherT.NumberOfSubunitsElement)) return false;
-      if( !DeepComparable.IsExactly(DisulfideLinkageElement, otherT.DisulfideLinkageElement)) return false;
-      if( !DeepComparable.IsExactly(Subunit, otherT.Subunit)) return false;
-
-      return true;
-    }
-
-    internal protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
@@ -572,7 +538,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object value)
     {
       switch (key)
       {
@@ -594,9 +560,9 @@ namespace Hl7.Fhir.Model
 
     }
 
-    internal protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
       if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
       if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
       if (DisulfideLinkageElement?.Any() == true) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
