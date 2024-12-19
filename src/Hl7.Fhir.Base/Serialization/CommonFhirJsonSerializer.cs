@@ -15,50 +15,48 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Tasks = System.Threading.Tasks;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public class CommonFhirJsonSerializer(ModelInspector modelInspector) : BaseFhirSerializer(modelInspector)
 {
-    public class CommonFhirJsonSerializer : BaseFhirSerializer
-    {
-        public CommonFhirJsonSerializer(ModelInspector modelInspector, SerializerSettings? settings = null) : base(modelInspector, settings)
-        {
-        }
+    public string SerializeToString(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        bool pretty = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .ToJson(pretty);
 
-        private FhirJsonSerializationSettings buildFhirJsonWriterSettings() =>
-            new() { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine };
+    public async Tasks.Task<string> SerializeToStringAsync(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        bool pretty = false)=>
+        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .ToJsonAsync(pretty).ConfigureAwait(false);
 
-        /// <inheritdoc cref="SerializeToStringAsync(Base, SummaryType, string[])" />
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .ToJson(buildFhirJsonWriterSettings());
+    public byte[] SerializeToBytes(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        bool pretty = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .ToJsonBytes(pretty);
 
-        public async Tasks.Task<string> SerializeToStringAsync(Base instance, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .ToJsonAsync(buildFhirJsonWriterSettings())
-                .ConfigureAwait(false);
+    public async Tasks.Task<byte[]> SerializeToBytesAsync(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null,
+        bool includeMandatoryInElementsSummary = false,
+        bool pretty = false) =>
+        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .ToJsonBytesAsync(pretty).ConfigureAwait(false);
 
-        /// <inheritdoc cref="SerializeToBytesAsync(Base, SummaryType, string[])" />
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .ToJsonBytes(buildFhirJsonWriterSettings());
+    public JObject SerializeToDocument(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .ToJObject();
 
-        public async Tasks.Task<byte[]> SerializeToBytesAsync(Base instance, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .ToJsonBytesAsync(buildFhirJsonWriterSettings())
-                .ConfigureAwait(false);
+    public void Serialize(Base instance, JsonWriter writer,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .WriteTo(writer);
 
-        public JObject SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .ToJObject(buildFhirJsonWriterSettings());
-
-        /// <inheritdoc cref="SerializeAsync(Base, JsonWriter, SummaryType, string[])" />
-        public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .WriteTo(writer, buildFhirJsonWriterSettings());
-
-        public async Tasks.Task SerializeAsync(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False, string[]? elements = null) =>
-            await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .WriteToAsync(writer, buildFhirJsonWriterSettings())
-                .ConfigureAwait(false);
-    }
+    public async Tasks.Task SerializeAsync(Base instance, JsonWriter writer,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
+        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .WriteToAsync(writer)
+            .ConfigureAwait(false);
 }
-#nullable restore

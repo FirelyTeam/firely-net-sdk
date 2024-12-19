@@ -38,7 +38,7 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public string XmlDictionarySerializer()
         {
-            return SerializationUtil.WriteXmlToString(Patient, (o, w) => XmlSerializer.Serialize(o, w));
+            return SerializationUtil.WriteXmlToString(w => XmlSerializer.Serialize(Patient, w));
         }
 
         [Benchmark]

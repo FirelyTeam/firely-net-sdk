@@ -2,13 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Model;
 
 public static class BaseExtensions
 {
-    [Obsolete("Use GetElementPairs() instead. Note that with GetElementPairs(), the elements are not guaranteed to " +
-              "be the same type, as they reflect the type in the actual POCO definition.")]
+    [Obsolete("Use EnumerateElements() instead. Note that with EnumerateElements(), the elements 'div' and 'id' are not FhirStrings, but XHtml and FhirUri respectively.")]
     public static IEnumerable<Base> Children(this Base instance)
     {
         foreach (var element in instance.EnumerateElements())
@@ -33,4 +33,46 @@ public static class BaseExtensions
             }
         }
     }
+
+    /// <summary>
+    /// Add the SUBSETTED tag to the Meta of the resource and all its resource children.
+    /// </summary>
+    /// <remarks>Will not add the tag to the root of a Bundle, since that is normally the container of
+    /// the subsetted resources. If the resource already contained a SUBSETTED tag, they will not
+    /// be reapplied.</remarks>
+    public static void AddSubsetted(this Base instance)
+    {
+        addSubsetted(instance, true);
+        return;
+
+        static void addSubsetted(Base instance, bool atRoot)
+        {
+            var isBundleAtRoot = instance is Bundle && atRoot;
+
+            if (instance is Resource resource && !isBundleAtRoot)
+            {
+                resource.Meta ??= new Meta();
+
+                foreach (var item in SUBSETTED_TAGS)
+                {
+                    if (!resource.Meta.Tag.Any(t => t.System == item.System && t.Code == item.Code))
+                    {
+                        resource.Meta.Tag.Add((Coding)item.DeepCopy());
+                    }
+                }
+            }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            foreach (var child in instance.Children())
+#pragma warning restore CS0618 // Type or member is obsolete
+                addSubsetted(child, atRoot: false);
+        }
+    }
+
+    private static readonly Coding[] SUBSETTED_TAGS =
+    [
+        new("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED"), // STU3 Tag
+        new("http://terminology.hl7.org/CodeSystem/v3-ObservationValue", "SUBSETTED") // Tag from R4 and higher
+    ];
+
 }

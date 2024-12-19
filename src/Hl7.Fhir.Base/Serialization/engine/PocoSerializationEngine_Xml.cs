@@ -22,7 +22,7 @@ internal partial class PocoSerializationEngine
         _xmlDeserializer ??= new BaseFhirXmlPocoDeserializer(_inspector, _xmlSettings);
 
     private BaseFhirXmlPocoSerializer getXmlSerializer() =>
-        _xmlSerializer ??= new BaseFhirXmlPocoSerializer(_inspector.FhirRelease);
+        _xmlSerializer ??= new BaseFhirXmlPocoSerializer(_inspector);
     
     /// <inheritdoc />
     public Resource DeserializeFromXml(string data)

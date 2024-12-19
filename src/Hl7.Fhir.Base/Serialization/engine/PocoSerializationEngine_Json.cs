@@ -9,17 +9,16 @@ namespace Hl7.Fhir.Serialization;
 
 internal partial class PocoSerializationEngine
 {
-    private readonly FhirJsonPocoDeserializerSettings? _jsonDeserializerSettings;
-    private readonly FhirJsonPocoSerializerSettings? _jsonSerializerSettings;
-    
+    private readonly FhirJsonConverterOptions? _jsonConverterOptions;
+
     private BaseFhirJsonPocoDeserializer? _jsonDeserializer;
     private BaseFhirJsonPocoSerializer? _jsonSerializer;
     
     private BaseFhirJsonPocoDeserializer getJsonDeserializer() => 
-        _jsonDeserializer ??= new BaseFhirJsonPocoDeserializer(_inspector, _jsonDeserializerSettings!);
+        _jsonDeserializer ??= new BaseFhirJsonPocoDeserializer(_inspector, _jsonConverterOptions!);
 
     private BaseFhirJsonPocoSerializer getJsonSerializer() =>
-        _jsonSerializer ??= new BaseFhirJsonPocoSerializer(_inspector, _jsonSerializerSettings!);
+        _jsonSerializer ??= new BaseFhirJsonPocoSerializer(_inspector);
     
     /// <inheritdoc />
     public Resource DeserializeFromJson(string data)
@@ -55,7 +54,8 @@ internal partial class PocoSerializationEngine
     /// </summary>
     /// <param name="instance">An instance of Base or any of its children</param>
     /// <param name="writer">The JSON writer</param>
-    public void SerializeToJsonWriter(Base instance, Utf8JsonWriter writer) => getJsonSerializer().Serialize(instance, writer);
+    public void SerializeToJsonWriter(Base instance, Utf8JsonWriter writer) =>
+        getJsonSerializer().Serialize(instance, writer, _jsonConverterOptions?.SummaryFilter);
     
     // overload necessary since ref structs cannot be captured in the lambda
     private Resource deserializeAndFilterErrors(BaseFhirJsonPocoDeserializer deserializer, ref Utf8JsonReader reader)
@@ -75,5 +75,3 @@ internal partial class PocoSerializationEngine
         return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
     }
 }
-
-#nullable restore

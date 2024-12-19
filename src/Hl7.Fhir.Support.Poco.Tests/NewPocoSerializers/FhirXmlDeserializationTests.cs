@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 }
             };
 
-            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+            var serializer = new FhirXmlPocoSerializer();
             var actual = serializer.SerializeToString(patient);
 
             // now parse this back out with the new parser

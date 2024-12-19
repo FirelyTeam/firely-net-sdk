@@ -5,66 +5,66 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
-
+#nullable enable
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System;
 using System.Xml;
 using System.Xml.Linq;
 using Tasks = System.Threading.Tasks;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public static class PocoSerializationExtensions
 {
-    public static class PocoSerializationExtensions
-    {
-        /// <inheritdoc cref="ToJsonAsync(Base, FhirJsonSerializationSettings)" />
-        public static string ToJson(this Base source, FhirJsonSerializationSettings settings = null) =>
-            source.ToTypedElement().ToJson(settings);
+    /// <summary>
+    /// Serializes the given POCO into a FHIR Json string.
+    /// </summary>
+    public static string ToJson(this Base source, bool pretty = false) =>
+        FhirJsonPocoSerializer.Default.SerializeToString(source, pretty);
 
-        public static async Tasks.Task<string> ToJsonAsync(this Base source, FhirJsonSerializationSettings settings = null) =>
-            await source.ToTypedElement().ToJsonAsync(settings).ConfigureAwait(false);
+    // 20241217
+    [Obsolete("We're cleaning up the POCO API surface, please use FhirJsonPocoSerializer.Default.SerializeToBytes() instead.")]
+    public static byte[] ToJsonBytes(this Base source, bool pretty = false) =>
+          FhirJsonPocoSerializer.Default.SerializeToBytes(source, pretty);
 
-        /// <inheritdoc cref="ToJsonBytesAsync(Base, FhirJsonSerializationSettings)" />
-        public static byte[] ToJsonBytes(this Base source, FhirJsonSerializationSettings settings = null) =>
-            source.ToTypedElement().ToJsonBytes(settings);
+    // 20241217
+    [Obsolete("We're phasing out Newtonsoft in favor of System.Text.Json, please use FhirJsonPocoSerializer.Default.Serialize() instead.")]
+    public static void WriteTo(this Base source, JsonWriter destination) =>
+        source.ToTypedElement().WriteTo(destination);
 
-        public static async Tasks.Task<byte[]> ToJsonBytesAsync(this Base source, FhirJsonSerializationSettings settings = null) =>
-            await source.ToTypedElement().ToJsonBytesAsync(settings).ConfigureAwait(false);
+    // 20241217
+    [Obsolete("We're phasing out Newtonsoft in favor of System.Text.Json, please use FhirJsonPocoSerializer.Default.Serialize() instead.")]
+    public static async Tasks.Task WriteToAsync(this Base source, JsonWriter destination) =>
+        await source.ToTypedElement().WriteToAsync(destination).ConfigureAwait(false);
 
-        /// <inheritdoc cref="WriteToAsync(Base, JsonWriter, FhirJsonSerializationSettings)" />
-        public static void WriteTo(this Base source, JsonWriter destination, FhirJsonSerializationSettings settings = null) =>
-            source.ToTypedElement().WriteTo(destination, settings);
+    /// <summary>
+    /// Serializes the given POCO into a FHIR Xml string.
+    /// </summary>
+    public static string ToXml(this Base source, bool pretty = false) =>
+        FhirXmlPocoSerializer.Default.SerializeToString(source);
 
-        public static async Tasks.Task WriteToAsync(this Base source, JsonWriter destination, FhirJsonSerializationSettings settings = null) =>
-            await source.ToTypedElement().WriteToAsync(destination, settings).ConfigureAwait(false);
+    [Obsolete("The new serializers are written against non-async APIs, so this async call is actually sync. Change to a non-async call.")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+    public static async Tasks.Task<string> ToXmlAsync(this Base source, bool pretty = false) =>
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        FhirXmlPocoSerializer.Default.SerializeToString(source);
 
-        public static JObject ToJObject(this Base source, FhirJsonSerializationSettings settings = null) =>
-            source.ToTypedElement().ToJObject(settings);
+    // 20241217
+    [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlPocoSerializer.Default.SerializeToBytes() instead.")]
+    public static byte[] ToXmlBytes(this Base source, bool pretty = false, SerializationFilter? filter = null) =>
+        FhirXmlPocoSerializer.Default.SerializeToBytes(source, pretty, filter);
 
-        /// <inheritdoc cref="ToXmlAsync(Base, FhirXmlSerializationSettings)" />
-        public static string ToXml(this Base source, FhirXmlSerializationSettings settings = null) =>
-            source.ToTypedElement().ToXml(settings);
+    // 20241217
+    [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlPocoSerializer.Default.Serialize() instead.")]
+    public static void WriteTo(this Base source, XmlWriter destination, SerializationFilter? filter = null) =>
+        FhirXmlPocoSerializer.Default.Serialize(source, destination, filter);
 
-        public static async Tasks.Task<string> ToXmlAsync(this Base source, FhirXmlSerializationSettings settings = null) =>
-            await source.ToTypedElement().ToXmlAsync(settings).ConfigureAwait(false);
-
-        /// <inheritdoc cref="ToXmlBytesAsync(Base, FhirXmlSerializationSettings)" />
-        public static byte[] ToXmlBytes(this Base source, FhirXmlSerializationSettings settings = null) =>
-            source.ToTypedElement().ToXmlBytes(settings);
-
-        public static async Tasks.Task<byte[]> ToXmlBytesAsync(this Base source, FhirXmlSerializationSettings settings = null) =>
-            await source.ToTypedElement().ToXmlBytesAsync(settings).ConfigureAwait(false);
-
-        /// <inheritdoc cref="WriteToAsync(Base, XmlWriter, FhirXmlSerializationSettings)" />
-        public static void WriteTo(this Base source, XmlWriter destination, FhirXmlSerializationSettings settings = null) =>
-            source.ToTypedElement().WriteTo(destination, settings);
-
-        public static async Tasks.Task WriteToAsync(this Base source, XmlWriter destination, FhirXmlSerializationSettings settings = null) =>
-            await source.ToTypedElement().WriteToAsync(destination, settings).ConfigureAwait(false);
-
-        public static XDocument ToXDocument(this Base source, FhirXmlSerializationSettings settings = null) =>
-            source.ToTypedElement().ToXDocument(settings);
-    }
+    // 20241217
+    [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlPocoSerializer.Default.Serialize() instead.")]
+    public static XDocument ToXDocument(this Base source) =>
+        source.ToTypedElement().ToXDocument();
 }

@@ -17,10 +17,16 @@ namespace Hl7.Fhir.Tests
 {
     public class JsonAssert
     {
+        private static JObject jObjectFromJsonText(string json)
+        {
+            using var reader = SerializationUtil.JsonReaderFromJsonText(json);
+            return SerializationUtil.JObjectFromReader(reader);
+        }
+
         public static void AreSame(string filename, string expected, string actual, List<string> errors)
         {
-            var exp = SerializationUtil.JObjectFromJsonText(expected);
-            var act = SerializationUtil.JObjectFromJsonText(actual);
+            var exp = jObjectFromJsonText(expected);
+            var act = jObjectFromJsonText(actual);
 
             AreSame(filename, exp, act, errors);
         }

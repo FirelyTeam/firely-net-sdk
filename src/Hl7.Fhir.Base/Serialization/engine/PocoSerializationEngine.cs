@@ -29,12 +29,12 @@ internal partial class PocoSerializationEngine : IFhirSerializationEngine
     private readonly ModelInspector _inspector;
     internal Predicate<CodedException> IgnoreFilter { get; set; }
         
-    internal PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null, FhirJsonPocoDeserializerSettings? jsonDeserializerSettings = null, FhirJsonPocoSerializerSettings? jsonSerializerSettings = null, FhirXmlPocoDeserializerSettings? xmlSettings = null)
+    internal PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null,
+        FhirJsonConverterOptions? converterOptions = null, FhirXmlPocoDeserializerSettings? xmlSettings = null)
     {
         _inspector = inspector;
         IgnoreFilter = ignoreFilter ?? (_ => false);
-        _jsonDeserializerSettings = jsonDeserializerSettings ?? new FhirJsonPocoDeserializerSettings();
-        _jsonSerializerSettings = jsonSerializerSettings ?? new FhirJsonPocoSerializerSettings();
+        _jsonConverterOptions = converterOptions ?? new FhirJsonConverterOptions();
         _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
     }
 
@@ -59,5 +59,3 @@ internal partial class PocoSerializationEngine : IFhirSerializationEngine
         return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
     }
 }
-
-#nullable restore

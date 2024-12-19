@@ -26,52 +26,18 @@ namespace Hl7.Fhir.Serialization;
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/json.html. Since all POCOs included
 /// in the SDK implement IReadOnlyDictionary, these methods can be used to serialize POCOs to Json.
 /// </remarks>
-public class BaseFhirJsonPocoSerializer
+public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
 {
     /// <summary>
-    /// Construct a new serializer for a specific release of FHIR.
+    /// The <see cref="ModelInspector"/> to be used for serialization metadata.
     /// </summary>
-    public BaseFhirJsonPocoSerializer(ModelInspector inspector) : this(inspector, new FhirJsonPocoSerializerSettings())
-    {
-        // nothing
-    }
+    public ModelInspector Inspector => inspector;
 
     /// <summary>
-    /// Construct a new serializer for a specific release of FHIR.
+    /// Serializes the given POCO with FHIR data into Json.
     /// </summary>
-    public BaseFhirJsonPocoSerializer(ModelInspector inspector, FhirJsonPocoSerializerSettings settings)
-    {
-        Inspector = inspector;
-        Settings = settings;
-    }
-
-    /// <summary>
-    /// The release of FHIR for which this serializer is configured.
-    /// </summary>
-    public ModelInspector Inspector { get; }
-
-    /// <summary>
-    /// The settings that were passed to the constructor.
-    /// </summary>
-    public FhirJsonPocoSerializerSettings Settings { get; }
-
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into Json.
-    /// </summary>
-    public void Serialize(Base element, Utf8JsonWriter writer) =>
-        serializeInternal(element, writer);
-    
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into a Json string.
-    /// </summary>
-    public string SerializeToString(Base element)
-    {
-        var stream = new MemoryStream();
-        var writer = new Utf8JsonWriter(stream);
-        serializeInternal(element, writer);
-        writer.Flush();
-        return Encoding.UTF8.GetString(stream.ToArray());
-    }
+    public void Serialize(Base element, Utf8JsonWriter writer, SerializationFilter? filter = null) =>
+        serializeInternal(element, writer, filter);
 
     /// <summary>
     /// Serializes the given POCO with FHIR data into Json, optionally skipping the "value" element.
@@ -80,8 +46,8 @@ public class BaseFhirJsonPocoSerializer
     /// with just the value, and one with the id/extensions.</remarks>
     private void serializeInternal(
         Base? element,
-        Utf8JsonWriter writer
-        )
+        Utf8JsonWriter writer,
+        SerializationFilter? filter = null)
     {
         if (element is null)
         {
@@ -91,7 +57,6 @@ public class BaseFhirJsonPocoSerializer
         }
 
         writer.WriteStartObject();
-        var filter = Settings.SummaryFilter;
 
         if (element is Resource r)
             writer.WriteString("resourceType", r.TypeName);

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) => 
+        private static async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) =>
             await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
             var pat = await pser.ParseAsync<Patient>(tp);
 
-            var output = await pat.ToJsonAsync();
+            var output = pat.ToJson();
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
@@ -69,37 +69,15 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var nav = await getJsonElement(json);
             var output = await nav.ToJsonAsync();
-            Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            var pretty = await nav.ToJsonAsync(new FhirJsonSerializationSettings { Pretty = true });
-            Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
+            Assert.IsFalse(output[..20].Contains('\n'));
+            var pretty = await nav.ToJsonAsync(pretty: true);
+            Assert.IsTrue(pretty[..20].Contains('\n'));
 
             var p = await new FhirJsonParser().ParseAsync<Patient>(json);
-            output = await (new FhirJsonSerializer(new SerializerSettings { Pretty = false })).SerializeToStringAsync(p);
-            Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            pretty = await (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToStringAsync(p);
-            Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
-        }
-
-        [TestMethod]
-        public async Tasks.Task TestAppendNewLine()
-        {
-            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
-
-            var nav = await getJsonElement(json);
-            var output = await nav.ToJsonAsync();
-            Assert.IsFalse(output.Contains('\n'));
-            var pretty = await nav.ToJsonAsync(new FhirJsonSerializationSettings { Pretty = true });
-            Assert.IsTrue(pretty.Contains('\n'));
-            var lastLine = pretty.Split('\n').Last();
-            Assert.IsFalse(string.IsNullOrEmpty(lastLine));
-
-            var p = await new FhirJsonParser().ParseAsync<Patient>(json);
-            output = await (new FhirJsonSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToStringAsync(p);
-            lastLine = output.Split('\n').Last();
-            Assert.IsTrue(string.IsNullOrEmpty(lastLine));
-            pretty = await (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToStringAsync(p);
-            lastLine = pretty.Split('\n').Last();
-            Assert.IsTrue(string.IsNullOrEmpty(lastLine));
+            output = await (new FhirJsonSerializer().SerializeToStringAsync(p, pretty: false));
+            Assert.IsFalse(output[..20].Contains('\n'));
+            pretty = await (new FhirJsonSerializer().SerializeToStringAsync(p, pretty: true));
+            Assert.IsTrue(pretty[..20].Contains('\n'));
         }
     }
 }

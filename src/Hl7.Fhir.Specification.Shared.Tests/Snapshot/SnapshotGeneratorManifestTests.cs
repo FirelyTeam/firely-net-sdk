@@ -87,14 +87,9 @@ namespace Hl7.Fhir.Specification.Tests
             GenerateSnapshotForExternalProfiles = true
         };
 
-        static readonly SerializerSettings _serializerSettings = new SerializerSettings()
-        {
-            Pretty = true
-        };
-
         static readonly FhirXmlParser _fhirXmlParser = new FhirXmlParser(_parserSettings);
         static readonly FhirJsonParser _fhirJsonParser = new FhirJsonParser(_parserSettings);
-        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer(_serializerSettings);
+        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer();
 
         string _testPath;
         DirectorySource _dirSource;
@@ -679,7 +674,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static void Save(string filePath, Base output)
         {
-            var xml = _fhirXmlSerializer.SerializeToString(output);
+            var xml = _fhirXmlSerializer.SerializeToString(output, pretty: true);
             File.WriteAllText(filePath, xml);
         }
 

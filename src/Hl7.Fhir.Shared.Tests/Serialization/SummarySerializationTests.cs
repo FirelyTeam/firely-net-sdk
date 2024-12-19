@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
-            var result = await customMaskingNode.ToXmlAsync(settings: new FhirXmlSerializationSettings());
+            var result = await customMaskingNode.ToXmlAsync();
 
             Assert.IsFalse(result.Contains("<language>"));
             Assert.IsTrue(result.Contains("<type>"));
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.None
             });
 
-            result = await customMaskingNodeForBundle.ToXmlAsync(settings: new FhirXmlSerializationSettings());
+            result = await customMaskingNodeForBundle.ToXmlAsync();
 
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));

@@ -16,57 +16,61 @@ using System.Xml;
 using System.Xml.Linq;
 using Tasks = System.Threading.Tasks;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public class CommonFhirXmlSerializer(ModelInspector modelInspector) : BaseFhirSerializer(modelInspector)
 {
-    public class CommonFhirXmlSerializer : BaseFhirSerializer
-    {
-        public CommonFhirXmlSerializer(ModelInspector modelInspector, SerializerSettings? settings = null) : base(modelInspector, settings)
-        {
-        }
-
-        private FhirXmlSerializationSettings buildFhirXmlWriterSettings() =>
-            new() { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
-
-        /// <inheritdoc cref="SerializeToStringAsync(Base, SummaryType, string, string[])" />
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
+    public string SerializeToString(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null,
+        bool pretty = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
-            .ToXml(settings: buildFhirXmlWriterSettings());
+            .ToXml(pretty);
 
-        public async Tasks.Task<string> SerializeToStringAsync(Base instance, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-            await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .Rename(root)
-                .ToXmlAsync(settings: buildFhirXmlWriterSettings())
-                .ConfigureAwait(false);
-
-        /// <inheritdoc cref="SerializeToBytesAsync(Base, SummaryType, string, string[])" />
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
+    public async Tasks.Task<string> SerializeToStringAsync(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null,
+        bool pretty = false) =>
+        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
-            .ToXmlBytes(settings: buildFhirXmlWriterSettings());
+            .ToXmlAsync().ConfigureAwait(false);
 
-        public async Tasks.Task<byte[]> SerializeToBytesAsync(Base instance, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-            await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .Rename(root)
-                .ToXmlBytesAsync(settings: buildFhirXmlWriterSettings())
-                .ConfigureAwait(false);
-
-        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-           MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
+    public byte[] SerializeToBytes(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null,
+        bool pretty = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
-            .ToXDocument(buildFhirXmlWriterSettings()).Rename(root);
+            .ToXmlBytes();
 
-        /// <inheritdoc cref="SerializeAsync(Base, XmlWriter, SummaryType, string, string[])" />
-        public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
+    public async Tasks.Task<byte[]> SerializeToBytesAsync(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null,
+        bool pretty = false) =>
+        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
-            .WriteTo(writer, settings: buildFhirXmlWriterSettings());
+            .ToXmlBytesAsync().ConfigureAwait(false);
 
-        public async Tasks.Task SerializeAsync(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string? root = null, string[]? elements = null) =>
-            await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
-                .Rename(root)
-                .WriteToAsync(writer, settings: buildFhirXmlWriterSettings())
-                .ConfigureAwait(false);
-    }
+    public XDocument SerializeToDocument(Base instance,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null,
+        bool pretty = false) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .Rename(root)
+            .ToXDocument().Rename(root);
+
+    public void Serialize(Base instance, XmlWriter writer,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null) =>
+        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .Rename(root)
+            .WriteTo(writer);
+
+    public async Tasks.Task SerializeAsync(Base instance, XmlWriter writer,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+        string? root = null) =>
+        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+            .Rename(root)
+            .WriteToAsync(writer).ConfigureAwait(false);
 }
-#nullable restore

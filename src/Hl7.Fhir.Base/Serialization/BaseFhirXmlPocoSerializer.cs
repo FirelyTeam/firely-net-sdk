@@ -25,23 +25,15 @@ namespace Hl7.Fhir.Serialization;
 /// </summary>
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html.
 /// </remarks>
-public class BaseFhirXmlPocoSerializer
+public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
 {
     /// <summary>
-    /// The release of FHIR for which this serializer is configured.
+    /// The <see cref="ModelInspector"/> to be used for serialization metadata.
     /// </summary>
-    public FhirRelease Release { get; }
+    public ModelInspector Inspector => inspector;
 
     /// <summary>
-    /// Construct a new serializer for a specific release of FHIR.
-    /// </summary>
-    public BaseFhirXmlPocoSerializer(FhirRelease release)
-    {
-        Release = release;
-    }
-
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into Json.
+    /// Serializes the given POCO with FHIR data into Json.
     /// </summary>
     public void Serialize(
         Base element,
@@ -68,14 +60,6 @@ public class BaseFhirXmlPocoSerializer
     }
 
     /// <summary>
-    /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
-    /// </summary>
-    public string SerializeToString(
-        Base element,
-        SerializationFilter? summary = default) =>
-        SerializationUtil.WriteXmlToString(element, (o,w) => Serialize(o, w, summary));
-
-    /// <summary>
     /// Serializes the given PCO with FHIR data into XML.
     /// </summary>
     private void serializeInternal(
@@ -87,7 +71,7 @@ public class BaseFhirXmlPocoSerializer
             writer.WriteStartElement(r.TypeName, XmlNs.FHIR);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
-        if (!ClassMapping.TryGetMappingForType(element.GetType(), Release, out var mapping))
+        if (Inspector.FindOrImportClassMapping(element.GetType()) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 

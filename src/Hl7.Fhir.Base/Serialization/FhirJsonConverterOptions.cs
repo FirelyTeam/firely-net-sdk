@@ -18,8 +18,13 @@ namespace Hl7.Fhir.Serialization
     /// <summary>
     /// Specify the optional features for Json deserialization.
     /// </summary>
-    public record FhirJsonPocoDeserializerSettings
+    public record FhirJsonConverterOptions
     {
+        /// <summary>
+        /// Specifies the filter to use for summary serialization.
+        /// </summary>
+        public SerializationFilter? SummaryFilter { get; set; } = default;
+
         /// <summary>
         /// If the caller will not access base64 data in the deserialized resources, base64 decoding
         /// of <see cref="Base64Binary"/> values can be turned off to increase performance.

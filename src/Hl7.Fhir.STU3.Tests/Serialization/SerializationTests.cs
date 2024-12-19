@@ -258,12 +258,6 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(trimmed.Contains(" Smith"));
             Assert.IsFalse(trimmed.Contains("Smith&#xD;&#xA;&#x9;"));
             Assert.IsTrue(trimmed.Contains("\"Smith\""));
-
-            var notTrimmed = await new FhirXmlSerializer(new SerializerSettings { TrimWhiteSpacesInXml = false }).SerializeToStringAsync(patient);
-            Assert.IsTrue(notTrimmed.Contains(" Smith"));
-            Assert.IsTrue(notTrimmed.Contains("Smith&#xD;&#xA;&#x9;"));
-            Assert.IsFalse(notTrimmed.Contains("\"Smith\""));
-
         }
 
         [TestMethod]
@@ -588,7 +582,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             poco.Meta = new Meta();
 
-            var reserialized = await poco.ToJsonAsync();
+            var reserialized = poco.ToJson();
 
             var newPoco = await fhirJsonParser.ParseAsync<Patient>(reserialized);
 
@@ -605,14 +599,14 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             // default behavior
-            var json = new FhirJsonSerializer().SerializeToDocument(obs, elements: new[] { "issued" });
+            var json = new FhirJsonSerializer().SerializeToDocument(obs, elements: ["issued"]);
 
             Assert.IsTrue(json.ContainsKey("issued"));
             Assert.IsFalse(json.ContainsKey("status"));
 
             // Adding mandatory elements to the set of elements
-            json = new FhirJsonSerializer(new SerializerSettings() { IncludeMandatoryInElementsSummary = true })
-                .SerializeToDocument(obs, elements: new[] { "issued" });
+            json = new FhirJsonSerializer()
+                .SerializeToDocument(obs, elements: ["issued"], includeMandatoryInElementsSummary: true);
 
             Assert.IsTrue(json.ContainsKey("issued"));
             Assert.IsTrue(json.ContainsKey("status"));
@@ -621,13 +615,10 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void AllowParseDateWithDateTime()
         {
-            var patientJson = "{ \"resourceType\": \"Patient\", \"birthDate\": \"1991-02-03T11:22:33Z\" }";
-            var parser = new FhirJsonParser();
-
-            //   Assert.ThrowsException<StructuralTypeException>(() => parser.Parse<Patient>(patientJson));
+            const string patientJson = "{ \"resourceType\": \"Patient\", \"birthDate\": \"1991-02-03T11:22:33Z\" }";
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            parser = new FhirJsonParser(new ParserSettings { TruncateDateTimeToDate = true });
+            var parser = new FhirJsonParser(new ParserSettings { TruncateDateTimeToDate = true });
 #pragma warning restore CS0618 // Type or member is obsolete
             var patient = parser.Parse<Patient>(patientJson);
             Assert.AreEqual("1991-02-03", patient.BirthDate.ToString());

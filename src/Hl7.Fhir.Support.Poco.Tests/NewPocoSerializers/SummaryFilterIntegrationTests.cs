@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 ));
 
             var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonPocoSerializerSettings() { SummaryFilter = filter })
+                .ForFhir(typeof(Patient).Assembly, new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
             string actual = JsonSerializer.Serialize(b, options);
 
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var full = FhirXmlNode.Parse(fullXml).ToPoco<T>(ModelInspector.ForType<T>());
 
             var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonPocoSerializerSettings { SummaryFilter = filter })
+                .ForFhir(typeof(Patient).Assembly, new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
             string summarizedJson = JsonSerializer.Serialize(full, options);
 
