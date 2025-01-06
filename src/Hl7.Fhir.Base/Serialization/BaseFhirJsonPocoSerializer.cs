@@ -47,7 +47,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
     private void serializeInternal(
         Base? element,
         Utf8JsonWriter writer,
-        SerializationFilter? filter = null)
+        SerializationFilter? filter)
     {
         if (element is null)
         {
@@ -87,10 +87,10 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
             switch (member.Value)
             {
                 case PrimitiveType pt:
-                    serializeFhirPrimitive(propertyName, pt, writer, requiredType);
+                    serializeFhirPrimitive(propertyName, pt, writer, filter, requiredType);
                     break;
                 case IReadOnlyList<PrimitiveType?> pts:
-                    serializeFhirPrimitiveList(propertyName, pts, writer, requiredType);
+                    serializeFhirPrimitiveList(propertyName, pts, writer, filter, requiredType);
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
                     {
@@ -98,7 +98,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
                         writer.WriteStartArray();
 
                         foreach (var child in children)
-                            serializeInternal(child, writer);
+                            serializeInternal(child, writer, filter);
 
                         writer.WriteEndArray();
                         break;
@@ -106,7 +106,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
                 case Base b:
                     {
                         writer.WritePropertyName(propertyName);
-                        serializeInternal(b, writer);
+                        serializeInternal(b, writer, filter);
                         break;
                     }
                 default:
@@ -142,6 +142,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
         string elementName,
         IReadOnlyList<PrimitiveType?> values,
         Utf8JsonWriter writer,
+        SerializationFilter? filter,
         Type? requiredType = null)
     {
         if(values is null) throw new ArgumentNullException(nameof(values));
@@ -196,7 +197,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
                     writeStartArray("_" + elementName, numNullsMissed, writer);
                 }
 
-                serializeInternal(value, writer);
+                serializeInternal(value, writer, filter);
             }
             else
             {
@@ -224,7 +225,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>FHIR primitives are handled separately here since they may require
     /// serialization into two Json properties called "elementName" and "_elementName".</remarks>
-    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, Type? requiredType = null)
+    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter, Type? requiredType = null)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
@@ -239,7 +240,7 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
 
         // Write a property with '_elementName'
         writer.WritePropertyName("_" + elementName);
-        serializeInternal(value, writer);
+        serializeInternal(value, writer, filter);
     }
 
     /// <summary>

@@ -37,20 +37,7 @@ internal partial class PocoSerializationEngine : IFhirSerializationEngine
         _jsonConverterOptions = converterOptions ?? new FhirJsonConverterOptions();
         _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
     }
-
-    internal PocoSerializationEngine(BaseFhirJsonPocoDeserializer deserializer,
-        BaseFhirJsonPocoSerializer serializer)
-    {
-        _jsonDeserializer = deserializer;
-        _jsonSerializer = serializer;
-        // dirty, but this constructor is really not supposed to be supported for much longer
-        var inspectorfield =
-            typeof(BaseFhirJsonPocoDeserializer).GetField("_inspector", BindingFlags.NonPublic | BindingFlags.Instance);
-        _inspector = (inspectorfield!.GetValue(_jsonDeserializer) as ModelInspector)!;
-        IgnoreFilter = _ => false;
-        _xmlSettings = new FhirXmlPocoDeserializerSettings();
-    }
-        
+    
     private Base deserializeAndFilterErrors(TryDeserializer deserializer)
     {
         var (instance, issues) = deserializer();

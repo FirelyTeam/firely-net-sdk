@@ -74,10 +74,10 @@ public static class FhirJsonConverterOptionsExtensions
     public static JsonSerializerOptions ForFhir(
         this JsonSerializerOptions options,
         Assembly modelAssembly,
-        FhirJsonConverterOptions deserializerSettings
+        FhirJsonConverterOptions converterOptions
     )
     {
-        var converter = new FhirJsonConverterFactory(modelAssembly, deserializerSettings);
+        var converter = new FhirJsonConverterFactory(modelAssembly, converterOptions);
         return options.ForFhir(converter);
     }
 
@@ -89,10 +89,10 @@ public static class FhirJsonConverterOptionsExtensions
     public static JsonSerializerOptions ForFhir(
         this JsonSerializerOptions options,
         ModelInspector inspector,
-        FhirJsonConverterOptions deserializerSettings
+        FhirJsonConverterOptions converterOptions
     )
     {
-        var converter = new FhirJsonConverterFactory(inspector, deserializerSettings);
+        var converter = new FhirJsonConverterFactory(inspector, converterOptions);
         return options.ForFhir(converter);
     }
 

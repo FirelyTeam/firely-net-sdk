@@ -125,7 +125,7 @@ public static class FhirSerializationEngineFactory
     /// </summary>
     public static IFhirSerializationEngine Recoverable(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions = null) =>
-        new PocoSerializationEngine(inspector, FilterPredicateExtensions.IsRecoverableIssue);
+        new PocoSerializationEngine(inspector, FilterPredicateExtensions.IsRecoverableIssue, converterOptions: converterOptions);
 
     /// <summary>
     /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the new Poco-based parser and
@@ -142,11 +142,11 @@ public static class FhirSerializationEngineFactory
     /// and just continue parsing. Note that this may mean data loss.
     /// </summary>
     public static IFhirSerializationEngine Ostrich(ModelInspector inspector,
-        FhirJsonConverterOptions? deserializerSettings = null) =>
+        FhirJsonConverterOptions? converterOptions = null) =>
         new PocoSerializationEngine(
             inspector,
             _ => true,
-            (deserializerSettings ?? new FhirJsonConverterOptions()) with {Validator = null},
+            (converterOptions ?? new FhirJsonConverterOptions()) with {Validator = null},
             xmlSettings: new FhirXmlPocoDeserializerSettings {Validator = null});
 
     /// <summary>
@@ -155,26 +155,13 @@ public static class FhirSerializationEngineFactory
     /// </summary>
     /// <param name="inspector"></param>
     /// <param name="ignoreFilter">A predicate specifying which errors to ignore when parsing</param>
-    /// <param name="jsonDeserializerSettings">The settings to be used by the engine to deserialize JSON sources</param>
+    /// <param name="converterOptions">The settings to be used by the engine to deserialize JSON sources</param>
     /// <param name="xmlSerializerSettings">The settings to be used by the engine to deserialize XML sources</param>
     /// <returns></returns>
     public static IFhirSerializationEngine Custom(ModelInspector inspector, Predicate<CodedException> ignoreFilter,
-        FhirJsonConverterOptions? jsonDeserializerSettings = null,
+        FhirJsonConverterOptions? converterOptions = null,
         FhirXmlPocoDeserializerSettings? xmlSerializerSettings = null)
     {
-        return new PocoSerializationEngine(inspector, ignoreFilter, jsonDeserializerSettings);
-    }
-
-    /// <summary>
-    /// Create an implementation of <see cref="IFhirSerializationEngine"/> which allows for manual specification of the json serializer and deserializer.
-    /// The Xml parser in this serialization engine is completely default.
-    /// </summary>
-    /// <param name="jsonDeserializer">A preconfigured json deserializer</param>
-    /// <param name="jsonSerializer">A preconfigured json serializer</param>
-    /// <returns></returns>
-    internal static IFhirSerializationEngine WithCustomJsonSerializers(BaseFhirJsonPocoDeserializer jsonDeserializer,
-        BaseFhirJsonPocoSerializer jsonSerializer)
-    {
-        return new PocoSerializationEngine(jsonDeserializer, jsonSerializer);
+        return new PocoSerializationEngine(inspector, ignoreFilter, converterOptions);
     }
 }
