@@ -3,6 +3,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,7 +39,7 @@ namespace Hl7.FhirPath
             return result is null || result.Value;
         }
 
-        /// <inheritdoc cref="Predicate(Hl7.FhirPath.CompiledExpression,Hl7.Fhir.Model.PocoNode,Hl7.FhirPath.EvaluationContext)"/>
+        /// <inheritdoc cref="Predicate{T}"/>
         public static bool Predicate(this CompiledExpression evaluator, Base input, EvaluationContext ctx)
         {
             var result = evaluator(input.ToElementNode(), ctx).BooleanEval();

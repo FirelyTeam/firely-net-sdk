@@ -83,7 +83,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
 
     private AnnotationList? _annotations;
 
-    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => []);
+    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     IEnumerable<object> IAnnotated.Annotations(Type type)
     {
