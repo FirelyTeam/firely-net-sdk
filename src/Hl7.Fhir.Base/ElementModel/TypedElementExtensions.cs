@@ -14,6 +14,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -57,11 +58,18 @@ namespace Hl7.Fhir.ElementModel
         }
 
         /// <summary>
-        /// Converts a Poco to a new PocoElementNode.
+        /// Converts a Poco to a PocoNode.
         /// </summary>
         /// <param name="base">The Poco that should be converted to an <see cref="ITypedElement"/>.</param>
         /// <param name="rootName"></param>
         public static PocoNode ToElementNode(this Base @base, string? rootName = null) => PocoNodeOrList.Root(@base, rootName);
+
+        /// <summary>
+        /// Converts a typed element to a PocoNode.
+        /// </summary>
+        /// <remarks>Will produce significantly more accurate results if a modelinspector is provided, or if the input is already a PocoNode</remarks>
+        public static PocoNode ToPocoNode(this ITypedElement node, ModelInspector? inspector = null) =>
+            node as PocoNode ?? node.ToPoco(inspector ?? ModelInspector.Base).ToElementNode();
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements

@@ -25,8 +25,6 @@ namespace Hl7.FhirPath.Expressions
             Symbols = symbols;
         }
 
-
-        [TemporarilyChanged] // we should investigate here. We will need a way to handle "object" without a fhir type, and try to infer it from the object
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
             return InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value));
