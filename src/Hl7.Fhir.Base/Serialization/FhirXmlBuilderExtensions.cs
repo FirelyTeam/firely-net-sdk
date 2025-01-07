@@ -64,7 +64,7 @@ public static class FhirXmlBuilderExtensions
 
     public static string ToXml(this ITypedElement source, bool pretty = false)
     {
-        if (source is not PocoNode { Poco: { } b } node)
+        if (source is not PocoNode node)
             return SerializationUtil.WriteXmlToString(source.WriteTo, pretty);
 
         return serializePocoNode(node, pretty);

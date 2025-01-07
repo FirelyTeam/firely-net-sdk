@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirXmlSerializationTests
     {
-        private (Patient, string) getEdgecases()
+        private static (Patient, string) getEdgecases()
         {
             var filename = Path.Combine("TestData", "fp-test-patient.xml");
             var expected = File.ReadAllText(filename);

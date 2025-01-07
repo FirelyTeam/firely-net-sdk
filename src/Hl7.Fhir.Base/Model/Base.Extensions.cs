@@ -38,6 +38,12 @@ public static class BaseExtensions
         }
     }
 
+    internal static Base MakeSubsettedClone(this Base source)
+    {
+        var clone = (Base)source.DeepCopy();
+        clone.AddSubsetted();
+        return clone;
+    }
 
     internal static ITypedElement MakeElementStack(this Base instance, ModelInspector modelInspector, SummaryType summary, string[]? elements, bool includeMandatoryInElementsSummary)
     {

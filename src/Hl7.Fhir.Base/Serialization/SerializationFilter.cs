@@ -53,12 +53,12 @@ public abstract class SerializationFilter
             IncludeMandatory = true
         }));
 
-    public static SerializationFilter ForCount() => new BundleFilter(new TopLevelFilter(
+    public static SerializationFilter ForCount() => new TopLevelFilter(
         new ElementMetadataFilter
         {
-            IncludeMandatory = true,
-            IncludeNames = ["id", "total", "link"]
-        }));
+            //IncludeMandatory = true,
+            IncludeNames = ["id", "total", "link", "type"]
+        });
 
     /// <summary>
     /// Construct a new filter that conforms to the `_summary=data` summarized form.
