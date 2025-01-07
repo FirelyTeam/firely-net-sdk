@@ -34,8 +34,8 @@ namespace Vonk.FhirPath.R4.Tests
         [TestCategory("LongRunner")]
         public async Tasks.Task TestSelectMethods()
         {
-            await MassiveParallelSelectsShouldBeCorrect("Api", new Func<IScopedNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
-            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<IScopedNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context)));
+            await MassiveParallelSelectsShouldBeCorrect("Api", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
+            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context)));
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Vonk.FhirPath.R4.Tests
         /// This may indicate a multithreading problem in the FhirPath evaluation.
         /// You may need to run the test in Release mode to reveal the error.
         /// </summary>
-        public static async Tasks.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<IScopedNode, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
+        public static async Tasks.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
             var buffer = new BufferBlock<ValueSet>();
@@ -126,7 +126,7 @@ namespace Vonk.FhirPath.R4.Tests
         }
 
 
-        public static IEnumerable<ITypedElement> Select(this IScopedNode input, string expression, EvaluationContext ctx = null)
+        public static IEnumerable<ITypedElement> Select(this PocoNode input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = GetCompiledExpression(expression);
             return evaluator(input, ctx ?? new EvaluationContext());

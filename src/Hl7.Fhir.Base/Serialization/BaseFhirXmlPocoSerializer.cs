@@ -52,11 +52,11 @@ public class BaseFhirXmlPocoSerializer
 
         // If we are serializing a non-resource, or we are serializing a nested resource,
         // we need to pick a name for the root element.
-        var pickElementName = element is not Resource or IScopedNode { Parent: not null };
+        var pickElementName = element is not Resource;
         if (pickElementName)
         {
             // If we are an element with a name, pick that, otherwise us the name of the type.
-            var nodeName = element is ITypedElement ite ? ite.Name : element.TypeName;
+            var nodeName = element.TypeName;
 
             writer.WriteStartElement(nodeName, XmlNs.FHIR);
         }

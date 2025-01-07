@@ -607,8 +607,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var exprCompiled = compiler.Compile(expr);
             var r = exprCompiled(fixture.PatientExample.ToElementNode(), new FhirEvaluationContext());
             Assert.AreEqual(2, r.Count());
-            Assert.AreEqual("r1-v1", r.First().Value);
-            Assert.AreEqual("r1-v2", r.Skip(1).First().Value);
+            Assert.AreEqual("r1-v1", r.First().GetValue());
+            Assert.AreEqual("r1-v2", r.Skip(1).First().GetValue());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
         }
         /*

@@ -2,9 +2,11 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Hl7.Fhir.ElementModel;
 
@@ -12,7 +14,7 @@ namespace Hl7.Fhir.ElementModel;
 
 public static class PocoNodeExtensions
 {
-    private static bool TryResolveBundleEntry(this PocoNode? node, string fullUrl, [NotNullWhen(true)] out PocoNode? result)
+    private static bool tryResolveBundleEntry(this PocoNode? node, string fullUrl, [NotNullWhen(true)] out PocoNode? result)
     {
         result = node?.Poco is Bundle
             ? node
@@ -24,7 +26,7 @@ public static class PocoNodeExtensions
         return result is not null;
     }
 
-    private static bool TryResolveContainedEntry(this PocoNode? node, string? id, [NotNullWhen(true)] out PocoNode? result)
+    private static bool tryResolveContainedEntry(this PocoNode? node, string? id, [NotNullWhen(true)] out PocoNode? result)
     {
         result = node?.Poco is DomainResource
             ? node
@@ -40,7 +42,7 @@ public static class PocoNodeExtensions
     /// <param name="node">this node</param>
     /// <param name="url">The relative URL to resolve.</param>
     /// <param name="result">Contains the referenced instance, or null if the operation failed</param>
-    /// <remarks>Does not create a copy. The resolved resource will be part of the IScopedNode-tree that was passed to this function</remarks>
+    /// <remarks>Does not create a copy. The resolved resource will be part of the PocoNode-tree that was passed to this function</remarks>
     /// <returns>t</returns>
     internal static bool TryResolveLocalReference(this PocoNode? node, string url, [NotNullWhen(true)] out PocoNode? result)
     {
@@ -48,17 +50,17 @@ public static class PocoNodeExtensions
         {
             if (scan.Poco is Bundle) // if we do not find it in the closest bundle, the reference is invalid
             {
-                return scan.TryResolveBundleEntry(url, out result);
+                return scan.tryResolveBundleEntry(url, out result);
             }
             
-            if (scan.Poco is DomainResource && scan.TryResolveContainedEntry(url, out result)) 
+            if (scan.Poco is DomainResource && scan.tryResolveContainedEntry(url, out result)) 
             {
                 // if we encounter a DomainResource, try to resolve the contained reference.
                 // If it fails, higher domain resources could still contain it!
                 return true;
             }
 
-            if (scan.Children("id").FirstOrDefault()?.Value as string == url[1..])
+            if (scan.Child<PrimitiveNode>("id")?.Value as string == url[1..])
             {
                 // if we encounter a resource with the correct id, return it
                 result = scan;
@@ -122,7 +124,7 @@ public static class PocoNodeExtensions
     }
     
     /// <summary>
-    /// Extract the %resource variable from this IScopedNode
+    /// Extract the %resource variable from this PocoNode
     /// </summary> 
     internal static PocoNode? GetResourceContext(this PocoNodeOrList? node) => node switch
     {
@@ -133,7 +135,7 @@ public static class PocoNodeExtensions
     };
     
     /// <summary>
-    /// Extract the %rootResource variable from this IScopedNode
+    /// Extract the %rootResource variable from this PocoNode
     /// </summary>
     internal static PocoNode? GetRootResourceContext(this PocoNodeOrList node) => node.GetResourceContext() switch
     {
@@ -192,4 +194,36 @@ public static class PocoNodeExtensions
     public static IEnumerable<PocoNode> ContainedResources(this PocoNode node) => node.Child("contained") ?? Enumerable.Empty<PocoNode>();
     
     public static IEnumerable<PocoNode> BundledResources(this PocoNode node) => node.Child("entry") ?? Enumerable.Empty<PocoNode>();
+    
+    public static object? GetValue(this PocoNode node) => node is PrimitiveNode primitive ? primitive.Value : null;
+
+    public static IEnumerable<PocoNode> FindSubChildren(this IEnumerable<PocoNode> nodes, string name) => nodes.SelectMany(node => node.Child(name) ?? Enumerable.Empty<PocoNode>());
+    
+    public static IEnumerable<PocoNode> Descendants(this IEnumerable<PocoNode> nodes) => nodes.SelectMany(Descendants);
+
+    public static IEnumerable<PocoNode> Descendants(this PocoNode node) => node.Children().SelectMany(singleOrList => singleOrList).Descendants();
+    
+    public static T? Child<T>(this PocoNode? node, string name) where T : PocoNodeOrList => node?.Child(name) as T;
+    
+    public static IEnumerable<PocoNode> Where<T>(this IEnumerable<PocoNode> nodes, Func<T, bool> predicate) where T : Base =>
+        nodes is PocoListNode pln 
+            ? pln.Where(predicate)
+            : nodes.Where(n => n.Poco is T t && predicate(t));
+
+    internal static IEnumerable<PocoNode> Where<T>(this PocoListNode pln, Func<T, bool> predicate) where T : Base =>
+        pln.Pocos.OfType<T>().Where(predicate).Select((poco, index) => new PocoNode(poco, pln.Parent, index, pln.Name));
+
+    public static PocoNode? FirstOrDefault<T>(this IEnumerable<PocoNode> node, Func<T, bool> predicate) where T : Base =>
+        node.FirstOrDefault(n => n.Poco is T t && predicate(t));
+    
+    internal static PocoNode? FirstOrDefault<T>(this PocoListNode pln, Func<T, bool> predicate) where T : Base
+    {
+        for (int index = 0; index < pln.Pocos.Count; index++)
+        {
+            if (pln.Pocos[index] is T item && predicate(item))
+                return new PocoNode(item, pln.Parent, index, pln.Name);
+        }
+
+        return null;
+    }
 }

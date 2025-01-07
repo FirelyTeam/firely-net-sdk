@@ -39,7 +39,7 @@ namespace Hl7.FhirPath.Expressions
             
             newClosure.SetThis(root);
             newClosure.SetThat(root);
-            newClosure.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(1));
+            newClosure.SetIndex(PocoNode.ForPrimitive<Integer>(1));
             newClosure.SetOriginalContext(root);
             
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
@@ -48,9 +48,9 @@ namespace Hl7.FhirPath.Expressions
             return newClosure;
         }
 
-        private Dictionary<string, IEnumerable<IScopedNode>> _namedValues = new ();
+        private Dictionary<string, IEnumerable<PocoNode>> _namedValues = new ();
 
-        public virtual void SetValue(string name, IEnumerable<IScopedNode> value)
+        public virtual void SetValue(string name, IEnumerable<PocoNode> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -69,10 +69,10 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        public virtual IEnumerable<IScopedNode> ResolveValue(string name)
+        public virtual IEnumerable<PocoNode> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            _namedValues.TryGetValue(name, out IEnumerable<IScopedNode> result);
+            _namedValues.TryGetValue(name, out IEnumerable<PocoNode> result);
 
             if (result != null) return result;
 

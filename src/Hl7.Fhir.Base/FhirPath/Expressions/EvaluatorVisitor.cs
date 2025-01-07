@@ -29,7 +29,7 @@ namespace Hl7.FhirPath.Expressions
         [TemporarilyChanged] // we should investigate here. We will need a way to handle "object" without a fhir type, and try to infer it from the object
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
-            return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value).ToScopedNode());
+            return InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value));
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
@@ -85,7 +85,7 @@ namespace Hl7.FhirPath.Expressions
 
             return chainResolves;
             
-            IEnumerable<IScopedNode> chainResolves(Closure context, IEnumerable<Invokee> invokees)
+            IEnumerable<PocoNode> chainResolves(Closure context, IEnumerable<Invokee> invokees)
             {
                 return context.ResolveValue(expression.Name) ?? resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, []);
             }

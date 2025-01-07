@@ -112,8 +112,8 @@ namespace Hl7.Fhir.ElementModel
             return new List<IElementDefinitionSummary>();
         }
 
-        public static IScopedNode ToScopedNode(this ITypedElement node) =>
-            node as IScopedNode ?? new ScopedNode(node);
+        public static IScopedNode ToScopedNode(this ITypedElement node) => 
+            (IScopedNode)(node as PocoNode) ?? new ScopedNode(node);
         
         internal static IEnumerable<IScopedNode> ToScopedNodes(this IEnumerable<ITypedElement> nodes) =>
             nodes.Select(n => n.ToScopedNode());

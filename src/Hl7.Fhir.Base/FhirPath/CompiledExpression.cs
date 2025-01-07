@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Hl7.FhirPath
 {
-    public delegate IEnumerable<IScopedNode> CompiledExpression(IScopedNode root, EvaluationContext ctx);
+    public delegate IEnumerable<PocoNode> CompiledExpression(PocoNode root, EvaluationContext ctx);
 
     public static class CompiledExpressionExtensions
     {
@@ -19,10 +19,10 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>The single result of an expression</returns>
-        public static object? Scalar(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx)
+        public static object? Scalar(this CompiledExpression evaluator, PocoNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).Take(2).ToArray();
-            return result.Any() ? result.Single().Value : null;
+            return result.SingleOrDefault() is PrimitiveNode primitive ? primitive.Value : null;
         }
 
         /// <summary>
@@ -32,13 +32,13 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if expression returns true of empty, otheriwse false</returns>
-        public static bool Predicate(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx)
+        public static bool Predicate(this CompiledExpression evaluator, PocoNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
             return result is null || result.Value;
         }
 
-        /// <inheritdoc cref="Predicate(Hl7.FhirPath.CompiledExpression,Hl7.Fhir.Model.IScopedNode,Hl7.FhirPath.EvaluationContext)"/>
+        /// <inheritdoc cref="Predicate(Hl7.FhirPath.CompiledExpression,Hl7.Fhir.Model.PocoNode,Hl7.FhirPath.EvaluationContext)"/>
         public static bool Predicate(this CompiledExpression evaluator, Base input, EvaluationContext ctx)
         {
             var result = evaluator(input.ToElementNode(), ctx).BooleanEval();
@@ -52,7 +52,7 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if expression returns true , and false if expression returns empty of false.</returns>
-        public static bool IsTrue(this CompiledExpression evaluator, IScopedNode input, EvaluationContext ctx)
+        public static bool IsTrue(this CompiledExpression evaluator, PocoNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
             return result is not null && result.Value;
@@ -67,7 +67,7 @@ namespace Hl7.FhirPath
         /// <param name="input">Input at which the expression is evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if the result of an expression is equal to a given boolean, otherwise false</returns>
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IScopedNode input, EvaluationContext ctx)
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, PocoNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
             return result is not null && result.Value == value;

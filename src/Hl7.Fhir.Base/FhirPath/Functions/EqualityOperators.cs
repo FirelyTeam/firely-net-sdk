@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
@@ -67,10 +68,14 @@ namespace Hl7.FhirPath.Functions
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
-            if (left.Type.HasFlag(NodeType.Quantity) && l == null)
-                l = Typecasts.ParseQuantity(left);
-            if (right.Type.HasFlag(NodeType.Quantity) && r == null)
-                r = Typecasts.ParseQuantity(right);
+            if (left.InstanceType == "Quantity" && l == null)
+                l = left is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
+            if (right.InstanceType == "Quantity" && r == null)
+                r = right is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -158,10 +163,14 @@ namespace Hl7.FhirPath.Functions
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
-            if (left.Type.HasFlag(NodeType.Quantity) && l == null)
-                l = Typecasts.ParseQuantity(left);
-            if (right.Type.HasFlag(NodeType.Quantity) && r == null)
-                r = Typecasts.ParseQuantity(right);
+            if (left.InstanceType == "Quantity" && l == null)
+                l = left is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
+            if (right.InstanceType == "Quantity" && r == null)
+                r = right is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))

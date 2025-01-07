@@ -26,9 +26,9 @@ namespace Hl7.FhirPath.Expressions
         private readonly string _name;
         private readonly SymbolTable _scope;
 
-        public IEnumerable<IScopedNode> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public IEnumerable<PocoNode> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            var actualArgs = new List<IEnumerable<IScopedNode>>();
+            var actualArgs = new List<IEnumerable<PocoNode>>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
             if (!focus.Any()) return [];

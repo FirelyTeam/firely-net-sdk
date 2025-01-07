@@ -274,7 +274,7 @@ namespace Hl7.Fhir.ElementModel
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
         
         /// <inheritdoc />
-        public IEnumerable<IScopedNode> Children(string? name = null) =>
+        public IEnumerable<ScopedNode> Children(string? name = null) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
 
         public string ShortPath => Current is ElementNode en ? en.ShortPath : Current.Location;

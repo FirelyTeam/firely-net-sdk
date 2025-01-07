@@ -33,7 +33,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        [TemporarilyChanged] // This test will be improved once ContainedResources and BundledResources are implemented on PocoNodeOrList, not IScopedNode
+        [TemporarilyChanged] // This test will be improved once ContainedResources and BundledResources are implemented on PocoNodeOrList, not PocoNode
         public void GetContainedAndBundledResources()
         {
             Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             var entry6 = entries[6].Resource;
             Assert.AreEqual(2, entry6!.ToElementNode().ContainedResources().Count());
             Assert.IsFalse(entry6.ToElementNode().BundledResources().Any());
-            Assert.AreEqual("orgY", (entry6.ToElementNode().ContainedResources().Skip(1).First().Children("id").First().Value));
+            Assert.AreEqual("orgY", (entry6.ToElementNode().ContainedResources().Skip(1).First().Child<PrimitiveNode>("id")?.Value));
         }
 
         [TestMethod]
@@ -62,18 +62,18 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FindFullUrl());
 
-            IScopedNode entry3 = entries[3].Children("resource").FirstOrDefault();
-            entry3 = entry3?.Children("managingOrganization").FirstOrDefault();
+            var entry3 = entries[3].Child("resource");
+            entry3 = entry3?.FindSubChildren("managingOrganization").FirstOrDefault();
             Assert.IsNotNull(entry3);
-            entry3 = entry3.Children("reference").FirstOrDefault();
+            entry3 = entry3.FindSubChildren("reference").FirstOrDefault();
             Assert.IsNotNull(entry3);
             Assert.AreEqual(entries[3].FindFullUrl(), entry3.FindFullUrl());
             Assert.AreEqual(entry3.GetParentResource()!.FindFullUrl(), entry3.FindFullUrl());
 
-            var entry6 = entries[6].Children("resource").FirstOrDefault();
+            var entry6 = entries[6].FindSubChildren("resource").FirstOrDefault();
             entry6 = entry6?.ContainedResources().Skip(1).FirstOrDefault();
             Assert.IsNotNull(entry6);
-            Assert.AreEqual("orgY", entry6.Children("id").FirstOrDefault()?.Value);
+            Assert.AreEqual("orgY", entry6.FindSubChildren("id").FirstOrDefault()?.GetValue());
             Assert.AreEqual(entries[6].FindFullUrl(), entry6.FindFullUrl());
             Assert.AreEqual(entry6.GetParentResource()!.FindFullUrl(), entry6.FindFullUrl());
         }
@@ -81,14 +81,14 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void TestMakeAbsolute()
         {
-            var inner0 = _bundleNode!.BundledResources().First().Children("resource").Children("active").SingleOrDefault() as IScopedNode;
+            var inner0 = _bundleNode!.BundledResources().First().Child("resource")?.FindSubChildren("active").SingleOrDefault();
             Assert.IsNotNull(inner0);
 
             Assert.AreEqual("http://example.org/fhir/Patient/3", inner0.MakeAbsolute("Patient/3"));
             Assert.AreEqual("http://nu.nl/myPat/3x", inner0.MakeAbsolute("http://nu.nl/myPat/3x"));
             Assert.AreEqual("http://example.org/fhir/Organization/5", inner0.MakeAbsolute("http://example.org/fhir/Organization/5"));
 
-            var inner1 = _bundleNode.BundledResources().Skip(1).First().Children("resource").Children("active").SingleOrDefault() as IScopedNode;
+            var inner1 = _bundleNode.BundledResources().Skip(1).First().Child("resource")?.FindSubChildren("active").SingleOrDefault();
 
             Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d/3", inner1!.MakeAbsolute("Patient/3"));
             Assert.AreEqual("http://nu.nl/myPat/3x", inner1!.MakeAbsolute("http://nu.nl/myPat/3x"));
@@ -100,33 +100,33 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             Assert.IsNull(_bundleNode!.Resolve("#"));
 
-            var patient = _bundleNode!.BundledResources().Skip(6).First().Children("resource").First();
+            var patient = _bundleNode!.BundledResources().Skip(6).First().Child("resource")?.First();
             Assert.IsNull(patient.Resolve("#"));
 
-            var containedOrg = patient.ContainedResources().First();
-            Assert.AreEqual("Patient", containedOrg.Resolve("#")!.InstanceType);
+            var containedOrg = patient?.ContainedResources().First();
+            Assert.AreEqual("Patient", containedOrg.Resolve("#")!.Poco.TypeName);
 
-            var containedId = containedOrg.Children("id").First();
-            Assert.AreEqual("Patient", containedId.Resolve("#")!.InstanceType);
+            var containedId = containedOrg?.Child("id")?.First();
+            Assert.AreEqual("Patient", containedId.Resolve("#")!.Poco.TypeName);
         }
 
         [TestMethod]
         public void TestResolve()
         {
-            IScopedNode inner7 = (_bundleNode!.BundledResources().Skip(6).First().Children("resource").Children("managingOrganization").SingleOrDefault() as IScopedNode)!;
+            PocoNode inner7 = (_bundleNode!.BundledResources().Skip(6).First().Child("resource")?.FindSubChildren("managingOrganization").Single());
 
-            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("#e")!.Location);
-            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/d")!.Location);
-            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("Patient/d")!.Location);
-            Assert.AreEqual("Bundle.entry[1].resource[0]", inner7.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d")!.Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("#e")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/d")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("Patient/d")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[1].resource[0]", inner7.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d")!.GetLocation());
             Assert.IsNull(inner7.Resolve("#d"));
             Assert.IsNull(inner7.Resolve("http://nu.nl/3"));
 
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve()!.Location);
-            Assert.IsTrue(inner7.Children("reference").Any());
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Children("reference").First().Resolve()!.Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve()!.GetLocation());
+            Assert.IsTrue(inner7!.Child("reference") is not null);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Child("reference")!.First().Resolve()!.GetLocation());
 
             string lastUrlResolved = "";
 
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
             Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
 
-            IScopedNode externalResolve(string url)
+            PocoNode externalResolve(string url)
             {
                 lastUrlResolved = url;
                 return null;
@@ -144,13 +144,12 @@ namespace Hl7.Fhir.ElementModel.Tests
 
         
         [TestMethod]
-        [Experimental("ExperimentalApi")]
         public void Bundle_WithEntryWithoutFullUrl_ShouldNotThrow()
         {
-            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
+            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToElementNode();
 
             var enumerate = () => bundle.BundledResources();
-            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => !c.Children("fullUrl").Any());
+            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.Child("fullUrl") == null);
         }
     }
 }

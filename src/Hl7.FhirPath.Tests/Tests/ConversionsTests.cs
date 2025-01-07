@@ -215,27 +215,27 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void CheckTypeDetermination()
         {
-            var values = ElementNode.CreateList(1, 1L, true, "hi", 4.0m, 4.0f, P.DateTime.Now()).ToScopedNodes();
+            var values = PocoNode.FromAnyList([1, 1L, true, "hi", 4.0m, 4.0f, P.DateTime.Now()]);
 
-            Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(int));
-            Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(long));
-            Test.IsInstanceOfType(values.Item(1).Single().Value, typeof(bool));
-            Test.IsInstanceOfType(values.Item(2).Single().Value, typeof(string));
-            Test.IsInstanceOfType(values.Item(3).Single().Value, typeof(decimal));
-            Test.IsInstanceOfType(values.Item(4).Single().Value, typeof(decimal));
-            Test.IsInstanceOfType(values.Item(5).Single().Value, typeof(P.DateTime));
+            Test.IsInstanceOfType(values.Item(0).Single().GetValue(), typeof(int));
+            Test.IsInstanceOfType(values.Item(0).Single().GetValue(), typeof(long));
+            Test.IsInstanceOfType(values.Item(1).Single().GetValue(), typeof(bool));
+            Test.IsInstanceOfType(values.Item(2).Single().GetValue(), typeof(string));
+            Test.IsInstanceOfType(values.Item(3).Single().GetValue(), typeof(decimal));
+            Test.IsInstanceOfType(values.Item(4).Single().GetValue(), typeof(decimal));
+            Test.IsInstanceOfType(values.Item(5).Single().GetValue(), typeof(P.DateTime));
         }
 
 
         [TestMethod]
         public void TestItemSelection()
         {
-            var values = ElementNode.CreateList(1L, 2, 3L, 4, 5, 6, 7).ToScopedNodes();
+            var values = PocoNode.FromAnyList([1L, 2, 3L, 4, 5, 6, 7]);
 
-            Assert.AreEqual(1L, values.Item(0).Single().Value);
-            Assert.AreEqual(2, values.Item(1).Single().Value);
-            Assert.AreEqual(3L, values.Item(2).Single().Value);
-            Assert.AreEqual(1L, values.First().Value);
+            Assert.AreEqual(1L, values.Item(0).Single().GetValue());
+            Assert.AreEqual(2, values.Item(1).Single().GetValue());
+            Assert.AreEqual(3L, values.Item(2).Single().GetValue());
+            Assert.AreEqual(1L, values.First().GetValue());
             Assert.IsFalse(values.Item(100).Any());
         }
 

@@ -18,14 +18,15 @@ namespace Hl7.FhirPath.Functions
 { 
     internal static class TypeOperators
     {
-        public static bool Is(this IScopedNode focus, string type)
+        public static bool Is(this PocoNode focus, string type)
         {
-            if (focus.InstanceType != null)
+            var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType()).Select(t => t.Name);
+            return selfAndBaseClasses.Any(typeString => Is(typeString, type));
+            
+            static IEnumerable<Type> getBaseClasses(Type t)
             {
-                return Is(focus.InstanceType, type);     // I have no information about classes/subclasses
+                return t.BaseType == null ? [] : getBaseClasses(t.BaseType).Append(t);
             }
-            else
-                throw Error.InvalidOperation("Is operator is called on untyped data");
         }
 
         public static bool Is(string instanceType, string declaredType)
@@ -41,10 +42,10 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-        public static IEnumerable<IScopedNode> FilterType(this IEnumerable<IScopedNode> focus, string typeName)
+        public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));
 
-        public static IScopedNode CastAs(this IScopedNode focus, string typeName)
+        public static PocoNode CastAs(this PocoNode focus, string typeName)
             => focus.Is(typeName) ? focus : null;
     }
 }

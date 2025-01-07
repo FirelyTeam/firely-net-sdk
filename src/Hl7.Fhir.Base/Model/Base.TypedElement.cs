@@ -15,7 +15,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-internal record ScopeInformation(IScopedNode? Parent, string Name, int? Index);
+internal record ScopeInformation(PocoNode? Parent, string Name, int? Index);
 
 public abstract partial class Base
 {
@@ -106,9 +106,9 @@ public abstract partial class Base
     //     };
     //
     // [TemporarilyChanged] // We need to use Children for now to preserve scope access, but we would really prefer poco-accesses here. When we refactor, we should change this back.
-    // bool IScopedNode.TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
+    // bool PocoNode.TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out PocoNode? result)
     // {
-    //     result = this is Bundle b ? (b as IScopedNode)
+    //     result = this is Bundle b ? (b as PocoNode)
     //         .Children("entry").FirstOrDefault(entry => entry.Children("fullUrl")
     //             .SingleOrDefault()?.Value is string url && url == fullUrl)?
     //         .Children("resource").SingleOrDefault() : null;
@@ -116,9 +116,9 @@ public abstract partial class Base
     // }
     //
     // [TemporarilyChanged] // We need to use Children for now to preserve scope access, but we would really prefer poco-accesses here. When we refactor, we should change this back.
-    // bool IScopedNode.TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result)
+    // bool PocoNode.TryResolveContainedEntry(string id, [NotNullWhen(true)] out PocoNode? result)
     // {
-    //     result = this is DomainResource dr ? (dr as IScopedNode).Children("contained").FirstOrDefault(contained => contained.Children("id").SingleOrDefault()?.Value is string containedId && $"#{containedId}" == id) : null;
+    //     result = this is DomainResource dr ? (dr as PocoNode).Children("contained").FirstOrDefault(contained => contained.Children("id").SingleOrDefault()?.Value is string containedId && $"#{containedId}" == id) : null;
     //     return result is not null;
     // }
     //
@@ -126,11 +126,11 @@ public abstract partial class Base
     //
     // #endregion
     //
-    // #region IScopedNode
+    // #region PocoNode
     //
-    // string IScopedNode.Name => ScopeInfo.Name;
+    // string PocoNode.Name => ScopeInfo.Name;
     //
-    // NodeType IScopedNode.Type =>
+    // NodeType PocoNode.Type =>
     //     this switch
     //     {
     //         Bundle => NodeType.Bundle | NodeType.Resource,
@@ -142,7 +142,7 @@ public abstract partial class Base
     //         _ => 0
     //     };
     //
-    // object? IScopedNode.Value
+    // object? PocoNode.Value
     // {
     //     get
     //     {
@@ -155,7 +155,7 @@ public abstract partial class Base
     //     }
     // }
     //
-    // string IScopedNode.Location =>
+    // string PocoNode.Location =>
     //     (ScopeInfo.Index, ScopeInfo.Parent) switch
     //     {
     //         // if we have an index, write it
@@ -166,9 +166,9 @@ public abstract partial class Base
     //         _ => $"{ScopeInfo.Name}"
     //     };
     //
-    // IScopedNode? IScopedNode.Parent => ScopeInfo.Parent;
+    // PocoNode? PocoNode.Parent => ScopeInfo.Parent;
     //
-    // IEnumerable<IScopedNode> IScopedNode.Children(string? name) => this.GetElementPairs()
+    // IEnumerable<PocoNode> PocoNode.Children(string? name) => this.GetElementPairs()
     //     .Where(ep => (name == null || name == ep.Key))
     //     .SelectMany<KeyValuePair<string, object>, Base>(ep =>
     //         (ep.Key, ep.Value) switch

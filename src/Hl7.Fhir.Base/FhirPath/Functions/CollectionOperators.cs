@@ -9,6 +9,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -38,7 +39,7 @@ namespace Hl7.FhirPath.Functions
             : !focus.BooleanEval().Value;
         
         public static IEnumerable<PocoNode> DistinctUnion(this IEnumerable<PocoNode> a, IEnumerable<PocoNode> b)
-            => a.Union(b, EqualityOperators.TypedElementEqualityComparer);
+            => a.Union<PocoNode>(b, EqualityOperators.TypedElementEqualityComparer);
 
         public static IEnumerable<PocoNode> Item(this IEnumerable<PocoNode> focus, int index)
             => focus.Skip(index).Take(1);
@@ -53,7 +54,7 @@ namespace Hl7.FhirPath.Functions
             => focus.Contains(value, EqualityOperators.TypedElementEqualityComparer);
         
         public static IEnumerable<PocoNode> Distinct(this IEnumerable<PocoNode> focus)
-            => focus.Distinct(EqualityOperators.TypedElementEqualityComparer);
+            => focus.Distinct<PocoNode>(EqualityOperators.TypedElementEqualityComparer);
 
         public static bool IsDistinct(this IEnumerable<PocoNode> focus)
             => focus.Distinct(EqualityOperators.TypedElementEqualityComparer).Count() == focus.Count();
@@ -62,7 +63,7 @@ namespace Hl7.FhirPath.Functions
             => focus.All(fitem => other.Contains(fitem));
         
         public static IEnumerable<PocoNode> Intersect(this IEnumerable<PocoNode> focus, IEnumerable<PocoNode> other)
-            => focus.Intersect(other, EqualityOperators.TypedElementEqualityComparer);
+            => focus.Intersect<PocoNode>(other, EqualityOperators.TypedElementEqualityComparer);
 
         public static IEnumerable<PocoNode> Exclude(this IEnumerable<PocoNode> focus, IEnumerable<PocoNode> other)
             => focus.Where(f => !other.Contains(f));
@@ -104,8 +105,7 @@ namespace Hl7.FhirPath.Functions
             {
                 // If we are at a resource, we should match a path that is possibly not rooted in the resource
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
-                var baseClasses = new[] { "Resource", "DomainResource" };
-                if (element.InstanceType == name || baseClasses.Contains(name))
+                if(element.Is(name))
                 {
                     return new List<PocoNode>() { element };
                 }
@@ -121,10 +121,10 @@ namespace Hl7.FhirPath.Functions
                 return string.Empty;
 
             //only join collections with string values inside
-            if (!collection.All(c => c.Value is string))
+            if (!collection.All(c => c.GetValue() is string))
                 throw Error.InvalidOperation("Join function can only be performed on string collections.");
 
-            var values = collection.Select(n => n.Value);
+            var values = collection.Select(n => n.GetValue());
             return string.Join(separator, values);
         }
     }

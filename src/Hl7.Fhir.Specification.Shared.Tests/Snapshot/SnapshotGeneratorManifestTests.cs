@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Custom context for accessing input & expected result
         class SnapshotEvaluationContext : FhirEvaluationContext
         {
-            Dictionary<string, IScopedNode> _aliases;
+            Dictionary<string, PocoNode> _aliases;
             string _testPath;
 
             public SnapshotEvaluationContext(
@@ -802,12 +802,12 @@ namespace Hl7.Fhir.Specification.Tests
                 this.WithResourceOverrides(Generated);
             }
 
-            void Trace(string msg, IEnumerable<IScopedNode> elems)
+            void Trace(string msg, IEnumerable<PocoNode> elems)
             {
                 Console.WriteLine($"[TRACE] {msg}:");
                 foreach (var elem in elems)
                 {
-                    Console.WriteLine($"[TRACE] '{elem.Name}' : {elem.InstanceType}{(elem.HasValue() ? $" = '{elem.Value.ToString()}'" : null)}");
+                    Console.WriteLine($"[TRACE] '{elem.Name}' : {elem.Poco.TypeName}{(elem.HasValue() ? $" = '{elem.GetValue()!}'" : null)}");
                 }
             }
 
@@ -815,19 +815,19 @@ namespace Hl7.Fhir.Specification.Tests
 
             public IResourceResolver TestResolver { get; }
 
-            public IScopedNode Input { get; }
+            public PocoNode Input { get; }
 
-            public IScopedNode Generated { get; }
+            public PocoNode Generated { get; }
 
             // Custom FhirPath method implementations
 
-            Dictionary<string, IScopedNode> Aliases => _aliases ?? (_aliases = new Dictionary<string, IScopedNode>());
+            Dictionary<string, PocoNode> Aliases => _aliases ?? (_aliases = new Dictionary<string, PocoNode>());
 
-            void AddAlias(string alias, IScopedNode elem) => Aliases[alias] = elem;
+            void AddAlias(string alias, PocoNode elem) => Aliases[alias] = elem;
 
-            IScopedNode Alias(string alias) => Aliases[alias];
+            PocoNode Alias(string alias) => Aliases[alias];
 
-            IScopedNode Fixture(string name)
+            PocoNode Fixture(string name)
             {
                 if (name == $"{Id}-input") { return Input; }
                 if (name == $"{Id}-output") { return Generated; }
@@ -861,18 +861,18 @@ namespace Hl7.Fhir.Specification.Tests
             // Add custom FHIRPath methods for unit testing
             public static void AddSymbols(SymbolTable symbols)
             {
-                symbols.Add<IScopedNode, string, EvaluationContext, IScopedNode>("fixture", Fixture);
-                symbols.Add<IScopedNode, string, EvaluationContext, IScopedNode>("aliasAs", AliasAs);
-                symbols.Add<IScopedNode, string, EvaluationContext, IScopedNode>("alias", Alias);
-                symbols.Add<IScopedNode, bool, string, EvaluationContext, IScopedNode>("check", Check);
+                symbols.Add<PocoNode, string, EvaluationContext, PocoNode>("fixture", Fixture);
+                symbols.Add<PocoNode, string, EvaluationContext, PocoNode>("aliasAs", AliasAs);
+                symbols.Add<PocoNode, string, EvaluationContext, PocoNode>("alias", Alias);
+                symbols.Add<PocoNode, bool, string, EvaluationContext, PocoNode>("check", Check);
             }
 
             // Custom FHIRPath methods for unit testing
 
-            public static IScopedNode Fixture(IScopedNode elem, string name, EvaluationContext ctx)
+            public static PocoNode Fixture(PocoNode elem, string name, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Fixture(name) : null;
 
-            public static IScopedNode AliasAs(IScopedNode elem, string id, EvaluationContext ctx)
+            public static PocoNode AliasAs(PocoNode elem, string id, EvaluationContext ctx)
             {
                 if (ctx is SnapshotEvaluationContext sctx)
                 {
@@ -881,10 +881,10 @@ namespace Hl7.Fhir.Specification.Tests
                 return elem;
             }
 
-            public static IScopedNode Alias(IScopedNode elem, string id, EvaluationContext ctx)
+            public static PocoNode Alias(PocoNode elem, string id, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Alias(id) : null;
 
-            public static IScopedNode Check(IScopedNode elem, bool condition, string message, EvaluationContext ctx)
+            public static PocoNode Check(PocoNode elem, bool condition, string message, EvaluationContext ctx)
             {
                 Assert.IsTrue(condition, $"[CHECK] '{elem.Name}' {message}");
                 //if (!condition)
