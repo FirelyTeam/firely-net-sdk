@@ -37,7 +37,7 @@ internal partial class PocoSerializationEngine : IFhirSerializationEngine
         _jsonConverterOptions = converterOptions ?? new FhirJsonConverterOptions();
         _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
     }
-    
+
     private Base deserializeAndFilterErrors(TryDeserializer deserializer)
     {
         var (instance, issues) = deserializer();

@@ -32,15 +32,12 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [Ignore]
         [TemporarilyChanged] // We once again cannot do this, as base no longer knows if it has a parent
         public async Tasks.Task CanSerializeSubtree()
         {
-            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var tpJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            // If on a Unix platform replace \\r\\n in json strings to \\n.
-            if(Environment.NewLine == "\n")
-                tpJson = tpJson.Replace(@"\r\n", @"\n");
+            var tpXml = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.xml"));
+            var tpJson = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+
             var pat = await (new FhirXmlParser()).ParseAsync<Patient>(tpXml);
 
             // Should work on the parent resource

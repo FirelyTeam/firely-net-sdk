@@ -52,5 +52,19 @@ namespace Hl7.Fhir.Support.Poco.Tests
             contactArray.Count().Should().Be(1);
             contactArray.First().Elements().Should().BeEmpty();
         }
+
+        [TestMethod]
+        public void SerializesSubtree()
+        {
+            var serializer = new BaseFhirXmlPocoSerializer(ModelInfo.ModelInspector);
+            FhirBoolean b = new() { ObjectValue = "treu" };
+
+            serializer.SerializeToString(b).Should().StartWith("<boolean");
+            serializer.SerializeToString(b, rootName: "active").Should().StartWith("<active");
+
+            Patient p = new() { ActiveElement = b };
+            serializer.SerializeToString(p).Should().StartWith("<Patient");
+            serializer.SerializeToString(p, rootName: "contact").Should().StartWith("<contact");
+        }
     }
 }

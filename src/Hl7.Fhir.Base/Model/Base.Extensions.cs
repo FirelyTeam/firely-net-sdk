@@ -1,4 +1,8 @@
 #nullable enable
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +36,31 @@ public static class BaseExtensions
                     break;
             }
         }
+    }
+
+
+    internal static ITypedElement MakeElementStack(this Base instance, ModelInspector modelInspector, SummaryType summary, string[]? elements, bool includeMandatoryInElementsSummary)
+    {
+        if (summary == SummaryType.False && elements == null) return instance.ToTypedElementLegacy(modelInspector);
+
+        if (elements is not null && summary != SummaryType.False)
+            throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.False or summary is not specified at all.");
+
+        var patchedInstance = (Base)instance.DeepCopy();
+
+        patchedInstance.AddSubsetted();
+
+        var baseNav = new ScopedNode(patchedInstance.ToTypedElementLegacy(modelInspector));
+
+        return summary switch
+        {
+            SummaryType.True => MaskingNode.ForSummary(baseNav),
+            SummaryType.Text => MaskingNode.ForText(baseNav),
+            SummaryType.Data => MaskingNode.ForData(baseNav),
+            SummaryType.Count => MaskingNode.ForCount(baseNav),
+            SummaryType.False => MaskingNode.ForElements(baseNav, elements, includeMandatoryInElementsSummary),
+            _ => baseNav,
+        };
     }
 
     /// <summary>

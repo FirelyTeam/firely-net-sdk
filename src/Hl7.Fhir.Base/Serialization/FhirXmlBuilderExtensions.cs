@@ -9,8 +9,8 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization;
 
 public static class FhirXmlBuilderExtensions
 {
-    /// <inheritdoc cref="writeToAsync(XDocument, XmlWriter)" />
+   /// <inheritdoc cref="writeToAsync(XDocument, XmlWriter)" />
     private static void writeTo(this XDocument doc, XmlWriter destination)
     {
         if (doc.Root != null)
@@ -62,24 +62,32 @@ public static class FhirXmlBuilderExtensions
     public static async Task<string> ToXmlAsync(this ISourceNode source, bool pretty = false)
         => await SerializationUtil.WriteXmlToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-    [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
     public static string ToXml(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode { Poco: { } b } node)
             return SerializationUtil.WriteXmlToString(source.WriteTo, pretty);
 
-        var serializer = new BaseFhirXmlPocoSerializer(node.FindInspector() ?? ModelInspector.ForType(b.GetType()));
-        return serializer.SerializeToString(b, pretty);
+        return serializePocoNode(node, pretty);
     }
 
-    [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
     public static async Task<string> ToXmlAsync(this ITypedElement source, bool pretty = false)
     {
-        if (source is not PocoNode {Poco: {} b} node)
+        if (source is not PocoNode node)
             return await SerializationUtil.WriteXmlToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-        var serializer = new BaseFhirXmlPocoSerializer(node.FindInspector() ?? ModelInspector.ForType(b.GetType()));
-        return serializer.SerializeToString(b, pretty);
+        return serializePocoNode(node, pretty);
+    }
+
+    private static string serializePocoNode(PocoNode pn, bool pretty)
+    {
+        var serializer = new BaseFhirXmlPocoSerializer(pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType()));
+
+        // If we are serializing a subtree of a resource, then if the current node is a datatype or a nested resource,
+        // we need to pick a name for this root element.
+        var pickElementName = pn.Poco is not Resource || pn.Parent is not null;
+        var rootName = pickElementName ? pn.Name : null;
+
+        return serializer.SerializeToString(pn.Poco, pretty, rootName: rootName);
     }
 
     public static byte[] ToXmlBytes(this ITypedElement source, bool pretty = false)

@@ -42,7 +42,6 @@ internal class FhirXmlBuilder : IExceptionSource
 #pragma warning disable CS0618 // Type or member is obsolete
         return buildInternal(source.ToTypedElement());
 #pragma warning restore CS0618 // Type or member is obsolete
-
     }
 
     private XDocument buildInternal(ITypedElement source)

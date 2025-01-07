@@ -38,29 +38,25 @@ public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
     public void Serialize(
         Base element,
         XmlWriter writer,
-        SerializationFilter? summary = default)
+        SerializationFilter? summary = default,
+        string? rootName = null)
     {
         writer.WriteStartDocument();
 
-        // If we are serializing a non-resource, or we are serializing a nested resource,
-        // we need to pick a name for the root element.
-        var pickElementName = element is not Resource or IScopedNode { Parent: not null };
-        if (pickElementName)
-        {
-            // If we are an element with a name, pick that, otherwise us the name of the type.
-            var nodeName = element is ITypedElement ite ? ite.Name : element.TypeName;
+        if (rootName is not null)
+            writer.WriteStartElement(rootName, XmlNs.FHIR);
 
-            writer.WriteStartElement(nodeName, XmlNs.FHIR);
-        }
+        if(element is not Resource)
+            writer.WriteStartElement(element.TypeName, XmlNs.FHIR);
 
         serializeInternal(element, writer, summary);
 
-        if (pickElementName) writer.WriteEndElement();
+        if (rootName is not null) writer.WriteEndElement();
         writer.WriteEndDocument();
     }
 
     /// <summary>
-    /// Serializes the given PCO with FHIR data into XML.
+    /// Serializes the given POCO with FHIR data into XML.
     /// </summary>
     private void serializeInternal(
         Base element,

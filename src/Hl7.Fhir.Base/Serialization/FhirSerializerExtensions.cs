@@ -25,8 +25,8 @@ public static class FhirSerializerExtensions
     /// Serializes the given POCO into a FHIR Xml string.
     /// </summary>
     public static string SerializeToString(this BaseFhirXmlPocoSerializer ser, Base element, bool pretty = false,
-        SerializationFilter? filter = null) =>
-        SerializationUtil.WriteXmlToString(w => ser.Serialize(element, w, filter), pretty);
+        SerializationFilter? filter = null, string? rootName = null) =>
+        SerializationUtil.WriteXmlToString(w => ser.Serialize(element, w, filter, rootName), pretty);
 
     /// <summary>
     /// Serializes the given POCO into a FHIR Json byte array.
@@ -39,6 +39,6 @@ public static class FhirSerializerExtensions
     /// Serializes the given POCO into a FHIR Xml byte array.
     /// </summary>
     public static byte[] SerializeToBytes(this BaseFhirXmlPocoSerializer ser, Base element, bool pretty = false,
-        SerializationFilter? filter = null) =>
-        SerializationUtil.WriteXmlToBytes(w => ser.Serialize(element, w, filter), pretty);
+        SerializationFilter? filter = null, string? rootName = null) =>
+        SerializationUtil.WriteXmlToBytes(w => ser.Serialize(element, w, filter, rootName), pretty);
 }

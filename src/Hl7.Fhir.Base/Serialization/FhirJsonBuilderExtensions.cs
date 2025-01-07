@@ -48,7 +48,6 @@ public static class FhirJsonBuilderExtensions
 
     public static JObject ToJObject(this ITypedElement source) => new FhirJsonBuilder().Build(source);
 
-    [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
     public static string ToJson(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode { Poco: Resource resource } node)
@@ -59,7 +58,6 @@ public static class FhirJsonBuilderExtensions
         return ser.SerializeToString(resource, pretty);
     }
 
-    [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
     public static async Task<string> ToJsonAsync(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode { Poco: Resource resource } node)

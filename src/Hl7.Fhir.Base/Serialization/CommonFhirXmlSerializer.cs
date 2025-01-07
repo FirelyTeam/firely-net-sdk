@@ -18,13 +18,13 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization;
 
-public class CommonFhirXmlSerializer(ModelInspector modelInspector) : BaseFhirSerializer(modelInspector)
+public class CommonFhirXmlSerializer(ModelInspector modelInspector)
 {
     public string SerializeToString(Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null,
         bool pretty = false) =>
-        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .ToXml(pretty);
 
@@ -32,7 +32,7 @@ public class CommonFhirXmlSerializer(ModelInspector modelInspector) : BaseFhirSe
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null,
         bool pretty = false) =>
-        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        await instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .ToXmlAsync(pretty).ConfigureAwait(false);
 
@@ -40,7 +40,7 @@ public class CommonFhirXmlSerializer(ModelInspector modelInspector) : BaseFhirSe
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null,
         bool pretty = false) =>
-        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .ToXmlBytes(pretty);
 
@@ -48,28 +48,28 @@ public class CommonFhirXmlSerializer(ModelInspector modelInspector) : BaseFhirSe
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null,
         bool pretty = false) =>
-        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        await instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .ToXmlBytesAsync(pretty).ConfigureAwait(false);
 
     public XDocument SerializeToDocument(Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null) =>
-        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .ToXDocument().Rename(root);
 
     public void Serialize(Base instance, XmlWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null) =>
-        MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .WriteTo(writer);
 
     public async Tasks.Task SerializeAsync(Base instance, XmlWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         string? root = null) =>
-        await MakeElementStack(instance, summary, elements, includeMandatoryInElementsSummary)
+        await instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
             .Rename(root)
             .WriteToAsync(writer).ConfigureAwait(false);
 }
