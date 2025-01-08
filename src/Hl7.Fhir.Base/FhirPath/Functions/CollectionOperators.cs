@@ -111,7 +111,7 @@ namespace Hl7.FhirPath.Functions
                 }
             }
 
-            return element.Child(name);
+            return element.Child(name) ?? Enumerable.Empty<PocoNode>();
         }
 
         public static string FpJoin(this IEnumerable<PocoNode> collection, string separator = null)

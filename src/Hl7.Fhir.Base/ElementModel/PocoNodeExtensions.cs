@@ -105,6 +105,7 @@ public static class PocoNodeExtensions
         {
             Canonical c => c.Value, // canonicals can be references
             ResourceReference r => r.Reference,
+            PrimitiveType {ObjectValue: string s} => s,
             _ => throw new ArgumentException($"Error occurred during reference resolution: Parameter {nameof(node)} is not a reference.")
         };
 
@@ -201,7 +202,7 @@ public static class PocoNodeExtensions
     
     public static IEnumerable<PocoNode> Descendants(this IEnumerable<PocoNode> nodes) => nodes.SelectMany(Descendants);
 
-    public static IEnumerable<PocoNode> Descendants(this PocoNode node) => node.Children().SelectMany(singleOrList => singleOrList).Descendants();
+    public static IEnumerable<PocoNode> Descendants(this PocoNode node) => node.Children().SelectMany(singleOrList => singleOrList).Descendants().Append(node);
     
     public static T? Child<T>(this PocoNode? node, string name) where T : PocoNodeOrList => node?.Child(name) as T;
     

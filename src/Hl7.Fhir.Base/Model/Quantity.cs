@@ -55,7 +55,10 @@ namespace Hl7.Fhir.Model
                 if (Comparator != null)
                     throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
 
-                return new P.Quantity(Value.Value, Code);
+                return new P.Quantity(Value.Value, Code, System == "http://hl7.org/fhirpath/CodeSystem/calendar-units"
+                    ? P.QuantityUnitSystem.CalendarDuration
+                    : P.QuantityUnitSystem.UCUM
+                );
             }
             else
                 return null;

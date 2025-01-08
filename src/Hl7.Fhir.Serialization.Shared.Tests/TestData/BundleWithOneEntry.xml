@@ -26,10 +26,10 @@
             <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
           </telecom>
         </contact>
+        <description value="Search on the narrative of the resource" />
         <code value="_text" />
         <base value="DomainResource" />
         <type value="string" />
-        <description value="Search on the narrative of the resource" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>

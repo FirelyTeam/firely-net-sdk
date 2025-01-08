@@ -65,7 +65,7 @@ namespace Hl7.FhirPath.Expressions
             // t.Add("builtin.children", (IEnumerable<PocoNode> f, string a) => f.Navigate(a), doNullProp: true);
             t.AddBuiltinChildren();
 
-            t.Add("children", (IEnumerable<PocoNode> f) => f.SelectMany(node => node.Children()), doNullProp: true);
+            t.Add("children", (IEnumerable<PocoNode> f) => f.SelectMany(node => node.Children().SelectMany(n => n)), doNullProp: true);
             t.Add("descendants", (IEnumerable<PocoNode> f) => f.Descendants(), doNullProp: true);
 
             t.Add("binary.=", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => a.IsEqualTo(b), doNullProp: true);
@@ -470,8 +470,7 @@ namespace Hl7.FhirPath.Expressions
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
                 if (result == true) return PocoNode.ForPrimitive<FhirBoolean>(true);
             }
-
-            //return PocoNodeOrList.ForPrimitive<FhirBoolean>(false);
+            
             return PocoNode.Root(new FhirBoolean(false));
         }
     }

@@ -79,7 +79,6 @@ namespace Hl7.Fhir.Support.Tests
 
             var poco = sourceNode.ToPoco<Parameters>(ModelInspector.Base);
             yield return new object[] { poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement" };
-
         }
 
         public static IEnumerable<object[]> LowBoundaryTestCases() =>

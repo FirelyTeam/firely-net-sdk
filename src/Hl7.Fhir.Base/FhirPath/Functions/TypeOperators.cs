@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Runtime.CompilerServices;
@@ -20,7 +21,9 @@ namespace Hl7.FhirPath.Functions
     {
         public static bool Is(this PocoNode focus, string type)
         {
-            var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType()).Select(t => t.Name).Append(((ITypedElement)focus).InstanceType);
+            var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
+                .Select(t => ModelInspector.ForType(t).GetFhirTypeNameForType(t))
+                .Append(((ITypedElement)focus).InstanceType);
             return selfAndBaseClasses.Any(typeString => Is(typeString, type));
             
             static IEnumerable<Type> getBaseClasses(Type t)

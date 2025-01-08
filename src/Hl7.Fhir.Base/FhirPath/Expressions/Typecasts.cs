@@ -9,6 +9,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -27,7 +28,7 @@ namespace Hl7.FhirPath.Expressions
 
         private static PocoNode any2primitiveTypedElement(object source) => PocoNode.ForAnyPrimitive(source);
 
-        private static IEnumerable<PocoNode> any2List(object source) => PocoNode.ForAnyPrimitive(source);
+        private static IEnumerable<PocoNode> any2SingleItemList(object source) => PocoNode.ForAnyPrimitive(source);
 
         private static P.Quantity tryQuantity(object source)
         {
@@ -48,10 +49,7 @@ namespace Hl7.FhirPath.Expressions
 
         internal static P.Quantity ParseQuantity(PocoNode qe)
         {
-            if (qe.Child<PrimitiveNode>("value")?.Value is not decimal value) return null;
-            return qe.Child<PrimitiveNode>("unit")?.Value is not string unit 
-                ? null 
-                : new P.Quantity(value, unit);
+            return (qe.Poco as Quantity)?.ToQuantity();
         }
 
         private static Cast getImplicitCast(object f, Type to)
@@ -64,8 +62,8 @@ namespace Hl7.FhirPath.Expressions
             // this check seems weird, but PocoElementNode both implements PocoNode and IEnumerable<PocoNode> for the sake of backwards compatibility
             bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>)) && !from.CanBeTreatedAsType(typeof(PocoNode));
             if (to == typeof(P.Quantity) && from.CanBeTreatedAsType(typeof(PocoNode))) return tryQuantity;
-            if (to == typeof(PocoNode) && (!fromElemList)) return any2primitiveTypedElement;
-            if (to == typeof(IEnumerable<PocoNode>)) return any2List;
+            if (to == typeof(PocoNode) && !fromElemList) return any2primitiveTypedElement;
+            if (to == typeof(IEnumerable<PocoNode>)) return any2SingleItemList;
 
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
             if (from == typeof(long?) && to == typeof(decimal?)) return makeNativeCast(typeof(decimal?));
