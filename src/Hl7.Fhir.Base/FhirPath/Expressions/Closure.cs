@@ -10,6 +10,8 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -21,7 +23,7 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(PocoNodeOrList root, EvaluationContext ctx = null)
+        public static Closure Root([NotNull] PocoNodeOrList root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
 

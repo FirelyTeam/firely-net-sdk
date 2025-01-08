@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Support.Tests
         public void AssertFhirPathTestcases(string expression, bool expected)
         {
             var evaluator = _compiler.Compile(expression);
-            var result = evaluator(null, new FhirEvaluationContext());
+            var result = evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
 
             if (result.Any())
             {

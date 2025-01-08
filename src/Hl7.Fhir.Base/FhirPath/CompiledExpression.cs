@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Hl7.FhirPath
