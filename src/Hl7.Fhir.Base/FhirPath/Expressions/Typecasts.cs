@@ -113,8 +113,9 @@ namespace Hl7.FhirPath.Expressions
             if (instance is IEnumerable<PocoNode> list)
             {
                 var cachedEnum = CachedEnumerable.Create(list);
-                if (to.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>))) return cachedEnum;
 
+                if (!to.CanBeTreatedAsType(typeof(PocoNode)) && to.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>))) return cachedEnum;
+                
                 if (!cachedEnum.Any()) return null;
                 if (cachedEnum.Count() == 1)
                     instance = cachedEnum.Single();

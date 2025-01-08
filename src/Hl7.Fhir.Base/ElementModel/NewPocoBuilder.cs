@@ -141,7 +141,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
         // Otherwise, let's use the ITypedElement's instance type.
         if (node.InstanceType is { } instanceType &&
-            inspector.FindClassMapping(instanceType) is { NativeType.IsAbstract: false } mapping)
+            inspector.FindClassMapping(instanceType) is { NativeType.IsAbstract: false } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
             return mapping;
 
         // No useable concrete type in the property, nor in the instance type, so we need to create

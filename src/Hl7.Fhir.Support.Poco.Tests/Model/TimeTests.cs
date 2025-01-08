@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Tests.Model
             dt.Millis.Should().Be(123);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Fraction);
 
-            dft = new Time(null);
+            dft = new Time((string)null);
             dft.TryToTime(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }

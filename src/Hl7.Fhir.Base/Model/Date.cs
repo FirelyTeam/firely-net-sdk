@@ -51,6 +51,12 @@ public partial class Date
     {
     }
 
+    public Date(P.Date date)
+    {
+        _parsedValue = date;
+        Value = date.ToString();
+    }
+
     public static Date FromDateTimeOffset(DateTimeOffset date) => new(date.Year, date.Month, date.Day);
 
     /// <summary>

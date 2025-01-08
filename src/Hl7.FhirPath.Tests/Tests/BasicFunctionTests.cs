@@ -216,7 +216,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void StringConcatenationAndEmpty()
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
+            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
 
             Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' + '' + 'DEF'"));
             Assert.AreEqual("DEF", dummy.Scalar("'' + 'DEF'"));

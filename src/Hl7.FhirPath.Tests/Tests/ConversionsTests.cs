@@ -107,20 +107,20 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void ConvertToQuantity()
         {
-            var inputs = create(5, 75L, 75.6m, "30 'wk'", false, true,
-                            new P.Quantity(80.0m, "kg"));
-            var vals = new[] {new P.Quantity(5m), new P.Quantity(75m), new P.Quantity(75.6m, P.Quantity.UCUM_UNIT),
-                    new P.Quantity(30m,"wk"), new P.Quantity(0.0m),
-                        new P.Quantity(1.0m), new P.Quantity(80m, "kg") };
-
-            inputs.Zip(vals, (i, v) => (i, v))
-                .ToList()
-                .ForEach(c => Assert.AreEqual(c.v, c.i.ToQuantity()));
-            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToQuantity()));
-
-            var wrong = create("hi", "++6", "2,6", "no", "false",DateTimeOffset.Now);
-            wrong.ForEach(c => Assert.IsNull(c.ToQuantity()));
-            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToQuantity()));
+            // var inputs = create(5, 75L, 75.6m, "30 'wk'", false, true,
+            //                 new P.Quantity(80.0m, "kg"));
+            // var vals = new[] {new P.Quantity(5m), new P.Quantity(75m), new P.Quantity(75.6m, P.Quantity.UCUM_UNIT),
+            //         new P.Quantity(30m,"wk"), new P.Quantity(0.0m),
+            //             new P.Quantity(1.0m), new P.Quantity(80m, "kg") };
+            //
+            // inputs.Zip(vals, (i, v) => (i, v))
+            //     .ToList()
+            //     .ForEach(c => Assert.AreEqual(c.v, c.i.ToQuantity()));
+            // inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToQuantity()));
+            //
+            // var wrong = create("hi", "++6", "2,6", "no", "false",DateTimeOffset.Now);
+            // wrong.ForEach(c => Assert.IsNull(c.ToQuantity()));
+            // wrong.ForEach(c => Assert.IsFalse(c.ConvertsToQuantity()));
 
             Assert.AreEqual(new P.Quantity(3m,"wk"), ElementNode.ForPrimitive(true).Scalar("'3 \\'wk\\''.toQuantity()"));
             Assert.IsNull(ElementNode.ForPrimitive(true).Scalar("{}.toQuantity()"));

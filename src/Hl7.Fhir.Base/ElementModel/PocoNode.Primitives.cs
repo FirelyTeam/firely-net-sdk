@@ -1,7 +1,14 @@
+using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using Date = Hl7.Fhir.Model.Date;
+using Integer = Hl7.Fhir.Model.Integer;
+using Quantity = Hl7.Fhir.Model.Quantity;
+using Time = Hl7.Fhir.Model.Time;
 
 #nullable enable
 
@@ -11,9 +18,18 @@ public partial record PocoNode
 {
     public static PocoNode ForPrimitive(PrimitiveType primitive) => 
         new PrimitiveNode(primitive);
-    
-    public static PocoNode ForAnyPrimitive(object value) =>
-        ForPrimitive(PrimitiveNode.InferFromValue(value));
+
+    public static PocoNode ForAnyPrimitive(object value)
+    {
+        if (value is Types.Quantity quantity)
+        {
+            return forQuantity(quantity);
+        }
+        return ForPrimitive(PrimitiveNode.InferFromValue(value));
+    }
+
+    private static PocoNode forQuantity(Types.Quantity quantity) =>
+        new PocoNode(new Quantity(quantity), null, null, "quantity");
     
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
         new PrimitiveNode(new T { ObjectValue = value });
@@ -25,20 +41,22 @@ public partial record PocoNode
         values.Select(PocoNode.ForPrimitive<T>);
 
     public static IEnumerable<PocoNode> FromAnyList(IEnumerable<object> values) => 
-        values.Select(PocoNode.ForAnyPrimitive);
+        values.Select(v => v as PocoNode ?? ForAnyPrimitive(v));
 }
 
 public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : PocoNode(Primitive, null, null, Name)
 {
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
-    internal object? Value => Primitive.ObjectValue;
+    internal object? Value => ValueInternal;
     
     internal static PrimitiveType InferFromValue(object value) => value switch
     {
-        Types.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(dt.Offset ?? TimeSpan.Zero)),
-        Types.Date d => new Date(d.ToString()),
-        Types.Time t => new Time(t.ToString()),
+        Types.DateTime dt => new FhirDateTime(dt),
+        Types.Date d => new Date(d),
+        Types.Time t => new Time(t),
         decimal dec => new FhirDecimal(dec),
+        float f => new FhirDecimal((decimal)f),
+        double d => new FhirDecimal((decimal)d),
         bool b => new FhirBoolean(b),
         int i => new Integer(i),
         long l => new Integer64(l),

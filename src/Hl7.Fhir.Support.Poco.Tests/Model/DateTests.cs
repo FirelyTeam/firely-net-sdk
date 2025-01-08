@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Tests.Model
             dt.Days.Should().BeNull();
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Month);
 
-            dft = new Date(null);
+            dft = new Date((string)null);
             dft.TryToDate(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }

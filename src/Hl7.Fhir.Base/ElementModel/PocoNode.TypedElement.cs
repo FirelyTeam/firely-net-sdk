@@ -21,7 +21,7 @@ public partial record PocoNode
             _ => Poco.TypeName
         };
 
-    object? ITypedElement.Value => ValueInternal;
+    object? ITypedElement.Value => Poco is Quantity q ? q.ToQuantity() : ValueInternal;
 
     // needed for ITE
     protected virtual object? ValueInternal => null;

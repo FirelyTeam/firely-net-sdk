@@ -84,6 +84,12 @@ public partial class FhirDateTime
     {
     }
 
+    public FhirDateTime(P.DateTime dateTime)
+    {
+        _parsedValue = dateTime;
+        Value = dateTime.ToString();
+    }
+
     public static FhirDateTime Now() => new(DateTimeOffset.Now);
 
     [NonSerialized]  // To prevent binary serialization from serializing this field

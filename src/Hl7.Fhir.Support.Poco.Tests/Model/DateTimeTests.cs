@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Tests.Model
             dft = new FhirDateTime("crap");
             dft.TryToDateTime(out dt).Should().BeFalse();
 
-            dft = new FhirDateTime(null);
+            dft = new FhirDateTime((string)null);
             dft.TryToDateTime(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }

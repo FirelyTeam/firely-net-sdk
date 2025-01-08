@@ -12,6 +12,7 @@
 using EM=Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Buffers;
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <remarks>Will produce significantly more accurate results if a modelinspector is provided, or if the input is already a PocoNode</remarks>
         public static PocoNode ToPocoNode(this ITypedElement node, ModelInspector? inspector = null) =>
-            node as PocoNode ?? node.ToPoco(inspector ?? ModelInspector.Base).ToElementNode();
+            node as PocoNode ?? node.ToPoco(inspector ?? ModelInspector.Base, new PocoBuilderSettings{IgnoreUnknownMembers = true}).ToElementNode();
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements

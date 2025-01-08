@@ -194,8 +194,8 @@ public static class PocoNodeExtensions
     public static IEnumerable<PocoNode> ContainedResources(this PocoNode node) => node.Child("contained") ?? Enumerable.Empty<PocoNode>();
     
     public static IEnumerable<PocoNode> BundledResources(this PocoNode node) => node.Child("entry") ?? Enumerable.Empty<PocoNode>();
-    
-    public static object? GetValue(this PocoNode node) => node is PrimitiveNode primitive ? primitive.Value : null;
+
+    public static object? GetValue(this PocoNode node) => ((ITypedElement)node).Value;
 
     public static IEnumerable<PocoNode> FindSubChildren(this IEnumerable<PocoNode> nodes, string name) => nodes.SelectMany(node => node.Child(name) ?? Enumerable.Empty<PocoNode>());
     
