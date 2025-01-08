@@ -445,12 +445,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async Tasks.Task TestRefreshAll() => await TestRefreshAsync(true);
+        public void TestRefreshAll() => testRefresh(true);
 
         [TestMethod]
-        public async Tasks.Task TestRefreshFile() => await TestRefreshAsync(false);
+        public void TestRefreshFile() => testRefresh(false);
 
-        async Tasks.Task TestRefreshAsync(bool refreshAll)
+        private static void testRefresh(bool refreshAll)
         {
             // Create a temporary folder with a single artifact file
             const string srcFileName = "TestPatient.xml";
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(patient.Id, "pat1");
                 patient.Id = "CHANGED";
                 var serializer = new FhirXmlSerializer();
-                var xml = await serializer.SerializeToStringAsync(patient);
+                var xml = serializer.SerializeToString(patient);
                 File.WriteAllText(tmpFilePath, xml);
 
                 // Verify that Refresh updates the summary information

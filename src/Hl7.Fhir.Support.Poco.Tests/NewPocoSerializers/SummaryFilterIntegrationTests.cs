@@ -176,6 +176,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             static IEnumerable<KeyValuePair<string, object>> childrenAndMe(KeyValuePair<string, object> y) =>
                 (y.Value switch
                 {
+                    Meta m => [], // skip Meta, since we've added SUBSETTED tags, so don't count those
                     ICollection array => array.Cast<object>().SelectMany(bsi => childrenAndMe(KeyValuePair.Create(y.Key, bsi))),
                     Base obj => obj.EnumerateElements().SelectMany(childrenAndMe),
                     _ => []

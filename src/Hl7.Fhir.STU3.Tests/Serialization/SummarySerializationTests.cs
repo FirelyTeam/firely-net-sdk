@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var p = new Patient
             {
                 BirthDate = "1972-11-30",     // present in both summary and full
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+                Photo = [new Attachment() { ContentType = "text/plain" }]
             };
 
 
@@ -191,11 +191,11 @@ namespace Hl7.Fhir.Tests.Serialization
             };
             var elements = new[] { "photo" };
 
-            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.False, elements: elements);
+            var summaryElements = FhirXmlSerializer.SerializeToString(p, SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));
 
-            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, elements: elements);
+            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, SummaryType.False, elements: elements);
             Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
             Assert.IsTrue(noSummarySpecified.Contains("<photo"));
         }
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 BirthDate = "1972-11-30"
             };
 
-            var pSum = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var pSum = FhirXmlSerializer.SerializeToString(p, summary: SummaryType.True);
             Assert.IsNull(p.Meta, "Meta should not be there");
 
             p.Meta = new Meta { VersionId = "v2" }; // introducing meta data ourselves. 

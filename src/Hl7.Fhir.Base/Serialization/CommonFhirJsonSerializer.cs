@@ -8,9 +8,9 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -19,74 +19,84 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization;
 
-public class CommonFhirJsonSerializer(ModelInspector modelInspector)
+public static class CommonFhirJsonSerializerExtensions
 {
-    private readonly BaseFhirJsonPocoSerializer _serializer = new(modelInspector);
+    /// <summary>
+    /// Serializes the given POCO into a FHIR Json string.
+    /// </summary>
+    public static string SerializeToString(this CommonFhirJsonSerializer ser, Base element, bool pretty = false,
+        SerializationFilter? filter = null) =>
+        SerializationUtil.WriteJsonToString(w => ser.Serialize(element, w, filter), pretty);
 
-    private static Base markSubsettedIfNecessary(Base instance, SummaryType summaryType) =>
-        summaryType == SummaryType.False ? instance : instance.MakeSubsettedClone();
-
-    public string SerializeToString(Base instance,
-            SummaryType summary = SummaryType.False, string[]? elements = null,
+    public static string SerializeToString(this CommonFhirJsonSerializer ser, Base instance,
+            SummaryType summary, string[]? elements = null,
             bool includeMandatoryInElementsSummary = false,
             bool pretty = false) =>
-        _serializer.SerializeToString(
-            markSubsettedIfNecessary(instance, summary),
+        ser.SerializeToString(
+            instance,
             pretty,
             summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
-    public Tasks.Task<string> SerializeToStringAsync(Base instance,
+    public static Tasks.Task<string> SerializeToStringAsync(this CommonFhirJsonSerializer ser, Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         bool pretty = false) =>
-       TaskExtensions.FromResult(SerializeToString(instance, summary, elements, includeMandatoryInElementsSummary, pretty));
+       TaskExtensions.FromResult(ser.SerializeToString(instance, summary, elements, includeMandatoryInElementsSummary, pretty));
 
-    public byte[] SerializeToBytes(Base instance,
-        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
+
+    /// <summary>
+    /// Serializes the given POCO into a FHIR Json byte array.
+    /// </summary>
+    public static byte[] SerializeToBytes(this CommonFhirJsonSerializer ser, Base element, bool pretty = false,
+        SerializationFilter? filter = null) =>
+        SerializationUtil.WriteJsonToBytes(w => ser.Serialize(element, w, filter), pretty);
+
+    public static byte[] SerializeToBytes(this CommonFhirJsonSerializer ser, Base instance,
+        SummaryType summary, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
         bool pretty = false) =>
-        _serializer.SerializeToBytes(
-            markSubsettedIfNecessary(instance, summary),
+        ser.SerializeToBytes(
+            instance,
             pretty,
             summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
-    public Tasks.Task<byte[]> SerializeToBytesAsync(Base instance,
+    public static Tasks.Task<byte[]> SerializeToBytesAsync(this CommonFhirJsonSerializer ser, Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null,
         bool includeMandatoryInElementsSummary = false,
         bool pretty = false) =>
-        TaskExtensions.FromResult(SerializeToBytes(instance, summary, elements, includeMandatoryInElementsSummary, pretty));
+        TaskExtensions.FromResult(ser.SerializeToBytes(instance, summary, elements, includeMandatoryInElementsSummary, pretty));
 
     [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
-    public JObject SerializeToDocument(Base instance,
+    public static JObject SerializeToDocument(this CommonFhirJsonSerializer ser, Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
+        instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
             .ToJObject();
 
     [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
-    public void Serialize(Base instance, JsonWriter writer,
+    public static void Serialize(this CommonFhirJsonSerializer ser, Base instance, JsonWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
+        instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
             .WriteTo(writer);
 
-    public void Serialize(Base instance, Utf8JsonWriter writer,
+    public static void Serialize(this CommonFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        _serializer.Serialize(
-            markSubsettedIfNecessary(instance, summary),
+        ser.Serialize(
+            instance,
             writer,
             summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
 
     [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
-    public async Tasks.Task SerializeAsync(Base instance, JsonWriter writer,
+    public static async Tasks.Task SerializeAsync(this CommonFhirJsonSerializer ser, Base instance, JsonWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        await instance.MakeElementStack(modelInspector, summary, elements, includeMandatoryInElementsSummary)
+        await instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
             .WriteToAsync(writer)
             .ConfigureAwait(false);
 
-    public Tasks.Task SerializeAsync(Base instance, Utf8JsonWriter writer,
+    public static Tasks.Task SerializeAsync(this CommonFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null,
         bool includeMandatoryInElementsSummary = false)
     {
-        Serialize(instance, writer, summary, elements, includeMandatoryInElementsSummary);
+        ser.Serialize(instance, writer, summary, elements, includeMandatoryInElementsSummary);
         return Tasks.Task.CompletedTask;
     }
 }

@@ -1209,8 +1209,8 @@ namespace Hl7.Fhir.Specification.Tests
             // {
             var tempPath = Path.GetTempPath();
             var xmlSer = new FhirXmlSerializer();
-            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-source.xml"), await xmlSer.SerializeToStringAsync(original));
-            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-dest.xml"), await xmlSer.SerializeToStringAsync(expanded));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-source.xml"), xmlSer.SerializeToString(original));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-dest.xml"), xmlSer.SerializeToString(expanded));
             // }
 
             // Assert.IsTrue(areEqual);

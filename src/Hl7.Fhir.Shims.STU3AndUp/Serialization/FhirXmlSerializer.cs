@@ -12,4 +12,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization;
 
-public class FhirXmlSerializer() : CommonFhirXmlSerializer(ModelInfo.ModelInspector);
+public class FhirXmlSerializer() : CommonFhirXmlSerializer(ModelInfo.ModelInspector)
+{
+    public static readonly FhirXmlSerializer Default = new();
+}

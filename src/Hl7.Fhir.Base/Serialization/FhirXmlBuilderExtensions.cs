@@ -80,7 +80,7 @@ public static class FhirXmlBuilderExtensions
 
     private static string serializePocoNode(PocoNode pn, bool pretty)
     {
-        var serializer = new BaseFhirXmlPocoSerializer(pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType()));
+        var serializer = new CommonFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType()));
 
         // If we are serializing a subtree of a resource, then if the current node is a datatype or a nested resource,
         // we need to pick a name for this root element.

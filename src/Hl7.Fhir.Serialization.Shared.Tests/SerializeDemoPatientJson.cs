@@ -74,9 +74,9 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(pretty[..20].Contains('\n'));
 
             var p = await new FhirJsonParser().ParseAsync<Patient>(json);
-            output = await (new FhirJsonSerializer().SerializeToStringAsync(p, pretty: false));
+            output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
             Assert.IsFalse(output[..20].Contains('\n'));
-            pretty = await (new FhirJsonSerializer().SerializeToStringAsync(p, pretty: true));
+            pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);
             Assert.IsTrue(pretty[..20].Contains('\n'));
         }
     }

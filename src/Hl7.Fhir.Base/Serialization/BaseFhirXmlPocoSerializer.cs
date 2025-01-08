@@ -20,12 +20,15 @@ using System.Xml;
 
 namespace Hl7.Fhir.Serialization;
 
+[Obsolete("This class has been replaced by the equivalent CommonFhirXmlSerializer class.")]
+public class BaseFhirXmlPocoSerializer(ModelInspector inspector) : CommonFhirXmlSerializer(inspector);
+
 /// <summary>
 /// Serializes the contents of a POCO according to the rules of FHIR Xml serialization.
 /// </summary>
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html.
 /// </remarks>
-public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
+public class CommonFhirXmlSerializer(ModelInspector inspector)
 {
     /// <summary>
     /// The <see cref="ModelInspector"/> to be used for serialization metadata.
@@ -38,17 +41,23 @@ public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
     public void Serialize(
         Base element,
         XmlWriter writer,
-        SerializationFilter? summary = default,
+        SerializationFilter? filter = null,
         string? rootName = null)
     {
+        // If the element is summarized, add the subsetted tags.
+        if (filter is not null)
+            element = element.MakeSubsettedClone();
+
         writer.WriteStartDocument();
 
+        // Wrap the instance with a named element if either a root name is given,
+        // or we are serializing a datatype (=a subtree).
         if (rootName is not null)
             writer.WriteStartElement(rootName, XmlNs.FHIR);
         else if(element is not Resource)
             writer.WriteStartElement(element.TypeName, XmlNs.FHIR);
 
-        serializeInternal(element, writer, summary);
+        serializeInternal(element, writer, filter);
 
         if (rootName is not null) writer.WriteEndElement();
         writer.WriteEndDocument();

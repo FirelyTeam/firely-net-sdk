@@ -54,7 +54,7 @@ public static class FhirJsonBuilderExtensions
             return SerializationUtil.WriteJsonToString(source.WriteTo, pretty);
 
         var inspector = node.FindInspector() ?? ModelInspector.ForType(resource.GetType());
-        var ser = new BaseFhirJsonPocoSerializer(inspector);
+        var ser = new CommonFhirJsonSerializer(inspector);
         return ser.SerializeToString(resource, pretty);
     }
 
@@ -66,7 +66,7 @@ public static class FhirJsonBuilderExtensions
                     pretty).ConfigureAwait(false);
 
         var inspector = node.FindInspector() ?? ModelInspector.ForType(resource.GetType());
-        var ser = new BaseFhirJsonPocoSerializer(inspector);
+        var ser = new CommonFhirJsonSerializer(inspector);
         return ser.SerializeToString(resource, pretty);
     }
 

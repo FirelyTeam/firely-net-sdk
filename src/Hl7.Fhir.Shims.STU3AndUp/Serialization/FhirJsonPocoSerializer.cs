@@ -1,17 +1,9 @@
 ﻿#nullable enable
 
 using Hl7.Fhir.Model;
+using System;
 
 namespace Hl7.Fhir.Serialization;
 
-public class FhirJsonPocoSerializer : BaseFhirJsonPocoSerializer
-{
-    public static readonly FhirJsonPocoSerializer Default = new();
-
-    /// <summary>
-    /// Construct a new FHIR Json serializer, based on the currently used FHIR version.
-    /// </summary>
-    public FhirJsonPocoSerializer() : base(ModelInfo.ModelInspector)
-    {
-    }
-}
+[Obsolete("This class has been replaced by the equivalent FhirXmlSerializer class.")]
+public class FhirJsonPocoSerializer() : BaseFhirJsonPocoSerializer(ModelInfo.ModelInspector);

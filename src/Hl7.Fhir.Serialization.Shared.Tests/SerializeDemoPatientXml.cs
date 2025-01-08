@@ -107,9 +107,9 @@ public class SerializeDemoPatientXml
         Assert.IsTrue(pretty[..50].Contains('\n'));
 
         var p = await new FhirXmlParser().ParseAsync<Patient>(xml);
-        output = await new FhirXmlSerializer().SerializeToStringAsync(p, pretty: false);
+        output = new FhirXmlSerializer().SerializeToString(p, pretty: false);
         Assert.IsFalse(output[..50].Contains('\n'));
-        pretty = await new FhirXmlSerializer().SerializeToStringAsync(p, pretty: true);
+        pretty = new FhirXmlSerializer().SerializeToString(p, pretty: true);
         Assert.IsTrue(pretty[..50].Contains('\n'));
     }
 }

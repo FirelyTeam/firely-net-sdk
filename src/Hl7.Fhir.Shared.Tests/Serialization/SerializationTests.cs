@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMetaXml()
         {
-            var xml = new FhirXmlSerializer().SerializeToString(metaPoco, root: "meta");
+            var xml = new FhirXmlSerializer().SerializeToString(metaPoco, rootName: "meta");
             Assert.AreEqual(metaXml, xml);
         }
 
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public async Tasks.Task ParseMetaXml()
         {
             var poco = (Meta)(await new FhirXmlParser().ParseAsync(metaXml, typeof(Meta)));
-            var xml = new FhirXmlSerializer().SerializeToString(poco, root: "meta");
+            var xml = new FhirXmlSerializer().SerializeToString(poco, rootName: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
@@ -289,11 +289,11 @@ namespace Hl7.Fhir.Tests.Serialization
                     null
                 },
 
-                Contact = new List<Patient.ContactComponent>
-                {
+                Contact =
+                [
                     null,
-                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") },
-                }
+                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") }
+                ]
             };
 
             var xml = FhirXmlSerializer.SerializeToString(p);
@@ -306,8 +306,6 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public async Tasks.Task SerializeJsonWithPlainDiv()
         {
-            // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
-
             string json = TestDataHelper.ReadTestData(@"TestPatient.json");
             Assert.IsNotNull(json);
             var parser = new FhirJsonParser { Settings = { PermissiveParsing = true } };

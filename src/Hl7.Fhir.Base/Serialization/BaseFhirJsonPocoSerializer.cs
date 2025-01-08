@@ -20,13 +20,17 @@ using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization;
 
+[Obsolete("This class has been replaced by the equivalent CommonFhirJsonSerializer class.")]
+public class BaseFhirJsonPocoSerializer(ModelInspector inspector) : CommonFhirJsonSerializer(inspector);
+
+
 /// <summary>
 /// Serializes the contents of an IReadOnlyDictionary[string,object] according to the rules of FHIR Json serialization.
 /// </summary>
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/json.html. Since all POCOs included
 /// in the SDK implement IReadOnlyDictionary, these methods can be used to serialize POCOs to Json.
 /// </remarks>
-public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
+public class CommonFhirJsonSerializer(ModelInspector inspector)
 {
     /// <summary>
     /// The <see cref="ModelInspector"/> to be used for serialization metadata.
@@ -36,8 +40,14 @@ public class BaseFhirJsonPocoSerializer(ModelInspector inspector)
     /// <summary>
     /// Serializes the given POCO with FHIR data into Json.
     /// </summary>
-    public void Serialize(Base element, Utf8JsonWriter writer, SerializationFilter? filter = null) =>
+    public void Serialize(Base element, Utf8JsonWriter writer, SerializationFilter? filter = null)
+    {
+        // If the element is summarized, add the subsetted tags.
+        if (filter is not null)
+            element = element.MakeSubsettedClone();
+
         serializeInternal(element, writer, filter);
+    }
 
     /// <summary>
     /// Serializes the given POCO with FHIR data into Json, optionally skipping the "value" element.

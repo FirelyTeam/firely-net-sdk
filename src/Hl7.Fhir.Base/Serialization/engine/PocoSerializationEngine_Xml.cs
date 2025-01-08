@@ -16,13 +16,13 @@ internal partial class PocoSerializationEngine
     private readonly FhirXmlPocoDeserializerSettings _xmlSettings;
     
     private BaseFhirXmlPocoDeserializer? _xmlDeserializer;
-    private BaseFhirXmlPocoSerializer? _xmlSerializer;
+    private CommonFhirXmlSerializer? _xmlSerializer;
 
     private BaseFhirXmlPocoDeserializer getXmlDeserializer() =>
         _xmlDeserializer ??= new BaseFhirXmlPocoDeserializer(_inspector, _xmlSettings);
 
-    private BaseFhirXmlPocoSerializer getXmlSerializer() =>
-        _xmlSerializer ??= new BaseFhirXmlPocoSerializer(_inspector);
+    private CommonFhirXmlSerializer getXmlSerializer() =>
+        _xmlSerializer ??= new CommonFhirXmlSerializer(_inspector);
     
     /// <inheritdoc />
     public Resource DeserializeFromXml(string data)
