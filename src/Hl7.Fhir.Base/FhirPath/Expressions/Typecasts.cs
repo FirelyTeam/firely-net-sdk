@@ -77,7 +77,8 @@ namespace Hl7.FhirPath.Expressions
 
             if (typeof(P.Any).IsAssignableFrom(to) && !fromElemList)
             {
-                if (f is PocoNode {Poco: Quantity}) return o => ParseQuantity((PocoNode)o);
+                if (f is PocoNode {Poco: Quantity}) 
+                    return o => ParseQuantity((PocoNode)o);
                 return o => P.Any.Convert(o);
             }
 
