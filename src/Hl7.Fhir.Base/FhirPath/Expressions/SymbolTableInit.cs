@@ -37,8 +37,8 @@ namespace Hl7.FhirPath.Expressions
 
             t.Add("allTrue", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is true));
             t.Add("anyTrue", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is true));
-            t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is true));
-            t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is true));
+            t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is false));
+            t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is false));
             t.Add("combine", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.Concat(r));
             t.Add("binary.|", (object _, IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
             t.Add("union", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));

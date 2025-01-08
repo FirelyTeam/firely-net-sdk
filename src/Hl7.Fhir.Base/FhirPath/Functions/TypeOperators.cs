@@ -22,8 +22,8 @@ namespace Hl7.FhirPath.Functions
         public static bool Is(this PocoNode focus, string type)
         {
             var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
-                .Select(t => ModelInspector.ForType(t).GetFhirTypeNameForType(t))
-                .Append(((ITypedElement)focus).InstanceType);
+                .Select(t => ModelInspector.ForType(t).GetFhirTypeNameForType(t).Capitalize())
+                .Append(((ITypedElement)focus).InstanceType.Capitalize());
             return selfAndBaseClasses.Any(typeString => Is(typeString, type));
             
             static IEnumerable<Type> getBaseClasses(Type t)
