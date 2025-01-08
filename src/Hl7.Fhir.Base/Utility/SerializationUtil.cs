@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -268,7 +269,7 @@ public static class SerializationUtil
     public static string WriteJsonToString(Action<Utf8JsonWriter> serializer, bool pretty = false)
     {
         using var stream = new MemoryStream();
-        using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = pretty });
+        using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = pretty});
         serializer(writer);
         writer.Flush();
         return Encoding.UTF8.GetString(stream.ToArray());

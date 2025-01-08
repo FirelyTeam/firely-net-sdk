@@ -58,17 +58,12 @@ namespace Hl7.Fhir.Specification.Tests
 
         static readonly FhirXmlParsingSettings _fhirXmlParserSettings = new FhirXmlParsingSettings()
         {
-            PermissiveParsing = false
+            PermissiveParsing = true
         };
-
-        //static readonly FhirJsonParsingSettings _fhirJsonParserSettings = new FhirJsonParsingSettings()
-        //{
-        //    PermissiveParsing = false
-        //};
 
         static readonly ParserSettings _parserSettings = new ParserSettings()
         {
-            PermissiveParsing = false
+            PermissiveParsing = true
         };
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()

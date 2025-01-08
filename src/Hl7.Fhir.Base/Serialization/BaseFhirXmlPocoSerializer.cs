@@ -45,8 +45,7 @@ public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
 
         if (rootName is not null)
             writer.WriteStartElement(rootName, XmlNs.FHIR);
-
-        if(element is not Resource)
+        else if(element is not Resource)
             writer.WriteStartElement(element.TypeName, XmlNs.FHIR);
 
         serializeInternal(element, writer, summary);
@@ -108,7 +107,7 @@ public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
             var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
                 addSuffixToElementName(mKey, serializeValue) : mKey;
 
-            if (serializeValue is IReadOnlyList<Base> coll)
+            if (serializeValue is IReadOnlyList<Base?> coll)
             {
                 foreach (var value in coll)
                     serializeMemberValue(elementName, value, writer, filter);
@@ -133,10 +132,12 @@ public class BaseFhirXmlPocoSerializer(ModelInspector inspector)
     }
 
 
-    private void serializeMemberValue(string elementName, object value, XmlWriter writer, SerializationFilter? filter)
+    private void serializeMemberValue(string elementName, object? value, XmlWriter writer, SerializationFilter? filter)
     {
         switch (value)
         {
+            case null:
+                break;  // In error situations there may be a null in a list, just don't serialize it.
             case XHtml xhtml:
                 writer.WriteRaw(xhtml.Value);
                 break;

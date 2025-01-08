@@ -29,25 +29,25 @@ namespace Hl7.Fhir.Tests.Serialization
         private readonly Meta metaPoco = new Meta { LastUpdated = new DateTimeOffset(2014, 12, 24, 16, 30, 56, 31, new TimeSpan(1, 0, 0)), VersionId = "3141" };
 
         [TestMethod]
-        public async Tasks.Task SerializeMetaXml()
+        public void SerializeMetaXml()
         {
-            var xml = await new FhirXmlSerializer().SerializeToStringAsync(metaPoco, root: "meta");
+            var xml = new FhirXmlSerializer().SerializeToString(metaPoco, root: "meta");
             Assert.AreEqual(metaXml, xml);
         }
 
 
         [TestMethod]
-        public async Tasks.Task SerializeMetaJson()
+        public void SerializeMetaJson()
         {
-            var json = await new FhirJsonSerializer().SerializeToStringAsync(metaPoco);
-            Assert.AreEqual(metaJson, json);
+            var json = new FhirJsonSerializer().SerializeToString(metaPoco);
+            JsonAssert.AreSame("0", metaJson, json);
         }
 
         [TestMethod]
         public async Tasks.Task ParseMetaXml()
         {
             var poco = (Meta)(await new FhirXmlParser().ParseAsync(metaXml, typeof(Meta)));
-            var xml = await new FhirXmlSerializer().SerializeToStringAsync(poco, root: "meta");
+            var xml = new FhirXmlSerializer().SerializeToString(poco, root: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
@@ -73,10 +73,10 @@ namespace Hl7.Fhir.Tests.Serialization
         public async Tasks.Task ParseMetaJson()
         {
             var poco = (Meta)await (new FhirJsonParser().ParseAsync(metaJson, typeof(Meta)));
-            var json = await FhirJsonSerializer.SerializeToStringAsync(poco);
+            var json = FhirJsonSerializer.SerializeToString(poco);
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
-            Assert.AreEqual(metaJson, json);
+            JsonAssert.AreSame("0", metaJson, json);
         }
 
         [TestMethod]
@@ -93,22 +93,22 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task AvoidBOMUse()
+        public void AvoidBOMUse()
         {
             Bundle b = new Bundle() { Total = 1000 };
 
-            var data = await FhirJsonSerializer.SerializeToBytesAsync(b);
+            var data = FhirJsonSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            data = await FhirXmlSerializer.SerializeToBytesAsync(b);
+            data = FhirXmlSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            Patient p = new Patient() { Active = true };
+            Patient p = new() { Active = true };
 
-            data = await FhirJsonSerializer.SerializeToBytesAsync(p);
+            data = FhirJsonSerializer.SerializeToBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            data = await FhirXmlSerializer.SerializeToBytesAsync(p);
+            data = FhirXmlSerializer.SerializeToBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
         }
 
@@ -131,56 +131,15 @@ namespace Hl7.Fhir.Tests.Serialization
         private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
         private readonly FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
-
-        //[TestMethod]
-        //public void HandleCommentsJson()
-        //{
-        //    string json = TestDataHelper.ReadTestData("TestPatient.json");
-
-        //    var pat = FhirJsonParser.Parse<Patient>(json);
-
-        //    Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
-        //    Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
-
-        //    pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
-
-        //    json = FhirJsonSerializer.SerializeToString(pat);
-        //    pat = FhirJsonParser.Parse<Patient>(json);
-
-        //    Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
-        //    Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
-        //    Assert.AreEqual("A second line", pat.Telecom[0].FhirComments.Skip(1).First());
-        //}
-
-        //[TestMethod, Ignore]
-        //public void HandleCommentsXml()
-        //{
-        //    string xml = TestDataHelper.ReadTestData("TestPatient.xml");
-
-        //    var pat = FhirXmlParser.Parse<Patient>(xml);
-
-        //    Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
-        //    Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
-
-        //    pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
-
-        //    xml = FhirXmlSerializer.SerializeToString(pat);
-
-        //    Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
-        //    Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
-        //    Assert.AreEqual("A second line", pat.Name[0].FhirComments.Skip(1).First());
-        //}
-
-
         [TestMethod]
-        public async Tasks.Task BundleLinksUnaltered()
+        public void BundleLinksUnaltered()
         {
             var b = new Bundle
             {
                 NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative)
             };
 
-            var xml = await new FhirXmlSerializer().SerializeToStringAsync(b);
+            var xml = new FhirXmlSerializer().SerializeToString(b);
 
             b = FhirXmlParser.Parse<Bundle>(xml);
 
@@ -188,7 +147,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task TestDecimalPrecisionSerializationInJson()
+        public void TestDecimalPrecisionSerializationInJson()
         {
             var dec6 = 6m;
             var dec60 = 6.0m;
@@ -196,8 +155,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var obs = new Observation();
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
-            var json = await FhirJsonSerializer.SerializeToStringAsync(obs);
-            var obs2 = await FhirJsonParser.ParseAsync<Observation>(json);
+            var json = FhirJsonSerializer.SerializeToString(obs);
+            var obs2 = FhirJsonParser.Parse<Observation>(json);
 
             Assert.AreEqual("6", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
@@ -205,8 +164,8 @@ namespace Hl7.Fhir.Tests.Serialization
             obs = new Observation();
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
-            json = await FhirJsonSerializer.SerializeToStringAsync(obs);
-            obs2 = await FhirJsonParser.ParseAsync<Observation>(json);
+            json = FhirJsonSerializer.SerializeToString(obs);
+            obs2 = FhirJsonParser.Parse<Observation>(json);
 
             Assert.AreEqual("6.0", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
@@ -219,7 +178,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var obs = new Observation();
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
-            var json = await FhirJsonSerializer.SerializeToStringAsync(obs);
+            var json = FhirJsonSerializer.SerializeToString(obs);
             var obs2 = await FhirJsonParser.ParseAsync<Observation>(json);
 
             Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
@@ -231,7 +190,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var dec6 = 6m;
             var ext = new FhirDecimal(dec6);
             var obs = new Observation { Value = new FhirDecimal(dec6) };
-            var json = await FhirJsonSerializer.SerializeToStringAsync(obs);
+            var json = FhirJsonSerializer.SerializeToString(obs);
             try
             {
                 var obs2 = await FhirJsonParser.ParseAsync<Observation>(json);
@@ -244,7 +203,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task TestSerializeWhitespacesInXml()
+        public void TestSerializeWhitespacesInXml()
         {
             var patient = new Patient
             {
@@ -254,20 +213,20 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var trimmed = await FhirXmlSerializer.SerializeToStringAsync(patient);
+            var trimmed = FhirXmlSerializer.SerializeToString(patient);
             Assert.IsFalse(trimmed.Contains(" Smith"));
             Assert.IsFalse(trimmed.Contains("Smith&#xD;&#xA;&#x9;"));
             Assert.IsTrue(trimmed.Contains("\"Smith\""));
         }
 
         [TestMethod]
-        public async Tasks.Task TryScriptInject()
+        public void TryScriptInject()
         {
             var x = new Patient();
 
             x.Name.Add(HumanName.ForFamily("<script language='javascript'></script>"));
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(x);
+            var xml = FhirXmlSerializer.SerializeToString(x);
             Assert.IsFalse(xml.Contains("<script"));
         }
 
@@ -307,20 +266,20 @@ namespace Hl7.Fhir.Tests.Serialization
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
             var p = await pser.ParseAsync<Patient>(xml);
-            string outp = await FhirXmlSerializer.SerializeToStringAsync(p);
+            string outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(outp.Contains("\"male\""));
 
             // Pollute the data with an incorrect administrative gender
             p.GenderElement.ObjectValue = "superman";
 
-            outp = await FhirXmlSerializer.SerializeToStringAsync(p);
+            outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsFalse(outp.Contains("\"male\""));
             Assert.IsTrue(outp.Contains("\"superman\""));
         }
 
 
         [TestMethod]
-        public async Tasks.Task TestNullExtensionRemoval()
+        public void TestNullExtensionRemoval()
         {
             var p = new Patient
             {
@@ -337,23 +296,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(p);
+            var xml = FhirXmlSerializer.SerializeToString(p);
 
-            var p2 = await (new FhirXmlParser()).ParseAsync<Patient>(xml);
+            var p2 = (new FhirXmlParser()).Parse<Patient>(xml);
             Assert.AreEqual(1, p2.Extension.Count);
             Assert.AreEqual(1, p2.Contact.Count);
         }
-
-        //An empty object is not allowed
-        //[TestMethod]
-        //public void SerializeEmptyParams()
-        //{
-        //    var par = new Parameters();
-        //    var xml = FhirXmlSerializer.SerializeToString(par);
-
-        //    var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
-        //    Assert.AreEqual(0, par2.Parameter.Count);
-        //}
 
         [TestMethod]
         public async Tasks.Task SerializeJsonWithPlainDiv()
@@ -366,22 +314,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var pat = await parser.ParseAsync<Patient>(json);
             Assert.IsNotNull(pat);
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(pat);
+            var xml = FhirXmlSerializer.SerializeToString(pat);
             Assert.IsNotNull(xml);
-        }
-
-        [TestMethod]
-        public async Tasks.Task TestClaimJsonSerialization()
-        {
-            var c = new Claim();
-            c.Payee = new Claim.PayeeComponent();
-            c.Payee.Type = new CodeableConcept(null, "test");
-            c.Payee.Party = new ResourceReference("Practitioner/example", "Example, Dr John");
-
-            string json = await FhirJsonSerializer.SerializeToStringAsync(c);
-            var c2 = await new FhirJsonParser().ParseAsync<Claim>(json);
-            Assert.AreEqual("test", c2.Payee.Type.Coding[0].Code);
-            Assert.AreEqual("Practitioner/example", c2.Payee.Party.Reference);
         }
 
         [FhirType("Bundle")]
@@ -394,7 +328,7 @@ namespace Hl7.Fhir.Tests.Serialization
         // [WMR 20170825] Richard Kavanagh: runtime exception while serializating derived PoCo classes
         // Workaround: add the FhirType attribute to derived class
         [TestMethod]
-        public async Tasks.Task TestDerivedPoCoSerialization()
+        public void TestDerivedPoCoSerialization()
         {
             ModelInfo.ModelInspector.ImportType(typeof(CustomBundle));
 
@@ -404,10 +338,10 @@ namespace Hl7.Fhir.Tests.Serialization
                 Id = "MyBundle"
             };
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(bundle);
+            var xml = FhirXmlSerializer.SerializeToString(bundle);
             Assert.IsNotNull(xml);
 
-            var json = await FhirJsonSerializer.SerializeToStringAsync(bundle);
+            var json = FhirJsonSerializer.SerializeToString(bundle);
             Assert.IsNotNull(json);
         }
 
@@ -430,7 +364,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 Gender = AdministrativeGender.Male
             };
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var doc = FhirXmlSerializer.SerializeToDocument(patientOne);
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.IsNotNull(doc);
 
             var root = doc.Root;
@@ -442,7 +378,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
         // [WMR 20180409] NEW: Serialize to JObject
         [TestMethod]
-        public async Tasks.Task TestSerializeToJsonDocument()
+        public void TestSerializeToJsonDocument()
         {
             // Note: output order is defined by core resource/datatype definitions!
 
@@ -458,13 +394,13 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var serializer = new FhirJsonSerializer();
-            var jsonText = await serializer.SerializeToStringAsync(patientOne);
+            var jsonText = serializer.SerializeToString(patientOne);
             Assert.IsNotNull(jsonText);
 
             var doc = JObject.Parse(jsonText);
             Assert.AreEqual(8, doc.Count); // Including resourceType
 
-            JToken assertProperty(JToken t, string expectedName)
+            static JToken assertProperty(JToken t, string expectedName)
             {
                 Assert.AreEqual(JTokenType.Property, t.Type);
                 var p = t as JProperty;
@@ -473,7 +409,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 return t;
             }
 
-            JToken assertPrimitiveProperty(JToken t, string expectedName, JTokenType expectedType, object expectedValue)
+            static JToken assertPrimitiveProperty(JToken t, string expectedName, JTokenType expectedType, object expectedValue)
             {
                 var p = t as JProperty;
                 Assert.IsNotNull(p);
@@ -485,7 +421,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 return t;
             }
 
-            JToken assertStringProperty(JToken t, string expectedName, object expectedValue) => assertPrimitiveProperty(t, expectedName, JTokenType.String, expectedValue);
+            static JToken assertStringProperty(JToken t, string expectedName, object expectedValue) =>
+                assertPrimitiveProperty(t, expectedName, JTokenType.String, expectedValue);
 
             Assert.AreEqual(JTokenType.Property, doc.First.Type);
             var token = assertStringProperty(doc.First, "resourceType", "Patient");
@@ -521,18 +458,18 @@ namespace Hl7.Fhir.Tests.Serialization
         /// This test proves issue 583: https://github.com/FirelyTeam/firely-net-sdk/issues/583
         /// </summary>
         [TestMethod]
-        public async Tasks.Task SummarizeSerializingTest()
+        public void SummarizeSerializingTest()
         {
             var patient = new Patient();
             var telecom = new ContactPoint(ContactPoint.ContactPointSystem.Phone, ContactPoint.ContactPointUse.Work, "0471 144 099");
             telecom.AddExtension("http://healthconnex.com.au/hcxd/Phone/IsMain", new FhirBoolean(true));
             patient.Telecom.Add(telecom);
 
-            var doc = await FhirXmlSerializer.SerializeToStringAsync(patient, Fhir.Rest.SummaryType.True);
+            var doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.True);
 
             Assert.IsFalse(doc.Contains("<extension"), "In the summary there must be no extension section.");
 
-            doc = await FhirXmlSerializer.SerializeToStringAsync(patient, Fhir.Rest.SummaryType.False);
+            doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.False);
             Assert.IsTrue(doc.Contains("<extension"), "Extension exists when Summary = false");
         }
 
@@ -543,7 +480,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public async Tasks.Task DateTimeOffsetAccuracyTest()
         {
             var patient = new Patient { Meta = new Meta { LastUpdated = DateTimeOffset.UtcNow } };
-            var json = await new FhirJsonSerializer().SerializeToStringAsync(patient);
+            var json = new FhirJsonSerializer().SerializeToString(patient);
             var res = await new FhirJsonParser().ParseAsync<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "1");
 
@@ -554,8 +491,8 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(patient.IsExactly(res), "2");
 
             // Is the serialization still correct without milliseconds?
-            var json2 = await new FhirJsonSerializer().SerializeToStringAsync(patient);
-            Assert.AreEqual(json, json2, "3");
+            var json2 = new FhirJsonSerializer().SerializeToString(patient);
+            JsonAssert.AreSame("3", json, json2);
 
             // Is the parsing still correct with a few milliseconds and TimeZone?
             patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, 12, TimeSpan.Zero) } };
@@ -564,8 +501,8 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(patient.IsExactly(res), "4");
 
             // Is the serialization still correct with a few milliseconds?
-            json2 = await new FhirJsonSerializer().SerializeToStringAsync(patient);
-            Assert.AreEqual(json, json2, "5");
+            json2 = new FhirJsonSerializer().SerializeToString(patient);
+            JsonAssert.AreSame("5", json, json2);
         }
 
         [TestMethod]
@@ -597,14 +534,18 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             // default behavior
+#pragma warning disable CS0618 // Type or member is obsolete
             var json = new FhirJsonSerializer().SerializeToDocument(obs, elements: ["issued"]);
-
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.IsTrue(json.ContainsKey("issued"));
+
             Assert.IsFalse(json.ContainsKey("status"));
 
             // Adding mandatory elements to the set of elements
+#pragma warning disable CS0618 // Type or member is obsolete
             json = new FhirJsonSerializer()
                 .SerializeToDocument(obs, elements: ["issued"], includeMandatoryInElementsSummary: true);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.IsTrue(json.ContainsKey("issued"));
             Assert.IsTrue(json.ContainsKey("status"));

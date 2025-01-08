@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
-            var outp = await FhirXmlSerializer.SerializeToStringAsync(basic);
+            var outp = FhirXmlSerializer.SerializeToString(basic);
             Assert.IsTrue(outp.Contains("&#xA;"));
         }
 
@@ -260,17 +260,17 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var poco = await FhirJsonParser.ParseAsync<Resource>(json);
             Assert.IsNotNull(poco);
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(poco);
+            var xml = FhirXmlSerializer.SerializeToString(poco);
             Assert.IsNotNull(xml);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.xml"), xml);
 
             poco = await FhirXmlParser.ParseAsync<Resource>(xml);
             Assert.IsNotNull(poco);
-            var json2 = await FhirJsonSerializer.SerializeToStringAsync(poco);
+            var json2 = FhirJsonSerializer.SerializeToString(poco);
             Assert.IsNotNull(json2);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.json"), json2);
 
-            List<string> errors = new List<string>();
+            List<string> errors = [];
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
             Console.WriteLine(String.Join("\r\n", errors));
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
@@ -284,12 +284,12 @@ namespace Hl7.Fhir.Tests.Serialization
             o.Contained.Add(p);
             o.ResourceBase = new Uri("http://nu.nl/fhir");
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(o);
+            var xml = FhirXmlSerializer.SerializeToString(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
             var o2 = await FhirXmlParser.ParseAsync<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
-            xml = await FhirXmlSerializer.SerializeToStringAsync(o2);
+            xml = FhirXmlSerializer.SerializeToString(o2);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
         }
 
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var json = await FhirJsonSerializer.SerializeToStringAsync(patient);
+            var json = FhirJsonSerializer.SerializeToString(patient);
             var parsedPatient = await FhirJsonParser.ParseAsync<Patient>(json);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             }
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(patient);
+            var xml = FhirXmlSerializer.SerializeToString(patient);
             parsedPatient = await FhirXmlParser.ParseAsync<Patient>(xml);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
@@ -352,9 +352,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nasty, a text with both \"double\" quotes and 'single' quotes</div>" }
             };
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(p);
+            var xml = FhirXmlSerializer.SerializeToString(p);
             Assert.IsNotNull(await FhirXmlParser.ParseAsync<Resource>(xml));
-            var json = await FhirJsonSerializer.SerializeToStringAsync(p);
+            var json = FhirJsonSerializer.SerializeToString(p);
             Assert.IsNotNull(await FhirJsonParser.ParseAsync<Resource>(json));
         }
 
