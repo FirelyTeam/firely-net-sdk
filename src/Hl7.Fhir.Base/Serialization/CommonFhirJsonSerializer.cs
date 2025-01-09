@@ -66,17 +66,33 @@ public static class CommonFhirJsonSerializerExtensions
         bool pretty = false) =>
         TaskExtensions.FromResult(ser.SerializeToBytes(instance, summary, elements, includeMandatoryInElementsSummary, pretty));
 
-    [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
+    [Obsolete(
+        "We're phasing out Newtonsoft in favor of System.Text.Json, please use FhirJsonSerializer.Default.Serialize() instead.")]
     public static JObject SerializeToDocument(this CommonFhirJsonSerializer ser, Base instance,
-        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
-            .ToJObject();
+        SummaryType summary = SummaryType.False, string[]? elements = null,
+        bool includeMandatoryInElementsSummary = false)
+    {
+        var jsonText = ser.SerializeToString(instance, summary, elements, includeMandatoryInElementsSummary);
+        return JObject.Parse(jsonText);
+    }
 
-    [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
+    [Obsolete(
+        "We're phasing out Newtonsoft in favor of System.Text.Json, please use FhirJsonSerializer.Default.Serialize() instead.")]
     public static void Serialize(this CommonFhirJsonSerializer ser, Base instance, JsonWriter writer,
-        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
-            .WriteTo(writer);
+        SummaryType summary = SummaryType.False, string[]? elements = null,
+        bool includeMandatoryInElementsSummary = false)
+    {
+        var jsonText = ser.SerializeToString(instance, summary, elements, includeMandatoryInElementsSummary);
+        writer.WriteRaw(jsonText);
+    }
+
+    [Obsolete("We're phasing out Newtonsoft in favor of System.Text.Json, please use FhirJsonSerializer.Default.Serialize() instead.")]
+    public static async Tasks.Task SerializeAsync(this CommonFhirJsonSerializer ser, Base instance, JsonWriter writer,
+        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false)
+    {
+        var jsonText = ser.SerializeToString(instance, summary, elements, includeMandatoryInElementsSummary);
+        await writer.WriteRawAsync(jsonText).ConfigureAwait(false);
+    }
 
     public static void Serialize(this CommonFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
@@ -84,13 +100,6 @@ public static class CommonFhirJsonSerializerExtensions
             instance,
             writer,
             summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
-
-    [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
-    public static async Tasks.Task SerializeAsync(this CommonFhirJsonSerializer ser, Base instance, JsonWriter writer,
-        SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false) =>
-        await instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
-            .WriteToAsync(writer)
-            .ConfigureAwait(false);
 
     public static Tasks.Task SerializeAsync(this CommonFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null,

@@ -46,7 +46,7 @@ public class CommonFhirXmlSerializer(ModelInspector inspector)
     {
         // If the element is summarized, add the subsetted tags.
         if (filter is not null)
-            element = element.MakeSubsettedClone();
+            element = SerializationUtil.MakeSubsettedClone(element);
 
         writer.WriteStartDocument();
 

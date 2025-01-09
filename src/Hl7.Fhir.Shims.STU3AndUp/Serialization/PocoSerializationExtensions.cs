@@ -64,7 +64,6 @@ public static class PocoSerializationExtensions
         FhirXmlSerializer.Default.Serialize(source, destination, filter);
 
     // 20241217
-    [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlSerializer.Default.Serialize() instead.")]
-    public static XDocument ToXDocument(this Base source) =>
-        source.ToTypedElement().ToXDocument();
+    [Obsolete("We're cleaning up the POCO API surface, please use and FhirXmlSerializer.Default.SerializeToDocument() instead.")]
+    public static XDocument ToXDocument(this Base source) => FhirXmlSerializer.Default.SerializeToDocument(source);
 }

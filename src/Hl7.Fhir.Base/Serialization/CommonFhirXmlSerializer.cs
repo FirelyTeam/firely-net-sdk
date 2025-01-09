@@ -55,45 +55,49 @@ public static class CommonFhirXmlSerializerExtensions
 
     public static byte[] SerializeToBytes(this CommonFhirXmlSerializer ser, Base instance,
         SummaryType summary, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
-        string? root = null,
+        string? rootName = null,
         bool pretty = false) =>
         ser.SerializeToBytes(
             instance,
             pretty,
             summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
-            root);
+            rootName);
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
     public static Tasks.Task<byte[]> SerializeToBytesAsync(this CommonFhirXmlSerializer ser, Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
-        string? root = null,
+        string? rootName = null,
         bool pretty = false) =>
-        TaskExtensions.FromResult(ser.SerializeToBytes(instance, summary, elements, includeMandatoryInElementsSummary, root, pretty));
+        TaskExtensions.FromResult(ser.SerializeToBytes(instance, summary, elements, includeMandatoryInElementsSummary, rootName, pretty));
 
-    [Obsolete("This method uses the older ITypedElement-based serializers and should not be used anymore.")]
     public static XDocument SerializeToDocument(this CommonFhirXmlSerializer ser, Base instance,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
-        string? root = null) =>
-        instance.MakeElementStack(ser.Inspector, summary, elements, includeMandatoryInElementsSummary)
-            .Rename(root)
-            .ToXDocument().Rename(root);
+        string? rootName = null)
+    {
+        var result = new XDocument();
+        using var writer = result.CreateWriter();
+        ser.Serialize(instance, writer, summary, elements, includeMandatoryInElementsSummary, rootName);
+        writer.Flush();
+
+        return result;
+    }
 
     public static void Serialize(this CommonFhirXmlSerializer ser, Base instance, XmlWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null, bool includeMandatoryInElementsSummary = false,
-        string? root = null) =>
+        string? rootName = null) =>
         ser.Serialize(
             instance,
             writer,
             summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
-            root);
+            rootName);
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
     public static Tasks.Task SerializeAsync(this CommonFhirXmlSerializer ser, Base instance, XmlWriter writer,
         SummaryType summary = SummaryType.False, string[]? elements = null,
         bool includeMandatoryInElementsSummary = false,
-        string? root = null)
+        string? rootName = null)
     {
-        ser.Serialize(instance, writer, summary, elements, includeMandatoryInElementsSummary, root);
+        ser.Serialize(instance, writer, summary, elements, includeMandatoryInElementsSummary, rootName);
         return Tasks.Task.CompletedTask;
     }
 }

@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
 
-                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+                Name = [new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official }],
 
                 Active = true,
                 BirthDate = "2015-07-09",
