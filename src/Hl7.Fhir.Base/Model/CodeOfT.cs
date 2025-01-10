@@ -42,6 +42,10 @@ using S = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// A <see cref="Code"/> that has a limited set of values and which <see cref="Code.Value"/> can therefore
+    /// be represented as an enumerated type.
+    /// </summary>
     [Serializable]
     [FhirType("codeOfT")]
     [DataContract]
@@ -94,7 +98,11 @@ namespace Hl7.Fhir.Model
 
         string ISystemAndCode.Code => Value?.GetLiteral();
 
-        new public S.Code ToSystemCode() => new(Value?.GetSystem(), Value?.GetLiteral(), display: null, version: null);
+        public override S.Code ToSystemCode() =>
+            new(Value?.GetSystem(),
+                Value?.GetLiteral() ?? throw new InvalidOperationException("Code must have a value in order to be useable to construct a System.Code."),
+                display: null,
+                version: null);
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
