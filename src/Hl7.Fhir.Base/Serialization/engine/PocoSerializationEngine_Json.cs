@@ -12,13 +12,13 @@ internal partial class PocoSerializationEngine
     private readonly FhirJsonConverterOptions? _jsonConverterOptions;
 
     private BaseFhirJsonPocoDeserializer? _jsonDeserializer;
-    private CommonFhirJsonSerializer? _jsonSerializer;
+    private BaseFhirJsonSerializer? _jsonSerializer;
     
     private BaseFhirJsonPocoDeserializer getJsonDeserializer() => 
         _jsonDeserializer ??= new BaseFhirJsonPocoDeserializer(_inspector, _jsonConverterOptions!);
 
-    private CommonFhirJsonSerializer getJsonSerializer() =>
-        _jsonSerializer ??= new CommonFhirJsonSerializer(_inspector);
+    private BaseFhirJsonSerializer getJsonSerializer() =>
+        _jsonSerializer ??= new BaseFhirJsonSerializer(_inspector);
     
     /// <inheritdoc />
     public Resource DeserializeFromJson(string data)

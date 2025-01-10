@@ -69,10 +69,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
-            var navRtXml = await JsonParsingHelpers.ParseToTypedElement(await navXml.ToJsonAsync(), navXml.InstanceType,
+            var navRtXml = await JsonParsingHelpers.ParseToTypedElement(navXml.ToJson(), navXml.InstanceType,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
             var navRtJson = navJson.ToPoco().ToTypedElement(navJson.Name);
-            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(await navPoco.ToXmlAsync(), navPoco.InstanceType,
+            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(navPoco.ToXml(), navPoco.InstanceType,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }

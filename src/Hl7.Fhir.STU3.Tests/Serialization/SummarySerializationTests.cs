@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var p = new Patient
             {
                 BirthDate = "1972-11-30",     // present in both summary and full
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+                Photo = [new Attachment() { ContentType = "text/plain" }]
             };
 
             var full = FhirXmlSerializer.SerializeToString(p);
@@ -124,23 +124,24 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(qText.Contains("<date value=\"2015-09-27\""));
             Assert.IsFalse(qText.Contains("<title value=\"TITLE\""));
             Assert.IsFalse(qText.Contains("<linkId value=\"linkid\""));
-            Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.AreEqual(0, q.Meta.Tag.Count(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
             // make sure we accept the crappy output with empty groups
             var nav = await FhirXmlNode.ParseAsync(qText, new FhirXmlParsingSettings { PermissiveParsing = true });
 
             var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
-            Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.AreEqual(1, qInflate.Meta.Tag.Count(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"), "Subsetted Tag should not still be there.");
         }
 
         [TestMethod]
-        public async Tasks.Task TestIncludeMandatory()
+        public void TestIncludeMandatory()
         {
-            var l = new Library();
-            l.Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") };
-            l.Id = "testId";
-            l.Language = "testLang";
+            var l = new Library
+            {
+                Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") }, Id = "testId",
+                Language = "testLang"
+            };
             var summaryElements = FhirXmlSerializer.SerializeToString(l, Fhir.Rest.SummaryType.Count);
 
             Assert.IsFalse(summaryElements.Contains("<language"));
@@ -153,7 +154,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
-            var result = await customMaskingNode.ToXmlAsync();
+            var result = customMaskingNode.ToXml();
 
             Assert.IsFalse(result.Contains("<language>"));
             Assert.IsTrue(result.Contains("<type>"));
@@ -175,7 +176,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.None
             });
 
-            result = await customMaskingNodeForBundle.ToXmlAsync();
+            result = customMaskingNodeForBundle.ToXml();
 
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));

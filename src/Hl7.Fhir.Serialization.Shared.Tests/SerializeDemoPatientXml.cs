@@ -20,11 +20,11 @@ public class SerializeDemoPatientXml
 
 
     [TestMethod]
-    public async Tasks.Task CanSerializeThroughNavigatorAndCompare()
+    public void CanSerializeThroughNavigatorAndCompare()
     {
         var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
         var nav = getXmlElement(tpXml);
-        var output = await nav.ToXmlAsync();
+        var output = nav.ToXml();
         XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
     }
 
@@ -62,7 +62,7 @@ public class SerializeDemoPatientXml
         var pat = await pser.ParseAsync<Patient>(tpXml);
 
         var nav = pat.ToTypedElement();
-        var output = await nav.ToXmlAsync();
+        var output = nav.ToXml();
         XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
     }
 
@@ -101,9 +101,9 @@ public class SerializeDemoPatientXml
         var xml = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.xml"));
 
         var nav = getXmlElement(xml);
-        var output = await nav.ToXmlAsync();
+        var output = nav.ToXml();
         Assert.IsFalse(output[..50].Contains('\n'));
-        var pretty = await nav.ToXmlAsync(pretty: true);
+        var pretty = nav.ToXml(pretty: true);
         Assert.IsTrue(pretty[..50].Contains('\n'));
 
         var p = await new FhirXmlParser().ParseAsync<Patient>(xml);

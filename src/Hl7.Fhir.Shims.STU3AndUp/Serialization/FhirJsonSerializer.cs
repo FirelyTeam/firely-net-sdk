@@ -12,7 +12,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization;
 
-public class FhirJsonSerializer() : CommonFhirJsonSerializer(ModelInfo.ModelInspector)
+public class FhirJsonSerializer() : BaseFhirJsonSerializer(ModelInfo.ModelInspector)
 {
     public static readonly FhirJsonSerializer Default = new();
 }

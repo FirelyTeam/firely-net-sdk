@@ -546,17 +546,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async Tasks.Task TestParserSettings()
+        public void TestParserSettings()
         {
             // Create an invalid patient resource on disk
             var obs = new Observation()
             {
                 Id = "1",
-                ReferenceRange = new List<Observation.ReferenceRangeComponent> {
-                    new Observation.ReferenceRangeComponent { Text = " "} }
+                ReferenceRange = [new Observation.ReferenceRangeComponent { Text = " " }]
             };
             var nav = obs.ToTypedElement();
-            var xml = await nav.ToXmlAsync();
+            var xml = nav.ToXml();
 
             var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
             var filePath = Path.Combine(folderPath, "TestPatient.xml");

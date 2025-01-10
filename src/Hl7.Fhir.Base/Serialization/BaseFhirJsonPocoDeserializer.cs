@@ -946,5 +946,3 @@ namespace Hl7.Fhir.Serialization
         public readonly PathStack Path = new();
     }
 }
-
-#nullable restore

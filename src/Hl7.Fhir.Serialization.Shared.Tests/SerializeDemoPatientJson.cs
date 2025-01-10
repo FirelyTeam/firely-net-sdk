@@ -25,9 +25,9 @@ namespace Hl7.Fhir.Serialization.Tests
             var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
             var nav = await getJsonElement(json);
-            var output = await nav.ToJsonAsync();
+            var output = nav.ToJson();
 
-            List<string> errors = new List<string>();
+            List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", json, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization.Tests
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
             var nav = await getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
 
-            var output = await nav.ToJsonAsync();
+            var output = nav.ToJson();
             var doc = JObject.Parse(output);
             Assert.AreEqual(17, doc.DescendantsAndSelf().Count());
         }
@@ -68,9 +68,9 @@ namespace Hl7.Fhir.Serialization.Tests
             var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
             var nav = await getJsonElement(json);
-            var output = await nav.ToJsonAsync();
+            var output = nav.ToJson();
             Assert.IsFalse(output[..20].Contains('\n'));
-            var pretty = await nav.ToJsonAsync(pretty: true);
+            var pretty = nav.ToJson(pretty: true);
             Assert.IsTrue(pretty[..20].Contains('\n'));
 
             var p = await new FhirJsonParser().ParseAsync<Patient>(json);

@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var (poco, expected) = getEdgecases();
 
-            var serializer = new CommonFhirXmlSerializer(ModelInfo.ModelInspector);
+            var serializer = new BaseFhirXmlSerializer(ModelInfo.ModelInspector);
             var actual = SerializationUtil.WriteXmlToString(w => serializer.Serialize(poco, w));
 
             XmlAssert.AreSame("edgecases", expected, actual, ignoreSchemaLocation: true);
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SerializesInvalidData()
         {
-            var serializer = new CommonFhirXmlSerializer(ModelInfo.ModelInspector);
+            var serializer = new BaseFhirXmlSerializer(ModelInfo.ModelInspector);
             FhirBoolean b = new() { ObjectValue = "treu" };
             var xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(w => serializer.Serialize(b, w)));
             Assert.AreEqual("treu", xdoc.Root.Attribute(XName.Get("value")).Value);
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SerializesSubtree()
         {
-            var serializer = new CommonFhirXmlSerializer(ModelInfo.ModelInspector);
+            var serializer = new BaseFhirXmlSerializer(ModelInfo.ModelInspector);
             FhirBoolean b = new() { ObjectValue = "treu" };
 
             serializer.SerializeToString(b).Should().StartWith("<boolean");

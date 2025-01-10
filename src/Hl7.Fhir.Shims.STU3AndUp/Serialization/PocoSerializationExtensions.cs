@@ -5,11 +5,11 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
+
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Xml;
@@ -18,13 +18,26 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization;
 
+/// <summary>
+/// Provides extension methods on POCOs to serialize to Xml and Json.
+/// </summary>
 public static class PocoSerializationExtensions
 {
     /// <summary>
     /// Serializes the given POCO into a FHIR Json string.
     /// </summary>
-    public static string ToJson(this Base source, bool pretty = false) =>
-        FhirJsonSerializer.Default.SerializeToString(source, pretty);
+    /// <param name="instance">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Json.</param>
+    public static string ToJson(this Base instance, bool pretty = false) =>
+        FhirJsonSerializer.Default.SerializeToString(instance, pretty);
+
+    /// <summary>
+    /// Serializes the given POCO into a FHIR Xml string.
+    /// </summary>
+    /// <param name="instance">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Json.</param>
+    public static string ToXml(this Base instance, bool pretty = false) =>
+        FhirXmlSerializer.Default.SerializeToString(instance);
 
     // 20241217
     [Obsolete("We're cleaning up the POCO API surface, please use FhirJsonSerializer.Default.SerializeToBytes() instead.")]
@@ -41,11 +54,6 @@ public static class PocoSerializationExtensions
     public static async Tasks.Task WriteToAsync(this Base source, JsonWriter destination) =>
         await source.ToTypedElement().WriteToAsync(destination).ConfigureAwait(false);
 
-    /// <summary>
-    /// Serializes the given POCO into a FHIR Xml string.
-    /// </summary>
-    public static string ToXml(this Base source, bool pretty = false) =>
-        FhirXmlSerializer.Default.SerializeToString(source);
 
     [Obsolete("The new serializers are written against non-async APIs, so this async call is actually sync. Change to a non-async call.")]
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

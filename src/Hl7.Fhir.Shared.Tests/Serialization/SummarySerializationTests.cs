@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task TestIncludeMandatory()
+        public void TestIncludeMandatory()
         {
             var l = new Library();
             l.Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") };
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
-            var result = await customMaskingNode.ToXmlAsync();
+            var result = customMaskingNode.ToXml();
 
             Assert.IsFalse(result.Contains("<language>"));
             Assert.IsTrue(result.Contains("<type>"));
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.None
             });
 
-            result = await customMaskingNodeForBundle.ToXmlAsync();
+            result = customMaskingNodeForBundle.ToXml();
 
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
