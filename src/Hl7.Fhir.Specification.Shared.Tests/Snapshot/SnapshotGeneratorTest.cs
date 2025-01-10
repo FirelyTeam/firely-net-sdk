@@ -283,6 +283,19 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task TestConstraintSourceDom6()
+        {
+            var communication = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Communication");
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            var snapshot = await _generator.GenerateAsync(communication);
+
+            Assert.IsTrue(communication.Snapshot?.Element
+                          .Where(e => e.Path == "Communication").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "dom-6" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);
+        }
+
+        [TestMethod]
         public async Tasks.Task GenerateSnapshotForExternalProfiles()
         {
             //Test external type profile
