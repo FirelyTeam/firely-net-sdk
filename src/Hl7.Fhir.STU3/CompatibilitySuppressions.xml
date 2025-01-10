@@ -254,6 +254,20 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Hl7.Fhir.Serialization.FhirJsonSerializer</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Hl7.Fhir.Serialization.FhirXmlSerializer</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
     <DiagnosticId>CP0008</DiagnosticId>
     <Target>T:Hl7.Fhir.Model.IElementList</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>

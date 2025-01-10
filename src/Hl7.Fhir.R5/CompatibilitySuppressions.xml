@@ -247,6 +247,27 @@
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Hl7.Fhir.Serialization.FhirJsonSerializer</Target>
+    <Left>lib/net8.0/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Hl7.Fhir.Serialization.FhirXmlSerializer</Target>
+    <Left>lib/net8.0/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP1002</DiagnosticId>
+    <Target>Hl7.Fhir.Base, Version=6.0.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3</Target>
+    <Left>lib/net8.0/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
     <DiagnosticId>PKV006</DiagnosticId>
     <Target>.NETStandard,Version=v2.0</Target>
   </Suppression>
