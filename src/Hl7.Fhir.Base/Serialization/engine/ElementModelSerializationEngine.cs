@@ -70,9 +70,9 @@ internal class ElementModelSerializationEngine(
         }
     }
 
-    public string SerializeToXml(Resource instance) => new CommonFhirXmlSerializer(inspector).SerializeToString(instance);
+    public string SerializeToXml(Resource instance) => new BaseFhirXmlSerializer(inspector).SerializeToString(instance);
 
-    public string SerializeToJson(Resource instance) => new CommonFhirJsonSerializer(inspector).SerializeToString(instance);
+    public string SerializeToJson(Resource instance) => new BaseFhirJsonSerializer(inspector).SerializeToString(instance);
 
     internal class ElementModelParserException(FormatException fe)
         : CodedException(ELEMENTMODEL_PARSER_EXCEPTION, fe.Message, fe)

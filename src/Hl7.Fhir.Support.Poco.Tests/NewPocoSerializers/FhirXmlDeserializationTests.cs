@@ -516,8 +516,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 }
             };
 
-            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
-            var actual = serializer.SerializeToString(patient);
+            var actual = FhirXmlSerializer.Default.SerializeToString(patient);
 
             // now parse this back out with the new parser
             BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new FhirXmlPocoDeserializerSettings());

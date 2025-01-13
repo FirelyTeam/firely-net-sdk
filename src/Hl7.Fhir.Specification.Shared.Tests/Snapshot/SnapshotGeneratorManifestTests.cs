@@ -58,17 +58,12 @@ namespace Hl7.Fhir.Specification.Tests
 
         static readonly FhirXmlParsingSettings _fhirXmlParserSettings = new FhirXmlParsingSettings()
         {
-            PermissiveParsing = false
+            PermissiveParsing = true
         };
-
-        //static readonly FhirJsonParsingSettings _fhirJsonParserSettings = new FhirJsonParsingSettings()
-        //{
-        //    PermissiveParsing = false
-        //};
 
         static readonly ParserSettings _parserSettings = new ParserSettings()
         {
-            PermissiveParsing = false
+            PermissiveParsing = true
         };
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
@@ -87,14 +82,9 @@ namespace Hl7.Fhir.Specification.Tests
             GenerateSnapshotForExternalProfiles = true
         };
 
-        static readonly SerializerSettings _serializerSettings = new SerializerSettings()
-        {
-            Pretty = true
-        };
-
         static readonly FhirXmlParser _fhirXmlParser = new FhirXmlParser(_parserSettings);
         static readonly FhirJsonParser _fhirJsonParser = new FhirJsonParser(_parserSettings);
-        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer(_serializerSettings);
+        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer();
 
         string _testPath;
         DirectorySource _dirSource;
@@ -679,7 +669,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static void Save(string filePath, Base output)
         {
-            var xml = _fhirXmlSerializer.SerializeToString(output);
+            var xml = _fhirXmlSerializer.SerializeToString(output, pretty: true);
             File.WriteAllText(filePath, xml);
         }
 
@@ -793,8 +783,8 @@ namespace Hl7.Fhir.Specification.Tests
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
                 if (input is null) { throw new ArgumentNullException(nameof(input)); }
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
-                Input = input.ToElementNode();
-                Generated = generated.ToElementNode();
+                Input = input.ToPocoNode();
+                Generated = generated.ToPocoNode();
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
@@ -841,7 +831,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         filePath = Path.ChangeExtension(filePath, "json");
                     }
-                    return Load(filePath).ToElementNode();
+                    return Load(filePath).ToPocoNode();
                 }
 
                 // Otherwise assume name refers to a core resource, e.g. 'patient'
@@ -850,7 +840,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (!(typeName is null))
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToElementNode();
+                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToPocoNode();
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
 

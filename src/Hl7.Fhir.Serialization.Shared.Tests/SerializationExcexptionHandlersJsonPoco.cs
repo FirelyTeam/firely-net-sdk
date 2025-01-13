@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Serialization.Tests
         private static T serializeResource<T>(string json)
             where T : Resource
         {
-            var settings = new FhirJsonPocoDeserializerSettings()
+            var settings = new FhirJsonConverterOptions()
             {
                 OnPrimitiveParseFailed = (ref Utf8JsonReader reader,
                     Type targetType,

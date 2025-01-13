@@ -29,7 +29,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
-            _bundleNode = bundle.ToElementNode();
+            _bundleNode = bundle.ToPocoNode();
         }
 
         [TestMethod]
@@ -44,15 +44,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d", entries[1].FullUrl);
             Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
 
-            Assert.IsFalse(entries[1].Resource!.ToElementNode().ContainedResources().Any());
-            Assert.IsNotNull(entries[1].Resource!.ToElementNode().Children().First());
+            Assert.IsFalse(entries[1].Resource!.ToPocoNode().ContainedResources().Any());
+            Assert.IsNotNull(entries[1].Resource!.ToPocoNode().Children().First());
 
             Assert.AreEqual("a", entries[2].Resource!.Id);
 
             var entry6 = entries[6].Resource;
-            Assert.AreEqual(2, entry6!.ToElementNode().ContainedResources().Count());
-            Assert.IsFalse(entry6.ToElementNode().BundledResources().Any());
-            Assert.AreEqual("orgY", (entry6.ToElementNode().ContainedResources().Skip(1).First().Children("id").First().Value));
+            Assert.AreEqual(2, entry6!.ToPocoNode().ContainedResources().Count());
+            Assert.IsFalse(entry6.ToPocoNode().BundledResources().Any());
+            Assert.AreEqual("orgY", (entry6.ToPocoNode().ContainedResources().Skip(1).First().Children("id").First().Value));
         }
 
         [TestMethod]

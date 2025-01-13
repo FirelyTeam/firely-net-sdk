@@ -107,7 +107,6 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
         _ => Name
     };
     
-    [TemporarilyChanged] // Parent should return PocoNode, not PocoNodeOrList. This will be solved in another branch.
     IElementDefinitionSummary? ITypedElement.Definition
     {
         get
@@ -143,7 +142,7 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
         ? Children().SelectMany(node => node)
         : Child(name) ?? [];
     
-    [TemporarilyChanged] // will be removed soon
+    [Obsolete("This is a temporary feature and will be removed before we publish SDK 6.0.")]
     NodeType IScopedNode.Type => Poco switch
     {
         Bundle => NodeType.Bundle | NodeType.Resource,
@@ -219,7 +218,7 @@ public record PocoNode(Base Poco, PocoNodeOrList? Parent, int? Index, string? Na
 
     private AnnotationList? _annotations;
 
-    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => []);
+    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     IEnumerable<object> IAnnotated.Annotations(Type type)
     {

@@ -69,16 +69,15 @@ namespace Hl7.Fhir.Serialization.Tests
         public void WorksWithPocoSerializers()
         {
             var sig = new Bundle() { Type = Bundle.BundleType.Document, Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
-            var json = new FhirJsonPocoSerializer().SerializeToString(sig);
+            var json = FhirJsonSerializer.Default.SerializeToString(sig);
             json.Should().Contain("\"who\"");
             var sig2 = new FhirJsonPocoDeserializer().DeserializeResource(json);
             sig.IsExactly(sig2).Should().BeTrue();
 
-            var xml = new FhirXmlPocoSerializer().SerializeToString(sig);
+            var xml = FhirXmlSerializer.Default.SerializeToString(sig);
             xml.Should().Contain("<who>");
             var sig3 = new FhirXmlPocoDeserializer().DeserializeResource(xml);
             sig.IsExactly(sig3).Should().BeTrue();
-
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var output = await xmlNav.ToJsonAsync();
+                var output = xmlNav.ToJson();
                 Assert.Fail();
             }
             catch (NotSupportedException)

@@ -44,24 +44,27 @@ namespace Hl7.Fhir.ElementModel
         /// In the meantime, you can restore the old behaviour with a call to <see cref="ToTypedElementLegacy"/></remarks>
 #if NETSTANDARD2_1
         [Obsolete("The implementation of this method has changed to use our new model stack. If you want to try the new behaviour, "+
-                  "either ignore this warning or call ToElementNode(). For reverting to the old behaviour, call .ToTypedElementLegacy()")]
+                  "either ignore this warning or call ToPocoNode(). For reverting to the old behaviour, call .ToTypedElementLegacy()")]
 #else
         [Experimental("SDK0001")]
 #endif
-        public static ITypedElement ToTypedElement(this Base @base, ModelInspector inspector, string? rootName = null)
-        {
-            var node = ToElementNode(@base, rootName);
-            ((IAnnotatable)node).AddAnnotation(inspector);
-            
-            return node;
-        }
+        public static ITypedElement ToTypedElement(this Base @base, ModelInspector inspector, string? rootName = null) =>
+            @base.ToPocoNode(inspector, rootName);
 
         /// <summary>
         /// Converts a Poco to a new PocoElementNode.
         /// </summary>
         /// <param name="base">The Poco that should be converted to an <see cref="ITypedElement"/>.</param>
-        /// <param name="rootName"></param>
-        public static PocoNode ToElementNode(this Base @base, string? rootName = null) => PocoNodeOrList.Root(@base, rootName);
+        /// <param name="inspector">An optional <see cref="ModelInspector"/> that should be used to access metadata about the resource.</param>
+        /// <param name="rootName">An optional nome for the node at the root of the tree.</param>
+        public static PocoNode ToPocoNode(this Base @base, ModelInspector? inspector = null, string? rootName = null)
+        {
+            var result = PocoNodeOrList.Root(@base, rootName);
+            if(inspector is not null)
+                ((IAnnotatable)result).AddAnnotation(inspector);
+
+            return result;
+        }
 
         /// <summary>
         /// Determines whether the specified ITypedElement is equal to the current ITypedElement. You can discard the order of the elements
