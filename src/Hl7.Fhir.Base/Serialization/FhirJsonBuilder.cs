@@ -19,12 +19,6 @@ namespace Hl7.Fhir.Serialization
 {
     internal class FhirJsonBuilder : IExceptionSource
     {
-        internal FhirJsonBuilder(FhirJsonSerializationSettings settings = null)
-        {
-            _settings = settings?.Clone() ?? new FhirJsonSerializationSettings();
-        }
-
-        private FhirJsonSerializationSettings _settings;
         private bool _roundtripMode = true;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
@@ -137,16 +131,8 @@ namespace Hl7.Fhir.Serialization
             {
                 var message = $"Element '{source.Location}' is missing type information.";
 
-                if (_settings.IgnoreUnknownElements)
-                {
-                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
-                        new MissingTypeInformationException(message)));
-                }
-                else
-                {
-                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
-                        new MissingTypeInformationException(message)));
-                }
+                ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
+                    new MissingTypeInformationException(message)));
 
                 return false;
             }

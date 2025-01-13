@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>Creates a new <see cref="FhirXmlParsingSettings"/> object that is a copy of the current instance.</summary>
         public FhirXmlParsingSettings Clone() => new(this);
 
-        /// <summary>Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
+        /// <summary>Creates a new <see cref="FhirXmlParsingSettings"/> instance with default property values.</summary>
         public static FhirXmlParsingSettings CreateDefault() => new();
     }
 }

@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 ));
 
             var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonPocoSerializerSettings() { SummaryFilter = filter })
+                .ForFhir(typeof(Patient).Assembly, new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
             string actual = JsonSerializer.Serialize(b, options);
 
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var full = FhirXmlNode.Parse(fullXml).ToPoco<T>(ModelInspector.ForType<T>());
 
             var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonPocoSerializerSettings { SummaryFilter = filter })
+                .ForFhir(typeof(Patient).Assembly, new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
             string summarizedJson = JsonSerializer.Serialize(full, options);
 
@@ -176,6 +176,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             static IEnumerable<KeyValuePair<string, object>> childrenAndMe(KeyValuePair<string, object> y) =>
                 (y.Value switch
                 {
+                    Meta m => [], // skip Meta, since we've added SUBSETTED tags, so don't count those
                     ICollection array => array.Cast<object>().SelectMany(bsi => childrenAndMe(KeyValuePair.Create(y.Key, bsi))),
                     Base obj => obj.EnumerateElements().SelectMany(childrenAndMe),
                     _ => []
