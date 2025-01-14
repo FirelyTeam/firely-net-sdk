@@ -49,7 +49,7 @@ public class DynamicResource : Resource, IDynamicType
     
     protected internal override Base DeepCopyInternal()
     {
-        var instance = new DynamicResource();
+        var instance = new DynamicResource { DynamicTypeName = DynamicTypeName };
         CopyToInternal(instance);
         return instance;
     }
@@ -70,7 +70,7 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
     
     protected internal override Base DeepCopyInternal()
     {
-        var instance = new DynamicPrimitive();
+        var instance = new DynamicPrimitive { DynamicTypeName = DynamicTypeName };
         CopyToInternal(instance);
         return instance;
     }
