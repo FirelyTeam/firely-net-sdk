@@ -11,6 +11,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Introspection;
@@ -134,16 +135,13 @@ public class ModelInspectorMembersTest
     }
 
     [FhirType("BindableClass")]
-    [Bindable(true)]
-    public class BindableClass
+    public class BindableClass : ICoded
     {
+        public IEnumerable<Coding> ToCodings() => throw new NotImplementedException();
     }
 
     [FhirType("NonBindableClass")]
-    [Bindable(false)]
-    public class NonBindableClass
-    {
-    }
+    public class NonBindableClass;
 
     [TestMethod]
     public void IsBindableTest()

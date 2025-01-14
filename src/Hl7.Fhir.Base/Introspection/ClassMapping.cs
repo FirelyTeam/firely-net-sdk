@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Introspection
             }
 
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
-            if (GetAttribute<FhirTypeAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
+            if (GetAttribute<FhirTypeAttribute>(type, release) is not { } typeAttribute) return false;
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
@@ -96,9 +96,9 @@ namespace Hl7.Fhir.Introspection
                             type.GenericTypeArguments[0] : null,
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
                 IsBackboneType = typeAttribute.IsBackboneType,
-                IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
+                IsBindable = typeof(ICoded).IsAssignableFrom(type),
                 Canonical = typeAttribute.Canonical,
-                ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
+                ValidationAttributes = GetAttributes<ValidationAttribute>(type, release).ToArray(),
             };
 
             return true;

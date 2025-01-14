@@ -28,20 +28,21 @@
 
 */
 
-using Hl7.Fhir.Introspection;
+#nullable enable
+
+using System.Collections.Generic;
 using System.Linq;
 using S = Hl7.Fhir.ElementModel.Types;
 
+namespace Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Model
+public partial class CodeableConcept : ICoded
 {
-    [Bindable(true)]
-    public partial class CodeableConcept
+    public S.Concept ToSystemConcept()
     {
-        public S.Concept ToSystemConcept()
-        {
-            var codes = Coding.Select(c => c.ToSystemCode());
-            return new S.Concept(codes, display: Text);
-        }
+        var codes = Coding.Select(c => c.ToSystemCode());
+        return new S.Concept(codes, display: Text);
     }
+
+    public IEnumerable<Coding> ToCodings() => Coding;
 }
