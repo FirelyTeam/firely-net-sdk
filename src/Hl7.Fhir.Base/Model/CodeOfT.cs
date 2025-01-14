@@ -42,11 +42,15 @@ using S = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// A <see cref="Code"/> that has a limited set of values and which <see cref="Code.Value"/> can therefore
+    /// be represented as an enumerated type.
+    /// </summary>
     [Serializable]
     [FhirType("codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
-    public class Code<T> : PrimitiveType, INullableValue<T>, ISystemAndCode where T : struct, Enum
+    public class Code<T> : Code, INullableValue<T>, ISystemAndCode where T : struct, Enum
     {
         static Code()
         {
@@ -66,7 +70,7 @@ namespace Hl7.Fhir.Model
         // Primitive value of element
         [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
         [DataMember]
-        public T? Value
+        new public T? Value
         {
             get => TryParseObjectValue(out var value)
                     ? value
@@ -94,7 +98,11 @@ namespace Hl7.Fhir.Model
 
         string ISystemAndCode.Code => Value?.GetLiteral();
 
-        public S.Code ToSystemCode() => new(Value?.GetSystem(), Value?.GetLiteral(), display: null, version: null);
+        public override S.Code ToSystemCode() =>
+            new(Value?.GetSystem(),
+                Value?.GetLiteral() ?? throw new InvalidOperationException("Code must have a value in order to be useable to construct a System.Code."),
+                display: null,
+                version: null);
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

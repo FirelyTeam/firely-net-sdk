@@ -50,8 +50,8 @@ namespace Hl7.Fhir.Model
         public static IEnumerable<Coding> ToCodings(this DataType? dt) => dt switch
         {
             null => Enumerable.Empty<Coding>(),
-            Code co => new[] { new Coding(null, co.Value) },
             ISystemAndCode sac => new[] { new Coding(sac.System, sac.Code) },
+            Code co => new[] { new Coding(null, co.Value) },
             Coding cd => new[] { cd },
             CodeableConcept cc => cc.Coding ?? Enumerable.Empty<Coding>(),
             Quantity q => new[] { new Coding(q.System, q.Code) },
