@@ -29,20 +29,19 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
+using System.Collections.Generic;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class FhirString : ICoded
 {
-    [Bindable(true)]
-    public partial class FhirString
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => value.Length is <= 1024 * 1024 and > 0;    // Note that strings SHALL NOT exceed 1MB in size.
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => value.Length is <= 1024 * 1024 and > 0;    // Note that strings SHALL NOT exceed 1MB in size.
         
-        // We do not match against the pattern since that is more expensive
-    }
-}
+    // We do not match against the pattern since that is more expensive
 
-#nullable restore
+
+    public IEnumerable<Coding> ToCodings() => [new(null, Value)];
+}

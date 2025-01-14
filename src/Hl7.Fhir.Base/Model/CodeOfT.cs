@@ -28,6 +28,7 @@
 
 */
 
+#nullable enable
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
@@ -40,80 +41,76 @@ using System.Runtime.Serialization;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using S = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+/// <summary>
+/// A <see cref="Code"/> that has a limited set of values and which <see cref="Code.Value"/> can therefore
+/// be represented as an enumerated type.
+/// </summary>
+[Serializable]
+[FhirType("codeOfT")]
+[DataContract]
+[System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
+public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 {
-    [Serializable]
-    [FhirType("codeOfT")]
-    [DataContract]
-    [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
-    public class Code<T> : PrimitiveType, INullableValue<T>, ISystemAndCode where T : struct, Enum
+    static Code()
     {
-        static Code()
+        if (!typeof(T).IsEnum())
+            throw new ArgumentException("T must be an enumerated type");
+    }
+
+    public override string TypeName => "code";
+
+    public Code() : this(null) { }
+
+    public Code(T? value)
+    {
+        Value = value;
+    }
+
+    // Primitive value of element
+    [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
+    [DataMember]
+    new public T? Value
+    {
+        get => TryParseObjectValue(out var value)
+            ? value
+            : throw new InvalidCastException($"Value '{ObjectValue}' cannot be cast to a member of enumeration {typeof(T).Name}.");
+        set
         {
-            if (!typeof(T).IsEnum())
-                throw new ArgumentException("T must be an enumerated type");
+            ObjectValue = value?.GetLiteral();
+            OnPropertyChanged("Value");
         }
+    }
 
-        protected internal override Base DeepCopyInternal()
+    internal bool TryParseObjectValue(out T? value)
+    {
+        value = default;
+
+        if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
         {
-            var instance = new Code<T>();
-            CopyToInternal(instance);
-            return instance;
-        } 
-
-        public override string TypeName => "code";
-
-        public Code() : this(null) { }
-
-        public Code(T? value)
-        {
-            Value = value;
+            value = parsed;
+            return true;
         }
+        else return ObjectValue is null;
+    }
 
-        // Primitive value of element
-        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
-        [DataMember]
-        public T? Value
-        {
-            get => TryParseObjectValue(out var value)
-                    ? value
-                    : throw new InvalidCastException($"Value '{ObjectValue}' cannot be cast to a member of enumeration {typeof(T).Name}.");
-            set
-            {
-                ObjectValue = value?.GetLiteral();
-                OnPropertyChanged("Value");
-            }
-        }
+    public override IEnumerable<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
 
-        internal bool TryParseObjectValue(out T? value)
-        {
-            value = default;
+    public override S.Code ToSystemCode() =>
+        new(Value?.GetSystem(),
+            Value?.GetLiteral() ?? throw new InvalidOperationException("Code must have a value in order to be useable to construct a System.Code."),
+            display: null,
+            version: null);
 
-            if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
-            {
-                value = parsed;
-                return true;
-            }
-            else return ObjectValue is null;
-        }
+    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var baseResults = base.Validate(validationContext);
 
-        string ISystemAndCode.System => Value?.GetSystem();
+        if (TryParseObjectValue(out _))
+            return baseResults;
 
-        string ISystemAndCode.Code => Value?.GetLiteral();
-
-        public S.Code ToSystemCode() => new(Value?.GetSystem(), Value?.GetLiteral(), display: null, version: null);
-
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var baseResults = base.Validate(validationContext);
-
-            if (TryParseObjectValue(out _))
-                return baseResults;
-            else
-            {
-                var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
-                return baseResults.Append(result);
-            }
-        }
+        var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
+        return baseResults.Append(result);
     }
 }

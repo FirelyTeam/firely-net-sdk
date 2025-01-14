@@ -51,15 +51,15 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void TestISystemAndCode()
+        public void TestToSystemCode()
         {
-            var c = new Code<AdministrativeGender>(AdministrativeGender.Female) as ISystemAndCode;
+            var c = new Code<AdministrativeGender>(AdministrativeGender.Female).ToSystemCode();
 
-            Assert.AreEqual("female", c.Code);
+            Assert.AreEqual("female", c.Value);
             Assert.AreEqual("http://hl7.org/fhir/administrative-gender", c.System);
 
-            c = new Code<TestEnum>(TestEnum.IHaveNoSystem) as ISystemAndCode;
-            Assert.AreEqual("IHaveNoSystem", c.Code);
+            c = new Code<TestEnum>(TestEnum.IHaveNoSystem).ToSystemCode();
+            Assert.AreEqual("IHaveNoSystem", c.Value);
             Assert.IsNull(c.System);
         }
 

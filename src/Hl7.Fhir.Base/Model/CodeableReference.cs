@@ -7,26 +7,27 @@
  */
 
 #nullable enable
-using Hl7.Fhir.Introspection;
 
-namespace Hl7.Fhir.Model
+using System.Collections.Generic;
+
+namespace Hl7.Fhir.Model;
+
+public partial class CodeableReference : ICoded
 {
-    [Bindable(true)]
-    public partial class CodeableReference
+    public CodeableReference()
     {
-        public CodeableReference()
-        {
-            // Nothing
-        }
-
-        public CodeableReference(CodeableConcept concept)
-        {
-            Concept = concept;
-        }
-
-        public CodeableReference(ResourceReference reference)
-        {
-            Reference = reference;
-        }
+        // Nothing
     }
+
+    public CodeableReference(CodeableConcept concept)
+    {
+        Concept = concept;
+    }
+
+    public CodeableReference(ResourceReference reference)
+    {
+        Reference = reference;
+    }
+
+    public IEnumerable<Coding> ToCodings() => Concept?.ToCodings() ?? [];
 }

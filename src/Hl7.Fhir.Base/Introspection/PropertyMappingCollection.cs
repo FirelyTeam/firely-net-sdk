@@ -24,10 +24,11 @@ namespace Hl7.Fhir.Introspection
             foreach (var mapping in mappings)
             {
                 var propKey = mapping.Name;
-                if (byName.ContainsKey(propKey))
-                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique.");
-
-                byName[propKey] = mapping;
+                if (!byName.TryAdd(propKey, mapping))
+                {
+                    throw Error.InvalidOperation(
+                        $"Class has multiple properties that are named '{propKey}'. The property name must be unique.");
+                }
             }
 
             ByName = byName;

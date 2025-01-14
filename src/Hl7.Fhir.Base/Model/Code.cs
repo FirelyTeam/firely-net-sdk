@@ -30,24 +30,22 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Code : ICoded
 {
-    [Bindable(true)]
-    public partial class Code
-    {
-        /// <summary>
-        /// Creates a <see cref="ElementModel.Types.Code"/> from an instance of a <see cref="Code"/>.
-        /// </summary>
-        public ElementModel.Types.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
+    /// <summary>
+    /// Creates a <see cref="ElementModel.Types.Code"/> from an instance of a <see cref="Code"/>.
+    /// </summary>
+    public virtual ElementModel.Types.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
 
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
-    }
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+
+    public virtual IEnumerable<Coding> ToCodings() => [new(system: null, code: Value)];
 }
-
-#nullable restore
