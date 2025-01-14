@@ -26,7 +26,9 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        [TemporarilyChanged] // we should investigate here. We will need a way to handle "object" without a fhir type, and try to infer it from the object
+        [TemporarilyChanged]
+        // we should investigate here. We will need a way to handle "object" without a fhir type,
+        // and try to infer it from the object. In the end we will remove the ToScopedNode.
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
             return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value).ToScopedNode());

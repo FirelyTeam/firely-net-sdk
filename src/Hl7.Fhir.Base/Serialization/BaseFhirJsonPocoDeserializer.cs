@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
-        public BaseFhirJsonPocoDeserializer(Assembly assembly, FhirJsonPocoDeserializerSettings settings)
+        public BaseFhirJsonPocoDeserializer(Assembly assembly, FhirJsonConverterOptions settings)
         {
             Settings = settings;
             _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
-        public BaseFhirJsonPocoDeserializer(ModelInspector inspector, FhirJsonPocoDeserializerSettings settings)
+        public BaseFhirJsonPocoDeserializer(ModelInspector inspector, FhirJsonConverterOptions settings)
         {
             Settings = settings;
             _inspector = inspector;
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// The settings that were passed to the constructor.
         /// </summary>
-        public FhirJsonPocoDeserializerSettings Settings { get; }
+        public FhirJsonConverterOptions Settings { get; }
 
         private const string INSTANCE_VALIDATION_KEY_SUFFIX = ":instance";
         private const string PROPERTY_VALIDATION_KEY_SUFFIX = ":property";
@@ -946,5 +946,3 @@ namespace Hl7.Fhir.Serialization
         public readonly PathStack Path = new();
     }
 }
-
-#nullable restore

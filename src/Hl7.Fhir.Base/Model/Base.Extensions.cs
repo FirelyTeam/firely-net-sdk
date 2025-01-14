@@ -1,4 +1,8 @@
 #nullable enable
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,8 +12,7 @@ namespace Hl7.Fhir.Model;
 
 public static class BaseExtensions
 {
-    [Obsolete("Use GetElementPairs() instead. Note that with GetElementPairs(), the elements are not guaranteed to " +
-              "be the same type, as they reflect the type in the actual POCO definition.")]
+    [Obsolete("Use EnumerateElements() instead. Note that with EnumerateElements(), the elements 'div' and 'id' are not FhirStrings, but XHtml and FhirUri respectively.")]
     public static IEnumerable<Base> Children(this Base instance)
     {
         foreach (var element in instance.EnumerateElements())

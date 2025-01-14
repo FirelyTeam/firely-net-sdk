@@ -192,9 +192,9 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public async Task RoundtripXmlUntyped()
+        public void RoundtripXmlUntyped()
         {
-            await ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNode.Parse(xmlText));
+            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNode.Parse(xmlText));
         }
 
         [TestMethod]
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var output = await jsonNav.ToXmlAsync();
+                var output = jsonNav.ToXml();
                 Assert.Fail();
             }
             catch (NotSupportedException)

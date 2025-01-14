@@ -15,207 +15,189 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+internal class FhirXmlBuilder : IExceptionSource
 {
-    internal class FhirXmlBuilder : IExceptionSource
+    private bool _roundtripMode;
+
+    public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
+    public XDocument Build(ITypedElement source) =>
+        buildInternal(source);
+
+    public XDocument Build(ISourceNode source)
     {
-        internal FhirXmlBuilder(FhirXmlSerializationSettings settings = null)
+        bool hasXmlSource = source.Annotation<FhirXmlNode>() != null;
+
+        // We can only work with an untyped source if we're doing a roundtrip,
+        // so we have all serialization details available.
+        if (!hasXmlSource)
         {
-            _settings = settings?.Clone() ?? new FhirXmlSerializationSettings();
+            throw Error.NotSupported($"The {nameof(FhirXmlBuilder)} will only work correctly on an untyped " +
+                                     $"source if the source is a {nameof(FhirXmlNode)}.");
         }
 
-        private FhirXmlSerializationSettings _settings;
-        private bool _roundtripMode;
-
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
-
-        public XDocument Build(ITypedElement source) =>
-            buildInternal(source);
-
-        public XDocument Build(ISourceNode source)
-        {
-            bool hasXmlSource = source.Annotation<FhirXmlNode>() != null;
-
-            // We can only work with an untyped source if we're doing a roundtrip,
-            // so we have all serialization details available.
-            if (hasXmlSource)
-            {
-                _roundtripMode = true;
+        _roundtripMode = true;
 #pragma warning disable CS0618 // Type or member is obsolete
-                return buildInternal(source.ToTypedElement());
+        return buildInternal(source.ToTypedElement());
 #pragma warning restore CS0618 // Type or member is obsolete
-            }
-            else
-            {
-                throw Error.NotSupported($"The {nameof(FhirXmlBuilder)} will only work correctly on an untyped " +
-                    $"source if the source is a {nameof(FhirXmlNode)}.");
-            }
-        }
+    }
 
-        public XDocument buildInternal(ITypedElement source)
+    private XDocument buildInternal(ITypedElement source)
+    {
+        var dest = new XDocument();
+
+        if (source is IExceptionSource)
         {
-            var dest = new XDocument();
-
-            if (source is IExceptionSource)
+            using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
             {
-                using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
-                {
-                    build(source, dest);
-                }
-            }
-            else
                 build(source, dest);
+            }
+        }
+        else
+            build(source, dest);
 
-            return dest;
+        return dest;
+    }
+
+    internal bool MustSerializeMember(ITypedElement source, out IElementDefinitionSummary info)
+    {
+        info = source.Definition;
+
+        if (info == null && !_roundtripMode)
+        {
+            var message = $"Element '{source.Location}' is missing type information.";
+
+            ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
+                new MissingTypeInformationException(message)));
+
+            return false;
         }
 
-        internal bool MustSerializeMember(ITypedElement source, out IElementDefinitionSummary info)
+        return true;
+    }
+
+    private void build(ITypedElement source, XContainer parent)
+    {
+        var xmlDetails = source.GetXmlSerializationDetails();
+        var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
+
+        if (!MustSerializeMember(source, out var serializationInfo)) return;
+
+        var value = source.Value != null ?
+            PrimitiveTypeConverter.ConvertTo<string>(source.Value) : null;
+
+        // A little note about trimming and whitespaces. The spec says:
+        // "Implementers SHOULD trim leading and trailing whitespace before writing and SHOULD trim leading
+        // and trailing whitespace when reading attribute values (for XML schema conformance)"
+        value = value?.Trim();
+
+        // xhtml children require special treament:
+        // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
+        // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
+        var isXhtml = source.InstanceType == "xhtml" ||
+                      serializationInfo?.Representation == XmlRepresentation.XHtml ||
+                      xmlDetails?.Namespace?.GetName("div") == XmlNs.XHTMLDIV;
+
+        if (isXhtml && !String.IsNullOrWhiteSpace(value))
         {
-            info = source.Definition;
+            // The value *should* be valid xhtml - however if people just provide a plain
+            // string, lets add a <div> around it.
+            if (!value.TrimStart().StartsWith("<div"))
+                value = $"<div xmlns='http://www.w3.org/1999/xhtml'>{value}</div>";
 
-            if (info == null && !_roundtripMode)
-            {
-                var message = $"Element '{source.Location}' is missing type information.";
+            var sanitized = SerializationUtil.SanitizeXml(value);
+            XElement xe = XElement.Parse(sanitized);
 
-                if (_settings.IgnoreUnknownElements)
-                {
-                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
-                        new MissingTypeInformationException(message)));
-                }
-                else
-                {
-                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
-                        new MissingTypeInformationException(message)));
-                }
+            // The div should be in the XHTMLNS namespace, correct if it
+            // is not the case.
+            xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
+            parent.Add(xe);
 
-                return false;
-            }
-
-            return true;
+            //using (var divWriter = parent.CreateWriter())
+            //using (var nodeReader = SerializationUtil.XmlReaderFromXmlText(value))
+            //    divWriter.WriteNode(nodeReader, false);
+            return;
         }
 
-        private void build(ITypedElement source, XContainer parent)
+        var usesAttribute = serializationInfo?.Representation == XmlRepresentation.XmlAttr ||
+                            (xmlDetails?.NodeType == XmlNodeType.Attribute);
+        var ns = serializationInfo?.NonDefaultNamespace ??
+                 xmlDetails?.Namespace?.NamespaceName ??
+                 (usesAttribute ? "" : XmlNs.FHIR);
+        bool atRoot = parent is XDocument;
+        var localName = serializationInfo?.IsChoiceElement == true ?
+            source.Name + source.InstanceType.Capitalize() : source.Name;
+
+        // If the node is represented by an attribute (e.g. an "id" child), write
+        // an attribute with the child's name + the child's Value into the parent
+        if (usesAttribute && !String.IsNullOrWhiteSpace(value) && !atRoot)
         {
-            var xmlDetails = source.GetXmlSerializationDetails();
-            var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
+            parent.Add(new XAttribute(XName.Get(localName, ns), value));
+            return;
+        }
+        // else: fall through - value will be serialized as an element
 
-            if (!MustSerializeMember(source, out var serializationInfo)) return;
-            bool hasTypeInfo = serializationInfo != null;
+        var me = new XElement(XName.Get(localName, ns));
 
-            var value = source.Value != null ?
-                PrimitiveTypeConverter.ConvertTo<string>(source.Value) : null;
+        if (xmlDetails?.SchemaLocation != null)
+            me.Add(new XAttribute(XmlNs.XSCHEMALOCATION, xmlDetails.SchemaLocation));
 
-            if (_settings.TrimWhitespaces)
-            {
-                value = value?.Trim();
-            }
+        // If the node has a value, add the standard FHIR value attribute
+        if (value != null)
+            me.Add(new XAttribute("value", value));
 
-            // xhtml children require special treament:
-            // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
-            // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
-            var isXhtml = source.InstanceType == "xhtml" ||
-                serializationInfo?.Representation == XmlRepresentation.XHtml ||
-                xmlDetails?.Namespace?.GetName("div") == XmlNs.XHTMLDIV;
+        // If this needs to be serialized as a contained resource, do so
+        var containedResourceType = atRoot ? null :
+            (serializationInfo?.IsResource == true ?
+                source.InstanceType :
+                source.Annotation<IResourceTypeSupplier>()?.ResourceType);
 
-            if (isXhtml && !String.IsNullOrWhiteSpace(value))
-            {
-                // The value *should* be valid xhtml - however if people just provide a plain
-                // string, lets add a <div> around it.
-                if (!value.TrimStart().StartsWith("<div"))
-                    value = $"<div xmlns='http://www.w3.org/1999/xhtml'>{value}</div>";
+        XElement containedResource = null;
+        if (containedResourceType != null)
+            containedResource = new XElement(XName.Get(containedResourceType, ns));
 
-                var sanitized = SerializationUtil.SanitizeXml(value);
-                XElement xe = XElement.Parse(sanitized);
+        var childParent = containedResource ?? me;
 
-                // The div should be in the XHTMLNS namespace, correct if it 
-                // is not the case.
-                xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
-                parent.Add(xe);
+        // Now, do the same for the children
+        // xml requires a certain order, so let's make sure we serialize in the right order
+        var orderedChildren = source.Children().OrderBy(c => c.Definition?.Order ?? 0);
 
-                //using (var divWriter = parent.CreateWriter())
-                //using (var nodeReader = SerializationUtil.XmlReaderFromXmlText(value))
-                //    divWriter.WriteNode(nodeReader, false);
-                return;
-            }
+        foreach (var child in orderedChildren)
+            build(child, childParent);
 
-            var usesAttribute = serializationInfo?.Representation == XmlRepresentation.XmlAttr ||
-                                (xmlDetails?.NodeType == XmlNodeType.Attribute);
-            var ns = serializationInfo?.NonDefaultNamespace ??
-                            xmlDetails?.Namespace.NamespaceName ??
-                            (usesAttribute ? "" : XmlNs.FHIR);
-            bool atRoot = parent is XDocument;
-            var localName = serializationInfo?.IsChoiceElement == true ?
-                            source.Name + source.InstanceType.Capitalize() : source.Name;
-
-            // If the node is represented by an attribute (e.g. an "id" child), write
-            // an attribute with the child's name + the child's Value into the parent
-            if (usesAttribute && !String.IsNullOrWhiteSpace(value) && !atRoot)
-            {
-                parent.Add(new XAttribute(XName.Get(localName, ns), value));
-                return;
-            }
-            // else: fall through - value will be serialized as an element
-
-            var me = new XElement(XName.Get(localName, ns));
-
-            if (xmlDetails?.SchemaLocation != null)
-                me.Add(new XAttribute(XmlNs.XSCHEMALOCATION, xmlDetails.SchemaLocation));
-
-            // If the node has a value, add the standard FHIR value attribute
-            if (value != null)
-                me.Add(new XAttribute("value", value));
-
-            // If this needs to be serialized as a contained resource, do so
-            var containedResourceType = atRoot ? null :
-                            (serializationInfo?.IsResource == true ?
-                                            source.InstanceType :
-                                            source.Annotation<IResourceTypeSupplier>()?.ResourceType);
-
-            XElement containedResource = null;
-            if (containedResourceType != null)
-                containedResource = new XElement(XName.Get(containedResourceType, ns));
-
-            var childParent = containedResource ?? me;
-
-            // Now, do the same for the children
-            // xml requires a certain order, so let's make sure we serialize in the right order
-            var orderedChildren = source.Children().OrderBy(c => c.Definition?.Order ?? 0);
-
-            foreach (var child in orderedChildren)
-                build(child, childParent);
-
-            if (serializationInfo?.Representation == XmlRepresentation.XmlText || xmlDetails?.NodeText != null)
-            {
-                childParent.Add(new XText(value ?? xmlDetails.NodeText));
-            }
-
-            if (sourceComments?.ClosingComments != null)
-                writeComments(sourceComments.ClosingComments, me);
-
-            // Only really add this contained resource to me when it has contents
-            if (containedResource != null && (containedResource.HasAttributes || containedResource.HasElements))
-                me.Add(containedResource);
-
-            // Only add myself to my parent if I have content, or I am the root
-            if (value != null || me.HasElements || me.HasAttributes || atRoot)
-            {
-                if (sourceComments?.CommentsBefore != null)
-                    writeComments(sourceComments.CommentsBefore, parent);
-
-                parent.Add(me);
-            }
-
-            if (atRoot && parent.Elements().Any() && sourceComments?.DocumentEndComments != null)
-                writeComments(sourceComments.DocumentEndComments, parent);
+        if (serializationInfo?.Representation == XmlRepresentation.XmlText || xmlDetails?.NodeText != null)
+        {
+            childParent.Add(new XText(value ?? xmlDetails.NodeText));
         }
 
-        private void writeComments(string[] comments, XContainer parent)
+        if (sourceComments?.ClosingComments != null)
+            writeComments(sourceComments.ClosingComments, me);
+
+        // Only really add this contained resource to me when it has contents
+        if (containedResource != null && (containedResource.HasAttributes || containedResource.HasElements))
+            me.Add(containedResource);
+
+        // Only add myself to my parent if I have content, or I am the root
+        if (value != null || me.HasElements || me.HasAttributes || atRoot)
         {
-            if (comments?.Any() == true)
-            {
-                foreach (var comment in comments)
-                    parent.Add(new XComment(comment));
-            }
+            if (sourceComments?.CommentsBefore != null)
+                writeComments(sourceComments.CommentsBefore, parent);
+
+            parent.Add(me);
+        }
+
+        if (atRoot && parent.Elements().Any() && sourceComments?.DocumentEndComments != null)
+            writeComments(sourceComments.DocumentEndComments, parent);
+    }
+
+    private void writeComments(string[] comments, XContainer parent)
+    {
+        if (comments?.Any() == true)
+        {
+            foreach (var comment in comments)
+                parent.Add(new XComment(comment));
         }
     }
 }

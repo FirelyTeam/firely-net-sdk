@@ -15,80 +15,120 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 using System.Threading.Tasks;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public static class FhirJsonBuilderExtensions
 {
-    public static class FhirJsonBuilderExtensions
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance to FHIR Json.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="JsonWriter"/> to write the serialized data to.</param>
+    public static void WriteTo(this ITypedElement source, JsonWriter writer) =>
+        new FhirJsonBuilder().Build(source).writeTo(writer);
+
+    /// <inheritdoc cref="WriteTo(Hl7.Fhir.ElementModel.ITypedElement,Newtonsoft.Json.JsonWriter)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task WriteToAsync(this ITypedElement source, JsonWriter destination) =>
+        await new FhirJsonBuilder().Build(source).writeToAsync(destination).ConfigureAwait(false);
+
+    /// <summary>
+    /// Serializes an <see cref="ISourceNode"/> instance into FHIR Json.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="JsonWriter"/> to write the serialized data to.</param>
+    /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
+    /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirJsonNode"/>.</remarks>
+    public static void WriteTo(this ISourceNode source, JsonWriter writer) =>
+        new FhirJsonBuilder().Build(source).writeTo(writer);
+
+    /// <inheritdoc cref="WriteTo(Hl7.Fhir.ElementModel.ISourceNode,Newtonsoft.Json.JsonWriter)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task WriteToAsync(this ISourceNode source, JsonWriter destination) =>
+        await new FhirJsonBuilder().Build(source).writeToAsync(destination).ConfigureAwait(false);
+
+    /// <summary>
+    /// Serializes an <see cref="ISourceNode"/> instance into a <see cref="JObject"/>.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
+    /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirJsonNode"/>.</remarks>
+    public static JObject ToJObject(this ISourceNode source) => new FhirJsonBuilder().Build(source);
+
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance into a <see cref="JObject"/>
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    public static JObject ToJObject(this ITypedElement source) => new FhirJsonBuilder().Build(source);
+
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance into a FHIR Json string.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Json.</param>
+    public static string ToJson(this ITypedElement source, bool pretty = false)
     {
-        /// <inheritdoc cref="writeToAsync(JObject, JsonWriter, string)" />
-        private static void writeTo(this JObject root, JsonWriter destination, string rootName = null)
-        {
-            root.WriteTo(destination);
-            destination.Flush();
-        }
+        if (source is not PocoNode { Poco: Resource resource } node)
+            return SerializationUtil.WriteJsonToString(source.WriteTo, pretty);
 
-        private static async Task writeToAsync(this JObject root, JsonWriter destination, string rootName = null)
-        {
-            await root.WriteToAsync(destination).ConfigureAwait(false);
-            await destination.FlushAsync().ConfigureAwait(false);
-        }
+        var inspector = node.FindInspector() ?? ModelInspector.ForType(resource.GetType());
+        var ser = new BaseFhirJsonSerializer(inspector);
+        return ser.SerializeToString(resource, pretty);
+    }
 
-        /// <inheritdoc cref="WriteToAsync(ITypedElement, JsonWriter, FhirJsonSerializationSettings)" />
-        public static void WriteTo(this ITypedElement source, JsonWriter destination, FhirJsonSerializationSettings settings = null) =>
-            new FhirJsonBuilder(settings).Build(source).writeTo(destination);
+    /// <inheritdoc cref="ToJson(Hl7.Fhir.ElementModel.ITypedElement,bool)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task<string> ToJsonAsync(this ITypedElement source, bool pretty = false)
+    {
+        if (source is not PocoNode { Poco: Resource resource } node)
+            return await SerializationUtil
+                .WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer).ConfigureAwait(false),
+                    pretty).ConfigureAwait(false);
 
-        public static async Task WriteToAsync(this ITypedElement source, JsonWriter destination, FhirJsonSerializationSettings settings = null) =>
-            await new FhirJsonBuilder(settings).Build(source).writeToAsync(destination).ConfigureAwait(false);
+        var inspector = node.FindInspector() ?? ModelInspector.ForType(resource.GetType());
+        var ser = new BaseFhirJsonSerializer(inspector);
+        return ser.SerializeToString(resource, pretty);
+    }
 
-        /// <inheritdoc cref="WriteToAsync(ISourceNode, JsonWriter, FhirJsonSerializationSettings)" />
-        public static void WriteTo(this ISourceNode source, JsonWriter destination, FhirJsonSerializationSettings settings = null) =>
-            new FhirJsonBuilder(settings).Build(source).writeTo(destination);
+    /// <summary>
+    /// Serializes an <see cref="ISourceNode"/> instance into a FHIR Json string.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Json.</param>
+    /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
+    /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirJsonNode"/>.</remarks>
+    public static string ToJson(this ISourceNode source, bool pretty = false)
+        => SerializationUtil.WriteJsonToString(source.WriteTo, pretty);
 
-        public static async Task WriteToAsync(this ISourceNode source, JsonWriter destination, FhirJsonSerializationSettings settings = null) =>
-            await new FhirJsonBuilder(settings).Build(source).writeToAsync(destination).ConfigureAwait(false);
+    /// <inheritdoc cref="ToJson(Hl7.Fhir.ElementModel.ISourceNode,bool)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task<string> ToJsonAsync(this ISourceNode source, bool pretty = false)
+        => await SerializationUtil.WriteJsonToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-        public static JObject ToJObject(this ISourceNode source, FhirJsonSerializationSettings settings = null) =>
-            new FhirJsonBuilder(settings).Build(source);
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance into a FHIR Json byte array.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Json.</param>
+    public static byte[] ToJsonBytes(this ITypedElement source, bool pretty = false)
+        => SerializationUtil.WriteJsonToBytes(source.WriteTo, pretty);
 
-        public static JObject ToJObject(this ITypedElement source, FhirJsonSerializationSettings settings = null) =>
-            new FhirJsonBuilder(settings).Build(source);
+    /// <inheritdoc cref="ToJsonBytes"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task<byte[]> ToJsonBytesAsync(this ITypedElement source, bool pretty = false)
+        => await SerializationUtil.WriteJsonToBytesAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-        /// <inheritdoc cref="ToJsonAsync(ITypedElement, FhirJsonSerializationSettings)" />
-        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
-        public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-        {
-            if (source is not PocoNode {Poco: Resource resource} node)
-                return SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
-            
-            var options = new JsonSerializerOptions{ WriteIndented = settings?.Pretty ?? false }.ForFhir(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
-            return JsonSerializer.Serialize(resource, options) + (settings?.AppendNewLine == true ? "\n" : "");
-        }
+    private static void writeTo(this JObject root, JsonWriter destination)
+    {
+        root.WriteTo(destination);
+        destination.Flush();
+    }
 
-        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
-        public static async Task<string> ToJsonAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-        {
-            if (source is not PocoNode {Poco: Resource resource} node)
-                return await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
-            
-            var options = new JsonSerializerOptions{ WriteIndented = settings?.Pretty ?? false }.ForFhir(node.FindInspector() ?? ModelInspector.ForType(resource.GetType()));
-            return JsonSerializer.Serialize(resource, options) + (settings?.AppendNewLine == true ? "\n" : "");
-        }
-
-        /// <inheritdoc cref="ToJsonAsync(ISourceNode, FhirJsonSerializationSettings)" />
-        public static string ToJson(this ISourceNode source, FhirJsonSerializationSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
-
-        public static async Task<string> ToJsonAsync(this ISourceNode source, FhirJsonSerializationSettings settings = null)
-            => await SerializationUtil.WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
-
-        /// <inheritdoc cref="ToJsonBytesAsync(ITypedElement, FhirJsonSerializationSettings)" />
-        public static byte[] ToJsonBytes(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-                => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
-
-        public static async Task<byte[]> ToJsonBytesAsync(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-                => await SerializationUtil.WriteJsonToBytesAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false)).ConfigureAwait(false);
+    private static async Task writeToAsync(this JObject root, JsonWriter destination)
+    {
+        await root.WriteToAsync(destination).ConfigureAwait(false);
+        await destination.FlushAsync().ConfigureAwait(false);
     }
 }

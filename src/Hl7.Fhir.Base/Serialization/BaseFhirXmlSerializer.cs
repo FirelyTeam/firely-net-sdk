@@ -8,7 +8,6 @@
 
 #nullable enable
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
@@ -20,64 +19,52 @@ using System.Xml;
 
 namespace Hl7.Fhir.Serialization;
 
+
 /// <summary>
 /// Serializes the contents of a POCO according to the rules of FHIR Xml serialization.
 /// </summary>
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html.
 /// </remarks>
-public class BaseFhirXmlPocoSerializer
+public class BaseFhirXmlSerializer(ModelInspector inspector)
 {
     /// <summary>
-    /// The release of FHIR for which this serializer is configured.
+    /// The <see cref="ModelInspector"/> to be used for serialization metadata.
     /// </summary>
-    public FhirRelease Release { get; }
+    public ModelInspector Inspector => inspector;
 
     /// <summary>
-    /// Construct a new serializer for a specific release of FHIR.
+    /// Serializes the given POCO with FHIR data into Xml.
     /// </summary>
-    public BaseFhirXmlPocoSerializer(FhirRelease release)
-    {
-        Release = release;
-    }
-
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into Json.
-    /// </summary>
+    /// <param name="instance">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="XmlWriter"/> to write the serialized data to.</param>
+    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
+    /// If necessary, use this parameter to override the name of the root element.</param>
     public void Serialize(
-        Base element,
+        Base instance,
         XmlWriter writer,
-        SerializationFilter? summary = default)
+        SerializationFilter? filter = null,
+        string? rootName = null)
     {
+        // If the element is summarized, add the subsetted tags.
+        if (filter is not null)
+            instance = SerializationUtil.MakeSubsettedClone(instance);
+
         writer.WriteStartDocument();
 
-        // If we are serializing a non-resource, or we are serializing a nested resource,
-        // we need to pick a name for the root element.
-        var pickElementName = element is not Resource or IScopedNode { Parent: not null };
-        if (pickElementName)
-        {
-            // If we are an element with a name, pick that, otherwise us the name of the type.
-            var nodeName = element is ITypedElement ite ? ite.Name : element.TypeName;
+        // Wrap the instance with a named element if either a root name is given,
+        // or we are serializing a datatype (=a subtree).
+        if (rootName is not null)
+            writer.WriteStartElement(rootName, XmlNs.FHIR);
+        else if(instance is not Resource)
+            writer.WriteStartElement(instance.TypeName, XmlNs.FHIR);
 
-            writer.WriteStartElement(nodeName, XmlNs.FHIR);
-        }
+        serializeInternal(instance, writer, filter);
 
-        serializeInternal(element, writer, summary);
-
-        if (pickElementName) writer.WriteEndElement();
+        if (rootName is not null) writer.WriteEndElement();
         writer.WriteEndDocument();
     }
 
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
-    /// </summary>
-    public string SerializeToString(
-        Base element,
-        SerializationFilter? summary = default) =>
-        SerializationUtil.WriteXmlToString(element, (o,w) => Serialize(o, w, summary));
-
-    /// <summary>
-    /// Serializes the given PCO with FHIR data into XML.
-    /// </summary>
     private void serializeInternal(
         Base element,
         XmlWriter writer,
@@ -87,7 +74,7 @@ public class BaseFhirXmlPocoSerializer
             writer.WriteStartElement(r.TypeName, XmlNs.FHIR);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
-        if (!ClassMapping.TryGetMappingForType(element.GetType(), Release, out var mapping))
+        if (Inspector.FindOrImportClassMapping(element.GetType()) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 
@@ -128,7 +115,7 @@ public class BaseFhirXmlPocoSerializer
             var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
                 addSuffixToElementName(mKey, serializeValue) : mKey;
 
-            if (serializeValue is IReadOnlyList<Base> coll)
+            if (serializeValue is IReadOnlyList<Base?> coll)
             {
                 foreach (var value in coll)
                     serializeMemberValue(elementName, value, writer, filter);
@@ -153,10 +140,12 @@ public class BaseFhirXmlPocoSerializer
     }
 
 
-    private void serializeMemberValue(string elementName, object value, XmlWriter writer, SerializationFilter? filter)
+    private void serializeMemberValue(string elementName, object? value, XmlWriter writer, SerializationFilter? filter)
     {
         switch (value)
         {
+            case null:
+                break;  // In error situations there may be a null in a list, just don't serialize it.
             case XHtml xhtml:
                 writer.WriteRaw(xhtml.Value);
                 break;
@@ -204,3 +193,6 @@ public class BaseFhirXmlPocoSerializer
         writer.WriteAttributeString(elementName, ns: null, value: literal);
     }
 }
+
+[Obsolete("This class has been replaced by the equivalent BaseFhirXmlSerializer class.")]
+public class BaseFhirXmlPocoSerializer(ModelInspector inspector) : BaseFhirXmlSerializer(inspector);

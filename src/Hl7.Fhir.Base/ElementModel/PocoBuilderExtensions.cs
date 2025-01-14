@@ -30,12 +30,7 @@ namespace Hl7.Fhir.ElementModel
         public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) =>
                new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
 
-        public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null)
-        {
-            var node = @base.ToElementNode(rootName);
-            ((IAnnotatable)node).AddAnnotation(inspector);
-            
-            return node;
-        }
+        public static ISourceNode ToSourceNode(this Base @base, ModelInspector inspector, string rootName = null) =>
+            @base.ToPocoNode(inspector, rootName);
     }
 }

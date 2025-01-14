@@ -143,7 +143,7 @@ public class TypedElementToPocoTests
 
     private T toPoco<T>(T source) where T : Base, new()
     {
-        var poco = toPoco(source.ToElementNode());
+        var poco = toPoco(source.ToPocoNode());
         return poco.Should().BeOfType<T>().Subject;
     }
 

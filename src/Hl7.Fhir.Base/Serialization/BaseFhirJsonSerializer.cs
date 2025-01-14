@@ -10,13 +10,10 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization;
@@ -27,51 +24,26 @@ namespace Hl7.Fhir.Serialization;
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/json.html. Since all POCOs included
 /// in the SDK implement IReadOnlyDictionary, these methods can be used to serialize POCOs to Json.
 /// </remarks>
-public class BaseFhirJsonPocoSerializer
+public class BaseFhirJsonSerializer(ModelInspector inspector)
 {
     /// <summary>
-    /// Construct a new serializer for a specific release of FHIR.
+    /// The <see cref="ModelInspector"/> to be used for serialization metadata.
     /// </summary>
-    public BaseFhirJsonPocoSerializer(FhirRelease release) : this(release, new())
+    public ModelInspector Inspector => inspector;
+
+    /// <summary>
+    /// Serializes the given POCO with FHIR data into Json.
+    /// </summary>
+    /// <param name="instance">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write the serialized data to.</param>
+    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    public void Serialize(Base instance, Utf8JsonWriter writer, SerializationFilter? filter = null)
     {
-        // nothing
-    }
+        // If the element is summarized, add the subsetted tags.
+        if (filter is not null)
+            instance = SerializationUtil.MakeSubsettedClone(instance);
 
-    /// <summary>
-    /// Construct a new serializer for a specific release of FHIR.
-    /// </summary>
-    public BaseFhirJsonPocoSerializer(FhirRelease release, FhirJsonPocoSerializerSettings settings)
-    {
-        Release = release;
-        Settings = settings;
-    }
-
-    /// <summary>
-    /// The release of FHIR for which this serializer is configured.
-    /// </summary>
-    public FhirRelease Release { get; }
-
-    /// <summary>
-    /// The settings that were passed to the constructor.
-    /// </summary>
-    public FhirJsonPocoSerializerSettings Settings { get; }
-
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into Json.
-    /// </summary>
-    public void Serialize(Base element, Utf8JsonWriter writer) =>
-        serializeInternal(element, writer);
-    
-    /// <summary>
-    /// Serializes the given dictionary with FHIR data into a Json string.
-    /// </summary>
-    public string SerializeToString(Base element)
-    {
-        var stream = new MemoryStream();
-        var writer = new Utf8JsonWriter(stream);
-        serializeInternal(element, writer);
-        writer.Flush();
-        return Encoding.UTF8.GetString(stream.ToArray());
+        serializeInternal(instance, writer, filter);
     }
 
     /// <summary>
@@ -81,8 +53,8 @@ public class BaseFhirJsonPocoSerializer
     /// with just the value, and one with the id/extensions.</remarks>
     private void serializeInternal(
         Base? element,
-        Utf8JsonWriter writer
-        )
+        Utf8JsonWriter writer,
+        SerializationFilter? filter)
     {
         if (element is null)
         {
@@ -92,13 +64,12 @@ public class BaseFhirJsonPocoSerializer
         }
 
         writer.WriteStartObject();
-        var filter = Settings.SummaryFilter;
 
         if (element is Resource r)
             writer.WriteString("resourceType", r.TypeName);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
-        if (!ClassMapping.TryGetMappingForType(element.GetType(), Release, out var mapping))
+        if (Inspector.FindOrImportClassMapping(element.GetType()) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 
@@ -123,10 +94,10 @@ public class BaseFhirJsonPocoSerializer
             switch (member.Value)
             {
                 case PrimitiveType pt:
-                    serializeFhirPrimitive(propertyName, pt, writer, requiredType);
+                    serializeFhirPrimitive(propertyName, pt, writer, filter, requiredType);
                     break;
                 case IReadOnlyList<PrimitiveType?> pts:
-                    serializeFhirPrimitiveList(propertyName, pts, writer, requiredType);
+                    serializeFhirPrimitiveList(propertyName, pts, writer, filter, requiredType);
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
                     {
@@ -134,7 +105,7 @@ public class BaseFhirJsonPocoSerializer
                         writer.WriteStartArray();
 
                         foreach (var child in children)
-                            serializeInternal(child, writer);
+                            serializeInternal(child, writer, filter);
 
                         writer.WriteEndArray();
                         break;
@@ -142,11 +113,11 @@ public class BaseFhirJsonPocoSerializer
                 case Base b:
                     {
                         writer.WritePropertyName(propertyName);
-                        serializeInternal(b, writer);
+                        serializeInternal(b, writer, filter);
                         break;
                     }
                 default:
-                    throw new InvalidOperationException($"GetElementPairs() returned a non-Base element of type {member.Value.GetType()}.");
+                    throw new InvalidOperationException($"{nameof(element.EnumerateElements)} returned a non-Base element of type {member.Value.GetType()}.");
             }
 
             filter?.LeaveMember(member.Key, member.Value, propertyMapping);
@@ -178,6 +149,7 @@ public class BaseFhirJsonPocoSerializer
         string elementName,
         IReadOnlyList<PrimitiveType?> values,
         Utf8JsonWriter writer,
+        SerializationFilter? filter,
         Type? requiredType = null)
     {
         if(values is null) throw new ArgumentNullException(nameof(values));
@@ -232,7 +204,7 @@ public class BaseFhirJsonPocoSerializer
                     writeStartArray("_" + elementName, numNullsMissed, writer);
                 }
 
-                serializeInternal(value, writer);
+                serializeInternal(value, writer, filter);
             }
             else
             {
@@ -260,7 +232,7 @@ public class BaseFhirJsonPocoSerializer
     /// </summary>
     /// <remarks>FHIR primitives are handled separately here since they may require
     /// serialization into two Json properties called "elementName" and "_elementName".</remarks>
-    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, Type? requiredType = null)
+    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter, Type? requiredType = null)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
@@ -275,7 +247,7 @@ public class BaseFhirJsonPocoSerializer
 
         // Write a property with '_elementName'
         writer.WritePropertyName("_" + elementName);
-        serializeInternal(value, writer);
+        serializeInternal(value, writer, filter);
     }
 
     /// <summary>
@@ -330,3 +302,6 @@ public class BaseFhirJsonPocoSerializer
         }
     }
 }
+
+[Obsolete("This class has been replaced by the equivalent BaseFhirJsonSerializer class.")]
+public class BaseFhirJsonPocoSerializer(ModelInspector inspector) : BaseFhirJsonSerializer(inspector);

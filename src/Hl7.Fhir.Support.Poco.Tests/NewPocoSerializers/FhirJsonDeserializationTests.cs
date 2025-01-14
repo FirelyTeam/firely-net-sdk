@@ -13,7 +13,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
@@ -102,7 +101,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
         }
 
-        private static BaseFhirJsonPocoDeserializer getTestDeserializer(FhirJsonPocoDeserializerSettings settings) =>
+        private static BaseFhirJsonPocoDeserializer getTestDeserializer(FhirJsonConverterOptions settings) =>
             new(typeof(Patient).Assembly, settings);
 
         [TestMethod]
@@ -264,7 +263,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private static (Base?, IReadOnlyCollection<CodedException>) deserializeComplex(Type objectType,
             object testObject, out Utf8JsonReader readerState,
-            FhirJsonPocoDeserializerSettings settings)
+            FhirJsonConverterOptions settings)
         {
             // For the tests, enable full XHML validation so we can test it when necessary.
             var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly, settings);
@@ -692,7 +691,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             attachment = deserializeAttachment(new() { DisableBase64Decoding = true });
             attachment.DataElement.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
 
-            static Attachment deserializeAttachment(FhirJsonPocoDeserializerSettings settings)
+            static Attachment deserializeAttachment(FhirJsonConverterOptions settings)
             {
                 var (attachment, errors) =
                     deserializeComplex(typeof(Attachment), new { data = "SGkh" }, out _, settings);

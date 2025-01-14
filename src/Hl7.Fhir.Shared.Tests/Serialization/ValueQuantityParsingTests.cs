@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var xmlFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.xml");
-            var xml = await new FhirXmlSerializer().SerializeToStringAsync(resource);
+            var xml = new FhirXmlSerializer().SerializeToString(resource);
             await File.WriteAllTextAsync(xmlFile, xml);
 
             xml = await File.ReadAllTextAsync(xmlFile);
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var jsonFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.json");
-            var json = await new FhirJsonSerializer().SerializeToStringAsync(resource);
+            var json = new FhirJsonSerializer().SerializeToString(resource);
             await File.WriteAllTextAsync(jsonFile, json);
 
             json = await File.ReadAllTextAsync(jsonFile);

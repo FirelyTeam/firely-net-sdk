@@ -10,13 +10,9 @@
 
 using Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public class FhirXmlSerializer() : BaseFhirXmlSerializer(ModelInfo.ModelInspector)
 {
-    public class FhirXmlSerializer : CommonFhirXmlSerializer
-    {
-        public FhirXmlSerializer(SerializerSettings? settings = null) : base(ModelInfo.ModelInspector, settings)
-        {
-        }
-    }
+    public static readonly FhirXmlSerializer Default = new();
 }
-#nullable restore
