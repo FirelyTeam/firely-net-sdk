@@ -35,6 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 
 #nullable enable
 
@@ -125,7 +126,18 @@ namespace Hl7.Fhir.Introspection
 
         private void validateElement(object value, ValidationContext validationContext, List<ValidationResult> result)
         {
-            DotNetAttributeValidation.TryValidate(value, validationContext.IntoPath(value, validationContext.MemberName ?? Name), result);
+            var useName = validationContext.MemberName;
+            if (!string.IsNullOrEmpty(useName))
+            {
+                var pm = ReflectionHelper.FindProperty(validationContext.ObjectType, validationContext.MemberName);
+                if (pm != null)
+                {
+                    var at = pm.GetCustomAttribute<FhirElementAttribute>();
+                    if (at != null)
+                        useName = at.Name;
+                }
+            }
+            DotNetAttributeValidation.TryValidate(value, validationContext.IntoPath(value, useName ?? Name), result);
         }
     }
 }
