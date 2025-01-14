@@ -43,10 +43,20 @@ namespace Hl7.Fhir.Utility
 
         private static string formatLocationMessage(string baseMessage, string? instancePath, long? lineNumber, long? position)
         {
-            string location = $"At line {lineNumber}, position {position}";
+            // If there is no location data, just return the base message
+            if (string.IsNullOrEmpty(instancePath) && !lineNumber.HasValue && !position.HasValue)
+                return baseMessage;
+
+            string? location = null;
             if (!string.IsNullOrEmpty(instancePath))
-                location = $"At {instancePath}, line {lineNumber}, position {position}";
-            var messageWithLocation = $"{baseMessage} {location}";
+                location += instancePath;
+            if (lineNumber.HasValue && position.HasValue)
+            {
+                if (!string.IsNullOrEmpty(location))
+                    location += ", ";
+                location += $"line {lineNumber}, position {position}";
+            }
+            var messageWithLocation = $"{baseMessage} At {location}";
             return messageWithLocation;
         }
 
