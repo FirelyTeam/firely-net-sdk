@@ -10,9 +10,11 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace Hl7.Fhir.Tests.Validation
@@ -33,6 +35,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);
+            Console.WriteLine(string.Join("\n", results.Select(r => r.ErrorMessage)));
 
             results.Clear();
             foreach (DomainResource contained in patient.Contained) contained.Text = null;
@@ -46,6 +49,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);
+            Console.WriteLine(string.Join("\n", results.Select(r => r.ErrorMessage)));
         }
     }
 }

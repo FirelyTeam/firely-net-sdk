@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 #pragma warning disable CS1580 // Invalid type for parameter in XML comment cref attribute
 #pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
 
@@ -88,7 +89,13 @@ namespace Hl7.Fhir.Serialization
                     {
                         // Add the name of the property to the path, so we can display the correct name of the element,
                         // even if it does not really contain any values.
-                        var nestedContext = validationContext.IntoEmptyProperty(propMapping.Name);
+                        var useName = propMapping.Name;
+                        // Use the fhir property name, not the .NET property name.
+                        var at = propMapping.NativeProperty.GetCustomAttribute<FhirElementAttribute>();
+                        if (at != null)
+                            useName = at.Name;
+
+                        var nestedContext = validationContext.IntoEmptyProperty(useName);
 
                         errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, nestedContext));
                     }

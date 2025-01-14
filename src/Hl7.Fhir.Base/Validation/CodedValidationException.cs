@@ -6,9 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -93,7 +95,21 @@ namespace Hl7.Fhir.Validation
                 // will return the parent, so we need to add the MemberName.
                 if (context.MemberName is not null)
                 {
-                    path = $"{path}.{context.MemberName}";
+                    var useName = context.MemberName;
+                    var pm = ReflectionHelper.FindProperty(context.ObjectType, context.MemberName);
+                    if (pm != null)
+                    {
+                        var at = pm.GetCustomAttribute<FhirElementAttribute>();
+                        if (at != null)
+                        {
+                            useName = at.Name;
+                            if (at.IsPrimitiveValue)
+                                useName = null;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(useName))
+                        path = $"{path}.{useName}";
                 }
             }
 

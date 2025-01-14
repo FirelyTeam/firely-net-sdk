@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(id);
 
             id = new Id("123456789012345678901234567890123456745290123456745290123456745290123456745290");
-            validateErrorOrFail(id);
+            validateErrorOrFail(id, errorMessage: "'123456789012345678901234567890123456745290123456745290123456745290123456745290' is not a correct literal for an id. At Id");
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Validation
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(p, recurse: true));
         }
 
-        private static void validateErrorOrFail(Base instance, bool recurse = false, string membername = null)
+        private static void validateErrorOrFail(Base instance, bool recurse = false, string membername = null, string errorMessage = null)
         {
             try
             {
@@ -73,8 +73,11 @@ namespace Hl7.Fhir.Tests.Validation
             }
             catch (ValidationException ve)
             {
+                Console.WriteLine($"Error: {ve.ValidationResult?.ErrorMessage}");
                 if (membername != null)
                     Assert.IsTrue(ve.ValidationResult.MemberNames.Contains(membername));
+                if (errorMessage != null)
+                    Assert.AreEqual(errorMessage, ve.ValidationResult.ErrorMessage);
             }
         }
 
@@ -213,7 +216,7 @@ namespace Hl7.Fhir.Tests.Validation
             DotNetAttributeValidation.Validate(obs);
 
             // When we recurse, this should fail
-            validateErrorOrFail(obs, true, membername: "Value");
+            validateErrorOrFail(obs, true, membername: "Value", errorMessage: "'Ewout Kramer' is not a correct literal for a dateTime. At Observation.effective.start");
         }
 
 #if !NETSTANDARD1_6
@@ -230,7 +233,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(p, true);
 
             p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><img onmouseover='bigImg(this)' src='smiley.gif' alt='Smiley' /></div>";
-            validateErrorOrFail(p, true);
+            validateErrorOrFail(p, true, null, "Value is not well-formed Xml adhering to the FHIR schema for Narrative: The 'onmouseover' attribute is not declared. At Patient.text.div");
         }
 #endif
 
