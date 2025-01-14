@@ -22,8 +22,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             client.Settings.PreferredFormat = ResourceFormat.Json;
             client.Settings.ReturnPreference = ReturnPreference.Representation;
 
-
-
             var pat = new Patient()
             {
                 Name = new List<HumanName>()

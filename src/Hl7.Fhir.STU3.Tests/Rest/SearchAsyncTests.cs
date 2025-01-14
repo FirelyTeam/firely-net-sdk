@@ -212,84 +212,17 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
-        {
-            using (var client = new FhirClient(_endpoint))
-            {
-                client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
-                await searchWithCriteria(client);
-            }
-        }
-
-        private static async Task searchWithCriteria(BaseFhirClient client)
-        {
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
-
-            Assert.IsTrue(result1.Entry.Count >= 1);
-
-            while (result1 != null)
-            {
-                foreach (var e in result1.Entry)
-                {
-                    Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
-                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                }
-                result1 = await client.ContinueAsync(result1, PageDirection.Next);
-            }
-
-            Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturnedHttpClient()
-        {
-            using (var client = new FhirClient(_endpoint))
-            {
-                client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
-                await searchUsingPostWithCriteria(client);
-            }
-        }
-
-
-        private static async Task searchUsingPostWithCriteria(BaseFhirClient client)
-        {
-            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize: 5);
-
-            Assert.IsTrue(result1.Entry.Count >= 1);
-
-            while (result1 != null)
-            {
-                foreach (var e in result1.Entry)
-                {
-                    Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
-                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                }
-                result1 = await client.ContinueAsync(result1, PageDirection.Next);
-            }
-
-            Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturnedHttpClient()
         {
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
                 client.Settings.ReturnPreference = ReturnPreference.Representation;
-                await searchWithCriteriaAsynContinue(client);
+                await searchWithCriteriaAsyncContinue(client);
             }
-
-
         }
 
-        private static async Task searchWithCriteriaAsynContinue(BaseFhirClient client)
+        private static async Task searchWithCriteriaAsyncContinue(BaseFhirClient client)
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 

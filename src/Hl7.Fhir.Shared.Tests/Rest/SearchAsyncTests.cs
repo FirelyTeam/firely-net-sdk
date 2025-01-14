@@ -80,26 +80,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             var results = await Task.WhenAll(tasks);
             results.All(r => r is not null).Should().BeTrue();
         }
-     
-        [TestMethod]
-        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
-        {
-            using var client = new FhirClient(ENDPOINT);
-           
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
-            await check(client, result1);
-        }
-
-        [TestMethod]
-        [Ignore("FS does not like to continue after a search with post - getting GONE")]
-        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturnedHttpClient()
-        {
-            using var client = new FhirClient(ENDPOINT);                  
-            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize: 5);
-            await check(client, result1);
-        }
 
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
