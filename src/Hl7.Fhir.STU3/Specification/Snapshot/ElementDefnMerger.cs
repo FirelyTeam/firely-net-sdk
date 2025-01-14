@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // i.e. derived profiles can remove inherited types
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
                 {
-                    snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopyInternal());
+                    snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                     foreach (var element in snap.Type) { onConstraint(element); }
                 }
 
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
                 if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
-                    var result = (T)diff.DeepCopyInternal();
+                    var result = (T)diff.DeepCopy();
 
                     if (allowAppend && diff.ObjectValue is string)
                     {
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private T deepCopyAndRaiseOnConstraint<T>(T elt) where T : PrimitiveType
             {
-                var result = (T)elt.DeepCopyInternal();
+                var result = (T)elt.DeepCopy();
                 onConstraint(result);
                 return result;
             }
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (T)diff.DeepCopyInternal();
+                        result = (T)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
@@ -374,14 +374,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // [WMR 20170227] Diff type is equal to or derived from snap type
                             // Clone base and recursively copy all non-null diff props over base props
                             // So effectively the result inherits all missing properties from base
-                            result = (T)snap.DeepCopyInternal();
+                            result = (T)snap.DeepCopy();
                             diff.CopyTo(result);
                         }
                         else
                         {
                             // [WMR 20170227] Diff type is incompatible with snap type (?)
                             // diff fully replaces snap
-                            result = (T)diff.DeepCopyInternal();
+                            result = (T)diff.DeepCopy();
                         }
                         onConstraint(result);
                     }
@@ -400,12 +400,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopyInternal();
+                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
                     {
-                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopyInternal());
+                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopy());
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             if (idx < 0)
                             {
                                 // No match; add diff item
-                                mergedItem = (ElementDefinition.ConstraintComponent)diffItem.DeepCopyInternal();
+                                mergedItem = (ElementDefinition.ConstraintComponent)diffItem.DeepCopy();
                                 result.Add(mergedItem);
                             }
                             else
@@ -461,12 +461,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (List<T>)diff.DeepCopyInternal();
+                        result = (List<T>)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
                     {
-                        result = new List<T>(snap.DeepCopyInternal());
+                        result = new List<T>(snap.DeepCopy());
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             if (idx < 0)
                             {
                                 // No match; add diff item
-                                mergedItem = (T)diffItem.DeepCopyInternal();
+                                mergedItem = (T)diffItem.DeepCopy();
                                 result.Add(mergedItem);
                             }
                             else
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopyInternal();
+                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))

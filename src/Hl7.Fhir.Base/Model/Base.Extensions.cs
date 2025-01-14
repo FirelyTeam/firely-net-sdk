@@ -38,6 +38,8 @@ public static class BaseExtensions
     public static T DeepCopy<T>(this T source) where T : Base => (T)source.DeepCopyInternal();
 
     public static void CopyTo<T>(this T source, T target) where T : Base => source.CopyToInternal(target);
+
+    public static IEnumerable<T> DeepCopy<T>(this IEnumerable<T> source) where T : Base => source.DeepCopyInternal();
     
     internal static IEnumerable<T> DeepCopyInternal<T>(this IEnumerable<T> source) where T : Base
     {

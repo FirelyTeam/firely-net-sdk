@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Model
             var p2 = new Patient();
 
             var patients = new List<Patient> { p1, p2 };
-            var patientsCopy = patients.DeepCopyInternal();
+            var patientsCopy = patients.DeepCopy();
 
             patients.Remove(p1);
             Assert.AreEqual(2, patientsCopy.Count());

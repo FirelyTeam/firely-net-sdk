@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (List<ElementDefinition.TypeRefComponent>)diff.DeepCopyInternal();
+                        result = (List<ElementDefinition.TypeRefComponent>)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
@@ -294,11 +294,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                         //result.AggregationElement = mergePrimitiveCollection(snap.AggregationElement, diff.AggregationElement, matchAggregationModes);
                         if (!(diff.AggregationElement is null))
                         {
-                            result.AggregationElement = new List<Code<ElementDefinition.AggregationMode>>(diff.AggregationElement.DeepCopyInternal());
+                            result.AggregationElement = new List<Code<ElementDefinition.AggregationMode>>(diff.AggregationElement.DeepCopy());
                         }
                         else if (!(snap.AggregationElement is null))
                         {
-                            result.AggregationElement = (List<Code<ElementDefinition.AggregationMode>>)snap.AggregationElement.DeepCopyInternal();
+                            result.AggregationElement = (List<Code<ElementDefinition.AggregationMode>>)snap.AggregationElement.DeepCopy();
                         }
 
                         result.VersioningElement = mergePrimitiveElement(snap.VersioningElement, diff.VersioningElement);
@@ -317,13 +317,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (List<T>)diff.DeepCopyInternal();
+                        result = (List<T>)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
                     {
                         // Paranoia... List elements are never null
-                        result = new List<T>(snap.DeepCopyInternal());
+                        result = new List<T>(snap.DeepCopy());
 
                         foreach (var diffItem in diff)
                         {
@@ -401,12 +401,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopyInternal();
+                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
                     {
-                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopyInternal());
+                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopy());
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
@@ -461,12 +461,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (List<T>)diff.DeepCopyInternal();
+                        result = (List<T>)diff.DeepCopy();
                         onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
                     {
-                        result = new List<T>(snap.DeepCopyInternal());
+                        result = new List<T>(snap.DeepCopy());
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {

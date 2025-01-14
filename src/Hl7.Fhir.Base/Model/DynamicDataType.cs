@@ -27,7 +27,7 @@ public class DynamicDataType : DataType, IDynamicType
     
     protected internal override Base DeepCopyInternal()
     {
-        var instance = new DynamicDataType();
+        var instance = new DynamicDataType { DynamicTypeName = DynamicTypeName };
         CopyToInternal(instance);
         return instance;
     }
