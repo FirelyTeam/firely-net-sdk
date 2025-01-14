@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 #pragma warning disable CS0618 // Type or member is obsolete
             var result1 = method switch
             {
-                "GET" => client.Search<Patient>(srch),
+                "GET" => await client.SearchAsync<Patient>(srch),
                 "ASYNC" => await client.SearchAsync<Patient>(srch),
                 "POST" => await client.SearchUsingPostAsync<Patient>(srch),
                 _ => throw new Exception()

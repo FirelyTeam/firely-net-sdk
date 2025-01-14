@@ -30,8 +30,6 @@ namespace Hl7.Fhir.Serialization
         public const string ELEMENT_NOT_IN_SEQUENCE_CODE = "XML116";
         public const string SCHEMALOCATION_DISALLOWED_CODE = "XML117";
         public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
-        [Obsolete("This name contains a spelling mistake, use ENCOUNTERED_DTD_REFERENCES_CODE instead.")]
-        public const string ENCOUNTERED_DTP_REFERENCES_CODE = "XML119";
         public const string ENCOUNTERED_DTD_REFERENCES_CODE = "XML119";
         public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
         public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";

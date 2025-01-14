@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchUsingParam(client);
             }
         }
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = await client.ContinueAsync(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchUsingPost(client);
             }
         }
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = await client.ContinueAsync(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 searchSync(client);
             }
         }
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 .LimitTo(10)
                 .SummaryOnly();
 
-            var result1 = client.Search<Patient>(srch);
+            var result1 = client.SearchAsync<Patient>(srch).WaitResult();
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = client.ContinueAsync(result1, PageDirection.Next).WaitResult();
             }
 
             Console.WriteLine("Test Completed");
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchMultiple(client);
             }
         }
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = await client.ContinueAsync(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchMultipleUsingPost(client);
             }
         }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = await client.ContinueAsync(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchWithCriteria(client);
             }
         }
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = await client.ContinueAsync(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchUsingPostWithCriteria(client);
             }
         }
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.Continue(result1, PageDirection.Next);
+                result1 = await client.ContinueAsync(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchWithCriteriaAsynContinue(client);
             }
 
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await searchUsingPostAsyncContinue(client);
             }
         }
