@@ -31,7 +31,49 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.get_Name</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.ElementDefinition.MappingComponent.get_CommentElement</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.set_Name(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ValueSet.get_Define</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ValueSet.set_Define(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Summary.ArtifactSummaryGenerator.get_Default</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Terminology.ValueSetExpander.Expand(Hl7.Fhir.Model.ValueSet)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
