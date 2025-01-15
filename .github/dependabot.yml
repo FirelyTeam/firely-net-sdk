@@ -22,4 +22,4 @@ updates:
       - dependency-name: MSTest.TestFramework
         update-types: ["version-update:semver-patch"]
       - dependency-name: FluentAssertions
-        versions: [">=8.0.0"]
+        versions: ["[8,)"]
