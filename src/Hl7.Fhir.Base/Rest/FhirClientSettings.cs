@@ -51,29 +51,6 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public int Timeout = 100 * 1000;
 
-        /// <inheritdoc cref="ReturnPreference"/>
-        [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
-        public Prefer? PreferredReturn
-        {
-            get => UseAsync ? Prefer.RespondAsync : (Prefer?)ReturnPreference;
-            set
-            {
-                switch (value)
-                {
-                    case Prefer.RespondAsync:
-                        UseAsync = true;
-                        break;
-                    case null:
-                        UseAsync = false;
-                        ReturnPreference = null;
-                        break;
-                    default:
-                        ReturnPreference = (ReturnPreference)value;
-                        break;
-                }
-            }
-        }
-
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content, 
         /// minimal content or an OperationOutcome (see https://hl7.org/fhir/http.html#return).
@@ -98,17 +75,6 @@ namespace Hl7.Fhir.Rest
         /// 2. decompress any responses that have Content-Encoding: gzip (or deflate)
         /// </summary>
         public bool PreferCompressedResponses;
-
-        /// <summary>
-        /// Compress any Request bodies using GZip.
-        /// </summary>
-        /// <remarks>If a server does not handle compressed requests using GZip, it will return a 415 response.</remarks>
-        [Obsolete("Use RequestBodyCompressionMethod instead.")]
-        public bool CompressRequestBody
-        {
-            get => RequestBodyCompressionMethod is not DecompressionMethods.None;
-            set => RequestBodyCompressionMethod = value ? DecompressionMethods.GZip : DecompressionMethods.None;
-        }
 
         /// <summary>
         /// Compress request bodies using the selected method. Note: only <see cref="DecompressionMethods.Deflate"/> and

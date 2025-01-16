@@ -162,11 +162,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         {
             yield return new object[] { "http://example.com/Patient/example/_history", "HistoryAsync", "Patient/example" };
             yield return new object[] { "http://example.com/Patient/example/_history", "HistoryAsync", new Uri("http://example.com/Patient/example") };
-            yield return new object[] { "http://example.com/Patient/example/_history", "History", "Patient/example" };
-            yield return new object[] { "http://example.com/Patient/example/_history", "History", new Uri("http://example.com/Patient/example") };
-            yield return new object[] { "http://example.com/Patient/_history", "TypeHistory", "Patient" };
             yield return new object[] { "http://example.com/Patient/_history", "TypeHistoryAsync", "Patient" };
-            yield return new object?[] { "http://example.com/_history", "WholeSystemHistory", null };
             yield return new object?[] { "http://example.com/_history", "WholeSystemHistoryAsync", null };
         }
 

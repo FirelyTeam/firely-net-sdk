@@ -42,7 +42,7 @@ namespace Hl7.Fhir.ElementModel
 
         /// <inheritdoc cref="ParseBindable"/>
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
-        public static Element? ParseBindableInternal(this ITypedElement instance) 
+        internal static Element? ParseBindableInternal(this ITypedElement instance) 
         {
             return instance.InstanceType switch
             {
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
-        public static Quantity ParseQuantityInternal(this ITypedElement instance) 
+        internal static Quantity ParseQuantityInternal(this ITypedElement instance) 
         {
             var newQuantity = new Quantity
             {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
-        public static T ParsePrimitiveInternal<T>(this ITypedElement instance) where T : PrimitiveType, new()
+        internal static T ParsePrimitiveInternal<T>(this ITypedElement instance) where T : PrimitiveType, new()
                     => new() { ObjectValue = instance.Value };
 
         #endregion
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.ElementModel
 
 
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
-        public static Coding ParseCodingInternal(this ITypedElement instance) 
+        internal static Coding ParseCodingInternal(this ITypedElement instance) 
         {
             return new Coding()
             {
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
-        public static ResourceReference ParseResourceReferenceInternal(this ITypedElement instance) 
+        internal static ResourceReference ParseResourceReferenceInternal(this ITypedElement instance) 
         {
             return new ResourceReference()
             {
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
-        public static CodeableConcept ParseCodeableConceptInternal(this ITypedElement instance) 
+        internal static CodeableConcept ParseCodeableConceptInternal(this ITypedElement instance) 
         {
             return new CodeableConcept()
             {
