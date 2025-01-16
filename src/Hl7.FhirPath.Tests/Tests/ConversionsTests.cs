@@ -24,7 +24,7 @@ namespace Hl7.FhirPath.Tests
     public class ConversionsTests
     {
         private List<Any> create(params object[] data) =>
-            data.Select(o => Any.Convert(o)).ToList();
+            data.Select(Any.Convert).ToList();
         //data.Select(o => Any.Convert(o)).Cast<ICqlConvertible>().ToList();
 
         [TestMethod]

@@ -253,7 +253,7 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="l"></param>
         /// <param name="r"></param>
         /// <returns></returns>
-        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r).Success;
+        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, out _);
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 

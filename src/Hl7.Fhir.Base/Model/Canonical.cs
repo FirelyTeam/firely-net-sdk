@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
         public Canonical(string? uri, string? version, string? fragment)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            if (uri.IndexOfAny(new[] { '|', '#' }) != -1)
+            if (uri.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
 
             if (version != null && version.IndexOfAny(new[] { '|', '#' }) != -1)

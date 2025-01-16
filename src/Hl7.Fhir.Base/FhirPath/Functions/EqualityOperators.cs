@@ -108,7 +108,6 @@ namespace Hl7.FhirPath.Functions
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
         }
 
-
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {
             left = upcastOne(left, right);

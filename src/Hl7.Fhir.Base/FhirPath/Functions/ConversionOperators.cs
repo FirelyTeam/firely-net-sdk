@@ -24,8 +24,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static bool? ToBoolean(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToBoolean().ValueOrDefault()?.Value;
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Boolean>(out var result) ? result.Value : null;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToBoolean(this Any focus) => ToBoolean(focus) is { };
+        public static bool ConvertsToBoolean(this Any focus) => ToBoolean(focus) is not null;
 
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static int? ToInteger(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToInteger().ValueOrDefault()?.Value;
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Integer>(out var result) ? result.Value : null;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToInteger(this Any focus) => ToInteger(focus) is { };
+        public static bool ConvertsToInteger(this Any focus) => ToInteger(focus) is not null;
 
 
         /// <summary>
@@ -62,17 +62,16 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static decimal? ToDecimal(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToDecimal().ValueOrDefault()?.Value;
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Decimal>(out var result) ? result.Value : null;
         }
-
 
         /// <summary>
         /// FhirPath convertsToDecimal() function.
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToDecimal(this Any focus) => ToDecimal(focus) is { };
+        public static bool ConvertsToDecimal(this Any focus) => ToDecimal(focus) is not null;
 
 
         /// <summary>
@@ -82,8 +81,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static long? ToLong(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToLong().ValueOrDefault()?.Value;
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Long>(out var result) ? result.Value : null;
         }
 
 
@@ -92,7 +91,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToLong(this Any focus) => ToLong(focus) is { };
+        public static bool ConvertsToLong(this Any focus) => ToLong(focus) is not null;
 
 
         /// <summary>
@@ -102,8 +101,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static P.Quantity? ToQuantity(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToQuantity().ValueOrDefault();
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Quantity>(out var result) ? result : null;
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToQuantity(this Any focus) => ToQuantity(focus) is { };
+        public static bool ConvertsToQuantity(this Any focus) => ToQuantity(focus) is not null;
 
 
         /// <summary>
@@ -121,8 +120,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static string? ToStringRepresentation(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToString().ValueOrDefault();
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<String>(out var result) ? result.Value : null;
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToString(this Any focus) => ToStringRepresentation(focus) is { };
+        public static bool ConvertsToString(this Any focus) => ToStringRepresentation(focus) is not null;
 
         /// <summary>
         /// FhirPath toDate() function.
@@ -139,8 +138,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static P.Date? ToDate(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToDate().ValueOrDefault();
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Date>(out var result) ? result : null;
         }
 
 
@@ -149,7 +148,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToDate(this Any focus) => ToDate(focus) is { };
+        public static bool ConvertsToDate(this Any focus) => ToDate(focus) is not null;
 
 
         /// <summary>
@@ -159,8 +158,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static P.DateTime? ToDateTime(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToDateTime().ValueOrDefault();
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<DateTime>(out var result) ? result : null;
         }
 
 
@@ -169,8 +168,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToDateTime(this Any focus) => ToDateTime(focus) is { };
-
+        public static bool ConvertsToDateTime(this Any focus) => ToDateTime(focus) is not null;
 
         /// <summary>
         /// FhirPath toTime() function.
@@ -179,8 +177,8 @@ namespace Hl7.FhirPath.Functions
         /// <returns></returns>
         public static P.Time? ToTime(this Any focus)
         {
-            if (!(focus is ICqlConvertible c)) return null;
-            return c.TryConvertToTime().ValueOrDefault();
+            if (focus is not ICqlConvertible c) return null;
+            return c.TryConvertTo<Time>(out var result) ? result : null;
 
         }
 
@@ -190,6 +188,6 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToTime(this Any focus) => ToTime(focus) is { };
+        public static bool ConvertsToTime(this Any focus) => ToTime(focus) is not null;
     }
 }
