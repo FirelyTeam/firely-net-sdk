@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Period _Period;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ContactComponent;
 
@@ -234,20 +234,21 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(Relationship.DeepCopy());
-        if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
-        if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-        if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
-        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-        if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(Relationship.DeepCopyInternal());
+        if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopyInternal();
+        if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
+        if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopyInternal();
+        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopyInternal();
+        if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
+        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ContactComponent());
+        var instance = new ContactComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -405,7 +406,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as CommunicationComponent;
 
@@ -414,15 +415,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopy();
-        if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopyInternal();
+        if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CommunicationComponent());
+        var instance = new CommunicationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -545,7 +547,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as LinkComponent;
 
@@ -554,15 +556,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)TypeElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopyInternal();
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)TypeElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LinkComponent());
+        var instance = new LinkComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -904,7 +907,7 @@ namespace Hl7.Fhir.Model
 
     Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Patient;
 
@@ -913,29 +916,30 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
-      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-      if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-      if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
-      if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.DataType)Deceased.DeepCopy();
-      if(Address.Any()) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
-      if(MaritalStatus != null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)MaritalStatus.DeepCopy();
-      if(MultipleBirth != null) dest.MultipleBirth = (Hl7.Fhir.Model.DataType)MultipleBirth.DeepCopy();
-      if(Photo.Any()) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
-      if(Communication.Any()) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopy());
-      if(GeneralPractitioner.Any()) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopy());
-      if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
-      if(Link.Any()) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(Link.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
+      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopyInternal());
+      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
+      if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopyInternal();
+      if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopyInternal();
+      if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.DataType)Deceased.DeepCopyInternal();
+      if(Address.Any()) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopyInternal());
+      if(MaritalStatus != null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)MaritalStatus.DeepCopyInternal();
+      if(MultipleBirth != null) dest.MultipleBirth = (Hl7.Fhir.Model.DataType)MultipleBirth.DeepCopyInternal();
+      if(Photo.Any()) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopyInternal());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopyInternal());
+      if(Communication.Any()) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopyInternal());
+      if(GeneralPractitioner.Any()) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopyInternal());
+      if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopyInternal();
+      if(Link.Any()) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(Link.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Patient());
+      var instance = new Patient();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

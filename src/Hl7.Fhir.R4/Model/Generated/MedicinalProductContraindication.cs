@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Medication;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as OtherTherapyComponent;
 
@@ -112,15 +112,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(TherapyRelationshipType != null) dest.TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept)TherapyRelationshipType.DeepCopy();
-        if(Medication != null) dest.Medication = (Hl7.Fhir.Model.DataType)Medication.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(TherapyRelationshipType != null) dest.TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept)TherapyRelationshipType.DeepCopyInternal();
+        if(Medication != null) dest.Medication = (Hl7.Fhir.Model.DataType)Medication.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new OtherTherapyComponent());
+        var instance = new OtherTherapyComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -276,7 +277,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Population> _Population;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as MedicinalProductContraindication;
 
@@ -285,20 +286,21 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
-      if(Disease != null) dest.Disease = (Hl7.Fhir.Model.CodeableConcept)Disease.DeepCopy();
-      if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopy();
-      if(Comorbidity.Any()) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
-      if(TherapeuticIndication.Any()) dest.TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(TherapeuticIndication.DeepCopy());
-      if(OtherTherapy.Any()) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>(OtherTherapy.DeepCopy());
-      if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopyInternal());
+      if(Disease != null) dest.Disease = (Hl7.Fhir.Model.CodeableConcept)Disease.DeepCopyInternal();
+      if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopyInternal();
+      if(Comorbidity.Any()) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopyInternal());
+      if(TherapeuticIndication.Any()) dest.TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(TherapeuticIndication.DeepCopyInternal());
+      if(OtherTherapy.Any()) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>(OtherTherapy.DeepCopyInternal());
+      if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new MedicinalProductContraindication());
+      var instance = new MedicinalProductContraindication();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

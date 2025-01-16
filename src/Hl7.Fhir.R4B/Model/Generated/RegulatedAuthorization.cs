@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> _Application;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as CaseComponent;
 
@@ -154,18 +154,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-        if(Date != null) dest.Date = (Hl7.Fhir.Model.DataType)Date.DeepCopy();
-        if(Application.Any()) dest.Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(Application.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
+        if(Date != null) dest.Date = (Hl7.Fhir.Model.DataType)Date.DeepCopyInternal();
+        if(Application.Any()) dest.Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(Application.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CaseComponent());
+        var instance = new CaseComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -480,7 +481,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as RegulatedAuthorization;
 
@@ -489,27 +490,28 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(Region.Any()) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopy());
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
-      if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
-      if(Indication != null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)Indication.DeepCopy();
-      if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopy();
-      if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopy());
-      if(Holder != null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)Holder.DeepCopy();
-      if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopy();
-      if(Case != null) dest.Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)Case.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopyInternal());
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
+      if(Region.Any()) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopyInternal());
+      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
+      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopyInternal();
+      if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopyInternal();
+      if(Indication != null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)Indication.DeepCopyInternal();
+      if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopyInternal();
+      if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopyInternal());
+      if(Holder != null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)Holder.DeepCopyInternal();
+      if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopyInternal();
+      if(Case != null) dest.Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)Case.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new RegulatedAuthorization());
+      var instance = new RegulatedAuthorization();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

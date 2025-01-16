@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.ResourceReference _Actor;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as PerformerComponent;
 
@@ -169,15 +169,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopy();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopyInternal();
+        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new PerformerComponent());
+        var instance = new PerformerComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -539,7 +540,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as BiologicallyDerivedProductDispense;
 
@@ -548,29 +549,30 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>)StatusElement.DeepCopy();
-      if(OriginRelationshipType != null) dest.OriginRelationshipType = (Hl7.Fhir.Model.CodeableConcept)OriginRelationshipType.DeepCopy();
-      if(Product != null) dest.Product = (Hl7.Fhir.Model.ResourceReference)Product.DeepCopy();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-      if(MatchStatus != null) dest.MatchStatus = (Hl7.Fhir.Model.CodeableConcept)MatchStatus.DeepCopy();
-      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.PerformerComponent>(Performer.DeepCopy());
-      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-      if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-      if(PreparedDateElement != null) dest.PreparedDateElement = (Hl7.Fhir.Model.FhirDateTime)PreparedDateElement.DeepCopy();
-      if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
-      if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(UsageInstructionElement != null) dest.UsageInstructionElement = (Hl7.Fhir.Model.FhirString)UsageInstructionElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
+      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>)StatusElement.DeepCopyInternal();
+      if(OriginRelationshipType != null) dest.OriginRelationshipType = (Hl7.Fhir.Model.CodeableConcept)OriginRelationshipType.DeepCopyInternal();
+      if(Product != null) dest.Product = (Hl7.Fhir.Model.ResourceReference)Product.DeepCopyInternal();
+      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
+      if(MatchStatus != null) dest.MatchStatus = (Hl7.Fhir.Model.CodeableConcept)MatchStatus.DeepCopyInternal();
+      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.PerformerComponent>(Performer.DeepCopyInternal());
+      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
+      if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
+      if(PreparedDateElement != null) dest.PreparedDateElement = (Hl7.Fhir.Model.FhirDateTime)PreparedDateElement.DeepCopyInternal();
+      if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopyInternal();
+      if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopyInternal();
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(UsageInstructionElement != null) dest.UsageInstructionElement = (Hl7.Fhir.Model.FhirString)UsageInstructionElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new BiologicallyDerivedProductDispense());
+      var instance = new BiologicallyDerivedProductDispense();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

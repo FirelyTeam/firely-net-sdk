@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.ResourceReference _Actor;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as PerformerComponent;
 
@@ -227,15 +227,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopy();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopyInternal();
+        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new PerformerComponent());
+        var instance = new PerformerComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -444,7 +445,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent> _ImageRegion3D;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as InstanceComponent;
 
@@ -453,19 +454,20 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Id)UidElement.DeepCopy();
-        if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
-        if(SopClass != null) dest.SopClass = (Hl7.Fhir.Model.Coding)SopClass.DeepCopy();
-        if(SubsetElement.Any()) dest.SubsetElement = new List<Hl7.Fhir.Model.FhirString>(SubsetElement.DeepCopy());
-        if(ImageRegion2D.Any()) dest.ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(ImageRegion2D.DeepCopy());
-        if(ImageRegion3D.Any()) dest.ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(ImageRegion3D.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Id)UidElement.DeepCopyInternal();
+        if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopyInternal();
+        if(SopClass != null) dest.SopClass = (Hl7.Fhir.Model.Coding)SopClass.DeepCopyInternal();
+        if(SubsetElement.Any()) dest.SubsetElement = new List<Hl7.Fhir.Model.FhirString>(SubsetElement.DeepCopyInternal());
+        if(ImageRegion2D.Any()) dest.ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(ImageRegion2D.DeepCopyInternal());
+        if(ImageRegion3D.Any()) dest.ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(ImageRegion3D.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new InstanceComponent());
+        var instance = new InstanceComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -636,7 +638,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ImageRegion2DComponent;
 
@@ -645,15 +647,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>)RegionTypeElement.DeepCopy();
-        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>)RegionTypeElement.DeepCopyInternal();
+        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ImageRegion2DComponent());
+        var instance = new ImageRegion2DComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -791,7 +794,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ImageRegion3DComponent;
 
@@ -800,15 +803,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>)RegionTypeElement.DeepCopy();
-        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>)RegionTypeElement.DeepCopyInternal();
+        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ImageRegion3DComponent());
+        var instance = new ImageRegion3DComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1220,7 +1224,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ImagingSelection;
 
@@ -1229,30 +1233,31 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>)StatusElement.DeepCopy();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(Performer.DeepCopy());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      if(StudyUidElement != null) dest.StudyUidElement = (Hl7.Fhir.Model.Id)StudyUidElement.DeepCopy();
-      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
-      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
-      if(SeriesUidElement != null) dest.SeriesUidElement = (Hl7.Fhir.Model.Id)SeriesUidElement.DeepCopy();
-      if(SeriesNumberElement != null) dest.SeriesNumberElement = (Hl7.Fhir.Model.UnsignedInt)SeriesNumberElement.DeepCopy();
-      if(FrameOfReferenceUidElement != null) dest.FrameOfReferenceUidElement = (Hl7.Fhir.Model.Id)FrameOfReferenceUidElement.DeepCopy();
-      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)BodySite.DeepCopy();
-      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
-      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(Instance.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>)StatusElement.DeepCopyInternal();
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopyInternal();
+      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(Performer.DeepCopyInternal());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
+      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+      if(StudyUidElement != null) dest.StudyUidElement = (Hl7.Fhir.Model.Id)StudyUidElement.DeepCopyInternal();
+      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopyInternal());
+      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopyInternal());
+      if(SeriesUidElement != null) dest.SeriesUidElement = (Hl7.Fhir.Model.Id)SeriesUidElement.DeepCopyInternal();
+      if(SeriesNumberElement != null) dest.SeriesNumberElement = (Hl7.Fhir.Model.UnsignedInt)SeriesNumberElement.DeepCopyInternal();
+      if(FrameOfReferenceUidElement != null) dest.FrameOfReferenceUidElement = (Hl7.Fhir.Model.Id)FrameOfReferenceUidElement.DeepCopyInternal();
+      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)BodySite.DeepCopyInternal();
+      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopyInternal());
+      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(Instance.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ImagingSelection());
+      var instance = new ImagingSelection();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

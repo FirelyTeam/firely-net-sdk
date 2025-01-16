@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RecommendationComponent;
 
@@ -293,25 +293,26 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(VaccineCode.Any()) dest.VaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(VaccineCode.DeepCopy());
-        if(TargetDisease != null) dest.TargetDisease = (Hl7.Fhir.Model.CodeableConcept)TargetDisease.DeepCopy();
-        if(ContraindicatedVaccineCode.Any()) dest.ContraindicatedVaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(ContraindicatedVaccineCode.DeepCopy());
-        if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
-        if(ForecastReason.Any()) dest.ForecastReason = new List<Hl7.Fhir.Model.CodeableConcept>(ForecastReason.DeepCopy());
-        if(DateCriterion.Any()) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(DateCriterion.DeepCopy());
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
-        if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.DataType)DoseNumber.DeepCopy();
-        if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.DataType)SeriesDoses.DeepCopy();
-        if(SupportingImmunization.Any()) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopy());
-        if(SupportingPatientInformation.Any()) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(VaccineCode.Any()) dest.VaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(VaccineCode.DeepCopyInternal());
+        if(TargetDisease != null) dest.TargetDisease = (Hl7.Fhir.Model.CodeableConcept)TargetDisease.DeepCopyInternal();
+        if(ContraindicatedVaccineCode.Any()) dest.ContraindicatedVaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(ContraindicatedVaccineCode.DeepCopyInternal());
+        if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopyInternal();
+        if(ForecastReason.Any()) dest.ForecastReason = new List<Hl7.Fhir.Model.CodeableConcept>(ForecastReason.DeepCopyInternal());
+        if(DateCriterion.Any()) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(DateCriterion.DeepCopyInternal());
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
+        if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopyInternal();
+        if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.DataType)DoseNumber.DeepCopyInternal();
+        if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.DataType)SeriesDoses.DeepCopyInternal();
+        if(SupportingImmunization.Any()) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopyInternal());
+        if(SupportingPatientInformation.Any()) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RecommendationComponent());
+        var instance = new RecommendationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -510,7 +511,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as DateCriterionComponent;
 
@@ -519,15 +520,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDateTime)ValueElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+        if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDateTime)ValueElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new DateCriterionComponent());
+        var instance = new DateCriterionComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -676,7 +678,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ImmunizationRecommendation;
 
@@ -685,18 +687,19 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-      if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
-      if(Recommendation.Any()) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(Recommendation.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
+      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
+      if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopyInternal();
+      if(Recommendation.Any()) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(Recommendation.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ImmunizationRecommendation());
+      var instance = new ImmunizationRecommendation();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

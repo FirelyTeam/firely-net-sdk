@@ -166,15 +166,15 @@ namespace Hl7.Fhir.Tests.Introspection
         public string Code { get; set; }
 
         public Date BirthDate => new(1972, 11, 30);
-
-        public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
+        
         public IEnumerable<Coding> ToCodings() => [new(null, Code)];
+        protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
     }
 
     [FhirType("Way2", Since = Specification.FhirRelease.DSTU2)]
     public class Way2 : Resource
     {
-        public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); }
+        protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
     }
 
     /* 

@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ProductionSpecificationComponent;
 
@@ -219,16 +219,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(SpecType != null) dest.SpecType = (Hl7.Fhir.Model.CodeableConcept)SpecType.DeepCopy();
-        if(ComponentId != null) dest.ComponentId = (Hl7.Fhir.Model.Identifier)ComponentId.DeepCopy();
-        if(ProductionSpecElement != null) dest.ProductionSpecElement = (Hl7.Fhir.Model.FhirString)ProductionSpecElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(SpecType != null) dest.SpecType = (Hl7.Fhir.Model.CodeableConcept)SpecType.DeepCopyInternal();
+        if(ComponentId != null) dest.ComponentId = (Hl7.Fhir.Model.Identifier)ComponentId.DeepCopyInternal();
+        if(ProductionSpecElement != null) dest.ProductionSpecElement = (Hl7.Fhir.Model.FhirString)ProductionSpecElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ProductionSpecificationComponent());
+        var instance = new ProductionSpecificationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -474,7 +475,7 @@ namespace Hl7.Fhir.Model
 
     Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as DeviceComponent;
 
@@ -483,23 +484,24 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopy();
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-      if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
-      if(OperationalStatus.Any()) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopy());
-      if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopy();
-      if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopy();
-      if(ProductionSpecification.Any()) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
-      if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+      if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopyInternal();
+      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopyInternal();
+      if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopyInternal();
+      if(OperationalStatus.Any()) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopyInternal());
+      if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopyInternal();
+      if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopyInternal();
+      if(ProductionSpecification.Any()) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopyInternal());
+      if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new DeviceComponent());
+      var instance = new DeviceComponent();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

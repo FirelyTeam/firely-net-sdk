@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as QualifiedValueComponent;
 
@@ -478,25 +478,26 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Context != null) dest.Context = (Hl7.Fhir.Model.CodeableConcept)Context.DeepCopy();
-        if(AppliesTo.Any()) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopy());
-        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-        if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
-        if(GestationalAge != null) dest.GestationalAge = (Hl7.Fhir.Model.Range)GestationalAge.DeepCopy();
-        if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopy();
-        if(RangeCategoryElement != null) dest.RangeCategoryElement = (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>)RangeCategoryElement.DeepCopy();
-        if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
-        if(ValidCodedValueSetElement != null) dest.ValidCodedValueSetElement = (Hl7.Fhir.Model.Canonical)ValidCodedValueSetElement.DeepCopy();
-        if(NormalCodedValueSetElement != null) dest.NormalCodedValueSetElement = (Hl7.Fhir.Model.Canonical)NormalCodedValueSetElement.DeepCopy();
-        if(AbnormalCodedValueSetElement != null) dest.AbnormalCodedValueSetElement = (Hl7.Fhir.Model.Canonical)AbnormalCodedValueSetElement.DeepCopy();
-        if(CriticalCodedValueSetElement != null) dest.CriticalCodedValueSetElement = (Hl7.Fhir.Model.Canonical)CriticalCodedValueSetElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Context != null) dest.Context = (Hl7.Fhir.Model.CodeableConcept)Context.DeepCopyInternal();
+        if(AppliesTo.Any()) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopyInternal());
+        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopyInternal();
+        if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopyInternal();
+        if(GestationalAge != null) dest.GestationalAge = (Hl7.Fhir.Model.Range)GestationalAge.DeepCopyInternal();
+        if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopyInternal();
+        if(RangeCategoryElement != null) dest.RangeCategoryElement = (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>)RangeCategoryElement.DeepCopyInternal();
+        if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopyInternal();
+        if(ValidCodedValueSetElement != null) dest.ValidCodedValueSetElement = (Hl7.Fhir.Model.Canonical)ValidCodedValueSetElement.DeepCopyInternal();
+        if(NormalCodedValueSetElement != null) dest.NormalCodedValueSetElement = (Hl7.Fhir.Model.Canonical)NormalCodedValueSetElement.DeepCopyInternal();
+        if(AbnormalCodedValueSetElement != null) dest.AbnormalCodedValueSetElement = (Hl7.Fhir.Model.Canonical)AbnormalCodedValueSetElement.DeepCopyInternal();
+        if(CriticalCodedValueSetElement != null) dest.CriticalCodedValueSetElement = (Hl7.Fhir.Model.Canonical)CriticalCodedValueSetElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new QualifiedValueComponent());
+        var instance = new QualifiedValueComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -726,7 +727,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent> _QualifiedValue;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ComponentComponent;
 
@@ -735,17 +736,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
-        if(PermittedUnit.Any()) dest.PermittedUnit = new List<Hl7.Fhir.Model.Coding>(PermittedUnit.DeepCopy());
-        if(QualifiedValue.Any()) dest.QualifiedValue = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent>(QualifiedValue.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+        if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopyInternal());
+        if(PermittedUnit.Any()) dest.PermittedUnit = new List<Hl7.Fhir.Model.Coding>(PermittedUnit.DeepCopyInternal());
+        if(QualifiedValue.Any()) dest.QualifiedValue = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent>(QualifiedValue.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ComponentComponent());
+        var instance = new ComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1676,7 +1678,7 @@ namespace Hl7.Fhir.Model
 
     Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ObservationDefinition;
 
@@ -1685,50 +1687,51 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
-      if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
-      if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-      if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-      if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
-      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-      if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
-      if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
-      if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
-      if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-      if(DerivedFromCanonicalElement.Any()) dest.DerivedFromCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(DerivedFromCanonicalElement.DeepCopy());
-      if(DerivedFromUriElement.Any()) dest.DerivedFromUriElement = new List<Hl7.Fhir.Model.FhirUri>(DerivedFromUriElement.DeepCopy());
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.CodeableConcept>(Subject.DeepCopy());
-      if(PerformerType != null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)PerformerType.DeepCopy();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
-      if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopy();
-      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
-      if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-      if(Specimen.Any()) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
-      if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
-      if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopy();
-      if(PermittedUnit.Any()) dest.PermittedUnit = new List<Hl7.Fhir.Model.Coding>(PermittedUnit.DeepCopy());
-      if(QualifiedValue.Any()) dest.QualifiedValue = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent>(QualifiedValue.DeepCopy());
-      if(HasMember.Any()) dest.HasMember = new List<Hl7.Fhir.Model.ResourceReference>(HasMember.DeepCopy());
-      if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ObservationDefinition.ComponentComponent>(Component.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
+      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopyInternal();
+      if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopyInternal();
+      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopyInternal();
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopyInternal();
+      if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopyInternal();
+      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
+      if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopyInternal();
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopyInternal());
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopyInternal());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
+      if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopyInternal();
+      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopyInternal();
+      if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopyInternal();
+      if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopyInternal();
+      if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopyInternal();
+      if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopyInternal();
+      if(DerivedFromCanonicalElement.Any()) dest.DerivedFromCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(DerivedFromCanonicalElement.DeepCopyInternal());
+      if(DerivedFromUriElement.Any()) dest.DerivedFromUriElement = new List<Hl7.Fhir.Model.FhirUri>(DerivedFromUriElement.DeepCopyInternal());
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.CodeableConcept>(Subject.DeepCopyInternal());
+      if(PerformerType != null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)PerformerType.DeepCopyInternal();
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
+      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+      if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopyInternal());
+      if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopyInternal();
+      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopyInternal();
+      if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopyInternal();
+      if(Specimen.Any()) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopyInternal());
+      if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopyInternal());
+      if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopyInternal();
+      if(PermittedUnit.Any()) dest.PermittedUnit = new List<Hl7.Fhir.Model.Coding>(PermittedUnit.DeepCopyInternal());
+      if(QualifiedValue.Any()) dest.QualifiedValue = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent>(QualifiedValue.DeepCopyInternal());
+      if(HasMember.Any()) dest.HasMember = new List<Hl7.Fhir.Model.ResourceReference>(HasMember.DeepCopyInternal());
+      if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ObservationDefinition.ComponentComponent>(Component.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ObservationDefinition());
+      var instance = new ObservationDefinition();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

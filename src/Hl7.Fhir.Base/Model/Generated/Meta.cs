@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Coding> _Tag;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Meta;
 
@@ -254,19 +254,20 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
-      if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopy();
-      if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
-      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(ProfileElement.DeepCopy());
-      if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
-      if(Tag.Any()) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopyInternal();
+      if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopyInternal();
+      if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopyInternal();
+      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(ProfileElement.DeepCopyInternal());
+      if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopyInternal());
+      if(Tag.Any()) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Meta());
+      var instance = new Meta();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

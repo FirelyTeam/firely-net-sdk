@@ -3148,7 +3148,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ParticipantComponent;
 
@@ -3157,18 +3157,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-        if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
-        if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>)StatusElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
+        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
+        if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopyInternal();
+        if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>)StatusElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ParticipantComponent());
+        var instance = new ParticipantComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -3490,7 +3491,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RecurrenceTemplateComponent;
 
@@ -3499,23 +3500,24 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Timezone != null) dest.Timezone = (Hl7.Fhir.Model.CodeableConcept)Timezone.DeepCopy();
-        if(RecurrenceType != null) dest.RecurrenceType = (Hl7.Fhir.Model.CodeableConcept)RecurrenceType.DeepCopy();
-        if(LastOccurrenceDateElement != null) dest.LastOccurrenceDateElement = (Hl7.Fhir.Model.Date)LastOccurrenceDateElement.DeepCopy();
-        if(OccurrenceCountElement != null) dest.OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt)OccurrenceCountElement.DeepCopy();
-        if(OccurrenceDateElement.Any()) dest.OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(OccurrenceDateElement.DeepCopy());
-        if(WeeklyTemplate != null) dest.WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent)WeeklyTemplate.DeepCopy();
-        if(MonthlyTemplate != null) dest.MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent)MonthlyTemplate.DeepCopy();
-        if(YearlyTemplate != null) dest.YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent)YearlyTemplate.DeepCopy();
-        if(ExcludingDateElement.Any()) dest.ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(ExcludingDateElement.DeepCopy());
-        if(ExcludingRecurrenceIdElement.Any()) dest.ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(ExcludingRecurrenceIdElement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Timezone != null) dest.Timezone = (Hl7.Fhir.Model.CodeableConcept)Timezone.DeepCopyInternal();
+        if(RecurrenceType != null) dest.RecurrenceType = (Hl7.Fhir.Model.CodeableConcept)RecurrenceType.DeepCopyInternal();
+        if(LastOccurrenceDateElement != null) dest.LastOccurrenceDateElement = (Hl7.Fhir.Model.Date)LastOccurrenceDateElement.DeepCopyInternal();
+        if(OccurrenceCountElement != null) dest.OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt)OccurrenceCountElement.DeepCopyInternal();
+        if(OccurrenceDateElement.Any()) dest.OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(OccurrenceDateElement.DeepCopyInternal());
+        if(WeeklyTemplate != null) dest.WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent)WeeklyTemplate.DeepCopyInternal();
+        if(MonthlyTemplate != null) dest.MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent)MonthlyTemplate.DeepCopyInternal();
+        if(YearlyTemplate != null) dest.YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent)YearlyTemplate.DeepCopyInternal();
+        if(ExcludingDateElement.Any()) dest.ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(ExcludingDateElement.DeepCopyInternal());
+        if(ExcludingRecurrenceIdElement.Any()) dest.ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(ExcludingRecurrenceIdElement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RecurrenceTemplateComponent());
+        var instance = new RecurrenceTemplateComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -3896,7 +3898,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as WeeklyTemplateComponent;
 
@@ -3905,21 +3907,22 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(MondayElement != null) dest.MondayElement = (Hl7.Fhir.Model.FhirBoolean)MondayElement.DeepCopy();
-        if(TuesdayElement != null) dest.TuesdayElement = (Hl7.Fhir.Model.FhirBoolean)TuesdayElement.DeepCopy();
-        if(WednesdayElement != null) dest.WednesdayElement = (Hl7.Fhir.Model.FhirBoolean)WednesdayElement.DeepCopy();
-        if(ThursdayElement != null) dest.ThursdayElement = (Hl7.Fhir.Model.FhirBoolean)ThursdayElement.DeepCopy();
-        if(FridayElement != null) dest.FridayElement = (Hl7.Fhir.Model.FhirBoolean)FridayElement.DeepCopy();
-        if(SaturdayElement != null) dest.SaturdayElement = (Hl7.Fhir.Model.FhirBoolean)SaturdayElement.DeepCopy();
-        if(SundayElement != null) dest.SundayElement = (Hl7.Fhir.Model.FhirBoolean)SundayElement.DeepCopy();
-        if(WeekIntervalElement != null) dest.WeekIntervalElement = (Hl7.Fhir.Model.PositiveInt)WeekIntervalElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(MondayElement != null) dest.MondayElement = (Hl7.Fhir.Model.FhirBoolean)MondayElement.DeepCopyInternal();
+        if(TuesdayElement != null) dest.TuesdayElement = (Hl7.Fhir.Model.FhirBoolean)TuesdayElement.DeepCopyInternal();
+        if(WednesdayElement != null) dest.WednesdayElement = (Hl7.Fhir.Model.FhirBoolean)WednesdayElement.DeepCopyInternal();
+        if(ThursdayElement != null) dest.ThursdayElement = (Hl7.Fhir.Model.FhirBoolean)ThursdayElement.DeepCopyInternal();
+        if(FridayElement != null) dest.FridayElement = (Hl7.Fhir.Model.FhirBoolean)FridayElement.DeepCopyInternal();
+        if(SaturdayElement != null) dest.SaturdayElement = (Hl7.Fhir.Model.FhirBoolean)SaturdayElement.DeepCopyInternal();
+        if(SundayElement != null) dest.SundayElement = (Hl7.Fhir.Model.FhirBoolean)SundayElement.DeepCopyInternal();
+        if(WeekIntervalElement != null) dest.WeekIntervalElement = (Hl7.Fhir.Model.PositiveInt)WeekIntervalElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new WeeklyTemplateComponent());
+        var instance = new WeeklyTemplateComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -4127,7 +4130,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as MonthlyTemplateComponent;
 
@@ -4136,17 +4139,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(DayOfMonthElement != null) dest.DayOfMonthElement = (Hl7.Fhir.Model.PositiveInt)DayOfMonthElement.DeepCopy();
-        if(NthWeekOfMonth != null) dest.NthWeekOfMonth = (Hl7.Fhir.Model.Coding)NthWeekOfMonth.DeepCopy();
-        if(DayOfWeek != null) dest.DayOfWeek = (Hl7.Fhir.Model.Coding)DayOfWeek.DeepCopy();
-        if(MonthIntervalElement != null) dest.MonthIntervalElement = (Hl7.Fhir.Model.PositiveInt)MonthIntervalElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(DayOfMonthElement != null) dest.DayOfMonthElement = (Hl7.Fhir.Model.PositiveInt)DayOfMonthElement.DeepCopyInternal();
+        if(NthWeekOfMonth != null) dest.NthWeekOfMonth = (Hl7.Fhir.Model.Coding)NthWeekOfMonth.DeepCopyInternal();
+        if(DayOfWeek != null) dest.DayOfWeek = (Hl7.Fhir.Model.Coding)DayOfWeek.DeepCopyInternal();
+        if(MonthIntervalElement != null) dest.MonthIntervalElement = (Hl7.Fhir.Model.PositiveInt)MonthIntervalElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new MonthlyTemplateComponent());
+        var instance = new MonthlyTemplateComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -4263,7 +4267,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as YearlyTemplateComponent;
 
@@ -4272,14 +4276,15 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(YearIntervalElement != null) dest.YearIntervalElement = (Hl7.Fhir.Model.PositiveInt)YearIntervalElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(YearIntervalElement != null) dest.YearIntervalElement = (Hl7.Fhir.Model.PositiveInt)YearIntervalElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new YearlyTemplateComponent());
+        var instance = new YearlyTemplateComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -4951,7 +4956,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Appointment;
 
@@ -4960,45 +4965,46 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)StatusElement.DeepCopy();
-      if(CancellationReason != null) dest.CancellationReason = (Hl7.Fhir.Model.CodeableConcept)CancellationReason.DeepCopy();
-      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopy());
-      if(ServiceCategory.Any()) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopy());
-      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
-      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-      if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopy();
-      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
-      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(Replaces.Any()) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
-      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopy());
-      if(SupportingInformation.Any()) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
-      if(PreviousAppointment != null) dest.PreviousAppointment = (Hl7.Fhir.Model.ResourceReference)PreviousAppointment.DeepCopy();
-      if(OriginatingAppointment != null) dest.OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference)OriginatingAppointment.DeepCopy();
-      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
-      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
-      if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
-      if(RequestedPeriod.Any()) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopy());
-      if(Slot.Any()) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
-      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-      if(CancellationDateElement != null) dest.CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime)CancellationDateElement.DeepCopy();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      if(PatientInstruction.Any()) dest.PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(PatientInstruction.DeepCopy());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
-      if(RecurrenceIdElement != null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)RecurrenceIdElement.DeepCopy();
-      if(OccurrenceChangedElement != null) dest.OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean)OccurrenceChangedElement.DeepCopy();
-      if(RecurrenceTemplate.Any()) dest.RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(RecurrenceTemplate.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)StatusElement.DeepCopyInternal();
+      if(CancellationReason != null) dest.CancellationReason = (Hl7.Fhir.Model.CodeableConcept)CancellationReason.DeepCopyInternal();
+      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopyInternal());
+      if(ServiceCategory.Any()) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopyInternal());
+      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopyInternal());
+      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopyInternal());
+      if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopyInternal();
+      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopyInternal());
+      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopyInternal();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
+      if(Replaces.Any()) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopyInternal());
+      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopyInternal());
+      if(SupportingInformation.Any()) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopyInternal());
+      if(PreviousAppointment != null) dest.PreviousAppointment = (Hl7.Fhir.Model.ResourceReference)PreviousAppointment.DeepCopyInternal();
+      if(OriginatingAppointment != null) dest.OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference)OriginatingAppointment.DeepCopyInternal();
+      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopyInternal();
+      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopyInternal();
+      if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopyInternal();
+      if(RequestedPeriod.Any()) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopyInternal());
+      if(Slot.Any()) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopyInternal());
+      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopyInternal());
+      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
+      if(CancellationDateElement != null) dest.CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime)CancellationDateElement.DeepCopyInternal();
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(PatientInstruction.Any()) dest.PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(PatientInstruction.DeepCopyInternal());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopyInternal());
+      if(RecurrenceIdElement != null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)RecurrenceIdElement.DeepCopyInternal();
+      if(OccurrenceChangedElement != null) dest.OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean)OccurrenceChangedElement.DeepCopyInternal();
+      if(RecurrenceTemplate.Any()) dest.RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(RecurrenceTemplate.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Appointment());
+      var instance = new Appointment();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

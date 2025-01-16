@@ -1222,7 +1222,7 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Money;
 
@@ -1231,15 +1231,16 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
-      if(CurrencyElement != null) dest.CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>)CurrencyElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopyInternal();
+      if(CurrencyElement != null) dest.CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>)CurrencyElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Money());
+      var instance = new Money();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

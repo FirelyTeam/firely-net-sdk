@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.DataRequirement _EventData;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as TriggerDefinition;
 
@@ -214,17 +214,18 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopy();
-      if(EventNameElement != null) dest.EventNameElement = (Hl7.Fhir.Model.FhirString)EventNameElement.DeepCopy();
-      if(EventTiming != null) dest.EventTiming = (Hl7.Fhir.Model.DataType)EventTiming.DeepCopy();
-      if(EventData != null) dest.EventData = (Hl7.Fhir.Model.DataRequirement)EventData.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopyInternal();
+      if(EventNameElement != null) dest.EventNameElement = (Hl7.Fhir.Model.FhirString)EventNameElement.DeepCopyInternal();
+      if(EventTiming != null) dest.EventTiming = (Hl7.Fhir.Model.DataType)EventTiming.DeepCopyInternal();
+      if(EventData != null) dest.EventData = (Hl7.Fhir.Model.DataRequirement)EventData.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new TriggerDefinition());
+      var instance = new TriggerDefinition();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

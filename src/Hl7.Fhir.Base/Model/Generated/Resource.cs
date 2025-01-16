@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Resource;
 
@@ -170,12 +170,11 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(IdElement != null) dest.IdElement = (Hl7.Fhir.Model.Id)IdElement.DeepCopy();
-      if(Meta != null) dest.Meta = (Hl7.Fhir.Model.Meta)Meta.DeepCopy();
-      if(ImplicitRulesElement != null) dest.ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)ImplicitRulesElement.DeepCopy();
-      if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(IdElement != null) dest.IdElement = (Hl7.Fhir.Model.Id)IdElement.DeepCopyInternal();
+      if(Meta != null) dest.Meta = (Hl7.Fhir.Model.Meta)Meta.DeepCopyInternal();
+      if(ImplicitRulesElement != null) dest.ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)ImplicitRulesElement.DeepCopyInternal();
+      if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopyInternal();
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

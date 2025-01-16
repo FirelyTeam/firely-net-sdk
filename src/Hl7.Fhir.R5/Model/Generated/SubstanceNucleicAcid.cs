@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent> _Sugar;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as SubunitComponent;
 
@@ -238,21 +238,22 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(SubunitElement != null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)SubunitElement.DeepCopy();
-        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
-        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopy();
-        if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopy();
-        if(FivePrime != null) dest.FivePrime = (Hl7.Fhir.Model.CodeableConcept)FivePrime.DeepCopy();
-        if(ThreePrime != null) dest.ThreePrime = (Hl7.Fhir.Model.CodeableConcept)ThreePrime.DeepCopy();
-        if(Linkage.Any()) dest.Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(Linkage.DeepCopy());
-        if(Sugar.Any()) dest.Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(Sugar.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(SubunitElement != null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)SubunitElement.DeepCopyInternal();
+        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopyInternal();
+        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopyInternal();
+        if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopyInternal();
+        if(FivePrime != null) dest.FivePrime = (Hl7.Fhir.Model.CodeableConcept)FivePrime.DeepCopyInternal();
+        if(ThreePrime != null) dest.ThreePrime = (Hl7.Fhir.Model.CodeableConcept)ThreePrime.DeepCopyInternal();
+        if(Linkage.Any()) dest.Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(Linkage.DeepCopyInternal());
+        if(Sugar.Any()) dest.Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(Sugar.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SubunitComponent());
+        var instance = new SubunitComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -475,7 +476,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as LinkageComponent;
 
@@ -484,17 +485,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(ConnectivityElement != null) dest.ConnectivityElement = (Hl7.Fhir.Model.FhirString)ConnectivityElement.DeepCopy();
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(ResidueSiteElement != null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)ResidueSiteElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(ConnectivityElement != null) dest.ConnectivityElement = (Hl7.Fhir.Model.FhirString)ConnectivityElement.DeepCopyInternal();
+        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+        if(ResidueSiteElement != null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)ResidueSiteElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LinkageComponent());
+        var instance = new LinkageComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -654,7 +656,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as SugarComponent;
 
@@ -663,16 +665,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(ResidueSiteElement != null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)ResidueSiteElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+        if(ResidueSiteElement != null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)ResidueSiteElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SugarComponent());
+        var instance = new SugarComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -838,7 +841,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent> _Subunit;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as SubstanceNucleicAcid;
 
@@ -847,18 +850,19 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopy();
-      if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopy();
-      if(AreaOfHybridisationElement != null) dest.AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString)AreaOfHybridisationElement.DeepCopy();
-      if(OligoNucleotideType != null) dest.OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept)OligoNucleotideType.DeepCopy();
-      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(Subunit.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopyInternal();
+      if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopyInternal();
+      if(AreaOfHybridisationElement != null) dest.AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString)AreaOfHybridisationElement.DeepCopyInternal();
+      if(OligoNucleotideType != null) dest.OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept)OligoNucleotideType.DeepCopyInternal();
+      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(Subunit.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new SubstanceNucleicAcid());
+      var instance = new SubstanceNucleicAcid();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

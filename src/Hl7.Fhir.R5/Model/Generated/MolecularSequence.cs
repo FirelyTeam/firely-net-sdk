@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.MolecularSequence.EditComponent> _Edit;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RelativeComponent;
 
@@ -236,18 +236,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(CoordinateSystem != null) dest.CoordinateSystem = (Hl7.Fhir.Model.CodeableConcept)CoordinateSystem.DeepCopy();
-        if(OrdinalPositionElement != null) dest.OrdinalPositionElement = (Hl7.Fhir.Model.Integer)OrdinalPositionElement.DeepCopy();
-        if(SequenceRange != null) dest.SequenceRange = (Hl7.Fhir.Model.Range)SequenceRange.DeepCopy();
-        if(StartingSequence != null) dest.StartingSequence = (Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent)StartingSequence.DeepCopy();
-        if(Edit.Any()) dest.Edit = new List<Hl7.Fhir.Model.MolecularSequence.EditComponent>(Edit.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(CoordinateSystem != null) dest.CoordinateSystem = (Hl7.Fhir.Model.CodeableConcept)CoordinateSystem.DeepCopyInternal();
+        if(OrdinalPositionElement != null) dest.OrdinalPositionElement = (Hl7.Fhir.Model.Integer)OrdinalPositionElement.DeepCopyInternal();
+        if(SequenceRange != null) dest.SequenceRange = (Hl7.Fhir.Model.Range)SequenceRange.DeepCopyInternal();
+        if(StartingSequence != null) dest.StartingSequence = (Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent)StartingSequence.DeepCopyInternal();
+        if(Edit.Any()) dest.Edit = new List<Hl7.Fhir.Model.MolecularSequence.EditComponent>(Edit.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RelativeComponent());
+        var instance = new RelativeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -516,7 +517,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as StartingSequenceComponent;
 
@@ -525,20 +526,21 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(GenomeAssembly != null) dest.GenomeAssembly = (Hl7.Fhir.Model.CodeableConcept)GenomeAssembly.DeepCopy();
-        if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopy();
-        if(Sequence != null) dest.Sequence = (Hl7.Fhir.Model.DataType)Sequence.DeepCopy();
-        if(WindowStartElement != null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)WindowStartElement.DeepCopy();
-        if(WindowEndElement != null) dest.WindowEndElement = (Hl7.Fhir.Model.Integer)WindowEndElement.DeepCopy();
-        if(OrientationElement != null) dest.OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>)OrientationElement.DeepCopy();
-        if(StrandElement != null) dest.StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>)StrandElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(GenomeAssembly != null) dest.GenomeAssembly = (Hl7.Fhir.Model.CodeableConcept)GenomeAssembly.DeepCopyInternal();
+        if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopyInternal();
+        if(Sequence != null) dest.Sequence = (Hl7.Fhir.Model.DataType)Sequence.DeepCopyInternal();
+        if(WindowStartElement != null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)WindowStartElement.DeepCopyInternal();
+        if(WindowEndElement != null) dest.WindowEndElement = (Hl7.Fhir.Model.Integer)WindowEndElement.DeepCopyInternal();
+        if(OrientationElement != null) dest.OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>)OrientationElement.DeepCopyInternal();
+        if(StrandElement != null) dest.StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>)StrandElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new StartingSequenceComponent());
+        var instance = new StartingSequenceComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -771,7 +773,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as EditComponent;
 
@@ -780,17 +782,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
-        if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
-        if(ReplacementSequenceElement != null) dest.ReplacementSequenceElement = (Hl7.Fhir.Model.FhirString)ReplacementSequenceElement.DeepCopy();
-        if(ReplacedSequenceElement != null) dest.ReplacedSequenceElement = (Hl7.Fhir.Model.FhirString)ReplacedSequenceElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopyInternal();
+        if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopyInternal();
+        if(ReplacementSequenceElement != null) dest.ReplacementSequenceElement = (Hl7.Fhir.Model.FhirString)ReplacementSequenceElement.DeepCopyInternal();
+        if(ReplacedSequenceElement != null) dest.ReplacedSequenceElement = (Hl7.Fhir.Model.FhirString)ReplacedSequenceElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new EditComponent());
+        var instance = new EditComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1046,7 +1049,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as MolecularSequence;
 
@@ -1055,23 +1058,24 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)TypeElement.DeepCopy();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
-      if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
-      if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-      if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
-      if(LiteralElement != null) dest.LiteralElement = (Hl7.Fhir.Model.FhirString)LiteralElement.DeepCopy();
-      if(Formatted.Any()) dest.Formatted = new List<Hl7.Fhir.Model.Attachment>(Formatted.DeepCopy());
-      if(Relative.Any()) dest.Relative = new List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>(Relative.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)TypeElement.DeepCopyInternal();
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopyInternal());
+      if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopyInternal();
+      if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopyInternal();
+      if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopyInternal();
+      if(LiteralElement != null) dest.LiteralElement = (Hl7.Fhir.Model.FhirString)LiteralElement.DeepCopyInternal();
+      if(Formatted.Any()) dest.Formatted = new List<Hl7.Fhir.Model.Attachment>(Formatted.DeepCopyInternal());
+      if(Relative.Any()) dest.Relative = new List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>(Relative.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new MolecularSequence());
+      var instance = new MolecularSequence();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

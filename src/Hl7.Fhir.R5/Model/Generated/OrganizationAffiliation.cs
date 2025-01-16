@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as OrganizationAffiliation;
 
@@ -263,25 +263,26 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-      if(ParticipatingOrganization != null) dest.ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference)ParticipatingOrganization.DeepCopy();
-      if(Network.Any()) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopy());
-      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
-      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
-      if(HealthcareService.Any()) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ExtendedContactDetail>(Contact.DeepCopy());
-      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
+      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
+      if(ParticipatingOrganization != null) dest.ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference)ParticipatingOrganization.DeepCopyInternal();
+      if(Network.Any()) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopyInternal());
+      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopyInternal());
+      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopyInternal());
+      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopyInternal());
+      if(HealthcareService.Any()) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopyInternal());
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ExtendedContactDetail>(Contact.DeepCopyInternal());
+      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new OrganizationAffiliation());
+      var instance = new OrganizationAffiliation();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
