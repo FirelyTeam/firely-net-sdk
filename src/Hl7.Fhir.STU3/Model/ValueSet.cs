@@ -19,9 +19,6 @@ namespace Hl7.Fhir.Model
 {
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {
-        [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
-        public string? Define { get; set; }
-
         [NotMapped]
         public bool HasExpansion => Expansion != null;
 

@@ -87,57 +87,6 @@ namespace Hl7.Fhir.Test
             HttpRequestMessage build(InteractionType interaction) => makeMessage(settings, interaction: interaction);
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        [TestMethod]
-        [DataRow(Prefer.ReturnRepresentation, ReturnPreference.Representation, false)]
-        [DataRow(Prefer.OperationOutcome, ReturnPreference.OperationOutcome, false)]
-        [DataRow(Prefer.ReturnMinimal, ReturnPreference.Minimal, false)]
-        [DataRow(Prefer.RespondAsync, null, true)]
-        [DataRow(null, null, false)]
-        public void TestConvertPreferredReturn(Prefer? setting, ReturnPreference? pref, bool isAsync)
-        {
-            var settings = new FhirClientSettings { PreferredReturn = setting };
-            settings.ReturnPreference.Should().Be(pref);
-            settings.UseAsync.Should().Be(isAsync);
-        }
-
-        [TestMethod]
-        [DataRow(null, false, null)]
-        [DataRow(null, true, Prefer.RespondAsync)]
-        [DataRow(ReturnPreference.Minimal, false, Prefer.ReturnMinimal)]
-        [DataRow(ReturnPreference.Representation, false, Prefer.ReturnRepresentation)]
-        [DataRow(ReturnPreference.OperationOutcome, false, Prefer.OperationOutcome)]
-        [DataRow(ReturnPreference.OperationOutcome, true, Prefer.RespondAsync)]
-        public void TestConvertReturnPreference(ReturnPreference? pref, bool isAsync, Prefer? setting)
-        {
-            var settings = new FhirClientSettings { ReturnPreference = pref, UseAsync = isAsync };
-            settings.PreferredReturn.Should().Be(setting);
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
-        [TestMethod]
-        [DataRow(false, DecompressionMethods.None)]
-        [DataRow(true, DecompressionMethods.GZip)]
-        public void ConvertCompressionRequestBody(bool compress, DecompressionMethods method)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var settings = new FhirClientSettings { CompressRequestBody = compress };
-#pragma warning restore CS0618 // Type or member is obsolete
-            settings.RequestBodyCompressionMethod.Should().Be(method);
-        }
-
-        [TestMethod]
-        [DataRow(DecompressionMethods.None, false)]
-        [DataRow(DecompressionMethods.GZip, true)]
-        [DataRow(DecompressionMethods.Deflate, true)]
-        public void ConvertRequestBodyCompression(DecompressionMethods method, bool compress)
-        {
-            var settings = new FhirClientSettings { RequestBodyCompressionMethod = method };
-#pragma warning disable CS0618 // Type or member is obsolete
-            settings.CompressRequestBody.Should().Be(compress);
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-
         [TestMethod]
         public void TestRequestUrl()
         {

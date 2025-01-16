@@ -45,9 +45,6 @@ namespace Hl7.Fhir.Specification.Terminology
             // nothing
         }
 
-        [Obsolete("ValueSetExpander now works best with asynchronous resolvers. Use ExpandAsync() instead.")]
-        public void Expand(ValueSet source) => TaskHelper.Await(() => ExpandAsync(source));
-
         /// <summary>
         /// Expand the <c>include</c> and <c>exclude</c> filters. Creates the <c></c>
         /// </summary>

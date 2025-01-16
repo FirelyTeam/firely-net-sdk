@@ -168,12 +168,6 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// Indicates whether this class represents the nested complex type for a backbone element.
         /// </summary>
-        [Obsolete("These types are now generally called Backbone types, so use IsBackboneType instead.")]
-        public bool IsNestedType { get => IsBackboneType; set => IsBackboneType = value; }
-
-        /// <summary>
-        /// Indicates whether this class represents the nested complex type for a backbone element.
-        /// </summary>
         public bool IsBackboneType { get; private set; } = false;
 
         /// <summary>

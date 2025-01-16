@@ -1,9 +1,6 @@
 ﻿#nullable enable
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using System;
-using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -19,30 +16,6 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="settings">Deserialization settings</param>
         public FhirJsonPocoDeserializer(FhirJsonConverterOptions settings) : base(ModelInfo.ModelInspector, settings) { }
-
-        ///<inheritdoc/>
-        [Obsolete("Please use FhirJsonPocoDeserializer() if you are using a single version of FHIR or BaseFhirJsonPocoDeserializer if you want to use multiple versions of FHIR")]
-        public FhirJsonPocoDeserializer(Assembly assembly) : base(assembly)
-        {
-        }
-
-        ///<inheritdoc/>
-        [Obsolete("Please use FhirJsonPocoDeserializer() if you are using a single version of FHIR or BaseFhirJsonPocoDeserializer if you want to use multiple versions of FHIR")]
-        public FhirJsonPocoDeserializer(ModelInspector inspector) : base(inspector)
-        {
-        }
-
-        ///<inheritdoc/>
-        [Obsolete("Please use FhirJsonPocoDeserializer() if you are using a single version of FHIR or BaseFhirJsonPocoDeserializer if you want to use multiple versions of FHIR")]
-        public FhirJsonPocoDeserializer(Assembly assembly, FhirJsonConverterOptions settings) : base(assembly, settings)
-        {
-        }
-
-        ///<inheritdoc/>
-        [Obsolete("Please use FhirJsonPocoDeserializer() if you are using a single version of FHIR or BaseFhirJsonPocoDeserializer if you want to use multiple versions of FHIR")]
-        public FhirJsonPocoDeserializer(ModelInspector inspector, FhirJsonConverterOptions settings) : base(inspector, settings)
-        {
-        }
     }
 }
 
