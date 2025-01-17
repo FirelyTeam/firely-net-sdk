@@ -45,4 +45,6 @@ public class Code(string? system, string code, string? display = null, string? v
     }
 
     public override string ToString() => $"{Value}@{System} " + Display;
+
+    // Does not support equality, equivalence and ordering in the CQL sense, so no explicit implementations of these interfaces
 }

@@ -43,24 +43,18 @@ public class Ratio(Quantity numerator, Quantity denominator) : Any
     public override int GetHashCode() => (Numerator, Denominator).GetHashCode();
     public override string ToString() => $"{Numerator}:{Denominator}";
 
-    public static explicit operator String(Ratio r) => new(r.ToString());
+    public static explicit operator String(Ratio r) => RunCast<String>(r);
 
     public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
     {
+        result = null;
+
         if(to == typeof(Ratio))
-        {
             result = this;
-            return true;
-        }
+        else if (to == typeof(String))
+            result = new String(ToString());
 
-        if (to == typeof(String))
-        {
-            result = (String)this;
-            return true;
-        }
-
-        result = default;
-        return false;
+        return result is not null;
     }
 
     public static bool operator ==(Ratio left, Ratio right) => left.Equals(right);

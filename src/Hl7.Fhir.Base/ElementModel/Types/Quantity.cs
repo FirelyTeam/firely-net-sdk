@@ -176,14 +176,11 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// calendar durations and definite quantity durations above seconds is determined by the <paramref name="comparisonType"/></remarks>
     public bool TryEquals(Any other, QuantityComparison comparisonType, [NotNullWhen(true)] out bool? result)
     {
-        if (other is Quantity && TryCompareTo(other, comparisonType, out var comparison))
-        {
-            result = comparison == 0;
-            return true;
-        }
+        result = other is Quantity
+            ? TryCompareTo(other, comparisonType, out var comparison) ? comparison == 0 : null
+            : false;
 
-        result = null;
-        return false;
+        return result is not null;
     }
 
     public static bool operator ==(Quantity a, Quantity b) => a.CompareTo(b) == 0;
@@ -224,11 +221,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             return true;
         }
 
-        if (other is not Quantity otherQ)
-        {
-            result = null;
-            return false;
-        }
+        if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
 
         if (IsDuration && otherQ.IsDuration)
         {
@@ -277,7 +270,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
                 _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
             };
 
-            return new(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
+            return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
         }
     }
 
@@ -309,25 +302,21 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         other is not null && TryEquals(other, CQL_EQUIVALENCE_COMPARISON, out var result) && result.Value;
 
     int? ICqlOrderable.CompareTo(Any? other) =>
-        other is not null && TryCompareTo(other, out var result) ? result : null;
+        other is not null && TryCompareTo(other, out var result)
+            ? result
+            : null;
 
-    public static explicit operator String(Quantity q) => new(q.ToString());
+    public static explicit operator String(Quantity q) => RunCast<String>(q);
 
     public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
     {
+        result = null;
+
         if(to == typeof(Quantity))
-        {
             result = this;
-            return true;
-        }
+        else if (to == typeof(String))
+            result = new String(ToString());
 
-        if (to == typeof(String))
-        {
-            result = (String)this;
-            return true;
-        }
-
-        result = default;
-        return false;
+        return result is not null;
     }
 }

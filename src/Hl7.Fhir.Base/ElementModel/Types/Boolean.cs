@@ -20,7 +20,7 @@ public class Boolean(bool value) : Any, ICqlEquatable, ICqlConvertible
     public const string TRUE_LITERAL = "true";
     public const string FALSE_LITERAL = "false";
 
-    public Boolean() : this(default) { }
+    public Boolean() : this(false) { }
 
     public bool Value { get; } = value;
 
@@ -43,7 +43,7 @@ public class Boolean(bool value) : Any, ICqlEquatable, ICqlConvertible
         }
         else
         {
-            value = default;
+            value = null;
             return false;
         }
     }

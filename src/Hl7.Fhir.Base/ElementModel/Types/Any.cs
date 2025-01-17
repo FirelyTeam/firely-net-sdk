@@ -154,7 +154,7 @@ public abstract class Any : ICqlConvertible
     }
 
     // some utility methods shared by the subclasses
-    protected static ArgumentException NotSameTypeComparison(object me, object? them) =>
+    protected static InvalidOperationException NotSameTypeComparison(object me, object? them) =>
         new($"Cannot compare {me} (of type {me.GetType()}) to {them} (of type {them?.GetType()}), because the types differ.");
 
     protected static TOut RunCast<TOut>(Any value) =>

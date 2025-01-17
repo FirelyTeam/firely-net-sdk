@@ -196,14 +196,11 @@ public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     public bool TryEquals(Any other, [NotNullWhen(true)] out bool? result)
     {
-        if (other is Date && TryCompareTo(other, out var comparison))
-        {
-             result = comparison == 0;
-             return true;
-        }
+        result = other is Date
+            ? TryCompareTo(other, out var comparison) ? comparison == 0 : null
+            : false;
 
-        result = null;
-        return false;
+        return result is not null;
     }
 
     public static bool operator ==(Date a, Date b) => Equals(a, b);

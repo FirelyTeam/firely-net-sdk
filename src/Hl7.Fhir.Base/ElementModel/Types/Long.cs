@@ -68,64 +68,37 @@ public class Long(long value) : Any, IComparable, ICqlEquatable, ICqlOrderable
     public static implicit operator long(Long i) => i.Value;
     public static explicit operator Long(long i) => new (i);
 
-    public static implicit operator Decimal(Long i) => new (i.Value);
-    public static implicit operator Quantity(Long i) => new (i.Value);
-
-    public static explicit operator Boolean(Long l) =>
-        l.Value switch
-        {
-            1 => Boolean.True,
-            0 => Boolean.False,
-            _ => throw new InvalidCastException($"Cannot cast Long value {l} to Boolean.")
-        };
-
-    public static implicit operator String(Long l) => new(l.ToString());
-
-    public static explicit operator Integer(Long l) =>
-        l.Value is >= int.MinValue and <= int.MaxValue
-            ? new Integer((int)l.Value)
-            : throw new InvalidCastException($"Cannot cast Long value {l} to Integer, it is too large.");
+    public static explicit operator Decimal(Long i) => RunCast<Decimal>(i);
+    public static explicit operator Quantity(Long i) => RunCast<Quantity>(i);
+    public static explicit operator Boolean(Long l) => RunCast<Boolean>(l);
+    public static explicit operator String(Long l) => RunCast<String>(l);
+    public static explicit operator Integer(Long l) => RunCast<Integer>(l);
 
     public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
     {
+        result = null;
+
         if (to == typeof(Long))
-        {
             result = this;
-            return true;
-        }
+        else if (to == typeof(Integer))
+            result = Value is >= int.MinValue and <= int.MaxValue
+                ? new Integer((int)Value)
+                : null;
+        else if (to == typeof(Decimal))
+            result = new Decimal(Value);
+        else if (to == typeof(Quantity))
+            result =  new Quantity(Value);
+        else if (to == typeof(Boolean))
+            result = Value switch
+            {
+                1 => Boolean.True,
+                0 => Boolean.False,
+                _ => null
+            };
+        else if (to == typeof(String))
+            result = new String(ToString());
 
-        if (to == typeof(Integer))
-        {
-            result = (Integer)this;
-            return true;
-        }
-
-        if (to == typeof(Decimal))
-        {
-            result = (Decimal)this;
-            return true;
-        }
-
-        if (to == typeof(Quantity))
-        {
-            result = (Quantity)this;
-            return true;
-        }
-
-        if (to == typeof(Boolean))
-        {
-            result = (Boolean)this;
-            return true;
-        }
-
-        if (to == typeof(String))
-        {
-            result = (String)this;
-            return true;
-        }
-
-        result = default;
-        return false;
+        return result is not null;
     }
 
     bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null ? Equals(other) : null;

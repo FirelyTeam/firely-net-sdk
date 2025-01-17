@@ -16,7 +16,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
-public class Decimal(decimal value = default) : Any, IComparable, ICqlEquatable, ICqlOrderable
+public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlOrderable
 {
     public decimal Value { get; } = value;
 
@@ -31,7 +31,7 @@ public class Decimal(decimal value = default) : Any, IComparable, ICqlEquatable,
     {
         if (representation == null) throw new ArgumentNullException(nameof(representation));
 
-        value = default;
+        value = null;
 
         if (FORBIDDEN_DECIMAL_PREFIXES.Any(representation.StartsWith) || representation.EndsWith("."))
             return false;

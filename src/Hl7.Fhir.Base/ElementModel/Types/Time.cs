@@ -148,14 +148,12 @@ public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     public bool TryEquals(Any other, [NotNullWhen(true)] out bool? result)
     {
-        if (other is Time && TryCompareTo(other, out var comparison))
-        {
-            result = comparison == 0;
-            return true;
-        }
+        result = other is Time
+            ? TryCompareTo(other, out var comparison) ? comparison == 0 : null
+            : false;
 
-        result = null;
-        return false;
+        return result is not null;
+
     }
 
     public static bool operator ==(Time a, Time b) => Equals(a, b);
@@ -229,31 +227,25 @@ public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable
         return _value.ToString(formatString, CultureInfo.InvariantCulture);
     }
 
-    public static explicit operator Time(DateTimeOffset dto) => FromDateTimeOffset(dto);
-    public static implicit operator String(Time dt) => new(dt.ToString());
-
-    bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null && TryEquals(other, out var result) ? result : null;
+ bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null && TryEquals(other, out var result) ? result : null;
 
     // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
     bool ICqlEquatable.IsEquivalentTo(Any? other) => other is not null && TryEquals(other, out var result) && result.Value;
 
     int? ICqlOrderable.CompareTo(Any? other) => other is not null && TryCompareTo(other, out var result) ? result : null;
 
+    public static explicit operator Time(DateTimeOffset dto) => FromDateTimeOffset(dto);
+    public static explicit operator String(Time dt) => RunCast<String>(dt);
+
     public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
     {
+        result = null;
+
         if(to == typeof(Time))
-        {
             result = this;
-            return true;
-        }
+        else if(to == typeof(String))
+            result = new String(ToString());
 
-        if(to == typeof(String))
-        {
-            result = (String)this;
-            return true;
-        }
-
-        result = default;
-        return false;
+        return result is not null;
     }
 }

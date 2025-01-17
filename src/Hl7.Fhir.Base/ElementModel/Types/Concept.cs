@@ -36,4 +36,6 @@ public class Concept(IEnumerable<Code> codes, string? display = null) : Any
     }
 
     public override string ToString() => string.Join(", ", Codes) + (Display != null ? $" \"{Display}\"" : "");
+
+    // Does not support equality, equivalence and ordering in the CQL sense, so no explicit implementations of these interfaces
 }

@@ -8,7 +8,6 @@
 
 #nullable enable
 
-using Hl7.FhirPath.Sprache;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -93,35 +92,26 @@ public class String(string value) : Any, IComparable, ICqlEquatable, ICqlOrderab
     public override string ToString() => Value;
 
     public static implicit operator string(String s) => s.Value;
-    public static implicit operator String(string s) => new(s);
-
-    public static explicit operator Boolean(String s) =>
-        s.TryConvertTo<Boolean>(out var result)
-            ? result
-            : throw new InvalidCastException($"Cannot cast String value {s} to Boolean.");
+    public static explicit operator String(string s) => new(s);
+    public static explicit operator Boolean(String s) => RunCast<Boolean>(s);
 
     public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
     {
-        if(to == typeof(String))
-        {
-            result = this;
-            return true;
-        }
+        result = null;
 
-        if (to == typeof(Boolean))
-        {
-            var boolValue = Value.ToLower() switch
+        if(to == typeof(String))
+            result = this;
+        else if (to == typeof(Boolean))
+            result = Value.ToLower() switch
             {
                 "true" or "t" or "yes" or "y" or "1" or "1.0" => Boolean.True,
                 "false" or "f" or "no" or "n" or "0" or "0.0" => Boolean.False,
                 _ => null
             };
+        else
+            _ = TryParseToAny(Value, to, out result);
 
-            result = boolValue;
-            return result is not null;
-        }
-
-        return TryParseToAny(Value, to, out result);
+        return result is not null;
     }
 
     private static T convertTo<T>(String s) where T:Any =>

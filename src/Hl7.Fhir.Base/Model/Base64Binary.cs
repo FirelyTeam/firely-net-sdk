@@ -32,26 +32,23 @@ using System;
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Base64Binary
 {
-    public partial class Base64Binary
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value)
     {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value)
+        try
         {
-            try
-            {
-                _ = Convert.FromBase64String(value);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            _ = Convert.FromBase64String(value);
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
 }
-
-#nullable restore
