@@ -30,10 +30,12 @@
 #nullable enable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class FhirString : ICoded
+public partial class FhirString : ICoded, P.IToSystemPrimitive
 {
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
@@ -42,6 +44,13 @@ public partial class FhirString : ICoded
         
     // We do not match against the pattern since that is more expensive
 
+    public P.String ToSystemString() => new(Value);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        result = ToSystemString();
+        return true;
+    }
 
     public IEnumerable<Coding> ToCodings() => [new(null, Value)];
 }

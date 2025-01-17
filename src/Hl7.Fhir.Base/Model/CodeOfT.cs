@@ -39,7 +39,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
@@ -85,7 +85,7 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 
     internal bool TryParseObjectValue(out T? value)
     {
-        value = default;
+        value = null;
 
         if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
         {
@@ -97,7 +97,7 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 
     public override IEnumerable<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
 
-    public override S.Code ToSystemCode() =>
+    public override P.Code ToSystemCode() =>
         new(Value?.GetSystem(),
             Value?.GetLiteral() ?? throw new InvalidOperationException("Code must have a value in order to be useable to construct a System.Code."),
             display: null,

@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 namespace Hl7.Fhir.ElementModel.Types;
 
 public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
-    : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
+    : Any, IComparable, ICqlEquatable, ICqlOrderable
 {
     public const string UCUM = "http://unitsofmeasure.org";
     public const string UCUM_UNIT = "1";

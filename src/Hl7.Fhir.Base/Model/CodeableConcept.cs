@@ -30,18 +30,26 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class CodeableConcept : ICoded
+public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
 {
-    public S.Concept ToSystemConcept()
+    public P.Concept ToSystemConcept()
     {
         var codes = Coding.Select(c => c.ToSystemCode());
-        return new S.Concept(codes, display: Text);
+        return new P.Concept(codes, display: Text);
+    }
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        result = ToSystemConcept();
+        return true;
     }
 
     public IEnumerable<Coding> ToCodings() => Coding;

@@ -30,21 +30,26 @@
 
 #nullable enable
 
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Markdown: P.IToSystemPrimitive
 {
-    public partial class Markdown
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
+
+    public static implicit operator string?(Markdown? md) => md?.Value;
+    public static implicit operator Markdown?(string? s) => s is not null ? new Markdown(s) : null;
+
+    public P.String ToSystemString() => new(Value ?? string.Empty);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
-
-        public static implicit operator string?(Markdown? md) => md?.Value;
-        public static implicit operator Markdown?(string? s) => s is not null ? new(s) : null;
-
+        result = ToSystemString();
+        return true;
     }
-
 }
-
-#nullable restore

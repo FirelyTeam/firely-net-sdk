@@ -30,15 +30,23 @@
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
+
+namespace Hl7.Fhir.Model;
+
+public partial class Integer64: P.IToSystemPrimitive
 {
-    public partial class Integer64
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => ElementModel.Types.Long.TryParse(value, out _);
+
+    public P.Long ToSystemLong() => new(value: Value ?? 0);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Long.TryParse(value, out _);
+        result = ToSystemLong();
+        return true;
     }
 }
-
-#nullable restore

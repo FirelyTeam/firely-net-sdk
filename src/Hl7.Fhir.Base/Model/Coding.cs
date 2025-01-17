@@ -32,13 +32,14 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
 [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-public partial class Coding: ICoded
+public partial class Coding: ICoded, P.IToSystemPrimitive
 {
     public Coding()
     {
@@ -75,6 +76,14 @@ public partial class Coding: ICoded
         }
     }
 
-    public S.Code ToSystemCode() => new(System, Code, Display, Version);
+    public P.Code ToSystemCode() => new(System, Code, Display, Version);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        result = ToSystemCode();
+        return true;
+    }
+
     public IEnumerable<Coding> ToCodings() => [this];
+
 }

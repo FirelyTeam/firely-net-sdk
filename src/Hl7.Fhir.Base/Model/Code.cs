@@ -30,17 +30,26 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using P=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Code : ICoded
+public partial class Code : ICoded, P.IToSystemPrimitive
 {
     /// <summary>
     /// Creates a <see cref="ElementModel.Types.Code"/> from an instance of a <see cref="Code"/>.
     /// </summary>
-    public virtual ElementModel.Types.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
+    public virtual P.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        result = ToSystemCode();
+        return true;
+    }
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.

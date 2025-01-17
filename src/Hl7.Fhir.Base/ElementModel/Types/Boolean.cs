@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
-public class Boolean(bool value) : Any, ICqlEquatable, ICqlConvertible
+public class Boolean(bool value) : Any, ICqlEquatable
 {
     public static Boolean True = new(true);
     public static Boolean False = new(false);

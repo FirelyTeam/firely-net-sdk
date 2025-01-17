@@ -30,23 +30,29 @@
 #nullable enable
 
 using System.Text.RegularExpressions;
+using P = Hl7.Fhir.ElementModel.Types;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Oid: P.IToSystemPrimitive
 {
-    public partial class Oid
+    /// <summary>
+    /// Creates a new <see cref="FhirUri"/> based on this oid.
+    /// </summary>
+    /// <returns></returns>
+    public FhirUri AsUri() => new(Value);
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+
+    public P.String ToSystemString() => new(Value ?? string.Empty);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        /// <summary>
-        /// Creates a new <see cref="FhirUri"/> based on this oid.
-        /// </summary>
-        /// <returns></returns>
-        public FhirUri AsUri() => new(Value);
-
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+        result = ToSystemString();
+        return true;
     }
-
 }
-
-#nullable restore

@@ -37,7 +37,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Time
+public partial class Time: P.IToSystemPrimitive
 {
     public const string FMT_HOURMINSEC = "{0:D2}:{1:D2}:{2:D2}";
 
@@ -68,7 +68,7 @@ public partial class Time
     /// Converts a Fhir Time to a <see cref="P.Time"/>.
     /// </summary>
     /// <returns>true if the Fhir Time contains a valid time string, false otherwise.</returns>
-    public bool TryToTime([NotNullWhen(true)] out P.Time? time)
+    public bool TryToSystemTime([NotNullWhen(true)] out P.Time? time)
     {
         if (_parsedValue is null)
         {
@@ -95,7 +95,20 @@ public partial class Time
     /// </summary>
     /// <returns>The Time, or null if the <see cref="Value"/> is null.</returns>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Time.</exception>
-    public P.Time ToTime() => TryToTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
+    public P.Time ToSystemTime() => TryToSystemTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        if (TryToSystemTime(out var dateTime))
+        {
+            result = dateTime;
+            return true;
+        }
+
+        result = null;
+        return false;
+    }
+
 
     protected override void OnObjectValueChanged()
     {
@@ -116,14 +129,14 @@ public partial class Time
     /// <returns>True if the value of the Fhir Time is not null and can be parsed as a Time without an offset, false otherwise.</returns>
     public bool TryToTimeSpan(out TimeSpan dto)
     {
-        if (Value is not null && TryToTime(out var dt) && !dt.HasOffset)
+        if (Value is not null && TryToSystemTime(out var dt) && !dt.HasOffset)
         {
             dto = dt.ToTimeSpan();
             return true;
         }
         else
         {
-            dto = default;
+            dto = TimeSpan.Zero;
             return false;
         }
     }

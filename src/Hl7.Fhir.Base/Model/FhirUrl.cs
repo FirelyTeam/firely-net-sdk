@@ -30,32 +30,40 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class FhirUrl: P.IToSystemPrimitive
 {
-    public partial class FhirUrl
+    public FhirUrl(Uri uri)
     {
-        public FhirUrl(Uri uri)
-        {
-            Value = uri.OriginalString;
-        }
+        Value = uri.OriginalString;
+    }
 
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value)
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value)
+    {
+        try
         {
-            try
-            {
-                var uri = new Uri(value, UriKind.RelativeOrAbsolute);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            var uri = new Uri(value, UriKind.RelativeOrAbsolute);
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
-}
 
-#nullable restore
+    public P.String ToSystemString() => new(Value);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        result = ToSystemString();
+        return true;
+    }
+
+}

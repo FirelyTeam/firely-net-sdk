@@ -37,7 +37,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class FhirDateTime
+public partial class FhirDateTime: P.IToSystemPrimitive
 {
     /// <summary>
     /// A <c>string.Format</c> pattern to use when formatting a full datetime with timezone.
@@ -98,7 +98,7 @@ public partial class FhirDateTime
     /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
     /// </summary>
     /// <returns>true if the FhirDateTime contains a valid date/time string, false otherwise.</returns>
-    public bool TryToDateTime([NotNullWhen(true)] out P.DateTime? dateTime)
+    public bool TryToSystemDateTime([NotNullWhen(true)] out P.DateTime? dateTime)
     {
         if (_parsedValue is null)
         {
@@ -125,7 +125,7 @@ public partial class FhirDateTime
     /// </summary>
     /// <returns>The DateTime, or null if the <see cref="Value"/> is null.</returns>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR DateTime.</exception>
-    public P.DateTime ToDateTime() => TryToDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+    public P.DateTime ToSystemDateTime() => TryToSystemDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
     protected override void OnObjectValueChanged()
     {
@@ -148,7 +148,7 @@ public partial class FhirDateTime
         if (Value == null) throw new InvalidOperationException("FhirDateTime's value is null.");
 
         // TryToDateTime() will convert partial date/times by filling out to midnight/january 1 UTC.
-        if (!TryToDateTime(out var dt))
+        if (!TryToSystemDateTime(out var dt))
             throw new FormatException($"DateTime '{Value}' was not recognized as a valid datetime.");
 
         // Since Value is not null and the parsed value is valid, dto will not be null
@@ -162,7 +162,7 @@ public partial class FhirDateTime
     /// specified timezone, false otherwise.</returns>
     public bool TryToDateTimeOffset(out DateTimeOffset dto)
     {
-        if (Value is not null && TryToDateTime(out var dt) && dt.Offset is not null)
+        if (Value is not null && TryToSystemDateTime(out var dt) && dt.Offset is not null)
         {
             dto = dt.ToDateTimeOffset(dt.Offset.Value);
             return true;
@@ -180,13 +180,25 @@ public partial class FhirDateTime
     /// <returns>True if the value of the FhirDateTime is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
     public bool TryToDateTimeOffset(TimeSpan defaultOffset, out DateTimeOffset dto)
     {
-        if (Value is not null && TryToDateTime(out var dt))
+        if (Value is not null && TryToSystemDateTime(out var dt))
         {
             dto = dt.ToDateTimeOffset(defaultOffset);
             return true;
         }
 
         dto = default;
+        return false;
+    }
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        if (TryToSystemDateTime(out var dateTime))
+        {
+            result = dateTime;
+            return true;
+        }
+
+        result = null;
         return false;
     }
 

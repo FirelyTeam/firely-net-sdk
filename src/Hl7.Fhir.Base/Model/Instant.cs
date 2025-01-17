@@ -30,33 +30,52 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Instant: P.IToSystemPrimitive
 {
-    public partial class Instant
+    public static Instant FromLocalDateTime(int year, int month, int day,
+        int hour, int min, int sec, int millis = 0) =>
+        new(new DateTimeOffset(year, month, day, hour, min, sec, millis, DateTimeOffset.Now.Offset));
+
+
+    public static Instant FromDateTimeUtc(int year, int month, int day,
+        int hour, int min, int sec, int millis = 0) =>
+        new(new DateTimeOffset(year, month, day, hour, min, sec, millis,
+            TimeSpan.Zero));
+
+    /// <summary>
+    /// Returns an Instant initialized with the current date and time.
+    /// </summary>
+    /// <returns></returns>
+    public static Instant Now() => new(DateTimeOffset.Now);
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => ElementModel.Types.DateTime.TryParse(value, out var dateTime) &&
+                                                     dateTime.Precision >= ElementModel.Types.DateTimePrecision.Second && dateTime.HasOffset;
+
+    public P.DateTime ToSystemDateTime() =>
+        Value is not null ? P.DateTime.FromDateTimeOffset(Value.Value) :
+           throw new InvalidOperationException("Instant's value is null and can therefore not be converted to a System DateTime.");
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        public static Instant FromLocalDateTime(int year, int month, int day,
-                    int hour, int min, int sec, int millis = 0) =>
-            new(new DateTimeOffset(year, month, day, hour, min, sec, millis, DateTimeOffset.Now.Offset));
+        if (Value is not null)
+        {
+            result = ToSystemDateTime();
+            return true;
+        }
 
-
-        public static Instant FromDateTimeUtc(int year, int month, int day,
-                                            int hour, int min, int sec, int millis = 0) =>
-            new(new DateTimeOffset(year, month, day, hour, min, sec, millis,
-                                   TimeSpan.Zero));
-
-        /// <summary>
-        /// Returns an Instant initialized with the current date and time.
-        /// </summary>
-        /// <returns></returns>
-        public static Instant Now() => new(DateTimeOffset.Now);
-
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.DateTime.TryParse(value, out var dateTime) &&
-            dateTime.Precision >= ElementModel.Types.DateTimePrecision.Second && dateTime.HasOffset;
+        result = null;
+        return false;
     }
+
+
 }
 
 #nullable restore

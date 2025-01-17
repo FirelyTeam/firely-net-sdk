@@ -32,23 +32,34 @@
 
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Quantity : ICoded
+public partial class Quantity : ICoded, P.IToSystemPrimitive
 {
-    public P.Quantity? ToQuantity()
+    public P.Quantity ToSystemQuantity()
     {
-        if (Value != null)
-        {
-            if (Comparator != null)
-                throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
+       if (Value == null)
+            throw Error.NotSupported("Cannot convert a Quantity without a value to a FhirPath Quantity.");
 
-            return new P.Quantity(Value.Value, Code);
+       if(Comparator == null)
+           throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity.");
+
+       return new P.Quantity(Value.Value, Code);
+    }
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        if (Value is not null && Comparator is not null)
+        {
+            result = ToSystemQuantity();
+            return true;
         }
-        else
-            return null;
+
+        result = null;
+        return false;
     }
 
     public IEnumerable<Coding> ToCodings() => [new(System, Code)];

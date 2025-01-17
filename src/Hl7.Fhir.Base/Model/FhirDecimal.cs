@@ -30,16 +30,23 @@
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
+
+namespace Hl7.Fhir.Model;
+
+public partial class FhirDecimal: P.IToSystemPrimitive
 {
-    public partial class FhirDecimal
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => P.Decimal.TryParse(value, out _);
+
+    public P.Decimal ToSystemDecimal() => new(value: Value ?? 0);
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Decimal.TryParse(value, out _);
+        result = ToSystemDecimal();
+        return true;
     }
-
 }
-
-#nullable restore

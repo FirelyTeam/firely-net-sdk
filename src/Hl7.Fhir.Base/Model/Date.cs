@@ -35,7 +35,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Date
+public partial class Date: P.IToSystemPrimitive
 {
     public Date(int year, int month, int day)
         : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTHDAY, year, month, day))
@@ -72,10 +72,10 @@ public partial class Date
     private static readonly P.Date INVALID_VALUE = P.Date.FromDateTimeOffset(DateTimeOffset.MinValue);
 
     /// <summary>
-    /// Converts a Fhir Date to a <see cref="P.Date"/>.
+    /// Converts a Fhir Date to a CQL <see cref="P.Date"/>.
     /// </summary>
     /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
-    public bool TryToDate([NotNullWhen(true)] out P.Date? date)
+    public bool TryToSystemDate([NotNullWhen(true)] out P.Date? date)
     {
         if (_parsedValue is null)
         {
@@ -96,11 +96,25 @@ public partial class Date
     }
 
     /// <summary>
-    /// Converts a Fhir Date to a <see cref="P.Date"/>.
+    /// Converts a Fhir Date to a CQL <see cref="P.Date"/>.
     /// </summary>
     /// <returns>The Date, or null if the <see cref="Value"/> is null.</returns>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Date.</exception>
-    public P.Date ToDate() => TryToDate(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid date.");
+    public P.Date ToSystemDate() => TryToSystemDate(out var dt)
+        ? dt
+        : throw new FormatException($"String '{Value}' was not recognized as a valid date.");
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        if (TryToSystemDate(out var date))
+        {
+            result = date;
+            return true;
+        }
+
+        result = null;
+        return false;
+    }
 
     protected override void OnObjectValueChanged()
     {
@@ -117,7 +131,7 @@ public partial class Date
         if (Value == null) throw new InvalidOperationException("Date's value is null.");
 
         // TryToDate() will convert partial date/times by filling out to midnight/january 1 UTC
-        if (!TryToDate(out var dt))
+        if (!TryToSystemDate(out var dt))
             throw new FormatException($"Date '{Value}' was not recognized as a valid datetime.");
 
         // Since Value is not null and the parsed value is valid, dto will not be null
@@ -130,7 +144,7 @@ public partial class Date
     /// <returns>True if the value of the Fhir Date is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
     public bool TryToDateTimeOffset(out DateTimeOffset dto)
     {
-        if (Value is not null && TryToDate(out var dt))
+        if (Value is not null && TryToSystemDate(out var dt))
         {
             dto = dt.ToDateTimeOffset(TimeSpan.Zero);
             return true;

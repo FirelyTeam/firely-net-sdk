@@ -99,17 +99,17 @@ namespace Hl7.Fhir.Tests.Model
         public void CanConvertToDateTime()
         {
             var dft = new Date(2023, 07, 11);
-            dft.TryToDate(out var dt).Should().BeTrue();
+            dft.TryToSystemDate(out var dt).Should().BeTrue();
             dt.Days.Should().Be(11);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Day);
 
             dft = new Date(2023, 7);
-            dft.TryToDate(out dt).Should().BeTrue();
+            dft.TryToSystemDate(out dt).Should().BeTrue();
             dt.Days.Should().BeNull();
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Month);
 
             dft = new Date(null);
-            dft.TryToDate(out dt).Should().BeTrue();
+            dft.TryToSystemDate(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }
     }

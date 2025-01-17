@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// <summary>
 /// The base class for all CQL/FhirPath types.
 /// </summary>
-public abstract class Any : ICqlConvertible
+public abstract class Any
 {
     /// <summary>
     /// Returns the concrete subclass of Any that is used to represent the
