@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Collected;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as CollectionComponent;
 
@@ -128,16 +128,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
-        if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-        if(Collected != null) dest.Collected = (Hl7.Fhir.Model.DataType)Collected.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopyInternal();
+        if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopyInternal();
+        if(Collected != null) dest.Collected = (Hl7.Fhir.Model.DataType)Collected.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CollectionComponent());
+        var instance = new CollectionComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -248,7 +249,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Value;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as PropertyComponent;
 
@@ -257,15 +258,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new PropertyComponent());
+        var instance = new PropertyComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -542,7 +544,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as BiologicallyDerivedProduct;
 
@@ -551,26 +553,27 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(ProductCategory != null) dest.ProductCategory = (Hl7.Fhir.Model.Coding)ProductCategory.DeepCopy();
-      if(ProductCode != null) dest.ProductCode = (Hl7.Fhir.Model.CodeableConcept)ProductCode.DeepCopy();
-      if(Parent.Any()) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
-      if(Request.Any()) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(BiologicalSourceEvent != null) dest.BiologicalSourceEvent = (Hl7.Fhir.Model.Identifier)BiologicalSourceEvent.DeepCopy();
-      if(ProcessingFacility.Any()) dest.ProcessingFacility = new List<Hl7.Fhir.Model.ResourceReference>(ProcessingFacility.DeepCopy());
-      if(DivisionElement != null) dest.DivisionElement = (Hl7.Fhir.Model.FhirString)DivisionElement.DeepCopy();
-      if(ProductStatus != null) dest.ProductStatus = (Hl7.Fhir.Model.Coding)ProductStatus.DeepCopy();
-      if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
-      if(Collection != null) dest.Collection = (Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent)Collection.DeepCopy();
-      if(StorageTempRequirements != null) dest.StorageTempRequirements = (Hl7.Fhir.Model.Range)StorageTempRequirements.DeepCopy();
-      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>(Property.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(ProductCategory != null) dest.ProductCategory = (Hl7.Fhir.Model.Coding)ProductCategory.DeepCopyInternal();
+      if(ProductCode != null) dest.ProductCode = (Hl7.Fhir.Model.CodeableConcept)ProductCode.DeepCopyInternal();
+      if(Parent.Any()) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopyInternal());
+      if(Request.Any()) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopyInternal());
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(BiologicalSourceEvent != null) dest.BiologicalSourceEvent = (Hl7.Fhir.Model.Identifier)BiologicalSourceEvent.DeepCopyInternal();
+      if(ProcessingFacility.Any()) dest.ProcessingFacility = new List<Hl7.Fhir.Model.ResourceReference>(ProcessingFacility.DeepCopyInternal());
+      if(DivisionElement != null) dest.DivisionElement = (Hl7.Fhir.Model.FhirString)DivisionElement.DeepCopyInternal();
+      if(ProductStatus != null) dest.ProductStatus = (Hl7.Fhir.Model.Coding)ProductStatus.DeepCopyInternal();
+      if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopyInternal();
+      if(Collection != null) dest.Collection = (Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent)Collection.DeepCopyInternal();
+      if(StorageTempRequirements != null) dest.StorageTempRequirements = (Hl7.Fhir.Model.Range)StorageTempRequirements.DeepCopyInternal();
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>(Property.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new BiologicallyDerivedProduct());
+      var instance = new BiologicallyDerivedProduct();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ParticipantComponent;
 
@@ -314,16 +314,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>)TypeElement.DeepCopy();
-        if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
-        if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>)TypeElement.DeepCopyInternal();
+        if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopyInternal();
+        if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ParticipantComponent());
+        var instance = new ParticipantComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -414,7 +415,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.TestReport.SetupActionComponent> _Action;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as SetupComponent;
 
@@ -423,14 +424,15 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.SetupActionComponent>(Action.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.SetupActionComponent>(Action.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SetupComponent());
+        var instance = new SetupComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -521,7 +523,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.TestReport.AssertComponent _Assert;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as SetupActionComponent;
 
@@ -530,15 +532,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestReport.OperationComponent)Operation.DeepCopy();
-        if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestReport.AssertComponent)Assert.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestReport.OperationComponent)Operation.DeepCopyInternal();
+        if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestReport.AssertComponent)Assert.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SetupActionComponent());
+        var instance = new SetupActionComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -706,7 +709,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as OperationComponent;
 
@@ -715,16 +718,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
-        if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
-        if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirUri)DetailElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopyInternal();
+        if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopyInternal();
+        if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirUri)DetailElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new OperationComponent());
+        var instance = new OperationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -914,7 +918,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.TestReport.RequirementComponent> _Requirement;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as AssertComponent;
 
@@ -923,17 +927,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
-        if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
-        if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
-        if(Requirement.Any()) dest.Requirement = new List<Hl7.Fhir.Model.TestReport.RequirementComponent>(Requirement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopyInternal();
+        if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopyInternal();
+        if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopyInternal();
+        if(Requirement.Any()) dest.Requirement = new List<Hl7.Fhir.Model.TestReport.RequirementComponent>(Requirement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new AssertComponent());
+        var instance = new AssertComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1037,7 +1042,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Link;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RequirementComponent;
 
@@ -1046,14 +1051,15 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Link != null) dest.Link = (Hl7.Fhir.Model.DataType)Link.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Link != null) dest.Link = (Hl7.Fhir.Model.DataType)Link.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RequirementComponent());
+        var instance = new RequirementComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1190,7 +1196,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.TestReport.TestActionComponent> _Action;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as TestComponent;
 
@@ -1199,16 +1205,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.TestActionComponent>(Action.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.TestActionComponent>(Action.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new TestComponent());
+        var instance = new TestComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1315,7 +1322,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.TestReport.AssertComponent _Assert;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as TestActionComponent;
 
@@ -1324,15 +1331,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestReport.OperationComponent)Operation.DeepCopy();
-        if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestReport.AssertComponent)Assert.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestReport.OperationComponent)Operation.DeepCopyInternal();
+        if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestReport.AssertComponent)Assert.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new TestActionComponent());
+        var instance = new TestActionComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1418,7 +1426,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.TestReport.TeardownActionComponent> _Action;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as TeardownComponent;
 
@@ -1427,14 +1435,15 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.TeardownActionComponent>(Action.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.TestReport.TeardownActionComponent>(Action.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new TeardownComponent());
+        var instance = new TeardownComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1513,7 +1522,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.TestReport.OperationComponent _Operation;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as TeardownActionComponent;
 
@@ -1522,14 +1531,15 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestReport.OperationComponent)Operation.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestReport.OperationComponent)Operation.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new TeardownActionComponent());
+        var instance = new TeardownActionComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1870,7 +1880,7 @@ namespace Hl7.Fhir.Model
 
     Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as TestReport;
 
@@ -1879,25 +1889,26 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.TestReport.TestReportStatus>)StatusElement.DeepCopy();
-      if(TestScriptElement != null) dest.TestScriptElement = (Hl7.Fhir.Model.Canonical)TestScriptElement.DeepCopy();
-      if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResult>)ResultElement.DeepCopy();
-      if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
-      if(TesterElement != null) dest.TesterElement = (Hl7.Fhir.Model.FhirString)TesterElement.DeepCopy();
-      if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.TestReport.ParticipantComponent>(Participant.DeepCopy());
-      if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestReport.SetupComponent)Setup.DeepCopy();
-      if(Test.Any()) dest.Test = new List<Hl7.Fhir.Model.TestReport.TestComponent>(Test.DeepCopy());
-      if(Teardown != null) dest.Teardown = (Hl7.Fhir.Model.TestReport.TeardownComponent)Teardown.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.TestReport.TestReportStatus>)StatusElement.DeepCopyInternal();
+      if(TestScriptElement != null) dest.TestScriptElement = (Hl7.Fhir.Model.Canonical)TestScriptElement.DeepCopyInternal();
+      if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResult>)ResultElement.DeepCopyInternal();
+      if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopyInternal();
+      if(TesterElement != null) dest.TesterElement = (Hl7.Fhir.Model.FhirString)TesterElement.DeepCopyInternal();
+      if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopyInternal();
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.TestReport.ParticipantComponent>(Participant.DeepCopyInternal());
+      if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestReport.SetupComponent)Setup.DeepCopyInternal();
+      if(Test.Any()) dest.Test = new List<Hl7.Fhir.Model.TestReport.TestComponent>(Test.DeepCopyInternal());
+      if(Teardown != null) dest.Teardown = (Hl7.Fhir.Model.TestReport.TeardownComponent)Teardown.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new TestReport());
+      var instance = new TestReport();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

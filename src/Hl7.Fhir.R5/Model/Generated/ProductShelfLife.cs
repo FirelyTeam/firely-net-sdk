@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.CodeableConcept> _SpecialPrecautionsForStorage;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ProductShelfLife;
 
@@ -107,16 +107,17 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.DataType)Period.DeepCopy();
-      if(SpecialPrecautionsForStorage.Any()) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialPrecautionsForStorage.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+      if(Period != null) dest.Period = (Hl7.Fhir.Model.DataType)Period.DeepCopyInternal();
+      if(SpecialPrecautionsForStorage.Any()) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialPrecautionsForStorage.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ProductShelfLife());
+      var instance = new ProductShelfLife();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

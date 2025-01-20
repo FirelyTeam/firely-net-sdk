@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ResourceReference> _Evidence;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as JustificationComponent;
 
@@ -192,15 +192,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopy());
-        if(Evidence.Any()) dest.Evidence = new List<Hl7.Fhir.Model.ResourceReference>(Evidence.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopyInternal());
+        if(Evidence.Any()) dest.Evidence = new List<Hl7.Fhir.Model.ResourceReference>(Evidence.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new JustificationComponent());
+        var instance = new JustificationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -348,7 +349,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.CodeableConcept> _Limit;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RuleComponent;
 
@@ -357,17 +358,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)TypeElement.DeepCopy();
-        if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.Permission.DataComponent>(Data.DeepCopy());
-        if(Activity.Any()) dest.Activity = new List<Hl7.Fhir.Model.Permission.ActivityComponent>(Activity.DeepCopy());
-        if(Limit.Any()) dest.Limit = new List<Hl7.Fhir.Model.CodeableConcept>(Limit.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)TypeElement.DeepCopyInternal();
+        if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.Permission.DataComponent>(Data.DeepCopyInternal());
+        if(Activity.Any()) dest.Activity = new List<Hl7.Fhir.Model.Permission.ActivityComponent>(Activity.DeepCopyInternal());
+        if(Limit.Any()) dest.Limit = new List<Hl7.Fhir.Model.CodeableConcept>(Limit.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RuleComponent());
+        var instance = new RuleComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -510,7 +512,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Expression _Expression;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as DataComponent;
 
@@ -519,17 +521,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Resource.Any()) dest.Resource = new List<Hl7.Fhir.Model.Permission.ResourceComponent>(Resource.DeepCopy());
-        if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
-        if(Period.Any()) dest.Period = new List<Hl7.Fhir.Model.Period>(Period.DeepCopy());
-        if(Expression != null) dest.Expression = (Hl7.Fhir.Model.Expression)Expression.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Resource.Any()) dest.Resource = new List<Hl7.Fhir.Model.Permission.ResourceComponent>(Resource.DeepCopyInternal());
+        if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopyInternal());
+        if(Period.Any()) dest.Period = new List<Hl7.Fhir.Model.Period>(Period.DeepCopyInternal());
+        if(Expression != null) dest.Expression = (Hl7.Fhir.Model.Expression)Expression.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new DataComponent());
+        var instance = new DataComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -664,7 +667,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.ResourceReference _Reference;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ResourceComponent;
 
@@ -673,15 +676,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)MeaningElement.DeepCopy();
-        if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)MeaningElement.DeepCopyInternal();
+        if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ResourceComponent());
+        var instance = new ResourceComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -796,7 +800,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.CodeableConcept> _Purpose;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ActivityComponent;
 
@@ -805,16 +809,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopy());
-        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopy());
-        if(Purpose.Any()) dest.Purpose = new List<Hl7.Fhir.Model.CodeableConcept>(Purpose.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopyInternal());
+        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopyInternal());
+        if(Purpose.Any()) dest.Purpose = new List<Hl7.Fhir.Model.CodeableConcept>(Purpose.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ActivityComponent());
+        var instance = new ActivityComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1033,7 +1038,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Permission.RuleComponent> _Rule;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Permission;
 
@@ -1042,20 +1047,21 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>)StatusElement.DeepCopy();
-      if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
-      if(DateElement.Any()) dest.DateElement = new List<Hl7.Fhir.Model.FhirDateTime>(DateElement.DeepCopy());
-      if(Validity != null) dest.Validity = (Hl7.Fhir.Model.Period)Validity.DeepCopy();
-      if(Justification != null) dest.Justification = (Hl7.Fhir.Model.Permission.JustificationComponent)Justification.DeepCopy();
-      if(CombiningElement != null) dest.CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>)CombiningElement.DeepCopy();
-      if(Rule.Any()) dest.Rule = new List<Hl7.Fhir.Model.Permission.RuleComponent>(Rule.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>)StatusElement.DeepCopyInternal();
+      if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopyInternal();
+      if(DateElement.Any()) dest.DateElement = new List<Hl7.Fhir.Model.FhirDateTime>(DateElement.DeepCopyInternal());
+      if(Validity != null) dest.Validity = (Hl7.Fhir.Model.Period)Validity.DeepCopyInternal();
+      if(Justification != null) dest.Justification = (Hl7.Fhir.Model.Permission.JustificationComponent)Justification.DeepCopyInternal();
+      if(CombiningElement != null) dest.CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>)CombiningElement.DeepCopyInternal();
+      if(Rule.Any()) dest.Rule = new List<Hl7.Fhir.Model.Permission.RuleComponent>(Rule.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Permission());
+      var instance = new Permission();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

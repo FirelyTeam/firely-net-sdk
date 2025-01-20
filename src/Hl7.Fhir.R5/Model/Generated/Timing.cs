@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RepeatComponent;
 
@@ -770,28 +770,29 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Bounds != null) dest.Bounds = (Hl7.Fhir.Model.DataType)Bounds.DeepCopy();
-        if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.PositiveInt)CountElement.DeepCopy();
-        if(CountMaxElement != null) dest.CountMaxElement = (Hl7.Fhir.Model.PositiveInt)CountMaxElement.DeepCopy();
-        if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopy();
-        if(DurationMaxElement != null) dest.DurationMaxElement = (Hl7.Fhir.Model.FhirDecimal)DurationMaxElement.DeepCopy();
-        if(DurationUnitElement != null) dest.DurationUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)DurationUnitElement.DeepCopy();
-        if(FrequencyElement != null) dest.FrequencyElement = (Hl7.Fhir.Model.PositiveInt)FrequencyElement.DeepCopy();
-        if(FrequencyMaxElement != null) dest.FrequencyMaxElement = (Hl7.Fhir.Model.PositiveInt)FrequencyMaxElement.DeepCopy();
-        if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
-        if(PeriodMaxElement != null) dest.PeriodMaxElement = (Hl7.Fhir.Model.FhirDecimal)PeriodMaxElement.DeepCopy();
-        if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopy();
-        if(DayOfWeekElement.Any()) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopy());
-        if(TimeOfDayElement.Any()) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopy());
-        if(WhenElement.Any()) dest.WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(WhenElement.DeepCopy());
-        if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.UnsignedInt)OffsetElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Bounds != null) dest.Bounds = (Hl7.Fhir.Model.DataType)Bounds.DeepCopyInternal();
+        if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.PositiveInt)CountElement.DeepCopyInternal();
+        if(CountMaxElement != null) dest.CountMaxElement = (Hl7.Fhir.Model.PositiveInt)CountMaxElement.DeepCopyInternal();
+        if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopyInternal();
+        if(DurationMaxElement != null) dest.DurationMaxElement = (Hl7.Fhir.Model.FhirDecimal)DurationMaxElement.DeepCopyInternal();
+        if(DurationUnitElement != null) dest.DurationUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)DurationUnitElement.DeepCopyInternal();
+        if(FrequencyElement != null) dest.FrequencyElement = (Hl7.Fhir.Model.PositiveInt)FrequencyElement.DeepCopyInternal();
+        if(FrequencyMaxElement != null) dest.FrequencyMaxElement = (Hl7.Fhir.Model.PositiveInt)FrequencyMaxElement.DeepCopyInternal();
+        if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopyInternal();
+        if(PeriodMaxElement != null) dest.PeriodMaxElement = (Hl7.Fhir.Model.FhirDecimal)PeriodMaxElement.DeepCopyInternal();
+        if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopyInternal();
+        if(DayOfWeekElement.Any()) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopyInternal());
+        if(TimeOfDayElement.Any()) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopyInternal());
+        if(WhenElement.Any()) dest.WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(WhenElement.DeepCopyInternal());
+        if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.UnsignedInt)OffsetElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepeatComponent());
+        var instance = new RepeatComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1010,7 +1011,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.CodeableConcept _Code;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Timing;
 
@@ -1019,16 +1020,17 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(EventElement.Any()) dest.EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(EventElement.DeepCopy());
-      if(Repeat != null) dest.Repeat = (Hl7.Fhir.Model.Timing.RepeatComponent)Repeat.DeepCopy();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(EventElement.Any()) dest.EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(EventElement.DeepCopyInternal());
+      if(Repeat != null) dest.Repeat = (Hl7.Fhir.Model.Timing.RepeatComponent)Repeat.DeepCopyInternal();
+      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Timing());
+      var instance = new Timing();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

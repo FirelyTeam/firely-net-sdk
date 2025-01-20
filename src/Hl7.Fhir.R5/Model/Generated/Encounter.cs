@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.ResourceReference _Actor;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ParticipantComponent;
 
@@ -164,16 +164,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
+        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ParticipantComponent());
+        var instance = new ParticipantComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -286,7 +287,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.CodeableReference> _Value;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ReasonComponent;
 
@@ -295,15 +296,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Use.Any()) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopy());
-        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.CodeableReference>(Value.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Use.Any()) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopyInternal());
+        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.CodeableReference>(Value.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ReasonComponent());
+        var instance = new ReasonComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -405,7 +407,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.CodeableConcept> _Use;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as DiagnosisComponent;
 
@@ -414,15 +416,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Condition.Any()) dest.Condition = new List<Hl7.Fhir.Model.CodeableReference>(Condition.DeepCopy());
-        if(Use.Any()) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Condition.Any()) dest.Condition = new List<Hl7.Fhir.Model.CodeableReference>(Condition.DeepCopyInternal());
+        if(Use.Any()) dest.Use = new List<Hl7.Fhir.Model.CodeableConcept>(Use.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new DiagnosisComponent());
+        var instance = new DiagnosisComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -582,7 +585,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.CodeableConcept _DischargeDisposition;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as AdmissionComponent;
 
@@ -591,19 +594,20 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
-        if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
-        if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
-        if(ReAdmission != null) dest.ReAdmission = (Hl7.Fhir.Model.CodeableConcept)ReAdmission.DeepCopy();
-        if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-        if(DischargeDisposition != null) dest.DischargeDisposition = (Hl7.Fhir.Model.CodeableConcept)DischargeDisposition.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopyInternal();
+        if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopyInternal();
+        if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopyInternal();
+        if(ReAdmission != null) dest.ReAdmission = (Hl7.Fhir.Model.CodeableConcept)ReAdmission.DeepCopyInternal();
+        if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopyInternal();
+        if(DischargeDisposition != null) dest.DischargeDisposition = (Hl7.Fhir.Model.CodeableConcept)DischargeDisposition.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new AdmissionComponent());
+        var instance = new AdmissionComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -784,7 +788,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Period _Period;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as LocationComponent;
 
@@ -793,17 +797,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-        if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>)StatusElement.DeepCopy();
-        if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
+        if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>)StatusElement.DeepCopyInternal();
+        if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopyInternal();
+        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LocationComponent());
+        var instance = new LocationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1339,7 +1344,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Encounter;
 
@@ -1348,41 +1353,42 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopy();
-      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopy());
-      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
-      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(SubjectStatus != null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)SubjectStatus.DeepCopy();
-      if(EpisodeOfCare.Any()) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(CareTeam.Any()) dest.CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(CareTeam.DeepCopy());
-      if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
-      if(ServiceProvider != null) dest.ServiceProvider = (Hl7.Fhir.Model.ResourceReference)ServiceProvider.DeepCopy();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
-      if(Appointment.Any()) dest.Appointment = new List<Hl7.Fhir.Model.ResourceReference>(Appointment.DeepCopy());
-      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopy());
-      if(ActualPeriod != null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)ActualPeriod.DeepCopy();
-      if(PlannedStartDateElement != null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedStartDateElement.DeepCopy();
-      if(PlannedEndDateElement != null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedEndDateElement.DeepCopy();
-      if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
-      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.Encounter.ReasonComponent>(Reason.DeepCopy());
-      if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.Encounter.DiagnosisComponent>(Diagnosis.DeepCopy());
-      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
-      if(DietPreference.Any()) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
-      if(SpecialArrangement.Any()) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
-      if(SpecialCourtesy.Any()) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
-      if(Admission != null) dest.Admission = (Hl7.Fhir.Model.Encounter.AdmissionComponent)Admission.DeepCopy();
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopyInternal();
+      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopyInternal());
+      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopyInternal();
+      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
+      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopyInternal());
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(SubjectStatus != null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)SubjectStatus.DeepCopyInternal();
+      if(EpisodeOfCare.Any()) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopyInternal());
+      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
+      if(CareTeam.Any()) dest.CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(CareTeam.DeepCopyInternal());
+      if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopyInternal();
+      if(ServiceProvider != null) dest.ServiceProvider = (Hl7.Fhir.Model.ResourceReference)ServiceProvider.DeepCopyInternal();
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopyInternal());
+      if(Appointment.Any()) dest.Appointment = new List<Hl7.Fhir.Model.ResourceReference>(Appointment.DeepCopyInternal());
+      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopyInternal());
+      if(ActualPeriod != null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)ActualPeriod.DeepCopyInternal();
+      if(PlannedStartDateElement != null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedStartDateElement.DeepCopyInternal();
+      if(PlannedEndDateElement != null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedEndDateElement.DeepCopyInternal();
+      if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopyInternal();
+      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.Encounter.ReasonComponent>(Reason.DeepCopyInternal());
+      if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.Encounter.DiagnosisComponent>(Diagnosis.DeepCopyInternal());
+      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopyInternal());
+      if(DietPreference.Any()) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopyInternal());
+      if(SpecialArrangement.Any()) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopyInternal());
+      if(SpecialCourtesy.Any()) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopyInternal());
+      if(Admission != null) dest.Admission = (Hl7.Fhir.Model.Encounter.AdmissionComponent)Admission.DeepCopyInternal();
+      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Encounter());
+      var instance = new Encounter();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

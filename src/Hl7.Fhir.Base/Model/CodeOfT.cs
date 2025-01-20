@@ -113,4 +113,11 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
         return baseResults.Append(result);
     }
+    
+    protected internal override Base DeepCopyInternal()
+    {
+        var instance = new Code<T>();
+        CopyToInternal(instance);
+        return instance;
+    } 
 }

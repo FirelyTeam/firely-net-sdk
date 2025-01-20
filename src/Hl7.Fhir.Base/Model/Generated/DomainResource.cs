@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as DomainResource;
 
@@ -120,12 +120,11 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopy();
-      if(Contained.Any()) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopy());
-      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
-      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopyInternal();
+      if(Contained.Any()) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopyInternal());
+      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopyInternal());
+      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopyInternal());
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

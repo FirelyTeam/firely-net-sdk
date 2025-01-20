@@ -53,14 +53,6 @@ public class SearchParamDefinition
     public SearchParamType Type { get; set; }
 
     /// <summary>
-    /// If this search parameter is a Composite, this array contains
-    /// the list of search parameters the param is a combination of <seealso cref="Component"/>
-    /// </summary>
-    [Obsolete("Use the property Component instead. " +
-        "Obsolete since 2023-05-16. Will be removed in the next major release.")]
-    public string[]? CompositeParams { get; set; }
-
-    /// <summary>
     /// One or more paths into the Resource instance that the search parameter
     /// uses
     /// </summary>

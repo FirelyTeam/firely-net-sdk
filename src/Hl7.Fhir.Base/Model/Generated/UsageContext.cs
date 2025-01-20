@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.DataType _Value;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as UsageContext;
 
@@ -101,15 +101,16 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
-      if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopyInternal();
+      if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new UsageContext());
+      var instance = new UsageContext();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

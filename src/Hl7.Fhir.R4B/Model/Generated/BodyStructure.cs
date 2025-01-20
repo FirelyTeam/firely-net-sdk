@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as BodyStructure;
 
@@ -219,21 +219,22 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-      if(Morphology != null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)Morphology.DeepCopy();
-      if(Location != null) dest.Location = (Hl7.Fhir.Model.CodeableConcept)Location.DeepCopy();
-      if(LocationQualifier.Any()) dest.LocationQualifier = new List<Hl7.Fhir.Model.CodeableConcept>(LocationQualifier.DeepCopy());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
+      if(Morphology != null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)Morphology.DeepCopyInternal();
+      if(Location != null) dest.Location = (Hl7.Fhir.Model.CodeableConcept)Location.DeepCopyInternal();
+      if(LocationQualifier.Any()) dest.LocationQualifier = new List<Hl7.Fhir.Model.CodeableConcept>(LocationQualifier.DeepCopyInternal());
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
+      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopyInternal());
+      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new BodyStructure());
+      var instance = new BodyStructure();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

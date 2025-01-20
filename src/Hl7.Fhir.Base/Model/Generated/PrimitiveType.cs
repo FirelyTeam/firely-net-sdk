@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
   [FhirType("PrimitiveType","http://hl7.org/fhir/StructureDefinition/PrimitiveType")]
   public abstract partial class PrimitiveType : Hl7.Fhir.Model.DataType
   {
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as PrimitiveType;
 
@@ -63,9 +63,8 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
+      base.CopyToInternal(dest);
       if (ObjectValue != null) dest.ObjectValue = ObjectValue;
-      return dest;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

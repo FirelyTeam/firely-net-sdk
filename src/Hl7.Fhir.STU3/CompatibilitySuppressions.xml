@@ -66,7 +66,56 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.get_Name</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ElementDefinition.set_Name(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ValueSet.get_Define</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ValueSet.set_Define(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.FhirClientOperationsExtensions.CapabilityStatement(Hl7.Fhir.Rest.BaseFhirClient,System.Nullable{Hl7.Fhir.Rest.SummaryType})</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Rest.FhirClientOperationsExtensions.Meta(Hl7.Fhir.Rest.BaseFhirClient,Hl7.Fhir.Model.ResourceType)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonPocoDeserializer.#ctor(Hl7.Fhir.Introspection.ModelInspector,Hl7.Fhir.Serialization.FhirJsonPocoDeserializerSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirJsonPocoDeserializer.#ctor(Hl7.Fhir.Introspection.ModelInspector)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -81,6 +130,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonPocoDeserializer.#ctor(System.Reflection.Assembly,Hl7.Fhir.Serialization.FhirJsonPocoDeserializerSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirJsonPocoDeserializer.#ctor(System.Reflection.Assembly)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -109,6 +165,34 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonSerializer.#ctor(Hl7.Fhir.Serialization.SerializerSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializer.#ctor(Hl7.Fhir.Introspection.ModelInspector,Hl7.Fhir.Serialization.FhirXmlPocoDeserializerSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializer.#ctor(Hl7.Fhir.Introspection.ModelInspector)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializer.#ctor(System.Reflection.Assembly,Hl7.Fhir.Serialization.FhirXmlPocoDeserializerSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializer.#ctor(System.Reflection.Assembly)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -249,6 +333,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.PocoSerializationExtensions.WriteToAsync(Hl7.Fhir.Model.Base,System.Xml.XmlWriter,Hl7.Fhir.Serialization.FhirXmlSerializationSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Terminology.ValueSetExpander.Expand(Hl7.Fhir.Model.ValueSet)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

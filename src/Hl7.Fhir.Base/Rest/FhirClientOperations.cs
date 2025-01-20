@@ -119,13 +119,6 @@ namespace Hl7.Fhir.Rest
             return OperationResult<OperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par, ct:ct).ConfigureAwait(false));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static OperationOutcome ValidateCreate(this BaseFhirClient client, DomainResource resource,
-            FhirUri profile = null)
-        {
-            return ValidateCreateAsync(client, resource, profile).WaitResult();
-        }
-
         public static async Task<OperationOutcome> ValidateUpdateAsync(this BaseFhirClient client, DomainResource resource, string id, FhirUri profile = null, CancellationToken? ct = null)
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
@@ -138,13 +131,6 @@ namespace Hl7.Fhir.Rest
             return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par, ct:ct).ConfigureAwait(false));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static OperationOutcome ValidateUpdate(this BaseFhirClient client, DomainResource resource, string id,
-            FhirUri profile = null)
-        {
-            return ValidateUpdateAsync(client, resource, id, profile).WaitResult();
-        }
-
         public static async Task<OperationOutcome> ValidateDeleteAsync(this BaseFhirClient client, ResourceIdentity location, CancellationToken? ct = null)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
@@ -152,12 +138,6 @@ namespace Hl7.Fhir.Rest
             var par = new Parameters().Add("mode", new Code("delete"));
 
             return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_RESOURCE, par, ct: ct).ConfigureAwait(false));
-        }
-
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static OperationOutcome ValidateDelete(this BaseFhirClient client, ResourceIdentity location)
-        {
-            return ValidateDeleteAsync(client, location).WaitResult();
         }
 
         public static async Task<OperationOutcome> ValidateResourceAsync(this BaseFhirClient client, DomainResource resource, string id = null, FhirUri profile = null, CancellationToken? ct = null)
@@ -178,13 +158,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static OperationOutcome ValidateResource(this BaseFhirClient client, DomainResource resource,
-            string id = null, FhirUri profile = null)
-        {
-            return ValidateResourceAsync(client, resource, id, profile).WaitResult();
-        }
-
         #endregion
 
         #region Fetch
@@ -198,21 +171,14 @@ namespace Hl7.Fhir.Rest
 
             Resource result;
             if (patient == null)
-                result = await client.TypeOperationAsync(RestOperation.FETCH_PATIENT_RECORD, FhirTypeNames.PATIENT_NAME, par, ct:ct).ConfigureAwait(false);
+                result = await client.TypeOperationAsync(RestOperation.FETCH_PATIENT_RECORD, FhirTypeNames.PATIENT_NAME, par, ct: ct).ConfigureAwait(false);
             else
             {
                 var location = new ResourceIdentity(patient);
-                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.FETCH_PATIENT_RECORD, par, ct:ct).ConfigureAwait(false);
+                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.FETCH_PATIENT_RECORD, par, ct: ct).ConfigureAwait(false);
             }
 
             return OperationResult<Bundle>(result);
-        }
-
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Bundle FetchPatientRecord(this BaseFhirClient client, Uri patient = null, FhirDateTime start = null,
-            FhirDateTime end = null)
-        {
-            return FetchPatientRecordAsync(client, patient, start, end).WaitResult();
         }
 
         #endregion
@@ -225,12 +191,6 @@ namespace Hl7.Fhir.Rest
             return ExtractMeta(OperationResult<Parameters>(await client.WholeSystemOperationAsync(RestOperation.META, useGet: true, ct:ct).ConfigureAwait(false)));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta Meta(this BaseFhirClient client)
-        {
-            return MetaAsync(client).WaitResult();
-        }
-
         //[base]/Resource/id/$meta/[_history/vid]
         public static async Task<Meta> MetaAsync(this BaseFhirClient client, Uri location, CancellationToken? ct = null)
         {
@@ -240,21 +200,9 @@ namespace Hl7.Fhir.Rest
             return ExtractMeta(OperationResult<Parameters>(result));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta Meta(this BaseFhirClient client, Uri location)
-        {
-            return MetaAsync(client, location).WaitResult();
-        }
-
         public static Task<Meta> MetaAsync(this BaseFhirClient client, string location, CancellationToken? ct = null)
         {
             return MetaAsync(client, new Uri(location, UriKind.RelativeOrAbsolute), ct);
-        }
-
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta Meta(this BaseFhirClient client, string location)
-        {
-            return MetaAsync(client, location).WaitResult();
         }
 
         public static async Task<Meta> AddMetaAsync(this BaseFhirClient client, Uri location, Meta meta, CancellationToken? ct = null)
@@ -263,23 +211,10 @@ namespace Hl7.Fhir.Rest
             return ExtractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_ADD, par, ct:ct).ConfigureAwait(false)));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta AddMeta(this BaseFhirClient client, Uri location, Meta meta)
-        {
-            return AddMetaAsync(client, location, meta).WaitResult();
-        }
-
         public static Task<Meta> AddMetaAsync(this BaseFhirClient client, string location, Meta meta, CancellationToken? ct = null)
         {
             return AddMetaAsync(client, new Uri(location, UriKind.RelativeOrAbsolute), meta, ct);
         }
-
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta AddMeta(this BaseFhirClient client, string location, Meta meta)
-        {
-            return AddMetaAsync(client, location, meta).WaitResult();
-        }
-
 
         public static async Task<Meta> DeleteMetaAsync(this BaseFhirClient client, Uri location, Meta meta, CancellationToken? ct = null)
         {
@@ -287,21 +222,9 @@ namespace Hl7.Fhir.Rest
             return ExtractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_DELETE, par, ct:ct).ConfigureAwait(false)));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta DeleteMeta(this BaseFhirClient client, Uri location, Meta meta)
-        {
-            return DeleteMetaAsync(client, location, meta).WaitResult();
-        }
-
         public static Task<Meta> DeleteMetaAsync(this BaseFhirClient client, string location, Meta meta, CancellationToken? ct = null)
         {
             return DeleteMetaAsync(client, new Uri(location, UriKind.RelativeOrAbsolute), meta, ct);
-        }
-
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Meta DeleteMeta(this BaseFhirClient client, string location, Meta meta)
-        {
-            return DeleteMetaAsync(client, location, meta).WaitResult();
         }
 
         #endregion   
@@ -324,32 +247,12 @@ namespace Hl7.Fhir.Rest
             return OperationResult<Parameters>(await client.InstanceOperationAsync(loc, RestOperation.TRANSLATE, par, ct:ct).ConfigureAwait(false));
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Parameters TranslateConcept(this BaseFhirClient client, string id, Code code, FhirUri system,
-            FhirString version,
-            FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target,
-            IEnumerable<TranslateConceptDependency> dependencies)
-        {
-            return TranslateConceptAsync(client, id, code, system, version, valueSet, coding, codeableConcept, target,
-                dependencies).WaitResult();
-        }
-
-
         public static async Task<Parameters> TranslateConceptAsync(this BaseFhirClient client, Code code, FhirUri system, FhirString version,
             FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies, CancellationToken? ct = null)
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
 
             return OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, par, ct:ct).ConfigureAwait(false));
-        }
-
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
-        public static Parameters TranslateConcept(this BaseFhirClient client, Code code, FhirUri system, FhirString version,
-            FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target,
-            IEnumerable<TranslateConceptDependency> dependencies)
-        {
-            return TranslateConceptAsync(client, code, system, version, valueSet, coding, codeableConcept, target,
-                dependencies).WaitResult();
         }
 
         #endregion

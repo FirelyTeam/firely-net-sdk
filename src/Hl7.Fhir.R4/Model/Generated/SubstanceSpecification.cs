@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Amount;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as MoietyComponent;
 
@@ -207,20 +207,21 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopy();
-        if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopy();
-        if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopy();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
+        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+        if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopyInternal();
+        if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopyInternal();
+        if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopyInternal();
+        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new MoietyComponent());
+        var instance = new MoietyComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -417,7 +418,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Amount;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as PropertyComponent;
 
@@ -426,18 +427,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(ParametersElement != null) dest.ParametersElement = (Hl7.Fhir.Model.FhirString)ParametersElement.DeepCopy();
-        if(DefiningSubstance != null) dest.DefiningSubstance = (Hl7.Fhir.Model.DataType)DefiningSubstance.DeepCopy();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+        if(ParametersElement != null) dest.ParametersElement = (Hl7.Fhir.Model.FhirString)ParametersElement.DeepCopyInternal();
+        if(DefiningSubstance != null) dest.DefiningSubstance = (Hl7.Fhir.Model.DataType)DefiningSubstance.DeepCopyInternal();
+        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new PropertyComponent());
+        var instance = new PropertyComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -675,7 +677,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent> _Representation;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as StructureComponent;
 
@@ -684,21 +686,22 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopy();
-        if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopy();
-        if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopy();
-        if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopy();
-        if(Isotope.Any()) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(Isotope.DeepCopy());
-        if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopy();
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-        if(Representation.Any()) dest.Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(Representation.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopyInternal();
+        if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopyInternal();
+        if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopyInternal();
+        if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopyInternal();
+        if(Isotope.Any()) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(Isotope.DeepCopyInternal());
+        if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopyInternal();
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
+        if(Representation.Any()) dest.Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(Representation.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new StructureComponent());
+        var instance = new StructureComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -880,7 +883,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent _MolecularWeight;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as IsotopeComponent;
 
@@ -889,18 +892,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-        if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopy();
-        if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)Substitution.DeepCopy();
-        if(HalfLife != null) dest.HalfLife = (Hl7.Fhir.Model.Quantity)HalfLife.DeepCopy();
-        if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+        if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopyInternal();
+        if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)Substitution.DeepCopyInternal();
+        if(HalfLife != null) dest.HalfLife = (Hl7.Fhir.Model.Quantity)HalfLife.DeepCopyInternal();
+        if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new IsotopeComponent());
+        var instance = new IsotopeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1032,7 +1036,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Quantity _Amount;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as MolecularWeightComponent;
 
@@ -1041,16 +1045,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopyInternal();
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new MolecularWeightComponent());
+        var instance = new MolecularWeightComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1184,7 +1189,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Attachment _Attachment;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RepresentationComponent;
 
@@ -1193,16 +1198,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(RepresentationElement != null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)RepresentationElement.DeepCopy();
-        if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(RepresentationElement != null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)RepresentationElement.DeepCopyInternal();
+        if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepresentationComponent());
+        var instance = new RepresentationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1383,7 +1389,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ResourceReference> _Source;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as CodeComponent;
 
@@ -1392,18 +1398,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-        if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
-        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
+        if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopyInternal();
+        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CodeComponent());
+        var instance = new CodeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1685,7 +1692,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ResourceReference> _Source;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as NameComponent;
 
@@ -1694,24 +1701,25 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-        if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
-        if(Language.Any()) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
-        if(Domain.Any()) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(Domain.DeepCopy());
-        if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-        if(Synonym.Any()) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Synonym.DeepCopy());
-        if(Translation.Any()) dest.Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Translation.DeepCopy());
-        if(Official.Any()) dest.Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(Official.DeepCopy());
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
+        if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopyInternal();
+        if(Language.Any()) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopyInternal());
+        if(Domain.Any()) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(Domain.DeepCopyInternal());
+        if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
+        if(Synonym.Any()) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Synonym.DeepCopyInternal());
+        if(Translation.Any()) dest.Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Translation.DeepCopyInternal());
+        if(Official.Any()) dest.Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(Official.DeepCopyInternal());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new NameComponent());
+        var instance = new NameComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1909,7 +1917,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as OfficialComponent;
 
@@ -1918,16 +1926,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Authority != null) dest.Authority = (Hl7.Fhir.Model.CodeableConcept)Authority.DeepCopy();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-        if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Authority != null) dest.Authority = (Hl7.Fhir.Model.CodeableConcept)Authority.DeepCopyInternal();
+        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
+        if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new OfficialComponent());
+        var instance = new OfficialComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -2121,7 +2130,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ResourceReference> _Source;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as RelationshipComponent;
 
@@ -2130,20 +2139,21 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Substance != null) dest.Substance = (Hl7.Fhir.Model.DataType)Substance.DeepCopy();
-        if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
-        if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopy();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
-        if(AmountRatioLowLimit != null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)AmountRatioLowLimit.DeepCopy();
-        if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Substance != null) dest.Substance = (Hl7.Fhir.Model.DataType)Substance.DeepCopyInternal();
+        if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopyInternal();
+        if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopyInternal();
+        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
+        if(AmountRatioLowLimit != null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)AmountRatioLowLimit.DeepCopyInternal();
+        if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopyInternal();
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RelationshipComponent());
+        var instance = new RelationshipComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -2543,7 +2553,7 @@ namespace Hl7.Fhir.Model
 
     Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as SubstanceSpecification;
 
@@ -2552,32 +2562,33 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-      if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopy();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-      if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-      if(Moiety.Any()) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(Moiety.DeepCopy());
-      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(Property.DeepCopy());
-      if(ReferenceInformation != null) dest.ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)ReferenceInformation.DeepCopy();
-      if(Structure != null) dest.Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent)Structure.DeepCopy();
-      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(Code.DeepCopy());
-      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Name.DeepCopy());
-      if(MolecularWeight.Any()) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(MolecularWeight.DeepCopy());
-      if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(Relationship.DeepCopy());
-      if(NucleicAcid != null) dest.NucleicAcid = (Hl7.Fhir.Model.ResourceReference)NucleicAcid.DeepCopy();
-      if(Polymer != null) dest.Polymer = (Hl7.Fhir.Model.ResourceReference)Polymer.DeepCopy();
-      if(Protein != null) dest.Protein = (Hl7.Fhir.Model.ResourceReference)Protein.DeepCopy();
-      if(SourceMaterial != null) dest.SourceMaterial = (Hl7.Fhir.Model.ResourceReference)SourceMaterial.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
+      if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopyInternal();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
+      if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
+      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
+      if(Moiety.Any()) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(Moiety.DeepCopyInternal());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(Property.DeepCopyInternal());
+      if(ReferenceInformation != null) dest.ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)ReferenceInformation.DeepCopyInternal();
+      if(Structure != null) dest.Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent)Structure.DeepCopyInternal();
+      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(Code.DeepCopyInternal());
+      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Name.DeepCopyInternal());
+      if(MolecularWeight.Any()) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(MolecularWeight.DeepCopyInternal());
+      if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(Relationship.DeepCopyInternal());
+      if(NucleicAcid != null) dest.NucleicAcid = (Hl7.Fhir.Model.ResourceReference)NucleicAcid.DeepCopyInternal();
+      if(Polymer != null) dest.Polymer = (Hl7.Fhir.Model.ResourceReference)Polymer.DeepCopyInternal();
+      if(Protein != null) dest.Protein = (Hl7.Fhir.Model.ResourceReference)Protein.DeepCopyInternal();
+      if(SourceMaterial != null) dest.SourceMaterial = (Hl7.Fhir.Model.ResourceReference)SourceMaterial.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new SubstanceSpecification());
+      var instance = new SubstanceSpecification();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Quantity _High;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Range;
 
@@ -95,15 +95,16 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
-      if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopyInternal();
+      if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Range());
+      var instance = new Range();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

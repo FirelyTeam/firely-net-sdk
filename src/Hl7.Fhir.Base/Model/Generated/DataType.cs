@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
   [FhirType("DataType","http://hl7.org/fhir/StructureDefinition/DataType")]
   public abstract partial class DataType : Hl7.Fhir.Model.Element
   {
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as DataType;
 
@@ -63,8 +63,7 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      return dest;
+      base.CopyToInternal(dest);
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

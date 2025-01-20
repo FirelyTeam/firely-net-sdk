@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as GroupComponent;
 
@@ -456,25 +456,26 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopy();
-        if(GroupDisplayElement != null) dest.GroupDisplayElement = (Hl7.Fhir.Model.FhirString)GroupDisplayElement.DeepCopy();
-        if(SubGroupElement != null) dest.SubGroupElement = (Hl7.Fhir.Model.FhirString)SubGroupElement.DeepCopy();
-        if(SubGroupDisplayElement != null) dest.SubGroupDisplayElement = (Hl7.Fhir.Model.FhirString)SubGroupDisplayElement.DeepCopy();
-        if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopy();
-        if(PlanDisplayElement != null) dest.PlanDisplayElement = (Hl7.Fhir.Model.FhirString)PlanDisplayElement.DeepCopy();
-        if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopy();
-        if(SubPlanDisplayElement != null) dest.SubPlanDisplayElement = (Hl7.Fhir.Model.FhirString)SubPlanDisplayElement.DeepCopy();
-        if(ClassElement != null) dest.ClassElement = (Hl7.Fhir.Model.FhirString)ClassElement.DeepCopy();
-        if(ClassDisplayElement != null) dest.ClassDisplayElement = (Hl7.Fhir.Model.FhirString)ClassDisplayElement.DeepCopy();
-        if(SubClassElement != null) dest.SubClassElement = (Hl7.Fhir.Model.FhirString)SubClassElement.DeepCopy();
-        if(SubClassDisplayElement != null) dest.SubClassDisplayElement = (Hl7.Fhir.Model.FhirString)SubClassDisplayElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopyInternal();
+        if(GroupDisplayElement != null) dest.GroupDisplayElement = (Hl7.Fhir.Model.FhirString)GroupDisplayElement.DeepCopyInternal();
+        if(SubGroupElement != null) dest.SubGroupElement = (Hl7.Fhir.Model.FhirString)SubGroupElement.DeepCopyInternal();
+        if(SubGroupDisplayElement != null) dest.SubGroupDisplayElement = (Hl7.Fhir.Model.FhirString)SubGroupDisplayElement.DeepCopyInternal();
+        if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopyInternal();
+        if(PlanDisplayElement != null) dest.PlanDisplayElement = (Hl7.Fhir.Model.FhirString)PlanDisplayElement.DeepCopyInternal();
+        if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopyInternal();
+        if(SubPlanDisplayElement != null) dest.SubPlanDisplayElement = (Hl7.Fhir.Model.FhirString)SubPlanDisplayElement.DeepCopyInternal();
+        if(ClassElement != null) dest.ClassElement = (Hl7.Fhir.Model.FhirString)ClassElement.DeepCopyInternal();
+        if(ClassDisplayElement != null) dest.ClassDisplayElement = (Hl7.Fhir.Model.FhirString)ClassDisplayElement.DeepCopyInternal();
+        if(SubClassElement != null) dest.SubClassElement = (Hl7.Fhir.Model.FhirString)SubClassElement.DeepCopyInternal();
+        if(SubClassDisplayElement != null) dest.SubClassDisplayElement = (Hl7.Fhir.Model.FhirString)SubClassDisplayElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new GroupComponent());
+        var instance = new GroupComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -945,7 +946,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Coverage;
 
@@ -954,29 +955,30 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(PolicyHolder != null) dest.PolicyHolder = (Hl7.Fhir.Model.ResourceReference)PolicyHolder.DeepCopy();
-      if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.ResourceReference)Subscriber.DeepCopy();
-      if(SubscriberIdElement != null) dest.SubscriberIdElement = (Hl7.Fhir.Model.FhirString)SubscriberIdElement.DeepCopy();
-      if(Beneficiary != null) dest.Beneficiary = (Hl7.Fhir.Model.ResourceReference)Beneficiary.DeepCopy();
-      if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Payor.Any()) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopy());
-      if(Grouping != null) dest.Grouping = (Hl7.Fhir.Model.Coverage.GroupComponent)Grouping.DeepCopy();
-      if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.FhirString)DependentElement.DeepCopy();
-      if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
-      if(OrderElement != null) dest.OrderElement = (Hl7.Fhir.Model.PositiveInt)OrderElement.DeepCopy();
-      if(NetworkElement != null) dest.NetworkElement = (Hl7.Fhir.Model.FhirString)NetworkElement.DeepCopy();
-      if(Contract.Any()) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopyInternal();
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+      if(PolicyHolder != null) dest.PolicyHolder = (Hl7.Fhir.Model.ResourceReference)PolicyHolder.DeepCopyInternal();
+      if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.ResourceReference)Subscriber.DeepCopyInternal();
+      if(SubscriberIdElement != null) dest.SubscriberIdElement = (Hl7.Fhir.Model.FhirString)SubscriberIdElement.DeepCopyInternal();
+      if(Beneficiary != null) dest.Beneficiary = (Hl7.Fhir.Model.ResourceReference)Beneficiary.DeepCopyInternal();
+      if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopyInternal();
+      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(Payor.Any()) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopyInternal());
+      if(Grouping != null) dest.Grouping = (Hl7.Fhir.Model.Coverage.GroupComponent)Grouping.DeepCopyInternal();
+      if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.FhirString)DependentElement.DeepCopyInternal();
+      if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopyInternal();
+      if(OrderElement != null) dest.OrderElement = (Hl7.Fhir.Model.PositiveInt)OrderElement.DeepCopyInternal();
+      if(NetworkElement != null) dest.NetworkElement = (Hl7.Fhir.Model.FhirString)NetworkElement.DeepCopyInternal();
+      if(Contract.Any()) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Coverage());
+      var instance = new Coverage();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

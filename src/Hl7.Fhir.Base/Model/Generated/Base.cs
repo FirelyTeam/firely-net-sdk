@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
   [FhirType("Base","http://hl7.org/fhir/StructureDefinition/Base")]
   public abstract partial class Base
   {
-    public virtual IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal virtual void CopyToInternal(Base other)
     {
       var dest = other as Base;
 
@@ -66,11 +66,11 @@ namespace Hl7.Fhir.Model
       if (_annotations is not null)
         dest.annotations.AddRange(annotations);
 
-      return dest;
+      if (Overflow.Any())
+        Overflow.CopyToInternal(dest.Overflow);
     }
 
-    public virtual IDeepCopyable DeepCopy() =>
-      CopyTo((IDeepCopyable)Activator.CreateInstance(GetType())!);
+    protected internal abstract Base DeepCopyInternal();
 
   }
 

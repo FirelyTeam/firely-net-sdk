@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.CodeableConcept _Scoring;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ProdCharacteristic;
 
@@ -265,24 +265,25 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Height != null) dest.Height = (Hl7.Fhir.Model.Quantity)Height.DeepCopy();
-      if(Width != null) dest.Width = (Hl7.Fhir.Model.Quantity)Width.DeepCopy();
-      if(Depth != null) dest.Depth = (Hl7.Fhir.Model.Quantity)Depth.DeepCopy();
-      if(Weight != null) dest.Weight = (Hl7.Fhir.Model.Quantity)Weight.DeepCopy();
-      if(NominalVolume != null) dest.NominalVolume = (Hl7.Fhir.Model.Quantity)NominalVolume.DeepCopy();
-      if(ExternalDiameter != null) dest.ExternalDiameter = (Hl7.Fhir.Model.Quantity)ExternalDiameter.DeepCopy();
-      if(ShapeElement != null) dest.ShapeElement = (Hl7.Fhir.Model.FhirString)ShapeElement.DeepCopy();
-      if(ColorElement.Any()) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(ColorElement.DeepCopy());
-      if(ImprintElement.Any()) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(ImprintElement.DeepCopy());
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
-      if(Scoring != null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)Scoring.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Height != null) dest.Height = (Hl7.Fhir.Model.Quantity)Height.DeepCopyInternal();
+      if(Width != null) dest.Width = (Hl7.Fhir.Model.Quantity)Width.DeepCopyInternal();
+      if(Depth != null) dest.Depth = (Hl7.Fhir.Model.Quantity)Depth.DeepCopyInternal();
+      if(Weight != null) dest.Weight = (Hl7.Fhir.Model.Quantity)Weight.DeepCopyInternal();
+      if(NominalVolume != null) dest.NominalVolume = (Hl7.Fhir.Model.Quantity)NominalVolume.DeepCopyInternal();
+      if(ExternalDiameter != null) dest.ExternalDiameter = (Hl7.Fhir.Model.Quantity)ExternalDiameter.DeepCopyInternal();
+      if(ShapeElement != null) dest.ShapeElement = (Hl7.Fhir.Model.FhirString)ShapeElement.DeepCopyInternal();
+      if(ColorElement.Any()) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(ColorElement.DeepCopyInternal());
+      if(ImprintElement.Any()) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(ImprintElement.DeepCopyInternal());
+      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopyInternal());
+      if(Scoring != null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)Scoring.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ProdCharacteristic());
+      var instance = new ProdCharacteristic();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
