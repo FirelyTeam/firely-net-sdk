@@ -48,16 +48,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Constructs a canonical from its components.
         /// </summary>
-        public Canonical(string? uri, string? version, string? fragment)
+        public Canonical(string? uri, string? version, string? fragment = null)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            if (uri.IndexOfAny(new[] { '|', '#' }) != -1)
+            if (uri.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
 
-            if (version != null && version.IndexOfAny(new[] { '|', '#' }) != -1)
+            if (version != null && version.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(version), "cannot contain version/fragment data");
 
-            if (fragment != null && fragment.IndexOfAny(new[] { '|', '#' }) != -1)
+            if (fragment != null && fragment.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(fragment), "already contains version/fragment data");
 
 
