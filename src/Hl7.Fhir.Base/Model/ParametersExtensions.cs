@@ -10,8 +10,8 @@ namespace Hl7.Fhir.Model
     {
         private const string CODEATTRIBUTE = "code";
         private const string URLATTRIBUTE = "url";
-        private const string SYSTEMATTRIBUTE = "system";
         private const string CONTEXTATTRIBUTE = "context";
+        private const string VALUESETATTRIBUTE = "valueSet";
 
         public static bool TryGetDuplicates(this Parameters parameters, out IEnumerable<string> duplicates)
         {
@@ -41,13 +41,19 @@ namespace Hl7.Fhir.Model
             parameters.NoDuplicates();
 
             //This error was changed from system to url. See: https://chat.fhir.org/#narrow/channel/179202-terminology/topic/Required.20.24validate-code.20parameters/near/482250225
-            //If a code is provided, a url or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.Parameter.Any(p => p.Name == CODEATTRIBUTE) && !(parameters.Parameter.Any(p => p.Name == URLATTRIBUTE) ||
-                                                                                    parameters.Parameter.Any(p => p.Name == CONTEXTATTRIBUTE)))
+            //If a code is provided, an inline valueset, url or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
+            if (parameters.HasParam(CODEATTRIBUTE) && !hasValueSet(parameters))
             {
                 //422 Unproccesable Entity
                 throw new FhirOperationException($"If a code is provided, a url or a context must be provided", (HttpStatusCode)422);
             }
+
+            static bool hasValueSet(Parameters p) =>
+                p.HasParam(URLATTRIBUTE) || p.HasParam(CONTEXTATTRIBUTE) || p.HasParam(VALUESETATTRIBUTE);
+
         }
+
+        internal static bool HasParam(this Parameters parameters, string name)
+            => parameters.Parameter.Any(p => p.Name == name);
     }
 }
