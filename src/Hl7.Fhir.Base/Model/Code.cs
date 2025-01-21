@@ -41,10 +41,12 @@ namespace Hl7.Fhir.Model;
 public partial class Code : ICoded, P.IToSystemPrimitive
 {
     /// <summary>
-    /// Creates a <see cref="ElementModel.Types.Code"/> from an instance of a <see cref="Code"/>.
+    /// Converts this Code to a <see cref="P.Code"/>.
     /// </summary>
+    /// <returns></returns>
     public virtual P.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
 
+    /// <inheritdoc />
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
         result = ToSystemCode();

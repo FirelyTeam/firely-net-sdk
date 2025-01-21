@@ -153,7 +153,12 @@ public partial class Canonical: P.IToSystemPrimitive
         }
     }
 
+    /// <summary>
+    /// Converts this canonical to a <see cref="P.String" />.
+    /// </summary>
     public P.String ToSystemString() => new(Value);
+
+    /// <inheritdoc />
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
         result = ToSystemString();
