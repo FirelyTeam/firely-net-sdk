@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -68,6 +70,30 @@ namespace Hl7.Fhir.Specification.Tests
 
             result.Parameter.Should().Contain(p => p.Name == "result")
                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+        }
+
+        [TestMethod]
+        [DataRow("code", null, null, null, true)]
+        [DataRow("code", "<ValueSet />", null, null, false)]
+        [DataRow("code", null, "http://nu.nl/valueset", null, false)]
+        [DataRow("code", null, null, "context", false)]
+        [DataRow("code", "<ValueSet />", null, "context", false)]
+        public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
+        {
+            var parameters = new Parameters()
+            {
+                { "code", code is not null ? new FhirString(code) : null },
+                { "url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null },
+                { "context", context is not null ? new FhirUri("context") : null },
+                { "valueSet", valueset is not null ? new ValueSet() : null }
+            };
+
+            Action validate = () => parameters.CheckForValidityOfValidateCodeParams();
+
+            if (!throws)
+                validate.Should().NotThrow();
+            else
+                validate.Should().Throw<FhirOperationException>();
         }
     }
 }
