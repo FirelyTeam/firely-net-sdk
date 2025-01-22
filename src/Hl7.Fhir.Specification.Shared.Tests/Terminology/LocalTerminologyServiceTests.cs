@@ -4,6 +4,8 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
+using System;
 using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -113,6 +115,56 @@ namespace Hl7.Fhir.Specification.Tests
 
             var ex = await ac.Should().ThrowAsync<FhirOperationException>();
             ex.WithMessage("*compositional code system*");
+        }
+
+        [TestMethod]
+        [DataRow("code", null, null, null, true)]
+        [DataRow("code", "<ValueSet />", null, null, false)]
+        [DataRow("code", null, "http://nu.nl/valueset", null, false)]
+        [DataRow("code", null, null, "context", false)]
+        [DataRow("code", "<ValueSet />", null, "context", false)]
+        public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
+        {
+            var parameters = new Parameters()
+            {
+                { "code", code is not null ? new FhirString(code) : null },
+                { "url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null },
+                { "context", context is not null ? new FhirUri("context") : null },
+                { "valueSet", valueset is not null ? new ValueSet() : null }
+            };
+
+            Action validate = () => parameters.CheckForValidityOfValidateCodeParams();
+
+            if (!throws)
+                validate.Should().NotThrow();
+            else
+                validate.Should().Throw<FhirOperationException>();
+        }
+
+        [TestMethod]
+        [DataRow("http://hl7.org/fhir/ValueSet/vs", null, "http://hl7.org/fhir/ValueSet/vs")]
+        [DataRow("http://hl7.org/fhir/ValueSet/vs|1.0", null, "http://hl7.org/fhir/ValueSet/vs|1.0")]
+        [DataRow("http://hl7.org/fhir/ValueSet/vs", "2.0", "http://hl7.org/fhir/ValueSet/vs|2.0")]
+        [DataRow("http://hl7.org/fhir/ValueSet/vs|2.0", "3.0", "http://hl7.org/fhir/ValueSet/vs|3.0")]
+        public async Task PicksUpValidationVersionInUri(string url, string vsVersion, string resolved)
+        {
+            var parameters = new Parameters()
+            {
+                { "code", new FhirString("code") }, { "url", new FhirUri(url) }
+            };
+
+            if(vsVersion is not null)
+                parameters.Add("valueSetVersion", new FhirString(vsVersion));
+
+            var resolver = Substitute.For<IAsyncResourceResolver>();
+            var localTs = new LocalTerminologyService(resolver);
+
+            // because we're not returning a valueset in the mock, we should get an error.
+            var validate = async () => await localTs.ValueSetValidateCode(parameters);
+            await validate.Should().ThrowAsync<FhirOperationException>();
+
+            // but we're called with the correct version before that.
+            await resolver.Received().FindValueSetAsync(Arg.Is<string>(u => u == resolved));
         }
     }
 }
