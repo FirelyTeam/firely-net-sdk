@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Extension> _Extension;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Element;
 
@@ -108,10 +108,9 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(ElementIdElement != null) dest.ElementIdElement = (Hl7.Fhir.Model.FhirString)ElementIdElement.DeepCopy();
-      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(ElementIdElement != null) dest.ElementIdElement = (Hl7.Fhir.Model.FhirString)ElementIdElement.DeepCopyInternal();
+      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopyInternal());
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

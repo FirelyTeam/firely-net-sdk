@@ -47,23 +47,23 @@ namespace Hl7.Fhir.FhirPath
 
         /// <inheritdoc cref="FhirPathCompilerCache.Select(PocoNode, string, EvaluationContext?)"/>
         public static IEnumerable<Base?> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Select(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext()).ToFhirValues();
+            => CACHE.Select(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext()).ToFhirValues();
 
         /// <inheritdoc cref="FhirPathCompilerCache.Scalar(PocoNode, string, EvaluationContext?)"/>
         public static object? Scalar(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Scalar(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.Scalar(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext());
 
         /// <inheritdoc cref="FhirPathCompilerCache.Predicate(PocoNode, string, EvaluationContext?)"/>
         public static bool Predicate(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Predicate(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.Predicate(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext());
 
         /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(PocoNode, string, EvaluationContext?)"/>
         public static bool IsTrue(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.IsTrue(input.ToElementNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.IsTrue(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext());
 
         /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(PocoNode, string, bool, EvaluationContext?) "/>
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext? ctx = null)
-            => CACHE.IsBoolean(input.ToElementNode(), expression, value, ctx ?? new FhirEvaluationContext());
+            => CACHE.IsBoolean(input.ToPocoNode(), expression, value, ctx ?? new FhirEvaluationContext());
     }
 }
 

@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as AvailableTimeComponent;
 
@@ -205,17 +205,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(DaysOfWeekElement.Any()) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
-        if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopy();
-        if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopy();
-        if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(DaysOfWeekElement.Any()) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopyInternal());
+        if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopyInternal();
+        if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopyInternal();
+        if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new AvailableTimeComponent());
+        var instance = new AvailableTimeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -344,7 +345,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.Period _During;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as NotAvailableTimeComponent;
 
@@ -353,15 +354,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
+        if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new NotAvailableTimeComponent());
+        var instance = new NotAvailableTimeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -445,7 +447,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> _NotAvailableTime;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Availability;
 
@@ -454,15 +456,16 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(AvailableTime.Any()) dest.AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(AvailableTime.DeepCopy());
-      if(NotAvailableTime.Any()) dest.NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(NotAvailableTime.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(AvailableTime.Any()) dest.AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(AvailableTime.DeepCopyInternal());
+      if(NotAvailableTime.Any()) dest.NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(NotAvailableTime.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Availability());
+      var instance = new Availability();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

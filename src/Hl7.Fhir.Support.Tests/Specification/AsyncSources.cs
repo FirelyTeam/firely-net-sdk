@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Utility.Tests
     internal class AResource : Resource
     {
         public int Data;
-
-        public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
+        
+        protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
     }
 }

@@ -97,9 +97,9 @@ namespace Hl7.Fhir.Serialization.Tests
 
 
         [TestMethod]
-        public async Task RoundtripXml()
+        public void RoundtripXml()
         {
-            await ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
+            ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
@@ -108,10 +108,10 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             // will allow whitespace and comments to come through      
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
-            var json = await navXml.ToJsonAsync();
+            var json = navXml.ToJson();
 
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider());
-            var xml = await navJson.ToXmlAsync();
+            var xml = navJson.ToXml();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
         }

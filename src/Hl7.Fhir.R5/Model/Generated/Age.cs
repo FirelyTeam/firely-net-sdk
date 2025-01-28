@@ -59,9 +59,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     public override string TypeName { get { return "Age"; } }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Age());
+      var instance = new Age();
+      CopyToInternal(instance);
+      return instance;
     }
 
   }

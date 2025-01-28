@@ -40,7 +40,7 @@ using System.Threading;
 
 namespace Hl7.Fhir.Model;
 
-public abstract partial class Base : IDeepCopyable, IAnnotatable,
+public abstract partial class Base : IAnnotatable,
     IValidatableObject, INotifyPropertyChanged
 {
     /// <summary>
@@ -64,13 +64,13 @@ public abstract partial class Base : IDeepCopyable, IAnnotatable,
 
     private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
-        public IEnumerable<object> Annotations(Type type)
-        {
-            if (type == typeof(IFhirValueProvider))
-                return [this];
-            else
-                return annotations.OfType(type);
-        }
+    public IEnumerable<object> Annotations(Type type)
+    {
+        if (type == typeof(IFhirValueProvider))
+            return [this];
+        else
+            return annotations.OfType(type);
+    }
 
     public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
 

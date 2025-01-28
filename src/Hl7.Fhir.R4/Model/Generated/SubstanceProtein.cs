@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as SubunitComponent;
 
@@ -272,21 +272,22 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(SubunitElement != null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)SubunitElement.DeepCopy();
-        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
-        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopy();
-        if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopy();
-        if(NTerminalModificationId != null) dest.NTerminalModificationId = (Hl7.Fhir.Model.Identifier)NTerminalModificationId.DeepCopy();
-        if(NTerminalModificationElement != null) dest.NTerminalModificationElement = (Hl7.Fhir.Model.FhirString)NTerminalModificationElement.DeepCopy();
-        if(CTerminalModificationId != null) dest.CTerminalModificationId = (Hl7.Fhir.Model.Identifier)CTerminalModificationId.DeepCopy();
-        if(CTerminalModificationElement != null) dest.CTerminalModificationElement = (Hl7.Fhir.Model.FhirString)CTerminalModificationElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(SubunitElement != null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)SubunitElement.DeepCopyInternal();
+        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopyInternal();
+        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopyInternal();
+        if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopyInternal();
+        if(NTerminalModificationId != null) dest.NTerminalModificationId = (Hl7.Fhir.Model.Identifier)NTerminalModificationId.DeepCopyInternal();
+        if(NTerminalModificationElement != null) dest.NTerminalModificationElement = (Hl7.Fhir.Model.FhirString)NTerminalModificationElement.DeepCopyInternal();
+        if(CTerminalModificationId != null) dest.CTerminalModificationId = (Hl7.Fhir.Model.Identifier)CTerminalModificationId.DeepCopyInternal();
+        if(CTerminalModificationElement != null) dest.CTerminalModificationElement = (Hl7.Fhir.Model.FhirString)CTerminalModificationElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SubunitComponent());
+        var instance = new SubunitComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -480,7 +481,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> _Subunit;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as SubstanceProtein;
 
@@ -489,17 +490,18 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopy();
-      if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopy();
-      if(DisulfideLinkageElement.Any()) dest.DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(DisulfideLinkageElement.DeepCopy());
-      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(Subunit.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopyInternal();
+      if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopyInternal();
+      if(DisulfideLinkageElement.Any()) dest.DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(DisulfideLinkageElement.DeepCopyInternal());
+      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(Subunit.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new SubstanceProtein());
+      var instance = new SubstanceProtein();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

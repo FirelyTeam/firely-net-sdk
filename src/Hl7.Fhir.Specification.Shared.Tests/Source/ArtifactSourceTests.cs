@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dupId = res.Id;
             var rootId = Guid.NewGuid().ToString();
             res.Id = rootId;
-            _ = await new FhirXmlSerializer().SerializeToStringAsync(res);
+            _ = new FhirXmlSerializer().SerializeToString(res);
 
             var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
             Assert.IsTrue(File.Exists(dupFilePath));

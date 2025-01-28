@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Model
 
             var p = await new FhirXmlParser().ParseAsync<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
-            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
+            var xml2 = new FhirXmlSerializer().SerializeToString(p2);
             XmlAssert.AreSame("TestPatient.xml", xml, xml2);
         }
 
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Model
 
             var p = await new FhirXmlParser().ParseAsync<CarePlan>(xml);
             var p2 = (CarePlan)p.DeepCopy();
-            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
+            var xml2 = new FhirXmlSerializer().SerializeToString(p2);
             XmlAssert.AreSame("careplan-example-f201-renal.xml", xml, xml2);
         }
 

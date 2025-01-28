@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.InventoryReport.ItemComponent> _Item;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as InventoryListingComponent;
 
@@ -207,17 +207,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-        if(ItemStatus != null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)ItemStatus.DeepCopy();
-        if(CountingDateTimeElement != null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)CountingDateTimeElement.DeepCopy();
-        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(Item.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
+        if(ItemStatus != null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)ItemStatus.DeepCopyInternal();
+        if(CountingDateTimeElement != null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)CountingDateTimeElement.DeepCopyInternal();
+        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(Item.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new InventoryListingComponent());
+        var instance = new InventoryListingComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -343,7 +344,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.CodeableReference _Item;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ItemComponent;
 
@@ -352,16 +353,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
+        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
+        if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ItemComponent());
+        var instance = new ItemComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -623,7 +625,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as InventoryReport;
 
@@ -632,23 +634,24 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)StatusElement.DeepCopy();
-      if(CountTypeElement != null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)CountTypeElement.DeepCopy();
-      if(OperationType != null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)OperationType.DeepCopy();
-      if(OperationTypeReason != null) dest.OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)OperationTypeReason.DeepCopy();
-      if(ReportedDateTimeElement != null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReportedDateTimeElement.DeepCopy();
-      if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
-      if(ReportingPeriod != null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)ReportingPeriod.DeepCopy();
-      if(InventoryListing.Any()) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(InventoryListing.DeepCopy());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)StatusElement.DeepCopyInternal();
+      if(CountTypeElement != null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)CountTypeElement.DeepCopyInternal();
+      if(OperationType != null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)OperationType.DeepCopyInternal();
+      if(OperationTypeReason != null) dest.OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)OperationTypeReason.DeepCopyInternal();
+      if(ReportedDateTimeElement != null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReportedDateTimeElement.DeepCopyInternal();
+      if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopyInternal();
+      if(ReportingPeriod != null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)ReportingPeriod.DeepCopyInternal();
+      if(InventoryListing.Any()) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(InventoryListing.DeepCopyInternal());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new InventoryReport());
+      var instance = new InventoryReport();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

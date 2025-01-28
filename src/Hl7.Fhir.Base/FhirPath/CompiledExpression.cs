@@ -43,7 +43,7 @@ namespace Hl7.FhirPath
         /// <inheritdoc cref="Predicate{T}"/>
         public static bool Predicate(this CompiledExpression evaluator, Base input, EvaluationContext ctx)
         {
-            var result = evaluator(input.ToElementNode(), ctx).BooleanEval();
+            var result = evaluator(input.ToPocoNode(), ctx).BooleanEval();
             return result is null || result.Value;
         }
 

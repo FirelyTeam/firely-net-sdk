@@ -60,9 +60,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
     public override string TypeName { get { return "Count"; } }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Count());
+      var instance = new Count();
+      CopyToInternal(instance);
+      return instance;
     }
 
   }

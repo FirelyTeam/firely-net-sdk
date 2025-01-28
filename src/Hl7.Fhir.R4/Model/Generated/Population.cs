@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.CodeableConcept _PhysiologicalCondition;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as Population;
 
@@ -122,17 +122,18 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Age != null) dest.Age = (Hl7.Fhir.Model.DataType)Age.DeepCopy();
-      if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
-      if(Race != null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)Race.DeepCopy();
-      if(PhysiologicalCondition != null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)PhysiologicalCondition.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Age != null) dest.Age = (Hl7.Fhir.Model.DataType)Age.DeepCopyInternal();
+      if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopyInternal();
+      if(Race != null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)Race.DeepCopyInternal();
+      if(PhysiologicalCondition != null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)PhysiologicalCondition.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Population());
+      var instance = new Population();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

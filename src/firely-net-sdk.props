@@ -22,12 +22,6 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed. 
-		Consider applying the 'await' operator to the result of the call.	-->
-		<WarningsAsErrors>CS4014</WarningsAsErrors>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<None Include="..\..\icon-firely-sdk-128.png" Pack="true" PackagePath=""/>
 		<None Include="..\..\README.md" Pack="true" PackagePath=""/>
@@ -42,9 +36,12 @@
 		<LangVersion>12.0</LangVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
-<!--		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
 		<EnablePackageValidation>true</EnablePackageValidation>
 		<PackageValidationBaselineVersion>5.11.1</PackageValidationBaselineVersion>
+		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed.
+		Consider applying the 'await' operator to the result of the call.	-->
+		<WarningsAsErrors>CS4014</WarningsAsErrors>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">

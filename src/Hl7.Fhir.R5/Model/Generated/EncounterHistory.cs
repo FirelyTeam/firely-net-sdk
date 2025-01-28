@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.CodeableConcept _Form;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as LocationComponent;
 
@@ -115,15 +115,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-        if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
+        if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LocationComponent());
+        var instance = new LocationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -420,7 +421,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as EncounterHistory;
 
@@ -429,26 +430,27 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopy();
-      if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
-      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopy());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(SubjectStatus != null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)SubjectStatus.DeepCopy();
-      if(ActualPeriod != null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)ActualPeriod.DeepCopy();
-      if(PlannedStartDateElement != null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedStartDateElement.DeepCopy();
-      if(PlannedEndDateElement != null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedEndDateElement.DeepCopy();
-      if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>(Location.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopyInternal();
+      if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopyInternal();
+      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
+      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopyInternal());
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(SubjectStatus != null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)SubjectStatus.DeepCopyInternal();
+      if(ActualPeriod != null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)ActualPeriod.DeepCopyInternal();
+      if(PlannedStartDateElement != null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedStartDateElement.DeepCopyInternal();
+      if(PlannedEndDateElement != null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedEndDateElement.DeepCopyInternal();
+      if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopyInternal();
+      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>(Location.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new EncounterHistory());
+      var instance = new EncounterHistory();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

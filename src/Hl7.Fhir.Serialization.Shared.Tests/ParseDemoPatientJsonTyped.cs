@@ -81,26 +81,26 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             // will allow whitespace and comments to come through      
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
-            var xml = await navJson.ToXmlAsync();
+            var xml = navJson.ToXml();
 
             var navXml = XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider());
-            var json = await navXml.ToJsonAsync();
+            var json = navXml.ToJson();
 
-            List<string> errors = new List<string>();
+            List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, json, errors);
             Console.WriteLine(String.Join("\r\n", errors));
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
-        public async Task IgnoreElements()
+        public void WillIgnoreUnknownElements()
         {
             var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
-            var jsonBare = await patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJsonAsync(new FhirJsonSerializationSettings { IgnoreUnknownElements = false });
+            var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson();
             Assert.IsTrue(jsonBare.Contains("pat1"));
 
             patient.Add(SourceNode.Valued("unknownElement", "someValue"));
-            var jsonUnknown = await patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJsonAsync(new FhirJsonSerializationSettings { IgnoreUnknownElements = true });
+            var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson();
             Assert.IsFalse(jsonUnknown.Contains("unknownElement"));
         }
 

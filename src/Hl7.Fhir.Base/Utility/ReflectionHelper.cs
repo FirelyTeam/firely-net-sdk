@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Utility
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
+        public static PropertyInfo[] FindPublicProperties(Type t)
         {
             if (t == null) throw Error.ArgumentNull("t");
 

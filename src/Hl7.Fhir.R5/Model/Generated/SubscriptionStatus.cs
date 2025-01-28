@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.ResourceReference> _AdditionalContext;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as NotificationEventComponent;
 
@@ -218,17 +218,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(EventNumberElement != null) dest.EventNumberElement = (Hl7.Fhir.Model.Integer64)EventNumberElement.DeepCopy();
-        if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
-        if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopy();
-        if(AdditionalContext.Any()) dest.AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(AdditionalContext.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(EventNumberElement != null) dest.EventNumberElement = (Hl7.Fhir.Model.Integer64)EventNumberElement.DeepCopyInternal();
+        if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopyInternal();
+        if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopyInternal();
+        if(AdditionalContext.Any()) dest.AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(AdditionalContext.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new NotificationEventComponent());
+        var instance = new NotificationEventComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -474,7 +475,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.CodeableConcept> _Error;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as SubscriptionStatus;
 
@@ -483,20 +484,21 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)StatusElement.DeepCopy();
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>)TypeElement.DeepCopy();
-      if(EventsSinceSubscriptionStartElement != null) dest.EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.Integer64)EventsSinceSubscriptionStartElement.DeepCopy();
-      if(NotificationEvent.Any()) dest.NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(NotificationEvent.DeepCopy());
-      if(Subscription != null) dest.Subscription = (Hl7.Fhir.Model.ResourceReference)Subscription.DeepCopy();
-      if(TopicElement != null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)TopicElement.DeepCopy();
-      if(Error.Any()) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)StatusElement.DeepCopyInternal();
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>)TypeElement.DeepCopyInternal();
+      if(EventsSinceSubscriptionStartElement != null) dest.EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.Integer64)EventsSinceSubscriptionStartElement.DeepCopyInternal();
+      if(NotificationEvent.Any()) dest.NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(NotificationEvent.DeepCopyInternal());
+      if(Subscription != null) dest.Subscription = (Hl7.Fhir.Model.ResourceReference)Subscription.DeepCopyInternal();
+      if(TopicElement != null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)TopicElement.DeepCopyInternal();
+      if(Error.Any()) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new SubscriptionStatus());
+      var instance = new SubscriptionStatus();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

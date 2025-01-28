@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.CodeableConcept> _Qualifier;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as IncludedStructureComponent;
 
@@ -158,18 +158,19 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Structure != null) dest.Structure = (Hl7.Fhir.Model.CodeableConcept)Structure.DeepCopy();
-        if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.CodeableConcept)Laterality.DeepCopy();
-        if(BodyLandmarkOrientation.Any()) dest.BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(BodyLandmarkOrientation.DeepCopy());
-        if(SpatialReference.Any()) dest.SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(SpatialReference.DeepCopy());
-        if(Qualifier.Any()) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Structure != null) dest.Structure = (Hl7.Fhir.Model.CodeableConcept)Structure.DeepCopyInternal();
+        if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.CodeableConcept)Laterality.DeepCopyInternal();
+        if(BodyLandmarkOrientation.Any()) dest.BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(BodyLandmarkOrientation.DeepCopyInternal());
+        if(SpatialReference.Any()) dest.SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(SpatialReference.DeepCopyInternal());
+        if(Qualifier.Any()) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new IncludedStructureComponent());
+        var instance = new IncludedStructureComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -324,7 +325,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.CodeableConcept> _SurfaceOrientation;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as BodyLandmarkOrientationComponent;
 
@@ -333,17 +334,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(LandmarkDescription.Any()) dest.LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(LandmarkDescription.DeepCopy());
-        if(ClockFacePosition.Any()) dest.ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(ClockFacePosition.DeepCopy());
-        if(DistanceFromLandmark.Any()) dest.DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(DistanceFromLandmark.DeepCopy());
-        if(SurfaceOrientation.Any()) dest.SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(SurfaceOrientation.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(LandmarkDescription.Any()) dest.LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(LandmarkDescription.DeepCopyInternal());
+        if(ClockFacePosition.Any()) dest.ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(ClockFacePosition.DeepCopyInternal());
+        if(DistanceFromLandmark.Any()) dest.DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(DistanceFromLandmark.DeepCopyInternal());
+        if(SurfaceOrientation.Any()) dest.SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(SurfaceOrientation.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new BodyLandmarkOrientationComponent());
+        var instance = new BodyLandmarkOrientationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -460,7 +462,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.Quantity> _Value;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as DistanceFromLandmarkComponent;
 
@@ -469,15 +471,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.CodeableReference>(Device.DeepCopy());
-        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.Quantity>(Value.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.CodeableReference>(Device.DeepCopyInternal());
+        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.Quantity>(Value.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new DistanceFromLandmarkComponent());
+        var instance = new DistanceFromLandmarkComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -683,7 +686,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as BodyStructure;
 
@@ -692,21 +695,22 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-      if(Morphology != null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)Morphology.DeepCopy();
-      if(IncludedStructure.Any()) dest.IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(IncludedStructure.DeepCopy());
-      if(ExcludedStructure.Any()) dest.ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(ExcludedStructure.DeepCopy());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
+      if(Morphology != null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)Morphology.DeepCopyInternal();
+      if(IncludedStructure.Any()) dest.IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(IncludedStructure.DeepCopyInternal());
+      if(ExcludedStructure.Any()) dest.ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(ExcludedStructure.DeepCopyInternal());
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
+      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopyInternal());
+      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new BodyStructure());
+      var instance = new BodyStructure();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

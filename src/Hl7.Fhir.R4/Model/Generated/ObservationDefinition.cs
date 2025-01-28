@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as QuantitativeDetailsComponent;
 
@@ -279,17 +279,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(CustomaryUnit != null) dest.CustomaryUnit = (Hl7.Fhir.Model.CodeableConcept)CustomaryUnit.DeepCopy();
-        if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopy();
-        if(ConversionFactorElement != null) dest.ConversionFactorElement = (Hl7.Fhir.Model.FhirDecimal)ConversionFactorElement.DeepCopy();
-        if(DecimalPrecisionElement != null) dest.DecimalPrecisionElement = (Hl7.Fhir.Model.Integer)DecimalPrecisionElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(CustomaryUnit != null) dest.CustomaryUnit = (Hl7.Fhir.Model.CodeableConcept)CustomaryUnit.DeepCopyInternal();
+        if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopyInternal();
+        if(ConversionFactorElement != null) dest.ConversionFactorElement = (Hl7.Fhir.Model.FhirDecimal)ConversionFactorElement.DeepCopyInternal();
+        if(DecimalPrecisionElement != null) dest.DecimalPrecisionElement = (Hl7.Fhir.Model.Integer)DecimalPrecisionElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new QuantitativeDetailsComponent());
+        var instance = new QuantitativeDetailsComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -542,7 +543,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as QualifiedIntervalComponent;
 
@@ -551,21 +552,22 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>)CategoryElement.DeepCopy();
-        if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
-        if(Context != null) dest.Context = (Hl7.Fhir.Model.CodeableConcept)Context.DeepCopy();
-        if(AppliesTo.Any()) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopy());
-        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-        if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
-        if(GestationalAge != null) dest.GestationalAge = (Hl7.Fhir.Model.Range)GestationalAge.DeepCopy();
-        if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>)CategoryElement.DeepCopyInternal();
+        if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopyInternal();
+        if(Context != null) dest.Context = (Hl7.Fhir.Model.CodeableConcept)Context.DeepCopyInternal();
+        if(AppliesTo.Any()) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopyInternal());
+        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopyInternal();
+        if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopyInternal();
+        if(GestationalAge != null) dest.GestationalAge = (Hl7.Fhir.Model.Range)GestationalAge.DeepCopyInternal();
+        if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new QualifiedIntervalComponent());
+        var instance = new QualifiedIntervalComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -915,7 +917,7 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.CodeableConcept ICoded<Hl7.Fhir.Model.CodeableConcept>.Code { get => Code; set => Code = value; }
     IEnumerable<Coding> ICoded.ToCodings() => Code.ToCodings();
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ObservationDefinition;
 
@@ -924,26 +926,27 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
-      if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopy();
-      if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-      if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopy();
-      if(QuantitativeDetails != null) dest.QuantitativeDetails = (Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent)QuantitativeDetails.DeepCopy();
-      if(QualifiedInterval.Any()) dest.QualifiedInterval = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>(QualifiedInterval.DeepCopy());
-      if(ValidCodedValueSet != null) dest.ValidCodedValueSet = (Hl7.Fhir.Model.ResourceReference)ValidCodedValueSet.DeepCopy();
-      if(NormalCodedValueSet != null) dest.NormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)NormalCodedValueSet.DeepCopy();
-      if(AbnormalCodedValueSet != null) dest.AbnormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)AbnormalCodedValueSet.DeepCopy();
-      if(CriticalCodedValueSet != null) dest.CriticalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)CriticalCodedValueSet.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
+      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(PermittedDataTypeElement.Any()) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopyInternal());
+      if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopyInternal();
+      if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopyInternal();
+      if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopyInternal();
+      if(QuantitativeDetails != null) dest.QuantitativeDetails = (Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent)QuantitativeDetails.DeepCopyInternal();
+      if(QualifiedInterval.Any()) dest.QualifiedInterval = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>(QualifiedInterval.DeepCopyInternal());
+      if(ValidCodedValueSet != null) dest.ValidCodedValueSet = (Hl7.Fhir.Model.ResourceReference)ValidCodedValueSet.DeepCopyInternal();
+      if(NormalCodedValueSet != null) dest.NormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)NormalCodedValueSet.DeepCopyInternal();
+      if(AbnormalCodedValueSet != null) dest.AbnormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)AbnormalCodedValueSet.DeepCopyInternal();
+      if(CriticalCodedValueSet != null) dest.CriticalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)CriticalCodedValueSet.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ObservationDefinition());
+      var instance = new ObservationDefinition();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

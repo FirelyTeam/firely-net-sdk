@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ProgressComponent;
 
@@ -293,19 +293,20 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(SubjectState != null) dest.SubjectState = (Hl7.Fhir.Model.CodeableConcept)SubjectState.DeepCopy();
-        if(Milestone != null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)Milestone.DeepCopy();
-        if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-        if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopy();
-        if(EndDateElement != null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)EndDateElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(SubjectState != null) dest.SubjectState = (Hl7.Fhir.Model.CodeableConcept)SubjectState.DeepCopyInternal();
+        if(Milestone != null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)Milestone.DeepCopyInternal();
+        if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopyInternal();
+        if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopyInternal();
+        if(EndDateElement != null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)EndDateElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ProgressComponent());
+        var instance = new ProgressComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -580,7 +581,7 @@ namespace Hl7.Fhir.Model
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as ResearchSubject;
 
@@ -589,22 +590,23 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
-      if(Progress.Any()) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopy());
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(AssignedComparisonGroupElement != null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)AssignedComparisonGroupElement.DeepCopy();
-      if(ActualComparisonGroupElement != null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)ActualComparisonGroupElement.DeepCopy();
-      if(Consent.Any()) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(Consent.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopyInternal();
+      if(Progress.Any()) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopyInternal());
+      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopyInternal();
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
+      if(AssignedComparisonGroupElement != null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)AssignedComparisonGroupElement.DeepCopyInternal();
+      if(ActualComparisonGroupElement != null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)ActualComparisonGroupElement.DeepCopyInternal();
+      if(Consent.Any()) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(Consent.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ResearchSubject());
+      var instance = new ResearchSubject();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

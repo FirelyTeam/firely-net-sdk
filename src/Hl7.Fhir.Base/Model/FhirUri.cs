@@ -29,50 +29,49 @@
 */
 
 #nullable enable
-using Hl7.Fhir.Introspection;
+
 using System;
+using System.Collections.Generic;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class FhirUri : ICoded
 {
-    [Bindable(true)]
-    public partial class FhirUri
+    public FhirUri(Uri uri)
     {
-        public FhirUri(Uri uri)
-        {
-            Value = uri.OriginalString;
-        }
-
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        /// <remarks>Due to the way we use Urls in FHIR, some "valid" FHIR urls are
-        /// actually no valid according to <see cref="Uri.IsWellFormedUriString(string?, UriKind)"/></remarks>
-        public static bool IsValidValue(string value)
-        {
-            Uri uri;
-
-            try
-            {
-                uri = new Uri(value, UriKind.RelativeOrAbsolute);
-            }
-            catch
-            {
-                return false;
-            }
-
-            if (uri.IsAbsoluteUri)
-            {
-                var uris = uri.ToString();
-
-                if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
-                    return false;
-                else if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
-                    return false;
-            }
-
-            return true;
-        }
+        Value = uri.OriginalString;
     }
-}
 
-#nullable restore
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    /// <remarks>Due to the way we use Urls in FHIR, some "valid" FHIR urls are
+    /// actually no valid according to <see cref="Uri.IsWellFormedUriString(string?, UriKind)"/></remarks>
+    public static bool IsValidValue(string value)
+    {
+        Uri uri;
+
+        try
+        {
+            uri = new Uri(value, UriKind.RelativeOrAbsolute);
+        }
+        catch
+        {
+            return false;
+        }
+
+        if (uri.IsAbsoluteUri)
+        {
+            var uris = uri.ToString();
+
+            if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
+                return false;
+            else if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
+                return false;
+        }
+
+        return true;
+    }
+
+    public IEnumerable<Coding> ToCodings() => [new(null, Value)];
+}

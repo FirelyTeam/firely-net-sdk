@@ -77,6 +77,13 @@ namespace Hl7.Fhir.Model
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
+    protected internal override Base DeepCopyInternal()
+    {
+      var instance = new FhirUrl();
+      CopyToInternal(instance);
+      return instance;
+    }
+
   }
 
 }

@@ -28,40 +28,28 @@
 
 */
 
-using Hl7.Fhir.Introspection;
+#nullable enable
+
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
 using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Quantity : ICoded
 {
-    [Bindable(true)]
-    public partial class Quantity
+    public P.Quantity? ToQuantity()
     {
-        public Quantity(P.Quantity quantity) :
-            this(
-                quantity.Value,
-                quantity.Unit,
-                quantity.System == P.QuantityUnitSystem.CalendarDuration
-                    ? "http://hl7.org/fhirpath/CodeSystem/calendar-units"
-                    : "http://unitsofmeasure.org"
-            )
+        if (Value != null)
         {
-        }
+            if (Comparator != null)
+                throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
 
-        public P.Quantity ToQuantity()
-        {
-            if (Value != null)
-            {
-                if (Comparator != null)
-                    throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
-
-                return new P.Quantity(Value.Value, Code, System == "http://hl7.org/fhirpath/CodeSystem/calendar-units"
-                    ? P.QuantityUnitSystem.CalendarDuration
-                    : P.QuantityUnitSystem.UCUM
-                );
-            }
-            else
-                return null;
+            return new P.Quantity(Value.Value, Code);
         }
+        else
+            return null;
     }
+
+    public IEnumerable<Coding> ToCodings() => [new(System, Code)];
 }

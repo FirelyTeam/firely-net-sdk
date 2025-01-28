@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
 
       private List<Hl7.Fhir.Model.Coding> _Code;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as CodeFilterComponent;
 
@@ -265,17 +265,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
-        if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopy();
-        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
+        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopyInternal();
+        if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopyInternal();
+        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CodeFilterComponent());
+        var instance = new CodeFilterComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -440,7 +441,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Value;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as DateFilterComponent;
 
@@ -449,16 +450,17 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
+        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopyInternal();
+        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new DateFilterComponent());
+        var instance = new DateFilterComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -648,7 +650,7 @@ namespace Hl7.Fhir.Model
 
       private Hl7.Fhir.Model.DataType _Value;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as ValueFilterComponent;
 
@@ -657,17 +659,18 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
-        if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>)ComparatorElement.DeepCopy();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
+        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopyInternal();
+        if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>)ComparatorElement.DeepCopyInternal();
+        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ValueFilterComponent());
+        var instance = new ValueFilterComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -822,7 +825,7 @@ namespace Hl7.Fhir.Model
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
         var dest = other as SortComponent;
 
@@ -831,15 +834,16 @@ namespace Hl7.Fhir.Model
           throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
 
-        base.CopyTo(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-        if(DirectionElement != null) dest.DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>)DirectionElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
+        if(DirectionElement != null) dest.DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>)DirectionElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SortComponent());
+        var instance = new SortComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -1097,7 +1101,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DataRequirement.SortComponent> _Sort;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as DataRequirement;
 
@@ -1106,22 +1110,23 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
-      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
-      if(MustSupportElement.Any()) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
-      if(CodeFilter.Any()) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
-      if(DateFilter.Any()) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());
-      if(ValueFilter.Any()) dest.ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(ValueFilter.DeepCopy());
-      if(LimitElement != null) dest.LimitElement = (Hl7.Fhir.Model.PositiveInt)LimitElement.DeepCopy();
-      if(Sort.Any()) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(Sort.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopyInternal();
+      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopyInternal());
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopyInternal();
+      if(MustSupportElement.Any()) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopyInternal());
+      if(CodeFilter.Any()) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopyInternal());
+      if(DateFilter.Any()) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopyInternal());
+      if(ValueFilter.Any()) dest.ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(ValueFilter.DeepCopyInternal());
+      if(LimitElement != null) dest.LimitElement = (Hl7.Fhir.Model.PositiveInt)LimitElement.DeepCopyInternal();
+      if(Sort.Any()) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(Sort.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new DataRequirement());
+      var instance = new DataRequirement();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

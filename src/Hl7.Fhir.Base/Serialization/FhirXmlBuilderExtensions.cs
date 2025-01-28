@@ -12,89 +12,135 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using PocoNode = Hl7.Fhir.ElementModel.PocoNode;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public static class FhirXmlBuilderExtensions
 {
-    public static class FhirXmlBuilderExtensions
+    /// <summary>
+    /// Serializes an <see cref="ISourceNode"/> instance into FHIR Xml.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="XmlWriter"/> to write the serialized data to.</param>
+    /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
+    /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirXmlNode"/>.</remarks>
+    public static void WriteTo(this ISourceNode source, XmlWriter writer) =>
+        new FhirXmlBuilder().Build(source).writeTo(writer);
+
+    /// <inheritdoc cref="WriteTo(Hl7.Fhir.ElementModel.ISourceNode,System.Xml.XmlWriter)"/>
+    public static async Task WriteToAsync(this ISourceNode source, XmlWriter destination) =>
+        await new FhirXmlBuilder().Build(source).writeToAsync(destination).ConfigureAwait(false);
+
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance to FHIR Xml.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="XmlWriter"/> to write the serialized data to.</param>
+    public static void WriteTo(this ITypedElement source, XmlWriter writer) =>
+        new FhirXmlBuilder().Build(source).writeTo(writer);
+
+    /// <inheritdoc cref="WriteTo(Hl7.Fhir.ElementModel.ITypedElement,System.Xml.XmlWriter)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task WriteToAsync(this ITypedElement source, XmlWriter destination) =>
+        await new FhirXmlBuilder().Build(source).writeToAsync(destination).ConfigureAwait(false);
+
+    /// <summary>
+    /// Serializes an <see cref="ISourceNode"/> instance into a <see cref="XDocument"/>.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
+    /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirXmlNode"/>.</remarks>
+    public static XDocument ToXDocument(this ISourceNode source) =>
+        new FhirXmlBuilder().Build(source);
+
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance into a <see cref="XDocument"/>
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    public static XDocument ToXDocument(this ITypedElement source) =>
+        new FhirXmlBuilder().Build(source);
+
+    /// <summary>
+    /// Serializes an <see cref="ISourceNode"/> instance into a FHIR Xml string.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Xml.</param>
+    /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
+    /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirXmlNode"/>.</remarks>
+    public static string ToXml(this ISourceNode source, bool pretty = false)
+        => SerializationUtil.WriteXmlToString(source.WriteTo, pretty);
+
+    /// <inheritdoc cref="ToXml(Hl7.Fhir.ElementModel.ISourceNode,bool)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task<string> ToXmlAsync(this ISourceNode source, bool pretty = false)
+        => await SerializationUtil.WriteXmlToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
+
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance into a FHIR Xml string.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Xml.</param>
+    public static string ToXml(this ITypedElement source, bool pretty = false)
     {
-        /// <inheritdoc cref="writeToAsync(XDocument, XmlWriter)" />
-        private static void writeTo(this XDocument doc, XmlWriter destination)
-        {
-            if (doc.Root != null)
-                doc.WriteTo(destination);
+        if (source is not PocoNode node)
+            return SerializationUtil.WriteXmlToString(source.WriteTo, pretty);
 
-            destination.Flush();
-        }
+        return serializePocoNode(node, pretty);
+    }
 
-        private static async Task writeToAsync(this XDocument doc, XmlWriter destination)
-        {
-            if (doc.Root != null)
-                doc.WriteTo(destination);
+    /// <inheritdoc cref="ToXml(Hl7.Fhir.ElementModel.ITypedElement,bool)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task<string> ToXmlAsync(this ITypedElement source, bool pretty = false)
+    {
+        if (source is not PocoNode node)
+            return await SerializationUtil.WriteXmlToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-            await destination.FlushAsync().ConfigureAwait(false);
-        }
+        return serializePocoNode(node, pretty);
+    }
 
-        /// <inheritdoc cref="WriteToAsync(ISourceNode, XmlWriter, FhirXmlSerializationSettings)" />
-        public static void WriteTo(this ISourceNode source, XmlWriter destination, FhirXmlSerializationSettings settings = null) => 
-            new FhirXmlBuilder(settings).Build(source).writeTo(destination);
+    private static string serializePocoNode(PocoNode pn, bool pretty)
+    {
+        var serializer = new BaseFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType()));
 
-        public static async Task WriteToAsync(this ISourceNode source, XmlWriter destination, FhirXmlSerializationSettings settings = null) =>
-            await new FhirXmlBuilder(settings).Build(source).writeToAsync(destination).ConfigureAwait(false);
+        // If we are serializing a subtree of a resource, then if the current node is a datatype or a nested resource,
+        // we need to pick a name for this root element.
+        var pickElementName = pn.Poco is not Resource || pn.Parent is not null;
+        var rootName = pickElementName ? pn.Name : null;
 
-        /// <inheritdoc cref="WriteToAsync(ITypedElement, XmlWriter, FhirXmlSerializationSettings)" />
-        public static void WriteTo(this ITypedElement source, XmlWriter destination, FhirXmlSerializationSettings settings = null) =>
-            new FhirXmlBuilder(settings).Build(source).writeTo(destination);
+        return serializer.SerializeToString(pn.Poco, pretty, rootName: rootName);
+    }
 
-        public static async Task WriteToAsync(this ITypedElement source, XmlWriter destination, FhirXmlSerializationSettings settings = null) =>
-            await new FhirXmlBuilder(settings).Build(source).writeToAsync(destination).ConfigureAwait(false);
+    /// <summary>
+    /// Serializes an <see cref="ITypedElement"/> instance into a FHIR Xml byte array.
+    /// </summary>
+    /// <param name="source">The instance to serialize.</param>
+    /// <param name="pretty">Formats and indents the serialized Xml.</param>
+    public static byte[] ToXmlBytes(this ITypedElement source, bool pretty = false)
+        => SerializationUtil.WriteXmlToBytes(source.WriteTo, pretty);
 
-        public static XDocument ToXDocument(this ISourceNode source, FhirXmlSerializationSettings settings = null) =>
-            new FhirXmlBuilder(settings).Build(source);
+    /// <inheritdoc cref="ToXmlBytes(Hl7.Fhir.ElementModel.ITypedElement,bool)"/>
+    [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    public static async Task<byte[]> ToXmlBytesAsync(this ITypedElement source, bool pretty = false)
+        => await SerializationUtil.WriteXmlToBytesAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-        public static XDocument ToXDocument(this ITypedElement source, FhirXmlSerializationSettings settings = null) =>
-            new FhirXmlBuilder(settings).Build(source);
+    private static void writeTo(this XDocument doc, XmlWriter destination)
+    {
+        if (doc.Root != null)
+            doc.WriteTo(destination);
 
-        /// <inheritdoc cref="ToXmlAsync(ISourceNode, FhirXmlSerializationSettings)" />
-        public static string ToXml(this ISourceNode source, FhirXmlSerializationSettings settings = null)
-        => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
+        destination.Flush();
+    }
 
-        public static async Task<string> ToXmlAsync(this ISourceNode source, FhirXmlSerializationSettings settings = null)
-            => await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false, settings?.AppendNewLine ?? false).ConfigureAwait(false);
+    private static async Task writeToAsync(this XDocument doc, XmlWriter destination)
+    {
+        if (doc.Root != null)
+            await doc.WriteToAsync(destination, CancellationToken.None);
 
-        /// <inheritdoc cref="ToXmlAsync(ITypedElement, FhirXmlSerializationSettings)" />
-        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
-        public static string ToXml(this ITypedElement source, FhirXmlSerializationSettings settings = null)
-        {
-            if (source is not PocoNode {Poco: {} b} node)
-                return SerializationUtil.WriteXmlToString(source, (s,w) => s.WriteTo(w, settings),
-                    settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
-            
-            var serializer = new BaseFhirXmlPocoSerializer(node.FindInspector()?.FhirRelease ?? ModelInspector.ForType(b.GetType()).FhirRelease);
-            return serializer.SerializeToString(b);
-        }
-
-        [TemporarilyChanged] // This works. Remove this attribute after writing new extensions on the pocos
-        public static async Task<string> ToXmlAsync(this ITypedElement source, FhirXmlSerializationSettings settings = null)
-        {
-            if (source is not PocoNode {Poco: {} b} node)
-                return await SerializationUtil.WriteXmlToStringAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false), settings?.Pretty ?? false,
-                    settings?.AppendNewLine ?? false).ConfigureAwait(false);
-            
-            var serializer = new BaseFhirXmlPocoSerializer(node.FindInspector()?.FhirRelease ?? ModelInspector.ForType(b.GetType()).FhirRelease);
-            return serializer.SerializeToString(b);
-        }
-
-        /// <inheritdoc cref="ToXmlBytesAsync(ITypedElement, FhirXmlSerializationSettings)" />
-        public static byte[] ToXmlBytes(this ITypedElement source, FhirXmlSerializationSettings settings = null)
-                => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings));
-
-        public static async Task<byte[]> ToXmlBytesAsync(this ITypedElement source, FhirXmlSerializationSettings settings = null)
-            => await SerializationUtil.WriteXmlToBytesAsync(async writer => await source.WriteToAsync(writer, settings).ConfigureAwait(false)).ConfigureAwait(false);
+        await destination.FlushAsync().ConfigureAwait(false);
     }
 }

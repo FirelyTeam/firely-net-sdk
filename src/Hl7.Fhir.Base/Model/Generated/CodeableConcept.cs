@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as CodeableConcept;
 
@@ -114,15 +114,16 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(Coding.Any()) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopy());
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(Coding.Any()) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopyInternal());
+      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new CodeableConcept());
+      var instance = new CodeableConcept();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

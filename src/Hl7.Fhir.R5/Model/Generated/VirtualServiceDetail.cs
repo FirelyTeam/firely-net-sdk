@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
       var dest = other as VirtualServiceDetail;
 
@@ -188,18 +188,19 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
       }
 
-      base.CopyTo(dest);
-      if(ChannelType != null) dest.ChannelType = (Hl7.Fhir.Model.Coding)ChannelType.DeepCopy();
-      if(Address != null) dest.Address = (Hl7.Fhir.Model.DataType)Address.DeepCopy();
-      if(AdditionalInfoElement.Any()) dest.AdditionalInfoElement = new List<Hl7.Fhir.Model.FhirUrl>(AdditionalInfoElement.DeepCopy());
-      if(MaxParticipantsElement != null) dest.MaxParticipantsElement = (Hl7.Fhir.Model.PositiveInt)MaxParticipantsElement.DeepCopy();
-      if(SessionKeyElement != null) dest.SessionKeyElement = (Hl7.Fhir.Model.FhirString)SessionKeyElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(ChannelType != null) dest.ChannelType = (Hl7.Fhir.Model.Coding)ChannelType.DeepCopyInternal();
+      if(Address != null) dest.Address = (Hl7.Fhir.Model.DataType)Address.DeepCopyInternal();
+      if(AdditionalInfoElement.Any()) dest.AdditionalInfoElement = new List<Hl7.Fhir.Model.FhirUrl>(AdditionalInfoElement.DeepCopyInternal());
+      if(MaxParticipantsElement != null) dest.MaxParticipantsElement = (Hl7.Fhir.Model.PositiveInt)MaxParticipantsElement.DeepCopyInternal();
+      if(SessionKeyElement != null) dest.SessionKeyElement = (Hl7.Fhir.Model.FhirString)SessionKeyElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new VirtualServiceDetail());
+      var instance = new VirtualServiceDetail();
+      CopyToInternal(instance);
+      return instance;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)

@@ -10,91 +10,108 @@
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.Specification
+namespace Hl7.Fhir.Specification;
+
+public interface IElementDefinitionSummary  // ElementDefinition
 {
-    public interface IElementDefinitionSummary  // ElementDefinition
-    {
-        string ElementName { get; }
-        bool IsCollection { get; }
-        bool IsRequired { get; }
-        bool InSummary { get; }
-        bool IsChoiceElement { get; }
-        bool IsResource { get; }
-
-        /// <summary>
-        /// If this modifies the meaning of other elements
-        /// </summary>
-        bool IsModifier { get; }
-
-        ITypeSerializationInfo[] Type { get; }
-
-        /// <summary>
-        /// Logical Models where a choice type is represented by ElementDefinition.representation = typeAttr might define a default type (elementdefinition-defaulttype extension). null in most cases.
-        /// </summary>
-        string DefaultTypeName { get; }
-
-        /// <summary>
-        /// This is the namespace used for the xml node representing this element.
-        /// Only need to be set if different from "http://hl7.org/fhir".
-        /// </summary>
-        string NonDefaultNamespace { get; }
-
-        /// <summary>
-        /// The kind of node used to represent this element in XML.
-        /// Default is <see cref="XmlRepresentation.XmlElement"/>.
-        /// </summary>
-        XmlRepresentation Representation { get; }
-
-        int Order { get; }
-    }
-
-
-
-    public interface ITypeSerializationInfo
-    {
-    }
+    string ElementName { get; }
 
     /// <summary>
-    /// A class representing a complex type, with child elements. 
+    /// Whether this element may repeat.
     /// </summary>
-    /// <remarks>
-    ///  In FHIR, this interface represents definitions of Resources, datatypes and BackboneElements. 
-    ///  BackboneElements will have the TypeName set to "BackboneElement" (in resources) or "Element" (in datatypes)
-    ///  and IsAbstract set to true.
-    ///  </remarks>
-    public interface IStructureDefinitionSummary : ITypeSerializationInfo
-    {
-        string TypeName { get; }
-        bool IsAbstract { get; }
-        bool IsResource { get; }
+    bool IsCollection { get; }
 
-        IReadOnlyCollection<IElementDefinitionSummary> GetElements();
-    }
+    /// <summary>
+    /// Whether this element may repeat, with a minimum cardinality of 1.
+    /// </summary>
+    bool IsRequired { get; }
 
-    public interface IStructureDefinitionReference : ITypeSerializationInfo
-    {
-        string ReferredType { get; }
-    }
+    /// <summary>
+    /// Whether this element is marked as "in summary" in the FHIR specification.
+    /// </summary>
+    bool InSummary { get; }
 
-    public interface IStructureDefinitionSummaryProvider
-    {
-        IStructureDefinitionSummary Provide(string canonical);
-    }
+    /// <summary>
+    /// Whether this element is a choice element, allowing multiple types.
+    /// </summary>
+    bool IsChoiceElement { get; }
 
-    public static class TypeSerializationInfoExtensions
+    /// <summary>
+    /// Whether the element contains a resource (e.g. a contained resource).
+    /// </summary>
+    bool IsResource { get; }
+
+    /// <summary>
+    /// If this modifies the meaning of other elements
+    /// </summary>
+    bool IsModifier { get; }
+
+    ITypeSerializationInfo[] Type { get; }
+
+    /// <summary>
+    /// Logical Models where a choice type is represented by ElementDefinition.representation = typeAttr might define a default type (elementdefinition-defaulttype extension). null in most cases.
+    /// </summary>
+    string DefaultTypeName { get; }
+
+    /// <summary>
+    /// This is the namespace used for the xml node representing this element.
+    /// Only need to be set if different from "http://hl7.org/fhir".
+    /// </summary>
+    string NonDefaultNamespace { get; }
+
+    /// <summary>
+    /// The kind of node used to represent this element in XML.
+    /// Default is <see cref="XmlRepresentation.XmlElement"/>.
+    /// </summary>
+    XmlRepresentation Representation { get; }
+
+    /// <summary>
+    /// Relative order of this element compared to other elements.
+    /// </summary>
+    int Order { get; }
+}
+
+
+
+public interface ITypeSerializationInfo;
+
+/// <summary>
+/// A class representing a complex type, with child elements.
+/// </summary>
+/// <remarks>
+///  In FHIR, this interface represents definitions of Resources, datatypes and BackboneElements.
+///  BackboneElements will have the TypeName set to "BackboneElement" (in resources) or "Element" (in datatypes)
+///  and IsAbstract set to true.
+///  </remarks>
+public interface IStructureDefinitionSummary : ITypeSerializationInfo
+{
+    string TypeName { get; }
+    bool IsAbstract { get; }
+    bool IsResource { get; }
+
+    IReadOnlyCollection<IElementDefinitionSummary> GetElements();
+}
+
+public interface IStructureDefinitionReference : ITypeSerializationInfo
+{
+    string ReferredType { get; }
+}
+
+public interface IStructureDefinitionSummaryProvider
+{
+    IStructureDefinitionSummary Provide(string canonical);
+}
+
+public static class TypeSerializationInfoExtensions
+{
+    public static string GetTypeName(this ITypeSerializationInfo info)
     {
-        public static string GetTypeName(this ITypeSerializationInfo info)
+        return info switch
         {
-            switch (info)
-            {
-                case IStructureDefinitionReference tr:
-                    return tr.ReferredType;
-                case IStructureDefinitionSummary ct:
-                    return ct.TypeName;
-                default:
-                    throw Error.NotSupported($"Don't know how to derive type information from type {info.GetType()}");
-            }
-        }
-
+            IStructureDefinitionReference tr => tr.ReferredType,
+            IStructureDefinitionSummary ct => ct.TypeName,
+            _ => throw Error.NotSupported($"Don't know how to derive type information from type {info.GetType()}")
+        };
     }
+
 }

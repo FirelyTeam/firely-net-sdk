@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Specification.Tests
             nav.JumpToFirst("Patient.communication");
             nav.MoveToNextSlice();
 
-            var fortest = await nav.StructureDefinition.ToXmlAsync();
+            var fortest = nav.StructureDefinition.ToXml();
             var walker = new StructureDefinitionWalker(nav, _source);
 
             var elem = walker.Extension("http://hl7.org/fhir/StructureDefinition/patient-proficiency");
