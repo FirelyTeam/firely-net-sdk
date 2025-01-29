@@ -44,12 +44,6 @@ public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
     {
     }
 
-    public CodeableConcept(IEnumerable<Coding> codes, string? text = null)
-    {
-        this.Coding = codes.ToList();
-        this.Text = text;
-    }
-
     public CodeableConcept(string system, string code, string? text = null)
     {
         if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code))
@@ -58,6 +52,7 @@ public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
         }
         this.Text = text;
     }
+
     public CodeableConcept(string system, string code, string display, string text)
     {
         if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code) || !string.IsNullOrEmpty(display))
@@ -65,6 +60,11 @@ public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
             this.Coding = [new Coding(system, code, display)];
         }
         this.Text = text;
+    }
+
+    public CodeableConcept(IEnumerable<Coding> codes)
+    {
+        this.Coding = codes.ToList();
     }
 
     public CodeableConcept Add(string system, string code, string? display = null)
@@ -93,7 +93,7 @@ public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
             return false;
         }
 
-        result = new P.Concept(codes.Cast<P.Code>());
+        result = new P.Concept(codes.Cast<P.Code>(), this.Text);
         return true;
     }
 
