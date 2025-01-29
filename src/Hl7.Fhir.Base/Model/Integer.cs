@@ -30,23 +30,28 @@
 
 #nullable enable
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Integer: P.IToSystemPrimitive
+public partial class Integer
 {
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
-    public static bool IsValidValue(string value) => ElementModel.Types.Integer.TryParse(value, out _);
+    public static bool IsValidValue(string value) => P.Integer.TryParse(value, out _);
 
-    public P.Integer ToSystemInteger() => new(value: Value ?? 0);
+    /// <summary>
+    /// Converts this Integer to a <see cref="P.Integer" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Integer is null,
+    /// which is not valid for System integers.</exception>
+    public P.Integer ToSystemInteger() =>
+        (P.Integer?)TryConvertToSystemTypeInternal()
+        ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemInteger();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Integer(Value.Value) : null;
 }

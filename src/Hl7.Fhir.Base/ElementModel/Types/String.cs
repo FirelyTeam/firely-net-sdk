@@ -16,8 +16,6 @@ namespace Hl7.Fhir.ElementModel.Types;
 
 public class String(string value) : Any, IComparable, ICqlEquatable, ICqlOrderable
 {
-    //public String() : this(string.Empty) { }
-
     public string Value { get; } = value;
 
     public static String Parse(string value) =>

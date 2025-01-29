@@ -30,24 +30,28 @@
 
 #nullable enable
 
-using System.Diagnostics.CodeAnalysis;
-
+using System;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class FhirBoolean: P.IToSystemPrimitive
+public partial class FhirBoolean
 {
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
     public static bool IsValidValue(string value) => P.Boolean.TryParse(value, out _);
 
-    public P.Boolean ToSystemBoolean() => new(value: Value ?? false);
+    /// <summary>
+    /// Converts this FhirBoolean to a <see cref="P.Boolean" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this boolean is null,
+    /// which is not valid for System booleans.</exception>
+    public P.Boolean ToSystemBoolean() =>
+        (P.Boolean?)TryConvertToSystemTypeInternal()
+           ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemBoolean();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Boolean(Value.Value) : null;
 }

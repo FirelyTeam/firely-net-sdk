@@ -30,6 +30,7 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -76,14 +77,26 @@ public partial class Coding: ICoded, P.IToSystemPrimitive
         }
     }
 
-    public P.Code ToSystemCode() => new(System, Code, Display, Version);
+    /// <summary>
+    /// Converts this Coding to a <see cref="P.Code"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Code of this code is null,
+    /// which is not valid for System Codes.</exception>
+    public P.Code ToSystemCode() =>
+        TryConvertToSystemTypeInternal() ??
+        throw new InvalidOperationException("Code is null.");
 
+    /// <inheritdoc cref="P.IToSystemPrimitive.TryConvertToSystemType(out P.Any)"/>
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        result = ToSystemCode();
-        return true;
+        result = TryConvertToSystemTypeInternal();
+        return result is not null;
     }
 
-    public IEnumerable<Coding> ToCodings() => [this];
+    internal P.Code? TryConvertToSystemTypeInternal() => Code is not null
+        ? new P.Code(System, Code, Display, Version)
+        : null;
 
+    /// <inheritdoc cref="ICoded.ToCodings()"/>
+    public IEnumerable<Coding> ToCodings() => [this];
 }

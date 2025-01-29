@@ -30,13 +30,13 @@
 
 #nullable enable
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Uuid: P.IToSystemPrimitive
+public partial class Uuid
 {
     /// <summary>
     /// Generates a new, random Uuid.
@@ -58,11 +58,15 @@ public partial class Uuid: P.IToSystemPrimitive
     /// </summary>
     public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
-    public P.String ToSystemString() => new(Value ?? string.Empty);
+    /// <summary>
+    /// Converts this Uuid to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Uuid is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemString();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
+
 }

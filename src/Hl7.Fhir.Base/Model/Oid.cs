@@ -29,13 +29,13 @@
 
 #nullable enable
 
+using System;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Oid: P.IToSystemPrimitive
+public partial class Oid
 {
     /// <summary>
     /// Creates a new <see cref="FhirUri"/> based on this oid.
@@ -48,11 +48,14 @@ public partial class Oid: P.IToSystemPrimitive
     /// </summary>
     public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
-    public P.String ToSystemString() => new(Value ?? string.Empty);
+    /// <summary>
+    /// Converts this Oid to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Oid is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemString();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
 }

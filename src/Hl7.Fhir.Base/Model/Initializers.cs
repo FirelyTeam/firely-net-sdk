@@ -56,35 +56,6 @@ namespace Hl7.Fhir.Model
             return sb.ToString();
         }
 
-        public CodeableConcept()
-        {
-        }
-
-        public CodeableConcept(string system, string code, string? text = null)
-        {
-            if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code))
-            {
-                this.Coding = new List<Coding>() {
-                    new Coding(system,code) };
-            }
-            this.Text = text;
-        }
-        public CodeableConcept(string system, string code, string display, string text)
-        {
-            if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code) || !string.IsNullOrEmpty(display))
-            {
-                this.Coding = new List<Coding>() {
-                    new Coding(system,code, display) };
-            }
-            this.Text = text;
-        }
-
-        public CodeableConcept Add(string system, string code, string? display = null)
-        {
-            Coding.Add(new Coding(system, code, display));
-
-            return this;
-        }
     }
 
     public partial class Identifier

@@ -28,7 +28,9 @@
 
 */
 
+using Hl7.Fhir.ElementModel.Types;
 using System;
+using P=Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
 
@@ -36,6 +38,12 @@ namespace Hl7.Fhir.Model;
 
 public partial class Base64Binary
 {
+    public static Base64Binary FromBase64String(string base64Data) =>
+        new(Convert.FromBase64String(base64Data));
+
+    public static Base64Binary FromText(string text) =>
+        new(System.Text.Encoding.UTF8.GetBytes(text));
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
@@ -51,4 +59,17 @@ public partial class Base64Binary
             return false;
         }
     }
+
+    /// <summary>
+    /// Converts this binary to a Base64-encoded <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The value of this binary is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() => (P.String?)TryConvertToSystemTypeInternal() ??
+                                        throw new InvalidOperationException("Value is null.");
+
+    protected internal override Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+        ? new P.String(Convert.ToBase64String(Value))
+        : null;
 }

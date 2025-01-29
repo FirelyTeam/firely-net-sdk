@@ -82,6 +82,7 @@ namespace Hl7.Fhir.Model
       return instance;
     }
 
+    protected internal override SystemPrimitive.Any TryConvertToSystemTypeInternal() => null;
   }
 
 }

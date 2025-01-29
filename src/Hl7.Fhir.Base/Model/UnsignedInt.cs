@@ -30,23 +30,28 @@
 
 #nullable enable
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class UnsignedInt: P.IToSystemPrimitive
+public partial class UnsignedInt
 {
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
     public static bool IsValidValue(string value) => ElementModel.Types.Integer.TryParse(value, out var parsed) && parsed.Value >= 0;
 
-    public P.Long ToSystemLong() => new(value: Value ?? 0);
+    /// <summary>
+    /// Converts this UnsignedInt to a <see cref="P.Long" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this UnsignedInt is null,
+    /// which is not valid for System longs.</exception>
+    public P.Long ToSystemLong() =>
+        (P.Long?)TryConvertToSystemTypeInternal()
+        ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemLong();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Long(Value.Value) : null;
 }

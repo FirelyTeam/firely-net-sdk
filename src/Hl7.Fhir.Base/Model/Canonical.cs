@@ -30,7 +30,6 @@
 using P=Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Utility;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
@@ -156,12 +155,11 @@ public partial class Canonical: P.IToSystemPrimitive
     /// <summary>
     /// Converts this canonical to a <see cref="P.String" />.
     /// </summary>
-    public P.String ToSystemString() => new(Value);
+    /// <exception cref="InvalidOperationException">The value of this canonical is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() => (P.String?)TryConvertToSystemTypeInternal() ??
+        throw new InvalidOperationException("Value is null.");
 
-    /// <inheritdoc />
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemString();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+            Value is not null ? new P.String(Value) : null;
 }

@@ -30,7 +30,7 @@
 
 #nullable enable
 
-using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -39,28 +39,35 @@ namespace Hl7.Fhir.Model;
 
 public partial class Quantity : ICoded, P.IToSystemPrimitive
 {
+    /// <summary>
+    /// Converts this Quantity to a <see cref="P.Quantity" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Quantity is null
+    /// or the Comparator is not null, which is not valid for System strings.</exception>
     public P.Quantity ToSystemQuantity()
     {
-       if (Value == null)
-            throw Error.NotSupported("Cannot convert a Quantity without a value to a FhirPath Quantity.");
+        var (v, e) = tryConvertToSystemTypeInternal();
+        return v! ?? throw e!;
+    }
 
-       if(Comparator == null)
-           throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity.");
+    private (P.Quantity? v, Exception? e) tryConvertToSystemTypeInternal()
+    {
+        if (Value is null)
+            return (null, new InvalidOperationException("Cannot convert a Quantity without a value to a FhirPath Quantity."));
 
-       return new P.Quantity(Value.Value, Code);
+        if (Comparator is not null)
+            return (null, new InvalidOperationException("Cannot convert a Quantity with a comparator to a FhirPath Quantity."));
+
+        return (new P.Quantity(Value.Value, Code), null);
     }
 
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        if (Value is not null && Comparator is not null)
-        {
-            result = ToSystemQuantity();
-            return true;
-        }
-
-        result = null;
-        return false;
+        var (v, e) = tryConvertToSystemTypeInternal();
+        result = v;
+        return e is null;
     }
 
+    /// <inheritdoc cref="ICoded.ToCodings"/>
     public IEnumerable<Coding> ToCodings() => [new(System, Code)];
 }

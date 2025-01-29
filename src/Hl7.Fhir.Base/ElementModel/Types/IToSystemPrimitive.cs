@@ -24,22 +24,3 @@ public interface IToSystemPrimitive
     /// <returns>true if this model object has a CQL equivalent and the conversion succeeded, otherwise false.</returns>
     bool TryConvertToSystemType([NotNullWhen(true)] out Any? result);
 }
-
-
-public static class CqlConvertible
-{
-    public static bool TryConvertTo<T>(this Any source, [NotNullWhen(true)] out T? result) where T : Any
-    {
-        var success = source.TryConvertTo(typeof(T), out var any) && any is T;
-
-        switch (success)
-        {
-            case true:
-                result = (T)any!;
-                return true;
-            default:
-                result = null;
-                return false;
-        }
-    }
-}

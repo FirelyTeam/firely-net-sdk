@@ -30,12 +30,12 @@
 
 #nullable enable
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Markdown: P.IToSystemPrimitive
+public partial class Markdown
 {
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
@@ -45,11 +45,14 @@ public partial class Markdown: P.IToSystemPrimitive
     public static implicit operator string?(Markdown? md) => md?.Value;
     public static implicit operator Markdown?(string? s) => s is not null ? new Markdown(s) : null;
 
-    public P.String ToSystemString() => new(Value ?? string.Empty);
+    /// <summary>
+    /// Converts this Markdown to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Markdown is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemString();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
+
 }

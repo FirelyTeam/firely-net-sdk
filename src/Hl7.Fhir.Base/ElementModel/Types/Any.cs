@@ -162,5 +162,8 @@ public abstract class Any
             ? result
             : throw new InvalidCastException($"Cannot cast from {value.GetType()} to {typeof(TOut)}.");
 
+    /// <summary>
+    /// Tries to convert one CQL datatype to another, as defined in the CQL specification.
+    /// </summary>
     public abstract bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result);
 }

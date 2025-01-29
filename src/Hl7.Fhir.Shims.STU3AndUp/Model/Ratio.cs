@@ -16,19 +16,49 @@ namespace Hl7.Fhir.Model;
 
 public partial class Ratio: P.IToSystemPrimitive
 {
-    public P.Ratio ToSystemRatio() => new(numerator: Numerator.ToSystemQuantity(), denominator: Denominator.ToSystemQuantity());
+    public Ratio()
+    {
+        // Nothing
+    }
+
+    public Ratio(Quantity numerator, Quantity denominator)
+    {
+        Numerator = numerator;
+        Denominator = denominator;
+    }
+
+    /// <summary>
+    /// Converts this Ratio to a <see cref="P.Ratio" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The nominator or denominator is null
+    /// or cannot be converted to System quantities.</exception>
+    public P.Ratio ToSystemRatio()
+    {
+        var (v, e) = tryConvert();
+        return v! ?? throw e!;
+    }
+
+    private (P.Ratio? value, Exception? e) tryConvert()
+    {
+        if(Numerator is not P.IToSystemPrimitive numerator)
+            return (null, new InvalidOperationException($"Numerator cannot be null."));
+
+        if(Denominator is not P.IToSystemPrimitive denominator)
+            return (null, new InvalidOperationException($"Denominator cannot be null."));
+
+        if(!numerator.TryConvertToSystemType(out var num))
+            return (null, new InvalidOperationException($"Conversion of Numerator failed."));
+
+        if(!denominator.TryConvertToSystemType(out var den))
+            return (null, new InvalidOperationException($"Conversion of Denominator failed."));
+
+        return (new P.Ratio((P.Quantity)num, (P.Quantity)den), null);
+    }
 
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
-        try
-        {
-            result = ToSystemRatio();
-            return true;
-        }
-        catch (Exception)
-        {
-            result = null;
-            return false;
-        }
+        var (v, e) = tryConvert();
+        result = v;
+        return e is null;
     }
 }

@@ -37,7 +37,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class FhirDateTime: P.IToSystemPrimitive
+public partial class FhirDateTime
 {
     /// <summary>
     /// A <c>string.Format</c> pattern to use when formatting a full datetime with timezone.
@@ -124,8 +124,17 @@ public partial class FhirDateTime: P.IToSystemPrimitive
     /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
     /// </summary>
     /// <returns>The DateTime, or null if the <see cref="Value"/> is null.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the Value is null.</exception>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR DateTime.</exception>
-    public P.DateTime ToSystemDateTime() => TryToSystemDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+    public P.DateTime ToSystemDateTime()
+    {
+        if (Value is null)
+            throw new InvalidOperationException("Value is null.");
+
+        return TryToSystemDateTime(out var dt)
+            ? dt
+            : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
+    }
 
     protected override void OnObjectValueChanged()
     {
@@ -190,17 +199,7 @@ public partial class FhirDateTime: P.IToSystemPrimitive
         return false;
     }
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        if (TryToSystemDateTime(out var dateTime))
-        {
-            result = dateTime;
-            return true;
-        }
-
-        result = null;
-        return false;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDateTime(out var date) ? date : null;
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.

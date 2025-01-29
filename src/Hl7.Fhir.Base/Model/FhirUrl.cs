@@ -58,12 +58,14 @@ public partial class FhirUrl: P.IToSystemPrimitive
         }
     }
 
-    public P.String ToSystemString() => new(Value);
+    /// <summary>
+    /// Converts this FhirUrl to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this FhirUrl is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
 
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemString();
-        return true;
-    }
-
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
 }

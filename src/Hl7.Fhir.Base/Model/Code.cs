@@ -38,25 +38,27 @@ using P=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Code : ICoded, P.IToSystemPrimitive
+public partial class Code : ICoded
 {
     /// <summary>
     /// Converts this Code to a <see cref="P.Code"/>.
     /// </summary>
-    /// <returns></returns>
-    public virtual P.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
+    /// <exception cref="InvalidOperationException">The value of this code is null,
+    /// which is not valid for System Codes.</exception>
+    public P.Code ToSystemCode() =>
+        (P.Code?)TryConvertToSystemTypeInternal() ??
+        throw new InvalidOperationException("Value is null.");
 
-    /// <inheritdoc />
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        result = ToSystemCode();
-        return true;
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Code(system: null, code: Value, display: null, version: null)
+            : null;
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
     public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
+    /// <inheritdoc cref="ICoded.ToCodings"/>
     public virtual IEnumerable<Coding> ToCodings() => [new(system: null, code: Value)];
 }

@@ -94,21 +94,21 @@ public partial class Time: P.IToSystemPrimitive
     /// Converts a Fhir Time to a <see cref="P.Time"/>.
     /// </summary>
     /// <returns>The Time, or null if the <see cref="Value"/> is null.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the Value is null.</exception>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Time.</exception>
-    public P.Time ToSystemTime() => TryToSystemTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
-
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    public P.Time ToSystemTime()
     {
-        if (TryToSystemTime(out var dateTime))
-        {
-            result = dateTime;
-            return true;
-        }
+        if (Value is null)
+            throw new InvalidOperationException("Value is null");
 
-        result = null;
-        return false;
+        return TryToSystemTime(out var dt)
+            ? dt
+            : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
     }
 
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        TryToSystemTime(out var result) ? result : null;
 
     protected override void OnObjectValueChanged()
     {

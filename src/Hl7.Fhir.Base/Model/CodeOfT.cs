@@ -95,13 +95,11 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         else return ObjectValue is null;
     }
 
+    /// <inheritdoc />
     public override IEnumerable<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
 
-    public override P.Code ToSystemCode() =>
-        new(Value?.GetSystem(),
-            Value?.GetLiteral() ?? throw new InvalidOperationException("Code must have a value in order to be useable to construct a System.Code."),
-            display: null,
-            version: null);
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;
 
     public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
@@ -119,5 +117,5 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         var instance = new Code<T>();
         CopyToInternal(instance);
         return instance;
-    } 
+    }
 }

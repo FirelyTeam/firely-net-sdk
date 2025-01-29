@@ -98,23 +98,19 @@ public partial class Date: P.IToSystemPrimitive
     /// <summary>
     /// Converts a Fhir Date to a CQL <see cref="P.Date"/>.
     /// </summary>
-    /// <returns>The Date, or null if the <see cref="Value"/> is null.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the Value is null.</exception>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Date.</exception>
-    public P.Date ToSystemDate() => TryToSystemDate(out var dt)
-        ? dt
-        : throw new FormatException($"String '{Value}' was not recognized as a valid date.");
-
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    public P.Date ToSystemDate()
     {
-        if (TryToSystemDate(out var date))
-        {
-            result = date;
-            return true;
-        }
+        if(Value is null)
+            throw new InvalidOperationException("Value is null.");
 
-        result = null;
-        return false;
+        return TryToSystemDate(out var dt)
+            ? dt
+            : throw new FormatException($"String '{Value}' was not recognized as a valid date.");
     }
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDate(out var date) ? date : null;
 
     protected override void OnObjectValueChanged()
     {
