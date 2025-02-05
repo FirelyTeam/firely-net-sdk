@@ -50,14 +50,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public Canonical(string? uri, string? version, string? fragment = null)
         {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            if (uri.IndexOfAny(['|', '#']) != -1)
+            if ((uri is not null) && uri.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
 
-            if (version != null && version.IndexOfAny(['|', '#']) != -1)
+            if ((version is not null) && version.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(version), "cannot contain version/fragment data");
 
-            if (fragment != null && fragment.IndexOfAny(['|', '#']) != -1)
+            if ((fragment is not null) && fragment.IndexOfAny(['|', '#']) != -1)
                 throw Error.Argument(nameof(fragment), "already contains version/fragment data");
 
 
