@@ -62,6 +62,19 @@ namespace Hl7.Fhir.Specification.Terminology
             return this;
         }
 
+        /// <summary>
+        /// Takes a canonical and splits it into the correct "url", and "valueSetVersion" parameters. 
+        /// </summary>
+        /// <param name="canonical">Canonical to be split up</param>
+        /// <returns></returns>
+        public ValidateCodeParameters WithValueSet(Canonical canonical)
+        {
+            var (uri, version, fragment) = canonical;
+            Url = new FhirUri(new Canonical(uri, null, fragment));
+            if (!string.IsNullOrWhiteSpace(version)) ValueSetVersion = new FhirString(version);
+            return this;
+        }
+
         public ValidateCodeParameters WithCode(string? code = null, string? system = null,
             string? systemVersion = null, string? display = null, string? displayLanguage = null,
             string? context = null, bool? inferSystem = null)
