@@ -30,15 +30,28 @@
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
-{
-    public partial class PositiveInt
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Integer.TryParse(value, out var parsed) && parsed.Value > 0;
-    }
-}
+using System;
+using P = Hl7.Fhir.ElementModel.Types;
 
-#nullable restore
+namespace Hl7.Fhir.Model;
+
+public partial class PositiveInt
+{
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => P.Integer.TryParse(value, out var parsed) && parsed.Value > 0;
+
+    /// <summary>
+    /// Converts this PositiveInt to a <see cref="P.Long" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this PositiveInt is null,
+    /// which is not valid for System longs.</exception>
+    public P.Long ToSystemLong() =>
+        (P.Long?)TryConvertToSystemTypeInternal()
+        ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Long(Value.Value) : null;
+}

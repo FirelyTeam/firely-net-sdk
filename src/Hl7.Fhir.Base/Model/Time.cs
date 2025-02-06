@@ -68,7 +68,7 @@ public partial class Time
     /// Converts a Fhir Time to a <see cref="P.Time"/>.
     /// </summary>
     /// <returns>true if the Fhir Time contains a valid time string, false otherwise.</returns>
-    public bool TryToTime([NotNullWhen(true)] out P.Time? time)
+    public bool TryToSystemTime([NotNullWhen(true)] out P.Time? time)
     {
         if (_parsedValue is null)
         {
@@ -94,8 +94,21 @@ public partial class Time
     /// Converts a Fhir Time to a <see cref="P.Time"/>.
     /// </summary>
     /// <returns>The Time, or null if the <see cref="Value"/> is null.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the Value is null.</exception>
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Time.</exception>
-    public P.Time ToTime() => TryToTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
+    public P.Time ToSystemTime()
+    {
+        if (Value is null)
+            throw new InvalidOperationException("Value is null");
+
+        return TryToSystemTime(out var dt)
+            ? dt
+            : throw new FormatException($"String '{Value}' was not recognized as a valid time.");
+    }
+
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        TryToSystemTime(out var result) ? result : null;
 
     protected override void OnObjectValueChanged()
     {
@@ -116,14 +129,14 @@ public partial class Time
     /// <returns>True if the value of the Fhir Time is not null and can be parsed as a Time without an offset, false otherwise.</returns>
     public bool TryToTimeSpan(out TimeSpan dto)
     {
-        if (Value is not null && TryToTime(out var dt) && !dt.HasOffset)
+        if (Value is not null && TryToSystemTime(out var dt) && !dt.HasOffset)
         {
             dto = dt.ToTimeSpan();
             return true;
         }
         else
         {
-            dto = default;
+            dto = TimeSpan.Zero;
             return false;
         }
     }

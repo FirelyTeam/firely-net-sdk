@@ -39,7 +39,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
@@ -85,7 +85,7 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 
     internal bool TryParseObjectValue(out T? value)
     {
-        value = default;
+        value = null;
 
         if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
         {
@@ -95,13 +95,11 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         else return ObjectValue is null;
     }
 
+    /// <inheritdoc />
     public override IEnumerable<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
 
-    public override S.Code ToSystemCode() =>
-        new(Value?.GetSystem(),
-            Value?.GetLiteral() ?? throw new InvalidOperationException("Code must have a value in order to be useable to construct a System.Code."),
-            display: null,
-            version: null);
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;
 
     public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
@@ -119,5 +117,5 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         var instance = new Code<T>();
         CopyToInternal(instance);
         return instance;
-    } 
+    }
 }

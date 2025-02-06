@@ -31,47 +31,47 @@
 using Hl7.Fhir.Utility;
 using System.Linq;
 using System.Xml;
+using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+/// <summary>
+/// Helper functions to work with FHIR XHtml in narrative.
+/// </summary>
+public partial class XHtml
 {
     /// <summary>
-    /// Helper functions to work with FHIR XHtml in narrative.
+    /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html.
     /// </summary>
-    public partial class XHtml
+    public static bool IsValidNarrativeXhtml(string value, out string[] errors)
     {
-        /// <summary>
-        /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html. 
-        /// </summary>
-        public static bool IsValidNarrativeXhtml(string value, out string[] errors)
+        errors = SerializationUtil.RunFhirXhtmlSchemaValidation(value);
+        return !errors.Any();
+    }
+
+    /// <inheritdoc cref="IsValidNarrativeXhtml(string, out string[])"/>
+    public static bool IsValidNarrativeXhtml(string value) => IsValidNarrativeXhtml(value, out _);
+
+    /// <summary>
+    /// Validates whether the given string of Xml is well-formatted.
+    /// </summary>
+    public static bool IsValidXml(string value, out string? error)
+    {
+        try
         {
-            errors = SerializationUtil.RunFhirXhtmlSchemaValidation(value);
-            return !errors.Any();
+            using var reader = SerializationUtil.XmlReaderFromXmlText(value);
+            while (reader.Read()) ;
+            error = null;
+            return true;
         }
-
-        /// <inheritdoc cref="IsValidNarrativeXhtml(string, out string[])"/>
-        public static bool IsValidNarrativeXhtml(string value) => IsValidNarrativeXhtml(value, out _);
-
-        /// <summary>
-        /// Validates whether the given string of Xml is well-formatted.
-        /// </summary>
-        public static bool IsValidXml(string value, out string? error)
+        catch (XmlException xmlE)
         {
-            try
-            {
-                using var reader = SerializationUtil.XmlReaderFromXmlText(value);
-                while (reader.Read()) ;
-                error = default;
-                return true;
-            }
-            catch (XmlException xmlE)
-            {
-                error = xmlE.Message;
-                return false;
-            }
+            error = xmlE.Message;
+            return false;
         }
     }
-}
 
-#nullable restore
+    protected internal override SystemPrimitive.Any? TryConvertToSystemTypeInternal() => null;
+}

@@ -10,10 +10,10 @@ namespace Firely.Sdk.Benchmarks
         public void BenchmarkSetup()
         {
             _dateTimeInstance = new FhirDateTime(DATETIME);
-            _ = _dateTimeInstance.TryToDateTime(out var _); // trigger initial compile of regex
+            _ = _dateTimeInstance.TryToSystemDateTime(out var _); // trigger initial compile of regex
 
             _dateInstance = new Date(DATE);
-            _ = _dateInstance.TryToDate(out var _); // trigger initial compile of regex
+            _ = _dateInstance.TryToSystemDate(out var _); // trigger initial compile of regex
         }
 
         private const string DATETIME = "2023-07-11T13:00:00";

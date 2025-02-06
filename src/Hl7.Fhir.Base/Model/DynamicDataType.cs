@@ -1,4 +1,5 @@
 #nullable enable
+using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
 using System;
 using System.Runtime.Serialization;
@@ -74,4 +75,6 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
         CopyToInternal(instance);
         return instance;
     }
+
+    protected internal override Any? TryConvertToSystemTypeInternal() => null;
 }

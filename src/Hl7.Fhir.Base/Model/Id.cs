@@ -31,18 +31,27 @@
 
 #nullable enable
 
+using System;
 using System.Text.RegularExpressions;
+using P = Hl7.Fhir.ElementModel.Types;
 
+namespace Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Model
+public partial class Id
 {
-    public partial class Id
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
-    }
-}
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
-#nullable restore
+    /// <summary>
+    /// Converts this Id to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Id is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
+}

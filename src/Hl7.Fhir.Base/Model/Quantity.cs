@@ -30,26 +30,44 @@
 
 #nullable enable
 
-using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Quantity : ICoded
+public partial class Quantity : ICoded, P.IToSystemPrimitive
 {
-    public P.Quantity? ToQuantity()
+    /// <summary>
+    /// Converts this Quantity to a <see cref="P.Quantity" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Quantity is null
+    /// or the Comparator is not null, which is not valid for System strings.</exception>
+    public P.Quantity ToSystemQuantity()
     {
-        if (Value != null)
-        {
-            if (Comparator != null)
-                throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
-
-            return new P.Quantity(Value.Value, Code);
-        }
-        else
-            return null;
+        var (v, e) = tryConvertToSystemTypeInternal();
+        return v! ?? throw e!;
     }
 
+    private (P.Quantity? v, Exception? e) tryConvertToSystemTypeInternal()
+    {
+        if (Value is null)
+            return (null, new InvalidOperationException("Cannot convert a Quantity without a value to a FhirPath Quantity."));
+
+        if (Comparator is not null)
+            return (null, new InvalidOperationException("Cannot convert a Quantity with a comparator to a FhirPath Quantity."));
+
+        return (new P.Quantity(Value.Value, Code), null);
+    }
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        var (v, e) = tryConvertToSystemTypeInternal();
+        result = v;
+        return e is null;
+    }
+
+    /// <inheritdoc cref="ICoded.ToCodings"/>
     public IEnumerable<Coding> ToCodings() => [new(System, Code)];
 }

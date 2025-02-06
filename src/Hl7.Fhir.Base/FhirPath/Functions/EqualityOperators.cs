@@ -108,7 +108,6 @@ namespace Hl7.FhirPath.Functions
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
         }
 
-
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {
             left = upcastOne(left, right);
@@ -208,7 +207,7 @@ namespace Hl7.FhirPath.Functions
 
 
 
-        public static bool? Compare(P.Any left, P.Any right, string op)
+        public static bool? Compare(P.Any? left, P.Any? right, string op)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
             // (though we might handle this more generally with the null-propagating functionality of the compiler

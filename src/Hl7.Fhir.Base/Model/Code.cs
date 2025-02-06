@@ -30,22 +30,35 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using P=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Code : ICoded
 {
     /// <summary>
-    /// Creates a <see cref="ElementModel.Types.Code"/> from an instance of a <see cref="Code"/>.
+    /// Converts this Code to a <see cref="P.Code"/>.
     /// </summary>
-    public virtual ElementModel.Types.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
+    /// <exception cref="InvalidOperationException">The value of this code is null,
+    /// which is not valid for System Codes.</exception>
+    public P.Code ToSystemCode() =>
+        (P.Code?)TryConvertToSystemTypeInternal() ??
+        throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Code(system: null, code: Value, display: null, version: null)
+            : null;
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
     public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
+    /// <inheritdoc cref="ICoded.ToCodings"/>
     public virtual IEnumerable<Coding> ToCodings() => [new(system: null, code: Value)];
 }
