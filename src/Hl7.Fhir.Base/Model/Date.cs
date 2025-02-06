@@ -35,7 +35,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Date: P.IToSystemPrimitive
+public partial class Date
 {
     public Date(int year, int month, int day)
         : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTHDAY, year, month, day))

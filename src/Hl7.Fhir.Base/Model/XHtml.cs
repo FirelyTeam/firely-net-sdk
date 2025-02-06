@@ -71,6 +71,8 @@ namespace Hl7.Fhir.Model
                 return false;
             }
         }
+
+        protected internal override SystemPrimitive.Any TryConvertToSystemTypeInternal() => null;
     }
 }
 

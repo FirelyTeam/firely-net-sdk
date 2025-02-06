@@ -37,7 +37,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Time: P.IToSystemPrimitive
+public partial class Time
 {
     public const string FMT_HOURMINSEC = "{0:D2}:{1:D2}:{2:D2}";
 

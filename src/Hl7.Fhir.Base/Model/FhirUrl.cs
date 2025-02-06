@@ -35,7 +35,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class FhirUrl: P.IToSystemPrimitive
+public partial class FhirUrl
 {
     public FhirUrl(Uri uri)
     {

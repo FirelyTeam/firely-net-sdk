@@ -35,7 +35,7 @@ using System;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Canonical: P.IToSystemPrimitive
+public partial class Canonical
 {
     /// <summary>
     /// Constructs a Canonical based on a given <see cref="Uri"/>.
