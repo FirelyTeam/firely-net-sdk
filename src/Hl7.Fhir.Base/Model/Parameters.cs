@@ -28,150 +28,141 @@
 
 */
 
+#nullable enable
 
-
-//using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+/// <summary>
+/// This is the Parameters partial class that adds all the specific functionality of a Parameters to the model
+/// </summary>
+[DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
+public partial class Parameters
 {
     /// <summary>
-    /// This is the Parameters partial class that adds all the specific functionality of a Parameters to the model
+    /// Add a parameter with a given name and value.
     /// </summary>
-    [System.Diagnostics.DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
-    public partial class Parameters
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="value">The value of the parameter as a FHIR datatype or Resource</param>
+    /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
+    public Parameters Add(string name, Base? value)
     {
-        /// <summary>
-        /// Add a parameter with a given name and value.
-        /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="value">The value of the parameter as a FHIR datatype or Resource</param>
-        /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
-        public Parameters Add(string name, Base value)
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        if (value != null)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-
-            if (value != null)
-            {
-                Parameter.Add(
-                    new ParameterComponent()
-                    {
-                        Name = name,
-                        Value = value as DataType,
-                        Resource = value as Resource
-                    });
-            }
-
-            return this;
-        }
-
-
-        /// <summary>
-        /// Add a parameter with a given name and tuple value.
-        /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="tuples">The value of the parameter as a list of tuples of (name,FHIR datatype or Resource)</param>
-        /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
-        public Parameters Add(string name, IEnumerable<Tuple<string, Base>> tuples)
-        {
-            if (name == null) throw new ArgumentNullException("name");
-            if (tuples == null) throw new ArgumentNullException("tuples");
-
-            var newParam = new ParameterComponent() { Name = name };
-
-            foreach (var tuple in tuples)
-            {
-                var newPart = new ParameterComponent() { Name = tuple.Item1 };
-                newParam.Part.Add(newPart);
-
-                if (tuple.Item2 is DataType dt)
-                    newPart.Value = dt;
-                else
+            Parameter.Add(
+                new ParameterComponent()
                 {
-                    //TODO: Due to an error in the jan2015 version of DSTU2, this is not yet possible
-                    //newPart.Resource = (Resource)tuple.Item2;
-                    throw Error.NotImplemented("Jan 2015 DSTU2 does not support resource values for tuples parameters");
-                }
-            }
-
-            Parameter.Add(newParam);
-
-            return this;
+                    Name = name,
+                    Value = value as DataType,
+                    Resource = value as Resource
+                });
         }
 
+        return this;
+    }
 
-        /// <summary>
-        /// Remove a parameter with a given name.
-        /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
-        /// <remarks>No exception is thrown when the parameters were not found and nothing was removed.</remarks>
-        public void Remove(string name, bool matchPrefix = false)
+
+    /// <summary>
+    /// Add a parameter with a given name and tuple value.
+    /// </summary>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="tuples">The value of the parameter as a list of tuples of (name,FHIR datatype or Resource)</param>
+    /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
+    public Parameters Add(string name, IEnumerable<Tuple<string, Base>> tuples)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+        if (tuples == null) throw new ArgumentNullException(nameof(tuples));
+
+        var newParam = new ParameterComponent() { Name = name };
+
+        foreach (var tuple in tuples)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            var newPart = new ParameterComponent() { Name = tuple.Item1 };
+            newParam.Part.Add(newPart);
 
-            foreach (var hit in Get(name, matchPrefix).ToList()) Parameter.Remove(hit);
-        }
-
-
-        /// <summary>
-        /// Searches for a parameter with the given name, and returns the matching parameter(s)
-        /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
-        public IEnumerable<ParameterComponent> Get(string name, bool matchPrefix = false)
-        {
-            if (name == null) throw new ArgumentNullException("name");
-
-            if (matchPrefix)
-                return Parameter.Where(p => p.Name.StartsWith(name)).ToList();
+            if (tuple.Item2 is DataType dt)
+                newPart.Value = dt;
             else
-                return Parameter.Where(p => p.Name == name).ToList();
-        }
-
-        /// <summary>
-        /// Searches for a parameter with the given name, and returns the matching parameter(s)
-        /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
-        public ParameterComponent GetSingle(string name, bool matchPrefix = false)
-        {
-            if (name == null) throw new ArgumentNullException("name");
-
-            return Get(name, matchPrefix).SingleOrDefault();
-        }
-
-        /// <summary>
-        /// Returns the Value property of the requested parameter casted to the requested type
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
-        /// <param name="matchPrefix"></param>
-        /// <returns></returns>
-        public T GetSingleValue<T>(string name, bool matchPrefix = false) where T : Element
-        {
-            if (name == null) throw new ArgumentNullException("name");
-            ParameterComponent p = Get(name, matchPrefix).SingleOrDefault();
-            if (p == null)
-                return null;
-            return p.Value as T;
-        }
-
-        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        public partial class ParameterComponent
-        {
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private string DebuggerDisplay
             {
-                get
-                {
-                    return String.Format("Name=\"{0}\" Value=\"{1}\"", this.Name, this.Value);
-                }
+                //TODO: Due to an error in the jan2015 version of DSTU2, this is not yet possible
+                //newPart.Resource = (Resource)tuple.Item2;
+                throw Error.NotImplemented("Jan 2015 DSTU2 does not support resource values for tuples parameters");
             }
         }
+
+        Parameter.Add(newParam);
+
+        return this;
+    }
+
+
+    /// <summary>
+    /// Remove a parameter with a given name.
+    /// </summary>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
+    /// <remarks>No exception is thrown when the parameters were not found and nothing was removed.</remarks>
+    public void Remove(string name, bool matchPrefix = false)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        foreach (var hit in Get(name, matchPrefix).ToList()) Parameter.Remove(hit);
+    }
+
+
+    /// <summary>
+    /// Searches for a parameter with the given name, and returns the matching parameter(s)
+    /// </summary>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
+    public IEnumerable<ParameterComponent> Get(string name, bool matchPrefix = false)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        if (matchPrefix)
+            return Parameter.Where(p => p.Name.StartsWith(name)).ToList();
+        else
+            return Parameter.Where(p => p.Name == name).ToList();
+    }
+
+    /// <summary>
+    /// Searches for a parameter with the given name, and returns the matching parameter(s)
+    /// </summary>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
+    public ParameterComponent? GetSingle(string name, bool matchPrefix = false)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        return Get(name, matchPrefix).SingleOrDefault();
+    }
+
+    /// <summary>
+    /// Returns the Value property of the requested parameter casted to the requested type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="name"></param>
+    /// <param name="matchPrefix"></param>
+    /// <returns></returns>
+    public T? GetSingleValue<T>(string name, bool matchPrefix = false) where T : Element
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        var p = Get(name, matchPrefix).SingleOrDefault();
+        return p?.Value as T;
+    }
+
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    public partial class ParameterComponent
+    {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string DebuggerDisplay => $"Name=\"{this.Name}\" Value=\"{this.Value}\"";
     }
 }
