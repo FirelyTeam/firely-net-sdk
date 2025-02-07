@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else if (implementingType == typeof(byte[]))
                 {
-                    return !Settings.DisableBase64Decoding ? getByteArrayValue(reader, trimmedValue, pathStack) : ((object?, ERR?))(trimmedValue, null);
+                    return (trimmedValue, null);
                 }
                 else if (implementingType == typeof(int))
                 {
@@ -595,22 +595,7 @@ namespace Hl7.Fhir.Serialization
             {
                 return (trimmedValue, ERR.ATTRIBUTE_HAS_EMPTY_VALUE(reader, pathStack.GetInstancePath()));
             }
-
-            static (object, ERR?) getByteArrayValue(XmlReader reader, string trimmedValue, PathStack pathStack)
-            {
-                try
-                {
-                    return (Convert.FromBase64String(trimmedValue), null);
-                }
-                catch (FormatException)
-                {
-                    return (trimmedValue, ERR.INCORRECT_BASE64_DATA(reader, pathStack.GetInstancePath()));
-                }
-            }
         }
-
-
-
 
         /// <summary>
         /// Returns the <see cref="ClassMapping" /> for the object to be deserialized using the root property.

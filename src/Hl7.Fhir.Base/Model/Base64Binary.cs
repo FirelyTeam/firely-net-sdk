@@ -29,7 +29,11 @@
 */
 
 using Hl7.Fhir.ElementModel.Types;
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using P=Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
@@ -38,11 +42,77 @@ namespace Hl7.Fhir.Model;
 
 public partial class Base64Binary
 {
+    /// <summary>
+    /// Constructs a Base64Binary instance from a string of base64-encoded data.
+    /// </summary>
     public static Base64Binary FromBase64String(string base64Data) =>
-        new(Convert.FromBase64String(base64Data));
+        new() { ObjectValue = base64Data };
 
+    /// <summary>
+    /// Constructs a Base64Binary instance from a string of human-readable text.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
     public static Base64Binary FromText(string text) =>
         new(System.Text.Encoding.UTF8.GetBytes(text));
+
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private byte[]? _parsedValue = null;
+
+    protected override void OnObjectValueChanged()
+    {
+        _parsedValue = null;
+        base.OnObjectValueChanged();
+    }
+
+    public partial byte[]? Value
+    {
+        get
+        {
+            if (_parsedValue is null && ObjectValue is not null)
+            {
+                if(ObjectValue is string base64data)
+                    _parsedValue = Convert.FromBase64String(base64data);
+                else
+                {
+                    throw new InvalidCastException($"Cannot convert value '{ObjectValue}' of type {ObjectValue.GetType()} to a byte array.");
+                }
+            }
+
+            return _parsedValue;
+        }
+
+        set
+        {
+            ObjectValue = value is null ? null : Convert.ToBase64String(value);
+            OnPropertyChanged("Value");
+        }
+    }
+
+    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var baseResults = base.Validate(validationContext);
+
+        if (HasValidValue())
+            return baseResults;
+
+        var result = CodedValidationException.INVALID_BASE64_VALUE(validationContext, ObjectValue).AsResult(validationContext);
+        return baseResults.Append(result);
+    }
+
+    public bool HasValidValue()
+    {
+        try
+        {
+            // There is no TryDecode(), so this is all we can do.
+            _ = Value;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
@@ -51,7 +121,8 @@ public partial class Base64Binary
     {
         try
         {
-            _ = Convert.FromBase64String(value);
+            var b64 = FromBase64String(value);
+            _ = b64.Value;  // triggers b64 decoding
             return true;
         }
         catch

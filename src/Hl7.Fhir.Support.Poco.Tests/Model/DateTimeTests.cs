@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToSystemDateTime(out dt).Should().BeFalse();
 
             dft = new FhirDateTime(null);
-            dft.TryToSystemDateTime(out dt).Should().BeTrue();
+            dft.TryToSystemDateTime(out dt).Should().BeFalse();
             dt.Should().BeNull();
         }
     }

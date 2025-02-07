@@ -74,19 +74,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(SystemPrimitive.Long))]
     [DataMember]
-    public long? Value
-    {
-      get
-{
-    return ObjectValue switch
-    {
-        null => null,
-        long l => l,
-        _ => Convert.ToInt64(ObjectValue)
-    };
-}
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
-    }
+    public partial long? Value { get; set; }
 
     protected internal override Base DeepCopyInternal()
     {

@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Tests.Model
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Month);
 
             dft = new Date(null);
-            dft.TryToSystemDate(out dt).Should().BeTrue();
+            dft.TryToSystemDate(out dt).Should().BeFalse();
             dt.Should().BeNull();
         }
     }

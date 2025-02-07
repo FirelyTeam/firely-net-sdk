@@ -79,7 +79,7 @@ public partial class Date
     {
         if (_parsedValue is null)
         {
-            if (Value is not null && !(P.Date.TryParse(Value, out _parsedValue) && !_parsedValue!.HasOffset))
+            if (Value is null || !(P.Date.TryParse(Value, out _parsedValue) && !_parsedValue!.HasOffset))
                 _parsedValue = INVALID_VALUE;
         }
 
@@ -124,11 +124,7 @@ public partial class Date
     /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date.</returns>
     public DateTimeOffset ToDateTimeOffset()
     {
-        if (Value == null) throw new InvalidOperationException("Date's value is null.");
-
-        // TryToDate() will convert partial date/times by filling out to midnight/january 1 UTC
-        if (!TryToSystemDate(out var dt))
-            throw new FormatException($"Date '{Value}' was not recognized as a valid datetime.");
+        var dt = ToSystemDate();
 
         // Since Value is not null and the parsed value is valid, dto will not be null
         return dt.ToDateTimeOffset(TimeSpan.Zero);
@@ -140,7 +136,7 @@ public partial class Date
     /// <returns>True if the value of the Fhir Date is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
     public bool TryToDateTimeOffset(out DateTimeOffset dto)
     {
-        if (Value is not null && TryToSystemDate(out var dt))
+        if (TryToSystemDate(out var dt))
         {
             dto = dt.ToDateTimeOffset(TimeSpan.Zero);
             return true;

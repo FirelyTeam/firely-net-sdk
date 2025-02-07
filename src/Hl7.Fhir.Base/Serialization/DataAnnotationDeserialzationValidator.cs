@@ -134,13 +134,11 @@ namespace Hl7.Fhir.Serialization
 
             foreach (var va in attributes)
             {
-                if (va.GetValidationResult(candidateValue, validationContext) is object vr)
-                {
-                    if (vr is CodedValidationResult cvr)
-                        errors = add(errors, new[] { cvr.ValidationException });
-                    else
-                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
-                }
+                if (va.GetValidationResult(candidateValue, validationContext) is not object vr) continue;
+                if (vr is CodedValidationResult cvr)
+                    errors = add(errors, [cvr.ValidationException]);
+                else
+                    throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
             }
 
             return errors?.ToArray();

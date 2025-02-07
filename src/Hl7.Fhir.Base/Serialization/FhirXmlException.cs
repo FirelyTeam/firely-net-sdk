@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization
         public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
         public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";
 
-        public const string INCORRECT_BASE64_DATA_CODE = "XML202";
+        //public const string INCORRECT_BASE64_DATA_CODE = "XML202";
         public const string VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE = "XML203";
 
         // ==========================================
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE(XmlReader reader, string instancePath, string localName, string elementName, string namespaceURI) => Initialize(reader, instancePath, INCORRECT_ATTRIBUTE_NAMESPACE_CODE, $"The attribute '{localName}' in element '{elementName}' uses the namespace '{namespaceURI}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
 
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
-        internal static FhirXmlException INCORRECT_BASE64_DATA(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
+        //internal static FhirXmlException INCORRECT_BASE64_DATA(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
 
         // An incorrect order does not mean we cannot parse the data safely
@@ -95,14 +95,15 @@ namespace Hl7.Fhir.Serialization
             INCORRECT_ELEMENT_NAMESPACE_CODE,
             INCORRECT_XHTML_NAMESPACE_CODE,
             INCORRECT_ATTRIBUTE_NAMESPACE_CODE,
-            INCORRECT_BASE64_DATA_CODE,
+            // INCORRECT_BASE64_DATA_CODE,
             VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE,
             ELEMENT_OUT_OF_ORDER_CODE,
             ELEMENT_NOT_IN_SEQUENCE_CODE,
             ATTRIBUTE_HAS_EMPTY_VALUE_CODE,
             ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
             SCHEMALOCATION_DISALLOWED_CODE,
-            ENCOUNTERED_DTD_REFERENCES_CODE
+            ENCOUNTERED_DTD_REFERENCES_CODE,
+            CodedValidationException.INVALID_BASE64_VALUE_CODE
         ];
         
 

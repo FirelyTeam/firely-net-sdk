@@ -68,14 +68,32 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         Value = value;
     }
 
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private T? _parsedValue = null;
+
+    protected override void OnObjectValueChanged()
+    {
+        _parsedValue = null;
+        base.OnObjectValueChanged();
+    }
+
     // Primitive value of element
     [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
     [DataMember]
     new public T? Value
     {
-        get => TryParseObjectValue(out var value)
-            ? value
-            : throw new InvalidCastException($"Value '{ObjectValue}' cannot be cast to a member of enumeration {typeof(T).Name}.");
+        get
+        {
+            if (_parsedValue is null && ObjectValue is not null)
+            {
+                if(TryParseObjectValue(out var parsed))
+                    _parsedValue = parsed;
+                else
+                    throw new InvalidCastException($"Cannot convert value '{ObjectValue}' of type {ObjectValue.GetType()} to an enum of type {typeof(T)}.");
+            }
+
+            return _parsedValue;
+        }
         set
         {
             ObjectValue = value?.GetLiteral();
@@ -92,7 +110,8 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
             value = parsed;
             return true;
         }
-        else return ObjectValue is null;
+
+        return ObjectValue is null;
     }
 
     /// <inheritdoc />

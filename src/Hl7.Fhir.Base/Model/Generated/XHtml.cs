@@ -81,6 +81,7 @@ namespace Hl7.Fhir.Model
       CopyToInternal(instance);
       return instance;
     }
+
   }
 
 }

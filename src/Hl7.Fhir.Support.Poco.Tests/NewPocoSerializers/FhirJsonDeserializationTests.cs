@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(new[] { 1, 2 }, null, typeof(decimal), null, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
         [DataRow("hi!", "hi!", typeof(string), null, null)]
         [DataRow("SGkh", null, typeof(byte[]), null, null)]
-        [DataRow("hi!", null, typeof(byte[]), null, ERR.INCORRECT_BASE64_DATA_CODE)]
+        [DataRow("hi!", null, typeof(byte[]), null, COVE.INVALID_BASE64_VALUE_CODE)]
         [DataRow("hi!", null, typeof(DateTimeOffset), null, ERR.STRING_ISNOTAN_INSTANT_CODE)]
         [DataRow("2007-02-03", null, typeof(DateTimeOffset), null, null)]
         [DataRow("enumvalue", null, typeof(UriFormat), null, COVE.INVALID_CODED_VALUE_CODE)]
@@ -57,12 +57,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(true, true, typeof(bool), null, null)]
         [DataRow(true, "true", typeof(string), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
         public void TryDeserializePrimitiveValue(object input, object expectedResult, Type expectedImplementingType,
-            Type? fhirType, string code)
+            Type? fhirType, string? code)
         {
             var reader = constructReader(input);
             reader.Read();
 
-            var deserializer = getTestDeserializer(new());
+            var deserializer = getTestDeserializer(new FhirJsonConverterOptions());
             var ps = new PathStack();
             ps.EnterElement("Patient", 0, false);
             var (result, error) =
@@ -73,22 +73,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
             else
                 error.Should().BeNull();
 
-            if (expectedImplementingType == typeof(byte[]))
-            {
-                if (error is null)
-                    Convert.ToBase64String((byte[])result!).Should().Be((string)input);
-                else
-                    result.Should().Be(input);
-            }
-            else if (expectedImplementingType == typeof(DateTimeOffset))
+            if (expectedImplementingType == typeof(DateTimeOffset))
             {
                 if (error is null)
                     result.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)input);
                 else
                     result.Should().Be(input);
             }
-            else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE ||
-                     code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE)
+            else if (code is ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE or ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE)
 #pragma warning disable CS0642 // Possible mistaken empty statement
                 ; // nothing to check
 #pragma warning restore CS0642 // Possible mistaken empty statement
@@ -208,8 +200,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(null, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
         [DataRow(new[] { 1, 2 }, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
         [DataRow("SGkh", typeof(FhirString), null, "SGkh")]
-        [DataRow("SGkh", typeof(Base64Binary), null, new byte[] { 72, 105, 33 })]
-        [DataRow("hi!", typeof(Base64Binary), ERR.INCORRECT_BASE64_DATA_CODE, "hi!")]
+        [DataRow("SGkh", typeof(Base64Binary), null, "SGkh")]
+        [DataRow("hi!", typeof(Base64Binary), COVE.INVALID_BASE64_VALUE_CODE, "hi!")]
         [DataRow(4, typeof(Base64Binary), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4")]
         [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
         [DataRow("", typeof(FhirDateTime), ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE, null)]
@@ -222,7 +214,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(true, typeof(Code), ERR.UNEXPECTED_JSON_TOKEN_CODE, "true")]
         [DataRow("hi!", typeof(Instant), ERR.STRING_ISNOTAN_INSTANT_CODE)]
         [DataRow("2007-02-03", typeof(Instant), null, 2007)]
-        public void ParsePrimitiveValue(object value, Type targetType, string errorcode,
+        public void ParsePrimitiveValue(object value, Type targetType, string? errorcode,
             object? expectedObjectValue = null)
         {
             var state = new FhirJsonPocoDeserializerState();
@@ -253,11 +245,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             if (expectedObjectValue is not null)
             {
-                if (targetType != typeof(Instant))
-                    result.ObjectValue.Should().BeEquivalentTo(expectedObjectValue);
-                else
+                if (targetType == typeof(Instant))
                     result.ObjectValue.Should().BeOfType<DateTimeOffset>().Which.Year.Should()
                         .Be((int)expectedObjectValue!);
+                else
+                    result.ObjectValue.Should().BeEquivalentTo(expectedObjectValue);
             }
         }
 
@@ -669,7 +661,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, // extension.valueSuperDecimal is incorrect
                     ERR.UNEXPECTED_JSON_TOKEN_CODE, // deceasedBoolean should be a boolean not a string
                     ERR.NUMBER_CANNOT_BE_PARSED_CODE, // multipleBirthInteger should not be a float (3.14)
-                    ERR.INCORRECT_BASE64_DATA_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
+                    COVE.INVALID_BASE64_VALUE_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
                     ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
                 ]);
 
@@ -683,13 +675,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
-        public void TestDisableBase64Parsing()
+        public void TestBase64Parsing()
         {
             var attachment = deserializeAttachment(new());
-            Encoding.ASCII.GetString(attachment.Data).Should().Be("Hi!");
 
-            attachment = deserializeAttachment(new() { DisableBase64Decoding = true });
+            // After parsing, the ObjectValue is supposed to be the base64 string
             attachment.DataElement.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
+
+            // Getting the Value should decode and return a byte[]
+            Encoding.UTF8.GetString(attachment.Data).Should().Be("Hi!");
 
             static Attachment deserializeAttachment(FhirJsonConverterOptions settings)
             {
@@ -1121,10 +1115,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     .ForFhir(typeof(Patient).Assembly)
                     .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
                     .Ignoring([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE])
-                    .Ignoring([ERR.INCORRECT_BASE64_DATA_CODE])),
+                    .Ignoring([COVE.INVALID_BASE64_VALUE_CODE])),
                 new Predicate<CodedException>(ce =>
-                    ce.ErrorCode is (ERR.INCORRECT_BASE64_DATA_CODE or ERR.ARRAYS_CANNOT_BE_EMPTY_CODE
-                        or ERR.UNEXPECTED_JSON_TOKEN_CODE))
+                    ce.ErrorCode is COVE.INVALID_BASE64_VALUE_CODE or ERR.ARRAYS_CANNOT_BE_EMPTY_CODE
+                        or ERR.UNEXPECTED_JSON_TOKEN_CODE)
             ];
             yield return
             [

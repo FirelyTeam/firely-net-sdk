@@ -102,7 +102,7 @@ public partial class FhirDateTime
     {
         if (_parsedValue is null)
         {
-            if (Value is not null && !P.DateTime.TryParse(Value, out _parsedValue))
+            if (Value is null || !P.DateTime.TryParse(Value, out _parsedValue))
                 _parsedValue = INVALID_VALUE;
         }
 
@@ -111,11 +111,9 @@ public partial class FhirDateTime
             dateTime = null;
             return false;
         }
-        else
-        {
-            dateTime = _parsedValue!;
-            return true;
-        }
+
+        dateTime = _parsedValue!;
+        return true;
 
         bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
     }
@@ -154,11 +152,7 @@ public partial class FhirDateTime
     /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
     public DateTimeOffset ToDateTimeOffset(TimeSpan zone)
     {
-        if (Value == null) throw new InvalidOperationException("FhirDateTime's value is null.");
-
-        // TryToDateTime() will convert partial date/times by filling out to midnight/january 1 UTC.
-        if (!TryToSystemDateTime(out var dt))
-            throw new FormatException($"DateTime '{Value}' was not recognized as a valid datetime.");
+        var dt = ToSystemDateTime();
 
         // Since Value is not null and the parsed value is valid, dto will not be null
         return dt.ToDateTimeOffset(TimeSpan.Zero).ToOffset(zone);
@@ -171,7 +165,7 @@ public partial class FhirDateTime
     /// specified timezone, false otherwise.</returns>
     public bool TryToDateTimeOffset(out DateTimeOffset dto)
     {
-        if (Value is not null && TryToSystemDateTime(out var dt) && dt.Offset is not null)
+        if (TryToSystemDateTime(out var dt) && dt.Offset is not null)
         {
             dto = dt.ToDateTimeOffset(dt.Offset.Value);
             return true;
@@ -189,7 +183,7 @@ public partial class FhirDateTime
     /// <returns>True if the value of the FhirDateTime is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
     public bool TryToDateTimeOffset(TimeSpan defaultOffset, out DateTimeOffset dto)
     {
-        if (Value is not null && TryToSystemDateTime(out var dt))
+        if (TryToSystemDateTime(out var dt))
         {
             dto = dt.ToDateTimeOffset(defaultOffset);
             return true;

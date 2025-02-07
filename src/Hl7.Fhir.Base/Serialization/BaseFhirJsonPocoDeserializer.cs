@@ -720,8 +720,7 @@ namespace Hl7.Fhir.Serialization
                 JsonTokenType.Null => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL(ref reader, pathStack.GetInstancePath())),
                 JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY(ref reader, pathStack.GetInstancePath())),
                 JsonTokenType.String when implementingType == typeof(string) => new(reader.GetString(), null),
-                JsonTokenType.String when implementingType == typeof(byte[]) =>
-                                !Settings.DisableBase64Decoding ? readBase64(ref reader, pathStack) : new(reader.GetString(), null),
+                JsonTokenType.String when implementingType == typeof(byte[]) => new(reader.GetString(), null),
                 JsonTokenType.String when implementingType == typeof(DateTimeOffset) => readDateTimeOffset(ref reader, pathStack),
                 JsonTokenType.String when implementingType.IsEnum => new(reader.GetString(), null),
                 JsonTokenType.String when implementingType == typeof(long) => readLong(ref reader, fhirType, pathStack),
@@ -748,11 +747,6 @@ namespace Hl7.Fhir.Serialization
             reader.Read();
 
             return result;
-
-            static (object?, FhirJsonException?) readBase64(ref Utf8JsonReader reader, PathStack pathStack) =>
-                reader.TryGetBytesFromBase64(out var bytesValue) ?
-                    new(bytesValue, null) :
-                    new(reader.GetString(), ERR.INCORRECT_BASE64_DATA(ref reader, pathStack.GetInstancePath()));
 
             static (object?, FhirJsonException?) readDateTimeOffset(ref Utf8JsonReader reader, PathStack pathStack)
             {

@@ -74,11 +74,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(SystemPrimitive.String))]
     [DataMember]
-    public byte[] Value
-    {
-      get { return (byte[])ObjectValue; }
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
-    }
+    public partial byte[] Value { get; set; }
 
     protected internal override Base DeepCopyInternal()
     {

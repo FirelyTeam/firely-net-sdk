@@ -72,7 +72,7 @@ public partial class Time
     {
         if (_parsedValue is null)
         {
-            if (Value is not null && !P.Time.TryParse(Value, out _parsedValue))
+            if (Value is null || !P.Time.TryParse(Value, out _parsedValue))
                 _parsedValue = INVALID_VALUE;
         }
 
@@ -81,11 +81,9 @@ public partial class Time
             time = null;
             return false;
         }
-        else
-        {
-            time = _parsedValue!;
-            return true;
-        }
+
+        time = _parsedValue!;
+        return true;
 
         bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
     }
@@ -129,16 +127,14 @@ public partial class Time
     /// <returns>True if the value of the Fhir Time is not null and can be parsed as a Time without an offset, false otherwise.</returns>
     public bool TryToTimeSpan(out TimeSpan dto)
     {
-        if (Value is not null && TryToSystemTime(out var dt) && !dt.HasOffset)
+        if (TryToSystemTime(out var dt) && !dt.HasOffset)
         {
             dto = dt.ToTimeSpan();
             return true;
         }
-        else
-        {
-            dto = TimeSpan.Zero;
-            return false;
-        }
+
+        dto = TimeSpan.Zero;
+        return false;
     }
 
     /// <summary>

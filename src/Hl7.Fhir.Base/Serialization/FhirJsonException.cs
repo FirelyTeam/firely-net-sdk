@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
         public const string NO_RESOURCETYPE_PROPERTY_CODE = "JSON103";
         public const string EXPECTED_PRIMITIVE_NOT_OBJECT_CODE = "JSON104";
         public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "JSON105";
-        public const string INCORRECT_BASE64_DATA_CODE = "JSON106";
+        //public const string INCORRECT_BASE64_DATA_CODE = "JSON106";
         public const string STRING_ISNOTAN_INSTANT_CODE = "JSON107";
         public const string NUMBER_CANNOT_BE_PARSED_CODE = "JSON108";
         public const string EXPECTED_PRIMITIVE_NOT_NULL_CODE = "JSON109";
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirJsonException PROPERTY_MAY_NOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PROPERTY_MAY_NOT_BE_EMPTY_CODE, "Properties cannot be empty strings. Either they are absent, or they are present with at least one character of non-whitespace content.", OO_Sev.Error, OO_Typ.Value);
 
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
-        internal static FhirJsonException INCORRECT_BASE64_DATA(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
+        // internal static FhirJsonException INCORRECT_BASE64_DATA(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirJsonException STRING_ISNOTAN_INSTANT(ref Utf8JsonReader reader, string instancePath, string value) => Initialize(ref reader, instancePath, STRING_ISNOTAN_INSTANT_CODE, $"Literal string '{value}' cannot be parsed as an instant.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirJsonException NUMBER_CANNOT_BE_PARSED(ref Utf8JsonReader reader, string instancePath, string? value, string typeName) => Initialize(ref reader, instancePath, NUMBER_CANNOT_BE_PARSED_CODE, $"Json number '{value}' cannot be parsed as a {typeName}.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirJsonException UNEXPECTED_JSON_TOKEN(ref Utf8JsonReader reader, string instancePath, string expected, string actual, string? value) => Initialize(ref reader, instancePath, UNEXPECTED_JSON_TOKEN_CODE, $"Expecting a {expected}, but found a json {actual} with value '{value}'.", OO_Sev.Warning, OO_Typ.Value);
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Serialization
         internal static string[] RecoverableIssues =
         [
             EXPECTED_PRIMITIVE_NOT_NULL_CODE,
-            INCORRECT_BASE64_DATA_CODE,
+            // INCORRECT_BASE64_DATA_CODE,
             STRING_ISNOTAN_INSTANT_CODE,
             NUMBER_CANNOT_BE_PARSED_CODE,
             UNEXPECTED_JSON_TOKEN_CODE,
@@ -145,7 +145,8 @@ namespace Hl7.Fhir.Serialization
           //  PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE,
             PRIMITIVE_ARRAYS_ONLY_NULL_CODE,
             PROPERTY_MAY_NOT_BE_EMPTY_CODE,
-            DUPLICATE_ARRAY_CODE
+            DUPLICATE_ARRAY_CODE,
+            CodedValidationException.INVALID_BASE64_VALUE_CODE
         ];
 #pragma warning restore CS0618 // Type or member is obsolete
 

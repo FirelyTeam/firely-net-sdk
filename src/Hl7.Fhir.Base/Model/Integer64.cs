@@ -37,6 +37,20 @@ namespace Hl7.Fhir.Model;
 
 public partial class Integer64
 {
+    public partial long? Value
+    {
+        get
+        {
+            return ObjectValue switch
+            {
+                null => null,
+                long l => l,
+                _ => Convert.ToInt64(ObjectValue)
+            };
+        }
+        set { ObjectValue = value; OnPropertyChanged("Value"); }
+    }
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

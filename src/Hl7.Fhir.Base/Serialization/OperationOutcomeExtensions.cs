@@ -68,13 +68,14 @@ namespace Hl7.Fhir.Serialization
                 case CodedValidationException.NARRATIVE_XML_IS_INVALID_CODE: shortDisplay = "Invalid narrative"; break;
                 case CodedValidationException.INVALID_CODED_VALUE_CODE: shortDisplay = "Invalid code"; break;
                 case CodedValidationException.CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE: shortDisplay = "Contained resources cannot be nested"; break;
+                case CodedValidationException.INVALID_BASE64_VALUE_CODE: shortDisplay = "Invalid Base64 data"; break;
 
                 case FhirJsonException.EXPECTED_START_OF_OBJECT_CODE: shortDisplay = "Expected Object"; break;
                 // case FhirJsonException.RESOURCETYPE_SHOULD_BE_STRING_CODE: shortDisplay = "JSON102"; break;
                 case FhirJsonException.NO_RESOURCETYPE_PROPERTY_CODE: shortDisplay = "Missing ResourceType"; break;
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE: shortDisplay = "Expected Object"; break;
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: shortDisplay = "Expected Primitive"; break;
-                case FhirJsonException.INCORRECT_BASE64_DATA_CODE: shortDisplay = "Invalid Base64 data"; break;
+                // case FhirJsonException.INCORRECT_BASE64_DATA_CODE: shortDisplay = "Invalid Base64 data"; break;
                 // case FhirJsonException.STRING_ISNOTAN_INSTANT_CODE: shortDisplay = "JSON107"; break;
                 case FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE: shortDisplay = "Invalid number"; break;
                 // case FhirJsonException.EXPECTED_PRIMITIVE_NOT_NULL_CODE: shortDisplay = "JSON109"; break;
@@ -117,7 +118,7 @@ namespace Hl7.Fhir.Serialization
                 // case FhirXmlException.ENCOUNTERED_DTP_REFERENCES_CODE: shortDisplay = "XML119"; break;
                 // case FhirXmlException.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE: shortDisplay = "XML120"; break;
 
-                case FhirXmlException.INCORRECT_BASE64_DATA_CODE: shortDisplay = "Invalid Base64 data"; break;
+                //case FhirXmlException.INCORRECT_BASE64_DATA_CODE: shortDisplay = "Invalid Base64 data"; break;
                 case FhirXmlException.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE: shortDisplay = "Invalid datatype"; break;
             }
 

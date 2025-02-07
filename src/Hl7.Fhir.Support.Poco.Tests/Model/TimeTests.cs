@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Tests.Model
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Fraction);
 
             dft = new Time(null);
-            dft.TryToSystemTime(out dt).Should().BeTrue();
+            dft.TryToSystemTime(out dt).Should().BeFalse();
             dt.Should().BeNull();
         }
     }
