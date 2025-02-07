@@ -1,3 +1,3 @@
-Changes:
+## Intro:
 
-- This is a hotfix to not throw an error when the validate code operation is called using the `system`, `code` and `valueSet` parameters.
+A hotfix in the `Canonical` class to also allow fragment only canonicals. 
