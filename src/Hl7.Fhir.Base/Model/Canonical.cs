@@ -46,20 +46,19 @@ public partial class Canonical
         // nothing
     }
 
-    /// <summary>
-    /// Constructs a canonical from its components.
-    /// </summary>
-    public Canonical(string? uri, string? version, string? fragment)
-    {
-        if (uri == null) throw Error.ArgumentNull(nameof(uri));
-        if (uri.IndexOfAny(['|', '#']) != -1)
-            throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
+        /// <summary>
+        /// Constructs a canonical from its components.
+        /// </summary>
+        public Canonical(string? uri, string? version, string? fragment = null)
+        {
+            if ((uri is not null) && uri.IndexOfAny(['|', '#']) != -1)
+                throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
 
-        if (version != null && version.IndexOfAny(['|', '#']) != -1)
-            throw Error.Argument(nameof(version), "cannot contain version/fragment data");
+            if ((version is not null) && version.IndexOfAny(['|', '#']) != -1)
+                throw Error.Argument(nameof(version), "cannot contain version/fragment data");
 
-        if (fragment != null && fragment.IndexOfAny(['|', '#']) != -1)
-            throw Error.Argument(nameof(fragment), "already contains version/fragment data");
+            if ((fragment is not null) && fragment.IndexOfAny(['|', '#']) != -1)
+                throw Error.Argument(nameof(fragment), "already contains version/fragment data");
 
 
         Value = uri +

@@ -801,6 +801,16 @@ namespace Hl7.Fhir.Specification.Tests
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "context" && ((FhirUri)p.Value).Value == "Patient.gender");
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "valueSet" && ((ValueSet)p.Resource) != null);
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "valueSetVersion" && ((FhirString)p.Value).Value == "1.0.4");
+
+
+            parameters = new ValidateCodeParameters()
+              .WithValueSet(new Canonical("http://foo.bar/ValueSet/foo|1.0.4#fragment"));
+            parameters.Url.Value.Should().Be("http://foo.bar/ValueSet/foo#fragment");
+            parameters.ValueSetVersion.Value.Should().Be("1.0.4");
+
+            parameters = new ValidateCodeParameters()
+              .WithValueSet(new Canonical("#fragment"));
+            parameters.Url.Value.Should().Be("#fragment");
         }
 
 
