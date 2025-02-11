@@ -1,14 +1,9 @@
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Hl7.Fhir.ElementModel;
@@ -21,6 +16,9 @@ namespace Hl7.Fhir.ElementModel;
 /// <param name="Name"></param>
 public abstract record PocoNodeOrList(string Name) : IEnumerable<PocoNode>
 {
+    /// <summary>
+    /// The parent of this node. This is always a singular PocoNode. If the Parent field is set to a PocoListNode, this will construct and return the PocoNode at the specified index.
+    /// </summary>
     public abstract PocoNode? Parent { get; }
     
     public abstract IEnumerator<PocoNode> GetEnumerator();
@@ -43,6 +41,7 @@ public abstract record PocoNodeOrList(string Name) : IEnumerable<PocoNode>
 public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index, string? Name)
     : PocoNodeOrList(Name ?? Poco.TypeName), IScopedNode, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
 {
+    /// <inheritdoc />
     public override PocoNode? Parent => ParentNode switch
     {
         PocoListNode nodes => nodes[Index!.Value],
@@ -50,12 +49,22 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
         _ => null
     };
     
+    /// <summary>
+    /// Enumerates all children of this node. These can each either be singular or repeating PocoNodes.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>Since PocoNodeOrList implements IEnumerable of PocoNode, you can consider this to be an IEnumerable of IEnumerable of PocoNode, if you prefer to work with that</remarks>
     public IEnumerable<PocoNodeOrList> Children() =>
         Poco.EnumerateElements()
             .Select(ep =>
                 nodeFor(ep.Key, ep.Value)
             );
 
+    /// <summary>
+    /// Finds a single child of this node by name. The result is either a singular or repeating PocoNode. The return value can always be used as an IEnumerable of PocoNode.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public PocoNodeOrList? Child(string name) => Poco.TryGetValue(name, out var result)
         ? nodeFor(name, result)
         : null;
@@ -76,6 +85,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     
     #region << Annotations >>
     
+    /// <inheritdoc />
     string IShortPathGenerator.ShortPath => (Index, Parent) switch
     {
         // if we have an index, we have a parent.
@@ -86,8 +96,10 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
         _ => Name
     };
 
+    /// <inheritdoc />
     Base IFhirValueProvider.FhirValue => Poco;
 
+    /// <inheritdoc />
     string? IResourceTypeSupplier.ResourceType => Poco is Resource
         ? ((ITypedElement)this).InstanceType
         : null;
@@ -96,6 +108,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
 
     private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
+    /// <inheritdoc />
     IEnumerable<object> IAnnotated.Annotations(Type type)
     {
         if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
@@ -107,8 +120,10 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
         return Annotations.OfType(type);
     }
 
+    /// <inheritdoc />
     void IAnnotatable.AddAnnotation(object annotation) => Annotations.AddAnnotation(annotation);
 
+    /// <inheritdoc />
     void IAnnotatable.RemoveAnnotations(Type type) => Annotations.RemoveAnnotations(type);
 
     #endregion

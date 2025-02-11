@@ -1,5 +1,7 @@
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -284,4 +286,6 @@ public static class PocoNodeExtensions
 
         return null;
     }
+    
+    internal static ModelInspector? FindInspector(this PocoNode node) => ((IAnnotated)node).Annotation<ModelInspector>() ?? node.Parent?.SingleOrDefault()?.FindInspector();
 }

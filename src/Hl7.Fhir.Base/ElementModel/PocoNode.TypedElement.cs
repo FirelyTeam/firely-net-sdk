@@ -53,9 +53,6 @@ public partial record PocoNode
             return classMapping?.FindMappedElementByName(Name);
         }
     }
-
-    [TemporarilyChanged] // I am refactoring the extensions in another branch. This should go into those extensions. To avoid conflicts, I implement it here for now.
-    internal ModelInspector? FindInspector() => ((IAnnotated)this).Annotation<ModelInspector>() ?? Parent?.SingleOrDefault()?.FindInspector();
     
     IEnumerable<ITypedElement> ITypedElement.Children(string? name) => name is null
         ? Children().SelectMany(node => node)
