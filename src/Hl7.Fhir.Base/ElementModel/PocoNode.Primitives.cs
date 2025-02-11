@@ -22,15 +22,8 @@ public partial record PocoNode
 
     public static PocoNode ForAnyPrimitive(object value)
     {
-        if (value is Types.Quantity quantity)
-        {
-            return forQuantity(quantity);
-        }
         return ForPrimitive(PrimitiveNode.InferFromValue(value));
     }
-
-    private static PocoNode forQuantity(Types.Quantity quantity) =>
-        new PocoNode(new FPQuantity(quantity), null, null, "quantity");
     
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
         new PrimitiveNode(new T { ObjectValue = value });
@@ -52,6 +45,7 @@ public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : Poco
     
     internal static PrimitiveType InferFromValue(object value) => value switch
     {
+        Types.Quantity qt => new FPQuantity(qt),
         Types.DateTime dt => new FPDateTime(dt),
         Types.Date d => new FPDate(d),
         Types.Time t => new FPTime(t),

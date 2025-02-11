@@ -99,7 +99,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     void IAnnotatable.AddAnnotation(object annotation) => Annotations.AddAnnotation(annotation);
 
     void IAnnotatable.RemoveAnnotations(Type type) => Annotations.RemoveAnnotations(type);
-    
+
     #endregion
 }
 

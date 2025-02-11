@@ -41,9 +41,9 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void TestIntersect()
         {
-            IEnumerable<PocoNode> left = PocoNode.FromList<Integer>([1, 3, 3, 5, 6]);
+            IEnumerable<PocoNode> left = PocoNode.FromList<Integer>([1, 3, 3, 5, 6]); 
             IEnumerable<PocoNode> right = PocoNode.FromList<Integer>([3, 5, 5, 6, 8]);
-           PocoNode.FromList<Integer>([3, 5, 6]).Should().BeEquivalentTo(left.Intersect(right).ToList());
+            PocoNode.FromList<Integer>([3, 5, 6]).IsEqualTo(PocoNode.FromList<Integer>(left.Intersect(right).ToList())).Should().BeTrue();
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace HL7.FhirPath.Tests.Functions
                 PocoNode.FromList<Integer>([1, 3, 3, 5, 6]);
             IEnumerable<PocoNode> right =
                 PocoNode.FromList<Integer>([5, 6]);
-            PocoNode.FromList<Integer>([1, 3, 3]).Should().BeEquivalentTo(left.Exclude(right).ToList());
+            PocoNode.FromList<Integer>([1, 3, 3]).IsEqualTo(left.Exclude(right).ToList()).Should().BeTrue();
         }
     }
 }

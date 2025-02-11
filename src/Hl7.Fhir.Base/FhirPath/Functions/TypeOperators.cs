@@ -15,6 +15,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Runtime.CompilerServices;
 
+#nullable enable
+
 namespace Hl7.FhirPath.Functions
 { 
     internal static class TypeOperators
@@ -22,8 +24,8 @@ namespace Hl7.FhirPath.Functions
         public static bool Is(this PocoNode focus, string type)
         {
             var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
-                .Select(t => ModelInspector.ForType(t).GetFhirTypeNameForType(t).Capitalize())
-                .Append(((ITypedElement)focus).InstanceType.Capitalize());
+                .Select(t => ModelInspector.ForType(t).GetFhirTypeNameForType(t))
+                .Append(((ITypedElement)focus).InstanceType);
             return selfAndBaseClasses.Any(typeString => Is(typeString, type));
             
             static IEnumerable<Type> getBaseClasses(Type t)
@@ -32,10 +34,10 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-        public static bool Is(string instanceType, string declaredType)
+        public static bool Is(string? instanceType, string declaredType)
         {
             // Bit of a hack, this hardwires the FhirPath implementation to FHIR
-            if (!instanceType.Contains(".")) instanceType = "FHIR." + instanceType;
+            if (instanceType?.Contains(".") is false) instanceType = "FHIR." + instanceType;
             if (declaredType.Contains("."))
                 return instanceType == declaredType;
             else
@@ -47,8 +49,5 @@ namespace Hl7.FhirPath.Functions
 
         public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));
-
-        public static PocoNode CastAs(this PocoNode focus, string typeName)
-            => focus.Is(typeName) ? focus : null;
     }
 }

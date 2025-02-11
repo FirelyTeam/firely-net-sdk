@@ -567,7 +567,6 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "Patient.name.defineVariable('n2', skip(1).first()).defineVariable('res', %n2.given+%n2.given).select(%res)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            foreach (var item in r) { Console.WriteLine(item.ToXml()); }
             Assert.AreEqual(2, r.Count());
             Assert.AreEqual("JimJim", r.First().ToString());
             Assert.AreEqual("JimJim", r.Skip(1).First().ToString());

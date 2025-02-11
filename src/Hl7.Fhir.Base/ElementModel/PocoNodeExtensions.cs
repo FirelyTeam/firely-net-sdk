@@ -200,9 +200,11 @@ public static class PocoNodeExtensions
 
     public static IEnumerable<PocoNode> FindSubChildren(this IEnumerable<PocoNode> nodes, string name) => nodes.SelectMany(node => node.Child(name) ?? Enumerable.Empty<PocoNode>());
     
-    public static IEnumerable<PocoNode> Descendants(this IEnumerable<PocoNode> nodes) => nodes.SelectMany(Descendants);
+    public static IEnumerable<PocoNode> Descendants(this IEnumerable<PocoNode> nodes) => nodes.SelectMany(descendants);
 
-    public static IEnumerable<PocoNode> Descendants(this PocoNode node) => node.Children().SelectMany(singleOrList => singleOrList).Descendants().Append(node);
+    public static IEnumerable<PocoNode> DescendantsAndSelf(this IEnumerable<PocoNode> nodes) => nodes.Descendants().Concat(nodes);
+
+    private static IEnumerable<PocoNode> descendants(this PocoNode node) => node.Children().SelectMany(singleOrList => singleOrList).DescendantsAndSelf();
     
     public static T? Child<T>(this PocoNode? node, string name) where T : PocoNodeOrList => node?.Child(name) as T;
     
