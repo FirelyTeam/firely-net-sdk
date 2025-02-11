@@ -10,28 +10,34 @@ namespace Hl7.Fhir.ElementModel;
 
 public partial record PocoNode
 {
+    // Constructs a PocoNode from a PrimitiveType
     public static PocoNode ForPrimitive(PrimitiveType primitive) => 
-        new PrimitiveNode(primitive);
+        new PrimitiveNode(primitive, null, null);
 
+    // Constructs a PocoNode from an object. Allowed objects are those that can be converted to a PrimitiveType, and are not yet PrimitiveTypes.
     public static PocoNode ForAnyPrimitive(object value)
     {
         return ForPrimitive(PrimitiveNode.InferFromValue(value));
     }
     
+    // Constructs a PocoNode from a value and a type. The type must be a PrimitiveType.
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
-        new PrimitiveNode(new T { ObjectValue = value });
+        new PrimitiveNode(new T { ObjectValue = value }, null, null);
     
+    // Constructs a PocoNode from a list of PrimitiveTypes
     public static IEnumerable<PocoNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => 
-        primitives.Select(PocoNode.ForPrimitive);
+        primitives.Select(ForPrimitive);
 
+    // Constructs multiple PocoNodes from a list of values and a type. The type must be a PrimitiveType.
     public static IEnumerable<PocoNode> FromList<T>(IEnumerable<object> values) where T : PrimitiveType, new() => 
-        values.Select(PocoNode.ForPrimitive<T>);
+        values.Select(ForPrimitive<T>);
 
+    // Constructs multiple PocoNodes from a list of objects. Allowed objects are those that can be converted to a PrimitiveType, and are not yet PrimitiveTypes.
     public static IEnumerable<PocoNode> FromAnyList(IEnumerable<object> values) => 
         values.Select(v => v as PocoNode ?? ForAnyPrimitive(v));
 }
 
-public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : PocoNode(Primitive, null, null, Name)
+public record PrimitiveNode(PrimitiveType Primitive, PocoNodeOrList? ParentNode, int? Index, string? Name = null) : PocoNode(Primitive, ParentNode, Index, Name)
 {
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
     internal object? Value => ValueInternal;
@@ -55,10 +61,10 @@ public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : Poco
     protected override string? TextInternal => Primitive.ToString();
 }
 
-internal record PrimitiveListNode(IReadOnlyList<PrimitiveType> Primitives, string? Name = null) : PocoListNode(Primitives, null, Name ?? "value")
+internal record PrimitiveListNode(IReadOnlyList<PrimitiveType> Primitives, PocoNodeOrList? ParentNode, string? Name = null) : PocoListNode(Primitives, ParentNode, Name ?? "value")
 {
     public override IEnumerator<PocoNode> GetEnumerator() =>
-        Primitives.Select((primitive, index) => new PrimitiveNode(primitive, Name) { Index = index }).GetEnumerator();
+        Primitives.Select((primitive, index) => new PrimitiveNode(primitive, ParentNode, index, Name)).GetEnumerator();
 
     internal IEnumerable<object?> Values => Primitives.Select(p => p.ObjectValue);
 }
