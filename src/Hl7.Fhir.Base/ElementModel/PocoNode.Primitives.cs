@@ -1,5 +1,6 @@
 using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Model;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,7 +30,7 @@ public partial record PocoNode
     }
 
     private static PocoNode forQuantity(Types.Quantity quantity) =>
-        new PocoNode(new Quantity(quantity), null, null, "quantity");
+        new PocoNode(new FPQuantity(quantity), null, null, "quantity");
     
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
         new PrimitiveNode(new T { ObjectValue = value });
@@ -51,16 +52,16 @@ public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : Poco
     
     internal static PrimitiveType InferFromValue(object value) => value switch
     {
-        Types.DateTime dt => new FhirDateTime(dt),
-        Types.Date d => new Date(d),
-        Types.Time t => new Time(t),
-        decimal dec => new FhirDecimal(dec),
-        float f => new FhirDecimal((decimal)f),
-        double d => new FhirDecimal((decimal)d),
-        bool b => new FhirBoolean(b),
-        int i => new Integer(i),
-        long l => new Integer64(l),
-        string s => new FhirString(s),
+        Types.DateTime dt => new FPDateTime(dt),
+        Types.Date d => new FPDateTime(d),
+        Types.Time t => new FPTime(t),
+        decimal dec => new FPDecimal(dec),
+        float f => new FPDecimal((decimal)f),
+        double d => new FPDecimal((decimal)d),
+        bool b => new FPBoolean(b),
+        int i => new FPInteger(i),
+        long l => new FPInteger((int)l),
+        string s => new FPString(s),
         _ => throw new ArgumentException("Cannot infer primitive type from value", nameof(value))
     };
     

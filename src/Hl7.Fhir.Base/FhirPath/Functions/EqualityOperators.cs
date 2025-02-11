@@ -71,11 +71,11 @@ namespace Hl7.FhirPath.Functions
             if (left.InstanceType == "Quantity" && l == null)
                 l = left is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
             if (right.InstanceType == "Quantity" && r == null)
                 r = right is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -166,11 +166,11 @@ namespace Hl7.FhirPath.Functions
             if (left.InstanceType == "Quantity" && l == null)
                 l = left is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
             if (right.InstanceType == "Quantity" && r == null)
                 r = right is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToElementNode());
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))

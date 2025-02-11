@@ -23,7 +23,7 @@ namespace Hl7.FhirPath.Tests
     [TestClass]
     public class CastTests
     {
-        private static readonly PocoNode complex = new DynamicDataType{DynamicTypeName = "NotAPrimitiveType"}.ToElementNode();
+        private static readonly PocoNode complex = new DynamicDataType{DynamicTypeName = "NotAPrimitiveType"}.ToPocoNode();
         private static readonly IEnumerable<PocoNode> collection = PocoNode.FromAnyList([4, 5, complex]);
         private static readonly IEnumerable<PocoNode> singleV = PocoNode.FromAnyList([4L]);
         private static readonly IEnumerable<PocoNode> singleC = PocoNode.FromAnyList([complex]);

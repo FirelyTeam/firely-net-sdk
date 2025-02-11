@@ -26,7 +26,7 @@ internal class FPDateTime : CqlPrimitive
 
 internal class FPBoolean : CqlPrimitive
 {
-    public FPBoolean(P.Boolean value)
+    public FPBoolean(bool value)
     {
         DynamicTypeName = "System.Boolean";
         ObjectValue = value;
@@ -53,7 +53,7 @@ internal class FPDecimal : CqlPrimitive
 
 internal class FPString : CqlPrimitive
 {
-    public FPString(P.String value)
+    public FPString(string value)
     {
         DynamicTypeName = "System.String";
         ObjectValue = value;
