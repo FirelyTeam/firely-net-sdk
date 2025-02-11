@@ -19,6 +19,9 @@ namespace Hl7.Fhir.Model;
 /// </summary>
 public interface ICoded
 {
+    /// <summary>
+    /// Maps a FHIR datatype to a (list of) Coding, according to https://hl7.org/fhir/terminologies.html#4.1
+    /// </summary>
     IEnumerable<Coding> ToCodings();
 }
 
@@ -44,9 +47,7 @@ public static class CodedExtensions
     /// </summary>
     public static IEnumerable<Coding> ToCodings(this IEnumerable<DataType>? dts) => dts?.SelectMany(dt => dt.ToCodings()) ?? [];
 
-    /// <summary>
-    /// Maps a FHIR datatype to a (list of) Coding, according to https://hl7.org/fhir/terminologies.html#4.1
-    /// </summary>
+    /// <inheritdoc cref="ICoded.ToCodings()"/>
     public static IEnumerable<Coding> ToCodings(this DataType? dt) => dt switch
     {
         ICoded c => c.ToCodings(),

@@ -30,19 +30,73 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class CodeableConcept : ICoded
+public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
 {
-    public S.Concept ToSystemConcept()
+    public CodeableConcept()
     {
-        var codes = Coding.Select(c => c.ToSystemCode());
-        return new S.Concept(codes, display: Text);
     }
 
+    public CodeableConcept(string system, string code, string? text = null)
+    {
+        if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code))
+        {
+            this.Coding = [new Coding(system, code)];
+        }
+        this.Text = text;
+    }
+
+    public CodeableConcept(string system, string code, string display, string text)
+    {
+        if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code) || !string.IsNullOrEmpty(display))
+        {
+            this.Coding = [new Coding(system, code, display)];
+        }
+        this.Text = text;
+    }
+
+    public CodeableConcept(IEnumerable<Coding> codes)
+    {
+        this.Coding = codes.ToList();
+    }
+
+    public CodeableConcept Add(string system, string code, string? display = null)
+    {
+        Coding.Add(new Coding(system, code, display));
+
+        return this;
+    }
+
+    /// <summary>
+    /// Converts this CodeableConcept to a <see cref="P.Concept"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">One or more of the codes are
+    /// not convertable to a System Code. See <see cref="Model.Coding.ToSystemCode()"/>.</exception>
+    public P.Concept ToSystemConcept() =>
+        ((P.IToSystemPrimitive)this).TryConvertToSystemType(out var result)
+            ? (P.Concept)result
+            : throw new InvalidOperationException("Not all Codings are convertible.");
+
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        var codes = Coding.Select(c => c.TryConvertToSystemTypeInternal()).ToArray();
+        if (codes.Any(c => c is null))
+        {
+            result = null;
+            return false;
+        }
+
+        result = new P.Concept(codes.Cast<P.Code>(), this.Text);
+        return true;
+    }
+
+    /// <inheritdoc cref="ICoded.ToCodings"/>
     public IEnumerable<Coding> ToCodings() => Coding;
 }

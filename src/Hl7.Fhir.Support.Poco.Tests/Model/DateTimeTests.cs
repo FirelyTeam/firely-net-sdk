@@ -151,22 +151,22 @@ namespace Hl7.Fhir.Tests.Model
         public void CanConvertToDateTime()
         {
             var dft = new FhirDateTime(2023, 07, 11, 13, 0, 0, TimeSpan.FromHours(1));
-            dft.TryToDateTime(out var dt).Should().BeTrue();
+            dft.TryToSystemDateTime(out var dt).Should().BeTrue();
             dt.Hours.Should().Be(13);
             dt.Offset.Value.Hours.Should().Be(1);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Second);
 
             dft = new FhirDateTime(2023, 07, 11);
-            dft.TryToDateTime(out dt).Should().BeTrue();
+            dft.TryToSystemDateTime(out dt).Should().BeTrue();
             dt.Days.Should().Be(11);
             dt.HasOffset.Should().BeFalse();
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Day);
 
             dft = new FhirDateTime("crap");
-            dft.TryToDateTime(out dt).Should().BeFalse();
+            dft.TryToSystemDateTime(out dt).Should().BeFalse();
 
-            dft = new FhirDateTime((string)null);
-            dft.TryToDateTime(out dt).Should().BeTrue();
+            dft = new FhirDateTime(null);
+            dft.TryToSystemDateTime(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }
     }

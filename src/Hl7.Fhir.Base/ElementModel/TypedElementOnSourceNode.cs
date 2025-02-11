@@ -10,6 +10,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -198,7 +199,7 @@ namespace Hl7.Fhir.ElementModel
 
             // Finally, we have a (potentially) unparsed string + type info
             // parse this primitive into the desired type
-            if (P.Any.TryParse(sourceText, ts, out var val))
+            if (tryParse(sourceText, ts, out var val))
                 return val;
             else
             {
@@ -210,7 +211,7 @@ namespace Hl7.Fhir.ElementModel
                 if (_settings.TruncateDateTimeToDate && ts == typeof(P.Date))
 #pragma warning restore CS0618 // Type or member is obsolete
                 {
-                    if (P.Any.TryParse(sourceText, typeof(P.DateTime), out var dateTimeVal))
+                    if (tryParse(sourceText, typeof(P.DateTime), out var dateTimeVal))
                     {
                         // TruncateToDate converts 1991-02-03T11:22:33Z to 1991-02-03+00:00 which is not a valid date! 
                         var date = (dateTimeVal as P.DateTime)!.TruncateToDate();
@@ -223,6 +224,35 @@ namespace Hl7.Fhir.ElementModel
                 return sourceText;
             }
         }
+
+        private static bool tryParse(string value, Type primitiveType, [NotNullWhen(true)] out object? parsed)
+        {
+            if (!P.Any.TryParseToAny(value, primitiveType, out P.Any? any))
+            {
+                parsed = null;
+                return false;
+            }
+
+            parsed = any switch
+            {
+                P.Boolean b => b.Value,
+                P.Code c => c,
+                P.Concept c => c,
+                P.Decimal d => d.Value,
+                P.Integer i => i.Value,
+                P.Long l => l.Value,
+                P.Date dt => dt,
+                P.DateTime dt => dt,
+                P.Time t => t,
+                P.Ratio r => r,
+                P.Quantity q => q,
+                P.String s => s.Value,
+                _ => null
+            };
+
+            return parsed is not null;
+        }
+
 
         private object? _value;
         private bool _valueInitialized = false;
@@ -500,7 +530,8 @@ namespace Hl7.Fhir.ElementModel
         }
     }
 
+
+
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
     public delegate object? AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object? state);
 }
-

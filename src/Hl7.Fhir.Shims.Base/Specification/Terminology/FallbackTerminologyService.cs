@@ -55,7 +55,11 @@ namespace Hl7.Fhir.Specification.Terminology
                     // The fall back service does not know the valueset. If our local service
                     // does, try get the VS from there, and retry by sending the vs inline
                     var url = parameters.GetSingleValue<FhirUri>("url")?.Value;
-                    var valueSet = await _localService.FindValueSet(url!).ConfigureAwait(false);
+                    if (url is null) throw;
+
+                    var version = parameters.GetSingleValue<FhirString>("valueSetVersion")?.Value;
+                    var canonical = new Canonical(url, version);
+                    var valueSet = await _localService.FindValueSet(canonical).ConfigureAwait(false);
                     if (valueSet == null) throw;
 
                     var paramsWithVs = (Parameters)parameters.DeepCopy();

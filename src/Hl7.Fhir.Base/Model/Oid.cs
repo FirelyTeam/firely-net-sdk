@@ -29,24 +29,33 @@
 
 #nullable enable
 
+using System;
 using System.Text.RegularExpressions;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Oid
 {
-    public partial class Oid
-    {
-        /// <summary>
-        /// Creates a new <see cref="FhirUri"/> based on this oid.
-        /// </summary>
-        /// <returns></returns>
-        public FhirUri AsUri() => new(Value);
+    /// <summary>
+    /// Creates a new <see cref="FhirUri"/> based on this oid.
+    /// </summary>
+    /// <returns></returns>
+    public FhirUri AsUri() => new(Value);
 
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
-    }
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
+    /// <summary>
+    /// Converts this Oid to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Oid is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
 }
-
-#nullable restore

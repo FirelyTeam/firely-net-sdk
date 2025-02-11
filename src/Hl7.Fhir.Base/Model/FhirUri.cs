@@ -32,6 +32,7 @@
 
 using System;
 using System.Collections.Generic;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
@@ -72,6 +73,16 @@ public partial class FhirUri : ICoded
 
         return true;
     }
+
+    /// <summary>
+    /// Converts this FhirUri to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this FhirUri is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
 
     public IEnumerable<Coding> ToCodings() => [new(null, Value)];
 }

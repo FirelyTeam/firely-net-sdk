@@ -30,15 +30,17 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
 [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-public partial class Coding: ICoded
+public partial class Coding: ICoded, P.IToSystemPrimitive
 {
     public Coding()
     {
@@ -75,6 +77,26 @@ public partial class Coding: ICoded
         }
     }
 
-    public S.Code ToSystemCode() => new(System, Code, Display, Version);
+    /// <summary>
+    /// Converts this Coding to a <see cref="P.Code"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Code of this code is null,
+    /// which is not valid for System Codes.</exception>
+    public P.Code ToSystemCode() =>
+        TryConvertToSystemTypeInternal() ??
+        throw new InvalidOperationException("Code is null.");
+
+    /// <inheritdoc cref="P.IToSystemPrimitive.TryConvertToSystemType(out P.Any)"/>
+    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
+    {
+        result = TryConvertToSystemTypeInternal();
+        return result is not null;
+    }
+
+    internal P.Code? TryConvertToSystemTypeInternal() => Code is not null
+        ? new P.Code(System, Code, Display, Version)
+        : null;
+
+    /// <inheritdoc cref="ICoded.ToCodings()"/>
     public IEnumerable<Coding> ToCodings() => [this];
 }

@@ -30,21 +30,29 @@
 
 #nullable enable
 
+using System;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Markdown
 {
-    public partial class Markdown
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
 
-        public static implicit operator string?(Markdown? md) => md?.Value;
-        public static implicit operator Markdown?(string? s) => s is not null ? new(s) : null;
+    public static implicit operator string?(Markdown? md) => md?.Value;
+    public static implicit operator Markdown?(string? s) => s is not null ? new Markdown(s) : null;
 
-    }
+    /// <summary>
+    /// Converts this Markdown to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Markdown is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
 
 }
-
-#nullable restore

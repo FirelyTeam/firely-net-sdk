@@ -30,16 +30,26 @@
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
+using System;
+using P = Hl7.Fhir.ElementModel.Types;
+
+namespace Hl7.Fhir.Model;
+
+public partial class FhirDecimal
 {
-    public partial class FhirDecimal
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Decimal.TryParse(value, out _);
-    }
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => P.Decimal.TryParse(value, out _);
 
+    /// <summary>
+    /// Converts this FhirDecimal to a <see cref="P.Decimal" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this decimal is null,
+    /// which is not valid for System decimals.</exception>
+    public P.Decimal ToSystemDecimal() =>
+        (P.Decimal?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.Decimal(Value.Value) : null;
 }
-
-#nullable restore

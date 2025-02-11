@@ -93,22 +93,22 @@ namespace Hl7.Fhir.Tests.Model
         public void CanConvertToTime()
         {
             var dft = new Time(11, 12, 13);
-            dft.TryToTime(out var dt).Should().BeTrue();
+            dft.TryToSystemTime(out var dt).Should().BeTrue();
             dt.Minutes.Should().Be(12);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Second);
 
             dft = new Time("11:12");
-            dft.TryToTime(out dt).Should().BeTrue();
+            dft.TryToSystemTime(out dt).Should().BeTrue();
             dt.Seconds.Should().BeNull();
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Minute);
 
             dft = new Time("11:12:34.123");
-            dft.TryToTime(out dt).Should().BeTrue();
+            dft.TryToSystemTime(out dt).Should().BeTrue();
             dt.Millis.Should().Be(123);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Fraction);
 
-            dft = new Time((string)null);
-            dft.TryToTime(out dt).Should().BeTrue();
+            dft = new Time(null);
+            dft.TryToSystemTime(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }
     }

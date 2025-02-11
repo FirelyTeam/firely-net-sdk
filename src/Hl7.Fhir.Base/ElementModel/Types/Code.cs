@@ -8,56 +8,43 @@
 
 #nullable enable
 
-using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using static Hl7.Fhir.Utility.Result;
 
-namespace Hl7.Fhir.ElementModel.Types
+namespace Hl7.Fhir.ElementModel.Types;
+
+public class Code(string? system, string code, string? display = null, string? version = null) : Any
 {
-    public class Code : Any, ICqlConvertible
+    public string? System { get; } = system;
+    public string Value { get; } = code ?? throw new ArgumentNullException(nameof(code));
+    public string? Display { get; } = display;
+    public string? Version { get; } = version;
+
+    public static Code Parse(string value) => throw new NotImplementedException();
+    public static bool TryParse(string representation, [NotNullWhen(true)] out Code? value) => throw new NotImplementedException();
+
+    public override bool Equals(object? obj) => obj is Code c
+                                                && System == c.System && Value == c.Value && Display == c.Display && Version == c.Version;
+    public override int GetHashCode() => (System, Value, Display, Version).GetHashCode();
+
+    public static bool operator ==(Code left, Code right) => left.Equals(right);
+    public static bool operator !=(Code left, Code right) => !left.Equals(right);
+
+    public static explicit operator Concept(Code c) => RunCast<Concept>(c);
+
+    public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
     {
-        public Code(string? system, string code, string? display = null, string? version = null)
-        {
-            System = system;
-            Value = code ?? throw new ArgumentNullException(nameof(code));
-            Display = display;
-            Version = version;
-        }
+        result = null;
 
-        public string? System { get; }
-        public string Value { get; }
-        public string? Display { get; }
-        public string? Version { get; }
+        if(to == typeof(Code))
+            result = this;
+        else if (to == typeof(Concept))
+            result = new Concept([this], Display);
 
-        public static Code Parse(string value) => throw new NotImplementedException();
-        public static bool TryParse(string representation, [NotNullWhen(true)] out Code? value) => throw new NotImplementedException();
-
-        public override int GetHashCode() => (System, Value, Display, Version).GetHashCode();
-        public override string ToString() => $"{Value}@{System} " + Display ?? "";
-        public override bool Equals(object? obj) => obj is Code c
-            && System == c.System && Value == c.Value && Display == c.Display && Version == c.Version;
-
-        public static implicit operator Concept(Code c) => ((ICqlConvertible)c).TryConvertToConcept().ValueOrThrow();
-
-
-        Result<Code> ICqlConvertible.TryConvertToCode() => Ok(this);
-        Result<Concept> ICqlConvertible.TryConvertToConcept() => Ok(new Concept(new[] { this }, Display));
-
-        Result<Boolean> ICqlConvertible.TryConvertToBoolean() => CannotCastTo<Boolean>(this);
-        Result<Date> ICqlConvertible.TryConvertToDate() => CannotCastTo<Date>(this);
-        Result<DateTime> ICqlConvertible.TryConvertToDateTime() => CannotCastTo<DateTime>(this);
-        Result<Decimal> ICqlConvertible.TryConvertToDecimal() => CannotCastTo<Decimal>(this);
-        Result<Integer> ICqlConvertible.TryConvertToInteger() => CannotCastTo<Integer>(this);
-        Result<Long> ICqlConvertible.TryConvertToLong() => CannotCastTo<Long>(this);
-        Result<Quantity> ICqlConvertible.TryConvertToQuantity() => CannotCastTo<Quantity>(this);
-        Result<Ratio> ICqlConvertible.TryConvertToRatio() => CannotCastTo<Ratio>(this);
-        Result<String> ICqlConvertible.TryConvertToString() => CannotCastTo<String>(this);
-        Result<Time> ICqlConvertible.TryConvertToTime() => CannotCastTo<Time>(this);
-
-        public static bool operator ==(Code left, Code right) => left.Equals(right);
-        public static bool operator !=(Code left, Code right) => !left.Equals(right);
-
-        // Does not support equality, equivalence and ordering in the CQL sense, so no explicit implementations of these interfaces
+        return result is not null;
     }
+
+    public override string ToString() => $"{Value}@{System} " + Display;
+
+    // Does not support equality, equivalence and ordering in the CQL sense, so no explicit implementations of these interfaces
 }

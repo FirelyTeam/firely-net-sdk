@@ -30,32 +30,42 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class FhirUrl
 {
-    public partial class FhirUrl
+    public FhirUrl(Uri uri)
     {
-        public FhirUrl(Uri uri)
-        {
-            Value = uri.OriginalString;
-        }
+        Value = uri.OriginalString;
+    }
 
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value)
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value)
+    {
+        try
         {
-            try
-            {
-                var uri = new Uri(value, UriKind.RelativeOrAbsolute);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            var uri = new Uri(value, UriKind.RelativeOrAbsolute);
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
-}
 
-#nullable restore
+    /// <summary>
+    /// Converts this FhirUrl to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this FhirUrl is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
+}

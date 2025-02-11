@@ -85,10 +85,10 @@ namespace Hl7.FhirPath.Expressions
             t.Add("binary.*", (object f, int a, int b) => a * b, doNullProp: true);
             t.Add("binary.*", (object f, long a, long b) => a * b, doNullProp: true);
             t.Add("binary.*", (object f, decimal a, decimal b) => a * b, doNullProp: true);
-            t.Add("binary.*", (object f, P.Quantity a, P.Quantity b) => a * b, doNullProp: true);
+           // t.Add("binary.*", (object f, P.Quantity a, P.Quantity b) => a * b, doNullProp: true);
 
             t.Add("binary./", (object f, decimal a, decimal b) => b != 0 ? a / b : (decimal?)null, doNullProp: true);
-            t.Add("binary./", (object f, P.Quantity a, P.Quantity b) => a / b, doNullProp: true);
+            // t.Add("binary./", (object f, P.Quantity a, P.Quantity b) => a / b, doNullProp: true);
 
             t.Add("binary.+", (object f, int a, int b) => a + b, doNullProp: true);
             t.Add("binary.+", (object f, long a, long b) => a + b, doNullProp: true);
@@ -96,14 +96,14 @@ namespace Hl7.FhirPath.Expressions
             t.Add("binary.+", (object f, string a, string b) => a + b, doNullProp: true);
             t.Add("binary.+", (object f, P.DateTime a, P.Quantity b) => a + b, doNullProp: true);
             t.Add("binary.+", (object f, P.Date a, P.Quantity b) => a + b, doNullProp: true);
-            t.Add("binary.+", (object f, P.Quantity a, P.Quantity b) => a + b, doNullProp: true);
+           // t.Add("binary.+", (object f, P.Quantity a, P.Quantity b) => a + b, doNullProp: true);
 
             t.Add("binary.-", (object f, int a, int b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, long a, long b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, decimal a, decimal b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, P.DateTime a, P.Quantity b) => a - b, doNullProp: true);
             t.Add("binary.-", (object f, P.Date a, P.Quantity b) => a - b, doNullProp: true);
-            t.Add("binary.-", (object f, P.Quantity a, P.Quantity b) => a - b, doNullProp: true);
+           // t.Add("binary.-", (object f, P.Quantity a, P.Quantity b) => a - b, doNullProp: true);
 
             t.Add("binary.div", (object f, int a, int b) => b != 0 ? a / b : (int?)null, doNullProp: true);
             t.Add("binary.div", (object f, long a, long b) => b != 0 ? a / b : (long?)null, doNullProp: true);

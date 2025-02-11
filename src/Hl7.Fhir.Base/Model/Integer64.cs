@@ -30,15 +30,28 @@
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
-{
-    public partial class Integer64
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Long.TryParse(value, out _);
-    }
-}
+using System;
+using P = Hl7.Fhir.ElementModel.Types;
 
-#nullable restore
+namespace Hl7.Fhir.Model;
+
+public partial class Integer64
+{
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => ElementModel.Types.Long.TryParse(value, out _);
+
+    /// <summary>
+    /// Converts this Integer64 to a <see cref="P.Long" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this Integer64 is null,
+    /// which is not valid for System longs.</exception>
+    public P.Long ToSystemLong() =>
+        (P.Long?)TryConvertToSystemTypeInternal()
+        ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Long(Value.Value) : null;
+}
