@@ -183,7 +183,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (node.Value is not null || (node.InstanceType is { } it && char.IsLower(it[0])))
             return determineBestPrimitiveMapping();
 
-        if (node.Annotation<IResourceTypeSupplier>() is not null)
+        if (node.Annotation<IResourceTypeSupplier>() is not null || node.Definition?.IsResource is true)
             return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME);
 
         return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME);

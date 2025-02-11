@@ -1,15 +1,8 @@
-using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using Date = Hl7.Fhir.Model.Date;
-using Integer = Hl7.Fhir.Model.Integer;
-using Quantity = Hl7.Fhir.Model.Quantity;
-using Time = Hl7.Fhir.Model.Time;
 
 #nullable enable
 

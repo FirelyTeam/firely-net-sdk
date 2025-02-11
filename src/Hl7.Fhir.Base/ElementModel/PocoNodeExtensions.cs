@@ -1,12 +1,9 @@
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace Hl7.Fhir.ElementModel;
 
@@ -219,18 +216,46 @@ public static class PocoNodeExtensions
     /// <returns></returns>
     public static IEnumerable<PocoNode> BundledResources(this PocoNode node) => node.Child("entry") ?? Enumerable.Empty<PocoNode>();
     
+    /// <summary>
+    /// Gets the "Legacy" ITypedElement.Value of a PocoNode without having to do an explicit cast. Uses a function signature to indicate its potential cost.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     public static object? GetValue(this PocoNode node) => ((ITypedElement)node).Value;
 
+    /// <summary>
+    /// Searches all given nodes for the specified children and flattens the results.
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> FindSubChildren(this IEnumerable<PocoNode> nodes, string name) => nodes.SelectMany(node => node.Child(name) ?? Enumerable.Empty<PocoNode>());
     
+    /// <summary>
+    /// Finds all descendants of this node and flattens the result.
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> Descendants(this IEnumerable<PocoNode> nodes) => nodes.SelectMany(descendants);
 
+    /// <summary>
+    /// Finds this node and all descendants of this node and flattens the result.
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> DescendantsAndSelf(this IEnumerable<PocoNode> nodes) => nodes.Descendants().Concat(nodes);
 
     private static IEnumerable<PocoNode> descendants(this PocoNode node) => node.Children().SelectMany(singleOrList => singleOrList).DescendantsAndSelf();
     
-    public static T? Child<T>(this PocoNode? node, string name) where T : PocoNodeOrList => node?.Child(name) as T;
+    internal static T? Child<T>(this PocoNode? node, string name) where T : PocoNodeOrList => node?.Child(name) as T;
     
+    /// <summary>
+    /// Filters a list of nodes based on a predicate to be evaluated on their internal POCOs.
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <param name="predicate"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> Where<T>(this IEnumerable<PocoNode> nodes, Func<T, bool> predicate) where T : Base =>
         nodes is PocoListNode pln 
             ? pln.Where(predicate)
@@ -239,6 +264,13 @@ public static class PocoNodeExtensions
     internal static IEnumerable<PocoNode> Where<T>(this PocoListNode pln, Func<T, bool> predicate) where T : Base =>
         pln.Pocos.OfType<T>().Where(predicate).Select((poco, index) => new PocoNode(poco, pln.Parent, index, pln.Name));
 
+    /// <summary>
+    /// Finds the first node in a list of nodes that satisfies a predicate to be evaluated on their internal POCOs.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="predicate"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static PocoNode? FirstOrDefault<T>(this IEnumerable<PocoNode> node, Func<T, bool> predicate) where T : Base =>
         node.FirstOrDefault(n => n.Poco is T t && predicate(t));
     
