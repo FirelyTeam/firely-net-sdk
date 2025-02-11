@@ -2,6 +2,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ public partial record PocoNode
     string ITypedElement.InstanceType =>
         Poco switch
         {
+            DataType => Poco.TypeName,
             BackboneElement => "BackboneElement",
             Element when Poco.TypeName.Contains('.') => "Element",
             _ => Poco.TypeName

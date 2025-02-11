@@ -53,14 +53,14 @@ public record PrimitiveNode(PrimitiveType Primitive, string? Name = null) : Poco
     internal static PrimitiveType InferFromValue(object value) => value switch
     {
         Types.DateTime dt => new FPDateTime(dt),
-        Types.Date d => new FPDateTime(d),
+        Types.Date d => new FPDate(d),
         Types.Time t => new FPTime(t),
         decimal dec => new FPDecimal(dec),
         float f => new FPDecimal((decimal)f),
         double d => new FPDecimal((decimal)d),
         bool b => new FPBoolean(b),
         int i => new FPInteger(i),
-        long l => new FPInteger((int)l),
+        long l => new FPLong(l),
         string s => new FPString(s),
         _ => throw new ArgumentException("Cannot infer primitive type from value", nameof(value))
     };

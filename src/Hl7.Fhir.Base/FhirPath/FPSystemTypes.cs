@@ -7,7 +7,6 @@ internal abstract class CqlPrimitive : DynamicPrimitive;
 
 internal class FPTime : CqlPrimitive
 {
-    
     public FPTime(P.Time value)
     {
         DynamicTypeName = "System.Time";
@@ -20,6 +19,15 @@ internal class FPDateTime : CqlPrimitive
     public FPDateTime(P.DateTime value)
     {
         DynamicTypeName = "System.DateTime";
+        ObjectValue = value;
+    }
+}
+
+internal class FPDate : CqlPrimitive
+{
+    public FPDate(P.Date value)
+    {
+        DynamicTypeName = "System.Date";
         ObjectValue = value;
     }
 }
@@ -38,6 +46,15 @@ internal class FPInteger : CqlPrimitive
     public FPInteger(int value)
     {
         DynamicTypeName = "System.Integer";
+        ObjectValue = value;
+    }
+}
+
+internal class FPLong : CqlPrimitive
+{
+    public FPLong(long value)
+    {
+        DynamicTypeName = "System.Long";
         ObjectValue = value;
     }
 }

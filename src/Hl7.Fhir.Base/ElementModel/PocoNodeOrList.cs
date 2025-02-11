@@ -34,8 +34,8 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
 {
     public override PocoNode? Parent => ParentNode switch
     {
-        PocoListNode rpen => rpen[Index!.Value],
-        PocoNode spen => spen,
+        PocoListNode nodes => nodes[Index!.Value],
+        PocoNode node => node,
         _ => null
     };
     
