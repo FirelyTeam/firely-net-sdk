@@ -9,10 +9,8 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.Expressions
@@ -49,7 +47,7 @@ namespace Hl7.FhirPath.Expressions
 
         internal static P.Quantity ParseQuantity(PocoNode qe)
         {
-            return (qe.Poco as Quantity)?.ToQuantity();
+            return (qe.Poco as Quantity)?.ToSystemQuantity();
         }
 
         private static Cast getImplicitCast(object f, Type to)

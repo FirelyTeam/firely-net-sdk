@@ -45,13 +45,7 @@ public partial class Time
     {
         // Nothing
     }
-
-    public Time(P.Time time)
-    {
-        _parsedValue = time;
-        Value = time.ToString();
-    }
-
+    
     /// <summary>
     /// Takes the hour, minute and second of a given <see cref="DateTimeOffset"/> in the indicated timezone, and uses this
     /// to construct a new Time.
