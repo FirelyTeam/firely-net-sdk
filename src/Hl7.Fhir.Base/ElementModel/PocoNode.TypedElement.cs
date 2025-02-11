@@ -43,7 +43,7 @@ public partial record PocoNode
     {
         get
         {
-            if (FindInspector() is not { } inspector)
+            if (this.FindInspector() is not { } inspector)
                 return null;
 
             if (this.Parent is not {} node) 
@@ -83,7 +83,7 @@ public partial record PocoNode
     {
         if (name is null) return Children().SelectMany(node => node);
         
-        var trueElementName = FindInspector()?
+        var trueElementName = this.FindInspector()?
             .FindOrImportClassMapping(Poco.GetType())?
             .FindMappedElementByChoiceName(name)?.Name;
         
