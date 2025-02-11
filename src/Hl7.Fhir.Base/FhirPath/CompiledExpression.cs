@@ -24,7 +24,7 @@ namespace Hl7.FhirPath
         public static object? Scalar(this CompiledExpression evaluator, PocoNode input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).Take(2).ToArray();
-            return ((ITypedElement?)result.SingleOrDefault())?.Value;
+            return result.SingleOrDefault()?.GetValue();
         }
 
         /// <summary>
