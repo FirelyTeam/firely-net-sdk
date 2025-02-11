@@ -23,7 +23,7 @@ public partial record PocoNode
             _ => Poco.TypeName
         };
 
-    object? ITypedElement.Value => Poco is Quantity q ? q.ToSystemQuantity() : ValueInternal;
+    object? ITypedElement.Value => ValueInternal;
 
     // needed for ITE
     protected virtual object? ValueInternal => null;
