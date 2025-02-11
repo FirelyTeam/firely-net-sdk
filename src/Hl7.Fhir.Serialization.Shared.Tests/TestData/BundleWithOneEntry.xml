@@ -30,7 +30,6 @@
         <code value="_text" />
         <base value="DomainResource" />
         <type value="string" />
-        <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>

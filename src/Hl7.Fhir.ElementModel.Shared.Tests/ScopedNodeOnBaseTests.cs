@@ -60,21 +60,21 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var entries = _bundleNode!.BundledResources().ToList();
 
-            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FindFullUrl());
+            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].Child("resource")?.FindFullUrl());
 
             var entry3 = entries[3].Child("resource");
             entry3 = entry3?.FindSubChildren("managingOrganization").FirstOrDefault();
             Assert.IsNotNull(entry3);
             entry3 = entry3.FindSubChildren("reference").FirstOrDefault();
             Assert.IsNotNull(entry3);
-            Assert.AreEqual(entries[3].FindFullUrl(), entry3.FindFullUrl());
+            Assert.AreEqual(entries[3].Child("resource")?.FindFullUrl(), entry3.FindFullUrl());
             Assert.AreEqual(entry3.GetParentResource()!.FindFullUrl(), entry3.FindFullUrl());
 
             var entry6 = entries[6].FindSubChildren("resource").FirstOrDefault();
             entry6 = entry6?.ContainedResources().Skip(1).FirstOrDefault();
             Assert.IsNotNull(entry6);
             Assert.AreEqual("orgY", entry6.FindSubChildren("id").FirstOrDefault()?.GetValue());
-            Assert.AreEqual(entries[6].FindFullUrl(), entry6.FindFullUrl());
+            Assert.AreEqual(entries[6].Child("resource")?.FindFullUrl(), entry6.FindFullUrl());
             Assert.AreEqual(entry6.GetParentResource()!.FindFullUrl(), entry6.FindFullUrl());
         }
 

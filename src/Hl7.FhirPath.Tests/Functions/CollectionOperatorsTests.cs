@@ -43,7 +43,7 @@ namespace HL7.FhirPath.Tests.Functions
         {
             IEnumerable<PocoNode> left = PocoNode.FromList<Integer>([1, 3, 3, 5, 6]); 
             IEnumerable<PocoNode> right = PocoNode.FromList<Integer>([3, 5, 5, 6, 8]);
-            PocoNode.FromList<Integer>([3, 5, 6]).IsEqualTo(PocoNode.FromList<Integer>(left.Intersect(right).ToList())).Should().BeTrue();
+            PocoNode.FromList<Integer>([3, 5, 6]).IsEqualTo(left.Intersect(right).ToList()).Should().BeTrue();
         }
 
         [TestMethod]
