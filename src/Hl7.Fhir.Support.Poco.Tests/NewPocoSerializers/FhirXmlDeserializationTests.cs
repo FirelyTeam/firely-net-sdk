@@ -38,22 +38,17 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow("<foo value =\"true\"/>", typeof(bool), true, null, DisplayName = "XmlBool1")]
         [DataRow("<foo value =\"1\"/>", typeof(bool), "1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool2")]
         [DataRow("<foo value =\"treu\"/>", typeof(bool), "treu", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool3")]
-        [DataRow("<foo value =\"2000-01-01\"/>", typeof(DateTimeOffset), "2000-01-01", null, DisplayName = "XmlInstant1")]
-        [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInstant2")]
+        [DataRow("<foo value =\"2000-01-01T12:00:00\"/>", typeof(DateTimeOffset), "2000-01-01T12:00:00", null, DisplayName = "XmlInstant1")]
+        [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", CodedValidationException.INSTANT_LITERAL_INVALID_CODE, DisplayName = "XmlInstant2")]
         [DataRow("<foo value =\"foo\"/>", typeof(byte[]), "foo", CodedValidationException.INVALID_BASE64_VALUE_CODE, DisplayName = "XmlByteArray")]
         [DataRow("<foo value =\"1\"/>", typeof(int), 1, null, DisplayName = "XmlInteger1")]
         [DataRow("<foo value =\"1.1\"/>", typeof(int), "1.1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInteger2")]
-        [DataRow("<foo value =\"1\"/>", typeof(long), 1, null, DisplayName = "XmlLong1")]
+        [DataRow("<foo value =\"1\"/>", typeof(long), "1", null, DisplayName = "XmlLong1")]
         [DataRow("<foo value =\"1.1\"/>", typeof(long), "1.1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlLong2")]
-        [DataRow("<foo value =\"1\"/>", typeof(uint), 1, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUint1")]
-        [DataRow("<foo value =\"-1\"/>", typeof(uint), "-1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUint2")]
         [DataRow("<foo value =\"3.14\"/>", typeof(decimal), 3.14, null, DisplayName = "XmlDecimal1")]
         [DataRow("<foo value =\"3.14e2\"/>", typeof(decimal), 3.14e2, null, DisplayName = "XmlDecimal1")]
         [DataRow("<foo value =\"3.14e500\"/>", typeof(decimal), "3.14e500", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlDecimal2")]
-        [DataRow("<foo value =\"3.14\"/>", typeof(double), 3.14, null, DisplayName = "XmlDouble1")]
-        [DataRow("<foo value =\"1\"/>", typeof(ulong), 1, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUlong1")]
-        [DataRow("<foo value =\"-1\"/>", typeof(ulong), "-1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUlong2")]
-        [DataRow("<foo value =\"1\"/>", typeof(float), 1, null, DisplayName = "XmlFloat1")]
+
         public void TryDeserializePrimitiveValue(string xmlPrimitive, Type implementingType, object expectedValue, string expectedErrorCode)
         {
             var reader = constructReader(xmlPrimitive);
@@ -63,18 +58,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = getTestDeserializer(new());
             var ps = new PathStack();
             ps.EnterElement("Patient", 0, false);
-            var (value, error) = deserializer.ParsePrimitiveValue(reader, implementingType, ps);
+            var (value, error) = BaseFhirXmlPocoDeserializer.ParsePrimitiveValue(reader, implementingType, ps);
 
             error?.ErrorCode.Should().Be(expectedErrorCode);
-
-            if (implementingType == typeof(DateTimeOffset) && expectedErrorCode is null)
-            {
-                value.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)expectedValue);
-            }
-            else
-            {
-                value.Should().Be(expectedValue);
-            }
+            value.Should().Be(expectedValue);
         }
 
 

@@ -30,31 +30,91 @@
 
 #nullable enable
 
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Xml;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Integer64
 {
+    protected override Type ObjectValueType => typeof(string);
+
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private long? _parsedValue = null;
+
+    private bool tryGetParsedValue(out long? dto)
+    {
+        dto = _parsedValue;
+        if (_parsedValue is not null || ObjectValue is null) return true;
+        if (ObjectValue is not string unparsed) return false;
+        if (!P.Long.TryParse(unparsed, out var parsedLong)) return false;
+
+        dto = _parsedValue = parsedLong.Value;
+        return true;
+    }
+
+    public override object? ObjectValue
+    {
+        get
+        {
+            if (_parsedValue is not null && base.ObjectValue is null)
+                base.ObjectValue = XmlConvert.ToString(_parsedValue.Value);
+
+            return base.ObjectValue;
+        }
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
+    }
+
     public partial long? Value
     {
         get
         {
-            return ObjectValue switch
-            {
-                null => null,
-                long l => l,
-                _ => Convert.ToInt64(ObjectValue)
-            };
+            if (!tryGetParsedValue(out var value))
+                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct literal for an Integer64.");
+
+            return value;
         }
-        set { ObjectValue = value; OnPropertyChanged("Value"); }
+
+        set
+        {
+            _parsedValue = value;
+            base.ObjectValue = null;
+            OnPropertyChanged("Value");
+        }
     }
 
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Checks whether the given literal is a correctly formatted Instant, with a precision higher than seconds.
     /// </summary>
-    public static bool IsValidValue(string value) => ElementModel.Types.Long.TryParse(value, out _);
+    public bool HasValidValue() => tryGetParsedValue(out _);
+
+     /// <inheritdoc cref="HasValidValue"/>
+    public static bool IsValidValue(string value)
+    {
+        var i = new Integer64 { ObjectValue = value };
+        return i.HasValidValue();
+    }
+
+    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var baseResults = base.Validate(validationContext);
+        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
+
+        if (HasValidValue())
+            return baseResults;
+
+        var result = CodedValidationException.LONG_LITERAL_INVALID(validationContext, ObjectValue).AsResult(validationContext);
+        return baseResults.Append(result);
+    }
 
     /// <summary>
     /// Converts this Integer64 to a <see cref="P.Long" />.

@@ -86,6 +86,8 @@ public partial class FhirDateTime
 
     public static FhirDateTime Now() => new(DateTimeOffset.Now);
 
+    protected override Type ObjectValueType => typeof(string);
+
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private P.DateTime? _parsedValue = null;
 
@@ -134,10 +136,14 @@ public partial class FhirDateTime
             : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
     }
 
-    protected override void OnObjectValueChanged()
+    public override object? ObjectValue
     {
-        _parsedValue = null;
-        base.OnObjectValueChanged();
+        get => base.ObjectValue;
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
     }
 
     /// <summary>

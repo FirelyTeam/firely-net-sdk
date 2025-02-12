@@ -56,6 +56,8 @@ public partial class Time
 
     public static Time UtcNow() => FromDateTimeOffset(DateTimeOffset.UtcNow);
 
+    protected override Type ObjectValueType => typeof(string);
+
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private P.Time? _parsedValue = null;
 
@@ -108,10 +110,14 @@ public partial class Time
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
         TryToSystemTime(out var result) ? result : null;
 
-    protected override void OnObjectValueChanged()
+    public override object? ObjectValue
     {
-        _parsedValue = null;
-        base.OnObjectValueChanged();
+        get => base.ObjectValue;
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
     }
 
     /// <summary>

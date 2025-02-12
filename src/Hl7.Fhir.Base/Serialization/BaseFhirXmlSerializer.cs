@@ -174,19 +174,14 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         var literal = value switch
         {
             int i32 => XmlConvert.ToString(i32),
-            uint ui32 => XmlConvert.ToString(ui32),
-            long i64 => XmlConvert.ToString(i64),
-            ulong ui64 => XmlConvert.ToString(ui64),
-            float si => XmlConvert.ToString(si),
-            double dbl => XmlConvert.ToString(dbl),
             decimal dec => XmlConvert.ToString(dec),
             // A little note about trimming and whitespaces. The spec says:
             // "Implementers SHOULD trim leading and trailing whitespace before writing and SHOULD trim leading
             // and trailing whitespace when reading attribute values (for XML schema conformance)"
             string s => s.Trim(),
             bool b => XmlConvert.ToString(b),
-            DateTimeOffset dto => ElementModel.Types.DateTime.FormatDateTimeOffset(dto),
-            byte[] bytes => Convert.ToBase64String(bytes),
+            // DateTimeOffset dto => ElementModel.Types.DateTime.FormatDateTimeOffset(dto),
+            // byte[] bytes => Convert.ToBase64String(bytes),
             _ => throw new FormatException($"There is no known serialization for type {value.GetType()} into an Xml primitive property value.")
         };
 

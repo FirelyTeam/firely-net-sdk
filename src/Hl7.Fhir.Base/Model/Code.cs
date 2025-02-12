@@ -40,6 +40,8 @@ namespace Hl7.Fhir.Model;
 
 public partial class Code : ICoded
 {
+    protected override Type ObjectValueType => typeof(string);
+
     /// <summary>
     /// Converts this Code to a <see cref="P.Code"/>.
     /// </summary>

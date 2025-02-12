@@ -22,19 +22,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var filename = Path.Combine("TestData", "json-edge-cases.json");
             var expected = File.ReadAllText(filename);
 
-            try
-            {
-                var parsed = JsonSerializer.Deserialize<Patient>(expected, BaseOptions);
-                return (parsed, expected);
-            }
-            catch (DeserializationFailedException dfe)
-            {
-                if (dfe.Exceptions.All(e => e.ErrorCode == CodedValidationException.CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE))
-                    return (dfe.PartialResult as Patient, expected);
-                else
-                    throw;
-            }
-
+            var parsed = JsonSerializer.Deserialize<Patient>(expected, BaseOptions);
+            return (parsed, expected);
         }
 
         [TestMethod]

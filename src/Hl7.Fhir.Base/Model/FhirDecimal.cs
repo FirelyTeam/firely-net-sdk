@@ -37,6 +37,8 @@ namespace Hl7.Fhir.Model;
 
 public partial class FhirDecimal
 {
+    protected override Type ObjectValueType => typeof(decimal);
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

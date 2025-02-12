@@ -65,6 +65,8 @@ public class DynamicResource : Resource, IDynamicType
 [FhirType("DynamicPrimitive","http://fire.ly/fhir/StructureDefinition/DynamicPrimitive")]
 public class DynamicPrimitive : PrimitiveType, IDynamicType
 {
+    protected override Type ObjectValueType => typeof(object);
+
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;

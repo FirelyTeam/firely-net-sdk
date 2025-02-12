@@ -37,6 +37,8 @@ namespace Hl7.Fhir.Model;
 
 public partial class FhirBoolean
 {
+    protected override Type ObjectValueType => typeof(bool);
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

@@ -29,6 +29,7 @@
 */
 
 using Hl7.Fhir.Utility;
+using System;
 using System.Linq;
 using System.Xml;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
@@ -42,6 +43,8 @@ namespace Hl7.Fhir.Model;
 /// </summary>
 public partial class XHtml
 {
+    protected override Type ObjectValueType => typeof(string);
+
     /// <summary>
     /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html.
     /// </summary>

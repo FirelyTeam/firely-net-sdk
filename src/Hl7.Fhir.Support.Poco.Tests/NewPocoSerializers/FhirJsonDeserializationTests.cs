@@ -10,7 +10,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,38 +25,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirJsonDeserializationTests
     {
-        [DataTestMethod]
-        [DataRow(null, null, typeof(decimal), null, ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
-        [DataRow(new[] { 1, 2 }, null, typeof(decimal), null, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
-        [DataRow("hi!", "hi!", typeof(string), null, null)]
-        [DataRow("SGkh", null, typeof(byte[]), null, null)]
-        [DataRow("hi!", null, typeof(byte[]), null, COVE.INVALID_BASE64_VALUE_CODE)]
-        [DataRow("hi!", null, typeof(DateTimeOffset), null, ERR.STRING_ISNOTAN_INSTANT_CODE)]
-        [DataRow("2007-02-03", null, typeof(DateTimeOffset), null, null)]
-        [DataRow("enumvalue", null, typeof(UriFormat), null, COVE.INVALID_CODED_VALUE_CODE)]
-        [DataRow(true, "true", typeof(Enum), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
-        [DataRow("hi!", "hi!", typeof(int), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
-        [DataRow("", "", typeof(string), null, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE)]
-        [DataRow(3, 3, typeof(decimal), null, null)]
-        [DataRow(3, 3, typeof(uint), null, null)]
-        [DataRow(3L, 3L, typeof(long), typeof(Integer64), ERR.LONG_INCORRECT_FORMAT_CODE)]
-        [DataRow(3L, 3L, typeof(long), typeof(UnsignedInt), null)]
-        [DataRow(3, 3, typeof(ulong), null, null)]
-        [DataRow(3.14, 3.14, typeof(decimal), null, null)]
-        [DataRow(3.14, "3.14", typeof(int), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
-        [DataRow(3.14, "3.14", typeof(uint), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
-        [DataRow(3.14, "3.14", typeof(long), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
-        [DataRow(-3, "-3", typeof(ulong), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
-        [DataRow(long.MaxValue, long.MaxValue, typeof(decimal), null, null)]
-        [DataRow(5, 5, typeof(float), null, null)]
-        [DataRow(6.14, 6.14, typeof(double), null, null)]
-        [DataRow(314, 314, typeof(int), null, null)]
-        [DataRow(314, 314, typeof(decimal), null, null)]
-        [DataRow(3.14, "3.14", typeof(bool), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
-        [DataRow(true, true, typeof(bool), null, null)]
-        [DataRow(true, "true", typeof(string), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
+
         public void TryDeserializePrimitiveValue(object input, object expectedResult, Type expectedImplementingType,
-            Type? fhirType, string? code)
+            string? code)
         {
             var reader = constructReader(input);
             reader.Read();
@@ -66,21 +36,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var ps = new PathStack();
             ps.EnterElement("Patient", 0, false);
             var (result, error) =
-                deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType, ps);
+                deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, ps);
 
             if (code is not null)
                 error?.ErrorCode.Should().Be(code);
             else
                 error.Should().BeNull();
 
-            if (expectedImplementingType == typeof(DateTimeOffset))
-            {
-                if (error is null)
-                    result.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)input);
-                else
-                    result.Should().Be(input);
-            }
-            else if (code is ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE or ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE)
+
+            if (code is ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE or ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE)
 #pragma warning disable CS0642 // Possible mistaken empty statement
                 ; // nothing to check
 #pragma warning restore CS0642 // Possible mistaken empty statement
@@ -96,71 +60,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private static BaseFhirJsonPocoDeserializer getTestDeserializer(FhirJsonConverterOptions settings) =>
             new(typeof(Patient).Assembly, settings);
 
-        [TestMethod]
-        public void TestCustomRecovery()
-        {
-            var (result, error) = test(1);
-            result.Should().Be(false);
-
-            (result, error) = test(11);
-            result.Should().Be(true);
-
-            (result, error) = test(21);
-            result.Should().Be("21");
-            error?.ErrorCode.Should().Be(ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
-
-            (result, error) = test(31);
-            result.Should().BeNull();
-            error?.ErrorCode.Should().Be(ERR.UNEXPECTED_JSON_TOKEN_CODE);
-
-            try
-            {
-                _ = test(41);
-                Assert.Fail();
-            }
-            catch (InvalidOperationException)
-            {
-            }
-
-            static (object?, FhirJsonException?) correctIntToBool(ref Utf8JsonReader reader,
-                Type targetType,
-                object? originalValue,
-                FhirJsonException originalException)
-            {
-                return reader.GetInt32() switch
-                {
-                    < 10 => (false, null),
-                    < 20 => (true, null),
-                    < 30 => (originalValue, ERR.ARRAYS_CANNOT_BE_EMPTY(ref reader, "Patient")),
-                    < 40 => (null, originalException),
-                    _ => throw new InvalidOperationException("Something")
-                };
-            }
-
-            static (object?, FhirJsonException?) test(int number)
-            {
-                var reader = constructReader(number);
-                reader.Read();
-                var deserializer = getTestDeserializer(new() { OnPrimitiveParseFailed = correctIntToBool });
-                var ps = new PathStack();
-                ps.EnterElement("Patient", 0, false);
-                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null, ps);
-            }
-        }
 
         [TestMethod]
         public void PrimitiveValueCannotBeComplex()
         {
-            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null,
-                ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
-            TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture),
-                typeof(decimal), null, FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE);
-            TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(uint), null,
-                ERR.NUMBER_CANNOT_BE_PARSED_CODE);
-            TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(int), null,
-                ERR.NUMBER_CANNOT_BE_PARSED_CODE);
-            TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture),
-                typeof(float), null, FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE);
+            ParsePrimitiveValue(new { bla = 4 }, typeof(FhirBoolean), ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+//            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int),
+//                ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
         }
 
         [DataTestMethod]
@@ -169,7 +75,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow("Meta", null)]
         [DataRow(4, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE)]
         [DataRow(null, ERR.NO_RESOURCETYPE_PROPERTY_CODE)]
-        public void DeriveClassMapping(object typename, string errorcode)
+        public void DeriveClassMapping(object? typename, string? errorcode)
         {
             var (result, error) = test(typename);
             if (errorcode is null)
@@ -178,9 +84,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 error?.ErrorCode.Should().Be(errorcode);
 
             if (errorcode is null)
-                result!.Name.Should().Be((string)typename);
+                result!.Name.Should().Be((string?)typename);
 
-            static (ClassMapping?, FhirJsonException?) test(object typename)
+            static (ClassMapping?, FhirJsonException?) test(object? typename)
             {
                 var inspector = ModelInspector.ForAssembly(typeof(Resource).Assembly);
 
@@ -200,20 +106,29 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(null, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
         [DataRow(new[] { 1, 2 }, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
         [DataRow("SGkh", typeof(FhirString), null, "SGkh")]
+        [DataRow(4, typeof(FhirString), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
         [DataRow("SGkh", typeof(Base64Binary), null, "SGkh")]
         [DataRow("hi!", typeof(Base64Binary), COVE.INVALID_BASE64_VALUE_CODE, "hi!")]
-        [DataRow(4, typeof(Base64Binary), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4")]
+        [DataRow(4, typeof(Base64Binary), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
         [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
         [DataRow("", typeof(FhirDateTime), ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE, null)]
         [DataRow("2007-", typeof(FhirDateTime), COVE.DATETIME_LITERAL_INVALID_CODE, "2007-")]
-        [DataRow(4.45, typeof(FhirDateTime), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4.45")]
+        [DataRow(true, typeof(FhirDateTime), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, true)]
         [DataRow("female", typeof(Code), null, "female")]
         [DataRow("is-a", typeof(Code<FilterOperator>), null, "is-a")]
         [DataRow("wrong", typeof(Code<FilterOperator>), COVE.INVALID_CODED_VALUE_CODE,
             "wrong")] // just sets ObjectValue, POCO validation handles enum checks
-        [DataRow(true, typeof(Code), ERR.UNEXPECTED_JSON_TOKEN_CODE, "true")]
-        [DataRow("hi!", typeof(Instant), ERR.STRING_ISNOTAN_INSTANT_CODE)]
-        [DataRow("2007-02-03", typeof(Instant), null, 2007)]
+        [DataRow(true, typeof(Code), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, true)]
+        [DataRow("hi!", typeof(Instant), COVE.INSTANT_LITERAL_INVALID_CODE)]
+        [DataRow("2007-02-03T12:00:00Z", typeof(Instant), null, "2007-02-03T12:00:00Z")]
+        [DataRow(3, typeof(FhirDecimal), null, 3)]
+        [DataRow(3.14, typeof(FhirDecimal), null, 3.14)]
+        [DataRow(3L, typeof(Integer64), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE)]
+        [DataRow("hoi", typeof(Integer64), COVE.LONG_LITERAL_INVALID_CODE)]
+        [DataRow("3", typeof(Integer64), null, "3")]
+        [DataRow(314, typeof(Integer), null, 314)]
+        [DataRow(3.14, typeof(FhirBoolean), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE)]
+        [DataRow(true, typeof(FhirBoolean), null, true)]
         public void ParsePrimitiveValue(object value, Type targetType, string? errorcode,
             object? expectedObjectValue = null)
         {
@@ -233,24 +148,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             var result = test();
 
-            state.Errors.HasExceptions.Should().Be(errorcode is not null);
-
             if (state.Errors.HasExceptions)
             {
                 if (errorcode is not null)
                     state.Errors.Should().OnlyContain(ce => ce.ErrorCode == errorcode);
                 else
-                    throw state.Errors.Single();
+                    errorcode.Should().BeNull(because: state.Errors.ToString());
+            }
+            else
+            {
+                errorcode.Should().BeNull(because: state.Errors.ToString());
             }
 
             if (expectedObjectValue is not null)
-            {
-                if (targetType == typeof(Instant))
-                    result.ObjectValue.Should().BeOfType<DateTimeOffset>().Which.Year.Should()
-                        .Be((int)expectedObjectValue!);
-                else
                     result.ObjectValue.Should().BeEquivalentTo(expectedObjectValue);
-            }
         }
 
         private static (Base?, IReadOnlyCollection<CodedException>) deserializeComplex(Type objectType,
@@ -471,7 +382,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
             yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
-            yield return data<ContactDetail>(new { _name = new { id = true } }, ERR.UNEXPECTED_JSON_TOKEN_CODE);
+            yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
             yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
 
             static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement.Value
@@ -638,11 +549,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 Console.WriteLine(recoveredActual);
 
                 assertErrors(dfe.Exceptions, [
-                    ERR.STRING_ISNOTAN_INSTANT_CODE,
+                    COVE.INSTANT_LITERAL_INVALID_CODE,
                     ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level
                     ERR.UNKNOWN_RESOURCE_TYPE_CODE, ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE,
                     ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.NO_RESOURCETYPE_PROPERTY_CODE,
-                    ERR.UNEXPECTED_JSON_TOKEN_CODE, ERR.EXPECTED_START_OF_ARRAY_CODE,
+                    COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, ERR.EXPECTED_START_OF_ARRAY_CODE,
                     ERR.UNKNOWN_PROPERTY_FOUND_CODE, // mother is not a property of HumanName
                     ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, // family is not an array,
                     ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE, // telecom use cannot be null
@@ -654,15 +565,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.EXPECTED_START_OF_OBJECT_CODE, // item.code is a complex object, not a boolean
                     COVE.URI_LITERAL_INVALID_CODE, // incorrect oid
                     COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, // given cannot be a single array with just a null
-                    ERR.UNEXPECTED_JSON_TOKEN_CODE, // telecom.rank should be a number, not a boolean
+                    COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // telecom.rank should be a number, not a boolean
                     ERR.EXPECTED_START_OF_OBJECT_CODE, // extension._url is an object (although not applicable)
-                    ERR.UNEXPECTED_JSON_TOKEN_CODE, // gender.extension.valueCode should be a string, not a number
+                    COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // gender.extension.valueCode should be a string, not a number
                     ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE, // extension.value is incorrect
                     ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, // extension.valueSuperDecimal is incorrect
-                    ERR.UNEXPECTED_JSON_TOKEN_CODE, // deceasedBoolean should be a boolean not a string
-                    ERR.NUMBER_CANNOT_BE_PARSED_CODE, // multipleBirthInteger should not be a float (3.14)
                     COVE.INVALID_BASE64_VALUE_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
-                    ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
+                    ERR.OBJECTS_CANNOT_BE_EMPTY_CODE,
+                    COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // deceasedBoolean should be a boolean not a string
+                    COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // multipleBirthInteger should not be a float (3.14)
                 ]);
 
                 var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
@@ -725,7 +636,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
                     .SetLocation(context.PathStack);
 
-                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, context.PropertyName) };
+                reportedErrors = [COVE.DATETIME_LITERAL_INVALID(validationContext, context.PropertyName)];
             }
         }
 
@@ -1005,7 +916,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                            {
                              "resourceType": "Patient",
                              "deceasedBoolean": true,
-                             "deceasedDateTime": "2022"
+                             "deceasedDateTime": "2022-01-01T12:00:00Z"
                            }
                            """;
             
@@ -1068,18 +979,18 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return
             [
                 new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
-                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE]),
-                new Predicate<IEnumerable<CodedException>>(errs => errs.All(e => e.ErrorCode != ERR.UNEXPECTED_JSON_TOKEN_CODE))
+                    .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]),
+                new Predicate<IEnumerable<CodedException>>(errs => errs.All(e => e.ErrorCode != COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE))
             ];
             yield return
             [
                 new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).UsingMode(DeserializerModes.Ostrich)
-                    .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.LONG_CANNOT_BE_PARSED_CODE]),
+                    .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.LONG_LITERAL_INVALID_CODE]),
                 new Predicate<IEnumerable<CodedException>>(errs =>
                 {
                     IEnumerable<CodedException> codedExceptions = errs as CodedException[] ?? errs.ToArray();
                     return codedExceptions.Any() && codedExceptions.All(e =>
-                        e.ErrorCode is ERR.ARRAYS_CANNOT_BE_EMPTY_CODE or ERR.LONG_CANNOT_BE_PARSED_CODE);
+                        e.ErrorCode is ERR.ARRAYS_CANNOT_BE_EMPTY_CODE or COVE.LONG_LITERAL_INVALID_CODE);
                 })
             ];
         }
@@ -1113,29 +1024,29 @@ namespace Hl7.Fhir.Support.Poco.Tests
             [
                 getPredicateFromOptions(new JsonSerializerOptions()
                     .ForFhir(typeof(Patient).Assembly)
-                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
+                    .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
                     .Ignoring([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE])
                     .Ignoring([COVE.INVALID_BASE64_VALUE_CODE])),
                 new Predicate<CodedException>(ce =>
                     ce.ErrorCode is COVE.INVALID_BASE64_VALUE_CODE or ERR.ARRAYS_CANNOT_BE_EMPTY_CODE
-                        or ERR.UNEXPECTED_JSON_TOKEN_CODE)
+                        or COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE)
             ];
             yield return
             [
                 getPredicateFromOptions(new JsonSerializerOptions()
                     .ForFhir(typeof(Patient).Assembly)
-                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
-                    .Enforcing([ERR.UNEXPECTED_JSON_TOKEN_CODE])),
+                    .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
+                    .Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])),
                 new Predicate<CodedException>(_ => false)
             ];
             yield return
             [
                 getPredicateFromOptions(new JsonSerializerOptions()
                     .ForFhir(typeof(Patient).Assembly)
-                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])
-                    .Enforcing([ERR.UNEXPECTED_JSON_TOKEN_CODE])
-                    .Ignoring([ERR.UNEXPECTED_JSON_TOKEN_CODE])),
-                new Predicate<CodedException>(ce => ce.ErrorCode == ERR.UNEXPECTED_JSON_TOKEN_CODE)
+                    .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
+                    .Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
+                    .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])),
+                new Predicate<CodedException>(ce => ce.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE)
             ];
         }
 

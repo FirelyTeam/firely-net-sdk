@@ -9,7 +9,10 @@
 #nullable enable
 
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -28,24 +31,7 @@ public partial class PrimitiveType : P.IToSystemPrimitive
     /// to store the original serialized string form of the value in the wire format when a parsing error is
     /// encountered.</remarks>
 
-    private object? _objectValue;
-    public object? ObjectValue
-    {
-        get => _objectValue;
-
-        set
-        {
-            if (!ReferenceEquals(value, _objectValue))
-            {
-                _objectValue = value;
-                OnObjectValueChanged();
-            }
-        }
-    }
-
-    protected virtual void OnObjectValueChanged()
-    {
-    }
+    public virtual object? ObjectValue { get; set; }
 
     /// <inheritdoc/>
     public override string? ToString()
@@ -59,7 +45,7 @@ public partial class PrimitiveType : P.IToSystemPrimitive
     /// Returns true if the primitive has any child elements (currently in FHIR this can
     /// be only the element id and zero or more extensions).
     /// </summary>
-    public bool HasElements => ElementId is not null || Extension?.Any() == true;
+    public bool HasElements => ElementIdElement?.ObjectValue is not null || Extension?.Any() == true;
 
     protected internal abstract P.Any? TryConvertToSystemTypeInternal();
 
@@ -70,6 +56,23 @@ public partial class PrimitiveType : P.IToSystemPrimitive
         return result is not null;
     }
 
+    protected abstract Type ObjectValueType { get; }
+
+    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var baseResults = base.Validate(validationContext);
+        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
+
+        // Validate that the ObjectValue has the correct inherent type, as described by the FHIR spec:
+        // string for most primitives, but bool for booleans etc.
+        if (ObjectValue is null || ObjectValue.GetType() == ObjectValueType || ObjectValueType == typeof(object))
+            return baseResults;
+
+        var result = CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE(validationContext, ObjectValue, this.TypeName)
+            .AsResult(validationContext);
+
+        return [..baseResults, result];
+    }
 
     internal object? ToITypedElementValue()
     {
@@ -85,7 +88,7 @@ public partial class PrimitiveType : P.IToSystemPrimitive
                 Integer64 fint64 => fint64.Value,
                 PositiveInt pint => pint.Value,
                 UnsignedInt unsint => unsint.Value,
-                Base64Binary { Value: { } b64 } => PrimitiveTypeConverter.ConvertTo<string>(b64),
+                Base64Binary { ObjectValue: { } b64 } => b64,
                 { } prim => prim.ObjectValue
             };
         }

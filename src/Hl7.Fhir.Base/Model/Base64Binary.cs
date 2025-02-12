@@ -59,39 +59,63 @@ public partial class Base64Binary
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private byte[]? _parsedValue = null;
 
-    protected override void OnObjectValueChanged()
+    private bool tryGetParsedValue(out byte[]? parsed)
     {
-        _parsedValue = null;
-        base.OnObjectValueChanged();
+        parsed = _parsedValue;
+        if (_parsedValue is not null || ObjectValue is null) return true;
+        if (ObjectValue is not string unparsed) return false;
+
+        try
+        {
+            parsed = _parsedValue = Convert.FromBase64String(unparsed);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public override object? ObjectValue
+    {
+        get
+        {
+            if (_parsedValue is not null && base.ObjectValue is null)
+                base.ObjectValue = Convert.ToBase64String(_parsedValue);
+
+            return base.ObjectValue;
+        }
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
     }
 
     public partial byte[]? Value
     {
         get
         {
-            if (_parsedValue is null && ObjectValue is not null)
-            {
-                if(ObjectValue is string base64data)
-                    _parsedValue = Convert.FromBase64String(base64data);
-                else
-                {
-                    throw new InvalidCastException($"Cannot convert value '{ObjectValue}' of type {ObjectValue.GetType()} to a byte array.");
-                }
-            }
+            if (!tryGetParsedValue(out var value))
+                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct literal for a Base64Binary.");
 
-            return _parsedValue;
+            return value;
         }
 
         set
         {
-            ObjectValue = value is null ? null : Convert.ToBase64String(value);
+            _parsedValue = value;
+            base.ObjectValue = null;
             OnPropertyChanged("Value");
         }
     }
 
+    protected override Type ObjectValueType => typeof(string);
+
     public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var baseResults = base.Validate(validationContext);
+        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
 
         if (HasValidValue())
             return baseResults;
@@ -100,35 +124,16 @@ public partial class Base64Binary
         return baseResults.Append(result);
     }
 
-    public bool HasValidValue()
-    {
-        try
-        {
-            // There is no TryDecode(), so this is all we can do.
-            _ = Value;
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Checks whether the given literal is a correctly encoded base64 string.
     /// </summary>
+    public bool HasValidValue() => tryGetParsedValue(out _);
+
+    /// <inheritdoc cref="HasValidValue"/>
     public static bool IsValidValue(string value)
     {
-        try
-        {
-            var b64 = FromBase64String(value);
-            _ = b64.Value;  // triggers b64 decoding
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        var b64 = FromBase64String(value);
+        return b64.HasValidValue();
     }
 
     /// <summary>
@@ -140,7 +145,7 @@ public partial class Base64Binary
                                         throw new InvalidOperationException("Value is null.");
 
     protected internal override Any? TryConvertToSystemTypeInternal() =>
-        Value is not null
-        ? new P.String(Convert.ToBase64String(Value))
+        ObjectValue is string s
+        ? new P.String(s)
         : null;
 }

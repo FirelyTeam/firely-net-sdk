@@ -10,43 +10,40 @@ using FluentAssertions;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Text;
 
 namespace Hl7.Fhir.Tests.Model;
 
 [TestClass]
-public class Base64Tests
+public class InstantTests
 {
     [TestMethod]
     public void SetValueUpdatesRawValue()
     {
-        var c = new Base64Binary();
+        var c = new Instant();
         Assert.IsNull(c.ObjectValue);
         Assert.IsNull(c.Value);
 
-        var bytes = "Hi!"u8.ToArray();
-        c.Value = bytes;
-        c.ObjectValue.Should().Be("SGkh");
+        c = new Instant(DateTimeOffset.UnixEpoch);
+        Assert.AreEqual(ElementModel.Types.DateTime.FormatDateTimeOffset(DateTimeOffset.UnixEpoch), c.ObjectValue);
+        Assert.AreEqual(DateTimeOffset.UnixEpoch, c.Value);
 
-        c.Value = null;
-        c.ObjectValue.Should().BeNull();
+        var now = DateTimeOffset.Now;
+        c.Value = now;
+        Assert.AreEqual(ElementModel.Types.DateTime.FormatDateTimeOffset(now), c.ObjectValue);
+        Assert.AreEqual(now, c.Value);
     }
 
 
     [TestMethod]
     public void SetRawValueUpdatesValue()
     {
-        var c = new Base64Binary { ObjectValue = "SGkh" };
-        Encoding.UTF8.GetString(c.Value).Should().Be("Hi!");
-
-        // Value gets recomputed when we change it.
-        c.ObjectValue = "dGhlcmU=";
-        Encoding.UTF8.GetString(c.Value).Should().Be("there");
+        var c = new Instant { ObjectValue = ElementModel.Types.DateTime.FormatDateTimeOffset(DateTimeOffset.UnixEpoch) };
+        Assert.AreEqual(DateTimeOffset.UnixEpoch, c.Value);
 
         c.ObjectValue = null;
-        c.Value.Should().BeNull();
+        Assert.IsNull(c.Value);
 
-        c.ObjectValue = "Hoi";
+        c.ObjectValue = "nonsense";
         Assert.ThrowsException<InvalidCastException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 

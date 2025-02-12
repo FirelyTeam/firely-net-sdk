@@ -300,18 +300,13 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     {
         return value switch
         {
-            // Instants are converted to DateTimeOffset, and should by definition have a timezone in their
-            // serialization, but if it does not, we'll use UTC.
-            ET.DateTime inst when instanceType == "instant" => inst.ToDateTimeOffset(TimeSpan.Zero),
-
-            // all "other" date/time types are just strings, since that is how the POCO's represent the
-            // partial date/time types in ObjectValue.
+            // Some ITypedElement date/time values are strings in the POCO's ObjectValue.
             ET.DateTime => value.ToString()!,
             ET.Time => value.ToString()!,
             ET.Date => value.ToString()!,
 
-            // Base64Binary is a string of base64 encoded data, and the POCO's use byte[] for this.
-            string uuenc when instanceType == "base64Binary" => Convert.FromBase64String(uuenc),
+            // Integer64 uses string in the POCOs
+            long l => new ET.Long(l).ToString(),
 
             // All other primitives are one-on-one convertible to their .NET counterparts.
             _ => value

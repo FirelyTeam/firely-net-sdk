@@ -37,6 +37,8 @@ namespace Hl7.Fhir.Model;
 
 public partial class Oid
 {
+    protected override Type ObjectValueType => typeof(string);
+
     /// <summary>
     /// Creates a new <see cref="FhirUri"/> based on this oid.
     /// </summary>

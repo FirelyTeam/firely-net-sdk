@@ -10,43 +10,39 @@ using FluentAssertions;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Text;
 
 namespace Hl7.Fhir.Tests.Model;
 
 [TestClass]
-public class Base64Tests
+public class Integer64Tests
 {
     [TestMethod]
     public void SetValueUpdatesRawValue()
     {
-        var c = new Base64Binary();
+        var c = new Integer64();
         Assert.IsNull(c.ObjectValue);
         Assert.IsNull(c.Value);
 
-        var bytes = "Hi!"u8.ToArray();
-        c.Value = bytes;
-        c.ObjectValue.Should().Be("SGkh");
+        c = new Integer64(3);
+        Assert.AreEqual("3", c.ObjectValue);
+        Assert.AreEqual(3, c.Value);
 
-        c.Value = null;
-        c.ObjectValue.Should().BeNull();
+        c.Value = 5;
+        Assert.AreEqual("5", c.ObjectValue);
+        Assert.AreEqual(5, c.Value);
     }
 
 
     [TestMethod]
     public void SetRawValueUpdatesValue()
     {
-        var c = new Base64Binary { ObjectValue = "SGkh" };
-        Encoding.UTF8.GetString(c.Value).Should().Be("Hi!");
-
-        // Value gets recomputed when we change it.
-        c.ObjectValue = "dGhlcmU=";
-        Encoding.UTF8.GetString(c.Value).Should().Be("there");
+        var c = new Integer64 { ObjectValue = "7" };
+        Assert.AreEqual(7, c.Value);
 
         c.ObjectValue = null;
-        c.Value.Should().BeNull();
+        Assert.IsNull(c.Value);
 
-        c.ObjectValue = "Hoi";
+        c.ObjectValue = "nonsense";
         Assert.ThrowsException<InvalidCastException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 

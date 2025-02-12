@@ -77,9 +77,9 @@ namespace Hl7.Fhir.Serialization
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: shortDisplay = "Expected Primitive"; break;
                 // case FhirJsonException.INCORRECT_BASE64_DATA_CODE: shortDisplay = "Invalid Base64 data"; break;
                 // case FhirJsonException.STRING_ISNOTAN_INSTANT_CODE: shortDisplay = "JSON107"; break;
-                case FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE: shortDisplay = "Invalid number"; break;
+                //case FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE: shortDisplay = "Invalid number"; break;
                 // case FhirJsonException.EXPECTED_PRIMITIVE_NOT_NULL_CODE: shortDisplay = "JSON109"; break;
-                case FhirJsonException.UNEXPECTED_JSON_TOKEN_CODE: shortDisplay = "Invalid datatype"; break;
+                //case FhirJsonException.UNEXPECTED_JSON_TOKEN_CODE: shortDisplay = "Invalid datatype"; break;
                 // case FhirJsonException.EXPECTED_START_OF_ARRAY_CODE: shortDisplay = "JSON111"; break;
                 // case FhirJsonException.USE_OF_UNDERSCORE_ILLEGAL_CODE: shortDisplay = "JSON113"; break;
                 // case FhirJsonException.CHOICE_ELEMENT_HAS_NO_TYPE_CODE: shortDisplay = "JSON114"; break;

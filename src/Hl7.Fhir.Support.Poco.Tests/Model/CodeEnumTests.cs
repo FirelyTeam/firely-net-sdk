@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -39,17 +40,19 @@ public class CodeEnumTests
         var c = new Code<AdministrativeGender>(AdministrativeGender.Female) { ObjectValue = "male" };
         Assert.AreEqual(AdministrativeGender.Male, c.Value);
 
-        c.ObjectValue = "maleX";
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
-
-        c.Value = AdministrativeGender.Other;
-        Assert.AreEqual("other", c.ObjectValue);
+        c.ObjectValue = "other";
+        Assert.AreEqual(AdministrativeGender.Other, c.Value);
 
         c.ObjectValue = null;
         Assert.IsNull(c.Value);
 
+        c.ObjectValue = "maleX";
+        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        c.HasValidValue().Should().BeFalse();
+
         c.ObjectValue = 314;
         Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        c.HasValidValue().Should().BeFalse();
     }
 
     [TestMethod]

@@ -46,6 +46,8 @@ public partial class Canonical
         // nothing
     }
 
+    protected override Type ObjectValueType => typeof(string);
+
         /// <summary>
         /// Constructs a canonical from its components.
         /// </summary>

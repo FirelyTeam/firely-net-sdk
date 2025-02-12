@@ -68,14 +68,38 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         Value = value;
     }
 
-    [NonSerialized]  // To prevent binary serialization from serializing this field
+    protected override Type ObjectValueType => typeof(string);
+
+    [NonSerialized] // To prevent binary serialization from serializing this field
     private T? _parsedValue = null;
 
-    protected override void OnObjectValueChanged()
+    private bool tryGetParsedValue(out T? parsed)
     {
-        _parsedValue = null;
-        base.OnObjectValueChanged();
+        parsed = _parsedValue;
+        if (_parsedValue is not null || ObjectValue is null) return true;
+        if (ObjectValue is not string unparsed) return false;
+        if (EnumUtility.ParseLiteral<T>(unparsed) is not { } e) return false;
+
+        parsed = e;
+        return true;
     }
+
+    public override object? ObjectValue
+    {
+        get
+        {
+            if (_parsedValue is not null && base.ObjectValue is null)
+                base.ObjectValue = _parsedValue.GetLiteral();
+
+            return base.ObjectValue;
+        }
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
+    }
+
 
     // Primitive value of element
     [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
@@ -84,34 +108,43 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     {
         get
         {
-            if (_parsedValue is null && ObjectValue is not null)
-            {
-                if(TryParseObjectValue(out var parsed))
-                    _parsedValue = parsed;
-                else
-                    throw new InvalidCastException($"Cannot convert value '{ObjectValue}' of type {ObjectValue.GetType()} to an enum of type {typeof(T)}.");
-            }
+            if (!tryGetParsedValue(out var value))
+                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct string literal for an Coded enum of type {typeof(T)}.");
 
-            return _parsedValue;
+            return value;
         }
+
         set
         {
-            ObjectValue = value?.GetLiteral();
+            _parsedValue = value;
+            base.ObjectValue = null;
             OnPropertyChanged("Value");
         }
     }
 
-    internal bool TryParseObjectValue(out T? value)
+
+    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        value = null;
+        var baseResults = base.Validate(validationContext);
+        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
 
-        if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
-        {
-            value = parsed;
-            return true;
-        }
+        if (HasValidValue())
+            return baseResults;
 
-        return ObjectValue is null;
+        var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
+        return baseResults.Append(result);
+    }
+
+    /// <summary>
+    /// Checks whether the given literal is one of the enum values for this T.
+    /// </summary>
+    public bool HasValidValue() => tryGetParsedValue(out _);
+
+    /// <inheritdoc cref="HasValidValue"/>
+    public new static bool IsValidValue(string value)
+    {
+        var code = new Code<T>() { ObjectValue = value };
+        return code.HasValidValue();
     }
 
     /// <inheritdoc />
@@ -120,17 +153,6 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
         Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;
 
-    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        var baseResults = base.Validate(validationContext);
-
-        if (TryParseObjectValue(out _))
-            return baseResults;
-
-        var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
-        return baseResults.Append(result);
-    }
-    
     protected internal override Base DeepCopyInternal()
     {
         var instance = new Code<T>();

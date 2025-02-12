@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Serialization
         /// Initializes an instance of the deserializer.
         /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-        public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new())
+        public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new FhirXmlPocoDeserializerSettings())
         {
             // nothing
         }
@@ -492,9 +492,7 @@ namespace Hl7.Fhir.Serialization
             int oldErrors = state.Errors.Count;
             //parse current attribute to expected type
 
-
             var (parsedValue, error) = ParsePrimitiveValue(reader, propMapping.ImplementingType, state.Path);
-
             state.Errors.Add(error);
 
             if (parsedValue != null)
@@ -524,77 +522,45 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal (object?, FhirXmlException?) ParsePrimitiveValue(XmlReader reader, Type implementingType, PathStack pathStack)
+        internal static (object?, FhirXmlException?) ParsePrimitiveValue(XmlReader reader, Type implementingType, PathStack pathStack)
         {
             // "Implementers SHOULD trim leading and trailing whitespace before writing and SHOULD trim leading and
             // trailing whitespace when reading attribute values (for XML schema conformance)"
             string trimmedValue = reader.Value.TrimEnd().TrimStart();
 
-            if (!string.IsNullOrEmpty(trimmedValue))
-            {
-                if (implementingType == typeof(string))
-                    return (trimmedValue, null);
-                else if (implementingType == typeof(FhirString))
-                    return (new FhirString(trimmedValue), null);
-                else if(implementingType == typeof(FhirUri))
-                    return (new FhirUri(trimmedValue), null);
-                else if (implementingType == typeof(bool))
-                {
-                    return ElementModel.Types.Boolean.TryParse(trimmedValue, out var parsed)
-                        ? (parsed?.Value, null)
-                        : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(DateTimeOffset))
-                {
-                    return ElementModel.Types.DateTime.TryParse(trimmedValue, out var parsed)
-                        ? (parsed.ToDateTimeOffset(TimeSpan.Zero), null)
-                        : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(byte[]))
-                {
-                    return (trimmedValue, null);
-                }
-                else if (implementingType == typeof(int))
-                {
-                    return ElementModel.Types.Integer.TryParse(trimmedValue, out var parsed) ? (parsed?.Value, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(uint))
-                {
-                    return uint.TryParse(trimmedValue, out var parsed) ? (parsed, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(long))
-                {
-                    return ElementModel.Types.Long.TryParse(trimmedValue, out var parsed) ? (parsed?.Value, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(decimal))
-                {
-                    return ElementModel.Types.Decimal.TryParse(trimmedValue, out var parsed) ? (parsed?.Value, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(double))
-                {
-                    return ElementModel.Types.Decimal.TryParse(trimmedValue, out var parsed) ? (parsed?.Value, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(float))
-                {
-                    return ElementModel.Types.Decimal.TryParse(trimmedValue, out var parsed) ? (parsed?.Value, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType == typeof(ulong))
-                {
-                    return ulong.TryParse(trimmedValue, out var parsed) ? (parsed, null) : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
-                }
-                else if (implementingType.IsEnum)
-                {
-                    return new(trimmedValue, null);
-                }
-                else
-                {
-                    throw new ArgumentException($"Implementing type '{implementingType.Name}' is incorrect for value '{trimmedValue}'");
-                }
-            }
-            else
-            {
+            if (string.IsNullOrEmpty(trimmedValue))
                 return (trimmedValue, ERR.ATTRIBUTE_HAS_EMPTY_VALUE(reader, pathStack.GetInstancePath()));
+
+            if (implementingType == typeof(FhirString))
+                return (new FhirString(trimmedValue), null);
+            if(implementingType == typeof(FhirUri))
+                return (new FhirUri(trimmedValue), null);
+
+            // bool, int and decimal are the only three types that are used in ObjectValue (and the json serialization)
+            if (implementingType == typeof(bool))
+            {
+                return ElementModel.Types.Boolean.TryParse(trimmedValue, out var parsed)
+                    ? (parsed?.Value, null)
+                    : (trimmedValue, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue, implementingType.Name));
             }
+            if (implementingType == typeof(int))
+            {
+                return ElementModel.Types.Integer.TryParse(trimmedValue, out var parsed)
+                    ? (parsed?.Value, null)
+                    : (trimmedValue,
+                        ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue,
+                            implementingType.Name));
+            }
+            if (implementingType == typeof(decimal))
+            {
+                return ElementModel.Types.Decimal.TryParse(trimmedValue, out var parsed)
+                    ? (parsed?.Value, null)
+                    : (trimmedValue,
+                        ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE(reader, pathStack.GetInstancePath(), trimmedValue,
+                            implementingType.Name));
+            }
+
+            return (trimmedValue, null);
         }
 
         /// <summary>
@@ -647,11 +613,11 @@ namespace Hl7.Fhir.Serialization
 
             (ClassMapping?, FhirXmlException?) getChoiceClassMapping(XmlReader r)
             {
-                string typeSuffix = propertyName.Substring(propertyMapping.Name.Length);
+                string typeSuffix = propertyName[propertyMapping.Name.Length..];
 
                 return string.IsNullOrEmpty(typeSuffix)
                     ? (null, ERR.CHOICE_ELEMENT_HAS_NO_TYPE(r, path.GetInstancePath(), propertyMapping.Name))
-                    : inspector.FindClassMapping(typeSuffix) is ClassMapping cm
+                    : inspector.FindClassMapping(typeSuffix) is { } cm
                         ? (cm, null)
                         : (default, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
             }

@@ -37,6 +37,8 @@ namespace Hl7.Fhir.Model;
 
 public partial class UnsignedInt
 {
+    protected override Type ObjectValueType => typeof(int);
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

@@ -37,6 +37,8 @@ namespace Hl7.Fhir.Model;
 
 public partial class Markdown
 {
+    protected override Type ObjectValueType => typeof(string);
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

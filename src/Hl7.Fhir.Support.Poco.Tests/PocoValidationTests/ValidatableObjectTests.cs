@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             Assert.ThrowsException<InvalidCastException>(() => c.Value);
 
             c.ObjectValue = 4;
-            assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
+            assertValid(c, errorCode: COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
             Assert.ThrowsException<InvalidCastException>(() => c.Value);
         }
 

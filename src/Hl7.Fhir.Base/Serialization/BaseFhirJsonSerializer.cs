@@ -268,20 +268,6 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         switch (value)
         {
             case int i32: writer.WriteNumberValue(i32); break;
-            case uint ui32: writer.WriteNumberValue(ui32); break;
-            case long i64:
-                {
-                    // in case of Integer64, then the value must be serialized as a string due to
-                    // issues with precision in floating point libraries.
-                    if (requiredType == typeof(Integer64))
-                        writer.WriteStringValue(i64.ToString());
-                    else
-                        writer.WriteNumberValue(i64);
-                    break;
-                }
-            case ulong ui64: writer.WriteNumberValue(ui64); break;
-            case float si: writer.WriteNumberValue(si); break;
-            case double dbl: writer.WriteNumberValue(dbl); break;
             case decimal dec: writer.WriteNumberValue(dec); break;
             // A little note about trimming and whitespaces. The spec says:
             // "(...) In JSON and Turtle whitespace in string values is always significant. Primitive types other than
@@ -293,9 +279,9 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             // (or an empty byte[]).
             case string s: writer.WriteStringValue(s); break;
             case bool b: writer.WriteBooleanValue(b); break;
-            case DateTimeOffset dto: writer.WriteStringValue(ElementModel.Types.DateTime.FormatDateTimeOffset(dto)); break;
-            case Enum e: writer.WriteStringValue(e.GetLiteral()); break;
-            case byte[] bytes: writer.WriteStringValue(Convert.ToBase64String(bytes)); break;
+            //case DateTimeOffset dto: writer.WriteStringValue(ElementModel.Types.DateTime.FormatDateTimeOffset(dto)); break;
+            //case Enum e: writer.WriteStringValue(e.GetLiteral()); break;
+            //case byte[] bytes: writer.WriteStringValue(Convert.ToBase64String(bytes)); break;
             case null: writer.WriteNullValue(); break;
             default:
                 throw new FormatException($"There is no known serialization for type {value.GetType()} into a Json primitive property value.");

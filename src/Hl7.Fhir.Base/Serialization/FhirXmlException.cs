@@ -62,15 +62,14 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE(XmlReader reader, string instancePath, string localName, string elementName, string namespaceURI) => Initialize(reader, instancePath, INCORRECT_ATTRIBUTE_NAMESPACE_CODE, $"The attribute '{localName}' in element '{elementName}' uses the namespace '{namespaceURI}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
 
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
-        //internal static FhirXmlException INCORRECT_BASE64_DATA(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
-        internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
+        internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Value);
 
         // An incorrect order does not mean we cannot parse the data safely
         internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order ", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException ELEMENT_NOT_IN_SEQUENCE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_NOT_IN_SEQUENCE_CODE, $"Element '{elementName}' was found multiple times, but not in sequence.", OO_Sev.Error, OO_Typ.Structure);
 
         // Empty values will result in nulls, but no data is lost.
-        internal static FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content", OO_Sev.Error, OO_Typ.Structure);
+        internal static FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content", OO_Sev.Error, OO_Typ.Value);
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(string instancePath, int lineNumber, int position, string? locationMessage, string? localName)
         {
@@ -95,7 +94,6 @@ namespace Hl7.Fhir.Serialization
             INCORRECT_ELEMENT_NAMESPACE_CODE,
             INCORRECT_XHTML_NAMESPACE_CODE,
             INCORRECT_ATTRIBUTE_NAMESPACE_CODE,
-            // INCORRECT_BASE64_DATA_CODE,
             VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE,
             ELEMENT_OUT_OF_ORDER_CODE,
             ELEMENT_NOT_IN_SEQUENCE_CODE,
@@ -103,9 +101,7 @@ namespace Hl7.Fhir.Serialization
             ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
             SCHEMALOCATION_DISALLOWED_CODE,
             ENCOUNTERED_DTD_REFERENCES_CODE,
-            CodedValidationException.INVALID_BASE64_VALUE_CODE
         ];
-        
 
         /// <summary>
         /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 

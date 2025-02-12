@@ -43,6 +43,8 @@ public partial class FhirUri : ICoded
         Value = uri.OriginalString;
     }
 
+    protected override Type ObjectValueType => typeof(string);
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

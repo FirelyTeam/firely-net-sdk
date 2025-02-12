@@ -63,6 +63,8 @@ public partial class Date
     /// </summary>
     public static Date UtcToday() => FromDateTimeOffset(DateTimeOffset.UtcNow);
 
+    protected override Type ObjectValueType => typeof(string);
+
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private P.Date? _parsedValue = null;
 
@@ -112,10 +114,14 @@ public partial class Date
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDate(out var date) ? date : null;
 
-    protected override void OnObjectValueChanged()
+    public override object? ObjectValue
     {
-        _parsedValue = null;
-        base.OnObjectValueChanged();
+        get => base.ObjectValue;
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
     }
 
     /// <summary>

@@ -53,14 +53,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private const string POCO_EMPTY_VALUE = "* cannot be empty*. Either they are absent*";
 
         [TestMethod]
-        [DataRow(CORRECTXML, null, null, null)]
-        [DataRow(PERMISSIVEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE)]
-        [DataRow(BWCOMPATIBLEXML, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null)]
-        [DataRow(WRONGXML, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE)]
-        [DataRow(CORRECTJSON, null, null, null)]
-        [DataRow(PERMISSIVEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE)]
-        [DataRow(BWCOMPATIBLEJSON, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null)]
-        [DataRow(WRONGJSON, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE)]
+        [DataRow(CORRECTXML, null, null, null, DisplayName = "Correct XML")]
+        [DataRow(PERMISSIVEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Permissive XML")]
+        [DataRow(BWCOMPATIBLEXML, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible XML")]
+        [DataRow(WRONGXML, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, DisplayName = "Wrong XML")]
+        [DataRow(CORRECTJSON, null, null, null, DisplayName = "Correct JSON")]
+        [DataRow(PERMISSIVEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Permissive JSON")]
+        [DataRow(BWCOMPATIBLEJSON, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible JSON")]
+        [DataRow(WRONGJSON, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, DisplayName = "Wrong JSON")]
         public void TestParsingPoco(string data, string? permissive, string? strict, string? bw)
         {
             test(data, FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR), permissive);

@@ -23,12 +23,7 @@ public record FhirJsonConverterOptions
     /// <summary>
     /// Specifies the filter to use for summary serialization.
     /// </summary>
-    public SerializationFilter? SummaryFilter { get; set; } = default;
-
-    /// <summary>
-    /// If set, this delegate is called when the deserializer fails to parse a primitive json value.
-    /// </summary>
-    public PrimitiveParseHandler? OnPrimitiveParseFailed { get; init; } = null;
+    public SerializationFilter? SummaryFilter { get; set; } = null;
 
     /// <summary>
     /// If set, this validator is invoked before the value is set in the object under construction to validate

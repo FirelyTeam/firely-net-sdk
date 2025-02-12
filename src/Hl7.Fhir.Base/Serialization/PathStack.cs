@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Serialization
             if (_tops.Count == 0) return "$this";
 
             var index = _path.LastIndexOf(RESOURCEPREFIX);
-            return index != -1 ? _path.Substring(index + 1) : _path;
+            return index != -1 ? _path[(index + 1)..] : _path;
         }
 
         /// <summary>
@@ -133,6 +133,11 @@ namespace Hl7.Fhir.Serialization
         {
             return String.Join(".", _paths.Reverse().Where(v => !string.IsNullOrEmpty(v)));
         }
+
+        /// <summary>
+        /// Returns the last part of the path (most often the current property name)
+        /// </summary>
+        public string GetLastPart() => _paths.Peek();
     }
 }
 

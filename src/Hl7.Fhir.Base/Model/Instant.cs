@@ -29,7 +29,11 @@
 
 #nullable enable
 
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
@@ -51,11 +55,80 @@ public partial class Instant
     /// <returns></returns>
     public static Instant Now() => new(DateTimeOffset.Now);
 
+    protected override Type ObjectValueType => typeof(string);
+
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private P.DateTime? _parsedValue = null;
+
+    private bool tryGetParsedValue(out P.DateTime? dto)
+    {
+        dto = _parsedValue;
+        if (_parsedValue is not null || ObjectValue is null) return true;
+        if (ObjectValue is not string unparsed) return false;
+        if (!P.DateTime.TryParse(unparsed, out _parsedValue) || !_parsedValue.IsInstant) return false;
+
+        dto = _parsedValue;
+        return true;
+    }
+
+    public override object? ObjectValue
+    {
+        get
+        {
+            if (_parsedValue is not null && base.ObjectValue is null)
+                base.ObjectValue = _parsedValue.ToString();
+
+            return base.ObjectValue;
+        }
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
+    }
+
+    public partial DateTimeOffset? Value
+    {
+        get
+        {
+            if (!tryGetParsedValue(out var value))
+                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct literal for a DateTime.");
+
+            return value?.ToDateTimeOffset(TimeSpan.Zero);
+        }
+
+        set
+        {
+            _parsedValue = value is null ? null : P.DateTime.FromDateTimeOffset(value.Value);
+            base.ObjectValue = null;
+            OnPropertyChanged("Value");
+        }
+    }
+
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Checks whether the given literal is a correctly formatted Instant, with a precision higher than seconds.
     /// </summary>
-    public static bool IsValidValue(string value) => P.DateTime.TryParse(value, out var dateTime) &&
-                                                     dateTime is { Precision: >= P.DateTimePrecision.Second, HasOffset: true };
+    public bool HasValidValue() => tryGetParsedValue(out _);
+
+     /// <inheritdoc cref="HasValidValue"/>
+    public static bool IsValidValue(string value)
+    {
+        var i = new Instant { ObjectValue = value };
+        return i.HasValidValue();
+    }
+
+    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var baseResults = base.Validate(validationContext);
+        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
+
+        if (HasValidValue())
+            return baseResults;
+
+        var result = CodedValidationException.INSTANT_LITERAL_INVALID(validationContext, ObjectValue).AsResult(validationContext);
+        return baseResults.Append(result);
+    }
+
     /// <summary>
     /// Converts this Instant to a <see cref="P.DateTime" />.
     /// </summary>
@@ -65,5 +138,5 @@ public partial class Instant
            throw new InvalidOperationException("Instant's value is null and can therefore not be converted to a System DateTime.");
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
-        Value is not null ? P.DateTime.FromDateTimeOffset(Value.Value) : null;
+        tryGetParsedValue(out var parsed) ? parsed : null;
 }

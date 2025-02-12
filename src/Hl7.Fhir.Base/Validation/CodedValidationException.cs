@@ -38,10 +38,13 @@ public class CodedValidationException : ExtendedCodedException
     public const string NARRATIVE_XML_IS_MALFORMED_CODE = "PVAL114";
     public const string NARRATIVE_XML_IS_INVALID_CODE = "PVAL115";
     public const string INVALID_CODED_VALUE_CODE = "PVAL116";
-    public const string CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE = "PVAL117"; // This was removed in R4 and is no longer validated
+//    public const string CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE = "PVAL117"; // This was removed in R4 and is no longer validated
     public const string CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE = "PVAL118";
     public const string INVALID_STRING_LENGTH_CODE = "PVAL119";
     public const string INVALID_BASE64_VALUE_CODE = "PVAL120";
+    public const string INSTANT_LITERAL_INVALID_CODE = "PVAL121";
+    public const string LONG_LITERAL_INVALID_CODE = "PVAL122";
+    public const string INCORRECT_LITERAL_VALUE_TYPE_CODE = "PVAL123";
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string TypeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{TypeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
     internal static COVE INCORRECT_CARDINALITY_MIN(ValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minimum cardinality is {Min}.", OO_Sev.Error, OO_Typ.Required);
@@ -62,7 +65,10 @@ public class CodedValidationException : ExtendedCodedException
     // internal static COVE CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE(ValidationContext context) => Initialize(context, CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE, "Resource has contained resources with narrative, which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
     internal static COVE CONTAINED_RESOURCES_CANNOT_BE_NESTED(ValidationContext context) => Initialize(context, CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE, "It is not allowed for a resource to contain resources which themselves contain resources.", OO_Sev.Error, OO_Typ.Structure);
     internal static COVE INVALID_STRING_LENGTH(ValidationContext context, string name, string value) => Initialize(context, INVALID_STRING_LENGTH_CODE, (value.Length > 0 ? $"String {name} exceeds maximum length of 1MB." : $"String {name} is empty"), OO_Sev.Error, OO_Typ.Value);
-    internal static COVE INVALID_BASE64_VALUE(ValidationContext context, object? value) => Initialize(context, INVALID_BASE64_VALUE_CODE, $"Value '{value}' is not parseable as Base64 data.", OO_Sev.Error, OO_Typ.CodeInvalid);
+    internal static COVE INVALID_BASE64_VALUE(ValidationContext context, object? value) => Initialize(context, INVALID_BASE64_VALUE_CODE, $"Value '{value}' is not parseable as Base64 data.", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE INSTANT_LITERAL_INVALID(ValidationContext context, object? value) => Initialize(context, INSTANT_LITERAL_INVALID_CODE, $"'{value}' is not a correct literal for an instant.", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE LONG_LITERAL_INVALID(ValidationContext context, object? value) => Initialize(context, LONG_LITERAL_INVALID_CODE, $"'{value}' is not a correct literal for an integer64.", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE INCORRECT_LITERAL_VALUE_TYPE(ValidationContext context, object value, string fhirTypeName) => Initialize(context, INCORRECT_LITERAL_VALUE_TYPE_CODE, $"Value '{value}' of type {value.GetType()} is not the right type of literal for a {fhirTypeName}.", OO_Sev.Warning, OO_Typ.Value);
 
     public CodedValidationException(string code, string message)
         : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)

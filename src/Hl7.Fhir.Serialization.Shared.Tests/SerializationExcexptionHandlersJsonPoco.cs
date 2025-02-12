@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -16,25 +17,6 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var settings = new FhirJsonConverterOptions()
             {
-                OnPrimitiveParseFailed = (ref Utf8JsonReader reader,
-                    Type targetType,
-                    object originalValue,
-                    FhirJsonException originalException) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"Primitive Parse Failed: {originalValue} {originalException.Message}");
-
-                    // retry the conversion ourselves
-                    try
-                    {
-                        var convertedValue = PrimitiveTypeConverter.ConvertTo(originalValue, targetType);
-                        return (convertedValue, originalException.CloneWith(originalException.BaseErrorMessage, OperationOutcome.IssueSeverity.Warning, originalException.IssueType));
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Trace.WriteLine($" => {ex.Message}");
-                        return (null, originalException.CloneWith(originalException.BaseErrorMessage, OperationOutcome.IssueSeverity.Fatal, originalException.IssueType));
-                    }
-                },
                 // Validator = null
                 ValidateOnFailedParse = true
             };
@@ -398,12 +380,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Observation.component[5].value.value", oc.Issue[0].Expression.First());
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.component[6].value.value", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[1].Severity);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -444,7 +426,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -485,7 +467,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -495,36 +477,36 @@ namespace Hl7.Fhir.Serialization.Tests
         public void JsonMixedInvalidParseIssues()
         {
             // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
-            string rawData = """
-                {
-                  "resourceType": "Observation",
-                  "id": "decimal",
-                  "status": "glarb",
-                  "code": {
-                    "text": "Decimal Testing Observation"
-                  },
-                  "component": [
-                    {
-                      "code": {
-                        "text": "Component"
-                      },
-                      "valueQuantity": {
-                        "value": "1.00000000000000000e-24",
-                        "unit": "g"
-                      }
-                    },
-                    {
-                      "code": {
-                        "text": "Component"
-                      },
-                      "valueQuantity": {
-                        "value": "-1.00000000000000000e245",
-                        "unit": "g"
-                      }
-                    }
-                  ]
-                }
-                """;
+            const string rawData = """
+                                   {
+                                     "resourceType": "Observation",
+                                     "id": "decimal",
+                                     "status": "glarb",
+                                     "code": {
+                                       "text": "Decimal Testing Observation"
+                                     },
+                                     "component": [
+                                       {
+                                         "code": {
+                                           "text": "Component"
+                                         },
+                                         "valueQuantity": {
+                                           "value": "1.00000000000000000e-24",
+                                           "unit": "g"
+                                         }
+                                       },
+                                       {
+                                         "code": {
+                                           "text": "Component"
+                                         },
+                                         "valueQuantity": {
+                                           "value": "-1.00000000000000000e245",
+                                           "unit": "g"
+                                         }
+                                       }
+                                     ]
+                                   }
+                                   """;
 
             try
             {
@@ -540,12 +522,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Observation.component[0].value.value", oc.Issue[0].Expression.First());
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.component[1].value.value", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[1].Severity);
 
                 Assert.AreEqual("Observation.status", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
@@ -592,7 +574,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.birthDate.id", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -799,17 +781,17 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
-                Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[0].Expression.First());
+                Assert.AreEqual("JSON101", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
+                Assert.AreEqual("Patient.name[0].given[1].extension[1]", oc.Issue[0].Expression.First());
 
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
-                Assert.AreEqual("JSON101", oc.Issue[1].Details.Coding[0].Code);
-                Assert.AreEqual("Patient.name[0].given[1].extension[1]", oc.Issue[1].Expression.First());
+                Assert.AreEqual("PVAL105", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[1].Expression.First());
 
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
-                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[2].Expression.First());
+                Assert.AreEqual("PVAL123", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[2].Severity);
+                Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[2].Expression.First());
 
                 Assert.AreEqual(3, oc.Issue.Count);
             }
