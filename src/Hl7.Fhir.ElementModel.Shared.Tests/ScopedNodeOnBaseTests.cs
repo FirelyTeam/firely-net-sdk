@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.ElementModel.Tests
 {
     [TestClass]
-    [TemporarilyChanged] // We should refactor these tests against PocoElementNode2
     public class ScopedNodeOnBaseTests
     {
         private PocoNode _bundleNode;
@@ -33,7 +32,6 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        [TemporarilyChanged] // This test will be improved once ContainedResources and BundledResources are implemented on PocoNodeOrList, not PocoNode
         public void GetContainedAndBundledResources()
         {
             Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());

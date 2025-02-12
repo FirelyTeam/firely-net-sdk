@@ -38,7 +38,6 @@ public partial record PocoNode
         _ => Name
     };
     
-    [TemporarilyChanged] // Parent should return PocoNode, not PocoNodeOrList. This will be solved in another branch.
     IElementDefinitionSummary? ITypedElement.Definition
     {
         get
