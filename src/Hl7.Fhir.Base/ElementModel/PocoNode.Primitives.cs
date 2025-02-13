@@ -10,29 +10,55 @@ namespace Hl7.Fhir.ElementModel;
 
 public partial record PocoNode
 {
-    // Constructs a PocoNode from a PrimitiveType
+    /// <summary>
+    /// Constructs a PocoNode from a PrimitiveType
+    /// </summary>
+    /// <returns></returns>
     public static PocoNode ForPrimitive(PrimitiveType primitive) => 
         new PrimitiveNode(primitive, null, null);
 
-    // Constructs a PocoNode from an object. Allowed objects are those that can be converted to a PrimitiveType, and are not yet PrimitiveTypes.
+    
+    /// <summary>
+    /// Constructs a PocoNode from an object. Allowed objects are those that can be converted to a PrimitiveType, and are not yet PrimitiveTypes.
+    /// </summary>
+    /// <returns></returns>
     public static PocoNode ForAnyPrimitive(object value)
     {
         return ForPrimitive(PrimitiveNode.InferFromValue(value));
     }
     
-    // Constructs a PocoNode from a value and a type. The type must be a PrimitiveType.
+    /// <summary>
+    /// Constructs a PocoNode from a value and a type. The type must be a PrimitiveType.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
         new PrimitiveNode(new T { ObjectValue = value }, null, null);
     
-    // Constructs a PocoNode from a list of PrimitiveTypes
+    /// <summary>
+    /// Constructs a PocoNode from a list of PrimitiveTypes
+    /// </summary>
+    /// <param name="primitives"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> FromList(IEnumerable<PrimitiveType> primitives, string? name = null) => 
         primitives.Select(ForPrimitive);
-
-    // Constructs multiple PocoNodes from a list of values and a type. The type must be a PrimitiveType.
+    
+    /// <summary>
+    /// Constructs multiple PocoNodes from a list of values and a type. The type must be a PrimitiveType.
+    /// </summary>
+    /// <param name="values"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> FromList<T>(IEnumerable<object> values) where T : PrimitiveType, new() => 
         values.Select(ForPrimitive<T>);
 
-    // Constructs multiple PocoNodes from a list of objects. Allowed objects are those that can be converted to a PrimitiveType, and are not yet PrimitiveTypes.
+    /// <summary>
+    /// Constructs multiple PocoNodes from a list of objects. Allowed objects are those that can be converted to a PrimitiveType, and are not yet PrimitiveTypes.
+    /// </summary>
+    /// <param name="values"></param>
+    /// <returns></returns>
     public static IEnumerable<PocoNode> FromAnyList(IEnumerable<object> values) => 
         values.Select(v => v as PocoNode ?? ForAnyPrimitive(v));
 }

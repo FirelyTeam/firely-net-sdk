@@ -1,4 +1,5 @@
 using Hl7.Fhir.ElementModel;
+using System;
 
 namespace Hl7.Fhir.Model;
 
@@ -9,9 +10,5 @@ namespace Hl7.Fhir.Model;
 /// This interface represents FHIR data as a tree of elements, including type information either present in
 /// the instance or derived from fully aware of the FHIR definitions and types
 /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-public interface IScopedNode : ITypedElement, IShortPathGenerator
-#pragma warning restore CS0618 // Type or member is obsolete
-{
-    
-}
+[Obsolete("use PocoNode instead")]
+public interface IScopedNode : ITypedElement;

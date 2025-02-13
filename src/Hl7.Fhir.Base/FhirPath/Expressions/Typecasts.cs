@@ -75,8 +75,8 @@ namespace Hl7.FhirPath.Expressions
 
             if (typeof(P.Any).IsAssignableFrom(to) && !fromElemList)
             {
-                if (f is PocoNode {Poco: Quantity}) 
-                    return o => ParseQuantity((PocoNode)o);
+                if (f is PocoNode {Poco: Quantity} q) 
+                    return _ => q;
                 return o => P.Any.Convert(o);
             }
 
@@ -122,11 +122,6 @@ namespace Hl7.FhirPath.Expressions
             {
                 if (to.CanBeTreatedAsType(typeof(PocoNode))) return instance;
                 if (to == typeof(object)) return instance;
-
-                // HACK - We assume the primitives
-                // start with a lower-case letter, which is true in FHIR but not
-                // in general. When this is a System.* type, we know this is supposed
-                // to represent the object in Value.
 
                 if (element is PrimitiveNode { Value: { } value })
                 {

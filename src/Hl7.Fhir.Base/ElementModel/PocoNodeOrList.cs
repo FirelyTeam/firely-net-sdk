@@ -39,7 +39,7 @@ public abstract record PocoNodeOrList(string Name) : IEnumerable<PocoNode>
 /// <param name="Index">This Poco's index in a list, if it is contained in one</param>
 /// <param name="Name"></param>
 public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index, string? Name)
-    : PocoNodeOrList(Name ?? Poco.TypeName), IScopedNode, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
+    : PocoNodeOrList(Name ?? Poco.TypeName), ITypedElement, IShortPathGenerator, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
 {
     /// <inheritdoc />
     public override PocoNode? Parent => ParentNode switch
@@ -111,7 +111,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     /// <inheritdoc />
     IEnumerable<object> IAnnotated.Annotations(Type type)
     {
-        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(IScopedNode))
+        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
             return [this];
         if (type == typeof(IFhirValueProvider))
             return [this];
@@ -130,7 +130,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
 }
 
 /// <summary>
-/// A single node for a repeating POCO. Note that since a repeating element has a single parent, this cannot be used for grouping "separate" pocos that are not repeating in the specification.
+/// A single node for a repeating element. Note that since a repeating element has a single parent, this cannot be used for grouping "separate" pocos that are not repeating in the specification.
 /// </summary>
 /// <param name="Pocos"></param>
 /// <param name="ParentNode"></param>

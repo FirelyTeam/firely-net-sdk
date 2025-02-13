@@ -231,7 +231,7 @@ public static class PocoNodeExtensions
     /// <param name="nodes"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static IEnumerable<PocoNode> FindSubChildren(this IEnumerable<PocoNode> nodes, string name) => nodes.SelectMany(node => node.Child(name) ?? Enumerable.Empty<PocoNode>());
+    public static IEnumerable<PocoNode> FlatChildren(this IEnumerable<PocoNode> nodes, string name) => nodes.SelectMany(node => node.Child(name) ?? Enumerable.Empty<PocoNode>());
     
     /// <summary>
     /// Finds all descendants of this node and flattens the result.

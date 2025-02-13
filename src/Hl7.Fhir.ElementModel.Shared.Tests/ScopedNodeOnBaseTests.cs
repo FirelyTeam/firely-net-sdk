@@ -61,17 +61,17 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].Child("resource")?.FindFullUrl());
 
             var entry3 = entries[3].Child("resource");
-            entry3 = entry3?.FindSubChildren("managingOrganization").FirstOrDefault();
+            entry3 = entry3?.FlatChildren("managingOrganization").FirstOrDefault();
             Assert.IsNotNull(entry3);
-            entry3 = entry3.FindSubChildren("reference").FirstOrDefault();
+            entry3 = entry3.FlatChildren("reference").FirstOrDefault();
             Assert.IsNotNull(entry3);
             Assert.AreEqual(entries[3].Child("resource")?.FindFullUrl(), entry3.FindFullUrl());
             Assert.AreEqual(entry3.GetParentResource()!.FindFullUrl(), entry3.FindFullUrl());
 
-            var entry6 = entries[6].FindSubChildren("resource").FirstOrDefault();
+            var entry6 = entries[6].FlatChildren("resource").FirstOrDefault();
             entry6 = entry6?.ContainedResources().Skip(1).FirstOrDefault();
             Assert.IsNotNull(entry6);
-            Assert.AreEqual("orgY", entry6.FindSubChildren("id").FirstOrDefault()?.GetValue());
+            Assert.AreEqual("orgY", entry6.FlatChildren("id").FirstOrDefault()?.GetValue());
             Assert.AreEqual(entries[6].Child("resource")?.FindFullUrl(), entry6.FindFullUrl());
             Assert.AreEqual(entry6.GetParentResource()!.FindFullUrl(), entry6.FindFullUrl());
         }
@@ -79,14 +79,14 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void TestMakeAbsolute()
         {
-            var inner0 = _bundleNode!.BundledResources().First().Child("resource")?.FindSubChildren("active").SingleOrDefault();
+            var inner0 = _bundleNode!.BundledResources().First().Child("resource")?.FlatChildren("active").SingleOrDefault();
             Assert.IsNotNull(inner0);
 
             Assert.AreEqual("http://example.org/fhir/Patient/3", inner0.MakeAbsolute("Patient/3"));
             Assert.AreEqual("http://nu.nl/myPat/3x", inner0.MakeAbsolute("http://nu.nl/myPat/3x"));
             Assert.AreEqual("http://example.org/fhir/Organization/5", inner0.MakeAbsolute("http://example.org/fhir/Organization/5"));
 
-            var inner1 = _bundleNode.BundledResources().Skip(1).First().Child("resource")?.FindSubChildren("active").SingleOrDefault();
+            var inner1 = _bundleNode.BundledResources().Skip(1).First().Child("resource")?.FlatChildren("active").SingleOrDefault();
 
             Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d/3", inner1!.MakeAbsolute("Patient/3"));
             Assert.AreEqual("http://nu.nl/myPat/3x", inner1!.MakeAbsolute("http://nu.nl/myPat/3x"));
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void TestResolve()
         {
-            PocoNode inner7 = (_bundleNode!.BundledResources().Skip(6).First().Child("resource")?.FindSubChildren("managingOrganization").Single());
+            PocoNode inner7 = (_bundleNode!.BundledResources().Skip(6).First().Child("resource")?.FlatChildren("managingOrganization").Single());
 
             Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.GetLocation());
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.GetLocation());

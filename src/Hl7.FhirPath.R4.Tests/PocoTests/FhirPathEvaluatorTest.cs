@@ -279,25 +279,25 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [TestMethod]
         public void TestExpression()
         {
-            // fixture.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
-            //            Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
-            //             Patient.identifier.first())");
-            //
-            // fixture.IsTrue(@"(1|2|3|4|5).where($this > 2 and $this <= 4) = (3|4)");
-            //
-            // fixture.IsTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
-            //             3 + Patient.identifier.count()");
-            //
-            // fixture.IsTrue(@"(Patient.identifier.where(use='official').last() in Patient.identifier) and
-            //            (Patient.identifier.first() in Patient.identifier.tail()).not()");
-            //
-            // fixture.IsTrue(@"Patient.identifier.any(use='official') and identifier.where(use='usual').exists()");
-            //
-            // fixture.IsTrue(@"Patient.descendants().where($this.as(string).contains('222'))[1] = %context.contained.address.line");
-            //
-            // fixture.IsTrue(@"Patient.name.select(given|family).count() = 2");
-            // fixture.IsTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
-            // fixture.IsTrue(@"Patient.descendants().where(($this is code) and ($this.contains('wne'))).trace('them') = contact.relationship.coding.code");
+            fixture.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
+                       Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
+                        Patient.identifier.first())");
+            
+            fixture.IsTrue(@"(1|2|3|4|5).where($this > 2 and $this <= 4) = (3|4)");
+            
+            fixture.IsTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
+                        3 + Patient.identifier.count()");
+            
+            fixture.IsTrue(@"(Patient.identifier.where(use='official').last() in Patient.identifier) and
+                       (Patient.identifier.first() in Patient.identifier.tail()).not()");
+            
+            fixture.IsTrue(@"Patient.identifier.any(use='official') and identifier.where(use='usual').exists()");
+            
+            fixture.IsTrue(@"Patient.descendants().where($this.as(string).contains('222'))[1] = %context.contained.address.line");
+            
+            fixture.IsTrue(@"Patient.name.select(given|family).count() = 2");
+            fixture.IsTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
+            fixture.IsTrue(@"Patient.descendants().where(($this is code) and ($this.contains('wne'))).trace('them') = contact.relationship.coding.code");
             fixture.IsTrue(@"Patient.descendants().as(code).where(matches('i.*/gif')) in Patient.photo.children()");
 
             fixture.IsTrue(

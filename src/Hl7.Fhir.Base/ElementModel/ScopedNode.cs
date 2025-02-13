@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : IScopedNode, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IShortPathGenerator, IAnnotated, IExceptionSource
     {
         private class Cache
         {
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// The resource or element which is the direct parent of this node.
         /// </summary>
-        public IScopedNode? Parent { get; }
+        public ScopedNode? Parent { get; }
 
         /// <summary>
         /// Returns the location of the current element within its most direct parent resource or datatype.
@@ -96,10 +96,10 @@ namespace Hl7.Fhir.ElementModel
         /// <inheritdoc/>
         public string Location => Current.Location;
 
-        public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
+        public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out ScopedNode? result)
             => (result = ((ReferencedResourceCache)this.BundledResources()).ResolveReference(fullUrl)) is not null;
 
-        public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result) 
+        public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out ScopedNode? result) 
             => (result = (this.ContainedResourcesWithId()).ResolveReference(id)) is not null;
 
         /// <summary>

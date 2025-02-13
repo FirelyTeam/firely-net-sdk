@@ -23,21 +23,6 @@ namespace Hl7.Fhir.FhirPath
         private static readonly FhirPathCompilerCache CACHE = new(COMPILER);
 
         /// <summary>
-        /// Converts results of a resolver from Resource to PocoNode
-        /// </summary>
-        /// <param name="resolver">results of a resolver as Resource</param>
-        /// <returns>Result of the convertion to PocoNode</returns>
-        public static Func<string, PocoNode?> ToFhirPathResolver(this Func<string, PocoNode> resolver)
-        {
-            return navResolver;
-
-            PocoNode? navResolver(string url)
-            {
-                return resolver(url);
-            }
-        }
-
-        /// <summary>
         /// Expose the SymbolTable of the compiler, so we can add extra symbols to it.
         /// </summary>
         /// <returns>The SymbolTable of the internal FP compiler</returns>

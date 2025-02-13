@@ -111,6 +111,12 @@ namespace Hl7.Fhir.ElementModel
             // Note: fall-through in all failure cases - return empty collection
             return new List<IElementDefinitionSummary>();
         }
+        
+        public static ScopedNode ToScopedNode(this ITypedElement node) =>
+            node as ScopedNode ?? new ScopedNode(node);
+
+        internal static IEnumerable<ScopedNode> ToScopedNodes(this IEnumerable<ITypedElement> nodes) => 
+            nodes.Select(n => n.ToScopedNode());
     }
 }
 
