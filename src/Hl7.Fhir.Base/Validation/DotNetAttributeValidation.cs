@@ -12,99 +12,83 @@ using System.ComponentModel.DataAnnotations;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Validation;
+
+/// <summary>
+/// Utility methods for invoking .NET's <see cref="ValidationAttribute"/>-based validation mechanism.
+/// </summary>
+public static class DotNetAttributeValidation
 {
     /// <summary>
-    /// Utility methods for invoking .NET's <see cref="ValidationAttribute"/>-based validation mechanism.
+    /// Validate and object and its members against any <see cref="ValidationAttribute" />s present.
+    /// Will throw when a validation error is encountered.
     /// </summary>
-    public static class DotNetAttributeValidation
+    /// <param name="poco">The POCO to validate</param>
+    /// <param name="recurse">Whether to validate the object recursively, by also validating the contents of each property of the object.</param>
+    /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
+    public static void Validate(
+        this Base poco,
+        bool recurse = false,
+        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
     {
-        /// <summary>
-        /// Validate and object and its members against any <see cref="ValidationAttribute" />s present. 
-        /// Will throw when a validation error is encountered.
-        /// </summary>
-        /// <param name="value">The object to validate</param>
-        /// <param name="recurse">Whether to validate the object recursively, by also validating the contents of each property of the object.</param>
-        /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
-        public static void Validate(
-            this Base value,
-            bool recurse = false,
-            NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml) =>
-                Validate((object)value, recurse, narrativeValidation);
-
-        /// <inheritdoc cref="Validate(Base, bool, NarrativeValidationKind)"/>
-        internal static void Validate(object value, bool recurse = false, NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
-        {
-            var validationContext = buildContext(recurse, narrativeValidation, value);
-            Validator.ValidateObject(value, validationContext, true);
-        }
-
-        /// <summary>
-        /// Validate an object and its members against any <see cref="ValidationAttribute" />s present. 
-        /// </summary>
-        /// <remarks>If <paramref name="validationResults"/> is <c>null</c>, no errors will be returned.</remarks>
-        public static bool TryValidate(this Base value, ICollection<ValidationResult>? validationResults = null, bool recurse = false, NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
-            => TryValidate((object)value, validationResults, recurse, narrativeValidation);
-
-        /// <inheritdoc cref="TryValidate(Base, ICollection{ValidationResult}?, bool, NarrativeValidationKind)"/>
-        internal static bool TryValidate(object value, ICollection<ValidationResult>? validationResults = null, bool recurse = false, NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
-        {
-            var validationContext = buildContext(recurse, narrativeValidation, value);
-
-            // Validate the object, also calling the validators on each child property.
-            var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject((object)value, validationContext, results, validateAllProperties: true);
-        }
-
-        /// <inheritdoc cref="TryValidate(Base, ICollection{ValidationResult}?, bool, NarrativeValidationKind)"/>
-        internal static bool TryValidate(object value, ValidationContext context, ICollection<ValidationResult>? validationResults)
-        {
-            // Validate the object, also calling the validators on each child property.
-            var results = validationResults ?? new List<ValidationResult>();
-            return Validator.TryValidateObject(value, context, results, validateAllProperties: true);
-        }
-
-        internal static ValidationContext IntoPath(this ValidationContext ctx, object instance, string nestedElementName)
-        {
-            var location = ctx.GetLocation();
-
-            var newContext = new ValidationContext(instance, ctx.Items);
-
-            if (location is not null)
-                newContext.SetLocation($"{location}.{nestedElementName}");
-            else
-                newContext.SetLocation(nestedElementName);
-
-            return newContext;
-        }
-
-        /// <summary>
-        /// This is very similar to IntoPath except that it doesn't walk into the actual property
-        /// as the property does not exist, but we do need to set the membername so that the error message
-        /// is created correctly identifies the location in the message (in the context of the location)
-        /// </summary>
-        /// <param name="ctx"></param>
-        /// <param name="elementName"></param>
-        /// <returns></returns>
-        internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName)
-        {
-            var newContext = new ValidationContext(ctx.ObjectInstance, ctx.Items);
-            newContext.MemberName = elementName;
-            return newContext;
-        }
-
-        private static ValidationContext buildContext(bool recurse, NarrativeValidationKind kind, object instance)
-        {
-            ValidationContext newContext = new(instance);
-
-            newContext.SetValidateRecursively(recurse);
-            newContext.SetNarrativeValidationKind(kind);
-            newContext.SetLocation(instance.GetType().Name);
-            return newContext;
-        }
-
+        var validationContext = buildContext(poco, recurse, narrativeValidation);
+        Validator.ValidateObject(poco, validationContext, true);
     }
 
-}
+    /// <summary>
+    /// Validate an object and its members against any <see cref="ValidationAttribute" />s present.
+    /// </summary>
+    /// <param name="poco">The POCO to validate</param>
+    /// <param name="recurse">Whether to validate the object recursively, by also validating the contents of each property of the object.</param>
+    /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
+    /// <param name="validationResults">A collection to which any validation errors will be added.</param>
+    /// <remarks>If <paramref name="validationResults"/> is <c>null</c>, no errors will be returned.</remarks>
+    public static bool TryValidate(this Base poco, ICollection<ValidationResult>? validationResults = null, bool recurse = false, NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
+    {
+        var validationContext = buildContext(poco, recurse, narrativeValidation);
 
-#nullable restore
+        // Validate the object, also calling the validators on each child property.
+        var results = validationResults ?? [];
+        return Validator.TryValidateObject(poco, validationContext, results, validateAllProperties: true);
+    }
+
+    internal static ValidationContext IntoPath(this ValidationContext ctx, Base poco, string nestedElementName)
+    {
+        var location = ctx.GetLocationProducer();
+
+        var newContext = new ValidationContext(poco, ctx.Items);
+
+        if (location is not null)
+            newContext.SetLocationProducer(() => $"{location}.{nestedElementName}");
+        else
+            newContext.SetLocationProducer(() => nestedElementName);
+
+        return newContext;
+    }
+
+    /// <summary>
+    /// This is very similar to IntoPath except that it doesn't walk into the actual property
+    /// as the property does not exist, but we do need to set the membername so that the error message
+    /// is created correctly identifies the location in the message (in the context of the location)
+    /// </summary>
+    /// <param name="ctx"></param>
+    /// <param name="elementName"></param>
+    /// <returns></returns>
+    internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName)
+    {
+        return new ValidationContext(ctx.ObjectInstance, ctx.Items)
+        {
+            MemberName = elementName
+        };
+    }
+
+    private static ValidationContext buildContext(Base instance, bool recurse, NarrativeValidationKind kind)
+    {
+        var newContext = new ValidationContext(instance);
+
+        newContext.SetValidateRecursively(recurse);
+        newContext.SetNarrativeValidationKind(kind);
+        newContext.SetLocationProducer(() => instance.GetType().Name);
+        return newContext;
+    }
+}

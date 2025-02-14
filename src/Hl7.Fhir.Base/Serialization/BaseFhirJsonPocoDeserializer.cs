@@ -394,6 +394,7 @@ public class BaseFhirJsonPocoDeserializer
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
         {
             var deserializationContext = new PropertyDeserializationContext(
+                target,
                 state.Path,
                 propertyName,
                 line, pos,
@@ -403,12 +404,21 @@ public class BaseFhirJsonPocoDeserializer
             // chance to encounter both the `name` and `_name` property.
             if (propertyValueMapping.IsFhirPrimitive)
             {
+                var elementName = propertyMapping.Name;
+
                 delayedValidations.ScheduleDelayedValidation(
-                    propertyMapping.Name + PROPERTY_VALIDATION_KEY_SUFFIX,
-                    () => PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator!, deserializationContext, state.Errors));
+                    elementName + PROPERTY_VALIDATION_KEY_SUFFIX,
+                    () =>
+                    {
+                        deserializationContext.PathStack.EnterElement(elementName, null,
+                            propertyValueMapping.IsPrimitive);
+                        PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!,
+                            deserializationContext, state.Errors);
+                        deserializationContext.PathStack.ExitElement();
+                    });
             }
             else
-                PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator!, deserializationContext, state.Errors);
+                PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!, deserializationContext, state.Errors);
         }
 
         propertyMapping.SetValue(target, result);
@@ -590,7 +600,7 @@ public class BaseFhirJsonPocoDeserializer
         ClassMapping propertyValueMapping,
         Type? fhirType,
         ref Utf8JsonReader reader,
-        ObjectParsingState? delayedValidations,
+        ObjectParsingState? parsingState,
         FhirJsonPocoDeserializerState state
     )
     {
@@ -617,20 +627,18 @@ public class BaseFhirJsonPocoDeserializer
                     state.Errors.Add(error);
                 else if (Settings.Validator is not null)
                 {
-
-                    var propertyValueContext = new PropertyDeserializationContext(
+                    var propertyValueContext = new ObjectValueDeserializationContext(
+                        targetPrimitive,
                         state.Path,
-                        "value",
-                        line, pos,
-                        primitiveValueProperty);
+                        line, pos);
 
-                    PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator, propertyValueContext, state.Errors);
+                    PocoDeserializationHelper.RunObjectValueValidation(ref result, Settings.Validator, propertyValueContext, state.Errors);
                 }
 
                 if (targetPrimitive.ObjectValue is not null)
                     state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
-                else
-                    targetPrimitive.ObjectValue = result;
+
+                targetPrimitive.ObjectValue = result;
             }
             finally
             {
@@ -654,16 +662,16 @@ public class BaseFhirJsonPocoDeserializer
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
         {
             var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping);
-            if (delayedValidations is null)
+            if (parsingState is null)
                 PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
             else
             {
-                var propName = state.Path.GetLastPart();
-                delayedValidations.ScheduleDelayedValidation(
-                    propName + INSTANCE_VALIDATION_KEY_SUFFIX,
+                var elementName = state.Path.GetLastPart();
+                parsingState.ScheduleDelayedValidation(
+                    elementName + INSTANCE_VALIDATION_KEY_SUFFIX,
                     () =>
                     {
-                        context.PathStack.EnterElement(propName, null,
+                        context.PathStack.EnterElement(elementName, null,
                             propertyValueMapping.IsPrimitive);
                         PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context,
                             state.Errors);

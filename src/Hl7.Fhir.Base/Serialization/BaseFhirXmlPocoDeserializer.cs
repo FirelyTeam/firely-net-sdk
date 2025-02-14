@@ -337,12 +337,13 @@ namespace Hl7.Fhir.Serialization
             if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
             {
                 var context = new PropertyDeserializationContext(
+                    target,
                     state.Path, // should this path GetPath or this?
                     name,
                     lineNumber, position,
                     propMapping);
 
-                PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator, context, state.Errors);
+                PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator, context, state.Errors);
             }
 
             propMapping.SetValue(target, result);
@@ -502,13 +503,12 @@ namespace Hl7.Fhir.Serialization
                     var (lineNumber, position) = reader.GenerateLineInfo();
                     var name = reader.LocalName;
 
-                    var context = new PropertyDeserializationContext(
+                    var context = new ObjectValueDeserializationContext(
+                        target,
                         state.Path,
-                        name,
-                        lineNumber, position,
-                        propMapping);
+                        lineNumber, position);
 
-                    PocoDeserializationHelper.RunPropertyValidation(ref parsedValue, Settings.Validator, context, state.Errors);
+                    PocoDeserializationHelper.RunObjectValueValidation(ref parsedValue, Settings.Validator, context, state.Errors);
                 }
 
                 if (target is PrimitiveType primitive && propMapping.Name == "value")
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    propMapping.SetValue(target, parsedValue);
+                    throw new InvalidOperationException("really?");
                 }
             }
         }

@@ -180,9 +180,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             // and trailing whitespace when reading attribute values (for XML schema conformance)"
             string s => s.Trim(),
             bool b => XmlConvert.ToString(b),
-            // DateTimeOffset dto => ElementModel.Types.DateTime.FormatDateTimeOffset(dto),
-            // byte[] bytes => Convert.ToBase64String(bytes),
-            _ => throw new FormatException($"There is no known serialization for type {value.GetType()} into an Xml primitive property value.")
+            _ => PrimitiveTypeConverter.ConvertTo<string>(value)
         };
 
         writer.WriteAttributeString(elementName, ns: null, value: literal);

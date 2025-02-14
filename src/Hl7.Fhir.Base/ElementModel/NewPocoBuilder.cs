@@ -53,7 +53,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         {
             var objectValue = newInstance is DynamicPrimitive ?
                 value :
-                convertTypedElementValue(value, node.InstanceType);
+                convertTypedElementValue(value);
 
             if(newInstance is PrimitiveType pt)
                 pt.ObjectValue = objectValue;
@@ -296,7 +296,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     /// <summary>
     /// Convert the value of a typed element to a value that can be set on a POCO property.
     /// </summary>
-    private static object convertTypedElementValue(object value, string? instanceType)
+    private static object convertTypedElementValue(object value)
     {
         return value switch
         {

@@ -6,6 +6,7 @@ using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using Date = Hl7.Fhir.ElementModel.Types.Date;
 using DateTime = Hl7.Fhir.ElementModel.Types.DateTime;
@@ -464,30 +465,22 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
-        public void TestCustomValidators()
+        public void TestValidatorIsCalledDuringDeserialization()
         {
-            test(new FhirJsonDeserializationTests.CustomComplexValidator());
-            test(new FhirJsonDeserializationTests.CustomDataTypeValidator());
-            test(new FhirJsonDeserializationTests.CustomPropertyValueValidator());
+            var validator = new FhirJsonDeserializationTests.CustomComplexValidator();
 
-            static void test(IDeserializationValidator validator)
-            {
-                var xml = "<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDateTime value=\"2070-01-01T12:01:02Z\"/></Patient>";
-                var reader = constructReader(xml);
-                reader.Read();
+            const string xml = "<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDateTime value=\"2070-01-01T12:01:02Z\"/></Patient>";
+            var reader = constructReader(xml);
+            reader.Read();
 
-                var serializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings { Validator = validator });
-                var state = new FhirXmlPocoDeserializerState();
+            var serializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings { Validator = validator });
+            serializer.TryDeserializeResource(reader, out _, out var issues);
 
-                var result = serializer.DeserializeResourceInternal(reader, state);
-
-                state.Errors.HasExceptions.Should().BeTrue();
-                state.Errors.Should().AllBeOfType<CodedValidationException>()
-                    .And.ContainSingle(e => ((CodedValidationException)e).ErrorCode == CodedValidationException.DATETIME_LITERAL_INVALID_CODE);
-                result.Should().BeOfType<Patient>()
-                    .Which.Deceased.Should().BeOfType<FhirDateTime>()
-                    .Which.Value.Should().EndWith("+00:00");
-            }
+            var errors = issues.ToList();
+            errors.Should().HaveCount(1);
+            errors.Single().Should().BeOfType<CodedValidationException>().Which.ErrorCode.Should().Be(CodedValidationException.DATETIME_LITERAL_INVALID_CODE);
+            validator.DateTimeSeenByObjectValueValidator.Should().Be("2070-01-01T12:01:02Z");
+            validator.DateTimeSeenByInstanceValidator?.Value.Should().Be("1972-30-11T12:00:00Z");
         }
 
         [TestMethod]
