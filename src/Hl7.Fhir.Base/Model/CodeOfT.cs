@@ -36,7 +36,6 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.Serialization;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -68,21 +67,8 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         Value = value;
     }
 
-    protected override Type ObjectValueType => typeof(string);
-
     [NonSerialized] // To prevent binary serialization from serializing this field
     private T? _parsedValue = null;
-
-    private bool tryGetParsedValue(out T? parsed)
-    {
-        parsed = _parsedValue;
-        if (_parsedValue is not null || ObjectValue is null) return true;
-        if (ObjectValue is not string unparsed) return false;
-        if (EnumUtility.ParseLiteral<T>(unparsed) is not { } e) return false;
-
-        parsed = e;
-        return true;
-    }
 
     public override object? ObjectValue
     {
@@ -108,10 +94,10 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     {
         get
         {
-            if (!tryGetParsedValue(out var value))
-                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct string literal for an Coded enum of type {typeof(T)}.");
+            if (ValidateObjectValue(null) is { } error)
+                throw error;
 
-            return value;
+            return _parsedValue;
         }
 
         set
@@ -122,30 +108,25 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         }
     }
 
-
-    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
-        var baseResults = base.Validate(validationContext);
-        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
+        if (_parsedValue is not null || ObjectValue is null) return null;
 
-        if (HasValidValue())
-            return baseResults;
+        _parsedValue = null;
 
-        var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
-        return baseResults.Append(result);
+        if (ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
+
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.INVALID_CODED_VALUE(context, unparsed, EnumUtility.GetName<T>()) : null;
     }
+
+    private static T? doParse(string literal) =>  EnumUtility.ParseLiteral<T>(literal);
 
     /// <summary>
-    /// Checks whether the given literal is one of the enum values for this T.
+    /// Checks whether the given literal is correctly formatted.
     /// </summary>
-    public bool HasValidValue() => tryGetParsedValue(out _);
-
-    /// <inheritdoc cref="HasValidValue"/>
-    public new static bool IsValidValue(string value)
-    {
-        var code = new Code<T>() { ObjectValue = value };
-        return code.HasValidValue();
-    }
+    public static new bool IsValidValue(string value) => doParse(value) is not null;
 
     /// <inheritdoc />
     public override IEnumerable<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];

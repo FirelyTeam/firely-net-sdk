@@ -31,18 +31,22 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class UnsignedInt
 {
-    protected override Type ObjectValueType => typeof(int);
-
-    /// <summary>
-    /// Checks whether the given literal is correctly formatted.
-    /// </summary>
-    public static bool IsValidValue(string value) => ElementModel.Types.Integer.TryParse(value, out var parsed) && parsed.Value >= 0;
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            >= 0 => null,
+            int i => COVE.UNSIGNED_INT_MUST_NOT_BE_NEGATIVE(context, i),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Converts this UnsignedInt to a <see cref="P.Long" />.

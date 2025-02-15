@@ -7,66 +7,28 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Validation;
+
+/// <summary>
+/// Validates an xhtml value against the FHIR rules for xhtml.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property)]
+public class NarrativeXhtmlPatternAttribute : ValidationAttribute
 {
-    /// <summary>
-    /// Validates an xhtml value against the FHIR rules for xhtml.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class NarrativeXhtmlPatternAttribute : ValidationAttribute
+    /// <inheritdoc />
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        /// <inheritdoc />
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
-            IsValid(value, validationContext.GetNarrativeValidationKind(), validationContext);
-
-        /// <summary>
-        /// Validates whether the value is a string of well-formatted Xml.
-        /// </summary>
-        public ValidationResult? IsValid(object? value, NarrativeValidationKind kind, ValidationContext context)
+        return value switch
         {
-            if (value is null) return ValidationResult.Success;
-
-            if (value is string xml)
-            {
-                return kind switch
-                {
-                    NarrativeValidationKind.None => ValidationResult.Success,
-                    NarrativeValidationKind.Xml => XHtml.IsValidXml(xml, out var error)
-                            ? ValidationResult.Success
-                            : COVE.NARRATIVE_XML_IS_MALFORMED(context, error).AsResult(context),
-                    NarrativeValidationKind.FhirXhtml => runValidateXhtmlSchema(xml, context),
-                    _ => throw new NotSupportedException($"Encountered unknown narrative validation kind {kind}.")
-                };
-            }
-            else
-                throw new ArgumentException($"{nameof(NarrativeXhtmlPatternAttribute)} attributes can only be applied to string properties.");
-        }
-
-        private static ValidationResult runValidateXhtmlSchema(string text, ValidationContext context)
-        {
-            try
-            {
-                var doc = SerializationUtil.XDocumentFromXmlText(text);
-                var errors = SerializationUtil.RunFhirXhtmlSchemaValidation(doc);
-
-                return errors.Any() ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Join(", ", errors)).AsResult(context) : ValidationResult.Success!;
-            }
-            catch (FormatException fe)
-            {
-                return COVE.NARRATIVE_XML_IS_MALFORMED(context, fe.Message).AsResult(context);
-            }
-        }
+            null => ValidationResult.Success,
+            string xml => XHtml.ValidateXmlLiteral(xml, validationContext)?.AsResult(validationContext),
+            _ => throw new ArgumentException(
+                $"{nameof(NarrativeXhtmlPatternAttribute)} attributes can only be applied to string properties.")
+        };
     }
 }
-
-
-
-#nullable restore

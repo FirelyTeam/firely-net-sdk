@@ -30,7 +30,8 @@
 #nullable enable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
@@ -42,7 +43,14 @@ public partial class FhirUrl
         Value = uri.OriginalString;
     }
 
-    protected override Type ObjectValueType => typeof(string);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string unparsed when IsValidValue(unparsed) => null,
+            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
@@ -51,7 +59,7 @@ public partial class FhirUrl
     {
         try
         {
-            var uri = new Uri(value, UriKind.RelativeOrAbsolute);
+            _ = new Uri(value, UriKind.RelativeOrAbsolute);
             return true;
         }
         catch

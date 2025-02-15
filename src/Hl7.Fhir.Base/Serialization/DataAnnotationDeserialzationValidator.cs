@@ -58,12 +58,12 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
         reportedErrors = runAttributeValidation(propertyValue, context.ElementMapping.ValidationAttributes, validationContext);
     }
 
-    /// <inheritdoc />
-    public virtual void ValidateObjectValue(ref object? value, in ObjectValueDeserializationContext context,
-        out CodedValidationException[]? reportedErrors)
-    {
-        reportedErrors = null;
-    }
+    // /// <inheritdoc />
+    // public virtual void ValidateObjectValue(ref object? value, in ObjectValueDeserializationContext context,
+    //     out CodedValidationException[]? reportedErrors)
+    // {
+    //     reportedErrors = null;
+    // }
 
     /// <inheritdoc />
     public virtual void ValidateInstance(Base instance, in InstanceDeserializationContext context,

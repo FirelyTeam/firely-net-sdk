@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Tests.Model;
 
@@ -47,11 +48,11 @@ public class CodeEnumTests
         Assert.IsNull(c.Value);
 
         c.ObjectValue = "maleX";
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        Assert.ThrowsException<COVE>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
         c.ObjectValue = 314;
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        Assert.ThrowsException<COVE>(() => c.Value).Message.Should().Contain("integer 314 is not the right type of literal for a code.");
         c.HasValidValue().Should().BeFalse();
     }
 

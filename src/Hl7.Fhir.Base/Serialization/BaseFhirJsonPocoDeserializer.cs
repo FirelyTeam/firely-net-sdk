@@ -615,30 +615,20 @@ public class BaseFhirJsonPocoDeserializer
                                          throw new InvalidOperationException($"All subclasses of {nameof(PrimitiveType)} should have a property representing the value element, " +
                                                                              $"but {propertyValueMapping.Name} has not. " + reader.GenerateLocationMessage());
 
-            state.Path.EnterElement("value", 0, true);
             try
             {
+                state.Path.EnterElement("value", 0, true);
 
                 var (result, error) = DeserializePrimitiveValue(ref reader, primitiveValueProperty.ImplementingType, state.Path);
 
-                // Only do validation when no parse errors were encountered, otherwise we'll just
-                // produce spurious messages.
                 if (error is not null)
                     state.Errors.Add(error);
-                else if (Settings.Validator is not null)
-                {
-                    var propertyValueContext = new ObjectValueDeserializationContext(
-                        targetPrimitive,
-                        state.Path,
-                        line, pos);
-
-                    PocoDeserializationHelper.RunObjectValueValidation(ref result, Settings.Validator, propertyValueContext, state.Errors);
-                }
 
                 if (targetPrimitive.ObjectValue is not null)
                     state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
-
-                targetPrimitive.ObjectValue = result;
+                else
+                    // Set the value, validation is done in the ObjectValidation of the PrimitiveType's.
+                    targetPrimitive.ObjectValue = result;
             }
             finally
             {

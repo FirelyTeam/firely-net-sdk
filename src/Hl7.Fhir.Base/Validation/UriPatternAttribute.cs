@@ -13,23 +13,14 @@ using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation
-{
-    /// <summary>
-    /// Validates an Uri value against the FHIR rules for Uri.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class UriPatternAttribute : ValidationAttribute
-    {
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
-            value switch
-            {
-                null => ValidationResult.Success,
-                string s when FhirUri.IsValidValue(s) => ValidationResult.Success,
-                string s => COVE.URI_LITERAL_INVALID(validationContext, s).AsResult(validationContext),
-                _ => throw new ArgumentException($"{nameof(UriPatternAttribute)} attributes can only be applied to string properties.")
-            };
-    }
-}
+namespace Hl7.Fhir.Validation;
 
-#nullable restore
+/// <summary>
+/// Validates an Uri value against the FHIR rules for Uri.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+public class UriPatternAttribute : ValidationAttribute
+{
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
+        new FhirUri { ObjectValue = value }.ValidateObjectValue(validationContext)?.AsResult(validationContext);
+}

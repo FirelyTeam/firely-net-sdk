@@ -37,22 +37,20 @@ using COVE = Hl7.Fhir.Validation.CodedValidationException;
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}}")]
-    public abstract partial class DomainResource : IModifierExtendable
+    public abstract partial class DomainResource : IValidatableObject
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            var result = new List<ValidationResult>(base.Validate(validationContext));
-
             if (this.Contained != null)
             {
                 if (!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
-                    result.Add(COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED(validationContext).AsResult(validationContext));
+                    return [COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED(validationContext).AsResult(validationContext)];
             }
 
-            return result;
+            return [];
         }
 
         /// <summary>

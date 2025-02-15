@@ -13,23 +13,15 @@ using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Validation;
+
+/// <summary>
+/// Validates a date value against the FHIR rules for date.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+public class DatePatternAttribute : ValidationAttribute
 {
-    /// <summary>
-    /// Validates a date value against the FHIR rules for date.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class DatePatternAttribute : ValidationAttribute
-    {
-        /// <inheritdoc/>
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
-            value switch
-            {
-                null => ValidationResult.Success,
-                string s when Date.IsValidValue(s) => ValidationResult.Success,
-                string s => COVE.DATE_LITERAL_INVALID(validationContext, s).AsResult(validationContext),
-                _ => throw new ArgumentException($"{nameof(DatePatternAttribute)} attributes can only be applied to string properties.")
-            };
-    }
+    /// <inheritdoc/>
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
+        new Date { ObjectValue = value }.ValidateObjectValue(validationContext)?.AsResult(validationContext);
 }
-#nullable restore

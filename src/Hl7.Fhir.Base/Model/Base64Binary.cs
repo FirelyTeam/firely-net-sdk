@@ -29,11 +29,9 @@
 */
 
 using Hl7.Fhir.ElementModel.Types;
-using Hl7.Fhir.Validation;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 using P=Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
@@ -59,22 +57,34 @@ public partial class Base64Binary
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private byte[]? _parsedValue = null;
 
-    private bool tryGetParsedValue(out byte[]? parsed)
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
-        parsed = _parsedValue;
-        if (_parsedValue is not null || ObjectValue is null) return true;
-        if (ObjectValue is not string unparsed) return false;
+        if (_parsedValue is not null || ObjectValue is null) return null;
+        _parsedValue = null;
 
+        if (ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
+
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.INVALID_BASE64_VALUE(context, unparsed) : null;
+    }
+
+    private static byte[]? doParse(string literal)
+    {
         try
         {
-            parsed = _parsedValue = Convert.FromBase64String(unparsed);
-            return true;
+            return Convert.FromBase64String(literal);
         }
         catch
         {
-            return false;
+            return null;
         }
     }
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => doParse(value) is not null;
 
     public override object? ObjectValue
     {
@@ -96,10 +106,10 @@ public partial class Base64Binary
     {
         get
         {
-            if (!tryGetParsedValue(out var value))
-                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct literal for a Base64Binary.");
+            if (ValidateObjectValue(null) is {} error)
+                throw error;
 
-            return value;
+            return _parsedValue;
         }
 
         set
@@ -108,32 +118,6 @@ public partial class Base64Binary
             base.ObjectValue = null;
             OnPropertyChanged("Value");
         }
-    }
-
-    protected override Type ObjectValueType => typeof(string);
-
-    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        var baseResults = base.Validate(validationContext);
-        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
-
-        if (HasValidValue())
-            return baseResults;
-
-        var result = CodedValidationException.INVALID_BASE64_VALUE(validationContext, ObjectValue).AsResult(validationContext);
-        return baseResults.Append(result);
-    }
-
-    /// <summary>
-    /// Checks whether the given literal is a correctly encoded base64 string.
-    /// </summary>
-    public bool HasValidValue() => tryGetParsedValue(out _);
-
-    /// <inheritdoc cref="HasValidValue"/>
-    public static bool IsValidValue(string value)
-    {
-        var b64 = FromBase64String(value);
-        return b64.HasValidValue();
     }
 
     /// <summary>

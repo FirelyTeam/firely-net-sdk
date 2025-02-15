@@ -88,12 +88,12 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HtmlChecks(this IScopedNode focus)
+        public static bool HtmlChecks(this IScopedNode? focus)
         {
             if (focus?.Value is null) return false;
 
             // Perform the checking of the content for valid html content
-            return XHtml.IsValidNarrativeXhtml(focus.Value.ToString()!);
+            return XHtml.IsValidNarrativeXhtml(focus.Value.ToString()!, out _, out _);
         }
 
         public static IEnumerable<Base?> ToFhirValues(this IEnumerable<IScopedNode> results)

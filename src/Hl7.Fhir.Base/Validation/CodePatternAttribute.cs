@@ -13,24 +13,15 @@ using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation
-{
-    /// <summary>
-    /// Validates a code value against the FHIR rules for code.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class CodePatternAttribute : ValidationAttribute
-    {
-        /// <inheritdoc/>
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
-            value switch
-            {
-                null => ValidationResult.Success,
-                string s when Code.IsValidValue(s) => ValidationResult.Success,
-                string s => COVE.CODE_LITERAL_INVALID(validationContext, s).AsResult(validationContext),
-                _ => ValidationResult.Success // Will happen during deserialization calls, where the raw value is fed to the attribute validation logic.
-            };
-    }
-}
+namespace Hl7.Fhir.Validation;
 
-#nullable restore
+/// <summary>
+/// Validates a code value against the FHIR rules for code.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property)]
+public class CodePatternAttribute : ValidationAttribute
+{
+    /// <inheritdoc/>
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
+        new Code { ObjectValue = value }.ValidateObjectValue(validationContext)?.AsResult(validationContext);
+}

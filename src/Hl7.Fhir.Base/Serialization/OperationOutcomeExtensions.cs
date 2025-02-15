@@ -56,14 +56,7 @@ namespace Hl7.Fhir.Serialization
                 case CodedValidationException.INCORRECT_CARDINALITY_MAX_CODE: shortDisplay = "Exceeded max values"; break;
                 case CodedValidationException.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE: shortDisplay = "Cannot be null"; break;
                 case CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE: shortDisplay = "Mandatory field cannot be null"; break;
-                case CodedValidationException.CODE_LITERAL_INVALID_CODE: shortDisplay = "Invalid code"; break;
-                case CodedValidationException.DATE_LITERAL_INVALID_CODE: shortDisplay = "Invalid date"; break;
-                case CodedValidationException.DATETIME_LITERAL_INVALID_CODE: shortDisplay = "Invalid datetime"; break;
-                case CodedValidationException.ID_LITERAL_INVALID_CODE: shortDisplay = "Invalid id"; break;
-                case CodedValidationException.OID_LITERAL_INVALID_CODE: shortDisplay = "Invalid oid"; break;
-                case CodedValidationException.TIME_LITERAL_INVALID_CODE: shortDisplay = "Invalid time"; break;
-                case CodedValidationException.URI_LITERAL_INVALID_CODE: shortDisplay = "Invalid uri"; break;
-                case CodedValidationException.UUID_LITERAL_INVALID_CODE: shortDisplay = "Invalid uuid"; break;
+                case CodedValidationException.LITERAL_INVALID_CODE: shortDisplay = "Invalid literal"; break;
                 case CodedValidationException.NARRATIVE_XML_IS_MALFORMED_CODE: shortDisplay = "Malformed narrative"; break;
                 case CodedValidationException.NARRATIVE_XML_IS_INVALID_CODE: shortDisplay = "Invalid narrative"; break;
                 case CodedValidationException.INVALID_CODED_VALUE_CODE: shortDisplay = "Invalid code"; break;
@@ -130,9 +123,9 @@ namespace Hl7.Fhir.Serialization
             };
 
             if (me.LineNumber.HasValue && me.Position.HasValue)
-                result.Location = new[] { $"line {me.LineNumber}, position {me.Position}" };
+                result.Location = [$"line {me.LineNumber}, position {me.Position}"];
             if (!string.IsNullOrEmpty(me.InstancePath))
-                result.Expression = new[] { me.InstancePath };
+                result.Expression = [me.InstancePath];
 
             return result;
         }

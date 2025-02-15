@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Text;
@@ -47,11 +48,11 @@ public class Base64Tests
         c.Value.Should().BeNull();
 
         c.ObjectValue = "Hoi";
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
         c.ObjectValue = 314;
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }
 }

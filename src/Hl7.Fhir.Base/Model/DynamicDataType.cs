@@ -1,8 +1,11 @@
 #nullable enable
 using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
@@ -65,8 +68,6 @@ public class DynamicResource : Resource, IDynamicType
 [FhirType("DynamicPrimitive","http://fire.ly/fhir/StructureDefinition/DynamicPrimitive")]
 public class DynamicPrimitive : PrimitiveType, IDynamicType
 {
-    protected override Type ObjectValueType => typeof(object);
-
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;
@@ -79,4 +80,9 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
     }
 
     protected internal override Any? TryConvertToSystemTypeInternal() => null;
+
+    protected internal override COVE? ValidateObjectValue(ValidationContext? validationContext) =>
+        ObjectValue is string or bool or decimal or int
+            ? null
+            : COVE.INCORRECT_LITERAL_VALUE_TYPE(validationContext, ObjectValue, TypeName);
 }

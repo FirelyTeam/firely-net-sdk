@@ -14,42 +14,42 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization;
 
-public readonly struct ObjectValueDeserializationContext
-{
-    internal ObjectValueDeserializationContext(
-        Base objectInstance,
-        PathStack path,
-        long lineNumber,
-        long linePosition)
-    {
-        PathStack = path;
-        ObjectInstance = objectInstance;
-        LineNumber = lineNumber;
-        LinePosition = linePosition;
-    }
-
-    internal PathStack PathStack { get; }
-
-    /// <summary>
-    /// The dotted path leading to this element from the root (has no indexers and includes the value virtual property on primitives)
-    /// </summary>
-    public string Path => PathStack.GetPath();
-
-    /// <summary>
-    /// The POCO this property is an element of.
-    /// </summary>
-    public Base ObjectInstance { get; }
-
-    /// <summary>
-    /// The approximate line number in the source data that is being deserialized.
-    /// </summary>
-    public long LineNumber { get; }
-
-    /// <summary>
-    /// The approximate line position in the source data that is being deserialized.
-    /// </summary>
-    public long LinePosition { get; }
-}
+// public readonly struct ObjectValueDeserializationContext
+// {
+//     internal ObjectValueDeserializationContext(
+//         Base objectInstance,
+//         PathStack path,
+//         long lineNumber,
+//         long linePosition)
+//     {
+//         PathStack = path;
+//         ObjectInstance = objectInstance;
+//         LineNumber = lineNumber;
+//         LinePosition = linePosition;
+//     }
+//
+//     internal PathStack PathStack { get; }
+//
+//     /// <summary>
+//     /// The dotted path leading to this element from the root (has no indexers and includes the value virtual property on primitives)
+//     /// </summary>
+//     public string Path => PathStack.GetPath();
+//
+//     /// <summary>
+//     /// The POCO this property is an element of.
+//     /// </summary>
+//     public Base ObjectInstance { get; }
+//
+//     /// <summary>
+//     /// The approximate line number in the source data that is being deserialized.
+//     /// </summary>
+//     public long LineNumber { get; }
+//
+//     /// <summary>
+//     /// The approximate line position in the source data that is being deserialized.
+//     /// </summary>
+//     public long LinePosition { get; }
+// }
 
 
 /// <summary>

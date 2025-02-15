@@ -19,14 +19,14 @@ namespace Hl7.Fhir.Serialization;
 /// </summary>
 public interface IDeserializationValidator
 {
-    /// <summary>
-    /// Implements validation logic to be run on the ObjectValue of a PrimitiveType just before that value is used
-    /// to initialize the property.
-    /// </summary>
-    /// <param name="value">The candidate value for ObjectValue.</param>
-    /// <param name="context">The current context of deserialization, like the path and the type under deserialization.</param>
-    /// <param name="reportedErrors">null, zero or more validation errors which will be aggregated in the final result of deserialization.</param>
-   void ValidateObjectValue(ref object? value, in ObjectValueDeserializationContext context, out CodedValidationException[]? reportedErrors);
+   //  /// <summary>
+   //  /// Implements validation logic to be run on the ObjectValue of a PrimitiveType just before that value is used
+   //  /// to initialize the property.
+   //  /// </summary>
+   //  /// <param name="value">The candidate value for ObjectValue.</param>
+   //  /// <param name="context">The current context of deserialization, like the path and the type under deserialization.</param>
+   //  /// <param name="reportedErrors">null, zero or more validation errors which will be aggregated in the final result of deserialization.</param>
+   // void ValidateObjectValue(ref object? value, in ObjectValueDeserializationContext context, out CodedValidationException[]? reportedErrors);
 
     /// <summary>
     /// Implements validation logic to be run on a property value just before that value is used
@@ -35,7 +35,7 @@ public interface IDeserializationValidator
     /// <param name="propertyValue">The value for the property (can be Base or a List of Base).</param>
     /// <param name="context">The current context of deserialization, like the path and the type under deserialization.</param>
     /// <param name="reportedErrors">null, zero or more validation errors which will be aggregated in the final result of deserialization.</param>
-    /// <remarks>This validation will not be called on Primitive's Value/ObjectValue properties, which uses <see cref="ValidateObjectValue"/>
+    /// <remarks>This validation will not be called on Primitive's Value/ObjectValue properties, which is done during <see cref="ValidateInstance"/>
     /// instead.</remarks>
     void ValidateProperty(
         object? propertyValue,

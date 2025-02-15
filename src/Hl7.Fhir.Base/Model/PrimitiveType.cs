@@ -19,7 +19,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class PrimitiveType : P.IToSystemPrimitive
+public partial class PrimitiveType : IValidatableObject, P.IToSystemPrimitive
 {
     /// <summary>
     /// The value of the primitive, stored as an object. Will generally contain the same value as the
@@ -56,23 +56,15 @@ public partial class PrimitiveType : P.IToSystemPrimitive
         return result is not null;
     }
 
-    protected abstract Type ObjectValueType { get; }
+    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext) =>
+        Validate(validationContext);
 
-    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        var baseResults = base.Validate(validationContext);
-        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
+    protected virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) =>
+        ValidateObjectValue(validationContext) is { } result ? [result.AsResult(validationContext)] : [];
 
-        // Validate that the ObjectValue has the correct inherent type, as described by the FHIR spec:
-        // string for most primitives, but bool for booleans etc.
-        if (ObjectValue is null || ObjectValue.GetType() == ObjectValueType || ObjectValueType == typeof(object))
-            return baseResults;
+    protected internal abstract CodedValidationException? ValidateObjectValue(ValidationContext? validationContext);
 
-        var result = CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE(validationContext, ObjectValue, this.TypeName)
-            .AsResult(validationContext);
-
-        return [..baseResults, result];
-    }
+    public bool HasValidValue() => ValidateObjectValue(null) is null;
 
     internal object? ToITypedElementValue()
     {

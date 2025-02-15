@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow("<foo value =\"1\"/>", typeof(bool), "1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool2")]
         [DataRow("<foo value =\"treu\"/>", typeof(bool), "treu", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool3")]
         [DataRow("<foo value =\"2000-01-01T12:00:00\"/>", typeof(DateTimeOffset), "2000-01-01T12:00:00", null, DisplayName = "XmlInstant1")]
-        [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", CodedValidationException.INSTANT_LITERAL_INVALID_CODE, DisplayName = "XmlInstant2")]
+        [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", CodedValidationException.LITERAL_INVALID_CODE, DisplayName = "XmlInstant2")]
         [DataRow("<foo value =\"foo\"/>", typeof(byte[]), "foo", CodedValidationException.INVALID_BASE64_VALUE_CODE, DisplayName = "XmlByteArray")]
         [DataRow("<foo value =\"1\"/>", typeof(int), 1, null, DisplayName = "XmlInteger1")]
         [DataRow("<foo value =\"1.1\"/>", typeof(int), "1.1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInteger2")]
@@ -478,9 +478,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             var errors = issues.ToList();
             errors.Should().HaveCount(1);
-            errors.Single().Should().BeOfType<CodedValidationException>().Which.ErrorCode.Should().Be(CodedValidationException.DATETIME_LITERAL_INVALID_CODE);
-            validator.DateTimeSeenByObjectValueValidator.Should().Be("2070-01-01T12:01:02Z");
-            validator.DateTimeSeenByInstanceValidator?.Value.Should().Be("1972-30-11T12:00:00Z");
+            errors.Single().Should().BeOfType<CodedValidationException>().Which.ErrorCode.Should().Be(CodedValidationException.LITERAL_INVALID_CODE);
+            validator.DateTimeSeenByInstanceValidator?.Value.Should().Be("1972-11-30T12:00:00Z");
         }
 
         [TestMethod]

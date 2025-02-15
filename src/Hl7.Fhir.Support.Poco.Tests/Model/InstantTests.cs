@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -44,11 +45,11 @@ public class InstantTests
         Assert.IsNull(c.Value);
 
         c.ObjectValue = "nonsense";
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
         c.ObjectValue = 314;
-        Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }
 }

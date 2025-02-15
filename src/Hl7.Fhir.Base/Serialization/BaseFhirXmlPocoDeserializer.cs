@@ -290,7 +290,6 @@ namespace Hl7.Fhir.Serialization
                 state.Errors.Add(ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN(reader, state.Path.GetInstancePath(), reader.LocalName));
             }
 
-
             if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
             {
                 var context = new InstanceDeserializationContext(
@@ -490,34 +489,19 @@ namespace Hl7.Fhir.Serialization
                 state.Errors.Add(ERR.INCORRECT_ATTRIBUTE_NAMESPACE(reader, state.Path.GetInstancePath(), reader.LocalName, elementName, reader.NamespaceURI));
             }
 
-            int oldErrors = state.Errors.Count;
-            //parse current attribute to expected type
-
             var (parsedValue, error) = ParsePrimitiveValue(reader, propMapping.ImplementingType, state.Path);
             state.Errors.Add(error);
 
             if (parsedValue != null)
             {
-                if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
-                {
-                    var (lineNumber, position) = reader.GenerateLineInfo();
-                    var name = reader.LocalName;
-
-                    var context = new ObjectValueDeserializationContext(
-                        target,
-                        state.Path,
-                        lineNumber, position);
-
-                    PocoDeserializationHelper.RunObjectValueValidation(ref parsedValue, Settings.Validator, context, state.Errors);
-                }
-
                 if (target is PrimitiveType primitive && propMapping.Name == "value")
                 {
                     primitive.ObjectValue = parsedValue;
                 }
                 else
                 {
-                    throw new InvalidOperationException("really?");
+                    // Handle atomic-types-as-primitives, Element.id, Extension.url etc.
+                    propMapping.SetValue(target, parsedValue);
                 }
             }
         }

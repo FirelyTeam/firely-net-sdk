@@ -34,29 +34,39 @@ using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Integer64
 {
-    protected override Type ObjectValueType => typeof(string);
-
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private long? _parsedValue = null;
 
-    private bool tryGetParsedValue(out long? dto)
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
-        dto = _parsedValue;
-        if (_parsedValue is not null || ObjectValue is null) return true;
-        if (ObjectValue is not string unparsed) return false;
-        if (!P.Long.TryParse(unparsed, out var parsedLong)) return false;
+        if (_parsedValue is not null || ObjectValue is null) return null;
 
-        dto = _parsedValue = parsedLong.Value;
-        return true;
+        _parsedValue = null;
+
+        if (ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
+
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, ObjectValue, this.TypeName) : null;
     }
+
+    private static long? doParse(string literal) =>
+        P.Long.TryParse(literal, out var parsedLong) ? parsedLong.Value : null;
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => doParse(value) is not null;
 
     public override object? ObjectValue
     {
@@ -78,10 +88,10 @@ public partial class Integer64
     {
         get
         {
-            if (!tryGetParsedValue(out var value))
-                throw new InvalidCastException($"Value '{ObjectValue}' of type {ObjectValue!.GetType()} is not a correct literal for an Integer64.");
+            if (ValidateObjectValue(null) is {} error)
+                throw error;
 
-            return value;
+            return _parsedValue;
         }
 
         set
@@ -93,27 +103,19 @@ public partial class Integer64
     }
 
     /// <summary>
-    /// Checks whether the given literal is a correctly formatted Instant, with a precision higher than seconds.
+    /// Converts an Insteger64 to a <see cref="P.Long"/>.
     /// </summary>
-    public bool HasValidValue() => tryGetParsedValue(out _);
-
-     /// <inheritdoc cref="HasValidValue"/>
-    public static bool IsValidValue(string value)
+    /// <returns>true if the Integer64 contains a valid date/time string, false otherwise.</returns>
+    public bool TryToSystemLong([NotNullWhen(true)] out P.Long? longValue)
     {
-        var i = new Integer64 { ObjectValue = value };
-        return i.HasValidValue();
-    }
+        if (ValidateObjectValue(null) is not null || _parsedValue is null)
+        {
+            longValue = null;
+            return false;
+        }
 
-    public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        var baseResults = base.Validate(validationContext);
-        if (baseResults.Any()) return baseResults; // Try to avoid duplicative errors.
-
-        if (HasValidValue())
-            return baseResults;
-
-        var result = CodedValidationException.LONG_LITERAL_INVALID(validationContext, ObjectValue).AsResult(validationContext);
-        return baseResults.Append(result);
+        longValue = new P.Long(_parsedValue.Value);
+        return true;
     }
 
     /// <summary>
@@ -121,11 +123,16 @@ public partial class Integer64
     /// </summary>
     /// <exception cref="InvalidOperationException">The Value of this Integer64 is null,
     /// which is not valid for System longs.</exception>
-    public P.Long ToSystemLong() =>
-        (P.Long?)TryConvertToSystemTypeInternal()
-        ?? throw new InvalidOperationException("Value is null.");
+    public P.Long ToSystemLong()
+    {
+        if (ValidateObjectValue(null) is { } error)
+            throw error;
 
-    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
-        Value is not null
-            ? new P.Long(Value.Value) : null;
+        if (_parsedValue is null)
+            throw new InvalidOperationException("Value is null.");
+
+        return new P.Long(_parsedValue.Value);
+    }
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemLong(out var longValue) ? longValue : null;
 }

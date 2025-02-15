@@ -31,8 +31,10 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
@@ -53,7 +55,15 @@ public partial class Uuid
     /// </summary>
     public FhirUri AsUri() => new(Value);
 
-    protected override Type ObjectValueType => typeof(string);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string unparsed when IsValidValue(unparsed) => null,
+            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
+
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
@@ -70,5 +80,4 @@ public partial class Uuid
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
         Value is not null ? new P.String(Value) : null;
-
 }

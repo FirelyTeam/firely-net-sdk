@@ -24,7 +24,7 @@ public class RoundTripAttachments
             ];
             yield return ["{\"size\":25.345, \"title\": \"An incorrect Attachment\"}", null!, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE
             ];
-            yield return ["{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, COVE.LONG_LITERAL_INVALID_CODE
+            yield return ["{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, COVE.LITERAL_INVALID_CODE
             ];
         }
 #else

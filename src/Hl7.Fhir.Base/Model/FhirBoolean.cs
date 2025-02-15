@@ -31,18 +31,20 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
 public partial class FhirBoolean
 {
-    protected override Type ObjectValueType => typeof(bool);
-
-    /// <summary>
-    /// Checks whether the given literal is correctly formatted.
-    /// </summary>
-    public static bool IsValidValue(string value) => P.Boolean.TryParse(value, out _);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null or bool => null,
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Converts this FhirBoolean to a <see cref="P.Boolean" />.

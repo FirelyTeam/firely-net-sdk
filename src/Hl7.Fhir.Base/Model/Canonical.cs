@@ -30,6 +30,8 @@
 using P=Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Utility;
 using System;
+using System.ComponentModel.DataAnnotations;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
@@ -46,22 +48,19 @@ public partial class Canonical
         // nothing
     }
 
-    protected override Type ObjectValueType => typeof(string);
+    /// <summary>
+    /// Constructs a canonical from its components.
+    /// </summary>
+    public Canonical(string? uri, string? version, string? fragment = null)
+    {
+        if ((uri is not null) && uri.IndexOfAny(['|', '#']) != -1)
+            throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
 
-        /// <summary>
-        /// Constructs a canonical from its components.
-        /// </summary>
-        public Canonical(string? uri, string? version, string? fragment = null)
-        {
-            if ((uri is not null) && uri.IndexOfAny(['|', '#']) != -1)
-                throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
+        if ((version is not null) && version.IndexOfAny(['|', '#']) != -1)
+            throw Error.Argument(nameof(version), "cannot contain version/fragment data");
 
-            if ((version is not null) && version.IndexOfAny(['|', '#']) != -1)
-                throw Error.Argument(nameof(version), "cannot contain version/fragment data");
-
-            if ((fragment is not null) && fragment.IndexOfAny(['|', '#']) != -1)
-                throw Error.Argument(nameof(fragment), "already contains version/fragment data");
-
+        if ((fragment is not null) && fragment.IndexOfAny(['|', '#']) != -1)
+            throw Error.Argument(nameof(fragment), "already contains version/fragment data");
 
         Value = uri +
                 (version is not null ? "|" + version : null) +
@@ -89,6 +88,16 @@ public partial class Canonical
     /// </summary>
     /// <param name="value"></param>
     public static implicit operator string?(Canonical? value) => value?.Value;
+
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string unparsed when IsValidValue(unparsed) => null,
+            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
+
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.

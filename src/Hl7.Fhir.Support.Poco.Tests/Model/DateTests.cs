@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -90,9 +91,9 @@ namespace Hl7.Fhir.Tests.Model
         {
             var dft = new Date("T45:45:56");
 
-            Assert.ThrowsException<FormatException>(() => dft.ToDateTimeOffset());
+            Assert.ThrowsException<CodedValidationException>(() => dft.ToDateTimeOffset());
 
-            dft.TryToDateTimeOffset(out var _).Should().BeFalse();
+            dft.TryToDateTimeOffset(out _).Should().BeFalse();
         }
 
         [TestMethod]
