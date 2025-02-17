@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Threading.Tasks;
 
@@ -23,15 +24,25 @@ namespace Hl7.Fhir.Specification.Source
 
         public Task<Resource> ResolveByUriAsync(string uri)
         {
-            var result = SyncResolver.ResolveByUri(uri);
+            var result = SyncResolver.TryResolveByUri(uri).Value;
 
             return Task.FromResult(result);
         }
 
         public Task<Resource> ResolveByCanonicalUriAsync(string uri)
         {
-            var result = SyncResolver.ResolveByCanonicalUri(uri);
+            var result = SyncResolver.TryResolveByCanonicalUri(uri).Value;
             return Task.FromResult(result);
+        }
+
+        public Task<ResolverResult> TryResolveByUriAsync(string uri)
+        {
+            return Task.FromResult(SyncResolver.TryResolveByUri(uri));
+        }
+
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        {
+            return Task.FromResult(SyncResolver.TryResolveByCanonicalUri(uri));
         }
     }
 

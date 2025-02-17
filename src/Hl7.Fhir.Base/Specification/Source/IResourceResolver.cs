@@ -19,12 +19,43 @@ namespace Hl7.Fhir.Specification.Source
     {
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
+        [Obsolete("This does not provide information about the kind of error that lead to us returning null. Consider implementing TryResolveByUri instead.")]
         Resource ResolveByUri(string uri);
-
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        [Obsolete("This does not provide information about the kind of error that lead to us returning null. Consider implementing TryResolveByCanonicalUri instead.")]
         Resource ResolveByCanonicalUri(string uri);
+
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
+        ResolverResult TryResolveByUri(string uri)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var resource = this.ResolveByUri(uri); 
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (resource is not null) 
+                return resource;
+            
+            return ResolverException.NotFound();
+        }
+        
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
+        /// <param name="uri">A resource uri.</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
+        ResolverResult TryResolveByCanonicalUri(string uri)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var resource = this.ResolveByCanonicalUri(uri); 
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (resource is not null) 
+                return resource;
+            
+            return ResolverException.NotFound();
+        }
     }
 
 
@@ -34,12 +65,44 @@ namespace Hl7.Fhir.Specification.Source
     {
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
+        [Obsolete("This does not provide information about the kind of error that lead to us returning null. Consider implementing TryResolveByUriAsync instead.")]
         Task<Resource> ResolveByUriAsync(string uri);
 
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        [Obsolete("This does not provide information about the kind of error that lead to us returning null. Consider implementing TryResolveByCanonicalUriAsync instead.")]
         Task<Resource> ResolveByCanonicalUriAsync(string uri); // IConformanceResource
+
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
+        /// <param name="uri">A resource uri.</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
+        async Task<ResolverResult> TryResolveByUriAsync(string uri)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var resource = await this.ResolveByUriAsync(uri);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (resource is not null)
+                return resource;
+
+            return ResolverException.NotFound();
+        }
+
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
+        async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var resource = await this.ResolveByCanonicalUriAsync(uri); 
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (resource is not null) 
+                return resource;
+            
+            return ResolverException.NotFound();
+        }
     }
 
     /// <summary>

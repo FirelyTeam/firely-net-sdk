@@ -52,13 +52,22 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByUri(string uri)
         {
+            return TryResolveByUri(uri).Value;
+        }
+
+        public Resource ResolveByCanonicalUri(string uri)
+        {
+            return ResolveByUri(uri);
+        }
+
+        public ResolverResult TryResolveByUri(string uri)
+        {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             if (!ResourceIdentity.IsRestResourceIdentity(uri))
             {
-                // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
-                return null;
+                return new ResolverException("NOTVALIDARG", "Provided uri is not a valid resource identity URI");
             }
-
+            
             var id = new ResourceIdentity(uri);
             var client = _clientFactory?.Invoke(id.BaseUri)
                          ?? new FhirClient(id.BaseUri);
@@ -75,23 +84,21 @@ namespace Hl7.Fhir.Specification.Source
             catch (FhirOperationException foe)
             {
                 LastError = foe;
-                return null;
+                return new ResolverException("OPERATIONEXCEPTION", "Error occurred during Fhir operation", foe);
             }
             catch (WebException we)
             {
                 LastError = we;
-                return null;
+                return new ResolverException("OPERATIONEXCEPTION", "Error occurred during web operation", we);
             }
             // Other runtime exceptions are fatal...
         }
 
-        public Resource ResolveByCanonicalUri(string uri)
-        {
-            return ResolveByUri(uri);
-        }
-
+        public ResolverResult TryResolveByCanonicalUri(string uri) => TryResolveByUri(uri);
         public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
         public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

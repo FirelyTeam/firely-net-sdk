@@ -614,18 +614,48 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="uri">A resource uri.</param>
         public Resource ResolveByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByUri(uri);
-            return loadResourceInternal<Resource>(summary);
+            return TryResolveByUri(uri).Value;
         }
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
         public Resource ResolveByCanonicalUri(string uri)
         {
+            return TryResolveByCanonicalUri(uri).Value;
+        }
+
+        public ResolverResult TryResolveByUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            var summary = GetSummaries().ResolveByUri(uri);
+
+            if(summary is null)
+                return ResolverException.ArtifactSummaryNoMatch(uri);
+            
+            var resource = loadResourceInternal<Resource>(summary);
+
+            if (resource is null)
+                return ResolverException.NotFound();
+            
+            return resource;
+        }
+
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        public ResolverResult TryResolveByCanonicalUri(string uri)
+        {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri);
-            return loadResourceInternal<Resource>(summary);
+
+            if(summary is null)
+                return ResolverException.ArtifactSummaryNoMatch(uri);
+            
+            var resource = loadResourceInternal<Resource>(summary);
+
+            if (resource is null)
+                return ResolverException.NotFound();
+            
+            return resource;
         }
 
         #endregion
@@ -1007,6 +1037,9 @@ namespace Hl7.Fhir.Specification.Source
         public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
 
         public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
+
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         #endregion
 
