@@ -52,7 +52,7 @@ public class CodedValidationException : ExtendedCodedException
     internal static COVE INVALID_STRING_LENGTH(ValidationContext context, string name, string value) => Initialize(context, INVALID_STRING_LENGTH_CODE, (value.Length > 0 ? $"String {name} exceeds maximum length of 1MB." : $"String {name} is empty"), OO_Sev.Error, OO_Typ.Value);
     internal static COVE INVALID_BASE64_VALUE(ValidationContext? context, object? value) => Initialize(context, INVALID_BASE64_VALUE_CODE, $"Value '{value}' is not parseable as Base64 data.", OO_Sev.Error, OO_Typ.Value);
     internal static COVE INCORRECT_LITERAL_VALUE_TYPE(ValidationContext? context, object? value, string fhirTypeName) =>
-        Initialize(context, INCORRECT_LITERAL_VALUE_TYPE_CODE, $"{niceValue(value)} is not the right type of literal for a {fhirTypeName}.", OO_Sev.Warning, OO_Typ.Value);
+        Initialize(context, INCORRECT_LITERAL_VALUE_TYPE_CODE, $"{niceValue(value)} is not the right type of literal for a {fhirTypeName}.", OO_Sev.Error, OO_Typ.Value);
     internal static COVE LITERAL_INVALID(ValidationContext? context, object? value, string fhirTypeName) =>
         Initialize(context, LITERAL_INVALID_CODE, $"{niceValue(value)} is not a correct literal for a {fhirTypeName}.", OO_Sev.Error, OO_Typ.Value);
     internal static COVE POSITIVE_INT_MUST_BE_POSITIVE(ValidationContext? context, int value) =>
@@ -95,7 +95,7 @@ public class CodedValidationException : ExtendedCodedException
 
     internal static CodedValidationException Initialize(ValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
     {
-        var path = context?.GetLocationProducer();
+        var path = context?.GetLocation();
 
         if (path is not null)
         {

@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
         public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";
 
         //public const string INCORRECT_BASE64_DATA_CODE = "XML202";
-        public const string VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE = "XML203";
+        //public const string VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE = "XML203";
 
         // ==========================================
         // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE(XmlReader reader, string instancePath, string localName, string elementName, string namespaceURI) => Initialize(reader, instancePath, INCORRECT_ATTRIBUTE_NAMESPACE_CODE, $"The attribute '{localName}' in element '{elementName}' uses the namespace '{namespaceURI}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
 
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
-        internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Value);
+        //internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Value);
 
         // An incorrect order does not mean we cannot parse the data safely
         internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order ", OO_Sev.Error, OO_Typ.Structure);
@@ -94,7 +94,6 @@ namespace Hl7.Fhir.Serialization
             INCORRECT_ELEMENT_NAMESPACE_CODE,
             INCORRECT_XHTML_NAMESPACE_CODE,
             INCORRECT_ATTRIBUTE_NAMESPACE_CODE,
-            VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE,
             ELEMENT_OUT_OF_ORDER_CODE,
             ELEMENT_NOT_IN_SEQUENCE_CODE,
             ATTRIBUTE_HAS_EMPTY_VALUE_CODE,

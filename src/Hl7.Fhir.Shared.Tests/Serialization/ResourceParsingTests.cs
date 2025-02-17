@@ -6,9 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ConfigureFailOnUnknownMember()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
+            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
             var parser = new FhirXmlParser();
             parser.Settings.AllowUnrecognizedEnums = true;
             parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) =>
@@ -39,7 +41,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                var r2 = parser.Parse<Resource>(xml);
+                parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
             catch (StructuralTypeException ste)
@@ -244,7 +246,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Now, allow unknown enums and check support
             pser.Settings.AllowUnrecognizedEnums = true;
             p = await pser.ParseAsync<Patient>(xml2);
-            Assert.ThrowsException<InvalidCastException>(() => p.Gender);
+            Assert.ThrowsException<CodedValidationException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 

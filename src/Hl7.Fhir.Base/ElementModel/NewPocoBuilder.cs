@@ -289,7 +289,8 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         }
         catch (InvalidCastException)
         {
-            throw Error.InvalidOperation($"Cannot assign data of type {convertedValue.GetType()} to to property '{node.Name}'.");
+            var typeString = convertedValue is IDynamicType it ? it.DynamicTypeName : convertedValue.GetType().Name;
+            throw Error.InvalidOperation($"Cannot assign data of type {typeString} to property '{node.Name}'.");
         }
     }
 

@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.gender", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("PVAL116", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INVALID_CODED_VALUE_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -89,15 +89,15 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Observation", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON120", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.OBJECTS_CANNOT_BE_EMPTY_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.status", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("PVAL105", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.code", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[2].Details.Coding[0].Code);
 
                 Assert.AreEqual(3, oc.Issue.Count);
             }
@@ -145,20 +145,20 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Observation.contained[0].birthDate", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.contained[0].gender", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INVALID_CODED_VALUE_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.status", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[2].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[2].Details.Text.Contains("status"));
 
                 Assert.AreEqual("Observation.code", oc.Issue[3].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
-                Assert.AreEqual("PVAL105", oc.Issue[3].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[3].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[3].Details.Text.Contains("code"));
 
                 Assert.AreEqual(4, oc.Issue.Count);
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.birthDate", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.birthDate", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -277,11 +277,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON118", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.UNKNOWN_PROPERTY_FOUND_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("JSON118", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.UNKNOWN_PROPERTY_FOUND_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -380,12 +380,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Observation.component[5].value.value", oc.Issue[0].Expression.First());
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 
                 Assert.AreEqual("Observation.component[6].value.value", oc.Issue[1].Expression.First());
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -425,8 +425,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -466,8 +466,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -522,16 +522,16 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Observation.component[0].value.value", oc.Issue[0].Expression.First());
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 
                 Assert.AreEqual("Observation.component[1].value.value", oc.Issue[1].Expression.First());
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
 
                 Assert.AreEqual("Observation.status", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL116", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INVALID_CODED_VALUE_CODE, oc.Issue[2].Details.Coding[0].Code);
 
                 Assert.AreEqual(3, oc.Issue.Count);
             }
@@ -573,8 +573,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Patient.birthDate.id", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual(CodedValidationException.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -614,8 +614,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON111", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(FhirJsonException.EXPECTED_START_OF_ARRAY_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON101", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.EXPECTED_START_OF_OBJECT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -702,7 +702,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.name[2]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON128", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.DUPLICATE_ARRAY_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.name[0].given[2]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
-                Assert.AreEqual("JSON128", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.DUPLICATE_ARRAY_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(3, oc.Issue.Count);
             }
@@ -781,16 +781,16 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("JSON101", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirJsonException.EXPECTED_START_OF_OBJECT_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
                 Assert.AreEqual("Patient.name[0].given[1].extension[1]", oc.Issue[0].Expression.First());
 
-                Assert.AreEqual("PVAL105", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[1].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[1].Expression.First());
 
-                Assert.AreEqual("PVAL123", oc.Issue[2].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[2].Severity);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[2].Expression.First());
 
                 Assert.AreEqual(3, oc.Issue.Count);
@@ -1038,15 +1038,15 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Bundle.entry[0].resource.gender", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("PVAL116", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.INVALID_CODED_VALUE_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Bundle.entry[1].resource.birthDate", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual("Bundle.entry[2].resource.birthDate", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[2].Details.Coding[0].Code);
 
                 Assert.AreEqual(12, oc.Issue.Count);
             }

@@ -54,7 +54,10 @@ public static class DotNetAttributeValidation
 
     internal static ValidationContext IntoPath(this ValidationContext ctx, Base poco, string nestedElementName)
     {
-        var location = ctx.GetLocationProducer();
+        // TODO: this will still trigger production of the location, so wasting time.
+        // need to defer this here too, but have to check first what that means for the PathStack,
+        // which keeps being updated in the face of delayed validations.
+        var location = ctx.GetLocation();
 
         var newContext = new ValidationContext(poco, ctx.Items);
 

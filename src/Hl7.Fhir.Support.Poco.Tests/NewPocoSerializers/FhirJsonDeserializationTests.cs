@@ -254,10 +254,10 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    // [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
     [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
     public void TestData(Type t, object testObject, JsonTokenType token, Action<object?>? verify,
         params string[] expectedErrors)

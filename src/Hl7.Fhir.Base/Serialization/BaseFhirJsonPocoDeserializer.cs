@@ -274,7 +274,6 @@ public class BaseFhirJsonPocoDeserializer
 
                 // try to recover by skipping to the next property.
                 reader.SkipTo(JsonTokenType.PropertyName);
-                continue;
             }
             else
             {
