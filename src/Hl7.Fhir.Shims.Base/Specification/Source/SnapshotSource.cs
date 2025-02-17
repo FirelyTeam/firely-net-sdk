@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     await Generator.UpdateAsync(sd).ConfigureAwait(false);
                     
-                    if(!Generator.Outcome.Success)
+                    if(Generator.Outcome?.Success is false)
                     {
                         return ResolverException.SnapshotOutcome(Generator.Outcome);
                     }
