@@ -32,8 +32,8 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Default expiration time for cached entries.</summary>
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
 
-        private readonly Cache<ResolverResult> _resourcesByUri;
-        private readonly Cache<ResolverResult> _resourcesByCanonical;
+        private readonly ResolverCache _resourcesByUri;
+        private readonly ResolverCache _resourcesByCanonical;
 
         /// <summary>Creates a new artifact resolver that caches loaded resources in memory.</summary>
         /// <param name="source">Resolver from which artifacts are initially resolved on a cache miss.</param>
@@ -228,15 +228,15 @@ namespace Hl7.Fhir.Specification.Source
         internal protected virtual string DebuggerDisplay
             => $"{GetType().Name} for {AsyncResolver.DebuggerDisplayString()}";
 
-        private class Cache<T>
+        private class ResolverCache
         {
-            readonly Func<string, Task<T>> _onCacheMiss;
+            readonly Func<string, Task<ResolverResult>> _onCacheMiss;
             readonly int _duration;
 
             readonly Object _getLock = new Object();
-            readonly Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
+            readonly Dictionary<string, CacheEntry<ResolverResult>> _cache = new Dictionary<string, CacheEntry<ResolverResult>>();
 
-            public Cache(Func<string, Task<T>> onCacheMiss, int duration)
+            public ResolverCache(Func<string, Task<ResolverResult>> onCacheMiss, int duration)
             {
                 _onCacheMiss = onCacheMiss;
                 _duration = duration;
@@ -244,16 +244,16 @@ namespace Hl7.Fhir.Specification.Source
 
 
             public bool Contains(string identifier) =>
-                _cache.TryGetValue(identifier, out var entry) && !entry.IsExpired && entry.Data != null;
+                _cache.TryGetValue(identifier, out var entry) && !entry.IsExpired && entry.Data.Success;
 
-            public async Task<T> Get(string identifier, CachedResolverLoadingStrategy strategy)
+            public async Task<ResolverResult> Get(string identifier, CachedResolverLoadingStrategy strategy)
             {
                 lock (_getLock)
                 {
                     // Check the cache
                     if (strategy != CachedResolverLoadingStrategy.LoadFromSource)
                     {
-                        if (_cache.TryGetValue(identifier, out CacheEntry<T> entry))
+                        if (_cache.TryGetValue(identifier, out CacheEntry<ResolverResult> entry))
                         {
                             // If we still have a fresh entry, return it
                             if (!entry.IsExpired)
@@ -271,14 +271,14 @@ namespace Hl7.Fhir.Specification.Source
                 if (strategy != CachedResolverLoadingStrategy.LoadFromCache)
                 {
                     // Otherwise, fetch it and cache it.
-                    T newData = await _onCacheMiss(identifier).ConfigureAwait(false);
+                    ResolverResult newData = await _onCacheMiss(identifier).ConfigureAwait(false);
 
                     lock (_getLock)
                     {
                         // finally double check whether some other thread has not created and added it by now, 
                         // since we had to release the lock to run the async onCacheMiss.
                         if (strategy != CachedResolverLoadingStrategy.LoadFromSource &&
-                            _cache.TryGetValue(identifier, out CacheEntry<T> existingEntry))
+                            _cache.TryGetValue(identifier, out CacheEntry<ResolverResult> existingEntry))
                             return existingEntry.Data;
                         else
                         {
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Specification.Source
                             // Note that an entry is created, even if the newData is null. 
                             // This ensures we don't keep trying to fetch the same url over and over again,
                             // even if the source cannot resolve it.
-                            _cache[identifier] = new CacheEntry<T>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
+                            _cache[identifier] = new CacheEntry<ResolverResult>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
                             return newData;
                         }
                     }

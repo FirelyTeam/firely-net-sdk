@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Specification.Tests
                 return await Tasks.Task.FromResult(uri == _myOnlyVS.Url ? _myOnlyVS : null);
             }
 
-            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _myOnlyVS.Url ? _myOnlyVS : null);
+            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _myOnlyVS.Url ? _myOnlyVS : ResolverException.NotFound());
             
             public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
@@ -1028,7 +1028,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
-            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _onlyCs.Url ? _onlyCs : null);
+            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _onlyCs.Url ? _onlyCs : ResolverException.NotFound());
 
             public Resource ResolveByUri(string uri) => throw new NotImplementedException();
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
