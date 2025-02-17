@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByUriAsync(string url)
         {
-            var result = await TryResolveByUriAsync(url);
+            var result = await TryResolveByUriAsync(url).ConfigureAwait(false);
             return result.Value;
         }
 
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy)
         {
-            var result = await TryResolveByUriAsync(url, strategy);
+            var result = await TryResolveByUriAsync(url, strategy).ConfigureAwait(false);
             return result.Value;
         }
         
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByCanonicalUriAsync(string url)
         {
-            var result = await TryResolveByCanonicalUriAsync(url);
+            var result = await TryResolveByCanonicalUriAsync(url).ConfigureAwait(false);
             return result.Value;
         }
 

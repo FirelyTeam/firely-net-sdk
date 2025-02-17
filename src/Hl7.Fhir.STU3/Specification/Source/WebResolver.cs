@@ -64,9 +64,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             if (!ResourceIdentity.IsRestResourceIdentity(uri))
-            {
-                return new ResolverException("NOTVALIDARG", "Provided uri is not a valid resource identity URI");
-            }
+                return ResolverException.NotValidResourceIdentity(uri);
             
             var id = new ResourceIdentity(uri);
             var client = _clientFactory?.Invoke(id.BaseUri)
@@ -84,12 +82,12 @@ namespace Hl7.Fhir.Specification.Source
             catch (FhirOperationException foe)
             {
                 LastError = foe;
-                return new ResolverException("OPERATIONEXCEPTION", "Error occurred during Fhir operation", foe);
+                return ResolverException.OperationFailed("Error occurred during Fhir operation", foe);
             }
             catch (WebException we)
             {
                 LastError = we;
-                return new ResolverException("OPERATIONEXCEPTION", "Error occurred during web operation", we);
+                return ResolverException.OperationFailed("Error occurred during web operation", we);
             }
             // Other runtime exceptions are fatal...
         }

@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Source
         async Task<ResolverResult> TryResolveByUriAsync(string uri)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            var resource = await this.ResolveByUriAsync(uri);
+            var resource = await this.ResolveByUriAsync(uri).ConfigureAwait(false);
 #pragma warning restore CS0618 // Type or member is obsolete
 
             if (resource is not null)
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Specification.Source
         async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            var resource = await this.ResolveByCanonicalUriAsync(uri); 
+            var resource = await this.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false); 
 #pragma warning restore CS0618 // Type or member is obsolete
 
             if (resource is not null) 

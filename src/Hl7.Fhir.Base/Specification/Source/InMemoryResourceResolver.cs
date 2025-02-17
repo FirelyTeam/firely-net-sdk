@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Specification.Source
             if (resource is not null)
                 return resource;
             
-            return new ResolverException("NOTFOUND", $"No resource matching the {nameof(uri)} found");
+            return ResolverException.NotFound();
         }
 
         public ResolverResult TryResolveByCanonicalUri(string uri)
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Specification.Source
             if (resource is not null)
                 return resource;
 
-            return new ResolverException("NOTFOUND", $"No resource matching the {nameof(uri)} found");
+            return ResolverException.NotFound();
         }
 
         ///<inheritdoc/>
