@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 pser.Settings.AllowUnrecognizedEnums = false;
-                p = await pser.ParseAsync<Patient>(xml2);
+                await pser.ParseAsync<Patient>(xml2);
                 Assert.Fail();
             }
             catch (FormatException)
