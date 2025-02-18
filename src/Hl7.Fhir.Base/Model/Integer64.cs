@@ -30,12 +30,12 @@
 
 #nullable enable
 
-using Hl7.Fhir.Validation;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Runtime.Serialization;
 using System.Xml;
 using P = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
@@ -44,6 +44,27 @@ namespace Hl7.Fhir.Model;
 
 public partial class Integer64
 {
+    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(P.Long))]
+    [DataMember]
+    public long? Value
+    {
+        get
+        {
+            if (ValidateObjectValue(null) is {} error)
+                throw error;
+
+            return _parsedValue;
+        }
+
+        set
+        {
+            _parsedValue = value;
+            base.ObjectValue = null;
+            OnPropertyChanged("Value");
+        }
+    }
+
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private long? _parsedValue = null;
 
@@ -84,23 +105,7 @@ public partial class Integer64
         }
     }
 
-    public partial long? Value
-    {
-        get
-        {
-            if (ValidateObjectValue(null) is {} error)
-                throw error;
 
-            return _parsedValue;
-        }
-
-        set
-        {
-            _parsedValue = value;
-            base.ObjectValue = null;
-            OnPropertyChanged("Value");
-        }
-    }
 
     /// <summary>
     /// Converts an Insteger64 to a <see cref="P.Long"/>.

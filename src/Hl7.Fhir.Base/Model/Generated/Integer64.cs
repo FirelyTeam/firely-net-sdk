@@ -68,14 +68,6 @@ namespace Hl7.Fhir.Model
 
     public Integer64(): this((long?)null) {}
 
-    /// <summary>
-    /// Primitive value of the element
-    /// </summary>
-    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.Long))]
-    [DataMember]
-    public partial long? Value { get; set; }
-
     protected internal override Base DeepCopyInternal()
     {
       var instance = new Integer64();

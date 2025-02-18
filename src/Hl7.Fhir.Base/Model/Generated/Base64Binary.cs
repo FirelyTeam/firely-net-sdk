@@ -68,14 +68,6 @@ namespace Hl7.Fhir.Model
 
     public Base64Binary(): this((byte[])null) {}
 
-    /// <summary>
-    /// Primitive value of the element
-    /// </summary>
-    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
-    [DataMember]
-    public partial byte[] Value { get; set; }
-
     protected internal override Base DeepCopyInternal()
     {
       var instance = new Base64Binary();

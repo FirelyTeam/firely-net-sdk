@@ -29,9 +29,12 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using P = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
@@ -39,6 +42,28 @@ namespace Hl7.Fhir.Model;
 
 public partial class Instant
 {
+    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(P.DateTime))]
+    [DataMember]
+    public DateTimeOffset? Value
+    {
+        get
+        {
+            if (ValidateObjectValue(null) is {} error)
+                throw error;
+
+            return _parsedValue?.ToDateTimeOffset(TimeSpan.Zero);
+        }
+
+        set
+        {
+            _parsedValue = value is null ? null : P.DateTime.FromDateTimeOffset(value.Value);
+            base.ObjectValue = null;
+            OnPropertyChanged("Value");
+        }
+    }
+
+
     public static Instant FromLocalDateTime(int year, int month, int day,
         int hour, int min, int sec, int millis = 0) =>
         new(new DateTimeOffset(year, month, day, hour, min, sec, millis, DateTimeOffset.Now.Offset));
@@ -91,24 +116,6 @@ public partial class Instant
         {
             base.ObjectValue = value;
             _parsedValue = null;
-        }
-    }
-
-    public partial DateTimeOffset? Value
-    {
-        get
-        {
-            if (ValidateObjectValue(null) is {} error)
-                throw error;
-
-            return _parsedValue?.ToDateTimeOffset(TimeSpan.Zero);
-        }
-
-        set
-        {
-            _parsedValue = value is null ? null : P.DateTime.FromDateTimeOffset(value.Value);
-            base.ObjectValue = null;
-            OnPropertyChanged("Value");
         }
     }
 

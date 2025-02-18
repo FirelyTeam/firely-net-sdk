@@ -33,7 +33,7 @@
 
 	<!-- Compiler settings -->
 	<PropertyGroup>
-		<LangVersion>13.0</LangVersion>
+		<LangVersion>12.0</LangVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
 		<EnablePackageValidation>true</EnablePackageValidation>
