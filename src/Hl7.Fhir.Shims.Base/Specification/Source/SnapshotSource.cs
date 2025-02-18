@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Specification.Source
                     
                     if(Generator.Outcome?.Success is false)
                     {
-                        return ResolverException.SnapshotOutcome(Generator.Outcome);
+                        return new ResolverResult(sd, ResolverException.SnapshotOutcome(Generator.Outcome));
                     }
                 }
             }

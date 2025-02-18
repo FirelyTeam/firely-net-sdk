@@ -34,7 +34,15 @@ public readonly record struct ResolverResult
         Error = error;
         Value = null;
     }
-        
+    
+#if NET8_0_OR_GREATER
+    [SetsRequiredMembers]
+#endif
+    public ResolverResult(Resource value, ResolverException error) : this(value)
+    {
+        Error = error;
+    }
+    
     public static implicit operator bool(ResolverResult result) => result.Success;
 
     public static implicit operator ResolverResult(Resource value) => new(value);
