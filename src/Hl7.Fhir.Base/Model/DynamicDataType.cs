@@ -44,7 +44,7 @@ public class DynamicDataType : DataType, IDynamicType
 /// </summary>
 [Serializable]
 [DataContract]
-[FhirType("DynamicDataType","http://fire.ly/fhir/StructureDefinition/DynamicResource")]
+[FhirType("DynamicResource","http://fire.ly/fhir/StructureDefinition/DynamicResource")]
 public class DynamicResource : Resource, IDynamicType
 {
     public string? DynamicTypeName { get; set; }

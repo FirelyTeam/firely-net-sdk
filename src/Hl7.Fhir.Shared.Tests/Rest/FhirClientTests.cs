@@ -71,12 +71,14 @@ namespace Hl7.Fhir.Tests.Rest
         public static void ClassInitialize(TestContext testContext)
         {
             // Ignore SSL certificate errors
+            // EK: Does not work in .NET9 anymore, but I have no time to find a replacement.
+#pragma warning disable SYSLIB0014
             ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-               | SecurityProtocolType.Tls12
-               | SecurityProtocolType.Tls11
-               | SecurityProtocolType.Tls13;
-
+                                                   | SecurityProtocolType.Tls12
+                                                   | SecurityProtocolType.Tls11
+                                                   | SecurityProtocolType.Tls13;
+#pragma warning restore SYSLIB0014
             CreateItems();
         }
 

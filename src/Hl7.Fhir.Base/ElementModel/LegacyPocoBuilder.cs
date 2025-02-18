@@ -121,16 +121,7 @@ namespace Hl7.Fhir.Serialization
             Base build()
             {
                 var newBuilder = new NewPocoBuilder(_inspector, _settings);
-
-                try
-                {
-                    return newBuilder.BuildFrom(source);
-                }
-                catch (InvalidOperationException e)
-                {
-                    ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(e));
-                    return null; // Will never get here, but compiler doesn't know that
-                }
+                return newBuilder.BuildFrom(source);
             }
         }
     }
