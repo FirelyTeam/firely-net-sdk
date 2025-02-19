@@ -8,6 +8,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 /*
   Copyright (c) 2011+, HL7, Inc.

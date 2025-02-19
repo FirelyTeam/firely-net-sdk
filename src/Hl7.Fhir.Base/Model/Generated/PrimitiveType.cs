@@ -74,11 +74,7 @@ namespace Hl7.Fhir.Model
 
       if(!base.CompareChildren(otherT, comparer)) return false;
 
-      var otherValue = otherT.ObjectValue;
-      if (ObjectValue is byte[] bytes && otherValue is byte[] bytesOther)
-        return Enumerable.SequenceEqual(bytes, bytesOther);
-      else
-        return Equals(ObjectValue, otherT.ObjectValue);
+      return Equals(ObjectValue, otherT.ObjectValue);
 
     }
 

@@ -65,32 +65,42 @@ public partial class Base64Binary
         }
     }
 
-    /// <summary>
-    /// Constructs a Base64Binary instance from a string of base64-encoded data.
-    /// </summary>
-    public static Base64Binary FromBase64String(string base64Data) =>
-        new() { ObjectValue = base64Data };
+    public override object? ObjectValue
+    {
+        get
+        {
+            if (_parsedValue is not null && base.ObjectValue is null)
+            {
+                base.ObjectValue = Convert.ToBase64String(_parsedValue);
+                _parsedValue = null;    // Clear the parsed value to free up memory
+            }
 
-    /// <summary>
-    /// Constructs a Base64Binary instance from a string of human-readable text.
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static Base64Binary FromText(string text) =>
-        new(System.Text.Encoding.UTF8.GetBytes(text));
+            return base.ObjectValue;
+        }
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
+    }
 
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private byte[]? _parsedValue = null;
 
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
-        if (_parsedValue is not null || ObjectValue is null) return null;
+        if (_parsedValue is not null || base.ObjectValue is null) return null;
         _parsedValue = null;
 
-        if (ObjectValue is not string unparsed)
+        if (base.ObjectValue is not string unparsed)
             return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
+
+        // Clear the string value to free up memory if we have successfully parsed the value.
+        if(_parsedValue is not null)
+            base.ObjectValue = null;
+
         return _parsedValue is null ? COVE.INVALID_BASE64_VALUE(context, unparsed) : null;
     }
 
@@ -111,21 +121,21 @@ public partial class Base64Binary
     /// </summary>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
-    public override object? ObjectValue
-    {
-        get
-        {
-            if (_parsedValue is not null && base.ObjectValue is null)
-                base.ObjectValue = Convert.ToBase64String(_parsedValue);
 
-            return base.ObjectValue;
-        }
-        set
-        {
-            base.ObjectValue = value;
-            _parsedValue = null;
-        }
-    }
+    /// <summary>
+    /// Constructs a Base64Binary instance from a string of base64-encoded data.
+    /// </summary>
+    public static Base64Binary FromBase64String(string base64Data) =>
+        new() { ObjectValue = base64Data };
+
+    /// <summary>
+    /// Constructs a Base64Binary instance from a string of human-readable text.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static Base64Binary FromText(string text) =>
+        new(System.Text.Encoding.UTF8.GetBytes(text));
+
 
     /// <summary>
     /// Converts this binary to a Base64-encoded <see cref="P.String" />.

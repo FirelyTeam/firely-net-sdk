@@ -73,15 +73,15 @@ public partial class Date
 
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
-        if (_parsedValue is not null || ObjectValue is null) return null;
+        if (_parsedValue is not null || base.ObjectValue is null) return null;
 
         _parsedValue = null;
 
-        if (ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
+        if (base.ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, ObjectValue, this.TypeName) : null;
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.ObjectValue, this.TypeName) : null;
     }
 
     private static P.Date? doParse(string value) =>

@@ -110,12 +110,12 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
-        if (_parsedValue is not null || ObjectValue is null) return null;
+        if (_parsedValue is not null || base.ObjectValue is null) return null;
 
         _parsedValue = null;
 
-        if (ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
+        if (base.ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
         return _parsedValue is null ? COVE.INVALID_CODED_VALUE(context, unparsed, EnumUtility.GetName<T>()) : null;

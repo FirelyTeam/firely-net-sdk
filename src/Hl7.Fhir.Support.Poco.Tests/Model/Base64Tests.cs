@@ -41,7 +41,11 @@ public class Base64Tests
         Encoding.UTF8.GetString(c.Value).Should().Be("Hi!");
 
         // Value gets recomputed when we change it.
+        // Since base64binary will only keep the parsed value or the original value,
+        // try to see if both remain in sync.
         c.ObjectValue = "dGhlcmU=";
+        Encoding.UTF8.GetString(c.Value).Should().Be("there");
+        c.ObjectValue.Should().Be("dGhlcmU=");
         Encoding.UTF8.GetString(c.Value).Should().Be("there");
 
         c.ObjectValue = null;
