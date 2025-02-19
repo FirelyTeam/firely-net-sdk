@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel;
 
-public static partial class VersionedConversionExtensions
+public static partial class TypedElementExtensions
 {
     public static IEnumerable<ITypedElement> Children(this IEnumerable<ITypedElement> nodes, string? name = null) =>
             nodes.SelectMany(n => n.Children(name));

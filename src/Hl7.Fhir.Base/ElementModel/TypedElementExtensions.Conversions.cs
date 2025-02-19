@@ -16,7 +16,7 @@ namespace Hl7.Fhir.ElementModel;
 
 #nullable enable
 
-public static partial class VersionedConversionExtensions
+public static partial class TypedElementExtensions
 {
     public static ScopedNode ToScopedNode(this ITypedElement node) =>
         node as ScopedNode ?? new ScopedNode(node);

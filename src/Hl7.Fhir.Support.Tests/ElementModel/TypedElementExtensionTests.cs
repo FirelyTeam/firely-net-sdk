@@ -32,7 +32,7 @@ namespace Hl7.Fhir.ElementModel
         public void ValueEqualityTest(object left, object right, bool result)
         {
             // Act
-            VersionedConversionExtensions.ValueEquality(left, right).Should().Be(result);
+            TypedElementExtensions.ValueEquality(left, right).Should().Be(result);
         }
 
         private static IEnumerable<object[]> getEqualityData()
