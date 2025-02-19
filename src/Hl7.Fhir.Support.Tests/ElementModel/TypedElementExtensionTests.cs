@@ -7,7 +7,7 @@ using EM= Hl7.Fhir.ElementModel.Types;
 namespace Hl7.Fhir.ElementModel
 {
     [TestClass]
-    public class TypedElementExtensionsTests
+    public class VersionedConversionExtensionsTests
     {
         private readonly IStructureDefinitionSummaryProvider _provider = new NoTypeProvider();
 
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.ElementModel
         public void ValueEqualityTest(object left, object right, bool result)
         {
             // Act
-            TypedElementExtensions.ValueEquality(left, right).Should().Be(result);
+            VersionedConversionExtensions.ValueEquality(left, right).Should().Be(result);
         }
 
         private static IEnumerable<object[]> getEqualityData()

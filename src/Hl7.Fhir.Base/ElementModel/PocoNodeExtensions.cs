@@ -1,6 +1,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -288,4 +289,16 @@ public static class PocoNodeExtensions
     }
     
     internal static ModelInspector? FindInspector(this PocoNode node) => ((IAnnotated)node).Annotation<ModelInspector>() ?? node.Parent?.SingleOrDefault()?.FindInspector();
+    
+    internal static string SerializeToString(this PocoNode pn, bool pretty)
+    {
+        var serializer = new BaseFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType()));
+
+        // If we are serializing a subtree of a resource, then if the current node is a datatype or a nested resource,
+        // we need to pick a name for this root element.
+        var pickElementName = pn.Poco is not Resource || pn.Parent is not null;
+        var rootName = pickElementName ? pn.Name : null;
+
+        return serializer.SerializeToString(pn.Poco, pretty, rootName: rootName);
+    }
 }
