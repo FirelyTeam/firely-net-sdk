@@ -59,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
 
             // this check seems weird, but PocoElementNode both implements PocoNode and IEnumerable<PocoNode> for the sake of backwards compatibility
             bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>)) && !from.CanBeTreatedAsType(typeof(PocoNode));
-            if (to == typeof(P.Quantity) && from.CanBeTreatedAsType(typeof(PocoNode))) return tryQuantity;
+            if (to.CanBeTreatedAsType(typeof(P.Any)) && from.CanBeTreatedAsType(typeof(PocoNode))) return tryQuantity;
             if (to == typeof(PocoNode) && !fromElemList) return any2primitiveTypedElement;
             if (to == typeof(IEnumerable<PocoNode>)) return any2SingleItemList;
 
