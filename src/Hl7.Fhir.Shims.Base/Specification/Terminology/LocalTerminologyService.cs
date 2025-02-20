@@ -137,7 +137,7 @@ public class LocalTerminologyService : ITerminologyService
         {
             // Unprocessable entity
             throw new FhirOperationException(
-                $"Operation {operation} failed: creating the required expansion failed mith message \"{e.Message}\".",
+                $"Operation {operation} failed: creating the required expansion failed with message \"{e.Message}\".",
                 (HttpStatusCode)422);
         }
 
