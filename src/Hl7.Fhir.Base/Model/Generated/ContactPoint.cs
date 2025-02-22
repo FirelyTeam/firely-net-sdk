@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -158,13 +161,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("ContactPointSystem")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> SystemElement
+    public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>? SystemElement
     {
       get { return _SystemElement; }
       set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> _SystemElement;
+    private Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>? _SystemElement;
 
     /// <summary>
     /// phone | fax | email | pager | url | sms | other
@@ -186,20 +189,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("value", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ValueElement
+    public Hl7.Fhir.Model.FhirString? ValueElement
     {
       get { return _ValueElement; }
       set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ValueElement;
+    private Hl7.Fhir.Model.FhirString? _ValueElement;
 
     /// <summary>
     /// The actual contact point details
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Value
+    public string? Value
     {
       get => _ValueElement?.Value;
       set
@@ -216,13 +219,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("ContactPointUse")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse> UseElement
+    public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>? UseElement
     {
       get { return _UseElement; }
       set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse> _UseElement;
+    private Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>? _UseElement;
 
     /// <summary>
     /// home | work | temp | old | mobile - purpose of this contact point
@@ -244,13 +247,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("rank", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt RankElement
+    public Hl7.Fhir.Model.PositiveInt? RankElement
     {
       get { return _RankElement; }
       set { _RankElement = value; OnPropertyChanged("RankElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _RankElement;
+    private Hl7.Fhir.Model.PositiveInt? _RankElement;
 
     /// <summary>
     /// Specify preferred order of use (1 = highest)
@@ -272,13 +275,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -305,16 +308,17 @@ namespace Hl7.Fhir.Model
       if(other is not ContactPoint otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
       if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
       if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
       if(!comparer.Equals(_RankElement, otherT._RankElement)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -339,24 +343,24 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "system":
-          SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>)value;
+          SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>?)value;
           return this;
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirString)value;
+          ValueElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>)value;
+          UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>?)value;
           return this;
         case "rank":
-          RankElement = (Hl7.Fhir.Model.PositiveInt)value;
+          RankElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);

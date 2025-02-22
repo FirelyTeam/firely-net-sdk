@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,13 +69,13 @@ namespace Hl7.Fhir.Model
     [Binding("UsageContextType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Coding Code
+    public Hl7.Fhir.Model.Coding? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.Coding _Code;
+    private Hl7.Fhir.Model.Coding? _Code;
 
     /// <summary>
     /// Value that defines the context.
@@ -84,13 +87,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Value
+    public Hl7.Fhir.Model.DataType? Value
     {
       get { return _Value; }
       set { _Value = value; OnPropertyChanged("Value"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Value;
+    private Hl7.Fhir.Model.DataType? _Value;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -114,13 +117,14 @@ namespace Hl7.Fhir.Model
       if(other is not UsageContext otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Code, otherT._Code)) return false;
       if(!comparer.Equals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -136,15 +140,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "code":
-          Code = (Hl7.Fhir.Model.Coding)value;
+          Code = (Hl7.Fhir.Model.Coding?)value;
           return this;
         case "value":
-          Value = (Hl7.Fhir.Model.DataType)value;
+          Value = (Hl7.Fhir.Model.DataType?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -82,20 +85,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Name from the definition
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
         get => _NameElement?.Value;
         set
@@ -110,13 +113,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       /// <summary>
       /// If parameter is a whole resource.
@@ -125,13 +128,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
-      public Hl7.Fhir.Model.Resource Resource
+      public Hl7.Fhir.Model.Resource? Resource
       {
         get { return _Resource; }
         set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
-      private Hl7.Fhir.Model.Resource _Resource;
+      private Hl7.Fhir.Model.Resource? _Resource;
 
       /// <summary>
       /// Named part of a multi-part parameter.
@@ -145,7 +148,7 @@ namespace Hl7.Fhir.Model
         set { _Part = value; OnPropertyChanged("Part"); }
       }
 
-      private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Part;
+      private List<Hl7.Fhir.Model.Parameters.ParameterComponent>? _Part;
 
       protected internal override void CopyToInternal(Base other)
       {
@@ -171,15 +174,16 @@ namespace Hl7.Fhir.Model
         if(other is not ParameterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
         if(!comparer.Equals(_Value, otherT._Value)) return false;
         if(!comparer.Equals(_Resource, otherT._Resource)) return false;
         if(!comparer.ListEquals(_Part, otherT._Part)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -201,21 +205,21 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "resource":
-            Resource = (Hl7.Fhir.Model.Resource)value;
+            Resource = (Hl7.Fhir.Model.Resource?)value;
             return this;
           case "part":
-            Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>)value;
+            Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -246,7 +250,7 @@ namespace Hl7.Fhir.Model
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 
-    private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
+    private List<Hl7.Fhir.Model.Parameters.ParameterComponent>? _Parameter;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -269,12 +273,13 @@ namespace Hl7.Fhir.Model
       if(other is not Parameters otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -287,12 +292,12 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "parameter":
-          Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>)value;
+          Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

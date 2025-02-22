@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -67,24 +70,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this body site record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this body site record is in active use
@@ -93,13 +96,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -110,13 +110,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
     [Binding("BodySite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Modification to location code.
@@ -127,39 +127,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
     {
-      get { if(_Qualifier==null) _Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Qualifier; }
+      get => _Qualifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Qualifier = value; OnPropertyChanged("Qualifier"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Qualifier;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Qualifier;
 
     /// <summary>
     /// Anatomical location description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Anatomical location description
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -172,11 +169,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.Attachment>(); return _Image; }
+      get => _Image ?? new List<Hl7.Fhir.Model.Attachment>();
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 
-    private List<Hl7.Fhir.Model.Attachment> _Image;
+    private List<Hl7.Fhir.Model.Attachment>? _Image;
 
     /// <summary>
     /// Who this is about.
@@ -186,33 +183,29 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as BodySite;
-
-      if (dest == null)
-      {
+      if(other is not BodySite dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(Qualifier.Any()) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopyInternal());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopyInternal());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_Qualifier is not null) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(_Qualifier.DeepCopyInternal());
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_Image is not null) dest.Image = new List<Hl7.Fhir.Model.Attachment>(_Image.DeepCopyInternal());
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -224,76 +217,76 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as BodySite;
-      if(otherT == null) return false;
+      if(other is not BodySite otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.ListEquals(Qualifier, otherT.Qualifier)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Image, otherT.Image)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.ListEquals(_Qualifier, otherT._Qualifier)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Image, otherT._Image)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "qualifier":
-          value = Qualifier;
-          return Qualifier?.Any() == true;
+          value = _Qualifier;
+          return _Qualifier?.Any() == true;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "image":
-          value = Image;
-          return Image?.Any() == true;
+          value = _Image;
+          return _Image?.Any() == true;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "qualifier":
-          Qualifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Qualifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "image":
-          Image = (List<Hl7.Fhir.Model.Attachment>)value;
+          Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -304,13 +297,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",Qualifier);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",_Qualifier);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Image?.Any() == true) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
     }
 
   }

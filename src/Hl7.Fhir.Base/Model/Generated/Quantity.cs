@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -105,13 +108,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal ValueElement
+    public Hl7.Fhir.Model.FhirDecimal? ValueElement
     {
       get { return _ValueElement; }
       set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal _ValueElement;
+    private Hl7.Fhir.Model.FhirDecimal? _ValueElement;
 
     /// <summary>
     /// Numerical value (with implicit precision)
@@ -135,13 +138,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("QuantityComparator")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
+    public Code<Hl7.Fhir.Model.Quantity.QuantityComparator>? ComparatorElement
     {
       get { return _ComparatorElement; }
       set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Quantity.QuantityComparator> _ComparatorElement;
+    private Code<Hl7.Fhir.Model.Quantity.QuantityComparator>? _ComparatorElement;
 
     /// <summary>
     /// &lt; | &lt;= | &gt;= | &gt; | ad - how to understand the value
@@ -163,20 +166,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString UnitElement
+    public Hl7.Fhir.Model.FhirString? UnitElement
     {
       get { return _UnitElement; }
       set { _UnitElement = value; OnPropertyChanged("UnitElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _UnitElement;
+    private Hl7.Fhir.Model.FhirString? _UnitElement;
 
     /// <summary>
     /// Unit representation
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Unit
+    public string? Unit
     {
       get => _UnitElement?.Value;
       set
@@ -191,20 +194,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("system", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri SystemElement
+    public Hl7.Fhir.Model.FhirUri? SystemElement
     {
       get { return _SystemElement; }
       set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _SystemElement;
+    private Hl7.Fhir.Model.FhirUri? _SystemElement;
 
     /// <summary>
     /// System that defines coded unit form
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string System
+    public string? System
     {
       get => _SystemElement?.Value;
       set
@@ -219,20 +222,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("code", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Code CodeElement
+    public Hl7.Fhir.Model.Code? CodeElement
     {
       get { return _CodeElement; }
       set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _CodeElement;
+    private Hl7.Fhir.Model.Code? _CodeElement;
 
     /// <summary>
     /// Coded form of the unit
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Code
+    public string? Code
     {
       get => _CodeElement?.Value;
       set
@@ -267,16 +270,17 @@ namespace Hl7.Fhir.Model
       if(other is not Quantity otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
       if(!comparer.Equals(_ComparatorElement, otherT._ComparatorElement)) return false;
       if(!comparer.Equals(_UnitElement, otherT._UnitElement)) return false;
       if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
       if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -301,24 +305,24 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirDecimal)value;
+          ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "comparator":
-          ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)value;
+          ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>?)value;
           return this;
         case "unit":
-          UnitElement = (Hl7.Fhir.Model.FhirString)value;
+          UnitElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "system":
-          SystemElement = (Hl7.Fhir.Model.FhirUri)value;
+          SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "code":
-          CodeElement = (Hl7.Fhir.Model.Code)value;
+          CodeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -72,27 +75,27 @@ namespace Hl7.Fhir.Model
       set { _Coding = value; OnPropertyChanged("Coding"); }
     }
 
-    private List<Hl7.Fhir.Model.Coding> _Coding;
+    private List<Hl7.Fhir.Model.Coding>? _Coding;
 
     /// <summary>
     /// Plain text representation of the concept.
     /// </summary>
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
       get { return _TextElement; }
       set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// Plain text representation of the concept
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
       get => _TextElement?.Value;
       set
@@ -124,13 +127,14 @@ namespace Hl7.Fhir.Model
       if(other is not CodeableConcept otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(_Coding, otherT._Coding)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Coding, otherT._Coding)) return false;
       if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -146,15 +150,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "coding":
-          Coding = (List<Hl7.Fhir.Model.Coding>)value;
+          Coding = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString)value;
+          TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);

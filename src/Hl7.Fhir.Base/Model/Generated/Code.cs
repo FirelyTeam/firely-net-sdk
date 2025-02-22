@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -59,12 +62,12 @@ namespace Hl7.Fhir.Model
     /// Must conform to the pattern "[^\s]+( [^\s]+)*"
     public const string PATTERN = @"[^\s]+( [^\s]+)*";
 
-    public Code(string value)
+    public Code(string? value)
     {
       Value = value;
     }
 
-    public Code(): this((string)null) {}
+    public Code(): this((string?)null) {}
 
     /// <summary>
     /// Primitive value of the element
@@ -73,9 +76,9 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(SystemPrimitive.String))]
     [CodePattern]
     [DataMember]
-    public string Value
+    public string? Value
     {
-      get { return ObjectValue is string or null ? (string)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is string or null ? (string?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

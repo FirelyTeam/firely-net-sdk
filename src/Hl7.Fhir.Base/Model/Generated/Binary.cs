@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -70,20 +73,20 @@ namespace Hl7.Fhir.Model
     [Binding("MimeType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code ContentTypeElement
+    public Hl7.Fhir.Model.Code? ContentTypeElement
     {
       get { return _ContentTypeElement; }
       set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _ContentTypeElement;
+    private Hl7.Fhir.Model.Code? _ContentTypeElement;
 
     /// <summary>
     /// MimeType of the binary content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContentType
+    public string? ContentType
     {
       get => _ContentTypeElement?.Value;
       set
@@ -100,13 +103,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference SecurityContext
+    public Hl7.Fhir.Model.ResourceReference? SecurityContext
     {
       get { return _SecurityContext; }
       set { _SecurityContext = value; OnPropertyChanged("SecurityContext"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _SecurityContext;
+    private Hl7.Fhir.Model.ResourceReference? _SecurityContext;
 
     /// <summary>
     /// The actual content.
@@ -117,20 +120,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary ContentElement
+    public Hl7.Fhir.Model.Base64Binary? ContentElement
     {
       get { return _ContentElement; }
       set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary _ContentElement;
+    private Hl7.Fhir.Model.Base64Binary? _ContentElement;
 
     /// <summary>
     /// The actual content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[] Content
+    public byte[]? Content
     {
       get => _ContentElement?.Value;
       set
@@ -148,20 +151,20 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("data", Order=70, Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary DataElement
+    public Hl7.Fhir.Model.Base64Binary? DataElement
     {
       get { return _DataElement; }
       set { _DataElement = value; OnPropertyChanged("DataElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary _DataElement;
+    private Hl7.Fhir.Model.Base64Binary? _DataElement;
 
     /// <summary>
     /// The actual content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[] Data
+    public byte[]? Data
     {
       get => _DataElement?.Value;
       set
@@ -195,15 +198,16 @@ namespace Hl7.Fhir.Model
       if(other is not Binary otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
       if(!comparer.Equals(_SecurityContext, otherT._SecurityContext)) return false;
       if(!comparer.Equals(_ContentElement, otherT._ContentElement)) return false;
       if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -225,21 +229,21 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "contentType":
-          ContentTypeElement = (Hl7.Fhir.Model.Code)value;
+          ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "securityContext":
-          SecurityContext = (Hl7.Fhir.Model.ResourceReference)value;
+          SecurityContext = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "content":
-          ContentElement = (Hl7.Fhir.Model.Base64Binary)value;
+          ContentElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         case "data":
-          DataElement = (Hl7.Fhir.Model.Base64Binary)value;
+          DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         default:
           return base.SetValue(key, value);

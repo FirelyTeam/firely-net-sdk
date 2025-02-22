@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -76,7 +79,7 @@ namespace Hl7.Fhir.Model
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private List<Hl7.Fhir.Model.Coding> _Type;
+    private List<Hl7.Fhir.Model.Coding>? _Type;
 
     /// <summary>
     /// When the signature was created.
@@ -86,13 +89,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("when", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Instant WhenElement
+    public Hl7.Fhir.Model.Instant? WhenElement
     {
       get { return _WhenElement; }
       set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _WhenElement;
+    private Hl7.Fhir.Model.Instant? _WhenElement;
 
     /// <summary>
     /// When the signature was created
@@ -124,13 +127,13 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Who
+    public Hl7.Fhir.Model.DataType? Who
     {
       get { return _Who; }
       set { _Who = value; OnPropertyChanged("Who"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Who;
+    private Hl7.Fhir.Model.DataType? _Who;
 
     /// <summary>
     /// The party represented.
@@ -146,13 +149,13 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType OnBehalfOf
+    public Hl7.Fhir.Model.DataType? OnBehalfOf
     {
       get { return _OnBehalfOf; }
       set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
     }
 
-    private Hl7.Fhir.Model.DataType _OnBehalfOf;
+    private Hl7.Fhir.Model.DataType? _OnBehalfOf;
 
     /// <summary>
     /// The technical format of the signature.
@@ -164,20 +167,20 @@ namespace Hl7.Fhir.Model
     [NotMapped(Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
-    public Hl7.Fhir.Model.Code ContentTypeElement
+    public Hl7.Fhir.Model.Code? ContentTypeElement
     {
       get { return _ContentTypeElement; }
       set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _ContentTypeElement;
+    private Hl7.Fhir.Model.Code? _ContentTypeElement;
 
     /// <summary>
     /// The technical format of the signature
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContentType
+    public string? ContentType
     {
       get => _ContentTypeElement?.Value;
       set
@@ -196,20 +199,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("targetFormat", Order=70, Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
-    public Hl7.Fhir.Model.Code TargetFormatElement
+    public Hl7.Fhir.Model.Code? TargetFormatElement
     {
       get { return _TargetFormatElement; }
       set { _TargetFormatElement = value; OnPropertyChanged("TargetFormatElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _TargetFormatElement;
+    private Hl7.Fhir.Model.Code? _TargetFormatElement;
 
     /// <summary>
     /// The technical format of the signed resources
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string TargetFormat
+    public string? TargetFormat
     {
       get => _TargetFormatElement?.Value;
       set
@@ -228,20 +231,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("sigFormat", Order=80, Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
-    public Hl7.Fhir.Model.Code SigFormatElement
+    public Hl7.Fhir.Model.Code? SigFormatElement
     {
       get { return _SigFormatElement; }
       set { _SigFormatElement = value; OnPropertyChanged("SigFormatElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _SigFormatElement;
+    private Hl7.Fhir.Model.Code? _SigFormatElement;
 
     /// <summary>
     /// The technical format of the signature
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string SigFormat
+    public string? SigFormat
     {
       get => _SigFormatElement?.Value;
       set
@@ -260,20 +263,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("blob", Order=90)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary BlobElement
+    public Hl7.Fhir.Model.Base64Binary? BlobElement
     {
       get { return _BlobElement; }
       set { _BlobElement = value; OnPropertyChanged("BlobElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary _BlobElement;
+    private Hl7.Fhir.Model.Base64Binary? _BlobElement;
 
     /// <summary>
     /// The actual signature content (XML DigSig. JWS, picture, etc.)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[] Blob
+    public byte[]? Blob
     {
       get => _BlobElement?.Value;
       set
@@ -291,20 +294,20 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("data", Order=90, Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary DataElement
+    public Hl7.Fhir.Model.Base64Binary? DataElement
     {
       get { return _DataElement; }
       set { _DataElement = value; OnPropertyChanged("DataElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary _DataElement;
+    private Hl7.Fhir.Model.Base64Binary? _DataElement;
 
     /// <summary>
     /// The actual signature content (XML DigSig. JWS, picture, etc.)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[] Data
+    public byte[]? Data
     {
       get => _DataElement?.Value;
       set
@@ -343,7 +346,7 @@ namespace Hl7.Fhir.Model
       if(other is not Signature otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Type, otherT._Type)) return false;
       if(!comparer.Equals(_WhenElement, otherT._WhenElement)) return false;
       if(!comparer.Equals(_Who, otherT._Who)) return false;
       if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
@@ -352,11 +355,12 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_SigFormatElement, otherT._SigFormatElement)) return false;
       if(!comparer.Equals(_BlobElement, otherT._BlobElement)) return false;
       if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -393,36 +397,36 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          Type = (List<Hl7.Fhir.Model.Coding>)value;
+          Type = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "when":
-          WhenElement = (Hl7.Fhir.Model.Instant)value;
+          WhenElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "who":
-          Who = (Hl7.Fhir.Model.DataType)value;
+          Who = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "onBehalfOf":
-          OnBehalfOf = (Hl7.Fhir.Model.DataType)value;
+          OnBehalfOf = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "contentType":
-          ContentTypeElement = (Hl7.Fhir.Model.Code)value;
+          ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "targetFormat":
-          TargetFormatElement = (Hl7.Fhir.Model.Code)value;
+          TargetFormatElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "sigFormat":
-          SigFormatElement = (Hl7.Fhir.Model.Code)value;
+          SigFormatElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "blob":
-          BlobElement = (Hl7.Fhir.Model.Base64Binary)value;
+          BlobElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         case "data":
-          DataElement = (Hl7.Fhir.Model.Base64Binary)value;
+          DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         default:
           return base.SetValue(key, value);

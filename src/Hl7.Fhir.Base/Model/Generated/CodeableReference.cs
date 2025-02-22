@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,26 +67,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("concept", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Concept
+    public Hl7.Fhir.Model.CodeableConcept? Concept
     {
       get { return _Concept; }
       set { _Concept = value; OnPropertyChanged("Concept"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Concept;
+    private Hl7.Fhir.Model.CodeableConcept? _Concept;
 
     /// <summary>
     /// Reference to a resource (by instance).
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Reference
+    public Hl7.Fhir.Model.ResourceReference? Reference
     {
       get { return _Reference; }
       set { _Reference = value; OnPropertyChanged("Reference"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Reference;
+    private Hl7.Fhir.Model.ResourceReference? _Reference;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -107,13 +110,14 @@ namespace Hl7.Fhir.Model
       if(other is not CodeableReference otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_Concept, otherT._Concept)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Concept, otherT._Concept)) return false;
       if(!comparer.Equals(_Reference, otherT._Reference)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -129,15 +133,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "concept":
-          Concept = (Hl7.Fhir.Model.CodeableConcept)value;
+          Concept = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "reference":
-          Reference = (Hl7.Fhir.Model.ResourceReference)value;
+          Reference = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -82,28 +85,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid UidElement
+      public Hl7.Fhir.Model.Oid? UidElement
       {
         get { return _UidElement; }
         set { _UidElement = value; OnPropertyChanged("UidElement"); }
       }
 
-      private Hl7.Fhir.Model.Oid _UidElement;
+      private Hl7.Fhir.Model.Oid? _UidElement;
 
       /// <summary>
       /// Study instance UID
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get { return UidElement != null ? UidElement.Value : null; }
+        get => _UidElement?.Value;
         set
         {
-          if (value == null)
-            UidElement = null;
-          else
-            UidElement = new Hl7.Fhir.Model.Oid(value);
+          UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -115,13 +115,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("ImagingStudy")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference ImagingStudy
+      public Hl7.Fhir.Model.ResourceReference? ImagingStudy
       {
         get { return _ImagingStudy; }
         set { _ImagingStudy = value; OnPropertyChanged("ImagingStudy"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _ImagingStudy;
+      private Hl7.Fhir.Model.ResourceReference? _ImagingStudy;
 
       /// <summary>
       /// Study access service endpoint.
@@ -133,11 +133,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
-        get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+        get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
         set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
       /// <summary>
       /// Series identity of the selected instances.
@@ -147,26 +147,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent> Series
       {
-        get { if(_Series==null) _Series = new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>(); return _Series; }
+        get => _Series ?? new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>();
         set { _Series = value; OnPropertyChanged("Series"); }
       }
 
-      private List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent> _Series;
+      private List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>? _Series;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StudyComponent;
-
-        if (dest == null)
-        {
+        if(other is not StudyComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopyInternal();
-        if(ImagingStudy != null) dest.ImagingStudy = (Hl7.Fhir.Model.ResourceReference)ImagingStudy.DeepCopyInternal();
-        if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopyInternal());
-        if(Series.Any()) dest.Series = new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>(Series.DeepCopyInternal());
+        if(_UidElement is not null) dest.UidElement = (Hl7.Fhir.Model.Oid)_UidElement.DeepCopyInternal();
+        if(_ImagingStudy is not null) dest.ImagingStudy = (Hl7.Fhir.Model.ResourceReference)_ImagingStudy.DeepCopyInternal();
+        if(_Endpoint is not null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(_Endpoint.DeepCopyInternal());
+        if(_Series is not null) dest.Series = new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>(_Series.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -178,55 +174,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StudyComponent;
-        if(otherT == null) return false;
+        if(other is not StudyComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(UidElement, otherT.UidElement)) return false;
-        if(!comparer.Equals(ImagingStudy, otherT.ImagingStudy)) return false;
-        if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
-        if(!comparer.ListEquals(Series, otherT.Series)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_UidElement, otherT._UidElement)) return false;
+        if(!comparer.Equals(_ImagingStudy, otherT._ImagingStudy)) return false;
+        if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
+        if(!comparer.ListEquals(_Series, otherT._Series)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "uid":
-            value = UidElement;
-            return UidElement is not null;
+            value = _UidElement;
+            return _UidElement is not null;
           case "imagingStudy":
-            value = ImagingStudy;
-            return ImagingStudy is not null;
+            value = _ImagingStudy;
+            return _ImagingStudy is not null;
           case "endpoint":
-            value = Endpoint;
-            return Endpoint?.Any() == true;
+            value = _Endpoint;
+            return _Endpoint?.Any() == true;
           case "series":
-            value = Series;
-            return Series?.Any() == true;
+            value = _Series;
+            return _Series?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "uid":
-            UidElement = (Hl7.Fhir.Model.Oid)value;
+            UidElement = (Hl7.Fhir.Model.Oid?)value;
             return this;
           case "imagingStudy":
-            ImagingStudy = (Hl7.Fhir.Model.ResourceReference)value;
+            ImagingStudy = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "endpoint":
-            Endpoint = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Endpoint = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "series":
-            Series = (List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>)value;
+            Series = (List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -237,10 +233,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
-        if (ImagingStudy is not null) yield return new KeyValuePair<string,object>("imagingStudy",ImagingStudy);
-        if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
-        if (Series?.Any() == true) yield return new KeyValuePair<string,object>("series",Series);
+        if (_UidElement is not null) yield return new KeyValuePair<string,object>("uid",_UidElement);
+        if (_ImagingStudy is not null) yield return new KeyValuePair<string,object>("imagingStudy",_ImagingStudy);
+        if (_Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
+        if (_Series?.Any() == true) yield return new KeyValuePair<string,object>("series",_Series);
       }
 
     }
@@ -268,28 +264,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid UidElement
+      public Hl7.Fhir.Model.Oid? UidElement
       {
         get { return _UidElement; }
         set { _UidElement = value; OnPropertyChanged("UidElement"); }
       }
 
-      private Hl7.Fhir.Model.Oid _UidElement;
+      private Hl7.Fhir.Model.Oid? _UidElement;
 
       /// <summary>
       /// Series instance UID
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get { return UidElement != null ? UidElement.Value : null; }
+        get => _UidElement?.Value;
         set
         {
-          if (value == null)
-            UidElement = null;
-          else
-            UidElement = new Hl7.Fhir.Model.Oid(value);
+          UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -304,11 +297,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
-        get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+        get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
         set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
       /// <summary>
       /// The selected instance.
@@ -318,25 +311,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent> Instance
       {
-        get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>(); return _Instance; }
+        get => _Instance ?? new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>();
         set { _Instance = value; OnPropertyChanged("Instance"); }
       }
 
-      private List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent> _Instance;
+      private List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>? _Instance;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SeriesComponent;
-
-        if (dest == null)
-        {
+        if(other is not SeriesComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopyInternal();
-        if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopyInternal());
-        if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>(Instance.DeepCopyInternal());
+        if(_UidElement is not null) dest.UidElement = (Hl7.Fhir.Model.Oid)_UidElement.DeepCopyInternal();
+        if(_Endpoint is not null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(_Endpoint.DeepCopyInternal());
+        if(_Instance is not null) dest.Instance = new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>(_Instance.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -348,48 +337,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SeriesComponent;
-        if(otherT == null) return false;
+        if(other is not SeriesComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(UidElement, otherT.UidElement)) return false;
-        if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
-        if(!comparer.ListEquals(Instance, otherT.Instance)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_UidElement, otherT._UidElement)) return false;
+        if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
+        if(!comparer.ListEquals(_Instance, otherT._Instance)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "uid":
-            value = UidElement;
-            return UidElement is not null;
+            value = _UidElement;
+            return _UidElement is not null;
           case "endpoint":
-            value = Endpoint;
-            return Endpoint?.Any() == true;
+            value = _Endpoint;
+            return _Endpoint?.Any() == true;
           case "instance":
-            value = Instance;
-            return Instance?.Any() == true;
+            value = _Instance;
+            return _Instance?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "uid":
-            UidElement = (Hl7.Fhir.Model.Oid)value;
+            UidElement = (Hl7.Fhir.Model.Oid?)value;
             return this;
           case "endpoint":
-            Endpoint = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Endpoint = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "instance":
-            Instance = (List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>)value;
+            Instance = (List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -400,9 +389,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
-        if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
-        if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+        if (_UidElement is not null) yield return new KeyValuePair<string,object>("uid",_UidElement);
+        if (_Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
+        if (_Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",_Instance);
       }
 
     }
@@ -430,28 +419,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("sopClass", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid SopClassElement
+      public Hl7.Fhir.Model.Oid? SopClassElement
       {
         get { return _SopClassElement; }
         set { _SopClassElement = value; OnPropertyChanged("SopClassElement"); }
       }
 
-      private Hl7.Fhir.Model.Oid _SopClassElement;
+      private Hl7.Fhir.Model.Oid? _SopClassElement;
 
       /// <summary>
       /// SOP class UID of instance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string SopClass
+      public string? SopClass
       {
-        get { return SopClassElement != null ? SopClassElement.Value : null; }
+        get => _SopClassElement?.Value;
         set
         {
-          if (value == null)
-            SopClassElement = null;
-          else
-            SopClassElement = new Hl7.Fhir.Model.Oid(value);
+          SopClassElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("SopClass");
         }
       }
@@ -462,44 +448,37 @@ namespace Hl7.Fhir.Model
       [FhirElement("uid", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid UidElement
+      public Hl7.Fhir.Model.Oid? UidElement
       {
         get { return _UidElement; }
         set { _UidElement = value; OnPropertyChanged("UidElement"); }
       }
 
-      private Hl7.Fhir.Model.Oid _UidElement;
+      private Hl7.Fhir.Model.Oid? _UidElement;
 
       /// <summary>
       /// Selected instance UID
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get { return UidElement != null ? UidElement.Value : null; }
+        get => _UidElement?.Value;
         set
         {
-          if (value == null)
-            UidElement = null;
-          else
-            UidElement = new Hl7.Fhir.Model.Oid(value);
+          UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InstanceComponent;
-
-        if (dest == null)
-        {
+        if(other is not InstanceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SopClassElement != null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)SopClassElement.DeepCopyInternal();
-        if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopyInternal();
+        if(_SopClassElement is not null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)_SopClassElement.DeepCopyInternal();
+        if(_UidElement is not null) dest.UidElement = (Hl7.Fhir.Model.Oid)_UidElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -511,41 +490,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InstanceComponent;
-        if(otherT == null) return false;
+        if(other is not InstanceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(SopClassElement, otherT.SopClassElement)) return false;
-        if(!comparer.Equals(UidElement, otherT.UidElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SopClassElement, otherT._SopClassElement)) return false;
+        if(!comparer.Equals(_UidElement, otherT._UidElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sopClass":
-            value = SopClassElement;
-            return SopClassElement is not null;
+            value = _SopClassElement;
+            return _SopClassElement is not null;
           case "uid":
-            value = UidElement;
-            return UidElement is not null;
+            value = _UidElement;
+            return _UidElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "sopClass":
-            SopClassElement = (Hl7.Fhir.Model.Oid)value;
+            SopClassElement = (Hl7.Fhir.Model.Oid?)value;
             return this;
           case "uid":
-            UidElement = (Hl7.Fhir.Model.Oid)value;
+            UidElement = (Hl7.Fhir.Model.Oid?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -556,8 +535,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SopClassElement is not null) yield return new KeyValuePair<string,object>("sopClass",SopClassElement);
-        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
+        if (_SopClassElement is not null) yield return new KeyValuePair<string,object>("sopClass",_SopClassElement);
+        if (_UidElement is not null) yield return new KeyValuePair<string,object>("uid",_UidElement);
       }
 
     }
@@ -567,13 +546,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// Patient of the selected objects.
@@ -583,41 +562,38 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Time when the selection of instances was made.
     /// </summary>
     [FhirElement("authoringTime", InSummary=true, Order=110, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
+    public Hl7.Fhir.Model.FhirDateTime? AuthoringTimeElement
     {
       get { return _AuthoringTimeElement; }
       set { _AuthoringTimeElement = value; OnPropertyChanged("AuthoringTimeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _AuthoringTimeElement;
+    private Hl7.Fhir.Model.FhirDateTime? _AuthoringTimeElement;
 
     /// <summary>
     /// Time when the selection of instances was made
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AuthoringTime
+    public string? AuthoringTime
     {
-      get { return AuthoringTimeElement != null ? AuthoringTimeElement.Value : null; }
+      get => _AuthoringTimeElement?.Value;
       set
       {
-        if (value == null)
-          AuthoringTimeElement = null;
-        else
-          AuthoringTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoringTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoringTime");
       }
     }
@@ -629,41 +605,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Author
+    public Hl7.Fhir.Model.ResourceReference? Author
     {
       get { return _Author; }
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Author;
+    private Hl7.Fhir.Model.ResourceReference? _Author;
 
     /// <summary>
     /// Description text.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Description text
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -676,30 +649,26 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> Study
     {
-      get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>(); return _Study; }
+      get => _Study ?? new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>();
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 
-    private List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> _Study;
+    private List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>? _Study;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ImagingManifest;
-
-      if (dest == null)
-      {
+      if(other is not ImagingManifest dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopyInternal();
-      if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(Study.Any()) dest.Study = new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>(Study.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_AuthoringTimeElement is not null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)_AuthoringTimeElement.DeepCopyInternal();
+      if(_Author is not null) dest.Author = (Hl7.Fhir.Model.ResourceReference)_Author.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_Study is not null) dest.Study = new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>(_Study.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -711,69 +680,69 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ImagingManifest;
-      if(otherT == null) return false;
+      if(other is not ImagingManifest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
-      if(!comparer.Equals(Author, otherT.Author)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Study, otherT.Study)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_AuthoringTimeElement, otherT._AuthoringTimeElement)) return false;
+      if(!comparer.Equals(_Author, otherT._Author)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Study, otherT._Study)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "authoringTime":
-          value = AuthoringTimeElement;
-          return AuthoringTimeElement is not null;
+          value = _AuthoringTimeElement;
+          return _AuthoringTimeElement is not null;
         case "author":
-          value = Author;
-          return Author is not null;
+          value = _Author;
+          return _Author is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "study":
-          value = Study;
-          return Study?.Any() == true;
+          value = _Study;
+          return _Study?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "authoringTime":
-          AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "author":
-          Author = (Hl7.Fhir.Model.ResourceReference)value;
+          Author = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "study":
-          Study = (List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>)value;
+          Study = (List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -784,12 +753,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (AuthoringTimeElement is not null) yield return new KeyValuePair<string,object>("authoringTime",AuthoringTimeElement);
-      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_AuthoringTimeElement is not null) yield return new KeyValuePair<string,object>("authoringTime",_AuthoringTimeElement);
+      if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Study?.Any() == true) yield return new KeyValuePair<string,object>("study",_Study);
     }
 
   }

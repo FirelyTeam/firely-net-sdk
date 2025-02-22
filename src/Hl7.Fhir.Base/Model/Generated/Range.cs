@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,26 +68,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("low", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Low
+    public Hl7.Fhir.Model.Quantity? Low
     {
       get { return _Low; }
       set { _Low = value; OnPropertyChanged("Low"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Low;
+    private Hl7.Fhir.Model.Quantity? _Low;
 
     /// <summary>
     /// High limit.
     /// </summary>
     [FhirElement("high", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity High
+    public Hl7.Fhir.Model.Quantity? High
     {
       get { return _High; }
       set { _High = value; OnPropertyChanged("High"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _High;
+    private Hl7.Fhir.Model.Quantity? _High;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -108,13 +111,14 @@ namespace Hl7.Fhir.Model
       if(other is not Range otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_Low, otherT._Low)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Low, otherT._Low)) return false;
       if(!comparer.Equals(_High, otherT._High)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -130,15 +134,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "low":
-          Low = (Hl7.Fhir.Model.Quantity)value;
+          Low = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "high":
-          High = (Hl7.Fhir.Model.Quantity)value;
+          High = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -119,13 +122,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("NameUse")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.HumanName.NameUse> UseElement
+    public Code<Hl7.Fhir.Model.HumanName.NameUse>? UseElement
     {
       get { return _UseElement; }
       set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.HumanName.NameUse> _UseElement;
+    private Code<Hl7.Fhir.Model.HumanName.NameUse>? _UseElement;
 
     /// <summary>
     /// usual | official | temp | nickname | anonymous | old | maiden
@@ -134,13 +137,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.HumanName.NameUse? Use
     {
-      get { return UseElement != null ? UseElement.Value : null; }
+      get => _UseElement?.Value;
       set
       {
-        if (value == null)
-          UseElement = null;
-        else
-          UseElement = new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
+        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -150,28 +150,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
       get { return _TextElement; }
       set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// Text representation of the full name
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get { return TextElement != null ? TextElement.Value : null; }
+      get => _TextElement?.Value;
       set
       {
-        if (value == null)
-          TextElement = null;
-        else
-          TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -181,28 +178,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("family", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString FamilyElement
+    public Hl7.Fhir.Model.FhirString? FamilyElement
     {
       get { return _FamilyElement; }
       set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _FamilyElement;
+    private Hl7.Fhir.Model.FhirString? _FamilyElement;
 
     /// <summary>
     /// Family name (often called 'Surname')
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Family
+    public string? Family
     {
-      get { return FamilyElement != null ? FamilyElement.Value : null; }
+      get => _FamilyElement?.Value;
       set
       {
-        if (value == null)
-          FamilyElement = null;
-        else
-          FamilyElement = new Hl7.Fhir.Model.FhirString(value);
+        FamilyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Family");
       }
     }
@@ -215,24 +209,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GivenElement
     {
-      get { if(_GivenElement==null) _GivenElement = new List<Hl7.Fhir.Model.FhirString>(); return _GivenElement; }
+      get => _GivenElement ?? new List<Hl7.Fhir.Model.FhirString>();
       set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _GivenElement;
+    private List<Hl7.Fhir.Model.FhirString>? _GivenElement;
 
     /// <summary>
     /// Given names (not always 'first'). Includes middle names
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Given
+    public IEnumerable<string?>? Given
     {
-      get { return GivenElement != null ? GivenElement.Select(elem => elem.Value) : null; }
+      get => _GivenElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          GivenElement = null;
+          GivenElement = null!;
         else
           GivenElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Given");
@@ -247,24 +241,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> PrefixElement
     {
-      get { if(_PrefixElement==null) _PrefixElement = new List<Hl7.Fhir.Model.FhirString>(); return _PrefixElement; }
+      get => _PrefixElement ?? new List<Hl7.Fhir.Model.FhirString>();
       set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _PrefixElement;
+    private List<Hl7.Fhir.Model.FhirString>? _PrefixElement;
 
     /// <summary>
     /// Parts that come before the name
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Prefix
+    public IEnumerable<string?>? Prefix
     {
-      get { return PrefixElement != null ? PrefixElement.Select(elem => elem.Value) : null; }
+      get => _PrefixElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          PrefixElement = null;
+          PrefixElement = null!;
         else
           PrefixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Prefix");
@@ -279,24 +273,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> SuffixElement
     {
-      get { if(_SuffixElement==null) _SuffixElement = new List<Hl7.Fhir.Model.FhirString>(); return _SuffixElement; }
+      get => _SuffixElement ?? new List<Hl7.Fhir.Model.FhirString>();
       set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _SuffixElement;
+    private List<Hl7.Fhir.Model.FhirString>? _SuffixElement;
 
     /// <summary>
     /// Parts that come after the name
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Suffix
+    public IEnumerable<string?>? Suffix
     {
-      get { return SuffixElement != null ? SuffixElement.Select(elem => elem.Value) : null; }
+      get => _SuffixElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          SuffixElement = null;
+          SuffixElement = null!;
         else
           SuffixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Suffix");
@@ -308,31 +302,27 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as HumanName;
-
-      if (dest == null)
-      {
+      if(other is not HumanName dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>)UseElement.DeepCopyInternal();
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
-      if(FamilyElement != null) dest.FamilyElement = (Hl7.Fhir.Model.FhirString)FamilyElement.DeepCopyInternal();
-      if(GivenElement.Any()) dest.GivenElement = new List<Hl7.Fhir.Model.FhirString>(GivenElement.DeepCopyInternal());
-      if(PrefixElement.Any()) dest.PrefixElement = new List<Hl7.Fhir.Model.FhirString>(PrefixElement.DeepCopyInternal());
-      if(SuffixElement.Any()) dest.SuffixElement = new List<Hl7.Fhir.Model.FhirString>(SuffixElement.DeepCopyInternal());
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(_UseElement is not null) dest.UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>)_UseElement.DeepCopyInternal();
+      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
+      if(_FamilyElement is not null) dest.FamilyElement = (Hl7.Fhir.Model.FhirString)_FamilyElement.DeepCopyInternal();
+      if(_GivenElement is not null) dest.GivenElement = new List<Hl7.Fhir.Model.FhirString>(_GivenElement.DeepCopyInternal());
+      if(_PrefixElement is not null) dest.PrefixElement = new List<Hl7.Fhir.Model.FhirString>(_PrefixElement.DeepCopyInternal());
+      if(_SuffixElement is not null) dest.SuffixElement = new List<Hl7.Fhir.Model.FhirString>(_SuffixElement.DeepCopyInternal());
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -344,76 +334,76 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as HumanName;
-      if(otherT == null) return false;
+      if(other is not HumanName otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(UseElement, otherT.UseElement)) return false;
-      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
-      if(!comparer.Equals(FamilyElement, otherT.FamilyElement)) return false;
-      if(!comparer.ListEquals(GivenElement, otherT.GivenElement)) return false;
-      if(!comparer.ListEquals(PrefixElement, otherT.PrefixElement)) return false;
-      if(!comparer.ListEquals(SuffixElement, otherT.SuffixElement)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+      if(!comparer.Equals(_FamilyElement, otherT._FamilyElement)) return false;
+      if(!comparer.ListEquals(_GivenElement, otherT._GivenElement)) return false;
+      if(!comparer.ListEquals(_PrefixElement, otherT._PrefixElement)) return false;
+      if(!comparer.ListEquals(_SuffixElement, otherT._SuffixElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "use":
-          value = UseElement;
-          return UseElement is not null;
+          value = _UseElement;
+          return _UseElement is not null;
         case "text":
-          value = TextElement;
-          return TextElement is not null;
+          value = _TextElement;
+          return _TextElement is not null;
         case "family":
-          value = FamilyElement;
-          return FamilyElement is not null;
+          value = _FamilyElement;
+          return _FamilyElement is not null;
         case "given":
-          value = GivenElement;
-          return GivenElement?.Any() == true;
+          value = _GivenElement;
+          return _GivenElement?.Any() == true;
         case "prefix":
-          value = PrefixElement;
-          return PrefixElement?.Any() == true;
+          value = _PrefixElement;
+          return _PrefixElement?.Any() == true;
         case "suffix":
-          value = SuffixElement;
-          return SuffixElement?.Any() == true;
+          value = _SuffixElement;
+          return _SuffixElement?.Any() == true;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>)value;
+          UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString)value;
+          TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "family":
-          FamilyElement = (Hl7.Fhir.Model.FhirString)value;
+          FamilyElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "given":
-          GivenElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          GivenElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "prefix":
-          PrefixElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          PrefixElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "suffix":
-          SuffixElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          SuffixElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -424,13 +414,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
-      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-      if (FamilyElement is not null) yield return new KeyValuePair<string,object>("family",FamilyElement);
-      if (GivenElement?.Any() == true) yield return new KeyValuePair<string,object>("given",GivenElement);
-      if (PrefixElement?.Any() == true) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
-      if (SuffixElement?.Any() == true) yield return new KeyValuePair<string,object>("suffix",SuffixElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (_UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_FamilyElement is not null) yield return new KeyValuePair<string,object>("family",_FamilyElement);
+      if (_GivenElement?.Any() == true) yield return new KeyValuePair<string,object>("given",_GivenElement);
+      if (_PrefixElement?.Any() == true) yield return new KeyValuePair<string,object>("prefix",_PrefixElement);
+      if (_SuffixElement?.Any() == true) yield return new KeyValuePair<string,object>("suffix",_SuffixElement);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

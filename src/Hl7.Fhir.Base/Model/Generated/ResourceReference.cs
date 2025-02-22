@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,20 +67,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ReferenceElement
+    public Hl7.Fhir.Model.FhirString? ReferenceElement
     {
       get { return _ReferenceElement; }
       set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ReferenceElement;
+    private Hl7.Fhir.Model.FhirString? _ReferenceElement;
 
     /// <summary>
     /// Literal reference, Relative, internal or absolute URL
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Reference
+    public string? Reference
     {
       get => _ReferenceElement?.Value;
       set
@@ -96,20 +99,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=40, Since=FhirRelease.R4)]
     [Binding("FHIRResourceTypeExt")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri TypeElement
+    public Hl7.Fhir.Model.FhirUri? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _TypeElement;
+    private Hl7.Fhir.Model.FhirUri? _TypeElement;
 
     /// <summary>
     /// Type the reference refers to (e.g. "Patient") - must be a resource in resources
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Type
+    public string? Type
     {
       get => _TypeElement?.Value;
       set
@@ -124,33 +127,33 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// Text alternative for the resource.
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DisplayElement
+    public Hl7.Fhir.Model.FhirString? DisplayElement
     {
       get { return _DisplayElement; }
       set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DisplayElement;
+    private Hl7.Fhir.Model.FhirString? _DisplayElement;
 
     /// <summary>
     /// Text alternative for the resource
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Display
+    public string? Display
     {
       get => _DisplayElement?.Value;
       set
@@ -184,15 +187,16 @@ namespace Hl7.Fhir.Model
       if(other is not ResourceReference otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
       if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
       if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -214,21 +218,21 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "reference":
-          ReferenceElement = (Hl7.Fhir.Model.FhirString)value;
+          ReferenceElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "type":
-          TypeElement = (Hl7.Fhir.Model.FhirUri)value;
+          TypeElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "display":
-          DisplayElement = (Hl7.Fhir.Model.FhirString)value;
+          DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);

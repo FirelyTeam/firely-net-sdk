@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -59,13 +62,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("text", Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Narrative Text
+    public Hl7.Fhir.Model.Narrative? Text
     {
       get { return _Text; }
       set { _Text = value; OnPropertyChanged("Text"); }
     }
 
-    private Hl7.Fhir.Model.Narrative _Text;
+    private Hl7.Fhir.Model.Narrative? _Text;
 
     /// <summary>
     /// Contained, inline Resources.
@@ -81,7 +84,7 @@ namespace Hl7.Fhir.Model
       set { _Contained = value; OnPropertyChanged("Contained"); }
     }
 
-    private List<Hl7.Fhir.Model.Resource> _Contained;
+    private List<Hl7.Fhir.Model.Resource>? _Contained;
 
     /// <summary>
     /// Additional content defined by implementations.
@@ -95,7 +98,7 @@ namespace Hl7.Fhir.Model
       set { _Extension = value; OnPropertyChanged("Extension"); }
     }
 
-    private List<Hl7.Fhir.Model.Extension> _Extension;
+    private List<Hl7.Fhir.Model.Extension>? _Extension;
 
     /// <summary>
     /// Extensions that cannot be ignored.
@@ -109,7 +112,7 @@ namespace Hl7.Fhir.Model
       set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
     }
 
-    private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
+    private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -128,15 +131,16 @@ namespace Hl7.Fhir.Model
       if(other is not DomainResource otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_Text, otherT._Text)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Text, otherT._Text)) return false;
       if(!comparer.ListEquals(_Contained, otherT._Contained)) return false;
       if(!comparer.ListEquals(_Extension, otherT._Extension)) return false;
       if(!comparer.ListEquals(_ModifierExtension, otherT._ModifierExtension)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -158,21 +162,21 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "text":
-          Text = (Hl7.Fhir.Model.Narrative)value;
+          Text = (Hl7.Fhir.Model.Narrative?)value;
           return this;
         case "contained":
-          Contained = (List<Hl7.Fhir.Model.Resource>)value;
+          Contained = (List<Hl7.Fhir.Model.Resource>?)value!;
           return this;
         case "extension":
-          Extension = (List<Hl7.Fhir.Model.Extension>)value;
+          Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         case "modifierExtension":
-          ModifierExtension = (List<Hl7.Fhir.Model.Extension>)value;
+          ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

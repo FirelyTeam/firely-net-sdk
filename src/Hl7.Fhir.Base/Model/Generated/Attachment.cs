@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,20 +69,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("contentType", InSummary=true, Order=30)]
     [Binding("MimeType")]
     [DataMember]
-    public Hl7.Fhir.Model.Code ContentTypeElement
+    public Hl7.Fhir.Model.Code? ContentTypeElement
     {
       get { return _ContentTypeElement; }
       set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _ContentTypeElement;
+    private Hl7.Fhir.Model.Code? _ContentTypeElement;
 
     /// <summary>
     /// Mime type of the content, with charset etc.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContentType
+    public string? ContentType
     {
       get => _ContentTypeElement?.Value;
       set
@@ -95,20 +98,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("language", InSummary=true, Order=40)]
     [Binding("Language")]
     [DataMember]
-    public Hl7.Fhir.Model.Code LanguageElement
+    public Hl7.Fhir.Model.Code? LanguageElement
     {
       get { return _LanguageElement; }
       set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _LanguageElement;
+    private Hl7.Fhir.Model.Code? _LanguageElement;
 
     /// <summary>
     /// Human language of the content (BCP-47)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Language
+    public string? Language
     {
       get => _LanguageElement?.Value;
       set
@@ -123,20 +126,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("data", Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary DataElement
+    public Hl7.Fhir.Model.Base64Binary? DataElement
     {
       get { return _DataElement; }
       set { _DataElement = value; OnPropertyChanged("DataElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary _DataElement;
+    private Hl7.Fhir.Model.Base64Binary? _DataElement;
 
     /// <summary>
     /// Data inline, base64ed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[] Data
+    public byte[]? Data
     {
       get => _DataElement?.Value;
       set
@@ -161,22 +164,22 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.PrimitiveType UrlElement
+    public Hl7.Fhir.Model.PrimitiveType? UrlElement
     {
       get { return _UrlElement; }
       set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.PrimitiveType _UrlElement;
+    private Hl7.Fhir.Model.PrimitiveType? _UrlElement;
 
     /// <summary>
     /// Uri where the data can be found. Use this property in STU3.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string UrlUri
+    public string? UrlUri
     {
-      get => ((IValue<string>)_UrlElement)?.Value;
+      get => ((IValue<string>?)_UrlElement)?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -189,9 +192,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url
+    public string? Url
     {
-      get => ((IValue<string>)_UrlElement)?.Value;
+      get => ((IValue<string>?)_UrlElement)?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -214,13 +217,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
     [DeclaredType(Type = typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.PrimitiveType SizeElement
+    public Hl7.Fhir.Model.PrimitiveType? SizeElement
     {
       get { return _SizeElement; }
       set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
     }
 
-    private Hl7.Fhir.Model.PrimitiveType _SizeElement;
+    private Hl7.Fhir.Model.PrimitiveType? _SizeElement;
 
     /// <summary>
     /// Number of bytes of content (if url provided). Use this property in STU3, R4 and R4B.
@@ -229,7 +232,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? SizeUnsignedInt
     {
-      get => ((Hl7.Fhir.Model.UnsignedInt)_SizeElement)?.Value;
+      get => ((Hl7.Fhir.Model.UnsignedInt?)_SizeElement)?.Value;
       set
       {
         SizeElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -244,7 +247,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public long? Size
     {
-      get => ((Hl7.Fhir.Model.Integer64)_SizeElement)?.Value;
+      get => ((Hl7.Fhir.Model.Integer64?)_SizeElement)?.Value;
       set
       {
         SizeElement = value is null ? null : new Hl7.Fhir.Model.Integer64(value);
@@ -257,20 +260,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("hash", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary HashElement
+    public Hl7.Fhir.Model.Base64Binary? HashElement
     {
       get { return _HashElement; }
       set { _HashElement = value; OnPropertyChanged("HashElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary _HashElement;
+    private Hl7.Fhir.Model.Base64Binary? _HashElement;
 
     /// <summary>
     /// Hash of the data (sha-1, base64ed)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[] Hash
+    public byte[]? Hash
     {
       get => _HashElement?.Value;
       set
@@ -285,20 +288,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("title", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TitleElement
+    public Hl7.Fhir.Model.FhirString? TitleElement
     {
       get { return _TitleElement; }
       set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TitleElement;
+    private Hl7.Fhir.Model.FhirString? _TitleElement;
 
     /// <summary>
     /// Label to display in place of the data
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Title
+    public string? Title
     {
       get => _TitleElement?.Value;
       set
@@ -313,20 +316,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("creation", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreationElement
+    public Hl7.Fhir.Model.FhirDateTime? CreationElement
     {
       get { return _CreationElement; }
       set { _CreationElement = value; OnPropertyChanged("CreationElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreationElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreationElement;
 
     /// <summary>
     /// Date attachment was first created
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Creation
+    public string? Creation
     {
       get => _CreationElement?.Value;
       set
@@ -344,13 +347,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("height", Order=110, Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt HeightElement
+    public Hl7.Fhir.Model.PositiveInt? HeightElement
     {
       get { return _HeightElement; }
       set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _HeightElement;
+    private Hl7.Fhir.Model.PositiveInt? _HeightElement;
 
     /// <summary>
     /// Height of the image in pixels (photo/video)
@@ -375,13 +378,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("width", Order=120, Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt WidthElement
+    public Hl7.Fhir.Model.PositiveInt? WidthElement
     {
       get { return _WidthElement; }
       set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _WidthElement;
+    private Hl7.Fhir.Model.PositiveInt? _WidthElement;
 
     /// <summary>
     /// Width of the image in pixels (photo/video)
@@ -406,13 +409,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("frames", Order=130, Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt FramesElement
+    public Hl7.Fhir.Model.PositiveInt? FramesElement
     {
       get { return _FramesElement; }
       set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _FramesElement;
+    private Hl7.Fhir.Model.PositiveInt? _FramesElement;
 
     /// <summary>
     /// Number of frames if &gt; 1 (photo)
@@ -437,13 +440,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("duration", Order=140, Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal DurationElement
+    public Hl7.Fhir.Model.FhirDecimal? DurationElement
     {
       get { return _DurationElement; }
       set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal _DurationElement;
+    private Hl7.Fhir.Model.FhirDecimal? _DurationElement;
 
     /// <summary>
     /// Length in seconds (audio / video)
@@ -468,13 +471,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("pages", Order=150, Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt PagesElement
+    public Hl7.Fhir.Model.PositiveInt? PagesElement
     {
       get { return _PagesElement; }
       set { _PagesElement = value; OnPropertyChanged("PagesElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _PagesElement;
+    private Hl7.Fhir.Model.PositiveInt? _PagesElement;
 
     /// <summary>
     /// Number of printed pages
@@ -524,7 +527,7 @@ namespace Hl7.Fhir.Model
       if(other is not Attachment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
       if(!comparer.Equals(_LanguageElement, otherT._LanguageElement)) return false;
       if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
       if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
@@ -537,11 +540,12 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_FramesElement, otherT._FramesElement)) return false;
       if(!comparer.Equals(_DurationElement, otherT._DurationElement)) return false;
       if(!comparer.Equals(_PagesElement, otherT._PagesElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -590,48 +594,48 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "contentType":
-          ContentTypeElement = (Hl7.Fhir.Model.Code)value;
+          ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "language":
-          LanguageElement = (Hl7.Fhir.Model.Code)value;
+          LanguageElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "data":
-          DataElement = (Hl7.Fhir.Model.Base64Binary)value;
+          DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.PrimitiveType)value;
+          UrlElement = (Hl7.Fhir.Model.PrimitiveType?)value;
           return this;
         case "size":
-          SizeElement = (Hl7.Fhir.Model.PrimitiveType)value;
+          SizeElement = (Hl7.Fhir.Model.PrimitiveType?)value;
           return this;
         case "hash":
-          HashElement = (Hl7.Fhir.Model.Base64Binary)value;
+          HashElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         case "title":
-          TitleElement = (Hl7.Fhir.Model.FhirString)value;
+          TitleElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "creation":
-          CreationElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreationElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "height":
-          HeightElement = (Hl7.Fhir.Model.PositiveInt)value;
+          HeightElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "width":
-          WidthElement = (Hl7.Fhir.Model.PositiveInt)value;
+          WidthElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "frames":
-          FramesElement = (Hl7.Fhir.Model.PositiveInt)value;
+          FramesElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "duration":
-          DurationElement = (Hl7.Fhir.Model.FhirDecimal)value;
+          DurationElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "pages":
-          PagesElement = (Hl7.Fhir.Model.PositiveInt)value;
+          PagesElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         default:
           return base.SetValue(key, value);

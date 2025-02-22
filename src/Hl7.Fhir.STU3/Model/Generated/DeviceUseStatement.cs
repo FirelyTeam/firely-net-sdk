@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -113,11 +116,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | completed | entered-in-error +.
@@ -127,13 +130,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceUseStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> StatusElement
+    public Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>? _StatusElement;
 
     /// <summary>
     /// active | completed | entered-in-error +
@@ -142,13 +145,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -161,26 +161,26 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Period device was used.
     /// </summary>
     [FhirElement("whenUsed", Order=120, FiveWs="when.done")]
     [DataMember]
-    public Hl7.Fhir.Model.Period WhenUsed
+    public Hl7.Fhir.Model.Period? WhenUsed
     {
       get { return _WhenUsed; }
       set { _WhenUsed = value; OnPropertyChanged("WhenUsed"); }
     }
 
-    private Hl7.Fhir.Model.Period _WhenUsed;
+    private Hl7.Fhir.Model.Period? _WhenUsed;
 
     /// <summary>
     /// How often  the device was used.
@@ -189,41 +189,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Timing
+    public Hl7.Fhir.Model.DataType? Timing
     {
       get { return _Timing; }
       set { _Timing = value; OnPropertyChanged("Timing"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Timing;
+    private Hl7.Fhir.Model.DataType? _Timing;
 
     /// <summary>
     /// When statement was recorded.
     /// </summary>
     [FhirElement("recordedOn", Order=140, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
+    public Hl7.Fhir.Model.FhirDateTime? RecordedOnElement
     {
       get { return _RecordedOnElement; }
       set { _RecordedOnElement = value; OnPropertyChanged("RecordedOnElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _RecordedOnElement;
+    private Hl7.Fhir.Model.FhirDateTime? _RecordedOnElement;
 
     /// <summary>
     /// When statement was recorded
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string RecordedOn
+    public string? RecordedOn
     {
-      get { return RecordedOnElement != null ? RecordedOnElement.Value : null; }
+      get => _RecordedOnElement?.Value;
       set
       {
-        if (value == null)
-          RecordedOnElement = null;
-        else
-          RecordedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedOn");
       }
     }
@@ -235,13 +232,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Source
+    public Hl7.Fhir.Model.ResourceReference? Source
     {
       get { return _Source; }
       set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Source;
+    private Hl7.Fhir.Model.ResourceReference? _Source;
 
     /// <summary>
     /// Reference to device used.
@@ -251,13 +248,13 @@ namespace Hl7.Fhir.Model
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Device
+    public Hl7.Fhir.Model.ResourceReference? Device
     {
       get { return _Device; }
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Device;
+    private Hl7.Fhir.Model.ResourceReference? _Device;
 
     /// <summary>
     /// Why device was used.
@@ -267,11 +264,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Indication
     {
-      get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Indication; }
+      get => _Indication ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Indication = value; OnPropertyChanged("Indication"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Indication;
 
     /// <summary>
     /// Target body site.
@@ -279,13 +276,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("bodySite", Order=180)]
     [Binding("BodySite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept BodySite
+    public Hl7.Fhir.Model.CodeableConcept? BodySite
     {
       get { return _BodySite; }
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _BodySite;
+    private Hl7.Fhir.Model.CodeableConcept? _BodySite;
 
     /// <summary>
     /// Addition details (comments, instructions).
@@ -295,35 +292,31 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DeviceUseStatement;
-
-      if (dest == null)
-      {
+      if(other is not DeviceUseStatement dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>)StatusElement.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(WhenUsed != null) dest.WhenUsed = (Hl7.Fhir.Model.Period)WhenUsed.DeepCopyInternal();
-      if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopyInternal();
-      if(RecordedOnElement != null) dest.RecordedOnElement = (Hl7.Fhir.Model.FhirDateTime)RecordedOnElement.DeepCopyInternal();
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopyInternal();
-      if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopyInternal();
-      if(Indication.Any()) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopyInternal());
-      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>)_StatusElement.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_WhenUsed is not null) dest.WhenUsed = (Hl7.Fhir.Model.Period)_WhenUsed.DeepCopyInternal();
+      if(_Timing is not null) dest.Timing = (Hl7.Fhir.Model.DataType)_Timing.DeepCopyInternal();
+      if(_RecordedOnElement is not null) dest.RecordedOnElement = (Hl7.Fhir.Model.FhirDateTime)_RecordedOnElement.DeepCopyInternal();
+      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.ResourceReference)_Source.DeepCopyInternal();
+      if(_Device is not null) dest.Device = (Hl7.Fhir.Model.ResourceReference)_Device.DeepCopyInternal();
+      if(_Indication is not null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(_Indication.DeepCopyInternal());
+      if(_BodySite is not null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)_BodySite.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -335,104 +328,104 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DeviceUseStatement;
-      if(otherT == null) return false;
+      if(other is not DeviceUseStatement otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(WhenUsed, otherT.WhenUsed)) return false;
-      if(!comparer.Equals(Timing, otherT.Timing)) return false;
-      if(!comparer.Equals(RecordedOnElement, otherT.RecordedOnElement)) return false;
-      if(!comparer.Equals(Source, otherT.Source)) return false;
-      if(!comparer.Equals(Device, otherT.Device)) return false;
-      if(!comparer.ListEquals(Indication, otherT.Indication)) return false;
-      if(!comparer.Equals(BodySite, otherT.BodySite)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_WhenUsed, otherT._WhenUsed)) return false;
+      if(!comparer.Equals(_Timing, otherT._Timing)) return false;
+      if(!comparer.Equals(_RecordedOnElement, otherT._RecordedOnElement)) return false;
+      if(!comparer.Equals(_Source, otherT._Source)) return false;
+      if(!comparer.Equals(_Device, otherT._Device)) return false;
+      if(!comparer.ListEquals(_Indication, otherT._Indication)) return false;
+      if(!comparer.Equals(_BodySite, otherT._BodySite)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "whenUsed":
-          value = WhenUsed;
-          return WhenUsed is not null;
+          value = _WhenUsed;
+          return _WhenUsed is not null;
         case "timing":
-          value = Timing;
-          return Timing is not null;
+          value = _Timing;
+          return _Timing is not null;
         case "recordedOn":
-          value = RecordedOnElement;
-          return RecordedOnElement is not null;
+          value = _RecordedOnElement;
+          return _RecordedOnElement is not null;
         case "source":
-          value = Source;
-          return Source is not null;
+          value = _Source;
+          return _Source is not null;
         case "device":
-          value = Device;
-          return Device is not null;
+          value = _Device;
+          return _Device is not null;
         case "indication":
-          value = Indication;
-          return Indication?.Any() == true;
+          value = _Indication;
+          return _Indication?.Any() == true;
         case "bodySite":
-          value = BodySite;
-          return BodySite is not null;
+          value = _BodySite;
+          return _BodySite is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "whenUsed":
-          WhenUsed = (Hl7.Fhir.Model.Period)value;
+          WhenUsed = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "timing":
-          Timing = (Hl7.Fhir.Model.DataType)value;
+          Timing = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "recordedOn":
-          RecordedOnElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          RecordedOnElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "source":
-          Source = (Hl7.Fhir.Model.ResourceReference)value;
+          Source = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "device":
-          Device = (Hl7.Fhir.Model.ResourceReference)value;
+          Device = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "indication":
-          Indication = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Indication = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "bodySite":
-          BodySite = (Hl7.Fhir.Model.CodeableConcept)value;
+          BodySite = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -443,17 +436,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (WhenUsed is not null) yield return new KeyValuePair<string,object>("whenUsed",WhenUsed);
-      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",Indication);
-      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_WhenUsed is not null) yield return new KeyValuePair<string,object>("whenUsed",_WhenUsed);
+      if (_Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",_RecordedOnElement);
+      if (_Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (_Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",_Indication);
+      if (_BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

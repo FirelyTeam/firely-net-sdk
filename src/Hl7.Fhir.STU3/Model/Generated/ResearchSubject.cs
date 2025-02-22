@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -111,13 +114,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// candidate | enrolled | active | suspended | withdrawn | completed.
@@ -127,13 +130,13 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchSubjectStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> StatusElement
+    public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>? _StatusElement;
 
     /// <summary>
     /// candidate | enrolled | active | suspended | withdrawn | completed
@@ -142,13 +145,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -158,13 +158,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=110, FiveWs="when.planned")]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// Study subject is part of.
@@ -174,13 +174,13 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Study
+    public Hl7.Fhir.Model.ResourceReference? Study
     {
       get { return _Study; }
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Study;
+    private Hl7.Fhir.Model.ResourceReference? _Study;
 
     /// <summary>
     /// Who is part of study.
@@ -190,41 +190,38 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Individual
+    public Hl7.Fhir.Model.ResourceReference? Individual
     {
       get { return _Individual; }
       set { _Individual = value; OnPropertyChanged("Individual"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Individual;
+    private Hl7.Fhir.Model.ResourceReference? _Individual;
 
     /// <summary>
     /// What path should be followed.
     /// </summary>
     [FhirElement("assignedArm", Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString AssignedArmElement
+    public Hl7.Fhir.Model.FhirString? AssignedArmElement
     {
       get { return _AssignedArmElement; }
       set { _AssignedArmElement = value; OnPropertyChanged("AssignedArmElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _AssignedArmElement;
+    private Hl7.Fhir.Model.FhirString? _AssignedArmElement;
 
     /// <summary>
     /// What path should be followed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AssignedArm
+    public string? AssignedArm
     {
-      get { return AssignedArmElement != null ? AssignedArmElement.Value : null; }
+      get => _AssignedArmElement?.Value;
       set
       {
-        if (value == null)
-          AssignedArmElement = null;
-        else
-          AssignedArmElement = new Hl7.Fhir.Model.FhirString(value);
+        AssignedArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AssignedArm");
       }
     }
@@ -234,28 +231,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("actualArm", Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ActualArmElement
+    public Hl7.Fhir.Model.FhirString? ActualArmElement
     {
       get { return _ActualArmElement; }
       set { _ActualArmElement = value; OnPropertyChanged("ActualArmElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ActualArmElement;
+    private Hl7.Fhir.Model.FhirString? _ActualArmElement;
 
     /// <summary>
     /// What path was followed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ActualArm
+    public string? ActualArm
     {
-      get { return ActualArmElement != null ? ActualArmElement.Value : null; }
+      get => _ActualArmElement?.Value;
       set
       {
-        if (value == null)
-          ActualArmElement = null;
-        else
-          ActualArmElement = new Hl7.Fhir.Model.FhirString(value);
+        ActualArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ActualArm");
       }
     }
@@ -267,34 +261,30 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Consent")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Consent
+    public Hl7.Fhir.Model.ResourceReference? Consent
     {
       get { return _Consent; }
       set { _Consent = value; OnPropertyChanged("Consent"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Consent;
+    private Hl7.Fhir.Model.ResourceReference? _Consent;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ResearchSubject;
-
-      if (dest == null)
-      {
+      if(other is not ResearchSubject dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>)StatusElement.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopyInternal();
-      if(Individual != null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)Individual.DeepCopyInternal();
-      if(AssignedArmElement != null) dest.AssignedArmElement = (Hl7.Fhir.Model.FhirString)AssignedArmElement.DeepCopyInternal();
-      if(ActualArmElement != null) dest.ActualArmElement = (Hl7.Fhir.Model.FhirString)ActualArmElement.DeepCopyInternal();
-      if(Consent != null) dest.Consent = (Hl7.Fhir.Model.ResourceReference)Consent.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>)_StatusElement.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Study is not null) dest.Study = (Hl7.Fhir.Model.ResourceReference)_Study.DeepCopyInternal();
+      if(_Individual is not null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)_Individual.DeepCopyInternal();
+      if(_AssignedArmElement is not null) dest.AssignedArmElement = (Hl7.Fhir.Model.FhirString)_AssignedArmElement.DeepCopyInternal();
+      if(_ActualArmElement is not null) dest.ActualArmElement = (Hl7.Fhir.Model.FhirString)_ActualArmElement.DeepCopyInternal();
+      if(_Consent is not null) dest.Consent = (Hl7.Fhir.Model.ResourceReference)_Consent.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -306,83 +296,83 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ResearchSubject;
-      if(otherT == null) return false;
+      if(other is not ResearchSubject otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.Equals(Study, otherT.Study)) return false;
-      if(!comparer.Equals(Individual, otherT.Individual)) return false;
-      if(!comparer.Equals(AssignedArmElement, otherT.AssignedArmElement)) return false;
-      if(!comparer.Equals(ActualArmElement, otherT.ActualArmElement)) return false;
-      if(!comparer.Equals(Consent, otherT.Consent)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Study, otherT._Study)) return false;
+      if(!comparer.Equals(_Individual, otherT._Individual)) return false;
+      if(!comparer.Equals(_AssignedArmElement, otherT._AssignedArmElement)) return false;
+      if(!comparer.Equals(_ActualArmElement, otherT._ActualArmElement)) return false;
+      if(!comparer.Equals(_Consent, otherT._Consent)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "study":
-          value = Study;
-          return Study is not null;
+          value = _Study;
+          return _Study is not null;
         case "individual":
-          value = Individual;
-          return Individual is not null;
+          value = _Individual;
+          return _Individual is not null;
         case "assignedArm":
-          value = AssignedArmElement;
-          return AssignedArmElement is not null;
+          value = _AssignedArmElement;
+          return _AssignedArmElement is not null;
         case "actualArm":
-          value = ActualArmElement;
-          return ActualArmElement is not null;
+          value = _ActualArmElement;
+          return _ActualArmElement is not null;
         case "consent":
-          value = Consent;
-          return Consent is not null;
+          value = _Consent;
+          return _Consent is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "study":
-          Study = (Hl7.Fhir.Model.ResourceReference)value;
+          Study = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "individual":
-          Individual = (Hl7.Fhir.Model.ResourceReference)value;
+          Individual = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "assignedArm":
-          AssignedArmElement = (Hl7.Fhir.Model.FhirString)value;
+          AssignedArmElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "actualArm":
-          ActualArmElement = (Hl7.Fhir.Model.FhirString)value;
+          ActualArmElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "consent":
-          Consent = (Hl7.Fhir.Model.ResourceReference)value;
+          Consent = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -393,14 +383,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);
-      if (Individual is not null) yield return new KeyValuePair<string,object>("individual",Individual);
-      if (AssignedArmElement is not null) yield return new KeyValuePair<string,object>("assignedArm",AssignedArmElement);
-      if (ActualArmElement is not null) yield return new KeyValuePair<string,object>("actualArm",ActualArmElement);
-      if (Consent is not null) yield return new KeyValuePair<string,object>("consent",Consent);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Study is not null) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Individual is not null) yield return new KeyValuePair<string,object>("individual",_Individual);
+      if (_AssignedArmElement is not null) yield return new KeyValuePair<string,object>("assignedArm",_AssignedArmElement);
+      if (_ActualArmElement is not null) yield return new KeyValuePair<string,object>("actualArm",_ActualArmElement);
+      if (_Consent is not null) yield return new KeyValuePair<string,object>("consent",_Consent);
     }
 
   }

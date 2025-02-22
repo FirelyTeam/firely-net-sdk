@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -152,13 +155,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("Role")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Role
+      public Hl7.Fhir.Model.CodeableConcept? Role
       {
         get { return _Role; }
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Role;
+      private Hl7.Fhir.Model.CodeableConcept? _Role;
 
       /// <summary>
       /// Practitioner or Organization  participant.
@@ -168,26 +171,22 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
         get { return _Actor; }
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PerformerComponent;
-
-        if (dest == null)
-        {
+        if(other is not PerformerComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
+        if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -199,41 +198,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PerformerComponent;
-        if(otherT == null) return false;
+        if(other is not PerformerComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Role, otherT.Role)) return false;
-        if(!comparer.Equals(Actor, otherT.Actor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Role, otherT._Role)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "role":
-            value = Role;
-            return Role is not null;
+            value = _Role;
+            return _Role is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            value = _Actor;
+            return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "role":
-            Role = (Hl7.Fhir.Model.CodeableConcept)value;
+            Role = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference)value;
+            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -244,8 +243,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if (_Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -271,28 +270,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comment", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString CommentElement
+      public Hl7.Fhir.Model.FhirString? CommentElement
       {
         get { return _CommentElement; }
         set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _CommentElement;
+      private Hl7.Fhir.Model.FhirString? _CommentElement;
 
       /// <summary>
       /// Comment about the image (e.g. explanation)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Comment
+      public string? Comment
       {
-        get { return CommentElement != null ? CommentElement.Value : null; }
+        get => _CommentElement?.Value;
         set
         {
-          if (value == null)
-            CommentElement = null;
-          else
-            CommentElement = new Hl7.Fhir.Model.FhirString(value);
+          CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -305,26 +301,22 @@ namespace Hl7.Fhir.Model
       [References("Media")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Link
+      public Hl7.Fhir.Model.ResourceReference? Link
       {
         get { return _Link; }
         set { _Link = value; OnPropertyChanged("Link"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Link;
+      private Hl7.Fhir.Model.ResourceReference? _Link;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ImageComponent;
-
-        if (dest == null)
-        {
+        if(other is not ImageComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
-        if(Link != null) dest.Link = (Hl7.Fhir.Model.ResourceReference)Link.DeepCopyInternal();
+        if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
+        if(_Link is not null) dest.Link = (Hl7.Fhir.Model.ResourceReference)_Link.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -336,41 +328,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ImageComponent;
-        if(otherT == null) return false;
+        if(other is not ImageComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
-        if(!comparer.Equals(Link, otherT.Link)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
+        if(!comparer.Equals(_Link, otherT._Link)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "comment":
-            value = CommentElement;
-            return CommentElement is not null;
+            value = _CommentElement;
+            return _CommentElement is not null;
           case "link":
-            value = Link;
-            return Link is not null;
+            value = _Link;
+            return _Link is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "comment":
-            CommentElement = (Hl7.Fhir.Model.FhirString)value;
+            CommentElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "link":
-            Link = (Hl7.Fhir.Model.ResourceReference)value;
+            Link = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -381,8 +373,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-        if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+        if (_CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+        if (_Link is not null) yield return new KeyValuePair<string,object>("link",_Link);
       }
 
     }
@@ -395,11 +387,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// What was requested.
@@ -411,11 +403,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// registered | partial | preliminary | final +.
@@ -425,13 +417,13 @@ namespace Hl7.Fhir.Model
     [Binding("DiagnosticReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> StatusElement
+    public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>? _StatusElement;
 
     /// <summary>
     /// registered | partial | preliminary | final +
@@ -440,13 +432,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -457,13 +446,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", InSummary=true, Order=120, FiveWs="class")]
     [Binding("DiagnosticServiceSection")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Category
+    public Hl7.Fhir.Model.CodeableConcept? Category
     {
       get { return _Category; }
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Category;
+    private Hl7.Fhir.Model.CodeableConcept? _Category;
 
     /// <summary>
     /// Name/Code for this diagnostic report.
@@ -472,13 +461,13 @@ namespace Hl7.Fhir.Model
     [Binding("DiagnosticReportCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// The subject of the report - usually, but not always, the patient.
@@ -487,13 +476,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Health care event when test ordered.
@@ -502,13 +491,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Context
+    public Hl7.Fhir.Model.ResourceReference? Context
     {
       get { return _Context; }
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Context;
+    private Hl7.Fhir.Model.ResourceReference? _Context;
 
     /// <summary>
     /// Clinically relevant time/time-period for report.
@@ -517,26 +506,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Effective
+    public Hl7.Fhir.Model.DataType? Effective
     {
       get { return _Effective; }
       set { _Effective = value; OnPropertyChanged("Effective"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Effective;
+    private Hl7.Fhir.Model.DataType? _Effective;
 
     /// <summary>
     /// DateTime this version was released.
     /// </summary>
     [FhirElement("issued", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant IssuedElement
+    public Hl7.Fhir.Model.Instant? IssuedElement
     {
       get { return _IssuedElement; }
       set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _IssuedElement;
+    private Hl7.Fhir.Model.Instant? _IssuedElement;
 
     /// <summary>
     /// DateTime this version was released
@@ -545,13 +534,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Issued
     {
-      get { return IssuedElement != null ? IssuedElement.Value : null; }
+      get => _IssuedElement?.Value;
       set
       {
-        if (value == null)
-          IssuedElement = null;
-        else
-          IssuedElement = new Hl7.Fhir.Model.Instant(value);
+        IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Issued");
       }
     }
@@ -564,11 +550,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent> Performer
     {
-      get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>(); return _Performer; }
+      get => _Performer ?? new List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>();
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
-    private List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent> _Performer;
+    private List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>? _Performer;
 
     /// <summary>
     /// Specimens this report is based on.
@@ -580,11 +566,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
-      get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
+      get => _Specimen ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Specimen = value; OnPropertyChanged("Specimen"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Specimen;
 
     /// <summary>
     /// Observations - simple, or complex nested groups.
@@ -596,11 +582,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Result
     {
-      get { if(_Result==null) _Result = new List<Hl7.Fhir.Model.ResourceReference>(); return _Result; }
+      get => _Result ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Result = value; OnPropertyChanged("Result"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Result;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Result;
 
     /// <summary>
     /// Reference to full details of imaging associated with the diagnostic report.
@@ -612,11 +598,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy
     {
-      get { if(_ImagingStudy==null) _ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(); return _ImagingStudy; }
+      get => _ImagingStudy ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _ImagingStudy = value; OnPropertyChanged("ImagingStudy"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ImagingStudy;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ImagingStudy;
 
     /// <summary>
     /// Key images associated with this report.
@@ -626,39 +612,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> Image
     {
-      get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(); return _Image; }
+      get => _Image ?? new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>();
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 
-    private List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> _Image;
+    private List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>? _Image;
 
     /// <summary>
     /// Clinical Interpretation of test results.
     /// </summary>
     [FhirElement("conclusion", Order=230)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ConclusionElement
+    public Hl7.Fhir.Model.FhirString? ConclusionElement
     {
       get { return _ConclusionElement; }
       set { _ConclusionElement = value; OnPropertyChanged("ConclusionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ConclusionElement;
+    private Hl7.Fhir.Model.FhirString? _ConclusionElement;
 
     /// <summary>
     /// Clinical Interpretation of test results
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Conclusion
+    public string? Conclusion
     {
-      get { return ConclusionElement != null ? ConclusionElement.Value : null; }
+      get => _ConclusionElement?.Value;
       set
       {
-        if (value == null)
-          ConclusionElement = null;
-        else
-          ConclusionElement = new Hl7.Fhir.Model.FhirString(value);
+        ConclusionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Conclusion");
       }
     }
@@ -672,11 +655,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis
     {
-      get { if(_CodedDiagnosis==null) _CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CodedDiagnosis; }
+      get => _CodedDiagnosis ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _CodedDiagnosis = value; OnPropertyChanged("CodedDiagnosis"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _CodedDiagnosis;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _CodedDiagnosis;
 
     /// <summary>
     /// Entire report as issued.
@@ -686,41 +669,37 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> PresentedForm
     {
-      get { if(_PresentedForm==null) _PresentedForm = new List<Hl7.Fhir.Model.Attachment>(); return _PresentedForm; }
+      get => _PresentedForm ?? new List<Hl7.Fhir.Model.Attachment>();
       set { _PresentedForm = value; OnPropertyChanged("PresentedForm"); }
     }
 
-    private List<Hl7.Fhir.Model.Attachment> _PresentedForm;
+    private List<Hl7.Fhir.Model.Attachment>? _PresentedForm;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DiagnosticReport;
-
-      if (dest == null)
-      {
+      if(other is not DiagnosticReport dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>)StatusElement.DeepCopyInternal();
-      if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopyInternal();
-      if(Effective != null) dest.Effective = (Hl7.Fhir.Model.DataType)Effective.DeepCopyInternal();
-      if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopyInternal();
-      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>(Performer.DeepCopyInternal());
-      if(Specimen.Any()) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopyInternal());
-      if(Result.Any()) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopyInternal());
-      if(ImagingStudy.Any()) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopyInternal());
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(Image.DeepCopyInternal());
-      if(ConclusionElement != null) dest.ConclusionElement = (Hl7.Fhir.Model.FhirString)ConclusionElement.DeepCopyInternal();
-      if(CodedDiagnosis.Any()) dest.CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(CodedDiagnosis.DeepCopyInternal());
-      if(PresentedForm.Any()) dest.PresentedForm = new List<Hl7.Fhir.Model.Attachment>(PresentedForm.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>)_StatusElement.DeepCopyInternal();
+      if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Context is not null) dest.Context = (Hl7.Fhir.Model.ResourceReference)_Context.DeepCopyInternal();
+      if(_Effective is not null) dest.Effective = (Hl7.Fhir.Model.DataType)_Effective.DeepCopyInternal();
+      if(_IssuedElement is not null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)_IssuedElement.DeepCopyInternal();
+      if(_Performer is not null) dest.Performer = new List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>(_Performer.DeepCopyInternal());
+      if(_Specimen is not null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(_Specimen.DeepCopyInternal());
+      if(_Result is not null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(_Result.DeepCopyInternal());
+      if(_ImagingStudy is not null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(_ImagingStudy.DeepCopyInternal());
+      if(_Image is not null) dest.Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(_Image.DeepCopyInternal());
+      if(_ConclusionElement is not null) dest.ConclusionElement = (Hl7.Fhir.Model.FhirString)_ConclusionElement.DeepCopyInternal();
+      if(_CodedDiagnosis is not null) dest.CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(_CodedDiagnosis.DeepCopyInternal());
+      if(_PresentedForm is not null) dest.PresentedForm = new List<Hl7.Fhir.Model.Attachment>(_PresentedForm.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -732,146 +711,146 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DiagnosticReport;
-      if(otherT == null) return false;
+      if(other is not DiagnosticReport otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Context, otherT.Context)) return false;
-      if(!comparer.Equals(Effective, otherT.Effective)) return false;
-      if(!comparer.Equals(IssuedElement, otherT.IssuedElement)) return false;
-      if(!comparer.ListEquals(Performer, otherT.Performer)) return false;
-      if(!comparer.ListEquals(Specimen, otherT.Specimen)) return false;
-      if(!comparer.ListEquals(Result, otherT.Result)) return false;
-      if(!comparer.ListEquals(ImagingStudy, otherT.ImagingStudy)) return false;
-      if(!comparer.ListEquals(Image, otherT.Image)) return false;
-      if(!comparer.Equals(ConclusionElement, otherT.ConclusionElement)) return false;
-      if(!comparer.ListEquals(CodedDiagnosis, otherT.CodedDiagnosis)) return false;
-      if(!comparer.ListEquals(PresentedForm, otherT.PresentedForm)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Context, otherT._Context)) return false;
+      if(!comparer.Equals(_Effective, otherT._Effective)) return false;
+      if(!comparer.Equals(_IssuedElement, otherT._IssuedElement)) return false;
+      if(!comparer.ListEquals(_Performer, otherT._Performer)) return false;
+      if(!comparer.ListEquals(_Specimen, otherT._Specimen)) return false;
+      if(!comparer.ListEquals(_Result, otherT._Result)) return false;
+      if(!comparer.ListEquals(_ImagingStudy, otherT._ImagingStudy)) return false;
+      if(!comparer.ListEquals(_Image, otherT._Image)) return false;
+      if(!comparer.Equals(_ConclusionElement, otherT._ConclusionElement)) return false;
+      if(!comparer.ListEquals(_CodedDiagnosis, otherT._CodedDiagnosis)) return false;
+      if(!comparer.ListEquals(_PresentedForm, otherT._PresentedForm)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "category":
-          value = Category;
-          return Category is not null;
+          value = _Category;
+          return _Category is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "context":
-          value = Context;
-          return Context is not null;
+          value = _Context;
+          return _Context is not null;
         case "effective":
-          value = Effective;
-          return Effective is not null;
+          value = _Effective;
+          return _Effective is not null;
         case "issued":
-          value = IssuedElement;
-          return IssuedElement is not null;
+          value = _IssuedElement;
+          return _IssuedElement is not null;
         case "performer":
-          value = Performer;
-          return Performer?.Any() == true;
+          value = _Performer;
+          return _Performer?.Any() == true;
         case "specimen":
-          value = Specimen;
-          return Specimen?.Any() == true;
+          value = _Specimen;
+          return _Specimen?.Any() == true;
         case "result":
-          value = Result;
-          return Result?.Any() == true;
+          value = _Result;
+          return _Result?.Any() == true;
         case "imagingStudy":
-          value = ImagingStudy;
-          return ImagingStudy?.Any() == true;
+          value = _ImagingStudy;
+          return _ImagingStudy?.Any() == true;
         case "image":
-          value = Image;
-          return Image?.Any() == true;
+          value = _Image;
+          return _Image?.Any() == true;
         case "conclusion":
-          value = ConclusionElement;
-          return ConclusionElement is not null;
+          value = _ConclusionElement;
+          return _ConclusionElement is not null;
         case "codedDiagnosis":
-          value = CodedDiagnosis;
-          return CodedDiagnosis?.Any() == true;
+          value = _CodedDiagnosis;
+          return _CodedDiagnosis?.Any() == true;
         case "presentedForm":
-          value = PresentedForm;
-          return PresentedForm?.Any() == true;
+          value = _PresentedForm;
+          return _PresentedForm?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>?)value;
           return this;
         case "category":
-          Category = (Hl7.Fhir.Model.CodeableConcept)value;
+          Category = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "context":
-          Context = (Hl7.Fhir.Model.ResourceReference)value;
+          Context = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "effective":
-          Effective = (Hl7.Fhir.Model.DataType)value;
+          Effective = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "issued":
-          IssuedElement = (Hl7.Fhir.Model.Instant)value;
+          IssuedElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "performer":
-          Performer = (List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>)value;
+          Performer = (List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>?)value!;
           return this;
         case "specimen":
-          Specimen = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Specimen = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "result":
-          Result = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Result = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "imagingStudy":
-          ImagingStudy = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          ImagingStudy = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "image":
-          Image = (List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>)value;
+          Image = (List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>?)value!;
           return this;
         case "conclusion":
-          ConclusionElement = (Hl7.Fhir.Model.FhirString)value;
+          ConclusionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "codedDiagnosis":
-          CodedDiagnosis = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          CodedDiagnosis = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "presentedForm":
-          PresentedForm = (List<Hl7.Fhir.Model.Attachment>)value;
+          PresentedForm = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -882,23 +861,23 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
-      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
-      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
-      if (Result?.Any() == true) yield return new KeyValuePair<string,object>("result",Result);
-      if (ImagingStudy?.Any() == true) yield return new KeyValuePair<string,object>("imagingStudy",ImagingStudy);
-      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
-      if (ConclusionElement is not null) yield return new KeyValuePair<string,object>("conclusion",ConclusionElement);
-      if (CodedDiagnosis?.Any() == true) yield return new KeyValuePair<string,object>("codedDiagnosis",CodedDiagnosis);
-      if (PresentedForm?.Any() == true) yield return new KeyValuePair<string,object>("presentedForm",PresentedForm);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Effective is not null) yield return new KeyValuePair<string,object>("effective",_Effective);
+      if (_IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",_IssuedElement);
+      if (_Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",_Specimen);
+      if (_Result?.Any() == true) yield return new KeyValuePair<string,object>("result",_Result);
+      if (_ImagingStudy?.Any() == true) yield return new KeyValuePair<string,object>("imagingStudy",_ImagingStudy);
+      if (_Image?.Any() == true) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_ConclusionElement is not null) yield return new KeyValuePair<string,object>("conclusion",_ConclusionElement);
+      if (_CodedDiagnosis?.Any() == true) yield return new KeyValuePair<string,object>("codedDiagnosis",_CodedDiagnosis);
+      if (_PresentedForm?.Any() == true) yield return new KeyValuePair<string,object>("presentedForm",_PresentedForm);
     }
 
   }

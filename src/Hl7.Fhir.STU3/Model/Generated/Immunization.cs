@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -103,13 +106,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("ImmunizationRole")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Role
+      public Hl7.Fhir.Model.CodeableConcept? Role
       {
         get { return _Role; }
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Role;
+      private Hl7.Fhir.Model.CodeableConcept? _Role;
 
       /// <summary>
       /// Individual who was performing.
@@ -119,26 +122,22 @@ namespace Hl7.Fhir.Model
       [References("Practitioner")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
         get { return _Actor; }
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PractitionerComponent;
-
-        if (dest == null)
-        {
+        if(other is not PractitionerComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
+        if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -150,41 +149,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PractitionerComponent;
-        if(otherT == null) return false;
+        if(other is not PractitionerComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Role, otherT.Role)) return false;
-        if(!comparer.Equals(Actor, otherT.Actor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Role, otherT._Role)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "role":
-            value = Role;
-            return Role is not null;
+            value = _Role;
+            return _Role is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            value = _Actor;
+            return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "role":
-            Role = (Hl7.Fhir.Model.CodeableConcept)value;
+            Role = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference)value;
+            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -195,8 +194,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if (_Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -226,11 +225,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
-        get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+        get => _Reason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Reason = value; OnPropertyChanged("Reason"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Reason;
 
       /// <summary>
       /// Why immunization did not occur.
@@ -241,24 +240,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
       {
-        get { if(_ReasonNotGiven==null) _ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonNotGiven; }
+        get => _ReasonNotGiven ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _ReasonNotGiven = value; OnPropertyChanged("ReasonNotGiven"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _ReasonNotGiven;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _ReasonNotGiven;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ExplanationComponent;
-
-        if (dest == null)
-        {
+        if(other is not ExplanationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopyInternal());
-        if(ReasonNotGiven.Any()) dest.ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotGiven.DeepCopyInternal());
+        if(_Reason is not null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(_Reason.DeepCopyInternal());
+        if(_ReasonNotGiven is not null) dest.ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(_ReasonNotGiven.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -270,41 +265,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ExplanationComponent;
-        if(otherT == null) return false;
+        if(other is not ExplanationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Reason, otherT.Reason)) return false;
-        if(!comparer.ListEquals(ReasonNotGiven, otherT.ReasonNotGiven)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Reason, otherT._Reason)) return false;
+        if(!comparer.ListEquals(_ReasonNotGiven, otherT._ReasonNotGiven)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "reason":
-            value = Reason;
-            return Reason?.Any() == true;
+            value = _Reason;
+            return _Reason?.Any() == true;
           case "reasonNotGiven":
-            value = ReasonNotGiven;
-            return ReasonNotGiven?.Any() == true;
+            value = _ReasonNotGiven;
+            return _ReasonNotGiven?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "reason":
-            Reason = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Reason = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "reasonNotGiven":
-            ReasonNotGiven = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            ReasonNotGiven = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -315,8 +310,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
-        if (ReasonNotGiven?.Any() == true) yield return new KeyValuePair<string,object>("reasonNotGiven",ReasonNotGiven);
+        if (_Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",_Reason);
+        if (_ReasonNotGiven?.Any() == true) yield return new KeyValuePair<string,object>("reasonNotGiven",_ReasonNotGiven);
       }
 
     }
@@ -343,28 +338,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("date", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime DateElement
+      public Hl7.Fhir.Model.FhirDateTime? DateElement
       {
         get { return _DateElement; }
         set { _DateElement = value; OnPropertyChanged("DateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _DateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
       /// <summary>
       /// When reaction started
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Date
+      public string? Date
       {
-        get { return DateElement != null ? DateElement.Value : null; }
+        get => _DateElement?.Value;
         set
         {
-          if (value == null)
-            DateElement = null;
-          else
-            DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -376,26 +368,26 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Observation")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Detail
+      public Hl7.Fhir.Model.ResourceReference? Detail
       {
         get { return _Detail; }
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Detail;
+      private Hl7.Fhir.Model.ResourceReference? _Detail;
 
       /// <summary>
       /// Indicates self-reported reaction.
       /// </summary>
       [FhirElement("reported", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean ReportedElement
+      public Hl7.Fhir.Model.FhirBoolean? ReportedElement
       {
         get { return _ReportedElement; }
         set { _ReportedElement = value; OnPropertyChanged("ReportedElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
+      private Hl7.Fhir.Model.FhirBoolean? _ReportedElement;
 
       /// <summary>
       /// Indicates self-reported reaction
@@ -404,30 +396,23 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Reported
       {
-        get { return ReportedElement != null ? ReportedElement.Value : null; }
+        get => _ReportedElement?.Value;
         set
         {
-          if (value == null)
-            ReportedElement = null;
-          else
-            ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          ReportedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Reported");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ReactionComponent;
-
-        if (dest == null)
-        {
+        if(other is not ReactionComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-        if(Detail != null) dest.Detail = (Hl7.Fhir.Model.ResourceReference)Detail.DeepCopyInternal();
-        if(ReportedElement != null) dest.ReportedElement = (Hl7.Fhir.Model.FhirBoolean)ReportedElement.DeepCopyInternal();
+        if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+        if(_Detail is not null) dest.Detail = (Hl7.Fhir.Model.ResourceReference)_Detail.DeepCopyInternal();
+        if(_ReportedElement is not null) dest.ReportedElement = (Hl7.Fhir.Model.FhirBoolean)_ReportedElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -439,48 +424,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ReactionComponent;
-        if(otherT == null) return false;
+        if(other is not ReactionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-        if(!comparer.Equals(Detail, otherT.Detail)) return false;
-        if(!comparer.Equals(ReportedElement, otherT.ReportedElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+        if(!comparer.Equals(_Detail, otherT._Detail)) return false;
+        if(!comparer.Equals(_ReportedElement, otherT._ReportedElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "date":
-            value = DateElement;
-            return DateElement is not null;
+            value = _DateElement;
+            return _DateElement is not null;
           case "detail":
-            value = Detail;
-            return Detail is not null;
+            value = _Detail;
+            return _Detail is not null;
           case "reported":
-            value = ReportedElement;
-            return ReportedElement is not null;
+            value = _ReportedElement;
+            return _ReportedElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "date":
-            DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "detail":
-            Detail = (Hl7.Fhir.Model.ResourceReference)value;
+            Detail = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "reported":
-            ReportedElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            ReportedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -491,9 +476,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
-        if (ReportedElement is not null) yield return new KeyValuePair<string,object>("reported",ReportedElement);
+        if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_Detail is not null) yield return new KeyValuePair<string,object>("detail",_Detail);
+        if (_ReportedElement is not null) yield return new KeyValuePair<string,object>("reported",_ReportedElement);
       }
 
     }
@@ -519,13 +504,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("doseSequence", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
+      public Hl7.Fhir.Model.PositiveInt? DoseSequenceElement
       {
         get { return _DoseSequenceElement; }
         set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _DoseSequenceElement;
+      private Hl7.Fhir.Model.PositiveInt? _DoseSequenceElement;
 
       /// <summary>
       /// Dose number within series
@@ -534,13 +519,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? DoseSequence
       {
-        get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
+        get => _DoseSequenceElement?.Value;
         set
         {
-          if (value == null)
-            DoseSequenceElement = null;
-          else
-            DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+          DoseSequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("DoseSequence");
         }
       }
@@ -550,28 +532,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("description", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DescriptionElement
+      public Hl7.Fhir.Model.FhirString? DescriptionElement
       {
         get { return _DescriptionElement; }
         set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _DescriptionElement;
+      private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
       /// <summary>
       /// Details of vaccine protocol
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Description
+      public string? Description
       {
-        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        get => _DescriptionElement?.Value;
         set
         {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -583,41 +562,38 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Authority
+      public Hl7.Fhir.Model.ResourceReference? Authority
       {
         get { return _Authority; }
         set { _Authority = value; OnPropertyChanged("Authority"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Authority;
+      private Hl7.Fhir.Model.ResourceReference? _Authority;
 
       /// <summary>
       /// Name of vaccine series.
       /// </summary>
       [FhirElement("series", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString SeriesElement
+      public Hl7.Fhir.Model.FhirString? SeriesElement
       {
         get { return _SeriesElement; }
         set { _SeriesElement = value; OnPropertyChanged("SeriesElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _SeriesElement;
+      private Hl7.Fhir.Model.FhirString? _SeriesElement;
 
       /// <summary>
       /// Name of vaccine series
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Series
+      public string? Series
       {
-        get { return SeriesElement != null ? SeriesElement.Value : null; }
+        get => _SeriesElement?.Value;
         set
         {
-          if (value == null)
-            SeriesElement = null;
-          else
-            SeriesElement = new Hl7.Fhir.Model.FhirString(value);
+          SeriesElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Series");
         }
       }
@@ -627,13 +603,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("seriesDoses", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt SeriesDosesElement
+      public Hl7.Fhir.Model.PositiveInt? SeriesDosesElement
       {
         get { return _SeriesDosesElement; }
         set { _SeriesDosesElement = value; OnPropertyChanged("SeriesDosesElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _SeriesDosesElement;
+      private Hl7.Fhir.Model.PositiveInt? _SeriesDosesElement;
 
       /// <summary>
       /// Recommended number of doses for immunity
@@ -642,13 +618,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SeriesDoses
       {
-        get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
+        get => _SeriesDosesElement?.Value;
         set
         {
-          if (value == null)
-            SeriesDosesElement = null;
-          else
-            SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SeriesDosesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SeriesDoses");
         }
       }
@@ -662,11 +635,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
       {
-        get { if(_TargetDisease==null) _TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetDisease; }
+        get => _TargetDisease ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _TargetDisease;
 
       /// <summary>
       /// Indicates if dose counts towards immunity.
@@ -675,13 +648,13 @@ namespace Hl7.Fhir.Model
       [Binding("VaccinationProtocolDoseStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept DoseStatus
+      public Hl7.Fhir.Model.CodeableConcept? DoseStatus
       {
         get { return _DoseStatus; }
         set { _DoseStatus = value; OnPropertyChanged("DoseStatus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _DoseStatus;
+      private Hl7.Fhir.Model.CodeableConcept? _DoseStatus;
 
       /// <summary>
       /// Why dose does (not) count.
@@ -689,32 +662,28 @@ namespace Hl7.Fhir.Model
       [FhirElement("doseStatusReason", Order=110)]
       [Binding("VaccinationProtocolDoseStatusReason")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept DoseStatusReason
+      public Hl7.Fhir.Model.CodeableConcept? DoseStatusReason
       {
         get { return _DoseStatusReason; }
         set { _DoseStatusReason = value; OnPropertyChanged("DoseStatusReason"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _DoseStatusReason;
+      private Hl7.Fhir.Model.CodeableConcept? _DoseStatusReason;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as VaccinationProtocolComponent;
-
-        if (dest == null)
-        {
+        if(other is not VaccinationProtocolComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)DoseSequenceElement.DeepCopyInternal();
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-        if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopyInternal();
-        if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopyInternal();
-        if(SeriesDosesElement != null) dest.SeriesDosesElement = (Hl7.Fhir.Model.PositiveInt)SeriesDosesElement.DeepCopyInternal();
-        if(TargetDisease.Any()) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopyInternal());
-        if(DoseStatus != null) dest.DoseStatus = (Hl7.Fhir.Model.CodeableConcept)DoseStatus.DeepCopyInternal();
-        if(DoseStatusReason != null) dest.DoseStatusReason = (Hl7.Fhir.Model.CodeableConcept)DoseStatusReason.DeepCopyInternal();
+        if(_DoseSequenceElement is not null) dest.DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)_DoseSequenceElement.DeepCopyInternal();
+        if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+        if(_Authority is not null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)_Authority.DeepCopyInternal();
+        if(_SeriesElement is not null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)_SeriesElement.DeepCopyInternal();
+        if(_SeriesDosesElement is not null) dest.SeriesDosesElement = (Hl7.Fhir.Model.PositiveInt)_SeriesDosesElement.DeepCopyInternal();
+        if(_TargetDisease is not null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(_TargetDisease.DeepCopyInternal());
+        if(_DoseStatus is not null) dest.DoseStatus = (Hl7.Fhir.Model.CodeableConcept)_DoseStatus.DeepCopyInternal();
+        if(_DoseStatusReason is not null) dest.DoseStatusReason = (Hl7.Fhir.Model.CodeableConcept)_DoseStatusReason.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -726,83 +695,83 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as VaccinationProtocolComponent;
-        if(otherT == null) return false;
+        if(other is not VaccinationProtocolComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
-        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-        if(!comparer.Equals(Authority, otherT.Authority)) return false;
-        if(!comparer.Equals(SeriesElement, otherT.SeriesElement)) return false;
-        if(!comparer.Equals(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
-        if(!comparer.ListEquals(TargetDisease, otherT.TargetDisease)) return false;
-        if(!comparer.Equals(DoseStatus, otherT.DoseStatus)) return false;
-        if(!comparer.Equals(DoseStatusReason, otherT.DoseStatusReason)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DoseSequenceElement, otherT._DoseSequenceElement)) return false;
+        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+        if(!comparer.Equals(_Authority, otherT._Authority)) return false;
+        if(!comparer.Equals(_SeriesElement, otherT._SeriesElement)) return false;
+        if(!comparer.Equals(_SeriesDosesElement, otherT._SeriesDosesElement)) return false;
+        if(!comparer.ListEquals(_TargetDisease, otherT._TargetDisease)) return false;
+        if(!comparer.Equals(_DoseStatus, otherT._DoseStatus)) return false;
+        if(!comparer.Equals(_DoseStatusReason, otherT._DoseStatusReason)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "doseSequence":
-            value = DoseSequenceElement;
-            return DoseSequenceElement is not null;
+            value = _DoseSequenceElement;
+            return _DoseSequenceElement is not null;
           case "description":
-            value = DescriptionElement;
-            return DescriptionElement is not null;
+            value = _DescriptionElement;
+            return _DescriptionElement is not null;
           case "authority":
-            value = Authority;
-            return Authority is not null;
+            value = _Authority;
+            return _Authority is not null;
           case "series":
-            value = SeriesElement;
-            return SeriesElement is not null;
+            value = _SeriesElement;
+            return _SeriesElement is not null;
           case "seriesDoses":
-            value = SeriesDosesElement;
-            return SeriesDosesElement is not null;
+            value = _SeriesDosesElement;
+            return _SeriesDosesElement is not null;
           case "targetDisease":
-            value = TargetDisease;
-            return TargetDisease?.Any() == true;
+            value = _TargetDisease;
+            return _TargetDisease?.Any() == true;
           case "doseStatus":
-            value = DoseStatus;
-            return DoseStatus is not null;
+            value = _DoseStatus;
+            return _DoseStatus is not null;
           case "doseStatusReason":
-            value = DoseStatusReason;
-            return DoseStatusReason is not null;
+            value = _DoseStatusReason;
+            return _DoseStatusReason is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "doseSequence":
-            DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)value;
+            DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+            DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "authority":
-            Authority = (Hl7.Fhir.Model.ResourceReference)value;
+            Authority = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "series":
-            SeriesElement = (Hl7.Fhir.Model.FhirString)value;
+            SeriesElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "seriesDoses":
-            SeriesDosesElement = (Hl7.Fhir.Model.PositiveInt)value;
+            SeriesDosesElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "targetDisease":
-            TargetDisease = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            TargetDisease = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "doseStatus":
-            DoseStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+            DoseStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "doseStatusReason":
-            DoseStatusReason = (Hl7.Fhir.Model.CodeableConcept)value;
+            DoseStatusReason = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -813,14 +782,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DoseSequenceElement is not null) yield return new KeyValuePair<string,object>("doseSequence",DoseSequenceElement);
-        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
-        if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
-        if (SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDosesElement);
-        if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
-        if (DoseStatus is not null) yield return new KeyValuePair<string,object>("doseStatus",DoseStatus);
-        if (DoseStatusReason is not null) yield return new KeyValuePair<string,object>("doseStatusReason",DoseStatusReason);
+        if (_DoseSequenceElement is not null) yield return new KeyValuePair<string,object>("doseSequence",_DoseSequenceElement);
+        if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_Authority is not null) yield return new KeyValuePair<string,object>("authority",_Authority);
+        if (_SeriesElement is not null) yield return new KeyValuePair<string,object>("series",_SeriesElement);
+        if (_SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",_SeriesDosesElement);
+        if (_TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",_TargetDisease);
+        if (_DoseStatus is not null) yield return new KeyValuePair<string,object>("doseStatus",_DoseStatus);
+        if (_DoseStatusReason is not null) yield return new KeyValuePair<string,object>("doseStatusReason",_DoseStatusReason);
       }
 
     }
@@ -833,11 +802,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// completed | entered-in-error.
@@ -847,13 +816,13 @@ namespace Hl7.Fhir.Model
     [Binding("ImmunizationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>? _StatusElement;
 
     /// <summary>
     /// completed | entered-in-error
@@ -862,13 +831,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -879,13 +845,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("notGiven", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean NotGivenElement
+    public Hl7.Fhir.Model.FhirBoolean? NotGivenElement
     {
       get { return _NotGivenElement; }
       set { _NotGivenElement = value; OnPropertyChanged("NotGivenElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _NotGivenElement;
+    private Hl7.Fhir.Model.FhirBoolean? _NotGivenElement;
 
     /// <summary>
     /// Flag for whether immunization was given
@@ -894,13 +860,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? NotGiven
     {
-      get { return NotGivenElement != null ? NotGivenElement.Value : null; }
+      get => _NotGivenElement?.Value;
       set
       {
-        if (value == null)
-          NotGivenElement = null;
-        else
-          NotGivenElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        NotGivenElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("NotGiven");
       }
     }
@@ -912,13 +875,13 @@ namespace Hl7.Fhir.Model
     [Binding("VaccineCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept VaccineCode
+    public Hl7.Fhir.Model.CodeableConcept? VaccineCode
     {
       get { return _VaccineCode; }
       set { _VaccineCode = value; OnPropertyChanged("VaccineCode"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _VaccineCode;
+    private Hl7.Fhir.Model.CodeableConcept? _VaccineCode;
 
     /// <summary>
     /// Who was immunized.
@@ -928,13 +891,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Encounter administered as part of.
@@ -943,41 +906,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// Vaccination administration date.
     /// </summary>
     [FhirElement("date", Order=150, FiveWs="when.init")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateElement
+    public Hl7.Fhir.Model.FhirDateTime? DateElement
     {
       get { return _DateElement; }
       set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
     /// <summary>
     /// Vaccination administration date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Date
+    public string? Date
     {
-      get { return DateElement != null ? DateElement.Value : null; }
+      get => _DateElement?.Value;
       set
       {
-        if (value == null)
-          DateElement = null;
-        else
-          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -988,13 +948,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("primarySource", Order=160, FiveWs="who.source")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean PrimarySourceElement
+    public Hl7.Fhir.Model.FhirBoolean? PrimarySourceElement
     {
       get { return _PrimarySourceElement; }
       set { _PrimarySourceElement = value; OnPropertyChanged("PrimarySourceElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _PrimarySourceElement;
+    private Hl7.Fhir.Model.FhirBoolean? _PrimarySourceElement;
 
     /// <summary>
     /// Indicates context the data was recorded in
@@ -1003,13 +963,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? PrimarySource
     {
-      get { return PrimarySourceElement != null ? PrimarySourceElement.Value : null; }
+      get => _PrimarySourceElement?.Value;
       set
       {
-        if (value == null)
-          PrimarySourceElement = null;
-        else
-          PrimarySourceElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        PrimarySourceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("PrimarySource");
       }
     }
@@ -1020,13 +977,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("reportOrigin", Order=170, FiveWs="who.source")]
     [Binding("ImmunizationReportOrigin")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ReportOrigin
+    public Hl7.Fhir.Model.CodeableConcept? ReportOrigin
     {
       get { return _ReportOrigin; }
       set { _ReportOrigin = value; OnPropertyChanged("ReportOrigin"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ReportOrigin;
+    private Hl7.Fhir.Model.CodeableConcept? _ReportOrigin;
 
     /// <summary>
     /// Where vaccination occurred.
@@ -1035,13 +992,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Location
+    public Hl7.Fhir.Model.ResourceReference? Location
     {
       get { return _Location; }
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Location;
+    private Hl7.Fhir.Model.ResourceReference? _Location;
 
     /// <summary>
     /// Vaccine manufacturer.
@@ -1050,41 +1007,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Manufacturer
+    public Hl7.Fhir.Model.ResourceReference? Manufacturer
     {
       get { return _Manufacturer; }
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Manufacturer;
+    private Hl7.Fhir.Model.ResourceReference? _Manufacturer;
 
     /// <summary>
     /// Vaccine lot number.
     /// </summary>
     [FhirElement("lotNumber", Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString LotNumberElement
+    public Hl7.Fhir.Model.FhirString? LotNumberElement
     {
       get { return _LotNumberElement; }
       set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _LotNumberElement;
+    private Hl7.Fhir.Model.FhirString? _LotNumberElement;
 
     /// <summary>
     /// Vaccine lot number
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string LotNumber
+    public string? LotNumber
     {
-      get { return LotNumberElement != null ? LotNumberElement.Value : null; }
+      get => _LotNumberElement?.Value;
       set
       {
-        if (value == null)
-          LotNumberElement = null;
-        else
-          LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
+        LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("LotNumber");
       }
     }
@@ -1094,28 +1048,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("expirationDate", Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.Date ExpirationDateElement
+    public Hl7.Fhir.Model.Date? ExpirationDateElement
     {
       get { return _ExpirationDateElement; }
       set { _ExpirationDateElement = value; OnPropertyChanged("ExpirationDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _ExpirationDateElement;
+    private Hl7.Fhir.Model.Date? _ExpirationDateElement;
 
     /// <summary>
     /// Vaccine expiration date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ExpirationDate
+    public string? ExpirationDate
     {
-      get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
+      get => _ExpirationDateElement?.Value;
       set
       {
-        if (value == null)
-          ExpirationDateElement = null;
-        else
-          ExpirationDateElement = new Hl7.Fhir.Model.Date(value);
+        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -1126,13 +1077,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("site", Order=220)]
     [Binding("ImmunizationSite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Site
+    public Hl7.Fhir.Model.CodeableConcept? Site
     {
       get { return _Site; }
       set { _Site = value; OnPropertyChanged("Site"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Site;
+    private Hl7.Fhir.Model.CodeableConcept? _Site;
 
     /// <summary>
     /// How vaccine entered body.
@@ -1140,26 +1091,26 @@ namespace Hl7.Fhir.Model
     [FhirElement("route", Order=230)]
     [Binding("ImmunizationRoute")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Route
+    public Hl7.Fhir.Model.CodeableConcept? Route
     {
       get { return _Route; }
       set { _Route = value; OnPropertyChanged("Route"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Route;
+    private Hl7.Fhir.Model.CodeableConcept? _Route;
 
     /// <summary>
     /// Amount of vaccine administered.
     /// </summary>
     [FhirElement("doseQuantity", Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity DoseQuantity
+    public Hl7.Fhir.Model.Quantity? DoseQuantity
     {
       get { return _DoseQuantity; }
       set { _DoseQuantity = value; OnPropertyChanged("DoseQuantity"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _DoseQuantity;
+    private Hl7.Fhir.Model.Quantity? _DoseQuantity;
 
     /// <summary>
     /// Who performed event.
@@ -1169,11 +1120,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.PractitionerComponent> Practitioner
     {
-      get { if(_Practitioner==null) _Practitioner = new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>(); return _Practitioner; }
+      get => _Practitioner ?? new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>();
       set { _Practitioner = value; OnPropertyChanged("Practitioner"); }
     }
 
-    private List<Hl7.Fhir.Model.Immunization.PractitionerComponent> _Practitioner;
+    private List<Hl7.Fhir.Model.Immunization.PractitionerComponent>? _Practitioner;
 
     /// <summary>
     /// Vaccination notes.
@@ -1183,24 +1134,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     /// <summary>
     /// Administration/non-administration reasons.
     /// </summary>
     [FhirElement("explanation", Order=270)]
     [DataMember]
-    public Hl7.Fhir.Model.Immunization.ExplanationComponent Explanation
+    public Hl7.Fhir.Model.Immunization.ExplanationComponent? Explanation
     {
       get { return _Explanation; }
       set { _Explanation = value; OnPropertyChanged("Explanation"); }
     }
 
-    private Hl7.Fhir.Model.Immunization.ExplanationComponent _Explanation;
+    private Hl7.Fhir.Model.Immunization.ExplanationComponent? _Explanation;
 
     /// <summary>
     /// Details of a reaction that follows immunization.
@@ -1210,11 +1161,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
     {
-      get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(); return _Reaction; }
+      get => _Reaction ?? new List<Hl7.Fhir.Model.Immunization.ReactionComponent>();
       set { _Reaction = value; OnPropertyChanged("Reaction"); }
     }
 
-    private List<Hl7.Fhir.Model.Immunization.ReactionComponent> _Reaction;
+    private List<Hl7.Fhir.Model.Immunization.ReactionComponent>? _Reaction;
 
     /// <summary>
     /// What protocol was followed.
@@ -1224,45 +1175,41 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> VaccinationProtocol
     {
-      get { if(_VaccinationProtocol==null) _VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(); return _VaccinationProtocol; }
+      get => _VaccinationProtocol ?? new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>();
       set { _VaccinationProtocol = value; OnPropertyChanged("VaccinationProtocol"); }
     }
 
-    private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
+    private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>? _VaccinationProtocol;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Immunization;
-
-      if (dest == null)
-      {
+      if(other is not Immunization dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>)StatusElement.DeepCopyInternal();
-      if(NotGivenElement != null) dest.NotGivenElement = (Hl7.Fhir.Model.FhirBoolean)NotGivenElement.DeepCopyInternal();
-      if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopyInternal();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-      if(PrimarySourceElement != null) dest.PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean)PrimarySourceElement.DeepCopyInternal();
-      if(ReportOrigin != null) dest.ReportOrigin = (Hl7.Fhir.Model.CodeableConcept)ReportOrigin.DeepCopyInternal();
-      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-      if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopyInternal();
-      if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopyInternal();
-      if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.Date)ExpirationDateElement.DeepCopyInternal();
-      if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopyInternal();
-      if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopyInternal();
-      if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.Quantity)DoseQuantity.DeepCopyInternal();
-      if(Practitioner.Any()) dest.Practitioner = new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>(Practitioner.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
-      if(Explanation != null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ExplanationComponent)Explanation.DeepCopyInternal();
-      if(Reaction.Any()) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(Reaction.DeepCopyInternal());
-      if(VaccinationProtocol.Any()) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(VaccinationProtocol.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_NotGivenElement is not null) dest.NotGivenElement = (Hl7.Fhir.Model.FhirBoolean)_NotGivenElement.DeepCopyInternal();
+      if(_VaccineCode is not null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)_VaccineCode.DeepCopyInternal();
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+      if(_PrimarySourceElement is not null) dest.PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean)_PrimarySourceElement.DeepCopyInternal();
+      if(_ReportOrigin is not null) dest.ReportOrigin = (Hl7.Fhir.Model.CodeableConcept)_ReportOrigin.DeepCopyInternal();
+      if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+      if(_Manufacturer is not null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)_Manufacturer.DeepCopyInternal();
+      if(_LotNumberElement is not null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)_LotNumberElement.DeepCopyInternal();
+      if(_ExpirationDateElement is not null) dest.ExpirationDateElement = (Hl7.Fhir.Model.Date)_ExpirationDateElement.DeepCopyInternal();
+      if(_Site is not null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)_Site.DeepCopyInternal();
+      if(_Route is not null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)_Route.DeepCopyInternal();
+      if(_DoseQuantity is not null) dest.DoseQuantity = (Hl7.Fhir.Model.Quantity)_DoseQuantity.DeepCopyInternal();
+      if(_Practitioner is not null) dest.Practitioner = new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>(_Practitioner.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      if(_Explanation is not null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ExplanationComponent)_Explanation.DeepCopyInternal();
+      if(_Reaction is not null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(_Reaction.DeepCopyInternal());
+      if(_VaccinationProtocol is not null) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(_VaccinationProtocol.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1274,174 +1221,174 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Immunization;
-      if(otherT == null) return false;
+      if(other is not Immunization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(NotGivenElement, otherT.NotGivenElement)) return false;
-      if(!comparer.Equals(VaccineCode, otherT.VaccineCode)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.Equals(PrimarySourceElement, otherT.PrimarySourceElement)) return false;
-      if(!comparer.Equals(ReportOrigin, otherT.ReportOrigin)) return false;
-      if(!comparer.Equals(Location, otherT.Location)) return false;
-      if(!comparer.Equals(Manufacturer, otherT.Manufacturer)) return false;
-      if(!comparer.Equals(LotNumberElement, otherT.LotNumberElement)) return false;
-      if(!comparer.Equals(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
-      if(!comparer.Equals(Site, otherT.Site)) return false;
-      if(!comparer.Equals(Route, otherT.Route)) return false;
-      if(!comparer.Equals(DoseQuantity, otherT.DoseQuantity)) return false;
-      if(!comparer.ListEquals(Practitioner, otherT.Practitioner)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
-      if(!comparer.Equals(Explanation, otherT.Explanation)) return false;
-      if(!comparer.ListEquals(Reaction, otherT.Reaction)) return false;
-      if(!comparer.ListEquals(VaccinationProtocol, otherT.VaccinationProtocol)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_NotGivenElement, otherT._NotGivenElement)) return false;
+      if(!comparer.Equals(_VaccineCode, otherT._VaccineCode)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.Equals(_PrimarySourceElement, otherT._PrimarySourceElement)) return false;
+      if(!comparer.Equals(_ReportOrigin, otherT._ReportOrigin)) return false;
+      if(!comparer.Equals(_Location, otherT._Location)) return false;
+      if(!comparer.Equals(_Manufacturer, otherT._Manufacturer)) return false;
+      if(!comparer.Equals(_LotNumberElement, otherT._LotNumberElement)) return false;
+      if(!comparer.Equals(_ExpirationDateElement, otherT._ExpirationDateElement)) return false;
+      if(!comparer.Equals(_Site, otherT._Site)) return false;
+      if(!comparer.Equals(_Route, otherT._Route)) return false;
+      if(!comparer.Equals(_DoseQuantity, otherT._DoseQuantity)) return false;
+      if(!comparer.ListEquals(_Practitioner, otherT._Practitioner)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      if(!comparer.Equals(_Explanation, otherT._Explanation)) return false;
+      if(!comparer.ListEquals(_Reaction, otherT._Reaction)) return false;
+      if(!comparer.ListEquals(_VaccinationProtocol, otherT._VaccinationProtocol)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "notGiven":
-          value = NotGivenElement;
-          return NotGivenElement is not null;
+          value = _NotGivenElement;
+          return _NotGivenElement is not null;
         case "vaccineCode":
-          value = VaccineCode;
-          return VaccineCode is not null;
+          value = _VaccineCode;
+          return _VaccineCode is not null;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "date":
-          value = DateElement;
-          return DateElement is not null;
+          value = _DateElement;
+          return _DateElement is not null;
         case "primarySource":
-          value = PrimarySourceElement;
-          return PrimarySourceElement is not null;
+          value = _PrimarySourceElement;
+          return _PrimarySourceElement is not null;
         case "reportOrigin":
-          value = ReportOrigin;
-          return ReportOrigin is not null;
+          value = _ReportOrigin;
+          return _ReportOrigin is not null;
         case "location":
-          value = Location;
-          return Location is not null;
+          value = _Location;
+          return _Location is not null;
         case "manufacturer":
-          value = Manufacturer;
-          return Manufacturer is not null;
+          value = _Manufacturer;
+          return _Manufacturer is not null;
         case "lotNumber":
-          value = LotNumberElement;
-          return LotNumberElement is not null;
+          value = _LotNumberElement;
+          return _LotNumberElement is not null;
         case "expirationDate":
-          value = ExpirationDateElement;
-          return ExpirationDateElement is not null;
+          value = _ExpirationDateElement;
+          return _ExpirationDateElement is not null;
         case "site":
-          value = Site;
-          return Site is not null;
+          value = _Site;
+          return _Site is not null;
         case "route":
-          value = Route;
-          return Route is not null;
+          value = _Route;
+          return _Route is not null;
         case "doseQuantity":
-          value = DoseQuantity;
-          return DoseQuantity is not null;
+          value = _DoseQuantity;
+          return _DoseQuantity is not null;
         case "practitioner":
-          value = Practitioner;
-          return Practitioner?.Any() == true;
+          value = _Practitioner;
+          return _Practitioner?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         case "explanation":
-          value = Explanation;
-          return Explanation is not null;
+          value = _Explanation;
+          return _Explanation is not null;
         case "reaction":
-          value = Reaction;
-          return Reaction?.Any() == true;
+          value = _Reaction;
+          return _Reaction?.Any() == true;
         case "vaccinationProtocol":
-          value = VaccinationProtocol;
-          return VaccinationProtocol?.Any() == true;
+          value = _VaccinationProtocol;
+          return _VaccinationProtocol?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>?)value;
           return this;
         case "notGiven":
-          NotGivenElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          NotGivenElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "vaccineCode":
-          VaccineCode = (Hl7.Fhir.Model.CodeableConcept)value;
+          VaccineCode = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "date":
-          DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "primarySource":
-          PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "reportOrigin":
-          ReportOrigin = (Hl7.Fhir.Model.CodeableConcept)value;
+          ReportOrigin = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "location":
-          Location = (Hl7.Fhir.Model.ResourceReference)value;
+          Location = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (Hl7.Fhir.Model.ResourceReference)value;
+          Manufacturer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "lotNumber":
-          LotNumberElement = (Hl7.Fhir.Model.FhirString)value;
+          LotNumberElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "expirationDate":
-          ExpirationDateElement = (Hl7.Fhir.Model.Date)value;
+          ExpirationDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "site":
-          Site = (Hl7.Fhir.Model.CodeableConcept)value;
+          Site = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "route":
-          Route = (Hl7.Fhir.Model.CodeableConcept)value;
+          Route = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "doseQuantity":
-          DoseQuantity = (Hl7.Fhir.Model.Quantity)value;
+          DoseQuantity = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "practitioner":
-          Practitioner = (List<Hl7.Fhir.Model.Immunization.PractitionerComponent>)value;
+          Practitioner = (List<Hl7.Fhir.Model.Immunization.PractitionerComponent>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "explanation":
-          Explanation = (Hl7.Fhir.Model.Immunization.ExplanationComponent)value;
+          Explanation = (Hl7.Fhir.Model.Immunization.ExplanationComponent?)value;
           return this;
         case "reaction":
-          Reaction = (List<Hl7.Fhir.Model.Immunization.ReactionComponent>)value;
+          Reaction = (List<Hl7.Fhir.Model.Immunization.ReactionComponent>?)value!;
           return this;
         case "vaccinationProtocol":
-          VaccinationProtocol = (List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>)value;
+          VaccinationProtocol = (List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1452,27 +1399,27 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (NotGivenElement is not null) yield return new KeyValuePair<string,object>("notGiven",NotGivenElement);
-      if (VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (PrimarySourceElement is not null) yield return new KeyValuePair<string,object>("primarySource",PrimarySourceElement);
-      if (ReportOrigin is not null) yield return new KeyValuePair<string,object>("reportOrigin",ReportOrigin);
-      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
-      if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
-      if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
-      if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
-      if (DoseQuantity is not null) yield return new KeyValuePair<string,object>("doseQuantity",DoseQuantity);
-      if (Practitioner?.Any() == true) yield return new KeyValuePair<string,object>("practitioner",Practitioner);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (Explanation is not null) yield return new KeyValuePair<string,object>("explanation",Explanation);
-      if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
-      if (VaccinationProtocol?.Any() == true) yield return new KeyValuePair<string,object>("vaccinationProtocol",VaccinationProtocol);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_NotGivenElement is not null) yield return new KeyValuePair<string,object>("notGiven",_NotGivenElement);
+      if (_VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",_VaccineCode);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_PrimarySourceElement is not null) yield return new KeyValuePair<string,object>("primarySource",_PrimarySourceElement);
+      if (_ReportOrigin is not null) yield return new KeyValuePair<string,object>("reportOrigin",_ReportOrigin);
+      if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
+      if (_ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
+      if (_Site is not null) yield return new KeyValuePair<string,object>("site",_Site);
+      if (_Route is not null) yield return new KeyValuePair<string,object>("route",_Route);
+      if (_DoseQuantity is not null) yield return new KeyValuePair<string,object>("doseQuantity",_DoseQuantity);
+      if (_Practitioner?.Any() == true) yield return new KeyValuePair<string,object>("practitioner",_Practitioner);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Explanation is not null) yield return new KeyValuePair<string,object>("explanation",_Explanation);
+      if (_Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",_Reaction);
+      if (_VaccinationProtocol?.Any() == true) yield return new KeyValuePair<string,object>("vaccinationProtocol",_VaccinationProtocol);
     }
 
   }

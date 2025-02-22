@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -81,13 +84,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("ProcedurePerformerRole")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Role
+      public Hl7.Fhir.Model.CodeableConcept? Role
       {
         get { return _Role; }
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Role;
+      private Hl7.Fhir.Model.CodeableConcept? _Role;
 
       /// <summary>
       /// The reference to the practitioner.
@@ -97,13 +100,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
         get { return _Actor; }
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
       /// <summary>
       /// Organization the device or practitioner was acting for.
@@ -112,27 +115,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+      public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
       {
         get { return _OnBehalfOf; }
         set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+      private Hl7.Fhir.Model.ResourceReference? _OnBehalfOf;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PerformerComponent;
-
-        if (dest == null)
-        {
+        if(other is not PerformerComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
-        if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopyInternal();
+        if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
+        if(_OnBehalfOf is not null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)_OnBehalfOf.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -144,48 +143,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PerformerComponent;
-        if(otherT == null) return false;
+        if(other is not PerformerComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Role, otherT.Role)) return false;
-        if(!comparer.Equals(Actor, otherT.Actor)) return false;
-        if(!comparer.Equals(OnBehalfOf, otherT.OnBehalfOf)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Role, otherT._Role)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+        if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "role":
-            value = Role;
-            return Role is not null;
+            value = _Role;
+            return _Role is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            value = _Actor;
+            return _Actor is not null;
           case "onBehalfOf":
-            value = OnBehalfOf;
-            return OnBehalfOf is not null;
+            value = _OnBehalfOf;
+            return _OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "role":
-            Role = (Hl7.Fhir.Model.CodeableConcept)value;
+            Role = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference)value;
+            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "onBehalfOf":
-            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)value;
+            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -196,9 +195,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
-        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+        if (_Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
       }
 
     }
@@ -225,13 +224,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=40)]
       [Binding("DeviceActionKind")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Action
+      public Hl7.Fhir.Model.CodeableConcept? Action
       {
         get { return _Action; }
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Action;
+      private Hl7.Fhir.Model.CodeableConcept? _Action;
 
       /// <summary>
       /// Device that was changed.
@@ -241,26 +240,22 @@ namespace Hl7.Fhir.Model
       [References("Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Manipulated
+      public Hl7.Fhir.Model.ResourceReference? Manipulated
       {
         get { return _Manipulated; }
         set { _Manipulated = value; OnPropertyChanged("Manipulated"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Manipulated;
+      private Hl7.Fhir.Model.ResourceReference? _Manipulated;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as FocalDeviceComponent;
-
-        if (dest == null)
-        {
+        if(other is not FocalDeviceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Action != null) dest.Action = (Hl7.Fhir.Model.CodeableConcept)Action.DeepCopyInternal();
-        if(Manipulated != null) dest.Manipulated = (Hl7.Fhir.Model.ResourceReference)Manipulated.DeepCopyInternal();
+        if(_Action is not null) dest.Action = (Hl7.Fhir.Model.CodeableConcept)_Action.DeepCopyInternal();
+        if(_Manipulated is not null) dest.Manipulated = (Hl7.Fhir.Model.ResourceReference)_Manipulated.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -272,41 +267,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as FocalDeviceComponent;
-        if(otherT == null) return false;
+        if(other is not FocalDeviceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Action, otherT.Action)) return false;
-        if(!comparer.Equals(Manipulated, otherT.Manipulated)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Action, otherT._Action)) return false;
+        if(!comparer.Equals(_Manipulated, otherT._Manipulated)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "action":
-            value = Action;
-            return Action is not null;
+            value = _Action;
+            return _Action is not null;
           case "manipulated":
-            value = Manipulated;
-            return Manipulated is not null;
+            value = _Manipulated;
+            return _Manipulated is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "action":
-            Action = (Hl7.Fhir.Model.CodeableConcept)value;
+            Action = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "manipulated":
-            Manipulated = (Hl7.Fhir.Model.ResourceReference)value;
+            Manipulated = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -317,8 +312,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
-        if (Manipulated is not null) yield return new KeyValuePair<string,object>("manipulated",Manipulated);
+        if (_Action is not null) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_Manipulated is not null) yield return new KeyValuePair<string,object>("manipulated",_Manipulated);
       }
 
     }
@@ -331,11 +326,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Instantiates protocol or definition.
@@ -347,11 +342,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Definition
     {
-      get { if(_Definition==null) _Definition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Definition; }
+      get => _Definition ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Definition = value; OnPropertyChanged("Definition"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Definition;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Definition;
 
     /// <summary>
     /// A request for this procedure.
@@ -363,11 +358,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// Part of referenced event.
@@ -379,11 +374,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
-      get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
+      get => _PartOf ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _PartOf = value; OnPropertyChanged("PartOf"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
+    private List<Hl7.Fhir.Model.ResourceReference>? _PartOf;
 
     /// <summary>
     /// preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown.
@@ -393,13 +388,13 @@ namespace Hl7.Fhir.Model
     [Binding("ProcedureStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EventStatus> StatusElement
+    public Code<Hl7.Fhir.Model.EventStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.EventStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.EventStatus>? _StatusElement;
 
     /// <summary>
     /// preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown
@@ -408,13 +403,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EventStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -424,13 +416,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("notDone", InSummary=true, IsModifier=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean NotDoneElement
+    public Hl7.Fhir.Model.FhirBoolean? NotDoneElement
     {
       get { return _NotDoneElement; }
       set { _NotDoneElement = value; OnPropertyChanged("NotDoneElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _NotDoneElement;
+    private Hl7.Fhir.Model.FhirBoolean? _NotDoneElement;
 
     /// <summary>
     /// True if procedure was not performed as scheduled
@@ -439,13 +431,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? NotDone
     {
-      get { return NotDoneElement != null ? NotDoneElement.Value : null; }
+      get => _NotDoneElement?.Value;
       set
       {
-        if (value == null)
-          NotDoneElement = null;
-        else
-          NotDoneElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        NotDoneElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("NotDone");
       }
     }
@@ -456,13 +445,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("notDoneReason", InSummary=true, Order=150)]
     [Binding("ProcedureNegationReason")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept NotDoneReason
+    public Hl7.Fhir.Model.CodeableConcept? NotDoneReason
     {
       get { return _NotDoneReason; }
       set { _NotDoneReason = value; OnPropertyChanged("NotDoneReason"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _NotDoneReason;
+    private Hl7.Fhir.Model.CodeableConcept? _NotDoneReason;
 
     /// <summary>
     /// Classification of the procedure.
@@ -470,13 +459,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", InSummary=true, Order=160, FiveWs="class")]
     [Binding("ProcedureCategory")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Category
+    public Hl7.Fhir.Model.CodeableConcept? Category
     {
       get { return _Category; }
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Category;
+    private Hl7.Fhir.Model.CodeableConcept? _Category;
 
     /// <summary>
     /// Identification of the procedure.
@@ -484,13 +473,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=170, FiveWs="what")]
     [Binding("ProcedureCode")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Who the procedure was performed on.
@@ -500,13 +489,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Encounter or episode associated with the procedure.
@@ -515,13 +504,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Context
+    public Hl7.Fhir.Model.ResourceReference? Context
     {
       get { return _Context; }
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Context;
+    private Hl7.Fhir.Model.ResourceReference? _Context;
 
     /// <summary>
     /// Date/Period the procedure was performed.
@@ -530,13 +519,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Performed
+    public Hl7.Fhir.Model.DataType? Performed
     {
       get { return _Performed; }
       set { _Performed = value; OnPropertyChanged("Performed"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Performed;
+    private Hl7.Fhir.Model.DataType? _Performed;
 
     /// <summary>
     /// The people who performed the procedure.
@@ -546,11 +535,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Procedure.PerformerComponent> Performer
     {
-      get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(); return _Performer; }
+      get => _Performer ?? new List<Hl7.Fhir.Model.Procedure.PerformerComponent>();
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
-    private List<Hl7.Fhir.Model.Procedure.PerformerComponent> _Performer;
+    private List<Hl7.Fhir.Model.Procedure.PerformerComponent>? _Performer;
 
     /// <summary>
     /// Where the procedure happened.
@@ -559,13 +548,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Location
+    public Hl7.Fhir.Model.ResourceReference? Location
     {
       get { return _Location; }
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Location;
+    private Hl7.Fhir.Model.ResourceReference? _Location;
 
     /// <summary>
     /// Coded reason procedure performed.
@@ -576,11 +565,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
-      get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+      get => _ReasonCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ReasonCode;
 
     /// <summary>
     /// Condition that is the reason the procedure performed.
@@ -592,11 +581,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
-      get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+      get => _ReasonReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ReasonReference;
 
     /// <summary>
     /// Target body sites.
@@ -607,11 +596,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
-      get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+      get => _BodySite ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _BodySite;
 
     /// <summary>
     /// The result of procedure.
@@ -619,13 +608,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("outcome", InSummary=true, Order=260)]
     [Binding("ProcedureOutcome")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Outcome
+    public Hl7.Fhir.Model.CodeableConcept? Outcome
     {
       get { return _Outcome; }
       set { _Outcome = value; OnPropertyChanged("Outcome"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Outcome;
+    private Hl7.Fhir.Model.CodeableConcept? _Outcome;
 
     /// <summary>
     /// Any report resulting from the procedure.
@@ -637,11 +626,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Report
     {
-      get { if(_Report==null) _Report = new List<Hl7.Fhir.Model.ResourceReference>(); return _Report; }
+      get => _Report ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Report = value; OnPropertyChanged("Report"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Report;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Report;
 
     /// <summary>
     /// Complication following the procedure.
@@ -652,11 +641,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Complication
     {
-      get { if(_Complication==null) _Complication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Complication; }
+      get => _Complication ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Complication = value; OnPropertyChanged("Complication"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Complication;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Complication;
 
     /// <summary>
     /// A condition that is a result of the procedure.
@@ -668,11 +657,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ComplicationDetail
     {
-      get { if(_ComplicationDetail==null) _ComplicationDetail = new List<Hl7.Fhir.Model.ResourceReference>(); return _ComplicationDetail; }
+      get => _ComplicationDetail ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _ComplicationDetail = value; OnPropertyChanged("ComplicationDetail"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ComplicationDetail;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ComplicationDetail;
 
     /// <summary>
     /// Instructions for follow up.
@@ -683,11 +672,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
     {
-      get { if(_FollowUp==null) _FollowUp = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FollowUp; }
+      get => _FollowUp ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _FollowUp = value; OnPropertyChanged("FollowUp"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _FollowUp;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _FollowUp;
 
     /// <summary>
     /// Additional information about the procedure.
@@ -697,11 +686,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     /// <summary>
     /// Device changed in procedure.
@@ -711,11 +700,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> FocalDevice
     {
-      get { if(_FocalDevice==null) _FocalDevice = new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>(); return _FocalDevice; }
+      get => _FocalDevice ?? new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>();
       set { _FocalDevice = value; OnPropertyChanged("FocalDevice"); }
     }
 
-    private List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> _FocalDevice;
+    private List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>? _FocalDevice;
 
     /// <summary>
     /// Items used during procedure.
@@ -727,11 +716,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> UsedReference
     {
-      get { if(_UsedReference==null) _UsedReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _UsedReference; }
+      get => _UsedReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _UsedReference = value; OnPropertyChanged("UsedReference"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _UsedReference;
+    private List<Hl7.Fhir.Model.ResourceReference>? _UsedReference;
 
     /// <summary>
     /// Coded items used during the procedure.
@@ -742,50 +731,46 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> UsedCode
     {
-      get { if(_UsedCode==null) _UsedCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UsedCode; }
+      get => _UsedCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _UsedCode = value; OnPropertyChanged("UsedCode"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _UsedCode;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Procedure;
-
-      if (dest == null)
-      {
+      if(other is not Procedure dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Definition.Any()) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(Definition.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)StatusElement.DeepCopyInternal();
-      if(NotDoneElement != null) dest.NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)NotDoneElement.DeepCopyInternal();
-      if(NotDoneReason != null) dest.NotDoneReason = (Hl7.Fhir.Model.CodeableConcept)NotDoneReason.DeepCopyInternal();
-      if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopyInternal();
-      if(Performed != null) dest.Performed = (Hl7.Fhir.Model.DataType)Performed.DeepCopyInternal();
-      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(Performer.DeepCopyInternal());
-      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-      if(ReasonCode.Any()) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopyInternal());
-      if(ReasonReference.Any()) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopyInternal());
-      if(BodySite.Any()) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopyInternal());
-      if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopyInternal();
-      if(Report.Any()) dest.Report = new List<Hl7.Fhir.Model.ResourceReference>(Report.DeepCopyInternal());
-      if(Complication.Any()) dest.Complication = new List<Hl7.Fhir.Model.CodeableConcept>(Complication.DeepCopyInternal());
-      if(ComplicationDetail.Any()) dest.ComplicationDetail = new List<Hl7.Fhir.Model.ResourceReference>(ComplicationDetail.DeepCopyInternal());
-      if(FollowUp.Any()) dest.FollowUp = new List<Hl7.Fhir.Model.CodeableConcept>(FollowUp.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
-      if(FocalDevice.Any()) dest.FocalDevice = new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>(FocalDevice.DeepCopyInternal());
-      if(UsedReference.Any()) dest.UsedReference = new List<Hl7.Fhir.Model.ResourceReference>(UsedReference.DeepCopyInternal());
-      if(UsedCode.Any()) dest.UsedCode = new List<Hl7.Fhir.Model.CodeableConcept>(UsedCode.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Definition is not null) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(_Definition.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_PartOf is not null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(_PartOf.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)_StatusElement.DeepCopyInternal();
+      if(_NotDoneElement is not null) dest.NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)_NotDoneElement.DeepCopyInternal();
+      if(_NotDoneReason is not null) dest.NotDoneReason = (Hl7.Fhir.Model.CodeableConcept)_NotDoneReason.DeepCopyInternal();
+      if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Context is not null) dest.Context = (Hl7.Fhir.Model.ResourceReference)_Context.DeepCopyInternal();
+      if(_Performed is not null) dest.Performed = (Hl7.Fhir.Model.DataType)_Performed.DeepCopyInternal();
+      if(_Performer is not null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(_Performer.DeepCopyInternal());
+      if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+      if(_ReasonCode is not null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(_ReasonCode.DeepCopyInternal());
+      if(_ReasonReference is not null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(_ReasonReference.DeepCopyInternal());
+      if(_BodySite is not null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(_BodySite.DeepCopyInternal());
+      if(_Outcome is not null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)_Outcome.DeepCopyInternal();
+      if(_Report is not null) dest.Report = new List<Hl7.Fhir.Model.ResourceReference>(_Report.DeepCopyInternal());
+      if(_Complication is not null) dest.Complication = new List<Hl7.Fhir.Model.CodeableConcept>(_Complication.DeepCopyInternal());
+      if(_ComplicationDetail is not null) dest.ComplicationDetail = new List<Hl7.Fhir.Model.ResourceReference>(_ComplicationDetail.DeepCopyInternal());
+      if(_FollowUp is not null) dest.FollowUp = new List<Hl7.Fhir.Model.CodeableConcept>(_FollowUp.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      if(_FocalDevice is not null) dest.FocalDevice = new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>(_FocalDevice.DeepCopyInternal());
+      if(_UsedReference is not null) dest.UsedReference = new List<Hl7.Fhir.Model.ResourceReference>(_UsedReference.DeepCopyInternal());
+      if(_UsedCode is not null) dest.UsedCode = new List<Hl7.Fhir.Model.CodeableConcept>(_UsedCode.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -797,209 +782,209 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Procedure;
-      if(otherT == null) return false;
+      if(other is not Procedure otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(Definition, otherT.Definition)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.ListEquals(PartOf, otherT.PartOf)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(NotDoneElement, otherT.NotDoneElement)) return false;
-      if(!comparer.Equals(NotDoneReason, otherT.NotDoneReason)) return false;
-      if(!comparer.Equals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Context, otherT.Context)) return false;
-      if(!comparer.Equals(Performed, otherT.Performed)) return false;
-      if(!comparer.ListEquals(Performer, otherT.Performer)) return false;
-      if(!comparer.Equals(Location, otherT.Location)) return false;
-      if(!comparer.ListEquals(ReasonCode, otherT.ReasonCode)) return false;
-      if(!comparer.ListEquals(ReasonReference, otherT.ReasonReference)) return false;
-      if(!comparer.ListEquals(BodySite, otherT.BodySite)) return false;
-      if(!comparer.Equals(Outcome, otherT.Outcome)) return false;
-      if(!comparer.ListEquals(Report, otherT.Report)) return false;
-      if(!comparer.ListEquals(Complication, otherT.Complication)) return false;
-      if(!comparer.ListEquals(ComplicationDetail, otherT.ComplicationDetail)) return false;
-      if(!comparer.ListEquals(FollowUp, otherT.FollowUp)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
-      if(!comparer.ListEquals(FocalDevice, otherT.FocalDevice)) return false;
-      if(!comparer.ListEquals(UsedReference, otherT.UsedReference)) return false;
-      if(!comparer.ListEquals(UsedCode, otherT.UsedCode)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_Definition, otherT._Definition)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.ListEquals(_PartOf, otherT._PartOf)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_NotDoneElement, otherT._NotDoneElement)) return false;
+      if(!comparer.Equals(_NotDoneReason, otherT._NotDoneReason)) return false;
+      if(!comparer.Equals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Context, otherT._Context)) return false;
+      if(!comparer.Equals(_Performed, otherT._Performed)) return false;
+      if(!comparer.ListEquals(_Performer, otherT._Performer)) return false;
+      if(!comparer.Equals(_Location, otherT._Location)) return false;
+      if(!comparer.ListEquals(_ReasonCode, otherT._ReasonCode)) return false;
+      if(!comparer.ListEquals(_ReasonReference, otherT._ReasonReference)) return false;
+      if(!comparer.ListEquals(_BodySite, otherT._BodySite)) return false;
+      if(!comparer.Equals(_Outcome, otherT._Outcome)) return false;
+      if(!comparer.ListEquals(_Report, otherT._Report)) return false;
+      if(!comparer.ListEquals(_Complication, otherT._Complication)) return false;
+      if(!comparer.ListEquals(_ComplicationDetail, otherT._ComplicationDetail)) return false;
+      if(!comparer.ListEquals(_FollowUp, otherT._FollowUp)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      if(!comparer.ListEquals(_FocalDevice, otherT._FocalDevice)) return false;
+      if(!comparer.ListEquals(_UsedReference, otherT._UsedReference)) return false;
+      if(!comparer.ListEquals(_UsedCode, otherT._UsedCode)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "definition":
-          value = Definition;
-          return Definition?.Any() == true;
+          value = _Definition;
+          return _Definition?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "partOf":
-          value = PartOf;
-          return PartOf?.Any() == true;
+          value = _PartOf;
+          return _PartOf?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "notDone":
-          value = NotDoneElement;
-          return NotDoneElement is not null;
+          value = _NotDoneElement;
+          return _NotDoneElement is not null;
         case "notDoneReason":
-          value = NotDoneReason;
-          return NotDoneReason is not null;
+          value = _NotDoneReason;
+          return _NotDoneReason is not null;
         case "category":
-          value = Category;
-          return Category is not null;
+          value = _Category;
+          return _Category is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "context":
-          value = Context;
-          return Context is not null;
+          value = _Context;
+          return _Context is not null;
         case "performed":
-          value = Performed;
-          return Performed is not null;
+          value = _Performed;
+          return _Performed is not null;
         case "performer":
-          value = Performer;
-          return Performer?.Any() == true;
+          value = _Performer;
+          return _Performer?.Any() == true;
         case "location":
-          value = Location;
-          return Location is not null;
+          value = _Location;
+          return _Location is not null;
         case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
+          value = _ReasonCode;
+          return _ReasonCode?.Any() == true;
         case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+          value = _ReasonReference;
+          return _ReasonReference?.Any() == true;
         case "bodySite":
-          value = BodySite;
-          return BodySite?.Any() == true;
+          value = _BodySite;
+          return _BodySite?.Any() == true;
         case "outcome":
-          value = Outcome;
-          return Outcome is not null;
+          value = _Outcome;
+          return _Outcome is not null;
         case "report":
-          value = Report;
-          return Report?.Any() == true;
+          value = _Report;
+          return _Report?.Any() == true;
         case "complication":
-          value = Complication;
-          return Complication?.Any() == true;
+          value = _Complication;
+          return _Complication?.Any() == true;
         case "complicationDetail":
-          value = ComplicationDetail;
-          return ComplicationDetail?.Any() == true;
+          value = _ComplicationDetail;
+          return _ComplicationDetail?.Any() == true;
         case "followUp":
-          value = FollowUp;
-          return FollowUp?.Any() == true;
+          value = _FollowUp;
+          return _FollowUp?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         case "focalDevice":
-          value = FocalDevice;
-          return FocalDevice?.Any() == true;
+          value = _FocalDevice;
+          return _FocalDevice?.Any() == true;
         case "usedReference":
-          value = UsedReference;
-          return UsedReference?.Any() == true;
+          value = _UsedReference;
+          return _UsedReference?.Any() == true;
         case "usedCode":
-          value = UsedCode;
-          return UsedCode?.Any() == true;
+          value = _UsedCode;
+          return _UsedCode?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "definition":
-          Definition = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Definition = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "partOf":
-          PartOf = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          PartOf = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value;
           return this;
         case "notDone":
-          NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          NotDoneElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "notDoneReason":
-          NotDoneReason = (Hl7.Fhir.Model.CodeableConcept)value;
+          NotDoneReason = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "category":
-          Category = (Hl7.Fhir.Model.CodeableConcept)value;
+          Category = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "context":
-          Context = (Hl7.Fhir.Model.ResourceReference)value;
+          Context = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "performed":
-          Performed = (Hl7.Fhir.Model.DataType)value;
+          Performed = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "performer":
-          Performer = (List<Hl7.Fhir.Model.Procedure.PerformerComponent>)value;
+          Performer = (List<Hl7.Fhir.Model.Procedure.PerformerComponent>?)value!;
           return this;
         case "location":
-          Location = (Hl7.Fhir.Model.ResourceReference)value;
+          Location = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "reasonCode":
-          ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "reasonReference":
-          ReasonReference = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          ReasonReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "bodySite":
-          BodySite = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          BodySite = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "outcome":
-          Outcome = (Hl7.Fhir.Model.CodeableConcept)value;
+          Outcome = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "report":
-          Report = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Report = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "complication":
-          Complication = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Complication = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "complicationDetail":
-          ComplicationDetail = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          ComplicationDetail = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "followUp":
-          FollowUp = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          FollowUp = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "focalDevice":
-          FocalDevice = (List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>)value;
+          FocalDevice = (List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>?)value!;
           return this;
         case "usedReference":
-          UsedReference = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          UsedReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "usedCode":
-          UsedCode = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          UsedCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1010,32 +995,32 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (NotDoneElement is not null) yield return new KeyValuePair<string,object>("notDone",NotDoneElement);
-      if (NotDoneReason is not null) yield return new KeyValuePair<string,object>("notDoneReason",NotDoneReason);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Performed is not null) yield return new KeyValuePair<string,object>("performed",Performed);
-      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
-      if (Report?.Any() == true) yield return new KeyValuePair<string,object>("report",Report);
-      if (Complication?.Any() == true) yield return new KeyValuePair<string,object>("complication",Complication);
-      if (ComplicationDetail?.Any() == true) yield return new KeyValuePair<string,object>("complicationDetail",ComplicationDetail);
-      if (FollowUp?.Any() == true) yield return new KeyValuePair<string,object>("followUp",FollowUp);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (FocalDevice?.Any() == true) yield return new KeyValuePair<string,object>("focalDevice",FocalDevice);
-      if (UsedReference?.Any() == true) yield return new KeyValuePair<string,object>("usedReference",UsedReference);
-      if (UsedCode?.Any() == true) yield return new KeyValuePair<string,object>("usedCode",UsedCode);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",_Definition);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",_PartOf);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_NotDoneElement is not null) yield return new KeyValuePair<string,object>("notDone",_NotDoneElement);
+      if (_NotDoneReason is not null) yield return new KeyValuePair<string,object>("notDoneReason",_NotDoneReason);
+      if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Performed is not null) yield return new KeyValuePair<string,object>("performed",_Performed);
+      if (_Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",_ReasonCode);
+      if (_ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",_ReasonReference);
+      if (_BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Outcome is not null) yield return new KeyValuePair<string,object>("outcome",_Outcome);
+      if (_Report?.Any() == true) yield return new KeyValuePair<string,object>("report",_Report);
+      if (_Complication?.Any() == true) yield return new KeyValuePair<string,object>("complication",_Complication);
+      if (_ComplicationDetail?.Any() == true) yield return new KeyValuePair<string,object>("complicationDetail",_ComplicationDetail);
+      if (_FollowUp?.Any() == true) yield return new KeyValuePair<string,object>("followUp",_FollowUp);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_FocalDevice?.Any() == true) yield return new KeyValuePair<string,object>("focalDevice",_FocalDevice);
+      if (_UsedReference?.Any() == true) yield return new KeyValuePair<string,object>("usedReference",_UsedReference);
+      if (_UsedCode?.Any() == true) yield return new KeyValuePair<string,object>("usedCode",_UsedCode);
     }
 
   }

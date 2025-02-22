@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -126,13 +129,13 @@ namespace Hl7.Fhir.Model
     [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> TypeElement
+    public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> _TypeElement;
+    private Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>? _TypeElement;
 
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
@@ -141,13 +144,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -157,28 +157,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("display", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DisplayElement
+    public Hl7.Fhir.Model.FhirString? DisplayElement
     {
       get { return _DisplayElement; }
       set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DisplayElement;
+    private Hl7.Fhir.Model.FhirString? _DisplayElement;
 
     /// <summary>
     /// Brief description of the related artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Display
+    public string? Display
     {
-      get { return DisplayElement != null ? DisplayElement.Value : null; }
+      get => _DisplayElement?.Value;
       set
       {
-        if (value == null)
-          DisplayElement = null;
-        else
-          DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
@@ -188,28 +185,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("citation", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CitationElement
+    public Hl7.Fhir.Model.FhirString? CitationElement
     {
       get { return _CitationElement; }
       set { _CitationElement = value; OnPropertyChanged("CitationElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CitationElement;
+    private Hl7.Fhir.Model.FhirString? _CitationElement;
 
     /// <summary>
     /// Bibliographic citation for the artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Citation
+    public string? Citation
     {
-      get { return CitationElement != null ? CitationElement.Value : null; }
+      get => _CitationElement?.Value;
       set
       {
-        if (value == null)
-          CitationElement = null;
-        else
-          CitationElement = new Hl7.Fhir.Model.FhirString(value);
+        CitationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Citation");
       }
     }
@@ -223,28 +217,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("url", InSummary=true, Order=60)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri UrlElement
+    public Hl7.Fhir.Model.FhirUri? UrlElement
     {
       get { return _UrlElement; }
       set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _UrlElement;
+    private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
     /// <summary>
     /// Where the artifact can be accessed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url
+    public string? Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get => _UrlElement?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -254,13 +245,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("document", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment Document
+    public Hl7.Fhir.Model.Attachment? Document
     {
       get { return _Document; }
       set { _Document = value; OnPropertyChanged("Document"); }
     }
 
-    private Hl7.Fhir.Model.Attachment _Document;
+    private Hl7.Fhir.Model.Attachment? _Document;
 
     /// <summary>
     /// What resource is being referenced.
@@ -269,30 +260,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Resource
+    public Hl7.Fhir.Model.ResourceReference? Resource
     {
       get { return _Resource; }
       set { _Resource = value; OnPropertyChanged("Resource"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Resource;
+    private Hl7.Fhir.Model.ResourceReference? _Resource;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as RelatedArtifact;
-
-      if (dest == null)
-      {
+      if(other is not RelatedArtifact dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)TypeElement.DeepCopyInternal();
-      if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopyInternal();
-      if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopyInternal();
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
-      if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopyInternal();
-      if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)_TypeElement.DeepCopyInternal();
+      if(_DisplayElement is not null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)_DisplayElement.DeepCopyInternal();
+      if(_CitationElement is not null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)_CitationElement.DeepCopyInternal();
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+      if(_Document is not null) dest.Document = (Hl7.Fhir.Model.Attachment)_Document.DeepCopyInternal();
+      if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)_Resource.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -304,69 +291,69 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as RelatedArtifact;
-      if(otherT == null) return false;
+      if(other is not RelatedArtifact otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(DisplayElement, otherT.DisplayElement)) return false;
-      if(!comparer.Equals(CitationElement, otherT.CitationElement)) return false;
-      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-      if(!comparer.Equals(Document, otherT.Document)) return false;
-      if(!comparer.Equals(Resource, otherT.Resource)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
+      if(!comparer.Equals(_CitationElement, otherT._CitationElement)) return false;
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.Equals(_Document, otherT._Document)) return false;
+      if(!comparer.Equals(_Resource, otherT._Resource)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "display":
-          value = DisplayElement;
-          return DisplayElement is not null;
+          value = _DisplayElement;
+          return _DisplayElement is not null;
         case "citation":
-          value = CitationElement;
-          return CitationElement is not null;
+          value = _CitationElement;
+          return _CitationElement is not null;
         case "url":
-          value = UrlElement;
-          return UrlElement is not null;
+          value = _UrlElement;
+          return _UrlElement is not null;
         case "document":
-          value = Document;
-          return Document is not null;
+          value = _Document;
+          return _Document is not null;
         case "resource":
-          value = Resource;
-          return Resource is not null;
+          value = _Resource;
+          return _Resource is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
           return this;
         case "display":
-          DisplayElement = (Hl7.Fhir.Model.FhirString)value;
+          DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "citation":
-          CitationElement = (Hl7.Fhir.Model.FhirString)value;
+          CitationElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUri)value;
+          UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "document":
-          Document = (Hl7.Fhir.Model.Attachment)value;
+          Document = (Hl7.Fhir.Model.Attachment?)value;
           return this;
         case "resource":
-          Resource = (Hl7.Fhir.Model.ResourceReference)value;
+          Resource = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -377,12 +364,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
-      if (CitationElement is not null) yield return new KeyValuePair<string,object>("citation",CitationElement);
-      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
-      if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_DisplayElement is not null) yield return new KeyValuePair<string,object>("display",_DisplayElement);
+      if (_CitationElement is not null) yield return new KeyValuePair<string,object>("citation",_CitationElement);
+      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Document is not null) yield return new KeyValuePair<string,object>("document",_Document);
+      if (_Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
     }
 
   }

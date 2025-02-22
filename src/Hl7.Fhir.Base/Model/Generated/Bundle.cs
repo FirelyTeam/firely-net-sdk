@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -969,22 +972,22 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PrimitiveType RelationElement
+      public Hl7.Fhir.Model.PrimitiveType? RelationElement
       {
         get { return _RelationElement; }
         set { _RelationElement = value; OnPropertyChanged("RelationElement"); }
       }
 
-      private Hl7.Fhir.Model.PrimitiveType _RelationElement;
+      private Hl7.Fhir.Model.PrimitiveType? _RelationElement;
 
       /// <summary>
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1. Use this property in STU3, R4 and R4B.
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string RelationString
+      public string? RelationString
       {
-        get => ((IValue<string>)_RelationElement)?.Value;
+        get => ((IValue<string>?)_RelationElement)?.Value;
         set
         {
           RelationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -997,9 +1000,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Relation
+      public string? Relation
       {
-        get => ((IValue<string>)_RelationElement)?.Value;
+        get => ((IValue<string>?)_RelationElement)?.Value;
         set
         {
           RelationElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -1013,20 +1016,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri UrlElement
+      public Hl7.Fhir.Model.FhirUri? UrlElement
       {
         get { return _UrlElement; }
         set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _UrlElement;
+      private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
       /// <summary>
       /// Reference details for the link
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Url
+      public string? Url
       {
         get => _UrlElement?.Value;
         set
@@ -1058,13 +1061,14 @@ namespace Hl7.Fhir.Model
         if(other is not LinkComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(_RelationElement, otherT._RelationElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_RelationElement, otherT._RelationElement)) return false;
         if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -1080,15 +1084,15 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "relation":
-            RelationElement = (Hl7.Fhir.Model.PrimitiveType)value;
+            RelationElement = (Hl7.Fhir.Model.PrimitiveType?)value;
             return this;
           case "url":
-            UrlElement = (Hl7.Fhir.Model.FhirUri)value;
+            UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1133,27 +1137,27 @@ namespace Hl7.Fhir.Model
         set { _Link = value; OnPropertyChanged("Link"); }
       }
 
-      private List<Hl7.Fhir.Model.Bundle.LinkComponent> _Link;
+      private List<Hl7.Fhir.Model.Bundle.LinkComponent>? _Link;
 
       /// <summary>
       /// URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.).
       /// </summary>
       [FhirElement("fullUrl", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri FullUrlElement
+      public Hl7.Fhir.Model.FhirUri? FullUrlElement
       {
         get { return _FullUrlElement; }
         set { _FullUrlElement = value; OnPropertyChanged("FullUrlElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _FullUrlElement;
+      private Hl7.Fhir.Model.FhirUri? _FullUrlElement;
 
       /// <summary>
       /// URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string FullUrl
+      public string? FullUrl
       {
         get => _FullUrlElement?.Value;
         set
@@ -1170,52 +1174,52 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
-      public Hl7.Fhir.Model.Resource Resource
+      public Hl7.Fhir.Model.Resource? Resource
       {
         get { return _Resource; }
         set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
-      private Hl7.Fhir.Model.Resource _Resource;
+      private Hl7.Fhir.Model.Resource? _Resource;
 
       /// <summary>
       /// Search related information.
       /// </summary>
       [FhirElement("search", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Bundle.SearchComponent Search
+      public Hl7.Fhir.Model.Bundle.SearchComponent? Search
       {
         get { return _Search; }
         set { _Search = value; OnPropertyChanged("Search"); }
       }
 
-      private Hl7.Fhir.Model.Bundle.SearchComponent _Search;
+      private Hl7.Fhir.Model.Bundle.SearchComponent? _Search;
 
       /// <summary>
       /// Additional execution information (transaction/batch/history).
       /// </summary>
       [FhirElement("request", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Bundle.RequestComponent Request
+      public Hl7.Fhir.Model.Bundle.RequestComponent? Request
       {
         get { return _Request; }
         set { _Request = value; OnPropertyChanged("Request"); }
       }
 
-      private Hl7.Fhir.Model.Bundle.RequestComponent _Request;
+      private Hl7.Fhir.Model.Bundle.RequestComponent? _Request;
 
       /// <summary>
       /// Results of execution (transaction/batch/history).
       /// </summary>
       [FhirElement("response", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.Bundle.ResponseComponent Response
+      public Hl7.Fhir.Model.Bundle.ResponseComponent? Response
       {
         get { return _Response; }
         set { _Response = value; OnPropertyChanged("Response"); }
       }
 
-      private Hl7.Fhir.Model.Bundle.ResponseComponent _Response;
+      private Hl7.Fhir.Model.Bundle.ResponseComponent? _Response;
 
       protected internal override void CopyToInternal(Base other)
       {
@@ -1243,17 +1247,18 @@ namespace Hl7.Fhir.Model
         if(other is not EntryComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(_Link, otherT._Link)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Link, otherT._Link)) return false;
         if(!comparer.Equals(_FullUrlElement, otherT._FullUrlElement)) return false;
         if(!comparer.Equals(_Resource, otherT._Resource)) return false;
         if(!comparer.Equals(_Search, otherT._Search)) return false;
         if(!comparer.Equals(_Request, otherT._Request)) return false;
         if(!comparer.Equals(_Response, otherT._Response)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -1281,27 +1286,27 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "link":
-            Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>)value;
+            Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>?)value!;
             return this;
           case "fullUrl":
-            FullUrlElement = (Hl7.Fhir.Model.FhirUri)value;
+            FullUrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "resource":
-            Resource = (Hl7.Fhir.Model.Resource)value;
+            Resource = (Hl7.Fhir.Model.Resource?)value;
             return this;
           case "search":
-            Search = (Hl7.Fhir.Model.Bundle.SearchComponent)value;
+            Search = (Hl7.Fhir.Model.Bundle.SearchComponent?)value;
             return this;
           case "request":
-            Request = (Hl7.Fhir.Model.Bundle.RequestComponent)value;
+            Request = (Hl7.Fhir.Model.Bundle.RequestComponent?)value;
             return this;
           case "response":
-            Response = (Hl7.Fhir.Model.Bundle.ResponseComponent)value;
+            Response = (Hl7.Fhir.Model.Bundle.ResponseComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1345,13 +1350,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("SearchEntryMode")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
+      public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>? ModeElement
       {
         get { return _ModeElement; }
         set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> _ModeElement;
+      private Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>? _ModeElement;
 
       /// <summary>
       /// match | include - why this is in the result set
@@ -1373,13 +1378,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("score", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal ScoreElement
+      public Hl7.Fhir.Model.FhirDecimal? ScoreElement
       {
         get { return _ScoreElement; }
         set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _ScoreElement;
+      private Hl7.Fhir.Model.FhirDecimal? _ScoreElement;
 
       /// <summary>
       /// Search ranking (between 0 and 1)
@@ -1418,13 +1423,14 @@ namespace Hl7.Fhir.Model
         if(other is not SearchComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(_ModeElement, otherT._ModeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_ModeElement, otherT._ModeElement)) return false;
         if(!comparer.Equals(_ScoreElement, otherT._ScoreElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -1440,15 +1446,15 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "mode":
-            ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>)value;
+            ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>?)value;
             return this;
           case "score":
-            ScoreElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            ScoreElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1489,13 +1495,13 @@ namespace Hl7.Fhir.Model
       [Binding("HTTPVerb")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Bundle.HTTPVerb> MethodElement
+      public Code<Hl7.Fhir.Model.Bundle.HTTPVerb>? MethodElement
       {
         get { return _MethodElement; }
         set { _MethodElement = value; OnPropertyChanged("MethodElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Bundle.HTTPVerb> _MethodElement;
+      private Code<Hl7.Fhir.Model.Bundle.HTTPVerb>? _MethodElement;
 
       /// <summary>
       /// GET | HEAD | POST | PUT | DELETE | PATCH
@@ -1518,20 +1524,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri UrlElement
+      public Hl7.Fhir.Model.FhirUri? UrlElement
       {
         get { return _UrlElement; }
         set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _UrlElement;
+      private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
       /// <summary>
       /// URL for HTTP equivalent of this entry
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Url
+      public string? Url
       {
         get => _UrlElement?.Value;
         set
@@ -1546,20 +1552,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("ifNoneMatch", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString IfNoneMatchElement
+      public Hl7.Fhir.Model.FhirString? IfNoneMatchElement
       {
         get { return _IfNoneMatchElement; }
         set { _IfNoneMatchElement = value; OnPropertyChanged("IfNoneMatchElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _IfNoneMatchElement;
+      private Hl7.Fhir.Model.FhirString? _IfNoneMatchElement;
 
       /// <summary>
       /// For managing cache validation
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string IfNoneMatch
+      public string? IfNoneMatch
       {
         get => _IfNoneMatchElement?.Value;
         set
@@ -1574,13 +1580,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("ifModifiedSince", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Instant IfModifiedSinceElement
+      public Hl7.Fhir.Model.Instant? IfModifiedSinceElement
       {
         get { return _IfModifiedSinceElement; }
         set { _IfModifiedSinceElement = value; OnPropertyChanged("IfModifiedSinceElement"); }
       }
 
-      private Hl7.Fhir.Model.Instant _IfModifiedSinceElement;
+      private Hl7.Fhir.Model.Instant? _IfModifiedSinceElement;
 
       /// <summary>
       /// For managing cache currency
@@ -1602,20 +1608,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("ifMatch", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString IfMatchElement
+      public Hl7.Fhir.Model.FhirString? IfMatchElement
       {
         get { return _IfMatchElement; }
         set { _IfMatchElement = value; OnPropertyChanged("IfMatchElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _IfMatchElement;
+      private Hl7.Fhir.Model.FhirString? _IfMatchElement;
 
       /// <summary>
       /// For managing update contention
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string IfMatch
+      public string? IfMatch
       {
         get => _IfMatchElement?.Value;
         set
@@ -1630,20 +1636,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("ifNoneExist", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString IfNoneExistElement
+      public Hl7.Fhir.Model.FhirString? IfNoneExistElement
       {
         get { return _IfNoneExistElement; }
         set { _IfNoneExistElement = value; OnPropertyChanged("IfNoneExistElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _IfNoneExistElement;
+      private Hl7.Fhir.Model.FhirString? _IfNoneExistElement;
 
       /// <summary>
       /// For conditional creates
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string IfNoneExist
+      public string? IfNoneExist
       {
         get => _IfNoneExistElement?.Value;
         set
@@ -1679,17 +1685,18 @@ namespace Hl7.Fhir.Model
         if(other is not RequestComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(_MethodElement, otherT._MethodElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_MethodElement, otherT._MethodElement)) return false;
         if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
         if(!comparer.Equals(_IfNoneMatchElement, otherT._IfNoneMatchElement)) return false;
         if(!comparer.Equals(_IfModifiedSinceElement, otherT._IfModifiedSinceElement)) return false;
         if(!comparer.Equals(_IfMatchElement, otherT._IfMatchElement)) return false;
         if(!comparer.Equals(_IfNoneExistElement, otherT._IfNoneExistElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -1717,27 +1724,27 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "method":
-            MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>)value;
+            MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>?)value;
             return this;
           case "url":
-            UrlElement = (Hl7.Fhir.Model.FhirUri)value;
+            UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "ifNoneMatch":
-            IfNoneMatchElement = (Hl7.Fhir.Model.FhirString)value;
+            IfNoneMatchElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "ifModifiedSince":
-            IfModifiedSinceElement = (Hl7.Fhir.Model.Instant)value;
+            IfModifiedSinceElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           case "ifMatch":
-            IfMatchElement = (Hl7.Fhir.Model.FhirString)value;
+            IfMatchElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "ifNoneExist":
-            IfNoneExistElement = (Hl7.Fhir.Model.FhirString)value;
+            IfNoneExistElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1780,20 +1787,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("status", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString StatusElement
+      public Hl7.Fhir.Model.FhirString? StatusElement
       {
         get { return _StatusElement; }
         set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _StatusElement;
+      private Hl7.Fhir.Model.FhirString? _StatusElement;
 
       /// <summary>
       /// Status response code (text optional)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Status
+      public string? Status
       {
         get => _StatusElement?.Value;
         set
@@ -1808,20 +1815,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("location", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri LocationElement
+      public Hl7.Fhir.Model.FhirUri? LocationElement
       {
         get { return _LocationElement; }
         set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _LocationElement;
+      private Hl7.Fhir.Model.FhirUri? _LocationElement;
 
       /// <summary>
       /// The location (if the operation returns a location)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Location
+      public string? Location
       {
         get => _LocationElement?.Value;
         set
@@ -1836,20 +1843,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("etag", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString EtagElement
+      public Hl7.Fhir.Model.FhirString? EtagElement
       {
         get { return _EtagElement; }
         set { _EtagElement = value; OnPropertyChanged("EtagElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _EtagElement;
+      private Hl7.Fhir.Model.FhirString? _EtagElement;
 
       /// <summary>
       /// The Etag for the resource (if relevant)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Etag
+      public string? Etag
       {
         get => _EtagElement?.Value;
         set
@@ -1864,13 +1871,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("lastModified", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Instant LastModifiedElement
+      public Hl7.Fhir.Model.Instant? LastModifiedElement
       {
         get { return _LastModifiedElement; }
         set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
       }
 
-      private Hl7.Fhir.Model.Instant _LastModifiedElement;
+      private Hl7.Fhir.Model.Instant? _LastModifiedElement;
 
       /// <summary>
       /// Server's date time modified
@@ -1894,13 +1901,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
-      public Hl7.Fhir.Model.Resource Outcome
+      public Hl7.Fhir.Model.Resource? Outcome
       {
         get { return _Outcome; }
         set { _Outcome = value; OnPropertyChanged("Outcome"); }
       }
 
-      private Hl7.Fhir.Model.Resource _Outcome;
+      private Hl7.Fhir.Model.Resource? _Outcome;
 
       protected internal override void CopyToInternal(Base other)
       {
@@ -1927,16 +1934,17 @@ namespace Hl7.Fhir.Model
         if(other is not ResponseComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
         if(!comparer.Equals(_LocationElement, otherT._LocationElement)) return false;
         if(!comparer.Equals(_EtagElement, otherT._EtagElement)) return false;
         if(!comparer.Equals(_LastModifiedElement, otherT._LastModifiedElement)) return false;
         if(!comparer.Equals(_Outcome, otherT._Outcome)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -1961,24 +1969,24 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "status":
-            StatusElement = (Hl7.Fhir.Model.FhirString)value;
+            StatusElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "location":
-            LocationElement = (Hl7.Fhir.Model.FhirUri)value;
+            LocationElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "etag":
-            EtagElement = (Hl7.Fhir.Model.FhirString)value;
+            EtagElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "lastModified":
-            LastModifiedElement = (Hl7.Fhir.Model.Instant)value;
+            LastModifiedElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           case "outcome":
-            Outcome = (Hl7.Fhir.Model.Resource)value;
+            Outcome = (Hl7.Fhir.Model.Resource?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2003,13 +2011,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
@@ -2019,13 +2027,13 @@ namespace Hl7.Fhir.Model
     [Binding("BundleType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Bundle.BundleType> TypeElement
+    public Code<Hl7.Fhir.Model.Bundle.BundleType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Bundle.BundleType> _TypeElement;
+    private Code<Hl7.Fhir.Model.Bundle.BundleType>? _TypeElement;
 
     /// <summary>
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification
@@ -2050,13 +2058,13 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("timestamp", InSummary=true, Order=70, FiveWs="FiveWs.init", Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Instant TimestampElement
+    public Hl7.Fhir.Model.Instant? TimestampElement
     {
       get { return _TimestampElement; }
       set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _TimestampElement;
+    private Hl7.Fhir.Model.Instant? _TimestampElement;
 
     /// <summary>
     /// When the bundle was assembled
@@ -2078,13 +2086,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("total", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.UnsignedInt TotalElement
+    public Hl7.Fhir.Model.UnsignedInt? TotalElement
     {
       get { return _TotalElement; }
       set { _TotalElement = value; OnPropertyChanged("TotalElement"); }
     }
 
-    private Hl7.Fhir.Model.UnsignedInt _TotalElement;
+    private Hl7.Fhir.Model.UnsignedInt? _TotalElement;
 
     /// <summary>
     /// If search, the total number of matches
@@ -2113,7 +2121,7 @@ namespace Hl7.Fhir.Model
       set { _Link = value; OnPropertyChanged("Link"); }
     }
 
-    private List<Hl7.Fhir.Model.Bundle.LinkComponent> _Link;
+    private List<Hl7.Fhir.Model.Bundle.LinkComponent>? _Link;
 
     /// <summary>
     /// Entry in the bundle - will have a resource or information.
@@ -2127,20 +2135,20 @@ namespace Hl7.Fhir.Model
       set { _Entry = value; OnPropertyChanged("Entry"); }
     }
 
-    private List<Hl7.Fhir.Model.Bundle.EntryComponent> _Entry;
+    private List<Hl7.Fhir.Model.Bundle.EntryComponent>? _Entry;
 
     /// <summary>
     /// Digital Signature.
     /// </summary>
     [FhirElement("signature", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.Signature Signature
+    public Hl7.Fhir.Model.Signature? Signature
     {
       get { return _Signature; }
       set { _Signature = value; OnPropertyChanged("Signature"); }
     }
 
-    private Hl7.Fhir.Model.Signature _Signature;
+    private Hl7.Fhir.Model.Signature? _Signature;
 
     /// <summary>
     /// Issues with the Bundle.
@@ -2152,15 +2160,15 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [DataMember]
-    public Hl7.Fhir.Model.Resource Issues
+    public Hl7.Fhir.Model.Resource? Issues
     {
       get { return _Issues; }
       set { _Issues = value; OnPropertyChanged("Issues"); }
     }
 
-    private Hl7.Fhir.Model.Resource _Issues;
+    private Hl7.Fhir.Model.Resource? _Issues;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2190,7 +2198,7 @@ namespace Hl7.Fhir.Model
       if(other is not Bundle otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
       if(!comparer.Equals(_TimestampElement, otherT._TimestampElement)) return false;
       if(!comparer.Equals(_TotalElement, otherT._TotalElement)) return false;
@@ -2198,11 +2206,12 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Entry, otherT._Entry)) return false;
       if(!comparer.Equals(_Signature, otherT._Signature)) return false;
       if(!comparer.Equals(_Issues, otherT._Issues)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -2236,33 +2245,33 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>?)value;
           return this;
         case "timestamp":
-          TimestampElement = (Hl7.Fhir.Model.Instant)value;
+          TimestampElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "total":
-          TotalElement = (Hl7.Fhir.Model.UnsignedInt)value;
+          TotalElement = (Hl7.Fhir.Model.UnsignedInt?)value;
           return this;
         case "link":
-          Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>)value;
+          Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>?)value!;
           return this;
         case "entry":
-          Entry = (List<Hl7.Fhir.Model.Bundle.EntryComponent>)value;
+          Entry = (List<Hl7.Fhir.Model.Bundle.EntryComponent>?)value!;
           return this;
         case "signature":
-          Signature = (Hl7.Fhir.Model.Signature)value;
+          Signature = (Hl7.Fhir.Model.Signature?)value;
           return this;
         case "issues":
-          Issues = (Hl7.Fhir.Model.Resource)value;
+          Issues = (Hl7.Fhir.Model.Resource?)value;
           return this;
         default:
           return base.SetValue(key, value);

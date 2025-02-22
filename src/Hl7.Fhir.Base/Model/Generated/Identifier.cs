@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -107,13 +110,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("IdentifierUse")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Identifier.IdentifierUse> UseElement
+    public Code<Hl7.Fhir.Model.Identifier.IdentifierUse>? UseElement
     {
       get { return _UseElement; }
       set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Identifier.IdentifierUse> _UseElement;
+    private Code<Hl7.Fhir.Model.Identifier.IdentifierUse>? _UseElement;
 
     /// <summary>
     /// usual | official | temp | secondary | old (If known)
@@ -136,33 +139,33 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=40)]
     [Binding("IdentifierType")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// The namespace for the identifier value.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri SystemElement
+    public Hl7.Fhir.Model.FhirUri? SystemElement
     {
       get { return _SystemElement; }
       set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _SystemElement;
+    private Hl7.Fhir.Model.FhirUri? _SystemElement;
 
     /// <summary>
     /// The namespace for the identifier value
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string System
+    public string? System
     {
       get => _SystemElement?.Value;
       set
@@ -177,20 +180,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("value", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ValueElement
+    public Hl7.Fhir.Model.FhirString? ValueElement
     {
       get { return _ValueElement; }
       set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ValueElement;
+    private Hl7.Fhir.Model.FhirString? _ValueElement;
 
     /// <summary>
     /// The value that is unique
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Value
+    public string? Value
     {
       get => _ValueElement?.Value;
       set
@@ -205,13 +208,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// Organization that issued id (may be just text).
@@ -220,13 +223,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Assigner
+    public Hl7.Fhir.Model.ResourceReference? Assigner
     {
       get { return _Assigner; }
       set { _Assigner = value; OnPropertyChanged("Assigner"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Assigner;
+    private Hl7.Fhir.Model.ResourceReference? _Assigner;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -254,17 +257,18 @@ namespace Hl7.Fhir.Model
       if(other is not Identifier otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
       if(!comparer.Equals(_Type, otherT._Type)) return false;
       if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
       if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
       if(!comparer.Equals(_Assigner, otherT._Assigner)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -292,27 +296,27 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>)value;
+          UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "system":
-          SystemElement = (Hl7.Fhir.Model.FhirUri)value;
+          SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirString)value;
+          ValueElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "assigner":
-          Assigner = (Hl7.Fhir.Model.ResourceReference)value;
+          Assigner = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);

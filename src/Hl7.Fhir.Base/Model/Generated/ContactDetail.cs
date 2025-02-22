@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,20 +67,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Name of an individual to contact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
       get => _NameElement?.Value;
       set
@@ -99,7 +102,7 @@ namespace Hl7.Fhir.Model
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -123,13 +126,14 @@ namespace Hl7.Fhir.Model
       if(other is not ContactDetail otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
       if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -145,15 +149,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

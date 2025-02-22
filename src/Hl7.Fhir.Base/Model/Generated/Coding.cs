@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,20 +67,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("system", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri SystemElement
+    public Hl7.Fhir.Model.FhirUri? SystemElement
     {
       get { return _SystemElement; }
       set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _SystemElement;
+    private Hl7.Fhir.Model.FhirUri? _SystemElement;
 
     /// <summary>
     /// Identity of the terminology system
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string System
+    public string? System
     {
       get => _SystemElement?.Value;
       set
@@ -92,20 +95,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("version", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString VersionElement
+    public Hl7.Fhir.Model.FhirString? VersionElement
     {
       get { return _VersionElement; }
       set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _VersionElement;
+    private Hl7.Fhir.Model.FhirString? _VersionElement;
 
     /// <summary>
     /// Version of the system - if relevant
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Version
+    public string? Version
     {
       get => _VersionElement?.Value;
       set
@@ -120,20 +123,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Code CodeElement
+    public Hl7.Fhir.Model.Code? CodeElement
     {
       get { return _CodeElement; }
       set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _CodeElement;
+    private Hl7.Fhir.Model.Code? _CodeElement;
 
     /// <summary>
     /// Symbol in syntax defined by the system
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Code
+    public string? Code
     {
       get => _CodeElement?.Value;
       set
@@ -148,20 +151,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DisplayElement
+    public Hl7.Fhir.Model.FhirString? DisplayElement
     {
       get { return _DisplayElement; }
       set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DisplayElement;
+    private Hl7.Fhir.Model.FhirString? _DisplayElement;
 
     /// <summary>
     /// Representation defined by the system
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Display
+    public string? Display
     {
       get => _DisplayElement?.Value;
       set
@@ -176,13 +179,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("userSelected", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean UserSelectedElement
+    public Hl7.Fhir.Model.FhirBoolean? UserSelectedElement
     {
       get { return _UserSelectedElement; }
       set { _UserSelectedElement = value; OnPropertyChanged("UserSelectedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _UserSelectedElement;
+    private Hl7.Fhir.Model.FhirBoolean? _UserSelectedElement;
 
     /// <summary>
     /// If this coding was chosen directly by the user
@@ -224,16 +227,17 @@ namespace Hl7.Fhir.Model
       if(other is not Coding otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
       if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
       if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
       if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
       if(!comparer.Equals(_UserSelectedElement, otherT._UserSelectedElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -258,24 +262,24 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "system":
-          SystemElement = (Hl7.Fhir.Model.FhirUri)value;
+          SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "version":
-          VersionElement = (Hl7.Fhir.Model.FhirString)value;
+          VersionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "code":
-          CodeElement = (Hl7.Fhir.Model.Code)value;
+          CodeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "display":
-          DisplayElement = (Hl7.Fhir.Model.FhirString)value;
+          DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "userSelected":
-          UserSelectedElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          UserSelectedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         default:
           return base.SetValue(key, value);

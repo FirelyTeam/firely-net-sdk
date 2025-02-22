@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -101,13 +104,13 @@ namespace Hl7.Fhir.Model
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? _StatusElement;
 
     /// <summary>
     /// generated | extensions | additional | empty
@@ -130,20 +133,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.XHtml DivElement
+    public Hl7.Fhir.Model.XHtml? DivElement
     {
       get { return _DivElement; }
       set { _DivElement = value; OnPropertyChanged("DivElement"); }
     }
 
-    private Hl7.Fhir.Model.XHtml _DivElement;
+    private Hl7.Fhir.Model.XHtml? _DivElement;
 
     /// <summary>
     /// Limited xhtml content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Div
+    public string? Div
     {
       get => _DivElement?.Value;
       set
@@ -175,13 +178,14 @@ namespace Hl7.Fhir.Model
       if(other is not Narrative otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_DivElement, otherT._DivElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -197,15 +201,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value;
           return this;
         case "div":
-          DivElement = (Hl7.Fhir.Model.XHtml)value;
+          DivElement = (Hl7.Fhir.Model.XHtml?)value;
           return this;
         default:
           return base.SetValue(key, value);

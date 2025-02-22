@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -92,11 +95,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Procedure that caused this media to be created.
@@ -108,11 +111,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// photo | video | audio.
@@ -122,13 +125,13 @@ namespace Hl7.Fhir.Model
     [Binding("DigitalMediaType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Media.DigitalMediaType> TypeElement
+    public Code<Hl7.Fhir.Model.Media.DigitalMediaType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Media.DigitalMediaType> _TypeElement;
+    private Code<Hl7.Fhir.Model.Media.DigitalMediaType>? _TypeElement;
 
     /// <summary>
     /// photo | video | audio
@@ -137,13 +140,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Media.DigitalMediaType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -154,13 +154,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("subtype", InSummary=true, Order=120, FiveWs="class")]
     [Binding("DigitalMediaSubtype")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Subtype
+    public Hl7.Fhir.Model.CodeableConcept? Subtype
     {
       get { return _Subtype; }
       set { _Subtype = value; OnPropertyChanged("Subtype"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Subtype;
+    private Hl7.Fhir.Model.CodeableConcept? _Subtype;
 
     /// <summary>
     /// Imaging view, e.g. Lateral or Antero-posterior.
@@ -168,13 +168,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("view", InSummary=true, Order=130, FiveWs="class")]
     [Binding("MediaView")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept View
+    public Hl7.Fhir.Model.CodeableConcept? View
     {
       get { return _View; }
       set { _View = value; OnPropertyChanged("View"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _View;
+    private Hl7.Fhir.Model.CodeableConcept? _View;
 
     /// <summary>
     /// Who/What this Media is a record of.
@@ -183,13 +183,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device","Specimen")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Encounter / Episode associated with media.
@@ -198,13 +198,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Context
+    public Hl7.Fhir.Model.ResourceReference? Context
     {
       get { return _Context; }
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Context;
+    private Hl7.Fhir.Model.ResourceReference? _Context;
 
     /// <summary>
     /// When Media was collected.
@@ -213,13 +213,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Occurrence
+    public Hl7.Fhir.Model.DataType? Occurrence
     {
       get { return _Occurrence; }
       set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Occurrence;
+    private Hl7.Fhir.Model.DataType? _Occurrence;
 
     /// <summary>
     /// The person who generated the image.
@@ -228,13 +228,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Operator
+    public Hl7.Fhir.Model.ResourceReference? Operator
     {
       get { return _Operator; }
       set { _Operator = value; OnPropertyChanged("Operator"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Operator;
+    private Hl7.Fhir.Model.ResourceReference? _Operator;
 
     /// <summary>
     /// Why was event performed?.
@@ -245,11 +245,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
-      get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+      get => _ReasonCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ReasonCode;
 
     /// <summary>
     /// Body part in media.
@@ -257,13 +257,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("bodySite", InSummary=true, Order=190)]
     [Binding("BodySite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept BodySite
+    public Hl7.Fhir.Model.CodeableConcept? BodySite
     {
       get { return _BodySite; }
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _BodySite;
+    private Hl7.Fhir.Model.CodeableConcept? _BodySite;
 
     /// <summary>
     /// Observing Device.
@@ -272,26 +272,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Device","DeviceMetric")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Device
+    public Hl7.Fhir.Model.ResourceReference? Device
     {
       get { return _Device; }
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Device;
+    private Hl7.Fhir.Model.ResourceReference? _Device;
 
     /// <summary>
     /// Height of the image in pixels (photo/video).
     /// </summary>
     [FhirElement("height", InSummary=true, Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt HeightElement
+    public Hl7.Fhir.Model.PositiveInt? HeightElement
     {
       get { return _HeightElement; }
       set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _HeightElement;
+    private Hl7.Fhir.Model.PositiveInt? _HeightElement;
 
     /// <summary>
     /// Height of the image in pixels (photo/video)
@@ -300,13 +300,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Height
     {
-      get { return HeightElement != null ? HeightElement.Value : null; }
+      get => _HeightElement?.Value;
       set
       {
-        if (value == null)
-          HeightElement = null;
-        else
-          HeightElement = new Hl7.Fhir.Model.PositiveInt(value);
+        HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Height");
       }
     }
@@ -316,13 +313,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("width", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt WidthElement
+    public Hl7.Fhir.Model.PositiveInt? WidthElement
     {
       get { return _WidthElement; }
       set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _WidthElement;
+    private Hl7.Fhir.Model.PositiveInt? _WidthElement;
 
     /// <summary>
     /// Width of the image in pixels (photo/video)
@@ -331,13 +328,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Width
     {
-      get { return WidthElement != null ? WidthElement.Value : null; }
+      get => _WidthElement?.Value;
       set
       {
-        if (value == null)
-          WidthElement = null;
-        else
-          WidthElement = new Hl7.Fhir.Model.PositiveInt(value);
+        WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Width");
       }
     }
@@ -347,13 +341,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("frames", InSummary=true, Order=230)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt FramesElement
+    public Hl7.Fhir.Model.PositiveInt? FramesElement
     {
       get { return _FramesElement; }
       set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _FramesElement;
+    private Hl7.Fhir.Model.PositiveInt? _FramesElement;
 
     /// <summary>
     /// Number of frames if &gt; 1 (photo)
@@ -362,13 +356,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Frames
     {
-      get { return FramesElement != null ? FramesElement.Value : null; }
+      get => _FramesElement?.Value;
       set
       {
-        if (value == null)
-          FramesElement = null;
-        else
-          FramesElement = new Hl7.Fhir.Model.PositiveInt(value);
+        FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Frames");
       }
     }
@@ -378,13 +369,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("duration", InSummary=true, Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.UnsignedInt DurationElement
+    public Hl7.Fhir.Model.UnsignedInt? DurationElement
     {
       get { return _DurationElement; }
       set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
     }
 
-    private Hl7.Fhir.Model.UnsignedInt _DurationElement;
+    private Hl7.Fhir.Model.UnsignedInt? _DurationElement;
 
     /// <summary>
     /// Length in seconds (audio / video)
@@ -393,13 +384,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Duration
     {
-      get { return DurationElement != null ? DurationElement.Value : null; }
+      get => _DurationElement?.Value;
       set
       {
-        if (value == null)
-          DurationElement = null;
-        else
-          DurationElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        DurationElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Duration");
       }
     }
@@ -410,13 +398,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("content", Order=250)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment Content
+    public Hl7.Fhir.Model.Attachment? Content
     {
       get { return _Content; }
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 
-    private Hl7.Fhir.Model.Attachment _Content;
+    private Hl7.Fhir.Model.Attachment? _Content;
 
     /// <summary>
     /// Comments made about the media.
@@ -426,42 +414,38 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Media;
-
-      if (dest == null)
-      {
+      if(other is not Media dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Media.DigitalMediaType>)TypeElement.DeepCopyInternal();
-      if(Subtype != null) dest.Subtype = (Hl7.Fhir.Model.CodeableConcept)Subtype.DeepCopyInternal();
-      if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopyInternal();
-      if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopyInternal();
-      if(Operator != null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)Operator.DeepCopyInternal();
-      if(ReasonCode.Any()) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopyInternal());
-      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopyInternal();
-      if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopyInternal();
-      if(HeightElement != null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)HeightElement.DeepCopyInternal();
-      if(WidthElement != null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)WidthElement.DeepCopyInternal();
-      if(FramesElement != null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)FramesElement.DeepCopyInternal();
-      if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.UnsignedInt)DurationElement.DeepCopyInternal();
-      if(Content != null) dest.Content = (Hl7.Fhir.Model.Attachment)Content.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.Media.DigitalMediaType>)_TypeElement.DeepCopyInternal();
+      if(_Subtype is not null) dest.Subtype = (Hl7.Fhir.Model.CodeableConcept)_Subtype.DeepCopyInternal();
+      if(_View is not null) dest.View = (Hl7.Fhir.Model.CodeableConcept)_View.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Context is not null) dest.Context = (Hl7.Fhir.Model.ResourceReference)_Context.DeepCopyInternal();
+      if(_Occurrence is not null) dest.Occurrence = (Hl7.Fhir.Model.DataType)_Occurrence.DeepCopyInternal();
+      if(_Operator is not null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)_Operator.DeepCopyInternal();
+      if(_ReasonCode is not null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(_ReasonCode.DeepCopyInternal());
+      if(_BodySite is not null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)_BodySite.DeepCopyInternal();
+      if(_Device is not null) dest.Device = (Hl7.Fhir.Model.ResourceReference)_Device.DeepCopyInternal();
+      if(_HeightElement is not null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)_HeightElement.DeepCopyInternal();
+      if(_WidthElement is not null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)_WidthElement.DeepCopyInternal();
+      if(_FramesElement is not null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)_FramesElement.DeepCopyInternal();
+      if(_DurationElement is not null) dest.DurationElement = (Hl7.Fhir.Model.UnsignedInt)_DurationElement.DeepCopyInternal();
+      if(_Content is not null) dest.Content = (Hl7.Fhir.Model.Attachment)_Content.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -473,153 +457,153 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Media;
-      if(otherT == null) return false;
+      if(other is not Media otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(Subtype, otherT.Subtype)) return false;
-      if(!comparer.Equals(View, otherT.View)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Context, otherT.Context)) return false;
-      if(!comparer.Equals(Occurrence, otherT.Occurrence)) return false;
-      if(!comparer.Equals(Operator, otherT.Operator)) return false;
-      if(!comparer.ListEquals(ReasonCode, otherT.ReasonCode)) return false;
-      if(!comparer.Equals(BodySite, otherT.BodySite)) return false;
-      if(!comparer.Equals(Device, otherT.Device)) return false;
-      if(!comparer.Equals(HeightElement, otherT.HeightElement)) return false;
-      if(!comparer.Equals(WidthElement, otherT.WidthElement)) return false;
-      if(!comparer.Equals(FramesElement, otherT.FramesElement)) return false;
-      if(!comparer.Equals(DurationElement, otherT.DurationElement)) return false;
-      if(!comparer.Equals(Content, otherT.Content)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_Subtype, otherT._Subtype)) return false;
+      if(!comparer.Equals(_View, otherT._View)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Context, otherT._Context)) return false;
+      if(!comparer.Equals(_Occurrence, otherT._Occurrence)) return false;
+      if(!comparer.Equals(_Operator, otherT._Operator)) return false;
+      if(!comparer.ListEquals(_ReasonCode, otherT._ReasonCode)) return false;
+      if(!comparer.Equals(_BodySite, otherT._BodySite)) return false;
+      if(!comparer.Equals(_Device, otherT._Device)) return false;
+      if(!comparer.Equals(_HeightElement, otherT._HeightElement)) return false;
+      if(!comparer.Equals(_WidthElement, otherT._WidthElement)) return false;
+      if(!comparer.Equals(_FramesElement, otherT._FramesElement)) return false;
+      if(!comparer.Equals(_DurationElement, otherT._DurationElement)) return false;
+      if(!comparer.Equals(_Content, otherT._Content)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "subtype":
-          value = Subtype;
-          return Subtype is not null;
+          value = _Subtype;
+          return _Subtype is not null;
         case "view":
-          value = View;
-          return View is not null;
+          value = _View;
+          return _View is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "context":
-          value = Context;
-          return Context is not null;
+          value = _Context;
+          return _Context is not null;
         case "occurrence":
-          value = Occurrence;
-          return Occurrence is not null;
+          value = _Occurrence;
+          return _Occurrence is not null;
         case "operator":
-          value = Operator;
-          return Operator is not null;
+          value = _Operator;
+          return _Operator is not null;
         case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
+          value = _ReasonCode;
+          return _ReasonCode?.Any() == true;
         case "bodySite":
-          value = BodySite;
-          return BodySite is not null;
+          value = _BodySite;
+          return _BodySite is not null;
         case "device":
-          value = Device;
-          return Device is not null;
+          value = _Device;
+          return _Device is not null;
         case "height":
-          value = HeightElement;
-          return HeightElement is not null;
+          value = _HeightElement;
+          return _HeightElement is not null;
         case "width":
-          value = WidthElement;
-          return WidthElement is not null;
+          value = _WidthElement;
+          return _WidthElement is not null;
         case "frames":
-          value = FramesElement;
-          return FramesElement is not null;
+          value = _FramesElement;
+          return _FramesElement is not null;
         case "duration":
-          value = DurationElement;
-          return DurationElement is not null;
+          value = _DurationElement;
+          return _DurationElement is not null;
         case "content":
-          value = Content;
-          return Content is not null;
+          value = _Content;
+          return _Content is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.Media.DigitalMediaType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.Media.DigitalMediaType>?)value;
           return this;
         case "subtype":
-          Subtype = (Hl7.Fhir.Model.CodeableConcept)value;
+          Subtype = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "view":
-          View = (Hl7.Fhir.Model.CodeableConcept)value;
+          View = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "context":
-          Context = (Hl7.Fhir.Model.ResourceReference)value;
+          Context = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "occurrence":
-          Occurrence = (Hl7.Fhir.Model.DataType)value;
+          Occurrence = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "operator":
-          Operator = (Hl7.Fhir.Model.ResourceReference)value;
+          Operator = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "reasonCode":
-          ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "bodySite":
-          BodySite = (Hl7.Fhir.Model.CodeableConcept)value;
+          BodySite = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "device":
-          Device = (Hl7.Fhir.Model.ResourceReference)value;
+          Device = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "height":
-          HeightElement = (Hl7.Fhir.Model.PositiveInt)value;
+          HeightElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "width":
-          WidthElement = (Hl7.Fhir.Model.PositiveInt)value;
+          WidthElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "frames":
-          FramesElement = (Hl7.Fhir.Model.PositiveInt)value;
+          FramesElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "duration":
-          DurationElement = (Hl7.Fhir.Model.UnsignedInt)value;
+          DurationElement = (Hl7.Fhir.Model.UnsignedInt?)value;
           return this;
         case "content":
-          Content = (Hl7.Fhir.Model.Attachment)value;
+          Content = (Hl7.Fhir.Model.Attachment?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -630,24 +614,24 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (Subtype is not null) yield return new KeyValuePair<string,object>("subtype",Subtype);
-      if (View is not null) yield return new KeyValuePair<string,object>("view",View);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (Operator is not null) yield return new KeyValuePair<string,object>("operator",Operator);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (HeightElement is not null) yield return new KeyValuePair<string,object>("height",HeightElement);
-      if (WidthElement is not null) yield return new KeyValuePair<string,object>("width",WidthElement);
-      if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
-      if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
-      if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Subtype is not null) yield return new KeyValuePair<string,object>("subtype",_Subtype);
+      if (_View is not null) yield return new KeyValuePair<string,object>("view",_View);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_Operator is not null) yield return new KeyValuePair<string,object>("operator",_Operator);
+      if (_ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",_ReasonCode);
+      if (_BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (_HeightElement is not null) yield return new KeyValuePair<string,object>("height",_HeightElement);
+      if (_WidthElement is not null) yield return new KeyValuePair<string,object>("width",_WidthElement);
+      if (_FramesElement is not null) yield return new KeyValuePair<string,object>("frames",_FramesElement);
+      if (_DurationElement is not null) yield return new KeyValuePair<string,object>("duration",_DurationElement);
+      if (_Content is not null) yield return new KeyValuePair<string,object>("content",_Content);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

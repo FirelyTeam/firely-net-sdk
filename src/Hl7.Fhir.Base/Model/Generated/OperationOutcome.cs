@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -333,13 +336,13 @@ namespace Hl7.Fhir.Model
       [Binding("IssueSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> SeverityElement
+      public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>? SeverityElement
       {
         get { return _SeverityElement; }
         set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> _SeverityElement;
+      private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>? _SeverityElement;
 
       /// <summary>
       /// fatal | error | warning | information | success
@@ -364,13 +367,13 @@ namespace Hl7.Fhir.Model
       [Binding("IssueType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.OperationOutcome.IssueType> CodeElement
+      public Code<Hl7.Fhir.Model.OperationOutcome.IssueType>? CodeElement
       {
         get { return _CodeElement; }
         set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.OperationOutcome.IssueType> _CodeElement;
+      private Code<Hl7.Fhir.Model.OperationOutcome.IssueType>? _CodeElement;
 
       /// <summary>
       /// Error or warning code
@@ -393,33 +396,33 @@ namespace Hl7.Fhir.Model
       [FhirElement("details", InSummary=true, Order=60)]
       [Binding("IssueDetails")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Details
+      public Hl7.Fhir.Model.CodeableConcept? Details
       {
         get { return _Details; }
         set { _Details = value; OnPropertyChanged("Details"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Details;
+      private Hl7.Fhir.Model.CodeableConcept? _Details;
 
       /// <summary>
       /// Additional diagnostic information about the issue.
       /// </summary>
       [FhirElement("diagnostics", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DiagnosticsElement
+      public Hl7.Fhir.Model.FhirString? DiagnosticsElement
       {
         get { return _DiagnosticsElement; }
         set { _DiagnosticsElement = value; OnPropertyChanged("DiagnosticsElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _DiagnosticsElement;
+      private Hl7.Fhir.Model.FhirString? _DiagnosticsElement;
 
       /// <summary>
       /// Additional diagnostic information about the issue
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Diagnostics
+      public string? Diagnostics
       {
         get => _DiagnosticsElement?.Value;
         set
@@ -441,20 +444,20 @@ namespace Hl7.Fhir.Model
         set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirString> _LocationElement;
+      private List<Hl7.Fhir.Model.FhirString>? _LocationElement;
 
       /// <summary>
       /// Deprecated: Path of element(s) related to issue
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> Location
+      public IEnumerable<string?>? Location
       {
-        get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
+        get => _LocationElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            LocationElement = null;
+            LocationElement = null!;
           else
             LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
           OnPropertyChanged("Location");
@@ -473,20 +476,20 @@ namespace Hl7.Fhir.Model
         set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirString> _ExpressionElement;
+      private List<Hl7.Fhir.Model.FhirString>? _ExpressionElement;
 
       /// <summary>
       /// FHIRPath of element(s) related to issue
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> Expression
+      public IEnumerable<string?>? Expression
       {
-        get { return ExpressionElement != null ? ExpressionElement.Select(elem => elem.Value) : null; }
+        get => _ExpressionElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            ExpressionElement = null;
+            ExpressionElement = null!;
           else
             ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
           OnPropertyChanged("Expression");
@@ -519,17 +522,18 @@ namespace Hl7.Fhir.Model
         if(other is not IssueComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(_SeverityElement, otherT._SeverityElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SeverityElement, otherT._SeverityElement)) return false;
         if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
         if(!comparer.Equals(_Details, otherT._Details)) return false;
         if(!comparer.Equals(_DiagnosticsElement, otherT._DiagnosticsElement)) return false;
         if(!comparer.ListEquals(_LocationElement, otherT._LocationElement)) return false;
         if(!comparer.ListEquals(_ExpressionElement, otherT._ExpressionElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
@@ -557,27 +561,27 @@ namespace Hl7.Fhir.Model
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "severity":
-            SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>)value;
+            SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>?)value;
             return this;
           case "code":
-            CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>)value;
+            CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>?)value;
             return this;
           case "details":
-            Details = (Hl7.Fhir.Model.CodeableConcept)value;
+            Details = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "diagnostics":
-            DiagnosticsElement = (Hl7.Fhir.Model.FhirString)value;
+            DiagnosticsElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "location":
-            LocationElement = (List<Hl7.Fhir.Model.FhirString>)value;
+            LocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
             return this;
           case "expression":
-            ExpressionElement = (List<Hl7.Fhir.Model.FhirString>)value;
+            ExpressionElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -610,7 +614,7 @@ namespace Hl7.Fhir.Model
       set { _Issue = value; OnPropertyChanged("Issue"); }
     }
 
-    private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> _Issue;
+    private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>? _Issue;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -633,12 +637,13 @@ namespace Hl7.Fhir.Model
       if(other is not OperationOutcome otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(_Issue, otherT._Issue)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Issue, otherT._Issue)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -651,12 +656,12 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "issue":
-          Issue = (List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>)value;
+          Issue = (List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -67,11 +70,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
@@ -80,13 +83,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("EligibilityRequestStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error
@@ -95,13 +98,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -112,13 +112,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("priority", Order=110, FiveWs="class")]
     [Binding("ProcessPriority")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Priority
+    public Hl7.Fhir.Model.CodeableConcept? Priority
     {
       get { return _Priority; }
       set { _Priority = value; OnPropertyChanged("Priority"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Priority;
+    private Hl7.Fhir.Model.CodeableConcept? _Priority;
 
     /// <summary>
     /// The subject of the Products and Services.
@@ -127,13 +127,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Estimated date or dates of Service.
@@ -142,41 +142,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Serviced
+    public Hl7.Fhir.Model.DataType? Serviced
     {
       get { return _Serviced; }
       set { _Serviced = value; OnPropertyChanged("Serviced"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Serviced;
+    private Hl7.Fhir.Model.DataType? _Serviced;
 
     /// <summary>
     /// Creation date.
     /// </summary>
     [FhirElement("created", Order=140, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
       get { return _CreatedElement; }
       set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
 
     /// <summary>
     /// Creation date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get { return CreatedElement != null ? CreatedElement.Value : null; }
+      get => _CreatedElement?.Value;
       set
       {
-        if (value == null)
-          CreatedElement = null;
-        else
-          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -188,13 +185,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Enterer
+    public Hl7.Fhir.Model.ResourceReference? Enterer
     {
       get { return _Enterer; }
       set { _Enterer = value; OnPropertyChanged("Enterer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Enterer;
+    private Hl7.Fhir.Model.ResourceReference? _Enterer;
 
     /// <summary>
     /// Responsible practitioner.
@@ -203,13 +200,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Provider
+    public Hl7.Fhir.Model.ResourceReference? Provider
     {
       get { return _Provider; }
       set { _Provider = value; OnPropertyChanged("Provider"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Provider;
+    private Hl7.Fhir.Model.ResourceReference? _Provider;
 
     /// <summary>
     /// Responsible organization.
@@ -218,13 +215,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Organization
+    public Hl7.Fhir.Model.ResourceReference? Organization
     {
       get { return _Organization; }
       set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Organization;
+    private Hl7.Fhir.Model.ResourceReference? _Organization;
 
     /// <summary>
     /// Target.
@@ -233,13 +230,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Insurer
+    public Hl7.Fhir.Model.ResourceReference? Insurer
     {
       get { return _Insurer; }
       set { _Insurer = value; OnPropertyChanged("Insurer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Insurer;
+    private Hl7.Fhir.Model.ResourceReference? _Insurer;
 
     /// <summary>
     /// Servicing Facility.
@@ -248,13 +245,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Facility
+    public Hl7.Fhir.Model.ResourceReference? Facility
     {
       get { return _Facility; }
       set { _Facility = value; OnPropertyChanged("Facility"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Facility;
+    private Hl7.Fhir.Model.ResourceReference? _Facility;
 
     /// <summary>
     /// Insurance or medical plan.
@@ -263,41 +260,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Coverage")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Coverage
+    public Hl7.Fhir.Model.ResourceReference? Coverage
     {
       get { return _Coverage; }
       set { _Coverage = value; OnPropertyChanged("Coverage"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Coverage;
+    private Hl7.Fhir.Model.ResourceReference? _Coverage;
 
     /// <summary>
     /// Business agreement.
     /// </summary>
     [FhirElement("businessArrangement", Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString BusinessArrangementElement
+    public Hl7.Fhir.Model.FhirString? BusinessArrangementElement
     {
       get { return _BusinessArrangementElement; }
       set { _BusinessArrangementElement = value; OnPropertyChanged("BusinessArrangementElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _BusinessArrangementElement;
+    private Hl7.Fhir.Model.FhirString? _BusinessArrangementElement;
 
     /// <summary>
     /// Business agreement
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string BusinessArrangement
+    public string? BusinessArrangement
     {
-      get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
+      get => _BusinessArrangementElement?.Value;
       set
       {
-        if (value == null)
-          BusinessArrangementElement = null;
-        else
-          BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
+        BusinessArrangementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("BusinessArrangement");
       }
     }
@@ -308,13 +302,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("benefitCategory", Order=220)]
     [Binding("BenefitCategory")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept BenefitCategory
+    public Hl7.Fhir.Model.CodeableConcept? BenefitCategory
     {
       get { return _BenefitCategory; }
       set { _BenefitCategory = value; OnPropertyChanged("BenefitCategory"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _BenefitCategory;
+    private Hl7.Fhir.Model.CodeableConcept? _BenefitCategory;
 
     /// <summary>
     /// Detailed services covered within the type.
@@ -322,41 +316,37 @@ namespace Hl7.Fhir.Model
     [FhirElement("benefitSubCategory", Order=230)]
     [Binding("BenefitSubCategory")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory
+    public Hl7.Fhir.Model.CodeableConcept? BenefitSubCategory
     {
       get { return _BenefitSubCategory; }
       set { _BenefitSubCategory = value; OnPropertyChanged("BenefitSubCategory"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _BenefitSubCategory;
+    private Hl7.Fhir.Model.CodeableConcept? _BenefitSubCategory;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as EligibilityRequest;
-
-      if (dest == null)
-      {
+      if(other is not EligibilityRequest dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopyInternal();
-      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopyInternal();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopyInternal();
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
-      if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopyInternal();
-      if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopyInternal();
-      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
-      if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopyInternal();
-      if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopyInternal();
-      if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopyInternal();
-      if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopyInternal();
-      if(BenefitCategory != null) dest.BenefitCategory = (Hl7.Fhir.Model.CodeableConcept)BenefitCategory.DeepCopyInternal();
-      if(BenefitSubCategory != null) dest.BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept)BenefitSubCategory.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_Priority is not null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)_Priority.DeepCopyInternal();
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Serviced is not null) dest.Serviced = (Hl7.Fhir.Model.DataType)_Serviced.DeepCopyInternal();
+      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
+      if(_Enterer is not null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)_Enterer.DeepCopyInternal();
+      if(_Provider is not null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)_Provider.DeepCopyInternal();
+      if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
+      if(_Insurer is not null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)_Insurer.DeepCopyInternal();
+      if(_Facility is not null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)_Facility.DeepCopyInternal();
+      if(_Coverage is not null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)_Coverage.DeepCopyInternal();
+      if(_BusinessArrangementElement is not null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)_BusinessArrangementElement.DeepCopyInternal();
+      if(_BenefitCategory is not null) dest.BenefitCategory = (Hl7.Fhir.Model.CodeableConcept)_BenefitCategory.DeepCopyInternal();
+      if(_BenefitSubCategory is not null) dest.BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept)_BenefitSubCategory.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -368,132 +358,132 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as EligibilityRequest;
-      if(otherT == null) return false;
+      if(other is not EligibilityRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Priority, otherT.Priority)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Serviced, otherT.Serviced)) return false;
-      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
-      if(!comparer.Equals(Enterer, otherT.Enterer)) return false;
-      if(!comparer.Equals(Provider, otherT.Provider)) return false;
-      if(!comparer.Equals(Organization, otherT.Organization)) return false;
-      if(!comparer.Equals(Insurer, otherT.Insurer)) return false;
-      if(!comparer.Equals(Facility, otherT.Facility)) return false;
-      if(!comparer.Equals(Coverage, otherT.Coverage)) return false;
-      if(!comparer.Equals(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
-      if(!comparer.Equals(BenefitCategory, otherT.BenefitCategory)) return false;
-      if(!comparer.Equals(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Priority, otherT._Priority)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Serviced, otherT._Serviced)) return false;
+      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
+      if(!comparer.Equals(_Enterer, otherT._Enterer)) return false;
+      if(!comparer.Equals(_Provider, otherT._Provider)) return false;
+      if(!comparer.Equals(_Organization, otherT._Organization)) return false;
+      if(!comparer.Equals(_Insurer, otherT._Insurer)) return false;
+      if(!comparer.Equals(_Facility, otherT._Facility)) return false;
+      if(!comparer.Equals(_Coverage, otherT._Coverage)) return false;
+      if(!comparer.Equals(_BusinessArrangementElement, otherT._BusinessArrangementElement)) return false;
+      if(!comparer.Equals(_BenefitCategory, otherT._BenefitCategory)) return false;
+      if(!comparer.Equals(_BenefitSubCategory, otherT._BenefitSubCategory)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "priority":
-          value = Priority;
-          return Priority is not null;
+          value = _Priority;
+          return _Priority is not null;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "serviced":
-          value = Serviced;
-          return Serviced is not null;
+          value = _Serviced;
+          return _Serviced is not null;
         case "created":
-          value = CreatedElement;
-          return CreatedElement is not null;
+          value = _CreatedElement;
+          return _CreatedElement is not null;
         case "enterer":
-          value = Enterer;
-          return Enterer is not null;
+          value = _Enterer;
+          return _Enterer is not null;
         case "provider":
-          value = Provider;
-          return Provider is not null;
+          value = _Provider;
+          return _Provider is not null;
         case "organization":
-          value = Organization;
-          return Organization is not null;
+          value = _Organization;
+          return _Organization is not null;
         case "insurer":
-          value = Insurer;
-          return Insurer is not null;
+          value = _Insurer;
+          return _Insurer is not null;
         case "facility":
-          value = Facility;
-          return Facility is not null;
+          value = _Facility;
+          return _Facility is not null;
         case "coverage":
-          value = Coverage;
-          return Coverage is not null;
+          value = _Coverage;
+          return _Coverage is not null;
         case "businessArrangement":
-          value = BusinessArrangementElement;
-          return BusinessArrangementElement is not null;
+          value = _BusinessArrangementElement;
+          return _BusinessArrangementElement is not null;
         case "benefitCategory":
-          value = BenefitCategory;
-          return BenefitCategory is not null;
+          value = _BenefitCategory;
+          return _BenefitCategory is not null;
         case "benefitSubCategory":
-          value = BenefitSubCategory;
-          return BenefitSubCategory is not null;
+          value = _BenefitSubCategory;
+          return _BenefitSubCategory is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "priority":
-          Priority = (Hl7.Fhir.Model.CodeableConcept)value;
+          Priority = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "serviced":
-          Serviced = (Hl7.Fhir.Model.DataType)value;
+          Serviced = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "enterer":
-          Enterer = (Hl7.Fhir.Model.ResourceReference)value;
+          Enterer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "provider":
-          Provider = (Hl7.Fhir.Model.ResourceReference)value;
+          Provider = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "organization":
-          Organization = (Hl7.Fhir.Model.ResourceReference)value;
+          Organization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "insurer":
-          Insurer = (Hl7.Fhir.Model.ResourceReference)value;
+          Insurer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "facility":
-          Facility = (Hl7.Fhir.Model.ResourceReference)value;
+          Facility = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "coverage":
-          Coverage = (Hl7.Fhir.Model.ResourceReference)value;
+          Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "businessArrangement":
-          BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)value;
+          BusinessArrangementElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "benefitCategory":
-          BenefitCategory = (Hl7.Fhir.Model.CodeableConcept)value;
+          BenefitCategory = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "benefitSubCategory":
-          BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept)value;
+          BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -504,21 +494,21 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
-      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
-      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
-      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
-      if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
-      if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
-      if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
-      if (BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",BusinessArrangementElement);
-      if (BenefitCategory is not null) yield return new KeyValuePair<string,object>("benefitCategory",BenefitCategory);
-      if (BenefitSubCategory is not null) yield return new KeyValuePair<string,object>("benefitSubCategory",BenefitSubCategory);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Priority is not null) yield return new KeyValuePair<string,object>("priority",_Priority);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Serviced is not null) yield return new KeyValuePair<string,object>("serviced",_Serviced);
+      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Enterer is not null) yield return new KeyValuePair<string,object>("enterer",_Enterer);
+      if (_Provider is not null) yield return new KeyValuePair<string,object>("provider",_Provider);
+      if (_Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+      if (_Insurer is not null) yield return new KeyValuePair<string,object>("insurer",_Insurer);
+      if (_Facility is not null) yield return new KeyValuePair<string,object>("facility",_Facility);
+      if (_Coverage is not null) yield return new KeyValuePair<string,object>("coverage",_Coverage);
+      if (_BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",_BusinessArrangementElement);
+      if (_BenefitCategory is not null) yield return new KeyValuePair<string,object>("benefitCategory",_BenefitCategory);
+      if (_BenefitSubCategory is not null) yield return new KeyValuePair<string,object>("benefitSubCategory",_BenefitSubCategory);
     }
 
   }

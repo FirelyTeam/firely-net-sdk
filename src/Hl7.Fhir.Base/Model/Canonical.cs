@@ -111,23 +111,25 @@ public partial class Canonical
     /// <summary>
     /// The version string of the canonical (if present).
     /// </summary>
-    public string? Version => splitCanonical(Value).version;
+    public string? Version => Value is null ? null : splitCanonical(Value).version;
 
     /// <summary>
     /// Optional anchor at the end of the canonical, without the '#' prefix.
     /// </summary>
-    public string? Fragment => splitCanonical(Value).fragment;
+    public string? Fragment => Value is null ? null : splitCanonical(Value).fragment;
 
     /// <summary>
     /// The uri part of the canonical, which is the canonical without the version indication.
     /// </summary>
-    public string? Uri => splitCanonical(Value).url;
+    public string? Uri => Value is null ? null : splitCanonical(Value).url;
 
     /// <summary>
     /// Converts the canonical to a <see cref="System.Uri" />.
     /// </summary>
     /// <returns></returns>
-    public Uri ToUri() => new(Value, UriKind.RelativeOrAbsolute);
+    public Uri ToUri() => new(
+        Value ?? throw new InvalidOperationException("Cannot turn a canonical without a value into a Uri"),
+        UriKind.RelativeOrAbsolute);
 
     /// <summary>
     /// Whether the canonical is a relative or an absolute uri.

@@ -89,12 +89,14 @@ public static class PocoEqualityComparisons
     /// </summary>
     /// <exception cref="ArgumentException">Is throw when the IEqualityComparer for Base does not
     /// support comparing IEnumerable{Base}</exception>
-    public static bool ListEquals<T>(this IEqualityComparer<T> comparer, IEnumerable<T> a, IEnumerable<T> b)
+    public static bool ListEquals<T>(this IEqualityComparer<T> comparer, IEnumerable<T>? a, IEnumerable<T>? b)
     {
         if (comparer is not IEqualityComparer<IEnumerable<T>> listComparer)
             throw new ArgumentException("The comparer does not support list comparison", nameof(comparer));
 
+#pragma warning disable CS8604 // Possible null reference argument - incorrect signature in netstd2.1
         return listComparer.Equals(a, b);
+#pragma warning restore CS8604 // Possible null reference argument.
     }
 
     /// <summary>

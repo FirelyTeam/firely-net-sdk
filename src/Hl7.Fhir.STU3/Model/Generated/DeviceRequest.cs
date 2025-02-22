@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -83,13 +86,13 @@ namespace Hl7.Fhir.Model
       [References("Device","Practitioner","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Agent
+      public Hl7.Fhir.Model.ResourceReference? Agent
       {
         get { return _Agent; }
         set { _Agent = value; OnPropertyChanged("Agent"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Agent;
+      private Hl7.Fhir.Model.ResourceReference? _Agent;
 
       /// <summary>
       /// Organization agent is acting for.
@@ -98,26 +101,22 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+      public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
       {
         get { return _OnBehalfOf; }
         set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+      private Hl7.Fhir.Model.ResourceReference? _OnBehalfOf;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RequesterComponent;
-
-        if (dest == null)
-        {
+        if(other is not RequesterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopyInternal();
-        if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopyInternal();
+        if(_Agent is not null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)_Agent.DeepCopyInternal();
+        if(_OnBehalfOf is not null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)_OnBehalfOf.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -129,41 +128,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RequesterComponent;
-        if(otherT == null) return false;
+        if(other is not RequesterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Agent, otherT.Agent)) return false;
-        if(!comparer.Equals(OnBehalfOf, otherT.OnBehalfOf)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Agent, otherT._Agent)) return false;
+        if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "agent":
-            value = Agent;
-            return Agent is not null;
+            value = _Agent;
+            return _Agent is not null;
           case "onBehalfOf":
-            value = OnBehalfOf;
-            return OnBehalfOf is not null;
+            value = _OnBehalfOf;
+            return _OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "agent":
-            Agent = (Hl7.Fhir.Model.ResourceReference)value;
+            Agent = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "onBehalfOf":
-            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)value;
+            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -174,8 +173,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Agent is not null) yield return new KeyValuePair<string,object>("agent",Agent);
-        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+        if (_Agent is not null) yield return new KeyValuePair<string,object>("agent",_Agent);
+        if (_OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
       }
 
     }
@@ -188,11 +187,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Protocol or definition.
@@ -204,11 +203,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Definition
     {
-      get { if(_Definition==null) _Definition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Definition; }
+      get => _Definition ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Definition = value; OnPropertyChanged("Definition"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Definition;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Definition;
 
     /// <summary>
     /// What request fulfills.
@@ -220,11 +219,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// What request replaces.
@@ -236,24 +235,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PriorRequest
     {
-      get { if(_PriorRequest==null) _PriorRequest = new List<Hl7.Fhir.Model.ResourceReference>(); return _PriorRequest; }
+      get => _PriorRequest ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _PriorRequest = value; OnPropertyChanged("PriorRequest"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _PriorRequest;
+    private List<Hl7.Fhir.Model.ResourceReference>? _PriorRequest;
 
     /// <summary>
     /// Identifier of composite request.
     /// </summary>
     [FhirElement("groupIdentifier", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier GroupIdentifier
+    public Hl7.Fhir.Model.Identifier? GroupIdentifier
     {
       get { return _GroupIdentifier; }
       set { _GroupIdentifier = value; OnPropertyChanged("GroupIdentifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _GroupIdentifier;
+    private Hl7.Fhir.Model.Identifier? _GroupIdentifier;
 
     /// <summary>
     /// draft | active | suspended | completed | entered-in-error | cancelled.
@@ -262,13 +261,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("DeviceRequestStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
+    public Code<Hl7.Fhir.Model.RequestStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.RequestStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | suspended | completed | entered-in-error | cancelled
@@ -277,13 +276,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -295,13 +291,13 @@ namespace Hl7.Fhir.Model
     [Binding("RequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Intent
+    public Hl7.Fhir.Model.CodeableConcept? Intent
     {
       get { return _Intent; }
       set { _Intent = value; OnPropertyChanged("Intent"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Intent;
+    private Hl7.Fhir.Model.CodeableConcept? _Intent;
 
     /// <summary>
     /// Indicates how quickly the {{title}} should be addressed with respect to other requests.
@@ -310,13 +306,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("RequestPriority")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
+    public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
     {
       get { return _PriorityElement; }
       set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
+    private Code<Hl7.Fhir.Model.RequestPriority>? _PriorityElement;
 
     /// <summary>
     /// Indicates how quickly the {{title}} should be addressed with respect to other requests
@@ -325,13 +321,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestPriority? Priority
     {
-      get { return PriorityElement != null ? PriorityElement.Value : null; }
+      get => _PriorityElement?.Value;
       set
       {
-        if (value == null)
-          PriorityElement = null;
-        else
-          PriorityElement = new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -346,13 +339,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Code
+    public Hl7.Fhir.Model.DataType? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Code;
+    private Hl7.Fhir.Model.DataType? _Code;
 
     /// <summary>
     /// Focus of request.
@@ -362,13 +355,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Location","Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Encounter or Episode motivating request.
@@ -377,13 +370,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Context
+    public Hl7.Fhir.Model.ResourceReference? Context
     {
       get { return _Context; }
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Context;
+    private Hl7.Fhir.Model.ResourceReference? _Context;
 
     /// <summary>
     /// Desired time or schedule for use.
@@ -392,41 +385,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Occurrence
+    public Hl7.Fhir.Model.DataType? Occurrence
     {
       get { return _Occurrence; }
       set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Occurrence;
+    private Hl7.Fhir.Model.DataType? _Occurrence;
 
     /// <summary>
     /// When recorded.
     /// </summary>
     [FhirElement("authoredOn", InSummary=true, Order=210, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
+    public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
     {
       get { return _AuthoredOnElement; }
       set { _AuthoredOnElement = value; OnPropertyChanged("AuthoredOnElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _AuthoredOnElement;
+    private Hl7.Fhir.Model.FhirDateTime? _AuthoredOnElement;
 
     /// <summary>
     /// When recorded
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AuthoredOn
+    public string? AuthoredOn
     {
-      get { return AuthoredOnElement != null ? AuthoredOnElement.Value : null; }
+      get => _AuthoredOnElement?.Value;
       set
       {
-        if (value == null)
-          AuthoredOnElement = null;
-        else
-          AuthoredOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -436,13 +426,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.DeviceRequest.RequesterComponent Requester
+    public Hl7.Fhir.Model.DeviceRequest.RequesterComponent? Requester
     {
       get { return _Requester; }
       set { _Requester = value; OnPropertyChanged("Requester"); }
     }
 
-    private Hl7.Fhir.Model.DeviceRequest.RequesterComponent _Requester;
+    private Hl7.Fhir.Model.DeviceRequest.RequesterComponent? _Requester;
 
     /// <summary>
     /// Fille role.
@@ -450,13 +440,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("performerType", InSummary=true, Order=230, FiveWs="who.actor")]
     [Binding("DeviceRequestParticipantRole")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept PerformerType
+    public Hl7.Fhir.Model.CodeableConcept? PerformerType
     {
       get { return _PerformerType; }
       set { _PerformerType = value; OnPropertyChanged("PerformerType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _PerformerType;
+    private Hl7.Fhir.Model.CodeableConcept? _PerformerType;
 
     /// <summary>
     /// Requested Filler.
@@ -465,13 +455,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","Organization","Patient","Device","RelatedPerson","HealthcareService")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Performer
+    public Hl7.Fhir.Model.ResourceReference? Performer
     {
       get { return _Performer; }
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Performer;
+    private Hl7.Fhir.Model.ResourceReference? _Performer;
 
     /// <summary>
     /// Coded Reason for request.
@@ -482,11 +472,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
-      get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+      get => _ReasonCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ReasonCode;
 
     /// <summary>
     /// Linked Reason for request.
@@ -498,11 +488,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
-      get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+      get => _ReasonReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ReasonReference;
 
     /// <summary>
     /// Additional clinical information.
@@ -514,11 +504,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInfo
     {
-      get { if(_SupportingInfo==null) _SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInfo; }
+      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _SupportingInfo;
+    private List<Hl7.Fhir.Model.ResourceReference>? _SupportingInfo;
 
     /// <summary>
     /// Notes or comments.
@@ -528,11 +518,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     /// <summary>
     /// Request provenance.
@@ -544,45 +534,41 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> RelevantHistory
     {
-      get { if(_RelevantHistory==null) _RelevantHistory = new List<Hl7.Fhir.Model.ResourceReference>(); return _RelevantHistory; }
+      get => _RelevantHistory ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _RelevantHistory = value; OnPropertyChanged("RelevantHistory"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
+    private List<Hl7.Fhir.Model.ResourceReference>? _RelevantHistory;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DeviceRequest;
-
-      if (dest == null)
-      {
+      if(other is not DeviceRequest dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Definition.Any()) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(Definition.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(PriorRequest.Any()) dest.PriorRequest = new List<Hl7.Fhir.Model.ResourceReference>(PriorRequest.DeepCopyInternal());
-      if(GroupIdentifier != null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)GroupIdentifier.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopyInternal();
-      if(Intent != null) dest.Intent = (Hl7.Fhir.Model.CodeableConcept)Intent.DeepCopyInternal();
-      if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.DataType)Code.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopyInternal();
-      if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopyInternal();
-      if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopyInternal();
-      if(Requester != null) dest.Requester = (Hl7.Fhir.Model.DeviceRequest.RequesterComponent)Requester.DeepCopyInternal();
-      if(PerformerType != null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)PerformerType.DeepCopyInternal();
-      if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopyInternal();
-      if(ReasonCode.Any()) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopyInternal());
-      if(ReasonReference.Any()) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopyInternal());
-      if(SupportingInfo.Any()) dest.SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInfo.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
-      if(RelevantHistory.Any()) dest.RelevantHistory = new List<Hl7.Fhir.Model.ResourceReference>(RelevantHistory.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Definition is not null) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(_Definition.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_PriorRequest is not null) dest.PriorRequest = new List<Hl7.Fhir.Model.ResourceReference>(_PriorRequest.DeepCopyInternal());
+      if(_GroupIdentifier is not null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)_GroupIdentifier.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)_StatusElement.DeepCopyInternal();
+      if(_Intent is not null) dest.Intent = (Hl7.Fhir.Model.CodeableConcept)_Intent.DeepCopyInternal();
+      if(_PriorityElement is not null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)_PriorityElement.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.DataType)_Code.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Context is not null) dest.Context = (Hl7.Fhir.Model.ResourceReference)_Context.DeepCopyInternal();
+      if(_Occurrence is not null) dest.Occurrence = (Hl7.Fhir.Model.DataType)_Occurrence.DeepCopyInternal();
+      if(_AuthoredOnElement is not null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)_AuthoredOnElement.DeepCopyInternal();
+      if(_Requester is not null) dest.Requester = (Hl7.Fhir.Model.DeviceRequest.RequesterComponent)_Requester.DeepCopyInternal();
+      if(_PerformerType is not null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)_PerformerType.DeepCopyInternal();
+      if(_Performer is not null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)_Performer.DeepCopyInternal();
+      if(_ReasonCode is not null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(_ReasonCode.DeepCopyInternal());
+      if(_ReasonReference is not null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(_ReasonReference.DeepCopyInternal());
+      if(_SupportingInfo is not null) dest.SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(_SupportingInfo.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      if(_RelevantHistory is not null) dest.RelevantHistory = new List<Hl7.Fhir.Model.ResourceReference>(_RelevantHistory.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -594,174 +580,174 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DeviceRequest;
-      if(otherT == null) return false;
+      if(other is not DeviceRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(Definition, otherT.Definition)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.ListEquals(PriorRequest, otherT.PriorRequest)) return false;
-      if(!comparer.Equals(GroupIdentifier, otherT.GroupIdentifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Intent, otherT.Intent)) return false;
-      if(!comparer.Equals(PriorityElement, otherT.PriorityElement)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Context, otherT.Context)) return false;
-      if(!comparer.Equals(Occurrence, otherT.Occurrence)) return false;
-      if(!comparer.Equals(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
-      if(!comparer.Equals(Requester, otherT.Requester)) return false;
-      if(!comparer.Equals(PerformerType, otherT.PerformerType)) return false;
-      if(!comparer.Equals(Performer, otherT.Performer)) return false;
-      if(!comparer.ListEquals(ReasonCode, otherT.ReasonCode)) return false;
-      if(!comparer.ListEquals(ReasonReference, otherT.ReasonReference)) return false;
-      if(!comparer.ListEquals(SupportingInfo, otherT.SupportingInfo)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
-      if(!comparer.ListEquals(RelevantHistory, otherT.RelevantHistory)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_Definition, otherT._Definition)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.ListEquals(_PriorRequest, otherT._PriorRequest)) return false;
+      if(!comparer.Equals(_GroupIdentifier, otherT._GroupIdentifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Intent, otherT._Intent)) return false;
+      if(!comparer.Equals(_PriorityElement, otherT._PriorityElement)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Context, otherT._Context)) return false;
+      if(!comparer.Equals(_Occurrence, otherT._Occurrence)) return false;
+      if(!comparer.Equals(_AuthoredOnElement, otherT._AuthoredOnElement)) return false;
+      if(!comparer.Equals(_Requester, otherT._Requester)) return false;
+      if(!comparer.Equals(_PerformerType, otherT._PerformerType)) return false;
+      if(!comparer.Equals(_Performer, otherT._Performer)) return false;
+      if(!comparer.ListEquals(_ReasonCode, otherT._ReasonCode)) return false;
+      if(!comparer.ListEquals(_ReasonReference, otherT._ReasonReference)) return false;
+      if(!comparer.ListEquals(_SupportingInfo, otherT._SupportingInfo)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      if(!comparer.ListEquals(_RelevantHistory, otherT._RelevantHistory)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "definition":
-          value = Definition;
-          return Definition?.Any() == true;
+          value = _Definition;
+          return _Definition?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "priorRequest":
-          value = PriorRequest;
-          return PriorRequest?.Any() == true;
+          value = _PriorRequest;
+          return _PriorRequest?.Any() == true;
         case "groupIdentifier":
-          value = GroupIdentifier;
-          return GroupIdentifier is not null;
+          value = _GroupIdentifier;
+          return _GroupIdentifier is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "intent":
-          value = Intent;
-          return Intent is not null;
+          value = _Intent;
+          return _Intent is not null;
         case "priority":
-          value = PriorityElement;
-          return PriorityElement is not null;
+          value = _PriorityElement;
+          return _PriorityElement is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "context":
-          value = Context;
-          return Context is not null;
+          value = _Context;
+          return _Context is not null;
         case "occurrence":
-          value = Occurrence;
-          return Occurrence is not null;
+          value = _Occurrence;
+          return _Occurrence is not null;
         case "authoredOn":
-          value = AuthoredOnElement;
-          return AuthoredOnElement is not null;
+          value = _AuthoredOnElement;
+          return _AuthoredOnElement is not null;
         case "requester":
-          value = Requester;
-          return Requester is not null;
+          value = _Requester;
+          return _Requester is not null;
         case "performerType":
-          value = PerformerType;
-          return PerformerType is not null;
+          value = _PerformerType;
+          return _PerformerType is not null;
         case "performer":
-          value = Performer;
-          return Performer is not null;
+          value = _Performer;
+          return _Performer is not null;
         case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
+          value = _ReasonCode;
+          return _ReasonCode?.Any() == true;
         case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+          value = _ReasonReference;
+          return _ReasonReference?.Any() == true;
         case "supportingInfo":
-          value = SupportingInfo;
-          return SupportingInfo?.Any() == true;
+          value = _SupportingInfo;
+          return _SupportingInfo?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         case "relevantHistory":
-          value = RelevantHistory;
-          return RelevantHistory?.Any() == true;
+          value = _RelevantHistory;
+          return _RelevantHistory?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "definition":
-          Definition = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Definition = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "priorRequest":
-          PriorRequest = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          PriorRequest = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "groupIdentifier":
-          GroupIdentifier = (Hl7.Fhir.Model.Identifier)value;
+          GroupIdentifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>?)value;
           return this;
         case "intent":
-          Intent = (Hl7.Fhir.Model.CodeableConcept)value;
+          Intent = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "priority":
-          PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)value;
+          PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.DataType)value;
+          Code = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "context":
-          Context = (Hl7.Fhir.Model.ResourceReference)value;
+          Context = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "occurrence":
-          Occurrence = (Hl7.Fhir.Model.DataType)value;
+          Occurrence = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "authoredOn":
-          AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "requester":
-          Requester = (Hl7.Fhir.Model.DeviceRequest.RequesterComponent)value;
+          Requester = (Hl7.Fhir.Model.DeviceRequest.RequesterComponent?)value;
           return this;
         case "performerType":
-          PerformerType = (Hl7.Fhir.Model.CodeableConcept)value;
+          PerformerType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "performer":
-          Performer = (Hl7.Fhir.Model.ResourceReference)value;
+          Performer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "reasonCode":
-          ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "reasonReference":
-          ReasonReference = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          ReasonReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "supportingInfo":
-          SupportingInfo = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          SupportingInfo = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "relevantHistory":
-          RelevantHistory = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          RelevantHistory = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -772,27 +758,27 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PriorRequest?.Any() == true) yield return new KeyValuePair<string,object>("priorRequest",PriorRequest);
-      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Intent is not null) yield return new KeyValuePair<string,object>("intent",Intent);
-      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
-      if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
-      if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",_Definition);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_PriorRequest?.Any() == true) yield return new KeyValuePair<string,object>("priorRequest",_PriorRequest);
+      if (_GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",_GroupIdentifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Intent is not null) yield return new KeyValuePair<string,object>("intent",_Intent);
+      if (_PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",_AuthoredOnElement);
+      if (_Requester is not null) yield return new KeyValuePair<string,object>("requester",_Requester);
+      if (_PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",_PerformerType);
+      if (_Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",_ReasonCode);
+      if (_ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",_ReasonReference);
+      if (_SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",_SupportingInfo);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",_RelevantHistory);
     }
 
   }

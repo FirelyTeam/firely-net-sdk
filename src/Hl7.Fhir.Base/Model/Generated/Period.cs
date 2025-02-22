@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,20 +69,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime StartElement
+    public Hl7.Fhir.Model.FhirDateTime? StartElement
     {
       get { return _StartElement; }
       set { _StartElement = value; OnPropertyChanged("StartElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _StartElement;
+    private Hl7.Fhir.Model.FhirDateTime? _StartElement;
 
     /// <summary>
     /// Starting time with inclusive boundary
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Start
+    public string? Start
     {
       get => _StartElement?.Value;
       set
@@ -94,20 +97,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("end", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime EndElement
+    public Hl7.Fhir.Model.FhirDateTime? EndElement
     {
       get { return _EndElement; }
       set { _EndElement = value; OnPropertyChanged("EndElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _EndElement;
+    private Hl7.Fhir.Model.FhirDateTime? _EndElement;
 
     /// <summary>
     /// End time with inclusive boundary, if not ongoing
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string End
+    public string? End
     {
       get => _EndElement?.Value;
       set
@@ -139,13 +142,14 @@ namespace Hl7.Fhir.Model
       if(other is not Period otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
       if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -161,15 +165,15 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "start":
-          StartElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         default:
           return base.SetValue(key, value);

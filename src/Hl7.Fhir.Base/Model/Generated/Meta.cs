@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,20 +67,20 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("versionId", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Id VersionIdElement
+    public Hl7.Fhir.Model.Id? VersionIdElement
     {
       get { return _VersionIdElement; }
       set { _VersionIdElement = value; OnPropertyChanged("VersionIdElement"); }
     }
 
-    private Hl7.Fhir.Model.Id _VersionIdElement;
+    private Hl7.Fhir.Model.Id? _VersionIdElement;
 
     /// <summary>
     /// Version specific identifier
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string VersionId
+    public string? VersionId
     {
       get => _VersionIdElement?.Value;
       set
@@ -92,13 +95,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("lastUpdated", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Instant LastUpdatedElement
+    public Hl7.Fhir.Model.Instant? LastUpdatedElement
     {
       get { return _LastUpdatedElement; }
       set { _LastUpdatedElement = value; OnPropertyChanged("LastUpdatedElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _LastUpdatedElement;
+    private Hl7.Fhir.Model.Instant? _LastUpdatedElement;
 
     /// <summary>
     /// When the resource version last changed
@@ -123,20 +126,20 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("source", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri SourceElement
+    public Hl7.Fhir.Model.FhirUri? SourceElement
     {
       get { return _SourceElement; }
       set { _SourceElement = value; OnPropertyChanged("SourceElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _SourceElement;
+    private Hl7.Fhir.Model.FhirUri? _SourceElement;
 
     /// <summary>
     /// Identifies where the resource comes from
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Source
+    public string? Source
     {
       get => _SourceElement?.Value;
       set
@@ -168,20 +171,20 @@ namespace Hl7.Fhir.Model
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
-    private List<Hl7.Fhir.Model.PrimitiveType> _ProfileElement;
+    private List<Hl7.Fhir.Model.PrimitiveType>? _ProfileElement;
 
     /// <summary>
     /// Profiles this resource claims to conform to. Use this property in STU3.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> ProfileUri
+    public IEnumerable<string?>? ProfileUri
     {
-      get { return ProfileElement != null ? ProfileElement.Cast<IValue<string>>().Select(elem => elem.Value) : null; }
+      get => _ProfileElement?.Cast<IValue<string>>()?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          ProfileElement = null;
+          ProfileElement = null!;
         else
           ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
         OnPropertyChanged("ProfileUri");
@@ -193,13 +196,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Profile
+    public IEnumerable<string?>? Profile
     {
-      get { return ProfileElement != null ? ProfileElement.Cast<IValue<string>>().Select(elem => elem.Value) : null; }
+      get => _ProfileElement?.Cast<IValue<string>>()?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          ProfileElement = null;
+          ProfileElement = null!;
         else
           ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("Profile");
@@ -219,7 +222,7 @@ namespace Hl7.Fhir.Model
       set { _Security = value; OnPropertyChanged("Security"); }
     }
 
-    private List<Hl7.Fhir.Model.Coding> _Security;
+    private List<Hl7.Fhir.Model.Coding>? _Security;
 
     /// <summary>
     /// Tags applied to this resource.
@@ -234,7 +237,7 @@ namespace Hl7.Fhir.Model
       set { _Tag = value; OnPropertyChanged("Tag"); }
     }
 
-    private List<Hl7.Fhir.Model.Coding> _Tag;
+    private List<Hl7.Fhir.Model.Coding>? _Tag;
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -262,17 +265,18 @@ namespace Hl7.Fhir.Model
       if(other is not Meta otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(_VersionIdElement, otherT._VersionIdElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_VersionIdElement, otherT._VersionIdElement)) return false;
       if(!comparer.Equals(_LastUpdatedElement, otherT._LastUpdatedElement)) return false;
       if(!comparer.Equals(_SourceElement, otherT._SourceElement)) return false;
       if(!comparer.ListEquals(_ProfileElement, otherT._ProfileElement)) return false;
       if(!comparer.ListEquals(_Security, otherT._Security)) return false;
       if(!comparer.ListEquals(_Tag, otherT._Tag)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
@@ -300,27 +304,27 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "versionId":
-          VersionIdElement = (Hl7.Fhir.Model.Id)value;
+          VersionIdElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "lastUpdated":
-          LastUpdatedElement = (Hl7.Fhir.Model.Instant)value;
+          LastUpdatedElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "source":
-          SourceElement = (Hl7.Fhir.Model.FhirUri)value;
+          SourceElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>)value;
+          ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>?)value!;
           return this;
         case "security":
-          Security = (List<Hl7.Fhir.Model.Coding>)value;
+          Security = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "tag":
-          Tag = (List<Hl7.Fhir.Model.Coding>)value;
+          Tag = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
