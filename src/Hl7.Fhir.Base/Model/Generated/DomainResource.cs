@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Resource> Contained
     {
-      get { if(_Contained==null) _Contained = new List<Hl7.Fhir.Model.Resource>(); return _Contained; }
+      get => _Contained ?? new List<Hl7.Fhir.Model.Resource>();
       set { _Contained = value; OnPropertyChanged("Contained"); }
     }
 
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
+      get => _Extension ?? new List<Hl7.Fhir.Model.Extension>();
       set { _Extension = value; OnPropertyChanged("Extension"); }
     }
 
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
+      get => _ModifierExtension ?? new List<Hl7.Fhir.Model.Extension>();
       set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
     }
 
@@ -113,30 +113,25 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DomainResource;
-
-      if (dest == null)
-      {
+      if(other is not DomainResource dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopyInternal();
-      if(Contained.Any()) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopyInternal());
-      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopyInternal());
-      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopyInternal());
+      if(_Text is not null) dest.Text = (Hl7.Fhir.Model.Narrative)_Text.DeepCopyInternal();
+      if(_Contained is not null) dest.Contained = new List<Hl7.Fhir.Model.Resource>(_Contained.DeepCopyInternal());
+      if(_Extension is not null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(_Extension.DeepCopyInternal());
+      if(_ModifierExtension is not null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(_ModifierExtension.DeepCopyInternal());
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DomainResource;
-      if(otherT == null) return false;
+      if(other is not DomainResource otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Text, otherT.Text)) return false;
-      if(!comparer.ListEquals(Contained, otherT.Contained)) return false;
-      if(!comparer.ListEquals(Extension, otherT.Extension)) return false;
-      if(!comparer.ListEquals(ModifierExtension, otherT.ModifierExtension)) return false;
+      if(!comparer.Equals(_Text, otherT._Text)) return false;
+      if(!comparer.ListEquals(_Contained, otherT._Contained)) return false;
+      if(!comparer.ListEquals(_Extension, otherT._Extension)) return false;
+      if(!comparer.ListEquals(_ModifierExtension, otherT._ModifierExtension)) return false;
 
       return true;
     }
@@ -146,17 +141,17 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "text":
-          value = Text;
-          return Text is not null;
+          value = _Text;
+          return _Text is not null;
         case "contained":
-          value = Contained;
-          return Contained?.Any() == true;
+          value = _Contained;
+          return _Contained?.Any() == true;
         case "extension":
-          value = Extension;
-          return Extension?.Any() == true;
+          value = _Extension;
+          return _Extension?.Any() == true;
         case "modifierExtension":
-          value = ModifierExtension;
-          return ModifierExtension?.Any() == true;
+          value = _ModifierExtension;
+          return _ModifierExtension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -188,10 +183,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Text is not null) yield return new KeyValuePair<string,object>("text",Text);
-      if (Contained?.Any() == true) yield return new KeyValuePair<string,object>("contained",Contained);
-      if (Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",Extension);
-      if (ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",ModifierExtension);
+      if (_Text is not null) yield return new KeyValuePair<string,object>("text",_Text);
+      if (_Contained?.Any() == true) yield return new KeyValuePair<string,object>("contained",_Contained);
+      if (_Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",_Extension);
+      if (_ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

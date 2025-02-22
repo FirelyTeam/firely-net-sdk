@@ -56,12 +56,8 @@ namespace Hl7.Fhir.Model
   {
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as PrimitiveType;
-
-      if (dest == null)
-      {
+      if(other is not PrimitiveType dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
       if (ObjectValue != null) dest.ObjectValue = ObjectValue;
@@ -69,8 +65,7 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as PrimitiveType;
-      if(otherT == null) return false;
+      if(other is not PrimitiveType otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
 

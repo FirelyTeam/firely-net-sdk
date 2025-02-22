@@ -74,13 +74,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string ElementId
     {
-      get { return ElementIdElement != null ? ElementIdElement.Value : null; }
+      get => _ElementIdElement?.Value;
       set
       {
-        if (value == null)
-          ElementIdElement = null;
-        else
-          ElementIdElement = new Hl7.Fhir.Model.FhirString(value);
+        ElementIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ElementId");
       }
     }
@@ -93,7 +90,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
+      get => _Extension ?? new List<Hl7.Fhir.Model.Extension>();
       set { _Extension = value; OnPropertyChanged("Extension"); }
     }
 
@@ -101,26 +98,21 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Element;
-
-      if (dest == null)
-      {
+      if(other is not Element dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ElementIdElement != null) dest.ElementIdElement = (Hl7.Fhir.Model.FhirString)ElementIdElement.DeepCopyInternal();
-      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopyInternal());
+      if(_ElementIdElement is not null) dest.ElementIdElement = (Hl7.Fhir.Model.FhirString)_ElementIdElement.DeepCopyInternal();
+      if(_Extension is not null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(_Extension.DeepCopyInternal());
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Element;
-      if(otherT == null) return false;
+      if(other is not Element otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ElementIdElement, otherT.ElementIdElement)) return false;
-      if(!comparer.ListEquals(Extension, otherT.Extension)) return false;
+      if(!comparer.Equals(_ElementIdElement, otherT._ElementIdElement)) return false;
+      if(!comparer.ListEquals(_Extension, otherT._Extension)) return false;
 
       return true;
     }
@@ -130,11 +122,11 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          value = ElementIdElement;
-          return ElementIdElement is not null;
+          value = _ElementIdElement;
+          return _ElementIdElement is not null;
         case "extension":
-          value = Extension;
-          return Extension?.Any() == true;
+          value = _Extension;
+          return _Extension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -160,8 +152,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",ElementIdElement);
-      if (Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",Extension);
+      if (_ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
+      if (_Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",_Extension);
     }
 
   }

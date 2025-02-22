@@ -85,13 +85,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string ContentType
     {
-      get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+      get => _ContentTypeElement?.Value;
       set
       {
-        if (value == null)
-          ContentTypeElement = null;
-        else
-          ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
@@ -135,13 +132,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[] Content
     {
-      get { return ContentElement != null ? ContentElement.Value : null; }
+      get => _ContentElement?.Value;
       set
       {
-        if (value == null)
-          ContentElement = null;
-        else
-          ContentElement = new Hl7.Fhir.Model.Base64Binary(value);
+        ContentElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Content");
       }
     }
@@ -169,31 +163,24 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[] Data
     {
-      get { return DataElement != null ? DataElement.Value : null; }
+      get => _DataElement?.Value;
       set
       {
-        if (value == null)
-          DataElement = null;
-        else
-          DataElement = new Hl7.Fhir.Model.Base64Binary(value);
+        DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Data");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Binary;
-
-      if (dest == null)
-      {
+      if(other is not Binary dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopyInternal();
-      if(SecurityContext != null) dest.SecurityContext = (Hl7.Fhir.Model.ResourceReference)SecurityContext.DeepCopyInternal();
-      if(ContentElement != null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)ContentElement.DeepCopyInternal();
-      if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopyInternal();
+      if(_ContentTypeElement is not null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)_ContentTypeElement.DeepCopyInternal();
+      if(_SecurityContext is not null) dest.SecurityContext = (Hl7.Fhir.Model.ResourceReference)_SecurityContext.DeepCopyInternal();
+      if(_ContentElement is not null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)_ContentElement.DeepCopyInternal();
+      if(_DataElement is not null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)_DataElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -205,14 +192,13 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Binary;
-      if(otherT == null) return false;
+      if(other is not Binary otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if(!comparer.Equals(SecurityContext, otherT.SecurityContext)) return false;
-      if(!comparer.Equals(ContentElement, otherT.ContentElement)) return false;
-      if(!comparer.Equals(DataElement, otherT.DataElement)) return false;
+      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
+      if(!comparer.Equals(_SecurityContext, otherT._SecurityContext)) return false;
+      if(!comparer.Equals(_ContentElement, otherT._ContentElement)) return false;
+      if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
 
       return true;
     }
@@ -222,17 +208,17 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "contentType":
-          value = ContentTypeElement;
-          return ContentTypeElement is not null;
+          value = _ContentTypeElement;
+          return _ContentTypeElement is not null;
         case "securityContext":
-          value = SecurityContext;
-          return SecurityContext is not null;
+          value = _SecurityContext;
+          return _SecurityContext is not null;
         case "content":
-          value = ContentElement;
-          return ContentElement is not null;
+          value = _ContentElement;
+          return _ContentElement is not null;
         case "data":
-          value = DataElement;
-          return DataElement is not null;
+          value = _DataElement;
+          return _DataElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -264,10 +250,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
-      if (SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",SecurityContext);
-      if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);
-      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
+      if (_ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",_SecurityContext);
+      if (_ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
+      if (_DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
     }
 
   }

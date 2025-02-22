@@ -56,20 +56,15 @@ namespace Hl7.Fhir.Model
   {
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DataType;
-
-      if (dest == null)
-      {
+      if(other is not DataType dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DataType;
-      if(otherT == null) return false;
+      if(other is not DataType otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
 

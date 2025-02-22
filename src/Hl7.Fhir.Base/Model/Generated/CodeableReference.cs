@@ -87,16 +87,12 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as CodeableReference;
-
-      if (dest == null)
-      {
+      if(other is not CodeableReference dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Concept != null) dest.Concept = (Hl7.Fhir.Model.CodeableConcept)Concept.DeepCopyInternal();
-      if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopyInternal();
+      if(_Concept is not null) dest.Concept = (Hl7.Fhir.Model.CodeableConcept)_Concept.DeepCopyInternal();
+      if(_Reference is not null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)_Reference.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -108,12 +104,11 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as CodeableReference;
-      if(otherT == null) return false;
+      if(other is not CodeableReference otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Concept, otherT.Concept)) return false;
-      if(!comparer.Equals(Reference, otherT.Reference)) return false;
+      if(!comparer.Equals(_Concept, otherT._Concept)) return false;
+      if(!comparer.Equals(_Reference, otherT._Reference)) return false;
 
       return true;
     }
@@ -123,11 +118,11 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "concept":
-          value = Concept;
-          return Concept is not null;
+          value = _Concept;
+          return _Concept is not null;
         case "reference":
-          value = Reference;
-          return Reference is not null;
+          value = _Reference;
+          return _Reference is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -153,8 +148,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Concept is not null) yield return new KeyValuePair<string,object>("concept",Concept);
-      if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+      if (_Concept is not null) yield return new KeyValuePair<string,object>("concept",_Concept);
+      if (_Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
     }
 
   }

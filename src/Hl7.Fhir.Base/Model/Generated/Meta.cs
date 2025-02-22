@@ -79,13 +79,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string VersionId
     {
-      get { return VersionIdElement != null ? VersionIdElement.Value : null; }
+      get => _VersionIdElement?.Value;
       set
       {
-        if (value == null)
-          VersionIdElement = null;
-        else
-          VersionIdElement = new Hl7.Fhir.Model.Id(value);
+        VersionIdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("VersionId");
       }
     }
@@ -110,13 +107,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? LastUpdated
     {
-      get { return LastUpdatedElement != null ? LastUpdatedElement.Value : null; }
+      get => _LastUpdatedElement?.Value;
       set
       {
-        if (value == null)
-          LastUpdatedElement = null;
-        else
-          LastUpdatedElement = new Hl7.Fhir.Model.Instant(value);
+        LastUpdatedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("LastUpdated");
       }
     }
@@ -144,13 +138,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Source
     {
-      get { return SourceElement != null ? SourceElement.Value : null; }
+      get => _SourceElement?.Value;
       set
       {
-        if (value == null)
-          SourceElement = null;
-        else
-          SourceElement = new Hl7.Fhir.Model.FhirUri(value);
+        SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Source");
       }
     }
@@ -173,7 +164,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement
     {
-      get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(); return _ProfileElement; }
+      get => _ProfileElement ?? new List<Hl7.Fhir.Model.PrimitiveType>();
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
@@ -224,7 +215,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Security
     {
-      get { if(_Security==null) _Security = new List<Hl7.Fhir.Model.Coding>(); return _Security; }
+      get => _Security ?? new List<Hl7.Fhir.Model.Coding>();
       set { _Security = value; OnPropertyChanged("Security"); }
     }
 
@@ -239,7 +230,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Tag
     {
-      get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Coding>(); return _Tag; }
+      get => _Tag ?? new List<Hl7.Fhir.Model.Coding>();
       set { _Tag = value; OnPropertyChanged("Tag"); }
     }
 
@@ -247,20 +238,16 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Meta;
-
-      if (dest == null)
-      {
+      if(other is not Meta dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopyInternal();
-      if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopyInternal();
-      if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopyInternal();
-      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(ProfileElement.DeepCopyInternal());
-      if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopyInternal());
-      if(Tag.Any()) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopyInternal());
+      if(_VersionIdElement is not null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)_VersionIdElement.DeepCopyInternal();
+      if(_LastUpdatedElement is not null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)_LastUpdatedElement.DeepCopyInternal();
+      if(_SourceElement is not null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)_SourceElement.DeepCopyInternal();
+      if(_ProfileElement is not null) dest.ProfileElement = new List<Hl7.Fhir.Model.PrimitiveType>(_ProfileElement.DeepCopyInternal());
+      if(_Security is not null) dest.Security = new List<Hl7.Fhir.Model.Coding>(_Security.DeepCopyInternal());
+      if(_Tag is not null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(_Tag.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -272,16 +259,15 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Meta;
-      if(otherT == null) return false;
+      if(other is not Meta otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(VersionIdElement, otherT.VersionIdElement)) return false;
-      if(!comparer.Equals(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
-      if(!comparer.Equals(SourceElement, otherT.SourceElement)) return false;
-      if(!comparer.ListEquals(ProfileElement, otherT.ProfileElement)) return false;
-      if(!comparer.ListEquals(Security, otherT.Security)) return false;
-      if(!comparer.ListEquals(Tag, otherT.Tag)) return false;
+      if(!comparer.Equals(_VersionIdElement, otherT._VersionIdElement)) return false;
+      if(!comparer.Equals(_LastUpdatedElement, otherT._LastUpdatedElement)) return false;
+      if(!comparer.Equals(_SourceElement, otherT._SourceElement)) return false;
+      if(!comparer.ListEquals(_ProfileElement, otherT._ProfileElement)) return false;
+      if(!comparer.ListEquals(_Security, otherT._Security)) return false;
+      if(!comparer.ListEquals(_Tag, otherT._Tag)) return false;
 
       return true;
     }
@@ -291,23 +277,23 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "versionId":
-          value = VersionIdElement;
-          return VersionIdElement is not null;
+          value = _VersionIdElement;
+          return _VersionIdElement is not null;
         case "lastUpdated":
-          value = LastUpdatedElement;
-          return LastUpdatedElement is not null;
+          value = _LastUpdatedElement;
+          return _LastUpdatedElement is not null;
         case "source":
-          value = SourceElement;
-          return SourceElement is not null;
+          value = _SourceElement;
+          return _SourceElement is not null;
         case "profile":
-          value = ProfileElement;
-          return ProfileElement?.Any() == true;
+          value = _ProfileElement;
+          return _ProfileElement?.Any() == true;
         case "security":
-          value = Security;
-          return Security?.Any() == true;
+          value = _Security;
+          return _Security?.Any() == true;
         case "tag":
-          value = Tag;
-          return Tag?.Any() == true;
+          value = _Tag;
+          return _Tag?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -345,12 +331,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (VersionIdElement is not null) yield return new KeyValuePair<string,object>("versionId",VersionIdElement);
-      if (LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",LastUpdatedElement);
-      if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
-      if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-      if (Security?.Any() == true) yield return new KeyValuePair<string,object>("security",Security);
-      if (Tag?.Any() == true) yield return new KeyValuePair<string,object>("tag",Tag);
+      if (_VersionIdElement is not null) yield return new KeyValuePair<string,object>("versionId",_VersionIdElement);
+      if (_LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
+      if (_SourceElement is not null) yield return new KeyValuePair<string,object>("source",_SourceElement);
+      if (_ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_Security?.Any() == true) yield return new KeyValuePair<string,object>("security",_Security);
+      if (_Tag?.Any() == true) yield return new KeyValuePair<string,object>("tag",_Tag);
     }
 
   }

@@ -122,13 +122,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Identifier.IdentifierUse? Use
     {
-      get { return UseElement != null ? UseElement.Value : null; }
+      get => _UseElement?.Value;
       set
       {
-        if (value == null)
-          UseElement = null;
-        else
-          UseElement = new Code<Hl7.Fhir.Model.Identifier.IdentifierUse>(value);
+        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.Identifier.IdentifierUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -167,13 +164,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string System
     {
-      get { return SystemElement != null ? SystemElement.Value : null; }
+      get => _SystemElement?.Value;
       set
       {
-        if (value == null)
-          SystemElement = null;
-        else
-          SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+        SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("System");
       }
     }
@@ -198,13 +192,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Value
     {
-      get { return ValueElement != null ? ValueElement.Value : null; }
+      get => _ValueElement?.Value;
       set
       {
-        if (value == null)
-          ValueElement = null;
-        else
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Value");
       }
     }
@@ -239,20 +230,16 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Identifier;
-
-      if (dest == null)
-      {
+      if(other is not Identifier dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>)UseElement.DeepCopyInternal();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopyInternal();
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)Assigner.DeepCopyInternal();
+      if(_UseElement is not null) dest.UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>)_UseElement.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_SystemElement is not null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)_SystemElement.DeepCopyInternal();
+      if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)_ValueElement.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Assigner is not null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)_Assigner.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -264,16 +251,15 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Identifier;
-      if(otherT == null) return false;
+      if(other is not Identifier otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(UseElement, otherT.UseElement)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(SystemElement, otherT.SystemElement)) return false;
-      if(!comparer.Equals(ValueElement, otherT.ValueElement)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.Equals(Assigner, otherT.Assigner)) return false;
+      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Assigner, otherT._Assigner)) return false;
 
       return true;
     }
@@ -283,23 +269,23 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          value = UseElement;
-          return UseElement is not null;
+          value = _UseElement;
+          return _UseElement is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "system":
-          value = SystemElement;
-          return SystemElement is not null;
+          value = _SystemElement;
+          return _SystemElement is not null;
         case "value":
-          value = ValueElement;
-          return ValueElement is not null;
+          value = _ValueElement;
+          return _ValueElement is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "assigner":
-          value = Assigner;
-          return Assigner is not null;
+          value = _Assigner;
+          return _Assigner is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -337,12 +323,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (SystemElement is not null) yield return new KeyValuePair<string,object>("system",SystemElement);
-      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Assigner is not null) yield return new KeyValuePair<string,object>("assigner",Assigner);
+      if (_UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_SystemElement is not null) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Assigner is not null) yield return new KeyValuePair<string,object>("assigner",_Assigner);
     }
 
   }

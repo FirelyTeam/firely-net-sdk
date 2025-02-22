@@ -116,13 +116,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -148,29 +145,22 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Div
     {
-      get { return DivElement != null ? DivElement.Value : null; }
+      get => _DivElement?.Value;
       set
       {
-        if (value == null)
-          DivElement = null;
-        else
-          DivElement = new Hl7.Fhir.Model.XHtml(value);
+        DivElement = value is null ? null : new Hl7.Fhir.Model.XHtml(value);
         OnPropertyChanged("Div");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Narrative;
-
-      if (dest == null)
-      {
+      if(other is not Narrative dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)StatusElement.DeepCopyInternal();
-      if(DivElement != null) dest.DivElement = (Hl7.Fhir.Model.XHtml)DivElement.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)_StatusElement.DeepCopyInternal();
+      if(_DivElement is not null) dest.DivElement = (Hl7.Fhir.Model.XHtml)_DivElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -182,12 +172,11 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Narrative;
-      if(otherT == null) return false;
+      if(other is not Narrative otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(DivElement, otherT.DivElement)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_DivElement, otherT._DivElement)) return false;
 
       return true;
     }
@@ -197,11 +186,11 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "div":
-          value = DivElement;
-          return DivElement is not null;
+          value = _DivElement;
+          return _DivElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -227,8 +216,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (DivElement is not null) yield return new KeyValuePair<string,object>("div",DivElement);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_DivElement is not null) yield return new KeyValuePair<string,object>("div",_DivElement);
     }
 
   }

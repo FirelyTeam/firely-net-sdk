@@ -56,12 +56,8 @@ namespace Hl7.Fhir.Model
   {
     protected internal virtual void CopyToInternal(Base other)
     {
-      var dest = other as Base;
-
-      if (dest == null)
-      {
+      if(other is not Base dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       if (_annotations is not null)
         dest.annotations.AddRange(annotations);

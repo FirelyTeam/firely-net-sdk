@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
+      get => _ModifierExtension ?? new List<Hl7.Fhir.Model.Extension>();
       set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
     }
 
@@ -70,24 +70,19 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as BackboneType;
-
-      if (dest == null)
-      {
+      if(other is not BackboneType dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopyInternal());
+      if(_ModifierExtension is not null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(_ModifierExtension.DeepCopyInternal());
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as BackboneType;
-      if(otherT == null) return false;
+      if(other is not BackboneType otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(ModifierExtension, otherT.ModifierExtension)) return false;
+      if(!comparer.ListEquals(_ModifierExtension, otherT._ModifierExtension)) return false;
 
       return true;
     }
@@ -97,8 +92,8 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "modifierExtension":
-          value = ModifierExtension;
-          return ModifierExtension?.Any() == true;
+          value = _ModifierExtension;
+          return _ModifierExtension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -121,7 +116,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",ModifierExtension);
+      if (_ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

@@ -180,13 +180,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Identity
       {
-        get { return IdentityElement != null ? IdentityElement.Value : null; }
+        get => _IdentityElement?.Value;
         set
         {
-          if (value == null)
-            IdentityElement = null;
-          else
-            IdentityElement = new Hl7.Fhir.Model.Id(value);
+          IdentityElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Identity");
         }
       }
@@ -211,13 +208,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Uri
       {
-        get { return UriElement != null ? UriElement.Value : null; }
+        get => _UriElement?.Value;
         set
         {
-          if (value == null)
-            UriElement = null;
-          else
-            UriElement = new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -242,13 +236,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -273,13 +264,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Comment
       {
-        get { return CommentElement != null ? CommentElement.Value : null; }
+        get => _CommentElement?.Value;
         set
         {
-          if (value == null)
-            CommentElement = null;
-          else
-            CommentElement = new Hl7.Fhir.Model.FhirString(value);
+          CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -294,10 +282,10 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyToInternal(dest);
-        if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopyInternal();
-        if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopyInternal();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
+        if(_IdentityElement is not null) dest.IdentityElement = (Hl7.Fhir.Model.Id)_IdentityElement.DeepCopyInternal();
+        if(_UriElement is not null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)_UriElement.DeepCopyInternal();
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -309,14 +297,13 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MappingComponent;
-        if(otherT == null) return false;
+        if(other is not MappingComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(IdentityElement, otherT.IdentityElement)) return false;
-        if(!comparer.Equals(UriElement, otherT.UriElement)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
+        if(!comparer.Equals(_IdentityElement, otherT._IdentityElement)) return false;
+        if(!comparer.Equals(_UriElement, otherT._UriElement)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
 
         return true;
       }
@@ -415,13 +402,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.StructureDefinition.ExtensionContextType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContextType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContextType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -447,13 +431,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Expression
       {
-        get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+        get => _ExpressionElement?.Value;
         set
         {
-          if (value == null)
-            ExpressionElement = null;
-          else
-            ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+          ExpressionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Expression");
         }
       }
@@ -468,8 +449,8 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyToInternal(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContextType>)TypeElement.DeepCopyInternal();
-        if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopyInternal();
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContextType>)_TypeElement.DeepCopyInternal();
+        if(_ExpressionElement is not null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)_ExpressionElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -481,12 +462,11 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ContextComponent;
-        if(otherT == null) return false;
+        if(other is not ContextComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-        if(!comparer.Equals(ExpressionElement, otherT.ExpressionElement)) return false;
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        if(!comparer.Equals(_ExpressionElement, otherT._ExpressionElement)) return false;
 
         return true;
       }
@@ -556,7 +536,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
       {
-        get { if(_Element==null) _Element = new List<Hl7.Fhir.Model.ElementDefinition>(); return _Element; }
+        get => _Element ?? new List<Hl7.Fhir.Model.ElementDefinition>();
         set { _Element = value; OnPropertyChanged("Element"); }
       }
 
@@ -572,7 +552,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyToInternal(dest);
-        if(Element.Any()) dest.Element = new List<Hl7.Fhir.Model.ElementDefinition>(Element.DeepCopyInternal());
+        if(_Element is not null) dest.Element = new List<Hl7.Fhir.Model.ElementDefinition>(_Element.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -584,11 +564,10 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SnapshotComponent;
-        if(otherT == null) return false;
+        if(other is not SnapshotComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Element, otherT.Element)) return false;
+        if(!comparer.ListEquals(_Element, otherT._Element)) return false;
 
         return true;
       }
@@ -651,7 +630,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
       {
-        get { if(_Element==null) _Element = new List<Hl7.Fhir.Model.ElementDefinition>(); return _Element; }
+        get => _Element ?? new List<Hl7.Fhir.Model.ElementDefinition>();
         set { _Element = value; OnPropertyChanged("Element"); }
       }
 
@@ -667,7 +646,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyToInternal(dest);
-        if(Element.Any()) dest.Element = new List<Hl7.Fhir.Model.ElementDefinition>(Element.DeepCopyInternal());
+        if(_Element is not null) dest.Element = new List<Hl7.Fhir.Model.ElementDefinition>(_Element.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -679,11 +658,10 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DifferentialComponent;
-        if(otherT == null) return false;
+        if(other is not DifferentialComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Element, otherT.Element)) return false;
+        if(!comparer.ListEquals(_Element, otherT._Element)) return false;
 
         return true;
       }
@@ -743,13 +721,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get => _UrlElement?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -762,7 +737,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -788,13 +763,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Version
     {
-      get { return VersionElement != null ? VersionElement.Value : null; }
+      get => _VersionElement?.Value;
       set
       {
-        if (value == null)
-          VersionElement = null;
-        else
-          VersionElement = new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -838,13 +810,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -869,13 +838,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Title
     {
-      get { return TitleElement != null ? TitleElement.Value : null; }
+      get => _TitleElement?.Value;
       set
       {
-        if (value == null)
-          TitleElement = null;
-        else
-          TitleElement = new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -903,13 +869,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -934,13 +897,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Experimental
     {
-      get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
+      get => _ExperimentalElement?.Value;
       set
       {
-        if (value == null)
-          ExperimentalElement = null;
-        else
-          ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ExperimentalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Experimental");
       }
     }
@@ -965,13 +925,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Date
     {
-      get { return DateElement != null ? DateElement.Value : null; }
+      get => _DateElement?.Value;
       set
       {
-        if (value == null)
-          DateElement = null;
-        else
-          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -996,13 +953,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Publisher
     {
-      get { return PublisherElement != null ? PublisherElement.Value : null; }
+      get => _PublisherElement?.Value;
       set
       {
-        if (value == null)
-          PublisherElement = null;
-        else
-          PublisherElement = new Hl7.Fhir.Model.FhirString(value);
+        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
@@ -1015,7 +969,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1041,13 +995,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1060,7 +1011,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.UsageContext>(); return _UseContext; }
+      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1075,7 +1026,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1101,13 +1052,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Purpose
     {
-      get { return PurposeElement != null ? PurposeElement.Value : null; }
+      get => _PurposeElement?.Value;
       set
       {
-        if (value == null)
-          PurposeElement = null;
-        else
-          PurposeElement = new Hl7.Fhir.Model.Markdown(value);
+        PurposeElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Purpose");
       }
     }
@@ -1132,13 +1080,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Copyright
     {
-      get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+      get => _CopyrightElement?.Value;
       set
       {
-        if (value == null)
-          CopyrightElement = null;
-        else
-          CopyrightElement = new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -1166,13 +1111,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string CopyrightLabel
     {
-      get { return CopyrightLabelElement != null ? CopyrightLabelElement.Value : null; }
+      get => _CopyrightLabelElement?.Value;
       set
       {
-        if (value == null)
-          CopyrightLabelElement = null;
-        else
-          CopyrightLabelElement = new Hl7.Fhir.Model.FhirString(value);
+        CopyrightLabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("CopyrightLabel");
       }
     }
@@ -1186,7 +1128,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Keyword
     {
-      get { if(_Keyword==null) _Keyword = new List<Hl7.Fhir.Model.Coding>(); return _Keyword; }
+      get => _Keyword ?? new List<Hl7.Fhir.Model.Coding>();
       set { _Keyword = value; OnPropertyChanged("Keyword"); }
     }
 
@@ -1214,13 +1156,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRVersion? FhirVersion
     {
-      get { return FhirVersionElement != null ? FhirVersionElement.Value : null; }
+      get => _FhirVersionElement?.Value;
       set
       {
-        if (value == null)
-          FhirVersionElement = null;
-        else
-          FhirVersionElement = new Code<Hl7.Fhir.Model.FHIRVersion>(value);
+        FhirVersionElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRVersion>(value);
         OnPropertyChanged("FhirVersion");
       }
     }
@@ -1233,7 +1172,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> Mapping
     {
-      get { if(_Mapping==null) _Mapping = new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>(); return _Mapping; }
+      get => _Mapping ?? new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>();
       set { _Mapping = value; OnPropertyChanged("Mapping"); }
     }
 
@@ -1262,13 +1201,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind? Kind
     {
-      get { return KindElement != null ? KindElement.Value : null; }
+      get => _KindElement?.Value;
       set
       {
-        if (value == null)
-          KindElement = null;
-        else
-          KindElement = new Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind>(value);
+        KindElement = value is null ? null : new Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind>(value);
         OnPropertyChanged("Kind");
       }
     }
@@ -1294,13 +1230,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Abstract
     {
-      get { return AbstractElement != null ? AbstractElement.Value : null; }
+      get => _AbstractElement?.Value;
       set
       {
-        if (value == null)
-          AbstractElement = null;
-        else
-          AbstractElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        AbstractElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Abstract");
       }
     }
@@ -1313,7 +1246,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureDefinition.ContextComponent> Context
     {
-      get { if(_Context==null) _Context = new List<Hl7.Fhir.Model.StructureDefinition.ContextComponent>(); return _Context; }
+      get => _Context ?? new List<Hl7.Fhir.Model.StructureDefinition.ContextComponent>();
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
@@ -1327,7 +1260,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ContextInvariantElement
     {
-      get { if(_ContextInvariantElement==null) _ContextInvariantElement = new List<Hl7.Fhir.Model.FhirString>(); return _ContextInvariantElement; }
+      get => _ContextInvariantElement ?? new List<Hl7.Fhir.Model.FhirString>();
       set { _ContextInvariantElement = value; OnPropertyChanged("ContextInvariantElement"); }
     }
 
@@ -1373,13 +1306,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Hl7.Fhir.Model.FhirUri(value);
+        TypeElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1404,13 +1334,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string BaseDefinition
     {
-      get { return BaseDefinitionElement != null ? BaseDefinitionElement.Value : null; }
+      get => _BaseDefinitionElement?.Value;
       set
       {
-        if (value == null)
-          BaseDefinitionElement = null;
-        else
-          BaseDefinitionElement = new Hl7.Fhir.Model.Canonical(value);
+        BaseDefinitionElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("BaseDefinition");
       }
     }
@@ -1437,13 +1364,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule? Derivation
     {
-      get { return DerivationElement != null ? DerivationElement.Value : null; }
+      get => _DerivationElement?.Value;
       set
       {
-        if (value == null)
-          DerivationElement = null;
-        else
-          DerivationElement = new Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>(value);
+        DerivationElement = value is null ? null : new Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>(value);
         OnPropertyChanged("Derivation");
       }
     }
@@ -1486,35 +1410,35 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyToInternal(dest);
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopyInternal();
-      if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopyInternal();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopyInternal();
-      if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopyInternal();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-      if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopyInternal();
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopyInternal());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
-      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopyInternal());
-      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
-      if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopyInternal();
-      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopyInternal();
-      if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopyInternal();
-      if(Keyword.Any()) dest.Keyword = new List<Hl7.Fhir.Model.Coding>(Keyword.DeepCopyInternal());
-      if(FhirVersionElement != null) dest.FhirVersionElement = (Code<Hl7.Fhir.Model.FHIRVersion>)FhirVersionElement.DeepCopyInternal();
-      if(Mapping.Any()) dest.Mapping = new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>(Mapping.DeepCopyInternal());
-      if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind>)KindElement.DeepCopyInternal();
-      if(AbstractElement != null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)AbstractElement.DeepCopyInternal();
-      if(Context.Any()) dest.Context = new List<Hl7.Fhir.Model.StructureDefinition.ContextComponent>(Context.DeepCopyInternal());
-      if(ContextInvariantElement.Any()) dest.ContextInvariantElement = new List<Hl7.Fhir.Model.FhirString>(ContextInvariantElement.DeepCopyInternal());
-      if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirUri)TypeElement.DeepCopyInternal();
-      if(BaseDefinitionElement != null) dest.BaseDefinitionElement = (Hl7.Fhir.Model.Canonical)BaseDefinitionElement.DeepCopyInternal();
-      if(DerivationElement != null) dest.DerivationElement = (Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>)DerivationElement.DeepCopyInternal();
-      if(Snapshot != null) dest.Snapshot = (Hl7.Fhir.Model.StructureDefinition.SnapshotComponent)Snapshot.DeepCopyInternal();
-      if(Differential != null) dest.Differential = (Hl7.Fhir.Model.StructureDefinition.DifferentialComponent)Differential.DeepCopyInternal();
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_VersionElement is not null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)_VersionElement.DeepCopyInternal();
+      if(_VersionAlgorithm is not null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)_VersionAlgorithm.DeepCopyInternal();
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_TitleElement is not null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)_TitleElement.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
+      if(_ExperimentalElement is not null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)_ExperimentalElement.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+      if(_PublisherElement is not null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)_PublisherElement.DeepCopyInternal();
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(_Contact.DeepCopyInternal());
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+      if(_UseContext is not null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(_UseContext.DeepCopyInternal());
+      if(_Jurisdiction is not null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(_Jurisdiction.DeepCopyInternal());
+      if(_PurposeElement is not null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)_PurposeElement.DeepCopyInternal();
+      if(_CopyrightElement is not null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)_CopyrightElement.DeepCopyInternal();
+      if(_CopyrightLabelElement is not null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)_CopyrightLabelElement.DeepCopyInternal();
+      if(_Keyword is not null) dest.Keyword = new List<Hl7.Fhir.Model.Coding>(_Keyword.DeepCopyInternal());
+      if(_FhirVersionElement is not null) dest.FhirVersionElement = (Code<Hl7.Fhir.Model.FHIRVersion>)_FhirVersionElement.DeepCopyInternal();
+      if(_Mapping is not null) dest.Mapping = new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>(_Mapping.DeepCopyInternal());
+      if(_KindElement is not null) dest.KindElement = (Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind>)_KindElement.DeepCopyInternal();
+      if(_AbstractElement is not null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)_AbstractElement.DeepCopyInternal();
+      if(_Context is not null) dest.Context = new List<Hl7.Fhir.Model.StructureDefinition.ContextComponent>(_Context.DeepCopyInternal());
+      if(_ContextInvariantElement is not null) dest.ContextInvariantElement = new List<Hl7.Fhir.Model.FhirString>(_ContextInvariantElement.DeepCopyInternal());
+      if(_TypeElement is not null) dest.TypeElement = (Hl7.Fhir.Model.FhirUri)_TypeElement.DeepCopyInternal();
+      if(_BaseDefinitionElement is not null) dest.BaseDefinitionElement = (Hl7.Fhir.Model.Canonical)_BaseDefinitionElement.DeepCopyInternal();
+      if(_DerivationElement is not null) dest.DerivationElement = (Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>)_DerivationElement.DeepCopyInternal();
+      if(_Snapshot is not null) dest.Snapshot = (Hl7.Fhir.Model.StructureDefinition.SnapshotComponent)_Snapshot.DeepCopyInternal();
+      if(_Differential is not null) dest.Differential = (Hl7.Fhir.Model.StructureDefinition.DifferentialComponent)_Differential.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1526,39 +1450,38 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as StructureDefinition;
-      if(otherT == null) return false;
+      if(other is not StructureDefinition otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(VersionElement, otherT.VersionElement)) return false;
-      if(!comparer.Equals(VersionAlgorithm, otherT.VersionAlgorithm)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(TitleElement, otherT.TitleElement)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(ExperimentalElement, otherT.ExperimentalElement)) return false;
-      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.Equals(PublisherElement, otherT.PublisherElement)) return false;
-      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(UseContext, otherT.UseContext)) return false;
-      if(!comparer.ListEquals(Jurisdiction, otherT.Jurisdiction)) return false;
-      if(!comparer.Equals(PurposeElement, otherT.PurposeElement)) return false;
-      if(!comparer.Equals(CopyrightElement, otherT.CopyrightElement)) return false;
-      if(!comparer.Equals(CopyrightLabelElement, otherT.CopyrightLabelElement)) return false;
-      if(!comparer.ListEquals(Keyword, otherT.Keyword)) return false;
-      if(!comparer.Equals(FhirVersionElement, otherT.FhirVersionElement)) return false;
-      if(!comparer.ListEquals(Mapping, otherT.Mapping)) return false;
-      if(!comparer.Equals(KindElement, otherT.KindElement)) return false;
-      if(!comparer.Equals(AbstractElement, otherT.AbstractElement)) return false;
-      if(!comparer.ListEquals(Context, otherT.Context)) return false;
-      if(!comparer.ListEquals(ContextInvariantElement, otherT.ContextInvariantElement)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(BaseDefinitionElement, otherT.BaseDefinitionElement)) return false;
-      if(!comparer.Equals(DerivationElement, otherT.DerivationElement)) return false;
-      if(!comparer.Equals(Snapshot, otherT.Snapshot)) return false;
-      if(!comparer.Equals(Differential, otherT.Differential)) return false;
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
+      if(!comparer.Equals(_VersionAlgorithm, otherT._VersionAlgorithm)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_ExperimentalElement, otherT._ExperimentalElement)) return false;
+      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.Equals(_PublisherElement, otherT._PublisherElement)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_UseContext, otherT._UseContext)) return false;
+      if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
+      if(!comparer.Equals(_PurposeElement, otherT._PurposeElement)) return false;
+      if(!comparer.Equals(_CopyrightElement, otherT._CopyrightElement)) return false;
+      if(!comparer.Equals(_CopyrightLabelElement, otherT._CopyrightLabelElement)) return false;
+      if(!comparer.ListEquals(_Keyword, otherT._Keyword)) return false;
+      if(!comparer.Equals(_FhirVersionElement, otherT._FhirVersionElement)) return false;
+      if(!comparer.ListEquals(_Mapping, otherT._Mapping)) return false;
+      if(!comparer.Equals(_KindElement, otherT._KindElement)) return false;
+      if(!comparer.Equals(_AbstractElement, otherT._AbstractElement)) return false;
+      if(!comparer.ListEquals(_Context, otherT._Context)) return false;
+      if(!comparer.ListEquals(_ContextInvariantElement, otherT._ContextInvariantElement)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_BaseDefinitionElement, otherT._BaseDefinitionElement)) return false;
+      if(!comparer.Equals(_DerivationElement, otherT._DerivationElement)) return false;
+      if(!comparer.Equals(_Snapshot, otherT._Snapshot)) return false;
+      if(!comparer.Equals(_Differential, otherT._Differential)) return false;
 
       return true;
     }

@@ -173,13 +173,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ContactPoint.ContactPointSystem? System
     {
-      get { return SystemElement != null ? SystemElement.Value : null; }
+      get => _SystemElement?.Value;
       set
       {
-        if (value == null)
-          SystemElement = null;
-        else
-          SystemElement = new Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>(value);
+        SystemElement = value is null ? null : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>(value);
         OnPropertyChanged("System");
       }
     }
@@ -204,13 +201,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Value
     {
-      get { return ValueElement != null ? ValueElement.Value : null; }
+      get => _ValueElement?.Value;
       set
       {
-        if (value == null)
-          ValueElement = null;
-        else
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Value");
       }
     }
@@ -237,13 +231,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ContactPoint.ContactPointUse? Use
     {
-      get { return UseElement != null ? UseElement.Value : null; }
+      get => _UseElement?.Value;
       set
       {
-        if (value == null)
-          UseElement = null;
-        else
-          UseElement = new Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>(value);
+        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -268,13 +259,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Rank
     {
-      get { return RankElement != null ? RankElement.Value : null; }
+      get => _RankElement?.Value;
       set
       {
-        if (value == null)
-          RankElement = null;
-        else
-          RankElement = new Hl7.Fhir.Model.PositiveInt(value);
+        RankElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Rank");
       }
     }
@@ -294,19 +282,15 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ContactPoint;
-
-      if (dest == null)
-      {
+      if(other is not ContactPoint dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(SystemElement != null) dest.SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>)SystemElement.DeepCopyInternal();
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopyInternal();
-      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>)UseElement.DeepCopyInternal();
-      if(RankElement != null) dest.RankElement = (Hl7.Fhir.Model.PositiveInt)RankElement.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(_SystemElement is not null) dest.SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>)_SystemElement.DeepCopyInternal();
+      if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)_ValueElement.DeepCopyInternal();
+      if(_UseElement is not null) dest.UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>)_UseElement.DeepCopyInternal();
+      if(_RankElement is not null) dest.RankElement = (Hl7.Fhir.Model.PositiveInt)_RankElement.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -318,15 +302,14 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ContactPoint;
-      if(otherT == null) return false;
+      if(other is not ContactPoint otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(SystemElement, otherT.SystemElement)) return false;
-      if(!comparer.Equals(ValueElement, otherT.ValueElement)) return false;
-      if(!comparer.Equals(UseElement, otherT.UseElement)) return false;
-      if(!comparer.Equals(RankElement, otherT.RankElement)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
+      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      if(!comparer.Equals(_RankElement, otherT._RankElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
 
       return true;
     }
@@ -336,20 +319,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "system":
-          value = SystemElement;
-          return SystemElement is not null;
+          value = _SystemElement;
+          return _SystemElement is not null;
         case "value":
-          value = ValueElement;
-          return ValueElement is not null;
+          value = _ValueElement;
+          return _ValueElement is not null;
         case "use":
-          value = UseElement;
-          return UseElement is not null;
+          value = _UseElement;
+          return _UseElement is not null;
         case "rank":
-          value = RankElement;
-          return RankElement is not null;
+          value = _RankElement;
+          return _RankElement is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -384,11 +367,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (SystemElement is not null) yield return new KeyValuePair<string,object>("system",SystemElement);
-      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
-      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
-      if (RankElement is not null) yield return new KeyValuePair<string,object>("rank",RankElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (_SystemElement is not null) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_RankElement is not null) yield return new KeyValuePair<string,object>("rank",_RankElement);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

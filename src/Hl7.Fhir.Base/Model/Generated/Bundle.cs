@@ -984,13 +984,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string RelationString
       {
-        get { return RelationElement != null ? ((IValue<string>)RelationElement).Value : null; }
+        get => ((IValue<string>)_RelationElement)?.Value;
         set
         {
-          if (value == null)
-            RelationElement = null;
-          else
-            RelationElement = new Hl7.Fhir.Model.FhirString(value);
+          RelationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("RelationString");
         }
       }
@@ -1002,13 +999,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Relation
       {
-        get { return RelationElement != null ? ((IValue<string>)RelationElement).Value : null; }
+        get => ((IValue<string>)_RelationElement)?.Value;
         set
         {
-          if (value == null)
-            RelationElement = null;
-          else
-            RelationElement = new Hl7.Fhir.Model.Code(value);
+          RelationElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
           OnPropertyChanged("Relation");
         }
       }
@@ -1034,29 +1028,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Url
       {
-        get { return UrlElement != null ? UrlElement.Value : null; }
+        get => _UrlElement?.Value;
         set
         {
-          if (value == null)
-            UrlElement = null;
-          else
-            UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+          UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Url");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LinkComponent;
-
-        if (dest == null)
-        {
+        if(other is not LinkComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(RelationElement != null) dest.RelationElement = (Hl7.Fhir.Model.PrimitiveType)RelationElement.DeepCopyInternal();
-        if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
+        if(_RelationElement is not null) dest.RelationElement = (Hl7.Fhir.Model.PrimitiveType)_RelationElement.DeepCopyInternal();
+        if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1068,12 +1055,11 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LinkComponent;
-        if(otherT == null) return false;
+        if(other is not LinkComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(RelationElement, otherT.RelationElement)) return false;
-        if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
+        if(!comparer.Equals(_RelationElement, otherT._RelationElement)) return false;
+        if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
 
         return true;
       }
@@ -1083,11 +1069,11 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "relation":
-            value = RelationElement;
-            return RelationElement is not null;
+            value = _RelationElement;
+            return _RelationElement is not null;
           case "url":
-            value = UrlElement;
-            return UrlElement is not null;
+            value = _UrlElement;
+            return _UrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1113,8 +1099,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (RelationElement is not null) yield return new KeyValuePair<string,object>("relation",RelationElement);
-        if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+        if (_RelationElement is not null) yield return new KeyValuePair<string,object>("relation",_RelationElement);
+        if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
       }
 
     }
@@ -1143,7 +1129,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
       {
-        get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(); return _Link; }
+        get => _Link ?? new List<Hl7.Fhir.Model.Bundle.LinkComponent>();
         set { _Link = value; OnPropertyChanged("Link"); }
       }
 
@@ -1169,13 +1155,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string FullUrl
       {
-        get { return FullUrlElement != null ? FullUrlElement.Value : null; }
+        get => _FullUrlElement?.Value;
         set
         {
-          if (value == null)
-            FullUrlElement = null;
-          else
-            FullUrlElement = new Hl7.Fhir.Model.FhirUri(value);
+          FullUrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("FullUrl");
         }
       }
@@ -1236,20 +1219,16 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EntryComponent;
-
-        if (dest == null)
-        {
+        if(other is not EntryComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Link.Any()) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopyInternal());
-        if(FullUrlElement != null) dest.FullUrlElement = (Hl7.Fhir.Model.FhirUri)FullUrlElement.DeepCopyInternal();
-        if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopyInternal();
-        if(Search != null) dest.Search = (Hl7.Fhir.Model.Bundle.SearchComponent)Search.DeepCopyInternal();
-        if(Request != null) dest.Request = (Hl7.Fhir.Model.Bundle.RequestComponent)Request.DeepCopyInternal();
-        if(Response != null) dest.Response = (Hl7.Fhir.Model.Bundle.ResponseComponent)Response.DeepCopyInternal();
+        if(_Link is not null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(_Link.DeepCopyInternal());
+        if(_FullUrlElement is not null) dest.FullUrlElement = (Hl7.Fhir.Model.FhirUri)_FullUrlElement.DeepCopyInternal();
+        if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.Resource)_Resource.DeepCopyInternal();
+        if(_Search is not null) dest.Search = (Hl7.Fhir.Model.Bundle.SearchComponent)_Search.DeepCopyInternal();
+        if(_Request is not null) dest.Request = (Hl7.Fhir.Model.Bundle.RequestComponent)_Request.DeepCopyInternal();
+        if(_Response is not null) dest.Response = (Hl7.Fhir.Model.Bundle.ResponseComponent)_Response.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1261,16 +1240,15 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EntryComponent;
-        if(otherT == null) return false;
+        if(other is not EntryComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Link, otherT.Link)) return false;
-        if(!comparer.Equals(FullUrlElement, otherT.FullUrlElement)) return false;
-        if(!comparer.Equals(Resource, otherT.Resource)) return false;
-        if(!comparer.Equals(Search, otherT.Search)) return false;
-        if(!comparer.Equals(Request, otherT.Request)) return false;
-        if(!comparer.Equals(Response, otherT.Response)) return false;
+        if(!comparer.ListEquals(_Link, otherT._Link)) return false;
+        if(!comparer.Equals(_FullUrlElement, otherT._FullUrlElement)) return false;
+        if(!comparer.Equals(_Resource, otherT._Resource)) return false;
+        if(!comparer.Equals(_Search, otherT._Search)) return false;
+        if(!comparer.Equals(_Request, otherT._Request)) return false;
+        if(!comparer.Equals(_Response, otherT._Response)) return false;
 
         return true;
       }
@@ -1280,23 +1258,23 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "link":
-            value = Link;
-            return Link?.Any() == true;
+            value = _Link;
+            return _Link?.Any() == true;
           case "fullUrl":
-            value = FullUrlElement;
-            return FullUrlElement is not null;
+            value = _FullUrlElement;
+            return _FullUrlElement is not null;
           case "resource":
-            value = Resource;
-            return Resource is not null;
+            value = _Resource;
+            return _Resource is not null;
           case "search":
-            value = Search;
-            return Search is not null;
+            value = _Search;
+            return _Search is not null;
           case "request":
-            value = Request;
-            return Request is not null;
+            value = _Request;
+            return _Request is not null;
           case "response":
-            value = Response;
-            return Response is not null;
+            value = _Response;
+            return _Response is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1334,12 +1312,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
-        if (FullUrlElement is not null) yield return new KeyValuePair<string,object>("fullUrl",FullUrlElement);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Search is not null) yield return new KeyValuePair<string,object>("search",Search);
-        if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
-        if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
+        if (_Link?.Any() == true) yield return new KeyValuePair<string,object>("link",_Link);
+        if (_FullUrlElement is not null) yield return new KeyValuePair<string,object>("fullUrl",_FullUrlElement);
+        if (_Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Search is not null) yield return new KeyValuePair<string,object>("search",_Search);
+        if (_Request is not null) yield return new KeyValuePair<string,object>("request",_Request);
+        if (_Response is not null) yield return new KeyValuePair<string,object>("response",_Response);
       }
 
     }
@@ -1382,13 +1360,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Bundle.SearchEntryMode? Mode
       {
-        get { return ModeElement != null ? ModeElement.Value : null; }
+        get => _ModeElement?.Value;
         set
         {
-          if (value == null)
-            ModeElement = null;
-          else
-            ModeElement = new Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>(value);
+          ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>(value);
           OnPropertyChanged("Mode");
         }
       }
@@ -1413,29 +1388,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Score
       {
-        get { return ScoreElement != null ? ScoreElement.Value : null; }
+        get => _ScoreElement?.Value;
         set
         {
-          if (value == null)
-            ScoreElement = null;
-          else
-            ScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          ScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Score");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SearchComponent;
-
-        if (dest == null)
-        {
+        if(other is not SearchComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>)ModeElement.DeepCopyInternal();
-        if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopyInternal();
+        if(_ModeElement is not null) dest.ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>)_ModeElement.DeepCopyInternal();
+        if(_ScoreElement is not null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)_ScoreElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1447,12 +1415,11 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SearchComponent;
-        if(otherT == null) return false;
+        if(other is not SearchComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(ModeElement, otherT.ModeElement)) return false;
-        if(!comparer.Equals(ScoreElement, otherT.ScoreElement)) return false;
+        if(!comparer.Equals(_ModeElement, otherT._ModeElement)) return false;
+        if(!comparer.Equals(_ScoreElement, otherT._ScoreElement)) return false;
 
         return true;
       }
@@ -1462,11 +1429,11 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "mode":
-            value = ModeElement;
-            return ModeElement is not null;
+            value = _ModeElement;
+            return _ModeElement is not null;
           case "score":
-            value = ScoreElement;
-            return ScoreElement is not null;
+            value = _ScoreElement;
+            return _ScoreElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1492,8 +1459,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
-        if (ScoreElement is not null) yield return new KeyValuePair<string,object>("score",ScoreElement);
+        if (_ModeElement is not null) yield return new KeyValuePair<string,object>("mode",_ModeElement);
+        if (_ScoreElement is not null) yield return new KeyValuePair<string,object>("score",_ScoreElement);
       }
 
     }
@@ -1537,13 +1504,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Bundle.HTTPVerb? Method
       {
-        get { return MethodElement != null ? MethodElement.Value : null; }
+        get => _MethodElement?.Value;
         set
         {
-          if (value == null)
-            MethodElement = null;
-          else
-            MethodElement = new Code<Hl7.Fhir.Model.Bundle.HTTPVerb>(value);
+          MethodElement = value is null ? null : new Code<Hl7.Fhir.Model.Bundle.HTTPVerb>(value);
           OnPropertyChanged("Method");
         }
       }
@@ -1569,13 +1533,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Url
       {
-        get { return UrlElement != null ? UrlElement.Value : null; }
+        get => _UrlElement?.Value;
         set
         {
-          if (value == null)
-            UrlElement = null;
-          else
-            UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+          UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Url");
         }
       }
@@ -1600,13 +1561,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string IfNoneMatch
       {
-        get { return IfNoneMatchElement != null ? IfNoneMatchElement.Value : null; }
+        get => _IfNoneMatchElement?.Value;
         set
         {
-          if (value == null)
-            IfNoneMatchElement = null;
-          else
-            IfNoneMatchElement = new Hl7.Fhir.Model.FhirString(value);
+          IfNoneMatchElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IfNoneMatch");
         }
       }
@@ -1631,13 +1589,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? IfModifiedSince
       {
-        get { return IfModifiedSinceElement != null ? IfModifiedSinceElement.Value : null; }
+        get => _IfModifiedSinceElement?.Value;
         set
         {
-          if (value == null)
-            IfModifiedSinceElement = null;
-          else
-            IfModifiedSinceElement = new Hl7.Fhir.Model.Instant(value);
+          IfModifiedSinceElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
           OnPropertyChanged("IfModifiedSince");
         }
       }
@@ -1662,13 +1617,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string IfMatch
       {
-        get { return IfMatchElement != null ? IfMatchElement.Value : null; }
+        get => _IfMatchElement?.Value;
         set
         {
-          if (value == null)
-            IfMatchElement = null;
-          else
-            IfMatchElement = new Hl7.Fhir.Model.FhirString(value);
+          IfMatchElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IfMatch");
         }
       }
@@ -1693,33 +1645,26 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string IfNoneExist
       {
-        get { return IfNoneExistElement != null ? IfNoneExistElement.Value : null; }
+        get => _IfNoneExistElement?.Value;
         set
         {
-          if (value == null)
-            IfNoneExistElement = null;
-          else
-            IfNoneExistElement = new Hl7.Fhir.Model.FhirString(value);
+          IfNoneExistElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IfNoneExist");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RequestComponent;
-
-        if (dest == null)
-        {
+        if(other is not RequestComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(MethodElement != null) dest.MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>)MethodElement.DeepCopyInternal();
-        if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
-        if(IfNoneMatchElement != null) dest.IfNoneMatchElement = (Hl7.Fhir.Model.FhirString)IfNoneMatchElement.DeepCopyInternal();
-        if(IfModifiedSinceElement != null) dest.IfModifiedSinceElement = (Hl7.Fhir.Model.Instant)IfModifiedSinceElement.DeepCopyInternal();
-        if(IfMatchElement != null) dest.IfMatchElement = (Hl7.Fhir.Model.FhirString)IfMatchElement.DeepCopyInternal();
-        if(IfNoneExistElement != null) dest.IfNoneExistElement = (Hl7.Fhir.Model.FhirString)IfNoneExistElement.DeepCopyInternal();
+        if(_MethodElement is not null) dest.MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>)_MethodElement.DeepCopyInternal();
+        if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+        if(_IfNoneMatchElement is not null) dest.IfNoneMatchElement = (Hl7.Fhir.Model.FhirString)_IfNoneMatchElement.DeepCopyInternal();
+        if(_IfModifiedSinceElement is not null) dest.IfModifiedSinceElement = (Hl7.Fhir.Model.Instant)_IfModifiedSinceElement.DeepCopyInternal();
+        if(_IfMatchElement is not null) dest.IfMatchElement = (Hl7.Fhir.Model.FhirString)_IfMatchElement.DeepCopyInternal();
+        if(_IfNoneExistElement is not null) dest.IfNoneExistElement = (Hl7.Fhir.Model.FhirString)_IfNoneExistElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1731,16 +1676,15 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RequestComponent;
-        if(otherT == null) return false;
+        if(other is not RequestComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(MethodElement, otherT.MethodElement)) return false;
-        if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-        if(!comparer.Equals(IfNoneMatchElement, otherT.IfNoneMatchElement)) return false;
-        if(!comparer.Equals(IfModifiedSinceElement, otherT.IfModifiedSinceElement)) return false;
-        if(!comparer.Equals(IfMatchElement, otherT.IfMatchElement)) return false;
-        if(!comparer.Equals(IfNoneExistElement, otherT.IfNoneExistElement)) return false;
+        if(!comparer.Equals(_MethodElement, otherT._MethodElement)) return false;
+        if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+        if(!comparer.Equals(_IfNoneMatchElement, otherT._IfNoneMatchElement)) return false;
+        if(!comparer.Equals(_IfModifiedSinceElement, otherT._IfModifiedSinceElement)) return false;
+        if(!comparer.Equals(_IfMatchElement, otherT._IfMatchElement)) return false;
+        if(!comparer.Equals(_IfNoneExistElement, otherT._IfNoneExistElement)) return false;
 
         return true;
       }
@@ -1750,23 +1694,23 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "method":
-            value = MethodElement;
-            return MethodElement is not null;
+            value = _MethodElement;
+            return _MethodElement is not null;
           case "url":
-            value = UrlElement;
-            return UrlElement is not null;
+            value = _UrlElement;
+            return _UrlElement is not null;
           case "ifNoneMatch":
-            value = IfNoneMatchElement;
-            return IfNoneMatchElement is not null;
+            value = _IfNoneMatchElement;
+            return _IfNoneMatchElement is not null;
           case "ifModifiedSince":
-            value = IfModifiedSinceElement;
-            return IfModifiedSinceElement is not null;
+            value = _IfModifiedSinceElement;
+            return _IfModifiedSinceElement is not null;
           case "ifMatch":
-            value = IfMatchElement;
-            return IfMatchElement is not null;
+            value = _IfMatchElement;
+            return _IfMatchElement is not null;
           case "ifNoneExist":
-            value = IfNoneExistElement;
-            return IfNoneExistElement is not null;
+            value = _IfNoneExistElement;
+            return _IfNoneExistElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1804,12 +1748,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (MethodElement is not null) yield return new KeyValuePair<string,object>("method",MethodElement);
-        if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-        if (IfNoneMatchElement is not null) yield return new KeyValuePair<string,object>("ifNoneMatch",IfNoneMatchElement);
-        if (IfModifiedSinceElement is not null) yield return new KeyValuePair<string,object>("ifModifiedSince",IfModifiedSinceElement);
-        if (IfMatchElement is not null) yield return new KeyValuePair<string,object>("ifMatch",IfMatchElement);
-        if (IfNoneExistElement is not null) yield return new KeyValuePair<string,object>("ifNoneExist",IfNoneExistElement);
+        if (_MethodElement is not null) yield return new KeyValuePair<string,object>("method",_MethodElement);
+        if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_IfNoneMatchElement is not null) yield return new KeyValuePair<string,object>("ifNoneMatch",_IfNoneMatchElement);
+        if (_IfModifiedSinceElement is not null) yield return new KeyValuePair<string,object>("ifModifiedSince",_IfModifiedSinceElement);
+        if (_IfMatchElement is not null) yield return new KeyValuePair<string,object>("ifMatch",_IfMatchElement);
+        if (_IfNoneExistElement is not null) yield return new KeyValuePair<string,object>("ifNoneExist",_IfNoneExistElement);
       }
 
     }
@@ -1851,13 +1795,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Status
       {
-        get { return StatusElement != null ? StatusElement.Value : null; }
+        get => _StatusElement?.Value;
         set
         {
-          if (value == null)
-            StatusElement = null;
-          else
-            StatusElement = new Hl7.Fhir.Model.FhirString(value);
+          StatusElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Status");
         }
       }
@@ -1882,13 +1823,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Location
       {
-        get { return LocationElement != null ? LocationElement.Value : null; }
+        get => _LocationElement?.Value;
         set
         {
-          if (value == null)
-            LocationElement = null;
-          else
-            LocationElement = new Hl7.Fhir.Model.FhirUri(value);
+          LocationElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Location");
         }
       }
@@ -1913,13 +1851,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Etag
       {
-        get { return EtagElement != null ? EtagElement.Value : null; }
+        get => _EtagElement?.Value;
         set
         {
-          if (value == null)
-            EtagElement = null;
-          else
-            EtagElement = new Hl7.Fhir.Model.FhirString(value);
+          EtagElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Etag");
         }
       }
@@ -1944,13 +1879,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? LastModified
       {
-        get { return LastModifiedElement != null ? LastModifiedElement.Value : null; }
+        get => _LastModifiedElement?.Value;
         set
         {
-          if (value == null)
-            LastModifiedElement = null;
-          else
-            LastModifiedElement = new Hl7.Fhir.Model.Instant(value);
+          LastModifiedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
           OnPropertyChanged("LastModified");
         }
       }
@@ -1972,19 +1904,15 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ResponseComponent;
-
-        if (dest == null)
-        {
+        if(other is not ResponseComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.FhirString)StatusElement.DeepCopyInternal();
-        if(LocationElement != null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)LocationElement.DeepCopyInternal();
-        if(EtagElement != null) dest.EtagElement = (Hl7.Fhir.Model.FhirString)EtagElement.DeepCopyInternal();
-        if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.Instant)LastModifiedElement.DeepCopyInternal();
-        if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.Resource)Outcome.DeepCopyInternal();
+        if(_StatusElement is not null) dest.StatusElement = (Hl7.Fhir.Model.FhirString)_StatusElement.DeepCopyInternal();
+        if(_LocationElement is not null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)_LocationElement.DeepCopyInternal();
+        if(_EtagElement is not null) dest.EtagElement = (Hl7.Fhir.Model.FhirString)_EtagElement.DeepCopyInternal();
+        if(_LastModifiedElement is not null) dest.LastModifiedElement = (Hl7.Fhir.Model.Instant)_LastModifiedElement.DeepCopyInternal();
+        if(_Outcome is not null) dest.Outcome = (Hl7.Fhir.Model.Resource)_Outcome.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1996,15 +1924,14 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ResponseComponent;
-        if(otherT == null) return false;
+        if(other is not ResponseComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-        if(!comparer.Equals(LocationElement, otherT.LocationElement)) return false;
-        if(!comparer.Equals(EtagElement, otherT.EtagElement)) return false;
-        if(!comparer.Equals(LastModifiedElement, otherT.LastModifiedElement)) return false;
-        if(!comparer.Equals(Outcome, otherT.Outcome)) return false;
+        if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+        if(!comparer.Equals(_LocationElement, otherT._LocationElement)) return false;
+        if(!comparer.Equals(_EtagElement, otherT._EtagElement)) return false;
+        if(!comparer.Equals(_LastModifiedElement, otherT._LastModifiedElement)) return false;
+        if(!comparer.Equals(_Outcome, otherT._Outcome)) return false;
 
         return true;
       }
@@ -2014,20 +1941,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "status":
-            value = StatusElement;
-            return StatusElement is not null;
+            value = _StatusElement;
+            return _StatusElement is not null;
           case "location":
-            value = LocationElement;
-            return LocationElement is not null;
+            value = _LocationElement;
+            return _LocationElement is not null;
           case "etag":
-            value = EtagElement;
-            return EtagElement is not null;
+            value = _EtagElement;
+            return _EtagElement is not null;
           case "lastModified":
-            value = LastModifiedElement;
-            return LastModifiedElement is not null;
+            value = _LastModifiedElement;
+            return _LastModifiedElement is not null;
           case "outcome":
-            value = Outcome;
-            return Outcome is not null;
+            value = _Outcome;
+            return _Outcome is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -2062,11 +1989,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-        if (LocationElement is not null) yield return new KeyValuePair<string,object>("location",LocationElement);
-        if (EtagElement is not null) yield return new KeyValuePair<string,object>("etag",EtagElement);
-        if (LastModifiedElement is not null) yield return new KeyValuePair<string,object>("lastModified",LastModifiedElement);
-        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+        if (_LocationElement is not null) yield return new KeyValuePair<string,object>("location",_LocationElement);
+        if (_EtagElement is not null) yield return new KeyValuePair<string,object>("etag",_EtagElement);
+        if (_LastModifiedElement is not null) yield return new KeyValuePair<string,object>("lastModified",_LastModifiedElement);
+        if (_Outcome is not null) yield return new KeyValuePair<string,object>("outcome",_Outcome);
       }
 
     }
@@ -2107,13 +2034,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Bundle.BundleType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.Bundle.BundleType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Bundle.BundleType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -2141,13 +2065,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Timestamp
     {
-      get { return TimestampElement != null ? TimestampElement.Value : null; }
+      get => _TimestampElement?.Value;
       set
       {
-        if (value == null)
-          TimestampElement = null;
-        else
-          TimestampElement = new Hl7.Fhir.Model.Instant(value);
+        TimestampElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Timestamp");
       }
     }
@@ -2172,13 +2093,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Total
     {
-      get { return TotalElement != null ? TotalElement.Value : null; }
+      get => _TotalElement?.Value;
       set
       {
-        if (value == null)
-          TotalElement = null;
-        else
-          TotalElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        TotalElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Total");
       }
     }
@@ -2191,7 +2109,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
     {
-      get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(); return _Link; }
+      get => _Link ?? new List<Hl7.Fhir.Model.Bundle.LinkComponent>();
       set { _Link = value; OnPropertyChanged("Link"); }
     }
 
@@ -2205,7 +2123,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
     {
-      get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(); return _Entry; }
+      get => _Entry ?? new List<Hl7.Fhir.Model.Bundle.EntryComponent>();
       set { _Entry = value; OnPropertyChanged("Entry"); }
     }
 
@@ -2246,22 +2164,18 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Bundle;
-
-      if (dest == null)
-      {
+      if(other is not Bundle dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopyInternal();
-      if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopyInternal();
-      if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopyInternal();
-      if(Link.Any()) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopyInternal());
-      if(Entry.Any()) dest.Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(Entry.DeepCopyInternal());
-      if(Signature != null) dest.Signature = (Hl7.Fhir.Model.Signature)Signature.DeepCopyInternal();
-      if(Issues != null) dest.Issues = (Hl7.Fhir.Model.Resource)Issues.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)_TypeElement.DeepCopyInternal();
+      if(_TimestampElement is not null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)_TimestampElement.DeepCopyInternal();
+      if(_TotalElement is not null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)_TotalElement.DeepCopyInternal();
+      if(_Link is not null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(_Link.DeepCopyInternal());
+      if(_Entry is not null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(_Entry.DeepCopyInternal());
+      if(_Signature is not null) dest.Signature = (Hl7.Fhir.Model.Signature)_Signature.DeepCopyInternal();
+      if(_Issues is not null) dest.Issues = (Hl7.Fhir.Model.Resource)_Issues.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -2273,18 +2187,17 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Bundle;
-      if(otherT == null) return false;
+      if(other is not Bundle otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(TimestampElement, otherT.TimestampElement)) return false;
-      if(!comparer.Equals(TotalElement, otherT.TotalElement)) return false;
-      if(!comparer.ListEquals(Link, otherT.Link)) return false;
-      if(!comparer.ListEquals(Entry, otherT.Entry)) return false;
-      if(!comparer.Equals(Signature, otherT.Signature)) return false;
-      if(!comparer.Equals(Issues, otherT.Issues)) return false;
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_TimestampElement, otherT._TimestampElement)) return false;
+      if(!comparer.Equals(_TotalElement, otherT._TotalElement)) return false;
+      if(!comparer.ListEquals(_Link, otherT._Link)) return false;
+      if(!comparer.ListEquals(_Entry, otherT._Entry)) return false;
+      if(!comparer.Equals(_Signature, otherT._Signature)) return false;
+      if(!comparer.Equals(_Issues, otherT._Issues)) return false;
 
       return true;
     }
@@ -2294,29 +2207,29 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "timestamp":
-          value = TimestampElement;
-          return TimestampElement is not null;
+          value = _TimestampElement;
+          return _TimestampElement is not null;
         case "total":
-          value = TotalElement;
-          return TotalElement is not null;
+          value = _TotalElement;
+          return _TotalElement is not null;
         case "link":
-          value = Link;
-          return Link?.Any() == true;
+          value = _Link;
+          return _Link?.Any() == true;
         case "entry":
-          value = Entry;
-          return Entry?.Any() == true;
+          value = _Entry;
+          return _Entry?.Any() == true;
         case "signature":
-          value = Signature;
-          return Signature is not null;
+          value = _Signature;
+          return _Signature is not null;
         case "issues":
-          value = Issues;
-          return Issues is not null;
+          value = _Issues;
+          return _Issues is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -2360,14 +2273,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",TimestampElement);
-      if (TotalElement is not null) yield return new KeyValuePair<string,object>("total",TotalElement);
-      if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
-      if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
-      if (Signature is not null) yield return new KeyValuePair<string,object>("signature",Signature);
-      if (Issues is not null) yield return new KeyValuePair<string,object>("issues",Issues);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",_TimestampElement);
+      if (_TotalElement is not null) yield return new KeyValuePair<string,object>("total",_TotalElement);
+      if (_Link?.Any() == true) yield return new KeyValuePair<string,object>("link",_Link);
+      if (_Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",_Entry);
+      if (_Signature is not null) yield return new KeyValuePair<string,object>("signature",_Signature);
+      if (_Issues is not null) yield return new KeyValuePair<string,object>("issues",_Issues);
     }
 
   }

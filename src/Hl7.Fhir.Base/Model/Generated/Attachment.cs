@@ -81,13 +81,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string ContentType
     {
-      get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+      get => _ContentTypeElement?.Value;
       set
       {
-        if (value == null)
-          ContentTypeElement = null;
-        else
-          ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
@@ -113,13 +110,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Language
     {
-      get { return LanguageElement != null ? LanguageElement.Value : null; }
+      get => _LanguageElement?.Value;
       set
       {
-        if (value == null)
-          LanguageElement = null;
-        else
-          LanguageElement = new Hl7.Fhir.Model.Code(value);
+        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }
@@ -144,13 +138,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[] Data
     {
-      get { return DataElement != null ? DataElement.Value : null; }
+      get => _DataElement?.Value;
       set
       {
-        if (value == null)
-          DataElement = null;
-        else
-          DataElement = new Hl7.Fhir.Model.Base64Binary(value);
+        DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Data");
       }
     }
@@ -185,13 +176,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string UrlUri
     {
-      get { return UrlElement != null ? ((IValue<string>)UrlElement).Value : null; }
+      get => ((IValue<string>)_UrlElement)?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("UrlUri");
       }
     }
@@ -203,13 +191,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Url
     {
-      get { return UrlElement != null ? ((IValue<string>)UrlElement).Value : null; }
+      get => ((IValue<string>)_UrlElement)?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
         OnPropertyChanged("Url");
       }
     }
@@ -244,13 +229,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? SizeUnsignedInt
     {
-      get { return SizeElement != null ? ((Hl7.Fhir.Model.UnsignedInt)SizeElement).Value : null; }
+      get => ((Hl7.Fhir.Model.UnsignedInt)_SizeElement)?.Value;
       set
       {
-        if (value == null)
-          SizeElement = null;
-        else
-          SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        SizeElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("SizeUnsignedInt");
       }
     }
@@ -262,13 +244,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public long? Size
     {
-      get { return SizeElement != null ? ((Hl7.Fhir.Model.Integer64)SizeElement).Value : null; }
+      get => ((Hl7.Fhir.Model.Integer64)_SizeElement)?.Value;
       set
       {
-        if (value == null)
-          SizeElement = null;
-        else
-          SizeElement = new Hl7.Fhir.Model.Integer64(value);
+        SizeElement = value is null ? null : new Hl7.Fhir.Model.Integer64(value);
         OnPropertyChanged("Size");
       }
     }
@@ -293,13 +272,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[] Hash
     {
-      get { return HashElement != null ? HashElement.Value : null; }
+      get => _HashElement?.Value;
       set
       {
-        if (value == null)
-          HashElement = null;
-        else
-          HashElement = new Hl7.Fhir.Model.Base64Binary(value);
+        HashElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Hash");
       }
     }
@@ -324,13 +300,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Title
     {
-      get { return TitleElement != null ? TitleElement.Value : null; }
+      get => _TitleElement?.Value;
       set
       {
-        if (value == null)
-          TitleElement = null;
-        else
-          TitleElement = new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -355,13 +328,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Creation
     {
-      get { return CreationElement != null ? CreationElement.Value : null; }
+      get => _CreationElement?.Value;
       set
       {
-        if (value == null)
-          CreationElement = null;
-        else
-          CreationElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Creation");
       }
     }
@@ -389,13 +359,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Height
     {
-      get { return HeightElement != null ? HeightElement.Value : null; }
+      get => _HeightElement?.Value;
       set
       {
-        if (value == null)
-          HeightElement = null;
-        else
-          HeightElement = new Hl7.Fhir.Model.PositiveInt(value);
+        HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Height");
       }
     }
@@ -423,13 +390,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Width
     {
-      get { return WidthElement != null ? WidthElement.Value : null; }
+      get => _WidthElement?.Value;
       set
       {
-        if (value == null)
-          WidthElement = null;
-        else
-          WidthElement = new Hl7.Fhir.Model.PositiveInt(value);
+        WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Width");
       }
     }
@@ -457,13 +421,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Frames
     {
-      get { return FramesElement != null ? FramesElement.Value : null; }
+      get => _FramesElement?.Value;
       set
       {
-        if (value == null)
-          FramesElement = null;
-        else
-          FramesElement = new Hl7.Fhir.Model.PositiveInt(value);
+        FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Frames");
       }
     }
@@ -491,13 +452,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Duration
     {
-      get { return DurationElement != null ? DurationElement.Value : null; }
+      get => _DurationElement?.Value;
       set
       {
-        if (value == null)
-          DurationElement = null;
-        else
-          DurationElement = new Hl7.Fhir.Model.FhirDecimal(value);
+        DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Duration");
       }
     }
@@ -525,40 +483,33 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Pages
     {
-      get { return PagesElement != null ? PagesElement.Value : null; }
+      get => _PagesElement?.Value;
       set
       {
-        if (value == null)
-          PagesElement = null;
-        else
-          PagesElement = new Hl7.Fhir.Model.PositiveInt(value);
+        PagesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Pages");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Attachment;
-
-      if (dest == null)
-      {
+      if(other is not Attachment dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopyInternal();
-      if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopyInternal();
-      if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopyInternal();
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.PrimitiveType)UrlElement.DeepCopyInternal();
-      if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.PrimitiveType)SizeElement.DeepCopyInternal();
-      if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopyInternal();
-      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopyInternal();
-      if(CreationElement != null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)CreationElement.DeepCopyInternal();
-      if(HeightElement != null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)HeightElement.DeepCopyInternal();
-      if(WidthElement != null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)WidthElement.DeepCopyInternal();
-      if(FramesElement != null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)FramesElement.DeepCopyInternal();
-      if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopyInternal();
-      if(PagesElement != null) dest.PagesElement = (Hl7.Fhir.Model.PositiveInt)PagesElement.DeepCopyInternal();
+      if(_ContentTypeElement is not null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)_ContentTypeElement.DeepCopyInternal();
+      if(_LanguageElement is not null) dest.LanguageElement = (Hl7.Fhir.Model.Code)_LanguageElement.DeepCopyInternal();
+      if(_DataElement is not null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)_DataElement.DeepCopyInternal();
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.PrimitiveType)_UrlElement.DeepCopyInternal();
+      if(_SizeElement is not null) dest.SizeElement = (Hl7.Fhir.Model.PrimitiveType)_SizeElement.DeepCopyInternal();
+      if(_HashElement is not null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)_HashElement.DeepCopyInternal();
+      if(_TitleElement is not null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)_TitleElement.DeepCopyInternal();
+      if(_CreationElement is not null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)_CreationElement.DeepCopyInternal();
+      if(_HeightElement is not null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)_HeightElement.DeepCopyInternal();
+      if(_WidthElement is not null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)_WidthElement.DeepCopyInternal();
+      if(_FramesElement is not null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)_FramesElement.DeepCopyInternal();
+      if(_DurationElement is not null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)_DurationElement.DeepCopyInternal();
+      if(_PagesElement is not null) dest.PagesElement = (Hl7.Fhir.Model.PositiveInt)_PagesElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -570,23 +521,22 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Attachment;
-      if(otherT == null) return false;
+      if(other is not Attachment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if(!comparer.Equals(LanguageElement, otherT.LanguageElement)) return false;
-      if(!comparer.Equals(DataElement, otherT.DataElement)) return false;
-      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-      if(!comparer.Equals(SizeElement, otherT.SizeElement)) return false;
-      if(!comparer.Equals(HashElement, otherT.HashElement)) return false;
-      if(!comparer.Equals(TitleElement, otherT.TitleElement)) return false;
-      if(!comparer.Equals(CreationElement, otherT.CreationElement)) return false;
-      if(!comparer.Equals(HeightElement, otherT.HeightElement)) return false;
-      if(!comparer.Equals(WidthElement, otherT.WidthElement)) return false;
-      if(!comparer.Equals(FramesElement, otherT.FramesElement)) return false;
-      if(!comparer.Equals(DurationElement, otherT.DurationElement)) return false;
-      if(!comparer.Equals(PagesElement, otherT.PagesElement)) return false;
+      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
+      if(!comparer.Equals(_LanguageElement, otherT._LanguageElement)) return false;
+      if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.Equals(_SizeElement, otherT._SizeElement)) return false;
+      if(!comparer.Equals(_HashElement, otherT._HashElement)) return false;
+      if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
+      if(!comparer.Equals(_CreationElement, otherT._CreationElement)) return false;
+      if(!comparer.Equals(_HeightElement, otherT._HeightElement)) return false;
+      if(!comparer.Equals(_WidthElement, otherT._WidthElement)) return false;
+      if(!comparer.Equals(_FramesElement, otherT._FramesElement)) return false;
+      if(!comparer.Equals(_DurationElement, otherT._DurationElement)) return false;
+      if(!comparer.Equals(_PagesElement, otherT._PagesElement)) return false;
 
       return true;
     }
@@ -596,44 +546,44 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "contentType":
-          value = ContentTypeElement;
-          return ContentTypeElement is not null;
+          value = _ContentTypeElement;
+          return _ContentTypeElement is not null;
         case "language":
-          value = LanguageElement;
-          return LanguageElement is not null;
+          value = _LanguageElement;
+          return _LanguageElement is not null;
         case "data":
-          value = DataElement;
-          return DataElement is not null;
+          value = _DataElement;
+          return _DataElement is not null;
         case "url":
-          value = UrlElement;
-          return UrlElement is not null;
+          value = _UrlElement;
+          return _UrlElement is not null;
         case "size":
-          value = SizeElement;
-          return SizeElement is not null;
+          value = _SizeElement;
+          return _SizeElement is not null;
         case "hash":
-          value = HashElement;
-          return HashElement is not null;
+          value = _HashElement;
+          return _HashElement is not null;
         case "title":
-          value = TitleElement;
-          return TitleElement is not null;
+          value = _TitleElement;
+          return _TitleElement is not null;
         case "creation":
-          value = CreationElement;
-          return CreationElement is not null;
+          value = _CreationElement;
+          return _CreationElement is not null;
         case "height":
-          value = HeightElement;
-          return HeightElement is not null;
+          value = _HeightElement;
+          return _HeightElement is not null;
         case "width":
-          value = WidthElement;
-          return WidthElement is not null;
+          value = _WidthElement;
+          return _WidthElement is not null;
         case "frames":
-          value = FramesElement;
-          return FramesElement is not null;
+          value = _FramesElement;
+          return _FramesElement is not null;
         case "duration":
-          value = DurationElement;
-          return DurationElement is not null;
+          value = _DurationElement;
+          return _DurationElement is not null;
         case "pages":
-          value = PagesElement;
-          return PagesElement is not null;
+          value = _PagesElement;
+          return _PagesElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -692,19 +642,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
-      if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
-      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
-      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (SizeElement is not null) yield return new KeyValuePair<string,object>("size",SizeElement);
-      if (HashElement is not null) yield return new KeyValuePair<string,object>("hash",HashElement);
-      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (CreationElement is not null) yield return new KeyValuePair<string,object>("creation",CreationElement);
-      if (HeightElement is not null) yield return new KeyValuePair<string,object>("height",HeightElement);
-      if (WidthElement is not null) yield return new KeyValuePair<string,object>("width",WidthElement);
-      if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
-      if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
-      if (PagesElement is not null) yield return new KeyValuePair<string,object>("pages",PagesElement);
+      if (_ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+      if (_DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
+      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_SizeElement is not null) yield return new KeyValuePair<string,object>("size",_SizeElement);
+      if (_HashElement is not null) yield return new KeyValuePair<string,object>("hash",_HashElement);
+      if (_TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (_CreationElement is not null) yield return new KeyValuePair<string,object>("creation",_CreationElement);
+      if (_HeightElement is not null) yield return new KeyValuePair<string,object>("height",_HeightElement);
+      if (_WidthElement is not null) yield return new KeyValuePair<string,object>("width",_WidthElement);
+      if (_FramesElement is not null) yield return new KeyValuePair<string,object>("frames",_FramesElement);
+      if (_DurationElement is not null) yield return new KeyValuePair<string,object>("duration",_DurationElement);
+      if (_PagesElement is not null) yield return new KeyValuePair<string,object>("pages",_PagesElement);
     }
 
   }

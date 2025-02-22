@@ -97,13 +97,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -144,7 +141,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
       {
-        get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Part; }
+        get => _Part ?? new List<Hl7.Fhir.Model.Parameters.ParameterComponent>();
         set { _Part = value; OnPropertyChanged("Part"); }
       }
 
@@ -152,18 +149,14 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParameterComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParameterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
-        if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopyInternal();
-        if(Part.Any()) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopyInternal());
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
+        if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.Resource)_Resource.DeepCopyInternal();
+        if(_Part is not null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(_Part.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -175,14 +168,13 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParameterComponent;
-        if(otherT == null) return false;
+        if(other is not ParameterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
-        if(!comparer.Equals(Resource, otherT.Resource)) return false;
-        if(!comparer.ListEquals(Part, otherT.Part)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        if(!comparer.Equals(_Resource, otherT._Resource)) return false;
+        if(!comparer.ListEquals(_Part, otherT._Part)) return false;
 
         return true;
       }
@@ -192,17 +184,17 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           case "resource":
-            value = Resource;
-            return Resource is not null;
+            value = _Resource;
+            return _Resource is not null;
           case "part":
-            value = Part;
-            return Part?.Any() == true;
+            value = _Part;
+            return _Part?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -234,10 +226,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Part?.Any() == true) yield return new KeyValuePair<string,object>("part",Part);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Part?.Any() == true) yield return new KeyValuePair<string,object>("part",_Part);
       }
 
     }
@@ -250,7 +242,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
     {
-      get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Parameter; }
+      get => _Parameter ?? new List<Hl7.Fhir.Model.Parameters.ParameterComponent>();
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 
@@ -258,15 +250,11 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Parameters;
-
-      if (dest == null)
-      {
+      if(other is not Parameters dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopyInternal());
+      if(_Parameter is not null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(_Parameter.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -278,11 +266,10 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Parameters;
-      if(otherT == null) return false;
+      if(other is not Parameters otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Parameter, otherT.Parameter)) return false;
+      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
 
       return true;
     }
@@ -292,8 +279,8 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "parameter":
-          value = Parameter;
-          return Parameter?.Any() == true;
+          value = _Parameter;
+          return _Parameter?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -316,7 +303,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
+      if (_Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
     }
 
   }

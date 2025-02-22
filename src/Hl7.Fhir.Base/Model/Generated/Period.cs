@@ -81,13 +81,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Start
     {
-      get { return StartElement != null ? StartElement.Value : null; }
+      get => _StartElement?.Value;
       set
       {
-        if (value == null)
-          StartElement = null;
-        else
-          StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        StartElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Start");
       }
     }
@@ -112,29 +109,22 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string End
     {
-      get { return EndElement != null ? EndElement.Value : null; }
+      get => _EndElement?.Value;
       set
       {
-        if (value == null)
-          EndElement = null;
-        else
-          EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        EndElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("End");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Period;
-
-      if (dest == null)
-      {
+      if(other is not Period dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)StartElement.DeepCopyInternal();
-      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)EndElement.DeepCopyInternal();
+      if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)_StartElement.DeepCopyInternal();
+      if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)_EndElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -146,12 +136,11 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Period;
-      if(otherT == null) return false;
+      if(other is not Period otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-      if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
+      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+      if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
 
       return true;
     }
@@ -161,11 +150,11 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "start":
-          value = StartElement;
-          return StartElement is not null;
+          value = _StartElement;
+          return _StartElement is not null;
         case "end":
-          value = EndElement;
-          return EndElement is not null;
+          value = _EndElement;
+          return _EndElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -191,8 +180,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
     }
 
   }

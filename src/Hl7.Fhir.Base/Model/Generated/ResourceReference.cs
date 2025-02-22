@@ -79,13 +79,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Reference
     {
-      get { return ReferenceElement != null ? ReferenceElement.Value : null; }
+      get => _ReferenceElement?.Value;
       set
       {
-        if (value == null)
-          ReferenceElement = null;
-        else
-          ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
+        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Reference");
       }
     }
@@ -114,13 +111,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Hl7.Fhir.Model.FhirUri(value);
+        TypeElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Type");
       }
     }
@@ -158,31 +152,24 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string Display
     {
-      get { return DisplayElement != null ? DisplayElement.Value : null; }
+      get => _DisplayElement?.Value;
       set
       {
-        if (value == null)
-          DisplayElement = null;
-        else
-          DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ResourceReference;
-
-      if (dest == null)
-      {
+      if(other is not ResourceReference dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopyInternal();
-      if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirUri)TypeElement.DeepCopyInternal();
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopyInternal();
+      if(_ReferenceElement is not null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)_ReferenceElement.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Hl7.Fhir.Model.FhirUri)_TypeElement.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_DisplayElement is not null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)_DisplayElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -194,14 +181,13 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ResourceReference;
-      if(otherT == null) return false;
+      if(other is not ResourceReference otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ReferenceElement, otherT.ReferenceElement)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(DisplayElement, otherT.DisplayElement)) return false;
+      if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
 
       return true;
     }
@@ -211,17 +197,17 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "reference":
-          value = ReferenceElement;
-          return ReferenceElement is not null;
+          value = _ReferenceElement;
+          return _ReferenceElement is not null;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "display":
-          value = DisplayElement;
-          return DisplayElement is not null;
+          value = _DisplayElement;
+          return _DisplayElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -253,10 +239,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
+      if (_ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_DisplayElement is not null) yield return new KeyValuePair<string,object>("display",_DisplayElement);
     }
 
   }
