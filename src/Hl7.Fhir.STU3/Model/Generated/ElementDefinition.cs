@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.ElementDefinition.AggregationMode??>? Aggregation
+      public IEnumerable<Hl7.Fhir.Model.ElementDefinition.AggregationMode?>? Aggregation
       {
         get => _AggregationElement?.Select(elem => elem.Value);
         set
@@ -1959,7 +1959,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation??>? Representation
+    public IEnumerable<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation?>? Representation
     {
       get => _RepresentationElement?.Select(elem => elem.Value);
       set

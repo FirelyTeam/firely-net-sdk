@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TestReport","http://hl7.org/fhir/StructureDefinition/TestReport")]
-  public partial class TestReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class TestReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1658,7 +1658,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.TestReport.TeardownComponent? _Teardown;
 
-    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {

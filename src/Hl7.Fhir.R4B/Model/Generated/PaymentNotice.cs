@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -67,11 +70,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
@@ -81,13 +84,13 @@ namespace Hl7.Fhir.Model
     [Binding("PaymentNoticeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error
@@ -96,13 +99,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -114,13 +114,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Request
+    public Hl7.Fhir.Model.ResourceReference? Request
     {
       get { return _Request; }
       set { _Request = value; OnPropertyChanged("Request"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Request;
+    private Hl7.Fhir.Model.ResourceReference? _Request;
 
     /// <summary>
     /// Response reference.
@@ -129,13 +129,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Response
+    public Hl7.Fhir.Model.ResourceReference? Response
     {
       get { return _Response; }
       set { _Response = value; OnPropertyChanged("Response"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Response;
+    private Hl7.Fhir.Model.ResourceReference? _Response;
 
     /// <summary>
     /// Creation date.
@@ -143,28 +143,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("created", InSummary=true, Order=130, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
       get { return _CreatedElement; }
       set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
 
     /// <summary>
     /// Creation date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get { return CreatedElement != null ? CreatedElement.Value : null; }
+      get => _CreatedElement?.Value;
       set
       {
-        if (value == null)
-          CreatedElement = null;
-        else
-          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -176,13 +173,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Provider
+    public Hl7.Fhir.Model.ResourceReference? Provider
     {
       get { return _Provider; }
       set { _Provider = value; OnPropertyChanged("Provider"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Provider;
+    private Hl7.Fhir.Model.ResourceReference? _Provider;
 
     /// <summary>
     /// Payment reference.
@@ -192,41 +189,38 @@ namespace Hl7.Fhir.Model
     [References("PaymentReconciliation")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Payment
+    public Hl7.Fhir.Model.ResourceReference? Payment
     {
       get { return _Payment; }
       set { _Payment = value; OnPropertyChanged("Payment"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Payment;
+    private Hl7.Fhir.Model.ResourceReference? _Payment;
 
     /// <summary>
     /// Payment or clearing date.
     /// </summary>
     [FhirElement("paymentDate", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Date PaymentDateElement
+    public Hl7.Fhir.Model.Date? PaymentDateElement
     {
       get { return _PaymentDateElement; }
       set { _PaymentDateElement = value; OnPropertyChanged("PaymentDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _PaymentDateElement;
+    private Hl7.Fhir.Model.Date? _PaymentDateElement;
 
     /// <summary>
     /// Payment or clearing date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PaymentDate
+    public string? PaymentDate
     {
-      get { return PaymentDateElement != null ? PaymentDateElement.Value : null; }
+      get => _PaymentDateElement?.Value;
       set
       {
-        if (value == null)
-          PaymentDateElement = null;
-        else
-          PaymentDateElement = new Hl7.Fhir.Model.Date(value);
+        PaymentDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("PaymentDate");
       }
     }
@@ -238,13 +232,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Payee
+    public Hl7.Fhir.Model.ResourceReference? Payee
     {
       get { return _Payee; }
       set { _Payee = value; OnPropertyChanged("Payee"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Payee;
+    private Hl7.Fhir.Model.ResourceReference? _Payee;
 
     /// <summary>
     /// Party being notified.
@@ -254,13 +248,13 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Recipient
+    public Hl7.Fhir.Model.ResourceReference? Recipient
     {
       get { return _Recipient; }
       set { _Recipient = value; OnPropertyChanged("Recipient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Recipient;
+    private Hl7.Fhir.Model.ResourceReference? _Recipient;
 
     /// <summary>
     /// Monetary amount of the payment.
@@ -268,13 +262,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("amount", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Money Amount
+    public Hl7.Fhir.Model.Money? Amount
     {
       get { return _Amount; }
       set { _Amount = value; OnPropertyChanged("Amount"); }
     }
 
-    private Hl7.Fhir.Model.Money _Amount;
+    private Hl7.Fhir.Model.Money? _Amount;
 
     /// <summary>
     /// Issued or cleared Status of the payment.
@@ -282,38 +276,34 @@ namespace Hl7.Fhir.Model
     [FhirElement("paymentStatus", Order=200)]
     [Binding("PaymentStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept PaymentStatus
+    public Hl7.Fhir.Model.CodeableConcept? PaymentStatus
     {
       get { return _PaymentStatus; }
       set { _PaymentStatus = value; OnPropertyChanged("PaymentStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _PaymentStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _PaymentStatus;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as PaymentNotice;
-
-      if (dest == null)
-      {
+      if(other is not PaymentNotice dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopyInternal();
-      if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopyInternal();
-      if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopyInternal();
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
-      if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopyInternal();
-      if(Payment != null) dest.Payment = (Hl7.Fhir.Model.ResourceReference)Payment.DeepCopyInternal();
-      if(PaymentDateElement != null) dest.PaymentDateElement = (Hl7.Fhir.Model.Date)PaymentDateElement.DeepCopyInternal();
-      if(Payee != null) dest.Payee = (Hl7.Fhir.Model.ResourceReference)Payee.DeepCopyInternal();
-      if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)Recipient.DeepCopyInternal();
-      if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopyInternal();
-      if(PaymentStatus != null) dest.PaymentStatus = (Hl7.Fhir.Model.CodeableConcept)PaymentStatus.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_Request is not null) dest.Request = (Hl7.Fhir.Model.ResourceReference)_Request.DeepCopyInternal();
+      if(_Response is not null) dest.Response = (Hl7.Fhir.Model.ResourceReference)_Response.DeepCopyInternal();
+      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
+      if(_Provider is not null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)_Provider.DeepCopyInternal();
+      if(_Payment is not null) dest.Payment = (Hl7.Fhir.Model.ResourceReference)_Payment.DeepCopyInternal();
+      if(_PaymentDateElement is not null) dest.PaymentDateElement = (Hl7.Fhir.Model.Date)_PaymentDateElement.DeepCopyInternal();
+      if(_Payee is not null) dest.Payee = (Hl7.Fhir.Model.ResourceReference)_Payee.DeepCopyInternal();
+      if(_Recipient is not null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)_Recipient.DeepCopyInternal();
+      if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.Money)_Amount.DeepCopyInternal();
+      if(_PaymentStatus is not null) dest.PaymentStatus = (Hl7.Fhir.Model.CodeableConcept)_PaymentStatus.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -325,111 +315,111 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as PaymentNotice;
-      if(otherT == null) return false;
+      if(other is not PaymentNotice otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Request, otherT.Request)) return false;
-      if(!comparer.Equals(Response, otherT.Response)) return false;
-      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
-      if(!comparer.Equals(Provider, otherT.Provider)) return false;
-      if(!comparer.Equals(Payment, otherT.Payment)) return false;
-      if(!comparer.Equals(PaymentDateElement, otherT.PaymentDateElement)) return false;
-      if(!comparer.Equals(Payee, otherT.Payee)) return false;
-      if(!comparer.Equals(Recipient, otherT.Recipient)) return false;
-      if(!comparer.Equals(Amount, otherT.Amount)) return false;
-      if(!comparer.Equals(PaymentStatus, otherT.PaymentStatus)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Request, otherT._Request)) return false;
+      if(!comparer.Equals(_Response, otherT._Response)) return false;
+      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
+      if(!comparer.Equals(_Provider, otherT._Provider)) return false;
+      if(!comparer.Equals(_Payment, otherT._Payment)) return false;
+      if(!comparer.Equals(_PaymentDateElement, otherT._PaymentDateElement)) return false;
+      if(!comparer.Equals(_Payee, otherT._Payee)) return false;
+      if(!comparer.Equals(_Recipient, otherT._Recipient)) return false;
+      if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+      if(!comparer.Equals(_PaymentStatus, otherT._PaymentStatus)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "request":
-          value = Request;
-          return Request is not null;
+          value = _Request;
+          return _Request is not null;
         case "response":
-          value = Response;
-          return Response is not null;
+          value = _Response;
+          return _Response is not null;
         case "created":
-          value = CreatedElement;
-          return CreatedElement is not null;
+          value = _CreatedElement;
+          return _CreatedElement is not null;
         case "provider":
-          value = Provider;
-          return Provider is not null;
+          value = _Provider;
+          return _Provider is not null;
         case "payment":
-          value = Payment;
-          return Payment is not null;
+          value = _Payment;
+          return _Payment is not null;
         case "paymentDate":
-          value = PaymentDateElement;
-          return PaymentDateElement is not null;
+          value = _PaymentDateElement;
+          return _PaymentDateElement is not null;
         case "payee":
-          value = Payee;
-          return Payee is not null;
+          value = _Payee;
+          return _Payee is not null;
         case "recipient":
-          value = Recipient;
-          return Recipient is not null;
+          value = _Recipient;
+          return _Recipient is not null;
         case "amount":
-          value = Amount;
-          return Amount is not null;
+          value = _Amount;
+          return _Amount is not null;
         case "paymentStatus":
-          value = PaymentStatus;
-          return PaymentStatus is not null;
+          value = _PaymentStatus;
+          return _PaymentStatus is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "request":
-          Request = (Hl7.Fhir.Model.ResourceReference)value;
+          Request = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "response":
-          Response = (Hl7.Fhir.Model.ResourceReference)value;
+          Response = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "provider":
-          Provider = (Hl7.Fhir.Model.ResourceReference)value;
+          Provider = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "payment":
-          Payment = (Hl7.Fhir.Model.ResourceReference)value;
+          Payment = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "paymentDate":
-          PaymentDateElement = (Hl7.Fhir.Model.Date)value;
+          PaymentDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "payee":
-          Payee = (Hl7.Fhir.Model.ResourceReference)value;
+          Payee = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "recipient":
-          Recipient = (Hl7.Fhir.Model.ResourceReference)value;
+          Recipient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "amount":
-          Amount = (Hl7.Fhir.Model.Money)value;
+          Amount = (Hl7.Fhir.Model.Money?)value;
           return this;
         case "paymentStatus":
-          PaymentStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          PaymentStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -440,18 +430,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
-      if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
-      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
-      if (Payment is not null) yield return new KeyValuePair<string,object>("payment",Payment);
-      if (PaymentDateElement is not null) yield return new KeyValuePair<string,object>("paymentDate",PaymentDateElement);
-      if (Payee is not null) yield return new KeyValuePair<string,object>("payee",Payee);
-      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
-      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-      if (PaymentStatus is not null) yield return new KeyValuePair<string,object>("paymentStatus",PaymentStatus);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Request is not null) yield return new KeyValuePair<string,object>("request",_Request);
+      if (_Response is not null) yield return new KeyValuePair<string,object>("response",_Response);
+      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Provider is not null) yield return new KeyValuePair<string,object>("provider",_Provider);
+      if (_Payment is not null) yield return new KeyValuePair<string,object>("payment",_Payment);
+      if (_PaymentDateElement is not null) yield return new KeyValuePair<string,object>("paymentDate",_PaymentDateElement);
+      if (_Payee is not null) yield return new KeyValuePair<string,object>("payee",_Payee);
+      if (_Recipient is not null) yield return new KeyValuePair<string,object>("recipient",_Recipient);
+      if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+      if (_PaymentStatus is not null) yield return new KeyValuePair<string,object>("paymentStatus",_PaymentStatus);
     }
 
   }

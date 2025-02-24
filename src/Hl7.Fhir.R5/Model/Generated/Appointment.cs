@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -3049,24 +3052,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
       /// <summary>
       /// Participation period of the actor.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Period Period
+      public Hl7.Fhir.Model.Period? Period
       {
         get { return _Period; }
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private Hl7.Fhir.Model.Period _Period;
+      private Hl7.Fhir.Model.Period? _Period;
 
       /// <summary>
       /// The individual, device, location, or service participating in the appointment.
@@ -3075,26 +3078,26 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Patient","Group","Practitioner","PractitionerRole","CareTeam","RelatedPerson","Device","HealthcareService","Location")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
         get { return _Actor; }
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
       /// <summary>
       /// The participant is required to attend (optional when false).
       /// </summary>
       [FhirElement("required", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean RequiredElement
+      public Hl7.Fhir.Model.FhirBoolean? RequiredElement
       {
         get { return _RequiredElement; }
         set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
+      private Hl7.Fhir.Model.FhirBoolean? _RequiredElement;
 
       /// <summary>
       /// The participant is required to attend (optional when false)
@@ -3103,13 +3106,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Required
       {
-        get { return RequiredElement != null ? RequiredElement.Value : null; }
+        get => _RequiredElement?.Value;
         set
         {
-          if (value == null)
-            RequiredElement = null;
-          else
-            RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          RequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Required");
         }
       }
@@ -3122,13 +3122,13 @@ namespace Hl7.Fhir.Model
       [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> StatusElement
+      public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>? StatusElement
       {
         get { return _StatusElement; }
         set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> _StatusElement;
+      private Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>? _StatusElement;
 
       /// <summary>
       /// accepted | declined | tentative | needs-action
@@ -3137,32 +3137,25 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Appointment.ParticipationStatus? Status
       {
-        get { return StatusElement != null ? StatusElement.Value : null; }
+        get => _StatusElement?.Value;
         set
         {
-          if (value == null)
-            StatusElement = null;
-          else
-            StatusElement = new Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>(value);
+          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>(value);
           OnPropertyChanged("Status");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParticipantComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParticipantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
-        if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopyInternal();
-        if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>)StatusElement.DeepCopyInternal();
+        if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+        if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
+        if(_RequiredElement is not null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)_RequiredElement.DeepCopyInternal();
+        if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>)_StatusElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -3174,62 +3167,62 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParticipantComponent;
-        if(otherT == null) return false;
+        if(other is not ParticipantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Period, otherT.Period)) return false;
-        if(!comparer.Equals(Actor, otherT.Actor)) return false;
-        if(!comparer.Equals(RequiredElement, otherT.RequiredElement)) return false;
-        if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Period, otherT._Period)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+        if(!comparer.Equals(_RequiredElement, otherT._RequiredElement)) return false;
+        if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type?.Any() == true;
+            value = _Type;
+            return _Type?.Any() == true;
           case "period":
-            value = Period;
-            return Period is not null;
+            value = _Period;
+            return _Period is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            value = _Actor;
+            return _Actor is not null;
           case "required":
-            value = RequiredElement;
-            return RequiredElement is not null;
+            value = _RequiredElement;
+            return _RequiredElement is not null;
           case "status":
-            value = StatusElement;
-            return StatusElement is not null;
+            value = _StatusElement;
+            return _StatusElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period)value;
+            Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference)value;
+            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "required":
-            RequiredElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            RequiredElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "status":
-            StatusElement = (Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>)value;
+            StatusElement = (Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -3240,11 +3233,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
-        if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
-        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_RequiredElement is not null) yield return new KeyValuePair<string,object>("required",_RequiredElement);
+        if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
       }
 
     }
@@ -3271,13 +3264,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("timezone", Order=40)]
       [Binding("IANATimezone")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Timezone
+      public Hl7.Fhir.Model.CodeableConcept? Timezone
       {
         get { return _Timezone; }
         set { _Timezone = value; OnPropertyChanged("Timezone"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Timezone;
+      private Hl7.Fhir.Model.CodeableConcept? _Timezone;
 
       /// <summary>
       /// The frequency of the recurrence.
@@ -3286,41 +3279,38 @@ namespace Hl7.Fhir.Model
       [Binding("AppointmentRecurrenceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept RecurrenceType
+      public Hl7.Fhir.Model.CodeableConcept? RecurrenceType
       {
         get { return _RecurrenceType; }
         set { _RecurrenceType = value; OnPropertyChanged("RecurrenceType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _RecurrenceType;
+      private Hl7.Fhir.Model.CodeableConcept? _RecurrenceType;
 
       /// <summary>
       /// The date when the recurrence should end.
       /// </summary>
       [FhirElement("lastOccurrenceDate", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Date LastOccurrenceDateElement
+      public Hl7.Fhir.Model.Date? LastOccurrenceDateElement
       {
         get { return _LastOccurrenceDateElement; }
         set { _LastOccurrenceDateElement = value; OnPropertyChanged("LastOccurrenceDateElement"); }
       }
 
-      private Hl7.Fhir.Model.Date _LastOccurrenceDateElement;
+      private Hl7.Fhir.Model.Date? _LastOccurrenceDateElement;
 
       /// <summary>
       /// The date when the recurrence should end
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string LastOccurrenceDate
+      public string? LastOccurrenceDate
       {
-        get { return LastOccurrenceDateElement != null ? LastOccurrenceDateElement.Value : null; }
+        get => _LastOccurrenceDateElement?.Value;
         set
         {
-          if (value == null)
-            LastOccurrenceDateElement = null;
-          else
-            LastOccurrenceDateElement = new Hl7.Fhir.Model.Date(value);
+          LastOccurrenceDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("LastOccurrenceDate");
         }
       }
@@ -3330,13 +3320,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("occurrenceCount", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt OccurrenceCountElement
+      public Hl7.Fhir.Model.PositiveInt? OccurrenceCountElement
       {
         get { return _OccurrenceCountElement; }
         set { _OccurrenceCountElement = value; OnPropertyChanged("OccurrenceCountElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _OccurrenceCountElement;
+      private Hl7.Fhir.Model.PositiveInt? _OccurrenceCountElement;
 
       /// <summary>
       /// The number of planned occurrences
@@ -3345,13 +3335,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? OccurrenceCount
       {
-        get { return OccurrenceCountElement != null ? OccurrenceCountElement.Value : null; }
+        get => _OccurrenceCountElement?.Value;
         set
         {
-          if (value == null)
-            OccurrenceCountElement = null;
-          else
-            OccurrenceCountElement = new Hl7.Fhir.Model.PositiveInt(value);
+          OccurrenceCountElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("OccurrenceCount");
         }
       }
@@ -3364,24 +3351,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Date> OccurrenceDateElement
       {
-        get { if(_OccurrenceDateElement==null) _OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(); return _OccurrenceDateElement; }
+        get => _OccurrenceDateElement ?? new List<Hl7.Fhir.Model.Date>();
         set { _OccurrenceDateElement = value; OnPropertyChanged("OccurrenceDateElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Date> _OccurrenceDateElement;
+      private List<Hl7.Fhir.Model.Date>? _OccurrenceDateElement;
 
       /// <summary>
       /// Specific dates for a recurring set of appointments (no template)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> OccurrenceDate
+      public IEnumerable<string?>? OccurrenceDate
       {
-        get { return OccurrenceDateElement != null ? OccurrenceDateElement.Select(elem => elem.Value) : null; }
+        get => _OccurrenceDateElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            OccurrenceDateElement = null;
+            OccurrenceDateElement = null!;
           else
             OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(value.Select(elem=>new Hl7.Fhir.Model.Date(elem)));
           OnPropertyChanged("OccurrenceDate");
@@ -3393,39 +3380,39 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("weeklyTemplate", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent WeeklyTemplate
+      public Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent? WeeklyTemplate
       {
         get { return _WeeklyTemplate; }
         set { _WeeklyTemplate = value; OnPropertyChanged("WeeklyTemplate"); }
       }
 
-      private Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent _WeeklyTemplate;
+      private Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent? _WeeklyTemplate;
 
       /// <summary>
       /// Information about monthly recurring appointments.
       /// </summary>
       [FhirElement("monthlyTemplate", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent MonthlyTemplate
+      public Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent? MonthlyTemplate
       {
         get { return _MonthlyTemplate; }
         set { _MonthlyTemplate = value; OnPropertyChanged("MonthlyTemplate"); }
       }
 
-      private Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent _MonthlyTemplate;
+      private Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent? _MonthlyTemplate;
 
       /// <summary>
       /// Information about yearly recurring appointments.
       /// </summary>
       [FhirElement("yearlyTemplate", Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.Appointment.YearlyTemplateComponent YearlyTemplate
+      public Hl7.Fhir.Model.Appointment.YearlyTemplateComponent? YearlyTemplate
       {
         get { return _YearlyTemplate; }
         set { _YearlyTemplate = value; OnPropertyChanged("YearlyTemplate"); }
       }
 
-      private Hl7.Fhir.Model.Appointment.YearlyTemplateComponent _YearlyTemplate;
+      private Hl7.Fhir.Model.Appointment.YearlyTemplateComponent? _YearlyTemplate;
 
       /// <summary>
       /// Any dates that should be excluded from the series.
@@ -3435,24 +3422,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Date> ExcludingDateElement
       {
-        get { if(_ExcludingDateElement==null) _ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(); return _ExcludingDateElement; }
+        get => _ExcludingDateElement ?? new List<Hl7.Fhir.Model.Date>();
         set { _ExcludingDateElement = value; OnPropertyChanged("ExcludingDateElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Date> _ExcludingDateElement;
+      private List<Hl7.Fhir.Model.Date>? _ExcludingDateElement;
 
       /// <summary>
       /// Any dates that should be excluded from the series
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> ExcludingDate
+      public IEnumerable<string?>? ExcludingDate
       {
-        get { return ExcludingDateElement != null ? ExcludingDateElement.Select(elem => elem.Value) : null; }
+        get => _ExcludingDateElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            ExcludingDateElement = null;
+            ExcludingDateElement = null!;
           else
             ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(value.Select(elem=>new Hl7.Fhir.Model.Date(elem)));
           OnPropertyChanged("ExcludingDate");
@@ -3467,24 +3454,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> ExcludingRecurrenceIdElement
       {
-        get { if(_ExcludingRecurrenceIdElement==null) _ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(); return _ExcludingRecurrenceIdElement; }
+        get => _ExcludingRecurrenceIdElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
         set { _ExcludingRecurrenceIdElement = value; OnPropertyChanged("ExcludingRecurrenceIdElement"); }
       }
 
-      private List<Hl7.Fhir.Model.PositiveInt> _ExcludingRecurrenceIdElement;
+      private List<Hl7.Fhir.Model.PositiveInt>? _ExcludingRecurrenceIdElement;
 
       /// <summary>
       /// Any recurrence IDs that should be excluded from the recurrence
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?> ExcludingRecurrenceId
+      public IEnumerable<int?>? ExcludingRecurrenceId
       {
-        get { return ExcludingRecurrenceIdElement != null ? ExcludingRecurrenceIdElement.Select(elem => elem.Value) : null; }
+        get => _ExcludingRecurrenceIdElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            ExcludingRecurrenceIdElement = null;
+            ExcludingRecurrenceIdElement = null!;
           else
             ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
           OnPropertyChanged("ExcludingRecurrenceId");
@@ -3493,24 +3480,20 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RecurrenceTemplateComponent;
-
-        if (dest == null)
-        {
+        if(other is not RecurrenceTemplateComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Timezone != null) dest.Timezone = (Hl7.Fhir.Model.CodeableConcept)Timezone.DeepCopyInternal();
-        if(RecurrenceType != null) dest.RecurrenceType = (Hl7.Fhir.Model.CodeableConcept)RecurrenceType.DeepCopyInternal();
-        if(LastOccurrenceDateElement != null) dest.LastOccurrenceDateElement = (Hl7.Fhir.Model.Date)LastOccurrenceDateElement.DeepCopyInternal();
-        if(OccurrenceCountElement != null) dest.OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt)OccurrenceCountElement.DeepCopyInternal();
-        if(OccurrenceDateElement.Any()) dest.OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(OccurrenceDateElement.DeepCopyInternal());
-        if(WeeklyTemplate != null) dest.WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent)WeeklyTemplate.DeepCopyInternal();
-        if(MonthlyTemplate != null) dest.MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent)MonthlyTemplate.DeepCopyInternal();
-        if(YearlyTemplate != null) dest.YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent)YearlyTemplate.DeepCopyInternal();
-        if(ExcludingDateElement.Any()) dest.ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(ExcludingDateElement.DeepCopyInternal());
-        if(ExcludingRecurrenceIdElement.Any()) dest.ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(ExcludingRecurrenceIdElement.DeepCopyInternal());
+        if(_Timezone is not null) dest.Timezone = (Hl7.Fhir.Model.CodeableConcept)_Timezone.DeepCopyInternal();
+        if(_RecurrenceType is not null) dest.RecurrenceType = (Hl7.Fhir.Model.CodeableConcept)_RecurrenceType.DeepCopyInternal();
+        if(_LastOccurrenceDateElement is not null) dest.LastOccurrenceDateElement = (Hl7.Fhir.Model.Date)_LastOccurrenceDateElement.DeepCopyInternal();
+        if(_OccurrenceCountElement is not null) dest.OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt)_OccurrenceCountElement.DeepCopyInternal();
+        if(_OccurrenceDateElement is not null) dest.OccurrenceDateElement = new List<Hl7.Fhir.Model.Date>(_OccurrenceDateElement.DeepCopyInternal());
+        if(_WeeklyTemplate is not null) dest.WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent)_WeeklyTemplate.DeepCopyInternal();
+        if(_MonthlyTemplate is not null) dest.MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent)_MonthlyTemplate.DeepCopyInternal();
+        if(_YearlyTemplate is not null) dest.YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent)_YearlyTemplate.DeepCopyInternal();
+        if(_ExcludingDateElement is not null) dest.ExcludingDateElement = new List<Hl7.Fhir.Model.Date>(_ExcludingDateElement.DeepCopyInternal());
+        if(_ExcludingRecurrenceIdElement is not null) dest.ExcludingRecurrenceIdElement = new List<Hl7.Fhir.Model.PositiveInt>(_ExcludingRecurrenceIdElement.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -3522,97 +3505,97 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RecurrenceTemplateComponent;
-        if(otherT == null) return false;
+        if(other is not RecurrenceTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Timezone, otherT.Timezone)) return false;
-        if(!comparer.Equals(RecurrenceType, otherT.RecurrenceType)) return false;
-        if(!comparer.Equals(LastOccurrenceDateElement, otherT.LastOccurrenceDateElement)) return false;
-        if(!comparer.Equals(OccurrenceCountElement, otherT.OccurrenceCountElement)) return false;
-        if(!comparer.ListEquals(OccurrenceDateElement, otherT.OccurrenceDateElement)) return false;
-        if(!comparer.Equals(WeeklyTemplate, otherT.WeeklyTemplate)) return false;
-        if(!comparer.Equals(MonthlyTemplate, otherT.MonthlyTemplate)) return false;
-        if(!comparer.Equals(YearlyTemplate, otherT.YearlyTemplate)) return false;
-        if(!comparer.ListEquals(ExcludingDateElement, otherT.ExcludingDateElement)) return false;
-        if(!comparer.ListEquals(ExcludingRecurrenceIdElement, otherT.ExcludingRecurrenceIdElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Timezone, otherT._Timezone)) return false;
+        if(!comparer.Equals(_RecurrenceType, otherT._RecurrenceType)) return false;
+        if(!comparer.Equals(_LastOccurrenceDateElement, otherT._LastOccurrenceDateElement)) return false;
+        if(!comparer.Equals(_OccurrenceCountElement, otherT._OccurrenceCountElement)) return false;
+        if(!comparer.ListEquals(_OccurrenceDateElement, otherT._OccurrenceDateElement)) return false;
+        if(!comparer.Equals(_WeeklyTemplate, otherT._WeeklyTemplate)) return false;
+        if(!comparer.Equals(_MonthlyTemplate, otherT._MonthlyTemplate)) return false;
+        if(!comparer.Equals(_YearlyTemplate, otherT._YearlyTemplate)) return false;
+        if(!comparer.ListEquals(_ExcludingDateElement, otherT._ExcludingDateElement)) return false;
+        if(!comparer.ListEquals(_ExcludingRecurrenceIdElement, otherT._ExcludingRecurrenceIdElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "timezone":
-            value = Timezone;
-            return Timezone is not null;
+            value = _Timezone;
+            return _Timezone is not null;
           case "recurrenceType":
-            value = RecurrenceType;
-            return RecurrenceType is not null;
+            value = _RecurrenceType;
+            return _RecurrenceType is not null;
           case "lastOccurrenceDate":
-            value = LastOccurrenceDateElement;
-            return LastOccurrenceDateElement is not null;
+            value = _LastOccurrenceDateElement;
+            return _LastOccurrenceDateElement is not null;
           case "occurrenceCount":
-            value = OccurrenceCountElement;
-            return OccurrenceCountElement is not null;
+            value = _OccurrenceCountElement;
+            return _OccurrenceCountElement is not null;
           case "occurrenceDate":
-            value = OccurrenceDateElement;
-            return OccurrenceDateElement?.Any() == true;
+            value = _OccurrenceDateElement;
+            return _OccurrenceDateElement?.Any() == true;
           case "weeklyTemplate":
-            value = WeeklyTemplate;
-            return WeeklyTemplate is not null;
+            value = _WeeklyTemplate;
+            return _WeeklyTemplate is not null;
           case "monthlyTemplate":
-            value = MonthlyTemplate;
-            return MonthlyTemplate is not null;
+            value = _MonthlyTemplate;
+            return _MonthlyTemplate is not null;
           case "yearlyTemplate":
-            value = YearlyTemplate;
-            return YearlyTemplate is not null;
+            value = _YearlyTemplate;
+            return _YearlyTemplate is not null;
           case "excludingDate":
-            value = ExcludingDateElement;
-            return ExcludingDateElement?.Any() == true;
+            value = _ExcludingDateElement;
+            return _ExcludingDateElement?.Any() == true;
           case "excludingRecurrenceId":
-            value = ExcludingRecurrenceIdElement;
-            return ExcludingRecurrenceIdElement?.Any() == true;
+            value = _ExcludingRecurrenceIdElement;
+            return _ExcludingRecurrenceIdElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "timezone":
-            Timezone = (Hl7.Fhir.Model.CodeableConcept)value;
+            Timezone = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "recurrenceType":
-            RecurrenceType = (Hl7.Fhir.Model.CodeableConcept)value;
+            RecurrenceType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "lastOccurrenceDate":
-            LastOccurrenceDateElement = (Hl7.Fhir.Model.Date)value;
+            LastOccurrenceDateElement = (Hl7.Fhir.Model.Date?)value;
             return this;
           case "occurrenceCount":
-            OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt)value;
+            OccurrenceCountElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "occurrenceDate":
-            OccurrenceDateElement = (List<Hl7.Fhir.Model.Date>)value;
+            OccurrenceDateElement = (List<Hl7.Fhir.Model.Date>?)value!;
             return this;
           case "weeklyTemplate":
-            WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent)value;
+            WeeklyTemplate = (Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent?)value;
             return this;
           case "monthlyTemplate":
-            MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent)value;
+            MonthlyTemplate = (Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent?)value;
             return this;
           case "yearlyTemplate":
-            YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent)value;
+            YearlyTemplate = (Hl7.Fhir.Model.Appointment.YearlyTemplateComponent?)value;
             return this;
           case "excludingDate":
-            ExcludingDateElement = (List<Hl7.Fhir.Model.Date>)value;
+            ExcludingDateElement = (List<Hl7.Fhir.Model.Date>?)value!;
             return this;
           case "excludingRecurrenceId":
-            ExcludingRecurrenceIdElement = (List<Hl7.Fhir.Model.PositiveInt>)value;
+            ExcludingRecurrenceIdElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -3623,16 +3606,16 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Timezone is not null) yield return new KeyValuePair<string,object>("timezone",Timezone);
-        if (RecurrenceType is not null) yield return new KeyValuePair<string,object>("recurrenceType",RecurrenceType);
-        if (LastOccurrenceDateElement is not null) yield return new KeyValuePair<string,object>("lastOccurrenceDate",LastOccurrenceDateElement);
-        if (OccurrenceCountElement is not null) yield return new KeyValuePair<string,object>("occurrenceCount",OccurrenceCountElement);
-        if (OccurrenceDateElement?.Any() == true) yield return new KeyValuePair<string,object>("occurrenceDate",OccurrenceDateElement);
-        if (WeeklyTemplate is not null) yield return new KeyValuePair<string,object>("weeklyTemplate",WeeklyTemplate);
-        if (MonthlyTemplate is not null) yield return new KeyValuePair<string,object>("monthlyTemplate",MonthlyTemplate);
-        if (YearlyTemplate is not null) yield return new KeyValuePair<string,object>("yearlyTemplate",YearlyTemplate);
-        if (ExcludingDateElement?.Any() == true) yield return new KeyValuePair<string,object>("excludingDate",ExcludingDateElement);
-        if (ExcludingRecurrenceIdElement?.Any() == true) yield return new KeyValuePair<string,object>("excludingRecurrenceId",ExcludingRecurrenceIdElement);
+        if (_Timezone is not null) yield return new KeyValuePair<string,object>("timezone",_Timezone);
+        if (_RecurrenceType is not null) yield return new KeyValuePair<string,object>("recurrenceType",_RecurrenceType);
+        if (_LastOccurrenceDateElement is not null) yield return new KeyValuePair<string,object>("lastOccurrenceDate",_LastOccurrenceDateElement);
+        if (_OccurrenceCountElement is not null) yield return new KeyValuePair<string,object>("occurrenceCount",_OccurrenceCountElement);
+        if (_OccurrenceDateElement?.Any() == true) yield return new KeyValuePair<string,object>("occurrenceDate",_OccurrenceDateElement);
+        if (_WeeklyTemplate is not null) yield return new KeyValuePair<string,object>("weeklyTemplate",_WeeklyTemplate);
+        if (_MonthlyTemplate is not null) yield return new KeyValuePair<string,object>("monthlyTemplate",_MonthlyTemplate);
+        if (_YearlyTemplate is not null) yield return new KeyValuePair<string,object>("yearlyTemplate",_YearlyTemplate);
+        if (_ExcludingDateElement?.Any() == true) yield return new KeyValuePair<string,object>("excludingDate",_ExcludingDateElement);
+        if (_ExcludingRecurrenceIdElement?.Any() == true) yield return new KeyValuePair<string,object>("excludingRecurrenceId",_ExcludingRecurrenceIdElement);
       }
 
     }
@@ -3655,13 +3638,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("monday", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean MondayElement
+      public Hl7.Fhir.Model.FhirBoolean? MondayElement
       {
         get { return _MondayElement; }
         set { _MondayElement = value; OnPropertyChanged("MondayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _MondayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _MondayElement;
 
       /// <summary>
       /// Recurs on Mondays
@@ -3670,13 +3653,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Monday
       {
-        get { return MondayElement != null ? MondayElement.Value : null; }
+        get => _MondayElement?.Value;
         set
         {
-          if (value == null)
-            MondayElement = null;
-          else
-            MondayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          MondayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Monday");
         }
       }
@@ -3686,13 +3666,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("tuesday", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean TuesdayElement
+      public Hl7.Fhir.Model.FhirBoolean? TuesdayElement
       {
         get { return _TuesdayElement; }
         set { _TuesdayElement = value; OnPropertyChanged("TuesdayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _TuesdayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _TuesdayElement;
 
       /// <summary>
       /// Recurs on Tuesday
@@ -3701,13 +3681,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Tuesday
       {
-        get { return TuesdayElement != null ? TuesdayElement.Value : null; }
+        get => _TuesdayElement?.Value;
         set
         {
-          if (value == null)
-            TuesdayElement = null;
-          else
-            TuesdayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          TuesdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Tuesday");
         }
       }
@@ -3717,13 +3694,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("wednesday", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean WednesdayElement
+      public Hl7.Fhir.Model.FhirBoolean? WednesdayElement
       {
         get { return _WednesdayElement; }
         set { _WednesdayElement = value; OnPropertyChanged("WednesdayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _WednesdayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _WednesdayElement;
 
       /// <summary>
       /// Recurs on Wednesday
@@ -3732,13 +3709,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Wednesday
       {
-        get { return WednesdayElement != null ? WednesdayElement.Value : null; }
+        get => _WednesdayElement?.Value;
         set
         {
-          if (value == null)
-            WednesdayElement = null;
-          else
-            WednesdayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          WednesdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Wednesday");
         }
       }
@@ -3748,13 +3722,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("thursday", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean ThursdayElement
+      public Hl7.Fhir.Model.FhirBoolean? ThursdayElement
       {
         get { return _ThursdayElement; }
         set { _ThursdayElement = value; OnPropertyChanged("ThursdayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _ThursdayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _ThursdayElement;
 
       /// <summary>
       /// Recurs on Thursday
@@ -3763,13 +3737,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Thursday
       {
-        get { return ThursdayElement != null ? ThursdayElement.Value : null; }
+        get => _ThursdayElement?.Value;
         set
         {
-          if (value == null)
-            ThursdayElement = null;
-          else
-            ThursdayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          ThursdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Thursday");
         }
       }
@@ -3779,13 +3750,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("friday", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean FridayElement
+      public Hl7.Fhir.Model.FhirBoolean? FridayElement
       {
         get { return _FridayElement; }
         set { _FridayElement = value; OnPropertyChanged("FridayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _FridayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _FridayElement;
 
       /// <summary>
       /// Recurs on Friday
@@ -3794,13 +3765,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Friday
       {
-        get { return FridayElement != null ? FridayElement.Value : null; }
+        get => _FridayElement?.Value;
         set
         {
-          if (value == null)
-            FridayElement = null;
-          else
-            FridayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          FridayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Friday");
         }
       }
@@ -3810,13 +3778,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("saturday", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean SaturdayElement
+      public Hl7.Fhir.Model.FhirBoolean? SaturdayElement
       {
         get { return _SaturdayElement; }
         set { _SaturdayElement = value; OnPropertyChanged("SaturdayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _SaturdayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _SaturdayElement;
 
       /// <summary>
       /// Recurs on Saturday
@@ -3825,13 +3793,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Saturday
       {
-        get { return SaturdayElement != null ? SaturdayElement.Value : null; }
+        get => _SaturdayElement?.Value;
         set
         {
-          if (value == null)
-            SaturdayElement = null;
-          else
-            SaturdayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          SaturdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Saturday");
         }
       }
@@ -3841,13 +3806,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("sunday", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean SundayElement
+      public Hl7.Fhir.Model.FhirBoolean? SundayElement
       {
         get { return _SundayElement; }
         set { _SundayElement = value; OnPropertyChanged("SundayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _SundayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _SundayElement;
 
       /// <summary>
       /// Recurs on Sunday
@@ -3856,13 +3821,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Sunday
       {
-        get { return SundayElement != null ? SundayElement.Value : null; }
+        get => _SundayElement?.Value;
         set
         {
-          if (value == null)
-            SundayElement = null;
-          else
-            SundayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          SundayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Sunday");
         }
       }
@@ -3872,13 +3834,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("weekInterval", Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt WeekIntervalElement
+      public Hl7.Fhir.Model.PositiveInt? WeekIntervalElement
       {
         get { return _WeekIntervalElement; }
         set { _WeekIntervalElement = value; OnPropertyChanged("WeekIntervalElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _WeekIntervalElement;
+      private Hl7.Fhir.Model.PositiveInt? _WeekIntervalElement;
 
       /// <summary>
       /// Recurs every nth week
@@ -3887,35 +3849,28 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WeekInterval
       {
-        get { return WeekIntervalElement != null ? WeekIntervalElement.Value : null; }
+        get => _WeekIntervalElement?.Value;
         set
         {
-          if (value == null)
-            WeekIntervalElement = null;
-          else
-            WeekIntervalElement = new Hl7.Fhir.Model.PositiveInt(value);
+          WeekIntervalElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("WeekInterval");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as WeeklyTemplateComponent;
-
-        if (dest == null)
-        {
+        if(other is not WeeklyTemplateComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(MondayElement != null) dest.MondayElement = (Hl7.Fhir.Model.FhirBoolean)MondayElement.DeepCopyInternal();
-        if(TuesdayElement != null) dest.TuesdayElement = (Hl7.Fhir.Model.FhirBoolean)TuesdayElement.DeepCopyInternal();
-        if(WednesdayElement != null) dest.WednesdayElement = (Hl7.Fhir.Model.FhirBoolean)WednesdayElement.DeepCopyInternal();
-        if(ThursdayElement != null) dest.ThursdayElement = (Hl7.Fhir.Model.FhirBoolean)ThursdayElement.DeepCopyInternal();
-        if(FridayElement != null) dest.FridayElement = (Hl7.Fhir.Model.FhirBoolean)FridayElement.DeepCopyInternal();
-        if(SaturdayElement != null) dest.SaturdayElement = (Hl7.Fhir.Model.FhirBoolean)SaturdayElement.DeepCopyInternal();
-        if(SundayElement != null) dest.SundayElement = (Hl7.Fhir.Model.FhirBoolean)SundayElement.DeepCopyInternal();
-        if(WeekIntervalElement != null) dest.WeekIntervalElement = (Hl7.Fhir.Model.PositiveInt)WeekIntervalElement.DeepCopyInternal();
+        if(_MondayElement is not null) dest.MondayElement = (Hl7.Fhir.Model.FhirBoolean)_MondayElement.DeepCopyInternal();
+        if(_TuesdayElement is not null) dest.TuesdayElement = (Hl7.Fhir.Model.FhirBoolean)_TuesdayElement.DeepCopyInternal();
+        if(_WednesdayElement is not null) dest.WednesdayElement = (Hl7.Fhir.Model.FhirBoolean)_WednesdayElement.DeepCopyInternal();
+        if(_ThursdayElement is not null) dest.ThursdayElement = (Hl7.Fhir.Model.FhirBoolean)_ThursdayElement.DeepCopyInternal();
+        if(_FridayElement is not null) dest.FridayElement = (Hl7.Fhir.Model.FhirBoolean)_FridayElement.DeepCopyInternal();
+        if(_SaturdayElement is not null) dest.SaturdayElement = (Hl7.Fhir.Model.FhirBoolean)_SaturdayElement.DeepCopyInternal();
+        if(_SundayElement is not null) dest.SundayElement = (Hl7.Fhir.Model.FhirBoolean)_SundayElement.DeepCopyInternal();
+        if(_WeekIntervalElement is not null) dest.WeekIntervalElement = (Hl7.Fhir.Model.PositiveInt)_WeekIntervalElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -3927,83 +3882,83 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as WeeklyTemplateComponent;
-        if(otherT == null) return false;
+        if(other is not WeeklyTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(MondayElement, otherT.MondayElement)) return false;
-        if(!comparer.Equals(TuesdayElement, otherT.TuesdayElement)) return false;
-        if(!comparer.Equals(WednesdayElement, otherT.WednesdayElement)) return false;
-        if(!comparer.Equals(ThursdayElement, otherT.ThursdayElement)) return false;
-        if(!comparer.Equals(FridayElement, otherT.FridayElement)) return false;
-        if(!comparer.Equals(SaturdayElement, otherT.SaturdayElement)) return false;
-        if(!comparer.Equals(SundayElement, otherT.SundayElement)) return false;
-        if(!comparer.Equals(WeekIntervalElement, otherT.WeekIntervalElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_MondayElement, otherT._MondayElement)) return false;
+        if(!comparer.Equals(_TuesdayElement, otherT._TuesdayElement)) return false;
+        if(!comparer.Equals(_WednesdayElement, otherT._WednesdayElement)) return false;
+        if(!comparer.Equals(_ThursdayElement, otherT._ThursdayElement)) return false;
+        if(!comparer.Equals(_FridayElement, otherT._FridayElement)) return false;
+        if(!comparer.Equals(_SaturdayElement, otherT._SaturdayElement)) return false;
+        if(!comparer.Equals(_SundayElement, otherT._SundayElement)) return false;
+        if(!comparer.Equals(_WeekIntervalElement, otherT._WeekIntervalElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "monday":
-            value = MondayElement;
-            return MondayElement is not null;
+            value = _MondayElement;
+            return _MondayElement is not null;
           case "tuesday":
-            value = TuesdayElement;
-            return TuesdayElement is not null;
+            value = _TuesdayElement;
+            return _TuesdayElement is not null;
           case "wednesday":
-            value = WednesdayElement;
-            return WednesdayElement is not null;
+            value = _WednesdayElement;
+            return _WednesdayElement is not null;
           case "thursday":
-            value = ThursdayElement;
-            return ThursdayElement is not null;
+            value = _ThursdayElement;
+            return _ThursdayElement is not null;
           case "friday":
-            value = FridayElement;
-            return FridayElement is not null;
+            value = _FridayElement;
+            return _FridayElement is not null;
           case "saturday":
-            value = SaturdayElement;
-            return SaturdayElement is not null;
+            value = _SaturdayElement;
+            return _SaturdayElement is not null;
           case "sunday":
-            value = SundayElement;
-            return SundayElement is not null;
+            value = _SundayElement;
+            return _SundayElement is not null;
           case "weekInterval":
-            value = WeekIntervalElement;
-            return WeekIntervalElement is not null;
+            value = _WeekIntervalElement;
+            return _WeekIntervalElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "monday":
-            MondayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            MondayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "tuesday":
-            TuesdayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            TuesdayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "wednesday":
-            WednesdayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            WednesdayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "thursday":
-            ThursdayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            ThursdayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "friday":
-            FridayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            FridayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "saturday":
-            SaturdayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            SaturdayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "sunday":
-            SundayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            SundayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "weekInterval":
-            WeekIntervalElement = (Hl7.Fhir.Model.PositiveInt)value;
+            WeekIntervalElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -4014,14 +3969,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (MondayElement is not null) yield return new KeyValuePair<string,object>("monday",MondayElement);
-        if (TuesdayElement is not null) yield return new KeyValuePair<string,object>("tuesday",TuesdayElement);
-        if (WednesdayElement is not null) yield return new KeyValuePair<string,object>("wednesday",WednesdayElement);
-        if (ThursdayElement is not null) yield return new KeyValuePair<string,object>("thursday",ThursdayElement);
-        if (FridayElement is not null) yield return new KeyValuePair<string,object>("friday",FridayElement);
-        if (SaturdayElement is not null) yield return new KeyValuePair<string,object>("saturday",SaturdayElement);
-        if (SundayElement is not null) yield return new KeyValuePair<string,object>("sunday",SundayElement);
-        if (WeekIntervalElement is not null) yield return new KeyValuePair<string,object>("weekInterval",WeekIntervalElement);
+        if (_MondayElement is not null) yield return new KeyValuePair<string,object>("monday",_MondayElement);
+        if (_TuesdayElement is not null) yield return new KeyValuePair<string,object>("tuesday",_TuesdayElement);
+        if (_WednesdayElement is not null) yield return new KeyValuePair<string,object>("wednesday",_WednesdayElement);
+        if (_ThursdayElement is not null) yield return new KeyValuePair<string,object>("thursday",_ThursdayElement);
+        if (_FridayElement is not null) yield return new KeyValuePair<string,object>("friday",_FridayElement);
+        if (_SaturdayElement is not null) yield return new KeyValuePair<string,object>("saturday",_SaturdayElement);
+        if (_SundayElement is not null) yield return new KeyValuePair<string,object>("sunday",_SundayElement);
+        if (_WeekIntervalElement is not null) yield return new KeyValuePair<string,object>("weekInterval",_WeekIntervalElement);
       }
 
     }
@@ -4044,13 +3999,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("dayOfMonth", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt DayOfMonthElement
+      public Hl7.Fhir.Model.PositiveInt? DayOfMonthElement
       {
         get { return _DayOfMonthElement; }
         set { _DayOfMonthElement = value; OnPropertyChanged("DayOfMonthElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _DayOfMonthElement;
+      private Hl7.Fhir.Model.PositiveInt? _DayOfMonthElement;
 
       /// <summary>
       /// Recurs on a specific day of the month
@@ -4059,13 +4014,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? DayOfMonth
       {
-        get { return DayOfMonthElement != null ? DayOfMonthElement.Value : null; }
+        get => _DayOfMonthElement?.Value;
         set
         {
-          if (value == null)
-            DayOfMonthElement = null;
-          else
-            DayOfMonthElement = new Hl7.Fhir.Model.PositiveInt(value);
+          DayOfMonthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("DayOfMonth");
         }
       }
@@ -4076,13 +4028,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("nthWeekOfMonth", Order=50)]
       [Binding("WeekOfMonth")]
       [DataMember]
-      public Hl7.Fhir.Model.Coding NthWeekOfMonth
+      public Hl7.Fhir.Model.Coding? NthWeekOfMonth
       {
         get { return _NthWeekOfMonth; }
         set { _NthWeekOfMonth = value; OnPropertyChanged("NthWeekOfMonth"); }
       }
 
-      private Hl7.Fhir.Model.Coding _NthWeekOfMonth;
+      private Hl7.Fhir.Model.Coding? _NthWeekOfMonth;
 
       /// <summary>
       /// Indicates which day of the week the appointment should occur.
@@ -4090,13 +4042,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("dayOfWeek", Order=60)]
       [Binding("DaysOfWeek")]
       [DataMember]
-      public Hl7.Fhir.Model.Coding DayOfWeek
+      public Hl7.Fhir.Model.Coding? DayOfWeek
       {
         get { return _DayOfWeek; }
         set { _DayOfWeek = value; OnPropertyChanged("DayOfWeek"); }
       }
 
-      private Hl7.Fhir.Model.Coding _DayOfWeek;
+      private Hl7.Fhir.Model.Coding? _DayOfWeek;
 
       /// <summary>
       /// Recurs every nth month.
@@ -4104,13 +4056,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("monthInterval", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt MonthIntervalElement
+      public Hl7.Fhir.Model.PositiveInt? MonthIntervalElement
       {
         get { return _MonthIntervalElement; }
         set { _MonthIntervalElement = value; OnPropertyChanged("MonthIntervalElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _MonthIntervalElement;
+      private Hl7.Fhir.Model.PositiveInt? _MonthIntervalElement;
 
       /// <summary>
       /// Recurs every nth month
@@ -4119,31 +4071,24 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? MonthInterval
       {
-        get { return MonthIntervalElement != null ? MonthIntervalElement.Value : null; }
+        get => _MonthIntervalElement?.Value;
         set
         {
-          if (value == null)
-            MonthIntervalElement = null;
-          else
-            MonthIntervalElement = new Hl7.Fhir.Model.PositiveInt(value);
+          MonthIntervalElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("MonthInterval");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as MonthlyTemplateComponent;
-
-        if (dest == null)
-        {
+        if(other is not MonthlyTemplateComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DayOfMonthElement != null) dest.DayOfMonthElement = (Hl7.Fhir.Model.PositiveInt)DayOfMonthElement.DeepCopyInternal();
-        if(NthWeekOfMonth != null) dest.NthWeekOfMonth = (Hl7.Fhir.Model.Coding)NthWeekOfMonth.DeepCopyInternal();
-        if(DayOfWeek != null) dest.DayOfWeek = (Hl7.Fhir.Model.Coding)DayOfWeek.DeepCopyInternal();
-        if(MonthIntervalElement != null) dest.MonthIntervalElement = (Hl7.Fhir.Model.PositiveInt)MonthIntervalElement.DeepCopyInternal();
+        if(_DayOfMonthElement is not null) dest.DayOfMonthElement = (Hl7.Fhir.Model.PositiveInt)_DayOfMonthElement.DeepCopyInternal();
+        if(_NthWeekOfMonth is not null) dest.NthWeekOfMonth = (Hl7.Fhir.Model.Coding)_NthWeekOfMonth.DeepCopyInternal();
+        if(_DayOfWeek is not null) dest.DayOfWeek = (Hl7.Fhir.Model.Coding)_DayOfWeek.DeepCopyInternal();
+        if(_MonthIntervalElement is not null) dest.MonthIntervalElement = (Hl7.Fhir.Model.PositiveInt)_MonthIntervalElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -4155,55 +4100,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MonthlyTemplateComponent;
-        if(otherT == null) return false;
+        if(other is not MonthlyTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DayOfMonthElement, otherT.DayOfMonthElement)) return false;
-        if(!comparer.Equals(NthWeekOfMonth, otherT.NthWeekOfMonth)) return false;
-        if(!comparer.Equals(DayOfWeek, otherT.DayOfWeek)) return false;
-        if(!comparer.Equals(MonthIntervalElement, otherT.MonthIntervalElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DayOfMonthElement, otherT._DayOfMonthElement)) return false;
+        if(!comparer.Equals(_NthWeekOfMonth, otherT._NthWeekOfMonth)) return false;
+        if(!comparer.Equals(_DayOfWeek, otherT._DayOfWeek)) return false;
+        if(!comparer.Equals(_MonthIntervalElement, otherT._MonthIntervalElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "dayOfMonth":
-            value = DayOfMonthElement;
-            return DayOfMonthElement is not null;
+            value = _DayOfMonthElement;
+            return _DayOfMonthElement is not null;
           case "nthWeekOfMonth":
-            value = NthWeekOfMonth;
-            return NthWeekOfMonth is not null;
+            value = _NthWeekOfMonth;
+            return _NthWeekOfMonth is not null;
           case "dayOfWeek":
-            value = DayOfWeek;
-            return DayOfWeek is not null;
+            value = _DayOfWeek;
+            return _DayOfWeek is not null;
           case "monthInterval":
-            value = MonthIntervalElement;
-            return MonthIntervalElement is not null;
+            value = _MonthIntervalElement;
+            return _MonthIntervalElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "dayOfMonth":
-            DayOfMonthElement = (Hl7.Fhir.Model.PositiveInt)value;
+            DayOfMonthElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "nthWeekOfMonth":
-            NthWeekOfMonth = (Hl7.Fhir.Model.Coding)value;
+            NthWeekOfMonth = (Hl7.Fhir.Model.Coding?)value;
             return this;
           case "dayOfWeek":
-            DayOfWeek = (Hl7.Fhir.Model.Coding)value;
+            DayOfWeek = (Hl7.Fhir.Model.Coding?)value;
             return this;
           case "monthInterval":
-            MonthIntervalElement = (Hl7.Fhir.Model.PositiveInt)value;
+            MonthIntervalElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -4214,10 +4159,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DayOfMonthElement is not null) yield return new KeyValuePair<string,object>("dayOfMonth",DayOfMonthElement);
-        if (NthWeekOfMonth is not null) yield return new KeyValuePair<string,object>("nthWeekOfMonth",NthWeekOfMonth);
-        if (DayOfWeek is not null) yield return new KeyValuePair<string,object>("dayOfWeek",DayOfWeek);
-        if (MonthIntervalElement is not null) yield return new KeyValuePair<string,object>("monthInterval",MonthIntervalElement);
+        if (_DayOfMonthElement is not null) yield return new KeyValuePair<string,object>("dayOfMonth",_DayOfMonthElement);
+        if (_NthWeekOfMonth is not null) yield return new KeyValuePair<string,object>("nthWeekOfMonth",_NthWeekOfMonth);
+        if (_DayOfWeek is not null) yield return new KeyValuePair<string,object>("dayOfWeek",_DayOfWeek);
+        if (_MonthIntervalElement is not null) yield return new KeyValuePair<string,object>("monthInterval",_MonthIntervalElement);
       }
 
     }
@@ -4241,13 +4186,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("yearInterval", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt YearIntervalElement
+      public Hl7.Fhir.Model.PositiveInt? YearIntervalElement
       {
         get { return _YearIntervalElement; }
         set { _YearIntervalElement = value; OnPropertyChanged("YearIntervalElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _YearIntervalElement;
+      private Hl7.Fhir.Model.PositiveInt? _YearIntervalElement;
 
       /// <summary>
       /// Recurs every nth year
@@ -4256,28 +4201,21 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? YearInterval
       {
-        get { return YearIntervalElement != null ? YearIntervalElement.Value : null; }
+        get => _YearIntervalElement?.Value;
         set
         {
-          if (value == null)
-            YearIntervalElement = null;
-          else
-            YearIntervalElement = new Hl7.Fhir.Model.PositiveInt(value);
+          YearIntervalElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("YearInterval");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as YearlyTemplateComponent;
-
-        if (dest == null)
-        {
+        if(other is not YearlyTemplateComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(YearIntervalElement != null) dest.YearIntervalElement = (Hl7.Fhir.Model.PositiveInt)YearIntervalElement.DeepCopyInternal();
+        if(_YearIntervalElement is not null) dest.YearIntervalElement = (Hl7.Fhir.Model.PositiveInt)_YearIntervalElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -4289,34 +4227,34 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as YearlyTemplateComponent;
-        if(otherT == null) return false;
+        if(other is not YearlyTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(YearIntervalElement, otherT.YearIntervalElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_YearIntervalElement, otherT._YearIntervalElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "yearInterval":
-            value = YearIntervalElement;
-            return YearIntervalElement is not null;
+            value = _YearIntervalElement;
+            return _YearIntervalElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "yearInterval":
-            YearIntervalElement = (Hl7.Fhir.Model.PositiveInt)value;
+            YearIntervalElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -4327,7 +4265,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (YearIntervalElement is not null) yield return new KeyValuePair<string,object>("yearInterval",YearIntervalElement);
+        if (_YearIntervalElement is not null) yield return new KeyValuePair<string,object>("yearInterval",_YearIntervalElement);
       }
 
     }
@@ -4340,11 +4278,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist.
@@ -4354,13 +4292,13 @@ namespace Hl7.Fhir.Model
     [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>? _StatusElement;
 
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
@@ -4369,13 +4307,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Appointment.AppointmentStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -4386,13 +4321,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("cancellationReason", InSummary=true, Order=110)]
     [Binding("cancellation-reason")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept CancellationReason
+    public Hl7.Fhir.Model.CodeableConcept? CancellationReason
     {
       get { return _CancellationReason; }
       set { _CancellationReason = value; OnPropertyChanged("CancellationReason"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _CancellationReason;
+    private Hl7.Fhir.Model.CodeableConcept? _CancellationReason;
 
     /// <summary>
     /// Classification when becoming an encounter.
@@ -4403,11 +4338,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Class
     {
-      get { if(_Class==null) _Class = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Class; }
+      get => _Class ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Class = value; OnPropertyChanged("Class"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Class;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Class;
 
     /// <summary>
     /// A broad categorization of the service that is to be performed during this appointment.
@@ -4418,11 +4353,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
-      get { if(_ServiceCategory==null) _ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceCategory; }
+      get => _ServiceCategory ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCategory;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ServiceCategory;
 
     /// <summary>
     /// The specific service that is to be performed during this appointment.
@@ -4433,11 +4368,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
-      get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(); return _ServiceType; }
+      get => _ServiceType ?? new List<Hl7.Fhir.Model.CodeableReference>();
       set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference> _ServiceType;
+    private List<Hl7.Fhir.Model.CodeableReference>? _ServiceType;
 
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
@@ -4448,11 +4383,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+      get => _Specialty ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Specialty;
 
     /// <summary>
     /// The style of appointment or patient that has been booked in the slot (not service type).
@@ -4460,13 +4395,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("appointmentType", InSummary=true, Order=160)]
     [Binding("appointment-type")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept AppointmentType
+    public Hl7.Fhir.Model.CodeableConcept? AppointmentType
     {
       get { return _AppointmentType; }
       set { _AppointmentType = value; OnPropertyChanged("AppointmentType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _AppointmentType;
+    private Hl7.Fhir.Model.CodeableConcept? _AppointmentType;
 
     /// <summary>
     /// Reason this appointment is scheduled.
@@ -4477,11 +4412,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference> _Reason;
+    private List<Hl7.Fhir.Model.CodeableReference>? _Reason;
 
     /// <summary>
     /// Used to make informed decisions if needing to re-prioritize.
@@ -4489,41 +4424,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("priority", Order=180, FiveWs="FiveWs.class")]
     [Binding("Priority")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Priority
+    public Hl7.Fhir.Model.CodeableConcept? Priority
     {
       get { return _Priority; }
       set { _Priority = value; OnPropertyChanged("Priority"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Priority;
+    private Hl7.Fhir.Model.CodeableConcept? _Priority;
 
     /// <summary>
     /// Shown on a subject line in a meeting request, or appointment list.
     /// </summary>
     [FhirElement("description", Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Shown on a subject line in a meeting request, or appointment list
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -4538,11 +4470,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
-      get { if(_Replaces==null) _Replaces = new List<Hl7.Fhir.Model.ResourceReference>(); return _Replaces; }
+      get => _Replaces ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Replaces = value; OnPropertyChanged("Replaces"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Replaces;
 
     /// <summary>
     /// Connection details of a virtual service (e.g. conference call).
@@ -4552,11 +4484,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VirtualServiceDetail> VirtualService
     {
-      get { if(_VirtualService==null) _VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(); return _VirtualService; }
+      get => _VirtualService ?? new List<Hl7.Fhir.Model.VirtualServiceDetail>();
       set { _VirtualService = value; OnPropertyChanged("VirtualService"); }
     }
 
-    private List<Hl7.Fhir.Model.VirtualServiceDetail> _VirtualService;
+    private List<Hl7.Fhir.Model.VirtualServiceDetail>? _VirtualService;
 
     /// <summary>
     /// Additional information to support the appointment.
@@ -4568,11 +4500,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
-      get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
+      get => _SupportingInformation ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+    private List<Hl7.Fhir.Model.ResourceReference>? _SupportingInformation;
 
     /// <summary>
     /// The previous appointment in a series.
@@ -4581,13 +4513,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Appointment")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference PreviousAppointment
+    public Hl7.Fhir.Model.ResourceReference? PreviousAppointment
     {
       get { return _PreviousAppointment; }
       set { _PreviousAppointment = value; OnPropertyChanged("PreviousAppointment"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _PreviousAppointment;
+    private Hl7.Fhir.Model.ResourceReference? _PreviousAppointment;
 
     /// <summary>
     /// The originating appointment in a recurring set of appointments.
@@ -4596,26 +4528,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Appointment")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference OriginatingAppointment
+    public Hl7.Fhir.Model.ResourceReference? OriginatingAppointment
     {
       get { return _OriginatingAppointment; }
       set { _OriginatingAppointment = value; OnPropertyChanged("OriginatingAppointment"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _OriginatingAppointment;
+    private Hl7.Fhir.Model.ResourceReference? _OriginatingAppointment;
 
     /// <summary>
     /// When appointment is to take place.
     /// </summary>
     [FhirElement("start", InSummary=true, Order=250, FiveWs="FiveWs.init")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant StartElement
+    public Hl7.Fhir.Model.Instant? StartElement
     {
       get { return _StartElement; }
       set { _StartElement = value; OnPropertyChanged("StartElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _StartElement;
+    private Hl7.Fhir.Model.Instant? _StartElement;
 
     /// <summary>
     /// When appointment is to take place
@@ -4624,13 +4556,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get { return StartElement != null ? StartElement.Value : null; }
+      get => _StartElement?.Value;
       set
       {
-        if (value == null)
-          StartElement = null;
-        else
-          StartElement = new Hl7.Fhir.Model.Instant(value);
+        StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -4640,13 +4569,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("end", InSummary=true, Order=260, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant EndElement
+    public Hl7.Fhir.Model.Instant? EndElement
     {
       get { return _EndElement; }
       set { _EndElement = value; OnPropertyChanged("EndElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _EndElement;
+    private Hl7.Fhir.Model.Instant? _EndElement;
 
     /// <summary>
     /// When appointment is to conclude
@@ -4655,13 +4584,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get { return EndElement != null ? EndElement.Value : null; }
+      get => _EndElement?.Value;
       set
       {
-        if (value == null)
-          EndElement = null;
-        else
-          EndElement = new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -4671,13 +4597,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("minutesDuration", Order=270)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt MinutesDurationElement
+    public Hl7.Fhir.Model.PositiveInt? MinutesDurationElement
     {
       get { return _MinutesDurationElement; }
       set { _MinutesDurationElement = value; OnPropertyChanged("MinutesDurationElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _MinutesDurationElement;
+    private Hl7.Fhir.Model.PositiveInt? _MinutesDurationElement;
 
     /// <summary>
     /// Can be less than start/end (e.g. estimate)
@@ -4686,13 +4612,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MinutesDuration
     {
-      get { return MinutesDurationElement != null ? MinutesDurationElement.Value : null; }
+      get => _MinutesDurationElement?.Value;
       set
       {
-        if (value == null)
-          MinutesDurationElement = null;
-        else
-          MinutesDurationElement = new Hl7.Fhir.Model.PositiveInt(value);
+        MinutesDurationElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("MinutesDuration");
       }
     }
@@ -4705,11 +4628,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Period> RequestedPeriod
     {
-      get { if(_RequestedPeriod==null) _RequestedPeriod = new List<Hl7.Fhir.Model.Period>(); return _RequestedPeriod; }
+      get => _RequestedPeriod ?? new List<Hl7.Fhir.Model.Period>();
       set { _RequestedPeriod = value; OnPropertyChanged("RequestedPeriod"); }
     }
 
-    private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
+    private List<Hl7.Fhir.Model.Period>? _RequestedPeriod;
 
     /// <summary>
     /// The slots that this appointment is filling.
@@ -4721,11 +4644,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Slot
     {
-      get { if(_Slot==null) _Slot = new List<Hl7.Fhir.Model.ResourceReference>(); return _Slot; }
+      get => _Slot ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Slot = value; OnPropertyChanged("Slot"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Slot;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Slot;
 
     /// <summary>
     /// The set of accounts that may be used for billing for this Appointment.
@@ -4737,39 +4660,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
-      get { if(_Account==null) _Account = new List<Hl7.Fhir.Model.ResourceReference>(); return _Account; }
+      get => _Account ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Account = value; OnPropertyChanged("Account"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Account;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Account;
 
     /// <summary>
     /// The date that this appointment was initially created.
     /// </summary>
     [FhirElement("created", Order=310)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
       get { return _CreatedElement; }
       set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
 
     /// <summary>
     /// The date that this appointment was initially created
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get { return CreatedElement != null ? CreatedElement.Value : null; }
+      get => _CreatedElement?.Value;
       set
       {
-        if (value == null)
-          CreatedElement = null;
-        else
-          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -4779,28 +4699,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("cancellationDate", Order=320)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CancellationDateElement
+    public Hl7.Fhir.Model.FhirDateTime? CancellationDateElement
     {
       get { return _CancellationDateElement; }
       set { _CancellationDateElement = value; OnPropertyChanged("CancellationDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CancellationDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CancellationDateElement;
 
     /// <summary>
     /// When the appointment was cancelled
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string CancellationDate
+    public string? CancellationDate
     {
-      get { return CancellationDateElement != null ? CancellationDateElement.Value : null; }
+      get => _CancellationDateElement?.Value;
       set
       {
-        if (value == null)
-          CancellationDateElement = null;
-        else
-          CancellationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CancellationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("CancellationDate");
       }
     }
@@ -4813,11 +4730,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     /// <summary>
     /// Detailed information and instructions for the patient.
@@ -4827,11 +4744,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> PatientInstruction
     {
-      get { if(_PatientInstruction==null) _PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(); return _PatientInstruction; }
+      get => _PatientInstruction ?? new List<Hl7.Fhir.Model.CodeableReference>();
       set { _PatientInstruction = value; OnPropertyChanged("PatientInstruction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference> _PatientInstruction;
+    private List<Hl7.Fhir.Model.CodeableReference>? _PatientInstruction;
 
     /// <summary>
     /// The request this appointment is allocated to assess.
@@ -4843,11 +4760,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// The patient or group associated with the appointment.
@@ -4856,13 +4773,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Participants involved in appointment.
@@ -4872,24 +4789,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
     {
-      get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(); return _Participant; }
+      get => _Participant ?? new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>();
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
-    private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
+    private List<Hl7.Fhir.Model.Appointment.ParticipantComponent>? _Participant;
 
     /// <summary>
     /// The sequence number in the recurrence.
     /// </summary>
     [FhirElement("recurrenceId", Order=380)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt RecurrenceIdElement
+    public Hl7.Fhir.Model.PositiveInt? RecurrenceIdElement
     {
       get { return _RecurrenceIdElement; }
       set { _RecurrenceIdElement = value; OnPropertyChanged("RecurrenceIdElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _RecurrenceIdElement;
+    private Hl7.Fhir.Model.PositiveInt? _RecurrenceIdElement;
 
     /// <summary>
     /// The sequence number in the recurrence
@@ -4898,13 +4815,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? RecurrenceId
     {
-      get { return RecurrenceIdElement != null ? RecurrenceIdElement.Value : null; }
+      get => _RecurrenceIdElement?.Value;
       set
       {
-        if (value == null)
-          RecurrenceIdElement = null;
-        else
-          RecurrenceIdElement = new Hl7.Fhir.Model.PositiveInt(value);
+        RecurrenceIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("RecurrenceId");
       }
     }
@@ -4914,13 +4828,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurrenceChanged", Order=390)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean OccurrenceChangedElement
+    public Hl7.Fhir.Model.FhirBoolean? OccurrenceChangedElement
     {
       get { return _OccurrenceChangedElement; }
       set { _OccurrenceChangedElement = value; OnPropertyChanged("OccurrenceChangedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _OccurrenceChangedElement;
+    private Hl7.Fhir.Model.FhirBoolean? _OccurrenceChangedElement;
 
     /// <summary>
     /// Indicates that this appointment varies from a recurrence pattern
@@ -4929,13 +4843,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? OccurrenceChanged
     {
-      get { return OccurrenceChangedElement != null ? OccurrenceChangedElement.Value : null; }
+      get => _OccurrenceChangedElement?.Value;
       set
       {
-        if (value == null)
-          OccurrenceChangedElement = null;
-        else
-          OccurrenceChangedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        OccurrenceChangedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("OccurrenceChanged");
       }
     }
@@ -4948,56 +4859,52 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent> RecurrenceTemplate
     {
-      get { if(_RecurrenceTemplate==null) _RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(); return _RecurrenceTemplate; }
+      get => _RecurrenceTemplate ?? new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>();
       set { _RecurrenceTemplate = value; OnPropertyChanged("RecurrenceTemplate"); }
     }
 
-    private List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent> _RecurrenceTemplate;
+    private List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>? _RecurrenceTemplate;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Appointment;
-
-      if (dest == null)
-      {
+      if(other is not Appointment dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)StatusElement.DeepCopyInternal();
-      if(CancellationReason != null) dest.CancellationReason = (Hl7.Fhir.Model.CodeableConcept)CancellationReason.DeepCopyInternal();
-      if(Class.Any()) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(Class.DeepCopyInternal());
-      if(ServiceCategory.Any()) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopyInternal());
-      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopyInternal());
-      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopyInternal());
-      if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopyInternal();
-      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopyInternal());
-      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(Replaces.Any()) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopyInternal());
-      if(VirtualService.Any()) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(VirtualService.DeepCopyInternal());
-      if(SupportingInformation.Any()) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopyInternal());
-      if(PreviousAppointment != null) dest.PreviousAppointment = (Hl7.Fhir.Model.ResourceReference)PreviousAppointment.DeepCopyInternal();
-      if(OriginatingAppointment != null) dest.OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference)OriginatingAppointment.DeepCopyInternal();
-      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopyInternal();
-      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopyInternal();
-      if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopyInternal();
-      if(RequestedPeriod.Any()) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopyInternal());
-      if(Slot.Any()) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopyInternal());
-      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopyInternal());
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
-      if(CancellationDateElement != null) dest.CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime)CancellationDateElement.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
-      if(PatientInstruction.Any()) dest.PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(PatientInstruction.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopyInternal());
-      if(RecurrenceIdElement != null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)RecurrenceIdElement.DeepCopyInternal();
-      if(OccurrenceChangedElement != null) dest.OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean)OccurrenceChangedElement.DeepCopyInternal();
-      if(RecurrenceTemplate.Any()) dest.RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(RecurrenceTemplate.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)_StatusElement.DeepCopyInternal();
+      if(_CancellationReason is not null) dest.CancellationReason = (Hl7.Fhir.Model.CodeableConcept)_CancellationReason.DeepCopyInternal();
+      if(_Class is not null) dest.Class = new List<Hl7.Fhir.Model.CodeableConcept>(_Class.DeepCopyInternal());
+      if(_ServiceCategory is not null) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(_ServiceCategory.DeepCopyInternal());
+      if(_ServiceType is not null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(_ServiceType.DeepCopyInternal());
+      if(_Specialty is not null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(_Specialty.DeepCopyInternal());
+      if(_AppointmentType is not null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)_AppointmentType.DeepCopyInternal();
+      if(_Reason is not null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(_Reason.DeepCopyInternal());
+      if(_Priority is not null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)_Priority.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_Replaces is not null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(_Replaces.DeepCopyInternal());
+      if(_VirtualService is not null) dest.VirtualService = new List<Hl7.Fhir.Model.VirtualServiceDetail>(_VirtualService.DeepCopyInternal());
+      if(_SupportingInformation is not null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(_SupportingInformation.DeepCopyInternal());
+      if(_PreviousAppointment is not null) dest.PreviousAppointment = (Hl7.Fhir.Model.ResourceReference)_PreviousAppointment.DeepCopyInternal();
+      if(_OriginatingAppointment is not null) dest.OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference)_OriginatingAppointment.DeepCopyInternal();
+      if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.Instant)_StartElement.DeepCopyInternal();
+      if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Instant)_EndElement.DeepCopyInternal();
+      if(_MinutesDurationElement is not null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)_MinutesDurationElement.DeepCopyInternal();
+      if(_RequestedPeriod is not null) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(_RequestedPeriod.DeepCopyInternal());
+      if(_Slot is not null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(_Slot.DeepCopyInternal());
+      if(_Account is not null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(_Account.DeepCopyInternal());
+      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
+      if(_CancellationDateElement is not null) dest.CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime)_CancellationDateElement.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      if(_PatientInstruction is not null) dest.PatientInstruction = new List<Hl7.Fhir.Model.CodeableReference>(_PatientInstruction.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Participant is not null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(_Participant.DeepCopyInternal());
+      if(_RecurrenceIdElement is not null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)_RecurrenceIdElement.DeepCopyInternal();
+      if(_OccurrenceChangedElement is not null) dest.OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean)_OccurrenceChangedElement.DeepCopyInternal();
+      if(_RecurrenceTemplate is not null) dest.RecurrenceTemplate = new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>(_RecurrenceTemplate.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -5009,251 +4916,251 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Appointment;
-      if(otherT == null) return false;
+      if(other is not Appointment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(CancellationReason, otherT.CancellationReason)) return false;
-      if(!comparer.ListEquals(Class, otherT.Class)) return false;
-      if(!comparer.ListEquals(ServiceCategory, otherT.ServiceCategory)) return false;
-      if(!comparer.ListEquals(ServiceType, otherT.ServiceType)) return false;
-      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
-      if(!comparer.Equals(AppointmentType, otherT.AppointmentType)) return false;
-      if(!comparer.ListEquals(Reason, otherT.Reason)) return false;
-      if(!comparer.Equals(Priority, otherT.Priority)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Replaces, otherT.Replaces)) return false;
-      if(!comparer.ListEquals(VirtualService, otherT.VirtualService)) return false;
-      if(!comparer.ListEquals(SupportingInformation, otherT.SupportingInformation)) return false;
-      if(!comparer.Equals(PreviousAppointment, otherT.PreviousAppointment)) return false;
-      if(!comparer.Equals(OriginatingAppointment, otherT.OriginatingAppointment)) return false;
-      if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-      if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
-      if(!comparer.Equals(MinutesDurationElement, otherT.MinutesDurationElement)) return false;
-      if(!comparer.ListEquals(RequestedPeriod, otherT.RequestedPeriod)) return false;
-      if(!comparer.ListEquals(Slot, otherT.Slot)) return false;
-      if(!comparer.ListEquals(Account, otherT.Account)) return false;
-      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
-      if(!comparer.Equals(CancellationDateElement, otherT.CancellationDateElement)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
-      if(!comparer.ListEquals(PatientInstruction, otherT.PatientInstruction)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.ListEquals(Participant, otherT.Participant)) return false;
-      if(!comparer.Equals(RecurrenceIdElement, otherT.RecurrenceIdElement)) return false;
-      if(!comparer.Equals(OccurrenceChangedElement, otherT.OccurrenceChangedElement)) return false;
-      if(!comparer.ListEquals(RecurrenceTemplate, otherT.RecurrenceTemplate)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_CancellationReason, otherT._CancellationReason)) return false;
+      if(!comparer.ListEquals(_Class, otherT._Class)) return false;
+      if(!comparer.ListEquals(_ServiceCategory, otherT._ServiceCategory)) return false;
+      if(!comparer.ListEquals(_ServiceType, otherT._ServiceType)) return false;
+      if(!comparer.ListEquals(_Specialty, otherT._Specialty)) return false;
+      if(!comparer.Equals(_AppointmentType, otherT._AppointmentType)) return false;
+      if(!comparer.ListEquals(_Reason, otherT._Reason)) return false;
+      if(!comparer.Equals(_Priority, otherT._Priority)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Replaces, otherT._Replaces)) return false;
+      if(!comparer.ListEquals(_VirtualService, otherT._VirtualService)) return false;
+      if(!comparer.ListEquals(_SupportingInformation, otherT._SupportingInformation)) return false;
+      if(!comparer.Equals(_PreviousAppointment, otherT._PreviousAppointment)) return false;
+      if(!comparer.Equals(_OriginatingAppointment, otherT._OriginatingAppointment)) return false;
+      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+      if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+      if(!comparer.Equals(_MinutesDurationElement, otherT._MinutesDurationElement)) return false;
+      if(!comparer.ListEquals(_RequestedPeriod, otherT._RequestedPeriod)) return false;
+      if(!comparer.ListEquals(_Slot, otherT._Slot)) return false;
+      if(!comparer.ListEquals(_Account, otherT._Account)) return false;
+      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
+      if(!comparer.Equals(_CancellationDateElement, otherT._CancellationDateElement)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      if(!comparer.ListEquals(_PatientInstruction, otherT._PatientInstruction)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.ListEquals(_Participant, otherT._Participant)) return false;
+      if(!comparer.Equals(_RecurrenceIdElement, otherT._RecurrenceIdElement)) return false;
+      if(!comparer.Equals(_OccurrenceChangedElement, otherT._OccurrenceChangedElement)) return false;
+      if(!comparer.ListEquals(_RecurrenceTemplate, otherT._RecurrenceTemplate)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "cancellationReason":
-          value = CancellationReason;
-          return CancellationReason is not null;
+          value = _CancellationReason;
+          return _CancellationReason is not null;
         case "class":
-          value = Class;
-          return Class?.Any() == true;
+          value = _Class;
+          return _Class?.Any() == true;
         case "serviceCategory":
-          value = ServiceCategory;
-          return ServiceCategory?.Any() == true;
+          value = _ServiceCategory;
+          return _ServiceCategory?.Any() == true;
         case "serviceType":
-          value = ServiceType;
-          return ServiceType?.Any() == true;
+          value = _ServiceType;
+          return _ServiceType?.Any() == true;
         case "specialty":
-          value = Specialty;
-          return Specialty?.Any() == true;
+          value = _Specialty;
+          return _Specialty?.Any() == true;
         case "appointmentType":
-          value = AppointmentType;
-          return AppointmentType is not null;
+          value = _AppointmentType;
+          return _AppointmentType is not null;
         case "reason":
-          value = Reason;
-          return Reason?.Any() == true;
+          value = _Reason;
+          return _Reason?.Any() == true;
         case "priority":
-          value = Priority;
-          return Priority is not null;
+          value = _Priority;
+          return _Priority is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "replaces":
-          value = Replaces;
-          return Replaces?.Any() == true;
+          value = _Replaces;
+          return _Replaces?.Any() == true;
         case "virtualService":
-          value = VirtualService;
-          return VirtualService?.Any() == true;
+          value = _VirtualService;
+          return _VirtualService?.Any() == true;
         case "supportingInformation":
-          value = SupportingInformation;
-          return SupportingInformation?.Any() == true;
+          value = _SupportingInformation;
+          return _SupportingInformation?.Any() == true;
         case "previousAppointment":
-          value = PreviousAppointment;
-          return PreviousAppointment is not null;
+          value = _PreviousAppointment;
+          return _PreviousAppointment is not null;
         case "originatingAppointment":
-          value = OriginatingAppointment;
-          return OriginatingAppointment is not null;
+          value = _OriginatingAppointment;
+          return _OriginatingAppointment is not null;
         case "start":
-          value = StartElement;
-          return StartElement is not null;
+          value = _StartElement;
+          return _StartElement is not null;
         case "end":
-          value = EndElement;
-          return EndElement is not null;
+          value = _EndElement;
+          return _EndElement is not null;
         case "minutesDuration":
-          value = MinutesDurationElement;
-          return MinutesDurationElement is not null;
+          value = _MinutesDurationElement;
+          return _MinutesDurationElement is not null;
         case "requestedPeriod":
-          value = RequestedPeriod;
-          return RequestedPeriod?.Any() == true;
+          value = _RequestedPeriod;
+          return _RequestedPeriod?.Any() == true;
         case "slot":
-          value = Slot;
-          return Slot?.Any() == true;
+          value = _Slot;
+          return _Slot?.Any() == true;
         case "account":
-          value = Account;
-          return Account?.Any() == true;
+          value = _Account;
+          return _Account?.Any() == true;
         case "created":
-          value = CreatedElement;
-          return CreatedElement is not null;
+          value = _CreatedElement;
+          return _CreatedElement is not null;
         case "cancellationDate":
-          value = CancellationDateElement;
-          return CancellationDateElement is not null;
+          value = _CancellationDateElement;
+          return _CancellationDateElement is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         case "patientInstruction":
-          value = PatientInstruction;
-          return PatientInstruction?.Any() == true;
+          value = _PatientInstruction;
+          return _PatientInstruction?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "participant":
-          value = Participant;
-          return Participant?.Any() == true;
+          value = _Participant;
+          return _Participant?.Any() == true;
         case "recurrenceId":
-          value = RecurrenceIdElement;
-          return RecurrenceIdElement is not null;
+          value = _RecurrenceIdElement;
+          return _RecurrenceIdElement is not null;
         case "occurrenceChanged":
-          value = OccurrenceChangedElement;
-          return OccurrenceChangedElement is not null;
+          value = _OccurrenceChangedElement;
+          return _OccurrenceChangedElement is not null;
         case "recurrenceTemplate":
-          value = RecurrenceTemplate;
-          return RecurrenceTemplate?.Any() == true;
+          value = _RecurrenceTemplate;
+          return _RecurrenceTemplate?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>?)value;
           return this;
         case "cancellationReason":
-          CancellationReason = (Hl7.Fhir.Model.CodeableConcept)value;
+          CancellationReason = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "class":
-          Class = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Class = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "serviceCategory":
-          ServiceCategory = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ServiceCategory = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "serviceType":
-          ServiceType = (List<Hl7.Fhir.Model.CodeableReference>)value;
+          ServiceType = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "specialty":
-          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "appointmentType":
-          AppointmentType = (Hl7.Fhir.Model.CodeableConcept)value;
+          AppointmentType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "reason":
-          Reason = (List<Hl7.Fhir.Model.CodeableReference>)value;
+          Reason = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "priority":
-          Priority = (Hl7.Fhir.Model.CodeableConcept)value;
+          Priority = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "replaces":
-          Replaces = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Replaces = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "virtualService":
-          VirtualService = (List<Hl7.Fhir.Model.VirtualServiceDetail>)value;
+          VirtualService = (List<Hl7.Fhir.Model.VirtualServiceDetail>?)value!;
           return this;
         case "supportingInformation":
-          SupportingInformation = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          SupportingInformation = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "previousAppointment":
-          PreviousAppointment = (Hl7.Fhir.Model.ResourceReference)value;
+          PreviousAppointment = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "originatingAppointment":
-          OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference)value;
+          OriginatingAppointment = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "start":
-          StartElement = (Hl7.Fhir.Model.Instant)value;
+          StartElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.Instant)value;
+          EndElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "minutesDuration":
-          MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)value;
+          MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "requestedPeriod":
-          RequestedPeriod = (List<Hl7.Fhir.Model.Period>)value;
+          RequestedPeriod = (List<Hl7.Fhir.Model.Period>?)value!;
           return this;
         case "slot":
-          Slot = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Slot = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "account":
-          Account = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Account = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "cancellationDate":
-          CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CancellationDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "patientInstruction":
-          PatientInstruction = (List<Hl7.Fhir.Model.CodeableReference>)value;
+          PatientInstruction = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "participant":
-          Participant = (List<Hl7.Fhir.Model.Appointment.ParticipantComponent>)value;
+          Participant = (List<Hl7.Fhir.Model.Appointment.ParticipantComponent>?)value!;
           return this;
         case "recurrenceId":
-          RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)value;
+          RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "occurrenceChanged":
-          OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          OccurrenceChangedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "recurrenceTemplate":
-          RecurrenceTemplate = (List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>)value;
+          RecurrenceTemplate = (List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -5264,38 +5171,38 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (CancellationReason is not null) yield return new KeyValuePair<string,object>("cancellationReason",CancellationReason);
-      if (Class?.Any() == true) yield return new KeyValuePair<string,object>("class",Class);
-      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
-      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
-      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
-      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
-      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
-      if (VirtualService?.Any() == true) yield return new KeyValuePair<string,object>("virtualService",VirtualService);
-      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
-      if (PreviousAppointment is not null) yield return new KeyValuePair<string,object>("previousAppointment",PreviousAppointment);
-      if (OriginatingAppointment is not null) yield return new KeyValuePair<string,object>("originatingAppointment",OriginatingAppointment);
-      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
-      if (MinutesDurationElement is not null) yield return new KeyValuePair<string,object>("minutesDuration",MinutesDurationElement);
-      if (RequestedPeriod?.Any() == true) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
-      if (Slot?.Any() == true) yield return new KeyValuePair<string,object>("slot",Slot);
-      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
-      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (CancellationDateElement is not null) yield return new KeyValuePair<string,object>("cancellationDate",CancellationDateElement);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (PatientInstruction?.Any() == true) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstruction);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
-      if (RecurrenceIdElement is not null) yield return new KeyValuePair<string,object>("recurrenceId",RecurrenceIdElement);
-      if (OccurrenceChangedElement is not null) yield return new KeyValuePair<string,object>("occurrenceChanged",OccurrenceChangedElement);
-      if (RecurrenceTemplate?.Any() == true) yield return new KeyValuePair<string,object>("recurrenceTemplate",RecurrenceTemplate);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CancellationReason is not null) yield return new KeyValuePair<string,object>("cancellationReason",_CancellationReason);
+      if (_Class?.Any() == true) yield return new KeyValuePair<string,object>("class",_Class);
+      if (_ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",_ServiceCategory);
+      if (_ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",_ServiceType);
+      if (_Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",_Specialty);
+      if (_AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",_AppointmentType);
+      if (_Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_Priority is not null) yield return new KeyValuePair<string,object>("priority",_Priority);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",_Replaces);
+      if (_VirtualService?.Any() == true) yield return new KeyValuePair<string,object>("virtualService",_VirtualService);
+      if (_SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",_SupportingInformation);
+      if (_PreviousAppointment is not null) yield return new KeyValuePair<string,object>("previousAppointment",_PreviousAppointment);
+      if (_OriginatingAppointment is not null) yield return new KeyValuePair<string,object>("originatingAppointment",_OriginatingAppointment);
+      if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_MinutesDurationElement is not null) yield return new KeyValuePair<string,object>("minutesDuration",_MinutesDurationElement);
+      if (_RequestedPeriod?.Any() == true) yield return new KeyValuePair<string,object>("requestedPeriod",_RequestedPeriod);
+      if (_Slot?.Any() == true) yield return new KeyValuePair<string,object>("slot",_Slot);
+      if (_Account?.Any() == true) yield return new KeyValuePair<string,object>("account",_Account);
+      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_CancellationDateElement is not null) yield return new KeyValuePair<string,object>("cancellationDate",_CancellationDateElement);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_PatientInstruction?.Any() == true) yield return new KeyValuePair<string,object>("patientInstruction",_PatientInstruction);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",_Participant);
+      if (_RecurrenceIdElement is not null) yield return new KeyValuePair<string,object>("recurrenceId",_RecurrenceIdElement);
+      if (_OccurrenceChangedElement is not null) yield return new KeyValuePair<string,object>("occurrenceChanged",_OccurrenceChangedElement);
+      if (_RecurrenceTemplate?.Any() == true) yield return new KeyValuePair<string,object>("recurrenceTemplate",_RecurrenceTemplate);
     }
 
   }

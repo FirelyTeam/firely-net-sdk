@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -143,13 +146,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", InSummary=true, Order=40)]
       [Binding("MeasureGroupExample")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// The populations in the group.
@@ -159,24 +162,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> Population
       {
-        get { if(_Population==null) _Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(); return _Population; }
+        get => _Population ?? new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>();
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
-      private List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> _Population;
+      private List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>? _Population;
 
       /// <summary>
       /// What score this group achieved.
       /// </summary>
       [FhirElement("measureScore", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity MeasureScore
+      public Hl7.Fhir.Model.Quantity? MeasureScore
       {
         get { return _MeasureScore; }
         set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _MeasureScore;
+      private Hl7.Fhir.Model.Quantity? _MeasureScore;
 
       /// <summary>
       /// Stratification results.
@@ -186,26 +189,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> Stratifier
       {
-        get { if(_Stratifier==null) _Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(); return _Stratifier; }
+        get => _Stratifier ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>();
         set { _Stratifier = value; OnPropertyChanged("Stratifier"); }
       }
 
-      private List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> _Stratifier;
+      private List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>? _Stratifier;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as GroupComponent;
-
-        if (dest == null)
-        {
+        if(other is not GroupComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(Population.DeepCopyInternal());
-        if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)MeasureScore.DeepCopyInternal();
-        if(Stratifier.Any()) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(Stratifier.DeepCopyInternal());
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_Population is not null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(_Population.DeepCopyInternal());
+        if(_MeasureScore is not null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)_MeasureScore.DeepCopyInternal();
+        if(_Stratifier is not null) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(_Stratifier.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -217,55 +216,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as GroupComponent;
-        if(otherT == null) return false;
+        if(other is not GroupComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.ListEquals(Population, otherT.Population)) return false;
-        if(!comparer.Equals(MeasureScore, otherT.MeasureScore)) return false;
-        if(!comparer.ListEquals(Stratifier, otherT.Stratifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.ListEquals(_Population, otherT._Population)) return false;
+        if(!comparer.Equals(_MeasureScore, otherT._MeasureScore)) return false;
+        if(!comparer.ListEquals(_Stratifier, otherT._Stratifier)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "population":
-            value = Population;
-            return Population?.Any() == true;
+            value = _Population;
+            return _Population?.Any() == true;
           case "measureScore":
-            value = MeasureScore;
-            return MeasureScore is not null;
+            value = _MeasureScore;
+            return _MeasureScore is not null;
           case "stratifier":
-            value = Stratifier;
-            return Stratifier?.Any() == true;
+            value = _Stratifier;
+            return _Stratifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "population":
-            Population = (List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>)value;
+            Population = (List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>?)value!;
             return this;
           case "measureScore":
-            MeasureScore = (Hl7.Fhir.Model.Quantity)value;
+            MeasureScore = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "stratifier":
-            Stratifier = (List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>)value;
+            Stratifier = (List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -276,10 +275,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
-        if (MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScore);
-        if (Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Population?.Any() == true) yield return new KeyValuePair<string,object>("population",_Population);
+        if (_MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",_MeasureScore);
+        if (_Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",_Stratifier);
       }
 
     }
@@ -306,26 +305,26 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", InSummary=true, Order=40)]
       [Binding("MeasurePopulation")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// Size of the population.
       /// </summary>
       [FhirElement("count", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer CountElement
+      public Hl7.Fhir.Model.Integer? CountElement
       {
         get { return _CountElement; }
         set { _CountElement = value; OnPropertyChanged("CountElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _CountElement;
+      private Hl7.Fhir.Model.Integer? _CountElement;
 
       /// <summary>
       /// Size of the population
@@ -334,13 +333,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get { return CountElement != null ? CountElement.Value : null; }
+        get => _CountElement?.Value;
         set
         {
-          if (value == null)
-            CountElement = null;
-          else
-            CountElement = new Hl7.Fhir.Model.Integer(value);
+          CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Count");
         }
       }
@@ -352,27 +348,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("List")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference SubjectResults
+      public Hl7.Fhir.Model.ResourceReference? SubjectResults
       {
         get { return _SubjectResults; }
         set { _SubjectResults = value; OnPropertyChanged("SubjectResults"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _SubjectResults;
+      private Hl7.Fhir.Model.ResourceReference? _SubjectResults;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PopulationComponent;
-
-        if (dest == null)
-        {
+        if(other is not PopulationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopyInternal();
-        if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_CountElement is not null) dest.CountElement = (Hl7.Fhir.Model.Integer)_CountElement.DeepCopyInternal();
+        if(_SubjectResults is not null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)_SubjectResults.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -384,48 +376,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PopulationComponent;
-        if(otherT == null) return false;
+        if(other is not PopulationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(CountElement, otherT.CountElement)) return false;
-        if(!comparer.Equals(SubjectResults, otherT.SubjectResults)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_CountElement, otherT._CountElement)) return false;
+        if(!comparer.Equals(_SubjectResults, otherT._SubjectResults)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "count":
-            value = CountElement;
-            return CountElement is not null;
+            value = _CountElement;
+            return _CountElement is not null;
           case "subjectResults":
-            value = SubjectResults;
-            return SubjectResults is not null;
+            value = _SubjectResults;
+            return _SubjectResults is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "count":
-            CountElement = (Hl7.Fhir.Model.Integer)value;
+            CountElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "subjectResults":
-            SubjectResults = (Hl7.Fhir.Model.ResourceReference)value;
+            SubjectResults = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -436,9 +428,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
-        if (SubjectResults is not null) yield return new KeyValuePair<string,object>("subjectResults",SubjectResults);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_CountElement is not null) yield return new KeyValuePair<string,object>("count",_CountElement);
+        if (_SubjectResults is not null) yield return new KeyValuePair<string,object>("subjectResults",_SubjectResults);
       }
 
     }
@@ -468,11 +460,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
+        get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Code;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Code;
 
       /// <summary>
       /// Stratum results, one for each unique value, or set of values, in the stratifier, or stratifier components.
@@ -482,24 +474,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> Stratum
       {
-        get { if(_Stratum==null) _Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(); return _Stratum; }
+        get => _Stratum ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>();
         set { _Stratum = value; OnPropertyChanged("Stratum"); }
       }
 
-      private List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> _Stratum;
+      private List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>? _Stratum;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StratifierComponent;
-
-        if (dest == null)
-        {
+        if(other is not StratifierComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopyInternal());
-        if(Stratum.Any()) dest.Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(Stratum.DeepCopyInternal());
+        if(_Code is not null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(_Code.DeepCopyInternal());
+        if(_Stratum is not null) dest.Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(_Stratum.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -511,41 +499,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StratifierComponent;
-        if(otherT == null) return false;
+        if(other is not StratifierComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Code, otherT.Code)) return false;
-        if(!comparer.ListEquals(Stratum, otherT.Stratum)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Code, otherT._Code)) return false;
+        if(!comparer.ListEquals(_Stratum, otherT._Stratum)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code?.Any() == true;
+            value = _Code;
+            return _Code?.Any() == true;
           case "stratum":
-            value = Stratum;
-            return Stratum?.Any() == true;
+            value = _Stratum;
+            return _Stratum?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Code = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "stratum":
-            Stratum = (List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>)value;
+            Stratum = (List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -556,8 +544,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
-        if (Stratum?.Any() == true) yield return new KeyValuePair<string,object>("stratum",Stratum);
+        if (_Code?.Any() == true) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Stratum?.Any() == true) yield return new KeyValuePair<string,object>("stratum",_Stratum);
       }
 
     }
@@ -584,13 +572,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", Order=40)]
       [Binding("MeasureReportStratifierValueExample")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Value
+      public Hl7.Fhir.Model.CodeableConcept? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Value;
+      private Hl7.Fhir.Model.CodeableConcept? _Value;
 
       /// <summary>
       /// Stratifier component values.
@@ -600,11 +588,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.ComponentComponent> Component
       {
-        get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(); return _Component; }
+        get => _Component ?? new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>();
         set { _Component = value; OnPropertyChanged("Component"); }
       }
 
-      private List<Hl7.Fhir.Model.MeasureReport.ComponentComponent> _Component;
+      private List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>? _Component;
 
       /// <summary>
       /// Population results in this stratum.
@@ -614,39 +602,35 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
       {
-        get { if(_Population==null) _Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(); return _Population; }
+        get => _Population ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>();
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
-      private List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> _Population;
+      private List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>? _Population;
 
       /// <summary>
       /// What score this stratum achieved.
       /// </summary>
       [FhirElement("measureScore", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity MeasureScore
+      public Hl7.Fhir.Model.Quantity? MeasureScore
       {
         get { return _MeasureScore; }
         set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _MeasureScore;
+      private Hl7.Fhir.Model.Quantity? _MeasureScore;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StratifierGroupComponent;
-
-        if (dest == null)
-        {
+        if(other is not StratifierGroupComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopyInternal();
-        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(Component.DeepCopyInternal());
-        if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopyInternal());
-        if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)MeasureScore.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)_Value.DeepCopyInternal();
+        if(_Component is not null) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(_Component.DeepCopyInternal());
+        if(_Population is not null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(_Population.DeepCopyInternal());
+        if(_MeasureScore is not null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)_MeasureScore.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -658,55 +642,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StratifierGroupComponent;
-        if(otherT == null) return false;
+        if(other is not StratifierGroupComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
-        if(!comparer.ListEquals(Component, otherT.Component)) return false;
-        if(!comparer.ListEquals(Population, otherT.Population)) return false;
-        if(!comparer.Equals(MeasureScore, otherT.MeasureScore)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        if(!comparer.ListEquals(_Component, otherT._Component)) return false;
+        if(!comparer.ListEquals(_Population, otherT._Population)) return false;
+        if(!comparer.Equals(_MeasureScore, otherT._MeasureScore)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           case "component":
-            value = Component;
-            return Component?.Any() == true;
+            value = _Component;
+            return _Component?.Any() == true;
           case "population":
-            value = Population;
-            return Population?.Any() == true;
+            value = _Population;
+            return _Population?.Any() == true;
           case "measureScore":
-            value = MeasureScore;
-            return MeasureScore is not null;
+            value = _MeasureScore;
+            return _MeasureScore is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "value":
-            Value = (Hl7.Fhir.Model.CodeableConcept)value;
+            Value = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "component":
-            Component = (List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>)value;
+            Component = (List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>?)value!;
             return this;
           case "population":
-            Population = (List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>)value;
+            Population = (List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>?)value!;
             return this;
           case "measureScore":
-            MeasureScore = (Hl7.Fhir.Model.Quantity)value;
+            MeasureScore = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -717,10 +701,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
-        if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
-        if (MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScore);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Component?.Any() == true) yield return new KeyValuePair<string,object>("component",_Component);
+        if (_Population?.Any() == true) yield return new KeyValuePair<string,object>("population",_Population);
+        if (_MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",_MeasureScore);
       }
 
     }
@@ -748,13 +732,13 @@ namespace Hl7.Fhir.Model
       [Binding("MeasureStratifierExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// The stratum component value, e.g. male.
@@ -763,26 +747,22 @@ namespace Hl7.Fhir.Model
       [Binding("MeasureReportStratifierValueExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Value
+      public Hl7.Fhir.Model.CodeableConcept? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Value;
+      private Hl7.Fhir.Model.CodeableConcept? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not ComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)_Value.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -794,41 +774,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ComponentComponent;
-        if(otherT == null) return false;
+        if(other is not ComponentComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.CodeableConcept)value;
+            Value = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -839,8 +819,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -867,26 +847,26 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", Order=40)]
       [Binding("MeasurePopulation")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// Size of the population.
       /// </summary>
       [FhirElement("count", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer CountElement
+      public Hl7.Fhir.Model.Integer? CountElement
       {
         get { return _CountElement; }
         set { _CountElement = value; OnPropertyChanged("CountElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _CountElement;
+      private Hl7.Fhir.Model.Integer? _CountElement;
 
       /// <summary>
       /// Size of the population
@@ -895,13 +875,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get { return CountElement != null ? CountElement.Value : null; }
+        get => _CountElement?.Value;
         set
         {
-          if (value == null)
-            CountElement = null;
-          else
-            CountElement = new Hl7.Fhir.Model.Integer(value);
+          CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Count");
         }
       }
@@ -913,27 +890,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("List")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference SubjectResults
+      public Hl7.Fhir.Model.ResourceReference? SubjectResults
       {
         get { return _SubjectResults; }
         set { _SubjectResults = value; OnPropertyChanged("SubjectResults"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _SubjectResults;
+      private Hl7.Fhir.Model.ResourceReference? _SubjectResults;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StratifierGroupPopulationComponent;
-
-        if (dest == null)
-        {
+        if(other is not StratifierGroupPopulationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopyInternal();
-        if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_CountElement is not null) dest.CountElement = (Hl7.Fhir.Model.Integer)_CountElement.DeepCopyInternal();
+        if(_SubjectResults is not null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)_SubjectResults.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -945,48 +918,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StratifierGroupPopulationComponent;
-        if(otherT == null) return false;
+        if(other is not StratifierGroupPopulationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(CountElement, otherT.CountElement)) return false;
-        if(!comparer.Equals(SubjectResults, otherT.SubjectResults)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_CountElement, otherT._CountElement)) return false;
+        if(!comparer.Equals(_SubjectResults, otherT._SubjectResults)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "count":
-            value = CountElement;
-            return CountElement is not null;
+            value = _CountElement;
+            return _CountElement is not null;
           case "subjectResults":
-            value = SubjectResults;
-            return SubjectResults is not null;
+            value = _SubjectResults;
+            return _SubjectResults is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "count":
-            CountElement = (Hl7.Fhir.Model.Integer)value;
+            CountElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "subjectResults":
-            SubjectResults = (Hl7.Fhir.Model.ResourceReference)value;
+            SubjectResults = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -997,9 +970,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
-        if (SubjectResults is not null) yield return new KeyValuePair<string,object>("subjectResults",SubjectResults);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_CountElement is not null) yield return new KeyValuePair<string,object>("count",_CountElement);
+        if (_SubjectResults is not null) yield return new KeyValuePair<string,object>("subjectResults",_SubjectResults);
       }
 
     }
@@ -1012,11 +985,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// complete | pending | error.
@@ -1026,13 +999,13 @@ namespace Hl7.Fhir.Model
     [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
+    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>? _StatusElement;
 
     /// <summary>
     /// complete | pending | error
@@ -1041,13 +1014,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1060,13 +1030,13 @@ namespace Hl7.Fhir.Model
     [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement
+    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> _TypeElement;
+    private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>? _TypeElement;
 
     /// <summary>
     /// individual | subject-list | summary | data-collection
@@ -1075,13 +1045,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1092,28 +1059,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("measure", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical MeasureElement
+    public Hl7.Fhir.Model.Canonical? MeasureElement
     {
       get { return _MeasureElement; }
       set { _MeasureElement = value; OnPropertyChanged("MeasureElement"); }
     }
 
-    private Hl7.Fhir.Model.Canonical _MeasureElement;
+    private Hl7.Fhir.Model.Canonical? _MeasureElement;
 
     /// <summary>
     /// What measure was calculated
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Measure
+    public string? Measure
     {
-      get { return MeasureElement != null ? MeasureElement.Value : null; }
+      get => _MeasureElement?.Value;
       set
       {
-        if (value == null)
-          MeasureElement = null;
-        else
-          MeasureElement = new Hl7.Fhir.Model.Canonical(value);
+        MeasureElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Measure");
       }
     }
@@ -1125,41 +1089,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Location","Device","RelatedPerson","Group")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// When the report was generated.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateElement
+    public Hl7.Fhir.Model.FhirDateTime? DateElement
     {
       get { return _DateElement; }
       set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
     /// <summary>
     /// When the report was generated
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Date
+    public string? Date
     {
-      get { return DateElement != null ? DateElement.Value : null; }
+      get => _DateElement?.Value;
       set
       {
-        if (value == null)
-          DateElement = null;
-        else
-          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1171,13 +1132,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Location","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Reporter
+    public Hl7.Fhir.Model.ResourceReference? Reporter
     {
       get { return _Reporter; }
       set { _Reporter = value; OnPropertyChanged("Reporter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Reporter;
+    private Hl7.Fhir.Model.ResourceReference? _Reporter;
 
     /// <summary>
     /// What period the report covers.
@@ -1185,13 +1146,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("period", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// increase | decrease.
@@ -1199,13 +1160,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("improvementNotation", InSummary=true, IsModifier=true, Order=170)]
     [Binding("MeasureImprovementNotation")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
+    public Hl7.Fhir.Model.CodeableConcept? ImprovementNotation
     {
       get { return _ImprovementNotation; }
       set { _ImprovementNotation = value; OnPropertyChanged("ImprovementNotation"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ImprovementNotation;
+    private Hl7.Fhir.Model.CodeableConcept? _ImprovementNotation;
 
     /// <summary>
     /// Measure results for each group.
@@ -1215,11 +1176,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
     {
-      get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(); return _Group; }
+      get => _Group ?? new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>();
       set { _Group = value; OnPropertyChanged("Group"); }
     }
 
-    private List<Hl7.Fhir.Model.MeasureReport.GroupComponent> _Group;
+    private List<Hl7.Fhir.Model.MeasureReport.GroupComponent>? _Group;
 
     /// <summary>
     /// What data was used to calculate the measure score.
@@ -1231,35 +1192,31 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> EvaluatedResource
     {
-      get { if(_EvaluatedResource==null) _EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(); return _EvaluatedResource; }
+      get => _EvaluatedResource ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _EvaluatedResource = value; OnPropertyChanged("EvaluatedResource"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
+    private List<Hl7.Fhir.Model.ResourceReference>? _EvaluatedResource;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MeasureReport;
-
-      if (dest == null)
-      {
+      if(other is not MeasureReport dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)StatusElement.DeepCopyInternal();
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)TypeElement.DeepCopyInternal();
-      if(MeasureElement != null) dest.MeasureElement = (Hl7.Fhir.Model.Canonical)MeasureElement.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-      if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(ImprovementNotation != null) dest.ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept)ImprovementNotation.DeepCopyInternal();
-      if(Group.Any()) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopyInternal());
-      if(EvaluatedResource.Any()) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(EvaluatedResource.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)_StatusElement.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)_TypeElement.DeepCopyInternal();
+      if(_MeasureElement is not null) dest.MeasureElement = (Hl7.Fhir.Model.Canonical)_MeasureElement.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+      if(_Reporter is not null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)_Reporter.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_ImprovementNotation is not null) dest.ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept)_ImprovementNotation.DeepCopyInternal();
+      if(_Group is not null) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(_Group.DeepCopyInternal());
+      if(_EvaluatedResource is not null) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(_EvaluatedResource.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1271,104 +1228,104 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MeasureReport;
-      if(otherT == null) return false;
+      if(other is not MeasureReport otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(MeasureElement, otherT.MeasureElement)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.Equals(Reporter, otherT.Reporter)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.Equals(ImprovementNotation, otherT.ImprovementNotation)) return false;
-      if(!comparer.ListEquals(Group, otherT.Group)) return false;
-      if(!comparer.ListEquals(EvaluatedResource, otherT.EvaluatedResource)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_MeasureElement, otherT._MeasureElement)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.Equals(_Reporter, otherT._Reporter)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_ImprovementNotation, otherT._ImprovementNotation)) return false;
+      if(!comparer.ListEquals(_Group, otherT._Group)) return false;
+      if(!comparer.ListEquals(_EvaluatedResource, otherT._EvaluatedResource)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "measure":
-          value = MeasureElement;
-          return MeasureElement is not null;
+          value = _MeasureElement;
+          return _MeasureElement is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "date":
-          value = DateElement;
-          return DateElement is not null;
+          value = _DateElement;
+          return _DateElement is not null;
         case "reporter":
-          value = Reporter;
-          return Reporter is not null;
+          value = _Reporter;
+          return _Reporter is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "improvementNotation":
-          value = ImprovementNotation;
-          return ImprovementNotation is not null;
+          value = _ImprovementNotation;
+          return _ImprovementNotation is not null;
         case "group":
-          value = Group;
-          return Group?.Any() == true;
+          value = _Group;
+          return _Group?.Any() == true;
         case "evaluatedResource":
-          value = EvaluatedResource;
-          return EvaluatedResource?.Any() == true;
+          value = _EvaluatedResource;
+          return _EvaluatedResource?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>?)value;
           return this;
         case "measure":
-          MeasureElement = (Hl7.Fhir.Model.Canonical)value;
+          MeasureElement = (Hl7.Fhir.Model.Canonical?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "date":
-          DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "reporter":
-          Reporter = (Hl7.Fhir.Model.ResourceReference)value;
+          Reporter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "improvementNotation":
-          ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept)value;
+          ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "group":
-          Group = (List<Hl7.Fhir.Model.MeasureReport.GroupComponent>)value;
+          Group = (List<Hl7.Fhir.Model.MeasureReport.GroupComponent>?)value!;
           return this;
         case "evaluatedResource":
-          EvaluatedResource = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          EvaluatedResource = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1379,17 +1336,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (MeasureElement is not null) yield return new KeyValuePair<string,object>("measure",MeasureElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (Reporter is not null) yield return new KeyValuePair<string,object>("reporter",Reporter);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (ImprovementNotation is not null) yield return new KeyValuePair<string,object>("improvementNotation",ImprovementNotation);
-      if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
-      if (EvaluatedResource?.Any() == true) yield return new KeyValuePair<string,object>("evaluatedResource",EvaluatedResource);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_MeasureElement is not null) yield return new KeyValuePair<string,object>("measure",_MeasureElement);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_Reporter is not null) yield return new KeyValuePair<string,object>("reporter",_Reporter);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_ImprovementNotation is not null) yield return new KeyValuePair<string,object>("improvementNotation",_ImprovementNotation);
+      if (_Group?.Any() == true) yield return new KeyValuePair<string,object>("group",_Group);
+      if (_EvaluatedResource?.Any() == true) yield return new KeyValuePair<string,object>("evaluatedResource",_EvaluatedResource);
     }
 
   }

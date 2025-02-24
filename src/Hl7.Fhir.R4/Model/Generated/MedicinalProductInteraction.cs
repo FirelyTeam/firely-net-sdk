@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -81,25 +84,21 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InteractantComponent;
-
-        if (dest == null)
-        {
+        if(other is not InteractantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -111,34 +110,34 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InteractantComponent;
-        if(otherT == null) return false;
+        if(other is not InteractantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Item, otherT._Item)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -149,7 +148,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -164,39 +163,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
 
     /// <summary>
     /// The interaction described.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// The interaction described
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -209,81 +205,77 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> Interactant
     {
-      get { if(_Interactant==null) _Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(); return _Interactant; }
+      get => _Interactant ?? new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>();
       set { _Interactant = value; OnPropertyChanged("Interactant"); }
     }
 
-    private List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> _Interactant;
+    private List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>? _Interactant;
 
     /// <summary>
     /// The type of the interaction e.g. drug-drug interaction, drug-food interaction, drug-lab test interaction.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// The effect of the interaction, for example "reduced gastric absorption of primary medication".
     /// </summary>
     [FhirElement("effect", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Effect
+    public Hl7.Fhir.Model.CodeableConcept? Effect
     {
       get { return _Effect; }
       set { _Effect = value; OnPropertyChanged("Effect"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Effect;
+    private Hl7.Fhir.Model.CodeableConcept? _Effect;
 
     /// <summary>
     /// The incidence of the interaction, e.g. theoretical, observed.
     /// </summary>
     [FhirElement("incidence", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Incidence
+    public Hl7.Fhir.Model.CodeableConcept? Incidence
     {
       get { return _Incidence; }
       set { _Incidence = value; OnPropertyChanged("Incidence"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Incidence;
+    private Hl7.Fhir.Model.CodeableConcept? _Incidence;
 
     /// <summary>
     /// Actions for managing the interaction.
     /// </summary>
     [FhirElement("management", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Management
+    public Hl7.Fhir.Model.CodeableConcept? Management
     {
       get { return _Management; }
       set { _Management = value; OnPropertyChanged("Management"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Management;
+    private Hl7.Fhir.Model.CodeableConcept? _Management;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MedicinalProductInteraction;
-
-      if (dest == null)
-      {
+      if(other is not MedicinalProductInteraction dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopyInternal());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(Interactant.Any()) dest.Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(Interactant.DeepCopyInternal());
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(Effect != null) dest.Effect = (Hl7.Fhir.Model.CodeableConcept)Effect.DeepCopyInternal();
-      if(Incidence != null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)Incidence.DeepCopyInternal();
-      if(Management != null) dest.Management = (Hl7.Fhir.Model.CodeableConcept)Management.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_Interactant is not null) dest.Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(_Interactant.DeepCopyInternal());
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_Effect is not null) dest.Effect = (Hl7.Fhir.Model.CodeableConcept)_Effect.DeepCopyInternal();
+      if(_Incidence is not null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)_Incidence.DeepCopyInternal();
+      if(_Management is not null) dest.Management = (Hl7.Fhir.Model.CodeableConcept)_Management.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -295,76 +287,76 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MedicinalProductInteraction;
-      if(otherT == null) return false;
+      if(other is not MedicinalProductInteraction otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Interactant, otherT.Interactant)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(Effect, otherT.Effect)) return false;
-      if(!comparer.Equals(Incidence, otherT.Incidence)) return false;
-      if(!comparer.Equals(Management, otherT.Management)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Interactant, otherT._Interactant)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_Effect, otherT._Effect)) return false;
+      if(!comparer.Equals(_Incidence, otherT._Incidence)) return false;
+      if(!comparer.Equals(_Management, otherT._Management)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "subject":
-          value = Subject;
-          return Subject?.Any() == true;
+          value = _Subject;
+          return _Subject?.Any() == true;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "interactant":
-          value = Interactant;
-          return Interactant?.Any() == true;
+          value = _Interactant;
+          return _Interactant?.Any() == true;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "effect":
-          value = Effect;
-          return Effect is not null;
+          value = _Effect;
+          return _Effect is not null;
         case "incidence":
-          value = Incidence;
-          return Incidence is not null;
+          value = _Incidence;
+          return _Incidence is not null;
         case "management":
-          value = Management;
-          return Management is not null;
+          value = _Management;
+          return _Management is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "subject":
-          Subject = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "interactant":
-          Interactant = (List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>)value;
+          Interactant = (List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>?)value!;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "effect":
-          Effect = (Hl7.Fhir.Model.CodeableConcept)value;
+          Effect = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "incidence":
-          Incidence = (Hl7.Fhir.Model.CodeableConcept)value;
+          Incidence = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "management":
-          Management = (Hl7.Fhir.Model.CodeableConcept)value;
+          Management = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -375,13 +367,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",Interactant);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
-      if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
-      if (Management is not null) yield return new KeyValuePair<string,object>("management",Management);
+      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",_Interactant);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Effect is not null) yield return new KeyValuePair<string,object>("effect",_Effect);
+      if (_Incidence is not null) yield return new KeyValuePair<string,object>("incidence",_Incidence);
+      if (_Management is not null) yield return new KeyValuePair<string,object>("management",_Management);
     }
 
   }

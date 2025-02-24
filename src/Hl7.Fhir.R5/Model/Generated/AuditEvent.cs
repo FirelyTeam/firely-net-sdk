@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -182,13 +185,13 @@ namespace Hl7.Fhir.Model
       [Binding("AuditEventOutcome")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Coding Code
+      public Hl7.Fhir.Model.Coding? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.Coding _Code;
+      private Hl7.Fhir.Model.Coding? _Code;
 
       /// <summary>
       /// Additional outcome detail.
@@ -199,24 +202,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Detail
       {
-        get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Detail; }
+        get => _Detail ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Detail;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Detail;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OutcomeComponent;
-
-        if (dest == null)
-        {
+        if(other is not OutcomeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopyInternal();
-        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.CodeableConcept>(Detail.DeepCopyInternal());
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.Coding)_Code.DeepCopyInternal();
+        if(_Detail is not null) dest.Detail = new List<Hl7.Fhir.Model.CodeableConcept>(_Detail.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -228,41 +227,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OutcomeComponent;
-        if(otherT == null) return false;
+        if(other is not OutcomeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.ListEquals(Detail, otherT.Detail)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.ListEquals(_Detail, otherT._Detail)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "detail":
-            value = Detail;
-            return Detail?.Any() == true;
+            value = _Detail;
+            return _Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.Coding)value;
+            Code = (Hl7.Fhir.Model.Coding?)value;
             return this;
           case "detail":
-            Detail = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Detail = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -273,8 +272,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",_Detail);
       }
 
     }
@@ -304,13 +303,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40, FiveWs="FiveWs.who")]
       [Binding("AuditAgentType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Agent role in the event.
@@ -321,11 +320,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
-        get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
+        get => _Role ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Role;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Role;
 
       /// <summary>
       /// Identifier of who.
@@ -335,26 +334,26 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Who
+      public Hl7.Fhir.Model.ResourceReference? Who
       {
         get { return _Who; }
         set { _Who = value; OnPropertyChanged("Who"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Who;
+      private Hl7.Fhir.Model.ResourceReference? _Who;
 
       /// <summary>
       /// Whether user is initiator.
       /// </summary>
       [FhirElement("requestor", InSummary=true, Order=70, FiveWs="FiveWs.who")]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean RequestorElement
+      public Hl7.Fhir.Model.FhirBoolean? RequestorElement
       {
         get { return _RequestorElement; }
         set { _RequestorElement = value; OnPropertyChanged("RequestorElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _RequestorElement;
+      private Hl7.Fhir.Model.FhirBoolean? _RequestorElement;
 
       /// <summary>
       /// Whether user is initiator
@@ -363,13 +362,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Requestor
       {
-        get { return RequestorElement != null ? RequestorElement.Value : null; }
+        get => _RequestorElement?.Value;
         set
         {
-          if (value == null)
-            RequestorElement = null;
-          else
-            RequestorElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          RequestorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Requestor");
         }
       }
@@ -381,13 +377,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Location
+      public Hl7.Fhir.Model.ResourceReference? Location
       {
         get { return _Location; }
         set { _Location = value; OnPropertyChanged("Location"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Location;
+      private Hl7.Fhir.Model.ResourceReference? _Location;
 
       /// <summary>
       /// Policy that authorized the agent participation in the event.
@@ -397,24 +393,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> PolicyElement
       {
-        get { if(_PolicyElement==null) _PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(); return _PolicyElement; }
+        get => _PolicyElement ?? new List<Hl7.Fhir.Model.FhirUri>();
         set { _PolicyElement = value; OnPropertyChanged("PolicyElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirUri> _PolicyElement;
+      private List<Hl7.Fhir.Model.FhirUri>? _PolicyElement;
 
       /// <summary>
       /// Policy that authorized the agent participation in the event
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> Policy
+      public IEnumerable<string?>? Policy
       {
-        get { return PolicyElement != null ? PolicyElement.Select(elem => elem.Value) : null; }
+        get => _PolicyElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            PolicyElement = null;
+            PolicyElement = null!;
           else
             PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
           OnPropertyChanged("Policy");
@@ -429,13 +425,13 @@ namespace Hl7.Fhir.Model
       [References("Endpoint")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Network
+      public Hl7.Fhir.Model.DataType? Network
       {
         get { return _Network; }
         set { _Network = value; OnPropertyChanged("Network"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Network;
+      private Hl7.Fhir.Model.DataType? _Network;
 
       /// <summary>
       /// Allowable authorization for this agent.
@@ -446,30 +442,26 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Authorization
       {
-        get { if(_Authorization==null) _Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Authorization; }
+        get => _Authorization ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Authorization = value; OnPropertyChanged("Authorization"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Authorization;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Authorization;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AgentComponent;
-
-        if (dest == null)
-        {
+        if(other is not AgentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Role.Any()) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopyInternal());
-        if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopyInternal();
-        if(RequestorElement != null) dest.RequestorElement = (Hl7.Fhir.Model.FhirBoolean)RequestorElement.DeepCopyInternal();
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-        if(PolicyElement.Any()) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopyInternal());
-        if(Network != null) dest.Network = (Hl7.Fhir.Model.DataType)Network.DeepCopyInternal();
-        if(Authorization.Any()) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(Authorization.DeepCopyInternal());
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Role is not null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(_Role.DeepCopyInternal());
+        if(_Who is not null) dest.Who = (Hl7.Fhir.Model.ResourceReference)_Who.DeepCopyInternal();
+        if(_RequestorElement is not null) dest.RequestorElement = (Hl7.Fhir.Model.FhirBoolean)_RequestorElement.DeepCopyInternal();
+        if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+        if(_PolicyElement is not null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(_PolicyElement.DeepCopyInternal());
+        if(_Network is not null) dest.Network = (Hl7.Fhir.Model.DataType)_Network.DeepCopyInternal();
+        if(_Authorization is not null) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(_Authorization.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -481,83 +473,83 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AgentComponent;
-        if(otherT == null) return false;
+        if(other is not AgentComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.ListEquals(Role, otherT.Role)) return false;
-        if(!comparer.Equals(Who, otherT.Who)) return false;
-        if(!comparer.Equals(RequestorElement, otherT.RequestorElement)) return false;
-        if(!comparer.Equals(Location, otherT.Location)) return false;
-        if(!comparer.ListEquals(PolicyElement, otherT.PolicyElement)) return false;
-        if(!comparer.Equals(Network, otherT.Network)) return false;
-        if(!comparer.ListEquals(Authorization, otherT.Authorization)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.ListEquals(_Role, otherT._Role)) return false;
+        if(!comparer.Equals(_Who, otherT._Who)) return false;
+        if(!comparer.Equals(_RequestorElement, otherT._RequestorElement)) return false;
+        if(!comparer.Equals(_Location, otherT._Location)) return false;
+        if(!comparer.ListEquals(_PolicyElement, otherT._PolicyElement)) return false;
+        if(!comparer.Equals(_Network, otherT._Network)) return false;
+        if(!comparer.ListEquals(_Authorization, otherT._Authorization)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "role":
-            value = Role;
-            return Role?.Any() == true;
+            value = _Role;
+            return _Role?.Any() == true;
           case "who":
-            value = Who;
-            return Who is not null;
+            value = _Who;
+            return _Who is not null;
           case "requestor":
-            value = RequestorElement;
-            return RequestorElement is not null;
+            value = _RequestorElement;
+            return _RequestorElement is not null;
           case "location":
-            value = Location;
-            return Location is not null;
+            value = _Location;
+            return _Location is not null;
           case "policy":
-            value = PolicyElement;
-            return PolicyElement?.Any() == true;
+            value = _PolicyElement;
+            return _PolicyElement?.Any() == true;
           case "network":
-            value = Network;
-            return Network is not null;
+            value = _Network;
+            return _Network is not null;
           case "authorization":
-            value = Authorization;
-            return Authorization?.Any() == true;
+            value = _Authorization;
+            return _Authorization?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "role":
-            Role = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Role = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "who":
-            Who = (Hl7.Fhir.Model.ResourceReference)value;
+            Who = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "requestor":
-            RequestorElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            RequestorElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "location":
-            Location = (Hl7.Fhir.Model.ResourceReference)value;
+            Location = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "policy":
-            PolicyElement = (List<Hl7.Fhir.Model.FhirUri>)value;
+            PolicyElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
             return this;
           case "network":
-            Network = (Hl7.Fhir.Model.DataType)value;
+            Network = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "authorization":
-            Authorization = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Authorization = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -568,14 +560,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Role?.Any() == true) yield return new KeyValuePair<string,object>("role",Role);
-        if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
-        if (RequestorElement is not null) yield return new KeyValuePair<string,object>("requestor",RequestorElement);
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-        if (PolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("policy",PolicyElement);
-        if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
-        if (Authorization?.Any() == true) yield return new KeyValuePair<string,object>("authorization",Authorization);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Role?.Any() == true) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
+        if (_RequestorElement is not null) yield return new KeyValuePair<string,object>("requestor",_RequestorElement);
+        if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+        if (_PolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("policy",_PolicyElement);
+        if (_Network is not null) yield return new KeyValuePair<string,object>("network",_Network);
+        if (_Authorization?.Any() == true) yield return new KeyValuePair<string,object>("authorization",_Authorization);
       }
 
     }
@@ -604,13 +596,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Site
+      public Hl7.Fhir.Model.ResourceReference? Site
       {
         get { return _Site; }
         set { _Site = value; OnPropertyChanged("Site"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Site;
+      private Hl7.Fhir.Model.ResourceReference? _Site;
 
       /// <summary>
       /// The identity of source detecting the event.
@@ -620,13 +612,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Observer
+      public Hl7.Fhir.Model.ResourceReference? Observer
       {
         get { return _Observer; }
         set { _Observer = value; OnPropertyChanged("Observer"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Observer;
+      private Hl7.Fhir.Model.ResourceReference? _Observer;
 
       /// <summary>
       /// The type of source where event originated.
@@ -637,25 +629,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SourceComponent;
-
-        if (dest == null)
-        {
+        if(other is not SourceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Site != null) dest.Site = (Hl7.Fhir.Model.ResourceReference)Site.DeepCopyInternal();
-        if(Observer != null) dest.Observer = (Hl7.Fhir.Model.ResourceReference)Observer.DeepCopyInternal();
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
+        if(_Site is not null) dest.Site = (Hl7.Fhir.Model.ResourceReference)_Site.DeepCopyInternal();
+        if(_Observer is not null) dest.Observer = (Hl7.Fhir.Model.ResourceReference)_Observer.DeepCopyInternal();
+        if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -667,48 +655,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SourceComponent;
-        if(otherT == null) return false;
+        if(other is not SourceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Site, otherT.Site)) return false;
-        if(!comparer.Equals(Observer, otherT.Observer)) return false;
-        if(!comparer.ListEquals(Type, otherT.Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Site, otherT._Site)) return false;
+        if(!comparer.Equals(_Observer, otherT._Observer)) return false;
+        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "site":
-            value = Site;
-            return Site is not null;
+            value = _Site;
+            return _Site is not null;
           case "observer":
-            value = Observer;
-            return Observer is not null;
+            value = _Observer;
+            return _Observer is not null;
           case "type":
-            value = Type;
-            return Type?.Any() == true;
+            value = _Type;
+            return _Type?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "site":
-            Site = (Hl7.Fhir.Model.ResourceReference)value;
+            Site = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "observer":
-            Observer = (Hl7.Fhir.Model.ResourceReference)value;
+            Observer = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "type":
-            Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -719,9 +707,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
-        if (Observer is not null) yield return new KeyValuePair<string,object>("observer",Observer);
-        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (_Site is not null) yield return new KeyValuePair<string,object>("site",_Site);
+        if (_Observer is not null) yield return new KeyValuePair<string,object>("observer",_Observer);
+        if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
       }
 
     }
@@ -750,13 +738,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference What
+      public Hl7.Fhir.Model.ResourceReference? What
       {
         get { return _What; }
         set { _What = value; OnPropertyChanged("What"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _What;
+      private Hl7.Fhir.Model.ResourceReference? _What;
 
       /// <summary>
       /// What role the entity played.
@@ -764,13 +752,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("role", Order=50, FiveWs="FiveWs.context")]
       [Binding("AuditEventEntityRole")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Role
+      public Hl7.Fhir.Model.CodeableConcept? Role
       {
         get { return _Role; }
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Role;
+      private Hl7.Fhir.Model.CodeableConcept? _Role;
 
       /// <summary>
       /// Security labels on the entity.
@@ -781,39 +769,36 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
       {
-        get { if(_SecurityLabel==null) _SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SecurityLabel; }
+        get => _SecurityLabel ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _SecurityLabel;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _SecurityLabel;
 
       /// <summary>
       /// Query parameters.
       /// </summary>
       [FhirElement("query", InSummary=true, Order=70, FiveWs="FiveWs.context")]
       [DataMember]
-      public Hl7.Fhir.Model.Base64Binary QueryElement
+      public Hl7.Fhir.Model.Base64Binary? QueryElement
       {
         get { return _QueryElement; }
         set { _QueryElement = value; OnPropertyChanged("QueryElement"); }
       }
 
-      private Hl7.Fhir.Model.Base64Binary _QueryElement;
+      private Hl7.Fhir.Model.Base64Binary? _QueryElement;
 
       /// <summary>
       /// Query parameters
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public byte[] Query
+      public byte[]? Query
       {
-        get { return QueryElement != null ? QueryElement.Value : null; }
+        get => _QueryElement?.Value;
         set
         {
-          if (value == null)
-            QueryElement = null;
-          else
-            QueryElement = new Hl7.Fhir.Model.Base64Binary(value);
+          QueryElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
           OnPropertyChanged("Query");
         }
       }
@@ -826,11 +811,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
       {
-        get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(); return _Detail; }
+        get => _Detail ?? new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>();
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
-      private List<Hl7.Fhir.Model.AuditEvent.DetailComponent> _Detail;
+      private List<Hl7.Fhir.Model.AuditEvent.DetailComponent>? _Detail;
 
       /// <summary>
       /// Entity is attributed to this agent.
@@ -840,28 +825,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
       {
-        get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(); return _Agent; }
+        get => _Agent ?? new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>();
         set { _Agent = value; OnPropertyChanged("Agent"); }
       }
 
-      private List<Hl7.Fhir.Model.AuditEvent.AgentComponent> _Agent;
+      private List<Hl7.Fhir.Model.AuditEvent.AgentComponent>? _Agent;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EntityComponent;
-
-        if (dest == null)
-        {
+        if(other is not EntityComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(What != null) dest.What = (Hl7.Fhir.Model.ResourceReference)What.DeepCopyInternal();
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
-        if(SecurityLabel.Any()) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(SecurityLabel.DeepCopyInternal());
-        if(QueryElement != null) dest.QueryElement = (Hl7.Fhir.Model.Base64Binary)QueryElement.DeepCopyInternal();
-        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(Detail.DeepCopyInternal());
-        if(Agent.Any()) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopyInternal());
+        if(_What is not null) dest.What = (Hl7.Fhir.Model.ResourceReference)_What.DeepCopyInternal();
+        if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
+        if(_SecurityLabel is not null) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(_SecurityLabel.DeepCopyInternal());
+        if(_QueryElement is not null) dest.QueryElement = (Hl7.Fhir.Model.Base64Binary)_QueryElement.DeepCopyInternal();
+        if(_Detail is not null) dest.Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(_Detail.DeepCopyInternal());
+        if(_Agent is not null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(_Agent.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -873,69 +854,69 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EntityComponent;
-        if(otherT == null) return false;
+        if(other is not EntityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(What, otherT.What)) return false;
-        if(!comparer.Equals(Role, otherT.Role)) return false;
-        if(!comparer.ListEquals(SecurityLabel, otherT.SecurityLabel)) return false;
-        if(!comparer.Equals(QueryElement, otherT.QueryElement)) return false;
-        if(!comparer.ListEquals(Detail, otherT.Detail)) return false;
-        if(!comparer.ListEquals(Agent, otherT.Agent)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_What, otherT._What)) return false;
+        if(!comparer.Equals(_Role, otherT._Role)) return false;
+        if(!comparer.ListEquals(_SecurityLabel, otherT._SecurityLabel)) return false;
+        if(!comparer.Equals(_QueryElement, otherT._QueryElement)) return false;
+        if(!comparer.ListEquals(_Detail, otherT._Detail)) return false;
+        if(!comparer.ListEquals(_Agent, otherT._Agent)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "what":
-            value = What;
-            return What is not null;
+            value = _What;
+            return _What is not null;
           case "role":
-            value = Role;
-            return Role is not null;
+            value = _Role;
+            return _Role is not null;
           case "securityLabel":
-            value = SecurityLabel;
-            return SecurityLabel?.Any() == true;
+            value = _SecurityLabel;
+            return _SecurityLabel?.Any() == true;
           case "query":
-            value = QueryElement;
-            return QueryElement is not null;
+            value = _QueryElement;
+            return _QueryElement is not null;
           case "detail":
-            value = Detail;
-            return Detail?.Any() == true;
+            value = _Detail;
+            return _Detail?.Any() == true;
           case "agent":
-            value = Agent;
-            return Agent?.Any() == true;
+            value = _Agent;
+            return _Agent?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "what":
-            What = (Hl7.Fhir.Model.ResourceReference)value;
+            What = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "role":
-            Role = (Hl7.Fhir.Model.CodeableConcept)value;
+            Role = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "securityLabel":
-            SecurityLabel = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            SecurityLabel = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "query":
-            QueryElement = (Hl7.Fhir.Model.Base64Binary)value;
+            QueryElement = (Hl7.Fhir.Model.Base64Binary?)value;
             return this;
           case "detail":
-            Detail = (List<Hl7.Fhir.Model.AuditEvent.DetailComponent>)value;
+            Detail = (List<Hl7.Fhir.Model.AuditEvent.DetailComponent>?)value!;
             return this;
           case "agent":
-            Agent = (List<Hl7.Fhir.Model.AuditEvent.AgentComponent>)value;
+            Agent = (List<Hl7.Fhir.Model.AuditEvent.AgentComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -946,12 +927,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (What is not null) yield return new KeyValuePair<string,object>("what",What);
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
-        if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
-        if (QueryElement is not null) yield return new KeyValuePair<string,object>("query",QueryElement);
-        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
-        if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
+        if (_What is not null) yield return new KeyValuePair<string,object>("what",_What);
+        if (_Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
+        if (_QueryElement is not null) yield return new KeyValuePair<string,object>("query",_QueryElement);
+        if (_Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",_Detail);
+        if (_Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",_Agent);
       }
 
     }
@@ -979,13 +960,13 @@ namespace Hl7.Fhir.Model
       [Binding("AuditEventDetailType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Property value.
@@ -995,26 +976,22 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Base64Binary))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DetailComponent;
-
-        if (dest == null)
-        {
+        if(other is not DetailComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1026,41 +1003,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DetailComponent;
-        if(otherT == null) return false;
+        if(other is not DetailComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1071,8 +1048,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -1086,11 +1063,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// Specific type of event.
@@ -1099,13 +1076,13 @@ namespace Hl7.Fhir.Model
     [Binding("AuditEventSubType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Type of action performed during the event.
@@ -1114,13 +1091,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("AuditEventAction")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
+    public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>? ActionElement
     {
       get { return _ActionElement; }
       set { _ActionElement = value; OnPropertyChanged("ActionElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> _ActionElement;
+    private Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>? _ActionElement;
 
     /// <summary>
     /// Type of action performed during the event
@@ -1129,13 +1106,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AuditEvent.AuditEventAction? Action
     {
-      get { return ActionElement != null ? ActionElement.Value : null; }
+      get => _ActionElement?.Value;
       set
       {
-        if (value == null)
-          ActionElement = null;
-        else
-          ActionElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
+        ActionElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
         OnPropertyChanged("Action");
       }
     }
@@ -1147,13 +1121,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("AuditEventSeverity")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity> SeverityElement
+    public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>? SeverityElement
     {
       get { return _SeverityElement; }
       set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity> _SeverityElement;
+    private Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>? _SeverityElement;
 
     /// <summary>
     /// emergency | alert | critical | error | warning | notice | informational | debug
@@ -1162,13 +1136,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AuditEvent.AuditEventSeverity? Severity
     {
-      get { return SeverityElement != null ? SeverityElement.Value : null; }
+      get => _SeverityElement?.Value;
       set
       {
-        if (value == null)
-          SeverityElement = null;
-        else
-          SeverityElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>(value);
+        SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>(value);
         OnPropertyChanged("Severity");
       }
     }
@@ -1180,13 +1151,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Occurred
+    public Hl7.Fhir.Model.DataType? Occurred
     {
       get { return _Occurred; }
       set { _Occurred = value; OnPropertyChanged("Occurred"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Occurred;
+    private Hl7.Fhir.Model.DataType? _Occurred;
 
     /// <summary>
     /// Time when the event was recorded.
@@ -1194,13 +1165,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("recorded", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Instant RecordedElement
+    public Hl7.Fhir.Model.Instant? RecordedElement
     {
       get { return _RecordedElement; }
       set { _RecordedElement = value; OnPropertyChanged("RecordedElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _RecordedElement;
+    private Hl7.Fhir.Model.Instant? _RecordedElement;
 
     /// <summary>
     /// Time when the event was recorded
@@ -1209,13 +1180,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Recorded
     {
-      get { return RecordedElement != null ? RecordedElement.Value : null; }
+      get => _RecordedElement?.Value;
       set
       {
-        if (value == null)
-          RecordedElement = null;
-        else
-          RecordedElement = new Hl7.Fhir.Model.Instant(value);
+        RecordedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Recorded");
       }
     }
@@ -1225,13 +1193,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.AuditEvent.OutcomeComponent Outcome
+    public Hl7.Fhir.Model.AuditEvent.OutcomeComponent? Outcome
     {
       get { return _Outcome; }
       set { _Outcome = value; OnPropertyChanged("Outcome"); }
     }
 
-    private Hl7.Fhir.Model.AuditEvent.OutcomeComponent _Outcome;
+    private Hl7.Fhir.Model.AuditEvent.OutcomeComponent? _Outcome;
 
     /// <summary>
     /// Authorization related to the event.
@@ -1242,11 +1210,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Authorization
     {
-      get { if(_Authorization==null) _Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Authorization; }
+      get => _Authorization ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Authorization = value; OnPropertyChanged("Authorization"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Authorization;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Authorization;
 
     /// <summary>
     /// Workflow authorization within which this event occurred.
@@ -1258,11 +1226,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// The patient is the subject of the data used/created/updated/deleted during the activity.
@@ -1271,13 +1239,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Encounter within which this event occurred or which the event is tightly associated.
@@ -1286,13 +1254,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// Actor involved in the event.
@@ -1302,11 +1270,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
     {
-      get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(); return _Agent; }
+      get => _Agent ?? new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>();
       set { _Agent = value; OnPropertyChanged("Agent"); }
     }
 
-    private List<Hl7.Fhir.Model.AuditEvent.AgentComponent> _Agent;
+    private List<Hl7.Fhir.Model.AuditEvent.AgentComponent>? _Agent;
 
     /// <summary>
     /// Audit Event Reporter.
@@ -1314,13 +1282,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("source", InSummary=true, Order=210, FiveWs="FiveWs.witness")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
+    public Hl7.Fhir.Model.AuditEvent.SourceComponent? Source
     {
       get { return _Source; }
       set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private Hl7.Fhir.Model.AuditEvent.SourceComponent _Source;
+    private Hl7.Fhir.Model.AuditEvent.SourceComponent? _Source;
 
     /// <summary>
     /// Data or objects used.
@@ -1330,36 +1298,32 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
     {
-      get { if(_Entity==null) _Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(); return _Entity; }
+      get => _Entity ?? new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>();
       set { _Entity = value; OnPropertyChanged("Entity"); }
     }
 
-    private List<Hl7.Fhir.Model.AuditEvent.EntityComponent> _Entity;
+    private List<Hl7.Fhir.Model.AuditEvent.EntityComponent>? _Entity;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as AuditEvent;
-
-      if (dest == null)
-      {
+      if(other is not AuditEvent dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)ActionElement.DeepCopyInternal();
-      if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>)SeverityElement.DeepCopyInternal();
-      if(Occurred != null) dest.Occurred = (Hl7.Fhir.Model.DataType)Occurred.DeepCopyInternal();
-      if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopyInternal();
-      if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.AuditEvent.OutcomeComponent)Outcome.DeepCopyInternal();
-      if(Authorization.Any()) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(Authorization.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(Agent.Any()) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopyInternal());
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)Source.DeepCopyInternal();
-      if(Entity.Any()) dest.Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(Entity.DeepCopyInternal());
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_ActionElement is not null) dest.ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)_ActionElement.DeepCopyInternal();
+      if(_SeverityElement is not null) dest.SeverityElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>)_SeverityElement.DeepCopyInternal();
+      if(_Occurred is not null) dest.Occurred = (Hl7.Fhir.Model.DataType)_Occurred.DeepCopyInternal();
+      if(_RecordedElement is not null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)_RecordedElement.DeepCopyInternal();
+      if(_Outcome is not null) dest.Outcome = (Hl7.Fhir.Model.AuditEvent.OutcomeComponent)_Outcome.DeepCopyInternal();
+      if(_Authorization is not null) dest.Authorization = new List<Hl7.Fhir.Model.CodeableConcept>(_Authorization.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_Agent is not null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(_Agent.DeepCopyInternal());
+      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)_Source.DeepCopyInternal();
+      if(_Entity is not null) dest.Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(_Entity.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1371,125 +1335,125 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as AuditEvent;
-      if(otherT == null) return false;
+      if(other is not AuditEvent otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(ActionElement, otherT.ActionElement)) return false;
-      if(!comparer.Equals(SeverityElement, otherT.SeverityElement)) return false;
-      if(!comparer.Equals(Occurred, otherT.Occurred)) return false;
-      if(!comparer.Equals(RecordedElement, otherT.RecordedElement)) return false;
-      if(!comparer.Equals(Outcome, otherT.Outcome)) return false;
-      if(!comparer.ListEquals(Authorization, otherT.Authorization)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.ListEquals(Agent, otherT.Agent)) return false;
-      if(!comparer.Equals(Source, otherT.Source)) return false;
-      if(!comparer.ListEquals(Entity, otherT.Entity)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_ActionElement, otherT._ActionElement)) return false;
+      if(!comparer.Equals(_SeverityElement, otherT._SeverityElement)) return false;
+      if(!comparer.Equals(_Occurred, otherT._Occurred)) return false;
+      if(!comparer.Equals(_RecordedElement, otherT._RecordedElement)) return false;
+      if(!comparer.Equals(_Outcome, otherT._Outcome)) return false;
+      if(!comparer.ListEquals(_Authorization, otherT._Authorization)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.ListEquals(_Agent, otherT._Agent)) return false;
+      if(!comparer.Equals(_Source, otherT._Source)) return false;
+      if(!comparer.ListEquals(_Entity, otherT._Entity)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "action":
-          value = ActionElement;
-          return ActionElement is not null;
+          value = _ActionElement;
+          return _ActionElement is not null;
         case "severity":
-          value = SeverityElement;
-          return SeverityElement is not null;
+          value = _SeverityElement;
+          return _SeverityElement is not null;
         case "occurred":
-          value = Occurred;
-          return Occurred is not null;
+          value = _Occurred;
+          return _Occurred is not null;
         case "recorded":
-          value = RecordedElement;
-          return RecordedElement is not null;
+          value = _RecordedElement;
+          return _RecordedElement is not null;
         case "outcome":
-          value = Outcome;
-          return Outcome is not null;
+          value = _Outcome;
+          return _Outcome is not null;
         case "authorization":
-          value = Authorization;
-          return Authorization?.Any() == true;
+          value = _Authorization;
+          return _Authorization?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "agent":
-          value = Agent;
-          return Agent?.Any() == true;
+          value = _Agent;
+          return _Agent?.Any() == true;
         case "source":
-          value = Source;
-          return Source is not null;
+          value = _Source;
+          return _Source is not null;
         case "entity":
-          value = Entity;
-          return Entity?.Any() == true;
+          value = _Entity;
+          return _Entity?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "action":
-          ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)value;
+          ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>?)value;
           return this;
         case "severity":
-          SeverityElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>)value;
+          SeverityElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>?)value;
           return this;
         case "occurred":
-          Occurred = (Hl7.Fhir.Model.DataType)value;
+          Occurred = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "recorded":
-          RecordedElement = (Hl7.Fhir.Model.Instant)value;
+          RecordedElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "outcome":
-          Outcome = (Hl7.Fhir.Model.AuditEvent.OutcomeComponent)value;
+          Outcome = (Hl7.Fhir.Model.AuditEvent.OutcomeComponent?)value;
           return this;
         case "authorization":
-          Authorization = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Authorization = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "agent":
-          Agent = (List<Hl7.Fhir.Model.AuditEvent.AgentComponent>)value;
+          Agent = (List<Hl7.Fhir.Model.AuditEvent.AgentComponent>?)value!;
           return this;
         case "source":
-          Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)value;
+          Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent?)value;
           return this;
         case "entity":
-          Entity = (List<Hl7.Fhir.Model.AuditEvent.EntityComponent>)value;
+          Entity = (List<Hl7.Fhir.Model.AuditEvent.EntityComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1500,20 +1464,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (ActionElement is not null) yield return new KeyValuePair<string,object>("action",ActionElement);
-      if (SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",SeverityElement);
-      if (Occurred is not null) yield return new KeyValuePair<string,object>("occurred",Occurred);
-      if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
-      if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
-      if (Authorization?.Any() == true) yield return new KeyValuePair<string,object>("authorization",Authorization);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",Entity);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_ActionElement is not null) yield return new KeyValuePair<string,object>("action",_ActionElement);
+      if (_SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
+      if (_Occurred is not null) yield return new KeyValuePair<string,object>("occurred",_Occurred);
+      if (_RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",_RecordedElement);
+      if (_Outcome is not null) yield return new KeyValuePair<string,object>("outcome",_Outcome);
+      if (_Authorization?.Any() == true) yield return new KeyValuePair<string,object>("authorization",_Authorization);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",_Agent);
+      if (_Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",_Entity);
     }
 
   }

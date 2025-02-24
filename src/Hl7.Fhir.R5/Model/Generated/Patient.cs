@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -118,24 +121,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Relationship
       {
-        get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Relationship; }
+        get => _Relationship ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Relationship = value; OnPropertyChanged("Relationship"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Relationship;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Relationship;
 
       /// <summary>
       /// A name associated with the contact person.
       /// </summary>
       [FhirElement("name", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.HumanName Name
+      public Hl7.Fhir.Model.HumanName? Name
       {
         get { return _Name; }
         set { _Name = value; OnPropertyChanged("Name"); }
       }
 
-      private Hl7.Fhir.Model.HumanName _Name;
+      private Hl7.Fhir.Model.HumanName? _Name;
 
       /// <summary>
       /// A contact detail for the person.
@@ -145,24 +148,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ContactPoint> Telecom
       {
-        get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+        get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
         set { _Telecom = value; OnPropertyChanged("Telecom"); }
       }
 
-      private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+      private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
 
       /// <summary>
       /// Address for the contact person.
       /// </summary>
       [FhirElement("address", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Address Address
+      public Hl7.Fhir.Model.Address? Address
       {
         get { return _Address; }
         set { _Address = value; OnPropertyChanged("Address"); }
       }
 
-      private Hl7.Fhir.Model.Address _Address;
+      private Hl7.Fhir.Model.Address? _Address;
 
       /// <summary>
       /// male | female | other | unknown.
@@ -171,13 +174,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("AdministrativeGender")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
+      public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
       {
         get { return _GenderElement; }
         set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
+      private Code<Hl7.Fhir.Model.AdministrativeGender>? _GenderElement;
 
       /// <summary>
       /// male | female | other | unknown
@@ -186,13 +189,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.AdministrativeGender? Gender
       {
-        get { return GenderElement != null ? GenderElement.Value : null; }
+        get => _GenderElement?.Value;
         set
         {
-          if (value == null)
-            GenderElement = null;
-          else
-            GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+          GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
           OnPropertyChanged("Gender");
         }
       }
@@ -204,44 +204,40 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Organization
+      public Hl7.Fhir.Model.ResourceReference? Organization
       {
         get { return _Organization; }
         set { _Organization = value; OnPropertyChanged("Organization"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Organization;
+      private Hl7.Fhir.Model.ResourceReference? _Organization;
 
       /// <summary>
       /// The period during which this contact person or organization is valid to be contacted relating to this patient.
       /// </summary>
       [FhirElement("period", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Period Period
+      public Hl7.Fhir.Model.Period? Period
       {
         get { return _Period; }
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private Hl7.Fhir.Model.Period _Period;
+      private Hl7.Fhir.Model.Period? _Period;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ContactComponent;
-
-        if (dest == null)
-        {
+        if(other is not ContactComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(Relationship.DeepCopyInternal());
-        if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopyInternal();
-        if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
-        if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopyInternal();
-        if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopyInternal();
-        if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+        if(_Relationship is not null) dest.Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(_Relationship.DeepCopyInternal());
+        if(_Name is not null) dest.Name = (Hl7.Fhir.Model.HumanName)_Name.DeepCopyInternal();
+        if(_Telecom is not null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(_Telecom.DeepCopyInternal());
+        if(_Address is not null) dest.Address = (Hl7.Fhir.Model.Address)_Address.DeepCopyInternal();
+        if(_GenderElement is not null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)_GenderElement.DeepCopyInternal();
+        if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
+        if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -253,76 +249,76 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ContactComponent;
-        if(otherT == null) return false;
+        if(other is not ContactComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Relationship, otherT.Relationship)) return false;
-        if(!comparer.Equals(Name, otherT.Name)) return false;
-        if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
-        if(!comparer.Equals(Address, otherT.Address)) return false;
-        if(!comparer.Equals(GenderElement, otherT.GenderElement)) return false;
-        if(!comparer.Equals(Organization, otherT.Organization)) return false;
-        if(!comparer.Equals(Period, otherT.Period)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Relationship, otherT._Relationship)) return false;
+        if(!comparer.Equals(_Name, otherT._Name)) return false;
+        if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
+        if(!comparer.Equals(_Address, otherT._Address)) return false;
+        if(!comparer.Equals(_GenderElement, otherT._GenderElement)) return false;
+        if(!comparer.Equals(_Organization, otherT._Organization)) return false;
+        if(!comparer.Equals(_Period, otherT._Period)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "relationship":
-            value = Relationship;
-            return Relationship?.Any() == true;
+            value = _Relationship;
+            return _Relationship?.Any() == true;
           case "name":
-            value = Name;
-            return Name is not null;
+            value = _Name;
+            return _Name is not null;
           case "telecom":
-            value = Telecom;
-            return Telecom?.Any() == true;
+            value = _Telecom;
+            return _Telecom?.Any() == true;
           case "address":
-            value = Address;
-            return Address is not null;
+            value = _Address;
+            return _Address is not null;
           case "gender":
-            value = GenderElement;
-            return GenderElement is not null;
+            value = _GenderElement;
+            return _GenderElement is not null;
           case "organization":
-            value = Organization;
-            return Organization is not null;
+            value = _Organization;
+            return _Organization is not null;
           case "period":
-            value = Period;
-            return Period is not null;
+            value = _Period;
+            return _Period is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "relationship":
-            Relationship = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Relationship = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "name":
-            Name = (Hl7.Fhir.Model.HumanName)value;
+            Name = (Hl7.Fhir.Model.HumanName?)value;
             return this;
           case "telecom":
-            Telecom = (List<Hl7.Fhir.Model.ContactPoint>)value;
+            Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
             return this;
           case "address":
-            Address = (Hl7.Fhir.Model.Address)value;
+            Address = (Hl7.Fhir.Model.Address?)value;
             return this;
           case "gender":
-            GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)value;
+            GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>?)value;
             return this;
           case "organization":
-            Organization = (Hl7.Fhir.Model.ResourceReference)value;
+            Organization = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period)value;
+            Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -333,13 +329,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",Relationship);
-        if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-        if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
-        if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
-        if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
-        if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (_Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",_Relationship);
+        if (_Name is not null) yield return new KeyValuePair<string,object>("name",_Name);
+        if (_Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
+        if (_Address is not null) yield return new KeyValuePair<string,object>("address",_Address);
+        if (_GenderElement is not null) yield return new KeyValuePair<string,object>("gender",_GenderElement);
+        if (_Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
       }
 
     }
@@ -367,26 +363,26 @@ namespace Hl7.Fhir.Model
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Language
+      public Hl7.Fhir.Model.CodeableConcept? Language
       {
         get { return _Language; }
         set { _Language = value; OnPropertyChanged("Language"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Language;
+      private Hl7.Fhir.Model.CodeableConcept? _Language;
 
       /// <summary>
       /// Language preference indicator.
       /// </summary>
       [FhirElement("preferred", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean PreferredElement
+      public Hl7.Fhir.Model.FhirBoolean? PreferredElement
       {
         get { return _PreferredElement; }
         set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
+      private Hl7.Fhir.Model.FhirBoolean? _PreferredElement;
 
       /// <summary>
       /// Language preference indicator
@@ -395,29 +391,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Preferred
       {
-        get { return PreferredElement != null ? PreferredElement.Value : null; }
+        get => _PreferredElement?.Value;
         set
         {
-          if (value == null)
-            PreferredElement = null;
-          else
-            PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Preferred");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CommunicationComponent;
-
-        if (dest == null)
-        {
+        if(other is not CommunicationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopyInternal();
-        if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopyInternal();
+        if(_Language is not null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)_Language.DeepCopyInternal();
+        if(_PreferredElement is not null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)_PreferredElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -429,41 +418,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CommunicationComponent;
-        if(otherT == null) return false;
+        if(other is not CommunicationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Language, otherT.Language)) return false;
-        if(!comparer.Equals(PreferredElement, otherT.PreferredElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Language, otherT._Language)) return false;
+        if(!comparer.Equals(_PreferredElement, otherT._PreferredElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "language":
-            value = Language;
-            return Language is not null;
+            value = _Language;
+            return _Language is not null;
           case "preferred":
-            value = PreferredElement;
-            return PreferredElement is not null;
+            value = _PreferredElement;
+            return _PreferredElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "language":
-            Language = (Hl7.Fhir.Model.CodeableConcept)value;
+            Language = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "preferred":
-            PreferredElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            PreferredElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -474,8 +463,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
-        if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
+        if (_Language is not null) yield return new KeyValuePair<string,object>("language",_Language);
+        if (_PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",_PreferredElement);
       }
 
     }
@@ -504,13 +493,13 @@ namespace Hl7.Fhir.Model
       [References("Patient","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Other
+      public Hl7.Fhir.Model.ResourceReference? Other
       {
         get { return _Other; }
         set { _Other = value; OnPropertyChanged("Other"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Other;
+      private Hl7.Fhir.Model.ResourceReference? _Other;
 
       /// <summary>
       /// replaced-by | replaces | refer | seealso.
@@ -520,13 +509,13 @@ namespace Hl7.Fhir.Model
       [Binding("LinkType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
+      public Code<Hl7.Fhir.Model.Patient.LinkType>? TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
+      private Code<Hl7.Fhir.Model.Patient.LinkType>? _TypeElement;
 
       /// <summary>
       /// replaced-by | replaces | refer | seealso
@@ -535,29 +524,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Patient.LinkType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
           OnPropertyChanged("Type");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LinkComponent;
-
-        if (dest == null)
-        {
+        if(other is not LinkComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopyInternal();
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)TypeElement.DeepCopyInternal();
+        if(_Other is not null) dest.Other = (Hl7.Fhir.Model.ResourceReference)_Other.DeepCopyInternal();
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)_TypeElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -569,41 +551,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LinkComponent;
-        if(otherT == null) return false;
+        if(other is not LinkComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Other, otherT.Other)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Other, otherT._Other)) return false;
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "other":
-            value = Other;
-            return Other is not null;
+            value = _Other;
+            return _Other is not null;
           case "type":
-            value = TypeElement;
-            return TypeElement is not null;
+            value = _TypeElement;
+            return _TypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "other":
-            Other = (Hl7.Fhir.Model.ResourceReference)value;
+            Other = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>)value;
+            TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -614,8 +596,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Other is not null) yield return new KeyValuePair<string,object>("other",Other);
-        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (_Other is not null) yield return new KeyValuePair<string,object>("other",_Other);
+        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
       }
 
     }
@@ -628,24 +610,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this patient's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this patient's record is in active use
@@ -654,13 +636,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -673,11 +652,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
-      get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
+      get => _Name ?? new List<Hl7.Fhir.Model.HumanName>();
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
-    private List<Hl7.Fhir.Model.HumanName> _Name;
+    private List<Hl7.Fhir.Model.HumanName>? _Name;
 
     /// <summary>
     /// A contact detail for the individual.
@@ -687,11 +666,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
 
     /// <summary>
     /// male | female | other | unknown.
@@ -700,13 +679,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
+    public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
     {
       get { return _GenderElement; }
       set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
+    private Code<Hl7.Fhir.Model.AdministrativeGender>? _GenderElement;
 
     /// <summary>
     /// male | female | other | unknown
@@ -715,13 +694,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdministrativeGender? Gender
     {
-      get { return GenderElement != null ? GenderElement.Value : null; }
+      get => _GenderElement?.Value;
       set
       {
-        if (value == null)
-          GenderElement = null;
-        else
-          GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+        GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
         OnPropertyChanged("Gender");
       }
     }
@@ -731,28 +707,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.Date BirthDateElement
+    public Hl7.Fhir.Model.Date? BirthDateElement
     {
       get { return _BirthDateElement; }
       set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _BirthDateElement;
+    private Hl7.Fhir.Model.Date? _BirthDateElement;
 
     /// <summary>
     /// The date of birth for the individual
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string BirthDate
+    public string? BirthDate
     {
-      get { return BirthDateElement != null ? BirthDateElement.Value : null; }
+      get => _BirthDateElement?.Value;
       set
       {
-        if (value == null)
-          BirthDateElement = null;
-        else
-          BirthDateElement = new Hl7.Fhir.Model.Date(value);
+        BirthDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("BirthDate");
       }
     }
@@ -764,13 +737,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Deceased
+    public Hl7.Fhir.Model.DataType? Deceased
     {
       get { return _Deceased; }
       set { _Deceased = value; OnPropertyChanged("Deceased"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Deceased;
+    private Hl7.Fhir.Model.DataType? _Deceased;
 
     /// <summary>
     /// An address for the individual.
@@ -780,11 +753,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Address> Address
     {
-      get { if(_Address==null) _Address = new List<Hl7.Fhir.Model.Address>(); return _Address; }
+      get => _Address ?? new List<Hl7.Fhir.Model.Address>();
       set { _Address = value; OnPropertyChanged("Address"); }
     }
 
-    private List<Hl7.Fhir.Model.Address> _Address;
+    private List<Hl7.Fhir.Model.Address>? _Address;
 
     /// <summary>
     /// Marital (civil) status of a patient.
@@ -792,13 +765,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("maritalStatus", Order=170)]
     [Binding("MaritalStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept MaritalStatus
+    public Hl7.Fhir.Model.CodeableConcept? MaritalStatus
     {
       get { return _MaritalStatus; }
       set { _MaritalStatus = value; OnPropertyChanged("MaritalStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _MaritalStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _MaritalStatus;
 
     /// <summary>
     /// Whether patient is part of a multiple birth.
@@ -807,13 +780,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType MultipleBirth
+    public Hl7.Fhir.Model.DataType? MultipleBirth
     {
       get { return _MultipleBirth; }
       set { _MultipleBirth = value; OnPropertyChanged("MultipleBirth"); }
     }
 
-    private Hl7.Fhir.Model.DataType _MultipleBirth;
+    private Hl7.Fhir.Model.DataType? _MultipleBirth;
 
     /// <summary>
     /// Image of the patient.
@@ -823,11 +796,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Photo
     {
-      get { if(_Photo==null) _Photo = new List<Hl7.Fhir.Model.Attachment>(); return _Photo; }
+      get => _Photo ?? new List<Hl7.Fhir.Model.Attachment>();
       set { _Photo = value; OnPropertyChanged("Photo"); }
     }
 
-    private List<Hl7.Fhir.Model.Attachment> _Photo;
+    private List<Hl7.Fhir.Model.Attachment>? _Photo;
 
     /// <summary>
     /// A contact party (e.g. guardian, partner, friend) for the patient.
@@ -837,11 +810,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.ContactComponent> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(); return _Contact; }
+      get => _Contact ?? new List<Hl7.Fhir.Model.Patient.ContactComponent>();
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
-    private List<Hl7.Fhir.Model.Patient.ContactComponent> _Contact;
+    private List<Hl7.Fhir.Model.Patient.ContactComponent>? _Contact;
 
     /// <summary>
     /// A language which may be used to communicate with the patient about his or her health.
@@ -851,11 +824,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.CommunicationComponent> Communication
     {
-      get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(); return _Communication; }
+      get => _Communication ?? new List<Hl7.Fhir.Model.Patient.CommunicationComponent>();
       set { _Communication = value; OnPropertyChanged("Communication"); }
     }
 
-    private List<Hl7.Fhir.Model.Patient.CommunicationComponent> _Communication;
+    private List<Hl7.Fhir.Model.Patient.CommunicationComponent>? _Communication;
 
     /// <summary>
     /// Patient's nominated primary care provider.
@@ -867,11 +840,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
     {
-      get { if(_GeneralPractitioner==null) _GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(); return _GeneralPractitioner; }
+      get => _GeneralPractitioner ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _GeneralPractitioner = value; OnPropertyChanged("GeneralPractitioner"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _GeneralPractitioner;
+    private List<Hl7.Fhir.Model.ResourceReference>? _GeneralPractitioner;
 
     /// <summary>
     /// Organization that is the custodian of the patient record.
@@ -880,13 +853,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ManagingOrganization
+    public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
     {
       get { return _ManagingOrganization; }
       set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+    private Hl7.Fhir.Model.ResourceReference? _ManagingOrganization;
 
     /// <summary>
     /// Link to a Patient or RelatedPerson resource that concerns the same actual individual.
@@ -896,40 +869,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
     {
-      get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(); return _Link; }
+      get => _Link ?? new List<Hl7.Fhir.Model.Patient.LinkComponent>();
       set { _Link = value; OnPropertyChanged("Link"); }
     }
 
-    private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
+    private List<Hl7.Fhir.Model.Patient.LinkComponent>? _Link;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Patient;
-
-      if (dest == null)
-      {
+      if(other is not Patient dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopyInternal());
-      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
-      if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopyInternal();
-      if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopyInternal();
-      if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.DataType)Deceased.DeepCopyInternal();
-      if(Address.Any()) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopyInternal());
-      if(MaritalStatus != null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)MaritalStatus.DeepCopyInternal();
-      if(MultipleBirth != null) dest.MultipleBirth = (Hl7.Fhir.Model.DataType)MultipleBirth.DeepCopyInternal();
-      if(Photo.Any()) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopyInternal());
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopyInternal());
-      if(Communication.Any()) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopyInternal());
-      if(GeneralPractitioner.Any()) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopyInternal());
-      if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopyInternal();
-      if(Link.Any()) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(Link.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_Name is not null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(_Name.DeepCopyInternal());
+      if(_Telecom is not null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(_Telecom.DeepCopyInternal());
+      if(_GenderElement is not null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)_GenderElement.DeepCopyInternal();
+      if(_BirthDateElement is not null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)_BirthDateElement.DeepCopyInternal();
+      if(_Deceased is not null) dest.Deceased = (Hl7.Fhir.Model.DataType)_Deceased.DeepCopyInternal();
+      if(_Address is not null) dest.Address = new List<Hl7.Fhir.Model.Address>(_Address.DeepCopyInternal());
+      if(_MaritalStatus is not null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)_MaritalStatus.DeepCopyInternal();
+      if(_MultipleBirth is not null) dest.MultipleBirth = (Hl7.Fhir.Model.DataType)_MultipleBirth.DeepCopyInternal();
+      if(_Photo is not null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(_Photo.DeepCopyInternal());
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(_Contact.DeepCopyInternal());
+      if(_Communication is not null) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(_Communication.DeepCopyInternal());
+      if(_GeneralPractitioner is not null) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(_GeneralPractitioner.DeepCopyInternal());
+      if(_ManagingOrganization is not null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)_ManagingOrganization.DeepCopyInternal();
+      if(_Link is not null) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(_Link.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -941,139 +910,139 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Patient;
-      if(otherT == null) return false;
+      if(other is not Patient otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.ListEquals(Name, otherT.Name)) return false;
-      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
-      if(!comparer.Equals(GenderElement, otherT.GenderElement)) return false;
-      if(!comparer.Equals(BirthDateElement, otherT.BirthDateElement)) return false;
-      if(!comparer.Equals(Deceased, otherT.Deceased)) return false;
-      if(!comparer.ListEquals(Address, otherT.Address)) return false;
-      if(!comparer.Equals(MaritalStatus, otherT.MaritalStatus)) return false;
-      if(!comparer.Equals(MultipleBirth, otherT.MultipleBirth)) return false;
-      if(!comparer.ListEquals(Photo, otherT.Photo)) return false;
-      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
-      if(!comparer.ListEquals(Communication, otherT.Communication)) return false;
-      if(!comparer.ListEquals(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
-      if(!comparer.Equals(ManagingOrganization, otherT.ManagingOrganization)) return false;
-      if(!comparer.ListEquals(Link, otherT.Link)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.ListEquals(_Name, otherT._Name)) return false;
+      if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
+      if(!comparer.Equals(_GenderElement, otherT._GenderElement)) return false;
+      if(!comparer.Equals(_BirthDateElement, otherT._BirthDateElement)) return false;
+      if(!comparer.Equals(_Deceased, otherT._Deceased)) return false;
+      if(!comparer.ListEquals(_Address, otherT._Address)) return false;
+      if(!comparer.Equals(_MaritalStatus, otherT._MaritalStatus)) return false;
+      if(!comparer.Equals(_MultipleBirth, otherT._MultipleBirth)) return false;
+      if(!comparer.ListEquals(_Photo, otherT._Photo)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.ListEquals(_Communication, otherT._Communication)) return false;
+      if(!comparer.ListEquals(_GeneralPractitioner, otherT._GeneralPractitioner)) return false;
+      if(!comparer.Equals(_ManagingOrganization, otherT._ManagingOrganization)) return false;
+      if(!comparer.ListEquals(_Link, otherT._Link)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "name":
-          value = Name;
-          return Name?.Any() == true;
+          value = _Name;
+          return _Name?.Any() == true;
         case "telecom":
-          value = Telecom;
-          return Telecom?.Any() == true;
+          value = _Telecom;
+          return _Telecom?.Any() == true;
         case "gender":
-          value = GenderElement;
-          return GenderElement is not null;
+          value = _GenderElement;
+          return _GenderElement is not null;
         case "birthDate":
-          value = BirthDateElement;
-          return BirthDateElement is not null;
+          value = _BirthDateElement;
+          return _BirthDateElement is not null;
         case "deceased":
-          value = Deceased;
-          return Deceased is not null;
+          value = _Deceased;
+          return _Deceased is not null;
         case "address":
-          value = Address;
-          return Address?.Any() == true;
+          value = _Address;
+          return _Address?.Any() == true;
         case "maritalStatus":
-          value = MaritalStatus;
-          return MaritalStatus is not null;
+          value = _MaritalStatus;
+          return _MaritalStatus is not null;
         case "multipleBirth":
-          value = MultipleBirth;
-          return MultipleBirth is not null;
+          value = _MultipleBirth;
+          return _MultipleBirth is not null;
         case "photo":
-          value = Photo;
-          return Photo?.Any() == true;
+          value = _Photo;
+          return _Photo?.Any() == true;
         case "contact":
-          value = Contact;
-          return Contact?.Any() == true;
+          value = _Contact;
+          return _Contact?.Any() == true;
         case "communication":
-          value = Communication;
-          return Communication?.Any() == true;
+          value = _Communication;
+          return _Communication?.Any() == true;
         case "generalPractitioner":
-          value = GeneralPractitioner;
-          return GeneralPractitioner?.Any() == true;
+          value = _GeneralPractitioner;
+          return _GeneralPractitioner?.Any() == true;
         case "managingOrganization":
-          value = ManagingOrganization;
-          return ManagingOrganization is not null;
+          value = _ManagingOrganization;
+          return _ManagingOrganization is not null;
         case "link":
-          value = Link;
-          return Link?.Any() == true;
+          value = _Link;
+          return _Link?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "name":
-          Name = (List<Hl7.Fhir.Model.HumanName>)value;
+          Name = (List<Hl7.Fhir.Model.HumanName>?)value!;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "gender":
-          GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)value;
+          GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>?)value;
           return this;
         case "birthDate":
-          BirthDateElement = (Hl7.Fhir.Model.Date)value;
+          BirthDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "deceased":
-          Deceased = (Hl7.Fhir.Model.DataType)value;
+          Deceased = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "address":
-          Address = (List<Hl7.Fhir.Model.Address>)value;
+          Address = (List<Hl7.Fhir.Model.Address>?)value!;
           return this;
         case "maritalStatus":
-          MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          MaritalStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "multipleBirth":
-          MultipleBirth = (Hl7.Fhir.Model.DataType)value;
+          MultipleBirth = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "photo":
-          Photo = (List<Hl7.Fhir.Model.Attachment>)value;
+          Photo = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.Patient.ContactComponent>)value;
+          Contact = (List<Hl7.Fhir.Model.Patient.ContactComponent>?)value!;
           return this;
         case "communication":
-          Communication = (List<Hl7.Fhir.Model.Patient.CommunicationComponent>)value;
+          Communication = (List<Hl7.Fhir.Model.Patient.CommunicationComponent>?)value!;
           return this;
         case "generalPractitioner":
-          GeneralPractitioner = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          GeneralPractitioner = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "managingOrganization":
-          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)value;
+          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "link":
-          Link = (List<Hl7.Fhir.Model.Patient.LinkComponent>)value;
+          Link = (List<Hl7.Fhir.Model.Patient.LinkComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1084,22 +1053,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
-      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
-      if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
-      if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
-      if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
-      if (Address?.Any() == true) yield return new KeyValuePair<string,object>("address",Address);
-      if (MaritalStatus is not null) yield return new KeyValuePair<string,object>("maritalStatus",MaritalStatus);
-      if (MultipleBirth is not null) yield return new KeyValuePair<string,object>("multipleBirth",MultipleBirth);
-      if (Photo?.Any() == true) yield return new KeyValuePair<string,object>("photo",Photo);
-      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Communication?.Any() == true) yield return new KeyValuePair<string,object>("communication",Communication);
-      if (GeneralPractitioner?.Any() == true) yield return new KeyValuePair<string,object>("generalPractitioner",GeneralPractitioner);
-      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
-      if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_Name?.Any() == true) yield return new KeyValuePair<string,object>("name",_Name);
+      if (_Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
+      if (_GenderElement is not null) yield return new KeyValuePair<string,object>("gender",_GenderElement);
+      if (_BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",_BirthDateElement);
+      if (_Deceased is not null) yield return new KeyValuePair<string,object>("deceased",_Deceased);
+      if (_Address?.Any() == true) yield return new KeyValuePair<string,object>("address",_Address);
+      if (_MaritalStatus is not null) yield return new KeyValuePair<string,object>("maritalStatus",_MaritalStatus);
+      if (_MultipleBirth is not null) yield return new KeyValuePair<string,object>("multipleBirth",_MultipleBirth);
+      if (_Photo?.Any() == true) yield return new KeyValuePair<string,object>("photo",_Photo);
+      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_Communication?.Any() == true) yield return new KeyValuePair<string,object>("communication",_Communication);
+      if (_GeneralPractitioner?.Any() == true) yield return new KeyValuePair<string,object>("generalPractitioner",_GeneralPractitioner);
+      if (_ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",_ManagingOrganization);
+      if (_Link?.Any() == true) yield return new KeyValuePair<string,object>("link",_Link);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -147,13 +150,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("measure", InSummary=true, Order=40)]
       [Binding("GoalTargetMeasure")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Measure
+      public Hl7.Fhir.Model.CodeableConcept? Measure
       {
         get { return _Measure; }
         set { _Measure = value; OnPropertyChanged("Measure"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Measure;
+      private Hl7.Fhir.Model.CodeableConcept? _Measure;
 
       /// <summary>
       /// The target value to be achieved.
@@ -163,13 +166,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Detail
+      public Hl7.Fhir.Model.DataType? Detail
       {
         get { return _Detail; }
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Detail;
+      private Hl7.Fhir.Model.DataType? _Detail;
 
       /// <summary>
       /// Reach goal on or before.
@@ -178,27 +181,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Due
+      public Hl7.Fhir.Model.DataType? Due
       {
         get { return _Due; }
         set { _Due = value; OnPropertyChanged("Due"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Due;
+      private Hl7.Fhir.Model.DataType? _Due;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as TargetComponent;
-
-        if (dest == null)
-        {
+        if(other is not TargetComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Measure != null) dest.Measure = (Hl7.Fhir.Model.CodeableConcept)Measure.DeepCopyInternal();
-        if(Detail != null) dest.Detail = (Hl7.Fhir.Model.DataType)Detail.DeepCopyInternal();
-        if(Due != null) dest.Due = (Hl7.Fhir.Model.DataType)Due.DeepCopyInternal();
+        if(_Measure is not null) dest.Measure = (Hl7.Fhir.Model.CodeableConcept)_Measure.DeepCopyInternal();
+        if(_Detail is not null) dest.Detail = (Hl7.Fhir.Model.DataType)_Detail.DeepCopyInternal();
+        if(_Due is not null) dest.Due = (Hl7.Fhir.Model.DataType)_Due.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -210,48 +209,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as TargetComponent;
-        if(otherT == null) return false;
+        if(other is not TargetComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Measure, otherT.Measure)) return false;
-        if(!comparer.Equals(Detail, otherT.Detail)) return false;
-        if(!comparer.Equals(Due, otherT.Due)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Measure, otherT._Measure)) return false;
+        if(!comparer.Equals(_Detail, otherT._Detail)) return false;
+        if(!comparer.Equals(_Due, otherT._Due)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "measure":
-            value = Measure;
-            return Measure is not null;
+            value = _Measure;
+            return _Measure is not null;
           case "detail":
-            value = Detail;
-            return Detail is not null;
+            value = _Detail;
+            return _Detail is not null;
           case "due":
-            value = Due;
-            return Due is not null;
+            value = _Due;
+            return _Due is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "measure":
-            Measure = (Hl7.Fhir.Model.CodeableConcept)value;
+            Measure = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "detail":
-            Detail = (Hl7.Fhir.Model.DataType)value;
+            Detail = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "due":
-            Due = (Hl7.Fhir.Model.DataType)value;
+            Due = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -262,9 +261,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
-        if (Due is not null) yield return new KeyValuePair<string,object>("due",Due);
+        if (_Measure is not null) yield return new KeyValuePair<string,object>("measure",_Measure);
+        if (_Detail is not null) yield return new KeyValuePair<string,object>("detail",_Detail);
+        if (_Due is not null) yield return new KeyValuePair<string,object>("due",_Due);
       }
 
     }
@@ -277,11 +276,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected.
@@ -291,13 +290,13 @@ namespace Hl7.Fhir.Model
     [Binding("GoalLifecycleStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus> LifecycleStatusElement
+    public Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>? LifecycleStatusElement
     {
       get { return _LifecycleStatusElement; }
       set { _LifecycleStatusElement = value; OnPropertyChanged("LifecycleStatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus> _LifecycleStatusElement;
+    private Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>? _LifecycleStatusElement;
 
     /// <summary>
     /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
@@ -306,13 +305,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Goal.GoalLifecycleStatus? LifecycleStatus
     {
-      get { return LifecycleStatusElement != null ? LifecycleStatusElement.Value : null; }
+      get => _LifecycleStatusElement?.Value;
       set
       {
-        if (value == null)
-          LifecycleStatusElement = null;
-        else
-          LifecycleStatusElement = new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
+        LifecycleStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
         OnPropertyChanged("LifecycleStatus");
       }
     }
@@ -323,13 +319,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("achievementStatus", InSummary=true, Order=110)]
     [Binding("GoalAchievementStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept AchievementStatus
+    public Hl7.Fhir.Model.CodeableConcept? AchievementStatus
     {
       get { return _AchievementStatus; }
       set { _AchievementStatus = value; OnPropertyChanged("AchievementStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _AchievementStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _AchievementStatus;
 
     /// <summary>
     /// E.g. Treatment, dietary, behavioral, etc.
@@ -340,11 +336,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// high-priority | medium-priority | low-priority.
@@ -352,13 +348,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("priority", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
     [Binding("GoalPriority")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Priority
+    public Hl7.Fhir.Model.CodeableConcept? Priority
     {
       get { return _Priority; }
       set { _Priority = value; OnPropertyChanged("Priority"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Priority;
+    private Hl7.Fhir.Model.CodeableConcept? _Priority;
 
     /// <summary>
     /// Code or text describing goal.
@@ -367,13 +363,13 @@ namespace Hl7.Fhir.Model
     [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Description
+    public Hl7.Fhir.Model.CodeableConcept? Description
     {
       get { return _Description; }
       set { _Description = value; OnPropertyChanged("Description"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Description;
+    private Hl7.Fhir.Model.CodeableConcept? _Description;
 
     /// <summary>
     /// Who this goal is intended for.
@@ -383,13 +379,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// When goal pursuit begins.
@@ -399,13 +395,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Start
+    public Hl7.Fhir.Model.DataType? Start
     {
       get { return _Start; }
       set { _Start = value; OnPropertyChanged("Start"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Start;
+    private Hl7.Fhir.Model.DataType? _Start;
 
     /// <summary>
     /// Target outcome for the goal.
@@ -415,39 +411,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Goal.TargetComponent> Target
     {
-      get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.Goal.TargetComponent>(); return _Target; }
+      get => _Target ?? new List<Hl7.Fhir.Model.Goal.TargetComponent>();
       set { _Target = value; OnPropertyChanged("Target"); }
     }
 
-    private List<Hl7.Fhir.Model.Goal.TargetComponent> _Target;
+    private List<Hl7.Fhir.Model.Goal.TargetComponent>? _Target;
 
     /// <summary>
     /// When goal status took effect.
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.Date StatusDateElement
+    public Hl7.Fhir.Model.Date? StatusDateElement
     {
       get { return _StatusDateElement; }
       set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _StatusDateElement;
+    private Hl7.Fhir.Model.Date? _StatusDateElement;
 
     /// <summary>
     /// When goal status took effect
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string StatusDate
+    public string? StatusDate
     {
-      get { return StatusDateElement != null ? StatusDateElement.Value : null; }
+      get => _StatusDateElement?.Value;
       set
       {
-        if (value == null)
-          StatusDateElement = null;
-        else
-          StatusDateElement = new Hl7.Fhir.Model.Date(value);
+        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -457,28 +450,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("statusReason", Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString StatusReasonElement
+    public Hl7.Fhir.Model.FhirString? StatusReasonElement
     {
       get { return _StatusReasonElement; }
       set { _StatusReasonElement = value; OnPropertyChanged("StatusReasonElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _StatusReasonElement;
+    private Hl7.Fhir.Model.FhirString? _StatusReasonElement;
 
     /// <summary>
     /// Reason for current status
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string StatusReason
+    public string? StatusReason
     {
-      get { return StatusReasonElement != null ? StatusReasonElement.Value : null; }
+      get => _StatusReasonElement?.Value;
       set
       {
-        if (value == null)
-          StatusReasonElement = null;
-        else
-          StatusReasonElement = new Hl7.Fhir.Model.FhirString(value);
+        StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("StatusReason");
       }
     }
@@ -490,13 +480,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ExpressedBy
+    public Hl7.Fhir.Model.ResourceReference? ExpressedBy
     {
       get { return _ExpressedBy; }
       set { _ExpressedBy = value; OnPropertyChanged("ExpressedBy"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ExpressedBy;
+    private Hl7.Fhir.Model.ResourceReference? _ExpressedBy;
 
     /// <summary>
     /// Issues addressed by this goal.
@@ -508,11 +498,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Addresses
     {
-      get { if(_Addresses==null) _Addresses = new List<Hl7.Fhir.Model.ResourceReference>(); return _Addresses; }
+      get => _Addresses ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Addresses = value; OnPropertyChanged("Addresses"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Addresses;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Addresses;
 
     /// <summary>
     /// Comments about the goal.
@@ -522,11 +512,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     /// <summary>
     /// What result was achieved regarding the goal?.
@@ -537,11 +527,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCode
     {
-      get { if(_OutcomeCode==null) _OutcomeCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _OutcomeCode; }
+      get => _OutcomeCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _OutcomeCode = value; OnPropertyChanged("OutcomeCode"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _OutcomeCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _OutcomeCode;
 
     /// <summary>
     /// Observation that resulted from goal.
@@ -553,43 +543,39 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> OutcomeReference
     {
-      get { if(_OutcomeReference==null) _OutcomeReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _OutcomeReference; }
+      get => _OutcomeReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _OutcomeReference = value; OnPropertyChanged("OutcomeReference"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _OutcomeReference;
+    private List<Hl7.Fhir.Model.ResourceReference>? _OutcomeReference;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
-    IEnumerable<Coding> ICoded.ToCodings() => Category.ToCodings();
+    IEnumerable<Coding> ICoded.ToCodings() => Category?.ToCodings() ?? [];
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Goal;
-
-      if (dest == null)
-      {
+      if(other is not Goal dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(LifecycleStatusElement != null) dest.LifecycleStatusElement = (Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>)LifecycleStatusElement.DeepCopyInternal();
-      if(AchievementStatus != null) dest.AchievementStatus = (Hl7.Fhir.Model.CodeableConcept)AchievementStatus.DeepCopyInternal();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopyInternal();
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)Description.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Start != null) dest.Start = (Hl7.Fhir.Model.DataType)Start.DeepCopyInternal();
-      if(Target.Any()) dest.Target = new List<Hl7.Fhir.Model.Goal.TargetComponent>(Target.DeepCopyInternal());
-      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopyInternal();
-      if(StatusReasonElement != null) dest.StatusReasonElement = (Hl7.Fhir.Model.FhirString)StatusReasonElement.DeepCopyInternal();
-      if(ExpressedBy != null) dest.ExpressedBy = (Hl7.Fhir.Model.ResourceReference)ExpressedBy.DeepCopyInternal();
-      if(Addresses.Any()) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
-      if(OutcomeCode.Any()) dest.OutcomeCode = new List<Hl7.Fhir.Model.CodeableConcept>(OutcomeCode.DeepCopyInternal());
-      if(OutcomeReference.Any()) dest.OutcomeReference = new List<Hl7.Fhir.Model.ResourceReference>(OutcomeReference.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_LifecycleStatusElement is not null) dest.LifecycleStatusElement = (Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>)_LifecycleStatusElement.DeepCopyInternal();
+      if(_AchievementStatus is not null) dest.AchievementStatus = (Hl7.Fhir.Model.CodeableConcept)_AchievementStatus.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Priority is not null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)_Priority.DeepCopyInternal();
+      if(_Description is not null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)_Description.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Start is not null) dest.Start = (Hl7.Fhir.Model.DataType)_Start.DeepCopyInternal();
+      if(_Target is not null) dest.Target = new List<Hl7.Fhir.Model.Goal.TargetComponent>(_Target.DeepCopyInternal());
+      if(_StatusDateElement is not null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)_StatusDateElement.DeepCopyInternal();
+      if(_StatusReasonElement is not null) dest.StatusReasonElement = (Hl7.Fhir.Model.FhirString)_StatusReasonElement.DeepCopyInternal();
+      if(_ExpressedBy is not null) dest.ExpressedBy = (Hl7.Fhir.Model.ResourceReference)_ExpressedBy.DeepCopyInternal();
+      if(_Addresses is not null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(_Addresses.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      if(_OutcomeCode is not null) dest.OutcomeCode = new List<Hl7.Fhir.Model.CodeableConcept>(_OutcomeCode.DeepCopyInternal());
+      if(_OutcomeReference is not null) dest.OutcomeReference = new List<Hl7.Fhir.Model.ResourceReference>(_OutcomeReference.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -601,139 +587,139 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Goal;
-      if(otherT == null) return false;
+      if(other is not Goal otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(LifecycleStatusElement, otherT.LifecycleStatusElement)) return false;
-      if(!comparer.Equals(AchievementStatus, otherT.AchievementStatus)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Priority, otherT.Priority)) return false;
-      if(!comparer.Equals(Description, otherT.Description)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Start, otherT.Start)) return false;
-      if(!comparer.ListEquals(Target, otherT.Target)) return false;
-      if(!comparer.Equals(StatusDateElement, otherT.StatusDateElement)) return false;
-      if(!comparer.Equals(StatusReasonElement, otherT.StatusReasonElement)) return false;
-      if(!comparer.Equals(ExpressedBy, otherT.ExpressedBy)) return false;
-      if(!comparer.ListEquals(Addresses, otherT.Addresses)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
-      if(!comparer.ListEquals(OutcomeCode, otherT.OutcomeCode)) return false;
-      if(!comparer.ListEquals(OutcomeReference, otherT.OutcomeReference)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_LifecycleStatusElement, otherT._LifecycleStatusElement)) return false;
+      if(!comparer.Equals(_AchievementStatus, otherT._AchievementStatus)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Priority, otherT._Priority)) return false;
+      if(!comparer.Equals(_Description, otherT._Description)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Start, otherT._Start)) return false;
+      if(!comparer.ListEquals(_Target, otherT._Target)) return false;
+      if(!comparer.Equals(_StatusDateElement, otherT._StatusDateElement)) return false;
+      if(!comparer.Equals(_StatusReasonElement, otherT._StatusReasonElement)) return false;
+      if(!comparer.Equals(_ExpressedBy, otherT._ExpressedBy)) return false;
+      if(!comparer.ListEquals(_Addresses, otherT._Addresses)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      if(!comparer.ListEquals(_OutcomeCode, otherT._OutcomeCode)) return false;
+      if(!comparer.ListEquals(_OutcomeReference, otherT._OutcomeReference)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "lifecycleStatus":
-          value = LifecycleStatusElement;
-          return LifecycleStatusElement is not null;
+          value = _LifecycleStatusElement;
+          return _LifecycleStatusElement is not null;
         case "achievementStatus":
-          value = AchievementStatus;
-          return AchievementStatus is not null;
+          value = _AchievementStatus;
+          return _AchievementStatus is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "priority":
-          value = Priority;
-          return Priority is not null;
+          value = _Priority;
+          return _Priority is not null;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = _Description;
+          return _Description is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "start":
-          value = Start;
-          return Start is not null;
+          value = _Start;
+          return _Start is not null;
         case "target":
-          value = Target;
-          return Target?.Any() == true;
+          value = _Target;
+          return _Target?.Any() == true;
         case "statusDate":
-          value = StatusDateElement;
-          return StatusDateElement is not null;
+          value = _StatusDateElement;
+          return _StatusDateElement is not null;
         case "statusReason":
-          value = StatusReasonElement;
-          return StatusReasonElement is not null;
+          value = _StatusReasonElement;
+          return _StatusReasonElement is not null;
         case "expressedBy":
-          value = ExpressedBy;
-          return ExpressedBy is not null;
+          value = _ExpressedBy;
+          return _ExpressedBy is not null;
         case "addresses":
-          value = Addresses;
-          return Addresses?.Any() == true;
+          value = _Addresses;
+          return _Addresses?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         case "outcomeCode":
-          value = OutcomeCode;
-          return OutcomeCode?.Any() == true;
+          value = _OutcomeCode;
+          return _OutcomeCode?.Any() == true;
         case "outcomeReference":
-          value = OutcomeReference;
-          return OutcomeReference?.Any() == true;
+          value = _OutcomeReference;
+          return _OutcomeReference?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "lifecycleStatus":
-          LifecycleStatusElement = (Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>)value;
+          LifecycleStatusElement = (Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>?)value;
           return this;
         case "achievementStatus":
-          AchievementStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          AchievementStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "priority":
-          Priority = (Hl7.Fhir.Model.CodeableConcept)value;
+          Priority = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "description":
-          Description = (Hl7.Fhir.Model.CodeableConcept)value;
+          Description = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "start":
-          Start = (Hl7.Fhir.Model.DataType)value;
+          Start = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "target":
-          Target = (List<Hl7.Fhir.Model.Goal.TargetComponent>)value;
+          Target = (List<Hl7.Fhir.Model.Goal.TargetComponent>?)value!;
           return this;
         case "statusDate":
-          StatusDateElement = (Hl7.Fhir.Model.Date)value;
+          StatusDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "statusReason":
-          StatusReasonElement = (Hl7.Fhir.Model.FhirString)value;
+          StatusReasonElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "expressedBy":
-          ExpressedBy = (Hl7.Fhir.Model.ResourceReference)value;
+          ExpressedBy = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "addresses":
-          Addresses = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Addresses = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "outcomeCode":
-          OutcomeCode = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          OutcomeCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "outcomeReference":
-          OutcomeReference = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          OutcomeReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -744,22 +730,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (LifecycleStatusElement is not null) yield return new KeyValuePair<string,object>("lifecycleStatus",LifecycleStatusElement);
-      if (AchievementStatus is not null) yield return new KeyValuePair<string,object>("achievementStatus",AchievementStatus);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Start is not null) yield return new KeyValuePair<string,object>("start",Start);
-      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
-      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
-      if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
-      if (ExpressedBy is not null) yield return new KeyValuePair<string,object>("expressedBy",ExpressedBy);
-      if (Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",Addresses);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (OutcomeCode?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
-      if (OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_LifecycleStatusElement is not null) yield return new KeyValuePair<string,object>("lifecycleStatus",_LifecycleStatusElement);
+      if (_AchievementStatus is not null) yield return new KeyValuePair<string,object>("achievementStatus",_AchievementStatus);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Priority is not null) yield return new KeyValuePair<string,object>("priority",_Priority);
+      if (_Description is not null) yield return new KeyValuePair<string,object>("description",_Description);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Start is not null) yield return new KeyValuePair<string,object>("start",_Start);
+      if (_Target?.Any() == true) yield return new KeyValuePair<string,object>("target",_Target);
+      if (_StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",_StatusReasonElement);
+      if (_ExpressedBy is not null) yield return new KeyValuePair<string,object>("expressedBy",_ExpressedBy);
+      if (_Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",_Addresses);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_OutcomeCode?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCode",_OutcomeCode);
+      if (_OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",_OutcomeReference);
     }
 
   }

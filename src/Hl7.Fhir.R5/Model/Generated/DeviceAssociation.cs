@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -116,13 +119,13 @@ namespace Hl7.Fhir.Model
       [Binding("DeviceAssociationOperationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Status
+      public Hl7.Fhir.Model.CodeableConcept? Status
       {
         get { return _Status; }
         set { _Status = value; OnPropertyChanged("Status"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Status;
+      private Hl7.Fhir.Model.CodeableConcept? _Status;
 
       /// <summary>
       /// The individual performing the action enabled by the device.
@@ -134,38 +137,34 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Operator
       {
-        get { if(_Operator==null) _Operator = new List<Hl7.Fhir.Model.ResourceReference>(); return _Operator; }
+        get => _Operator ?? new List<Hl7.Fhir.Model.ResourceReference>();
         set { _Operator = value; OnPropertyChanged("Operator"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Operator;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Operator;
 
       /// <summary>
       /// Begin and end dates and times for the device's operation.
       /// </summary>
       [FhirElement("period", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Period Period
+      public Hl7.Fhir.Model.Period? Period
       {
         get { return _Period; }
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private Hl7.Fhir.Model.Period _Period;
+      private Hl7.Fhir.Model.Period? _Period;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OperationComponent;
-
-        if (dest == null)
-        {
+        if(other is not OperationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-        if(Operator.Any()) dest.Operator = new List<Hl7.Fhir.Model.ResourceReference>(Operator.DeepCopyInternal());
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+        if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+        if(_Operator is not null) dest.Operator = new List<Hl7.Fhir.Model.ResourceReference>(_Operator.DeepCopyInternal());
+        if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -177,48 +176,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OperationComponent;
-        if(otherT == null) return false;
+        if(other is not OperationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Status, otherT.Status)) return false;
-        if(!comparer.ListEquals(Operator, otherT.Operator)) return false;
-        if(!comparer.Equals(Period, otherT.Period)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Status, otherT._Status)) return false;
+        if(!comparer.ListEquals(_Operator, otherT._Operator)) return false;
+        if(!comparer.Equals(_Period, otherT._Period)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "status":
-            value = Status;
-            return Status is not null;
+            value = _Status;
+            return _Status is not null;
           case "operator":
-            value = Operator;
-            return Operator?.Any() == true;
+            value = _Operator;
+            return _Operator?.Any() == true;
           case "period":
-            value = Period;
-            return Period is not null;
+            value = _Period;
+            return _Period is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "status":
-            Status = (Hl7.Fhir.Model.CodeableConcept)value;
+            Status = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "operator":
-            Operator = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Operator = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period)value;
+            Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -229,9 +228,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-        if (Operator?.Any() == true) yield return new KeyValuePair<string,object>("operator",Operator);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_Operator?.Any() == true) yield return new KeyValuePair<string,object>("operator",_Operator);
+        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
       }
 
     }
@@ -244,11 +243,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Reference to the devices associated with the patient or group.
@@ -258,13 +257,13 @@ namespace Hl7.Fhir.Model
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Device
+    public Hl7.Fhir.Model.ResourceReference? Device
     {
       get { return _Device; }
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Device;
+    private Hl7.Fhir.Model.ResourceReference? _Device;
 
     /// <summary>
     /// Describes the relationship between the device and subject.
@@ -274,11 +273,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// implanted | explanted | attached | entered-in-error | unknown.
@@ -287,13 +286,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceAssociationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Status
+    public Hl7.Fhir.Model.CodeableConcept? Status
     {
       get { return _Status; }
       set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Status;
+    private Hl7.Fhir.Model.CodeableConcept? _Status;
 
     /// <summary>
     /// The reasons given for the current association status.
@@ -304,11 +303,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
     {
-      get { if(_StatusReason==null) _StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _StatusReason; }
+      get => _StatusReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _StatusReason = value; OnPropertyChanged("StatusReason"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _StatusReason;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _StatusReason;
 
     /// <summary>
     /// The individual, group of individuals or device that the device is on or associated with.
@@ -317,13 +316,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","RelatedPerson","Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Current anatomical location of the device in/on subject.
@@ -332,26 +331,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("BodyStructure")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference BodyStructure
+    public Hl7.Fhir.Model.ResourceReference? BodyStructure
     {
       get { return _BodyStructure; }
       set { _BodyStructure = value; OnPropertyChanged("BodyStructure"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _BodyStructure;
+    private Hl7.Fhir.Model.ResourceReference? _BodyStructure;
 
     /// <summary>
     /// Begin and end dates and times for the device association.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// The details about the device when it is in use to describe its operation.
@@ -361,33 +360,29 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent> Operation
     {
-      get { if(_Operation==null) _Operation = new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>(); return _Operation; }
+      get => _Operation ?? new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>();
       set { _Operation = value; OnPropertyChanged("Operation"); }
     }
 
-    private List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent> _Operation;
+    private List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>? _Operation;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DeviceAssociation;
-
-      if (dest == null)
-      {
+      if(other is not DeviceAssociation dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopyInternal();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-      if(StatusReason.Any()) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopyInternal());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(BodyStructure != null) dest.BodyStructure = (Hl7.Fhir.Model.ResourceReference)BodyStructure.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(Operation.Any()) dest.Operation = new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>(Operation.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Device is not null) dest.Device = (Hl7.Fhir.Model.ResourceReference)_Device.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+      if(_StatusReason is not null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(_StatusReason.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_BodyStructure is not null) dest.BodyStructure = (Hl7.Fhir.Model.ResourceReference)_BodyStructure.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Operation is not null) dest.Operation = new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>(_Operation.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -399,90 +394,90 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DeviceAssociation;
-      if(otherT == null) return false;
+      if(other is not DeviceAssociation otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Device, otherT.Device)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Status, otherT.Status)) return false;
-      if(!comparer.ListEquals(StatusReason, otherT.StatusReason)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(BodyStructure, otherT.BodyStructure)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.ListEquals(Operation, otherT.Operation)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Device, otherT._Device)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Status, otherT._Status)) return false;
+      if(!comparer.ListEquals(_StatusReason, otherT._StatusReason)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_BodyStructure, otherT._BodyStructure)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.ListEquals(_Operation, otherT._Operation)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "device":
-          value = Device;
-          return Device is not null;
+          value = _Device;
+          return _Device is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "status":
-          value = Status;
-          return Status is not null;
+          value = _Status;
+          return _Status is not null;
         case "statusReason":
-          value = StatusReason;
-          return StatusReason?.Any() == true;
+          value = _StatusReason;
+          return _StatusReason?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "bodyStructure":
-          value = BodyStructure;
-          return BodyStructure is not null;
+          value = _BodyStructure;
+          return _BodyStructure is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "operation":
-          value = Operation;
-          return Operation?.Any() == true;
+          value = _Operation;
+          return _Operation?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "device":
-          Device = (Hl7.Fhir.Model.ResourceReference)value;
+          Device = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "status":
-          Status = (Hl7.Fhir.Model.CodeableConcept)value;
+          Status = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "statusReason":
-          StatusReason = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          StatusReason = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "bodyStructure":
-          BodyStructure = (Hl7.Fhir.Model.ResourceReference)value;
+          BodyStructure = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "operation":
-          Operation = (List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>)value;
+          Operation = (List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -493,15 +488,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-      if (StatusReason?.Any() == true) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (BodyStructure is not null) yield return new KeyValuePair<string,object>("bodyStructure",BodyStructure);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Operation?.Any() == true) yield return new KeyValuePair<string,object>("operation",Operation);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_StatusReason?.Any() == true) yield return new KeyValuePair<string,object>("statusReason",_StatusReason);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_BodyStructure is not null) yield return new KeyValuePair<string,object>("bodyStructure",_BodyStructure);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Operation?.Any() == true) yield return new KeyValuePair<string,object>("operation",_Operation);
     }
 
   }

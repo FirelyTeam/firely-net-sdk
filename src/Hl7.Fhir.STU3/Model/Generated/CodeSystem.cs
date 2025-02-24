@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CodeSystem","http://hl7.org/fhir/StructureDefinition/CodeSystem")]
-  public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.FilterOperator??>? Operator
+      public IEnumerable<Hl7.Fhir.Model.FilterOperator?>? Operator
       {
         get => _OperatorElement?.Select(elem => elem.Value);
         set
@@ -1778,7 +1778,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>? _Concept;
 
-    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {

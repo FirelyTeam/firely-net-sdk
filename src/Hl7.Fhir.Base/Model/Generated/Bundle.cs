@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Bundle","http://hl7.org/fhir/StructureDefinition/Bundle")]
-  public partial class Bundle : Hl7.Fhir.Model.Resource, IIdentifiable<Identifier>
+  public partial class Bundle : Hl7.Fhir.Model.Resource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2168,7 +2168,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Resource? _Issues;
 
-    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {

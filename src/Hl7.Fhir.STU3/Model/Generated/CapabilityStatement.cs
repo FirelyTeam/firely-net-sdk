@@ -1699,7 +1699,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy??>? ReferencePolicy
+      public IEnumerable<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy?>? ReferencePolicy
       {
         get => _ReferencePolicyElement?.Select(elem => elem.Value);
         set

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -104,11 +107,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Appointment this response relates to.
@@ -118,26 +121,26 @@ namespace Hl7.Fhir.Model
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Appointment
+    public Hl7.Fhir.Model.ResourceReference? Appointment
     {
       get { return _Appointment; }
       set { _Appointment = value; OnPropertyChanged("Appointment"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Appointment;
+    private Hl7.Fhir.Model.ResourceReference? _Appointment;
 
     /// <summary>
     /// Indicator for a counter proposal.
     /// </summary>
     [FhirElement("proposedNewTime", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ProposedNewTimeElement
+    public Hl7.Fhir.Model.FhirBoolean? ProposedNewTimeElement
     {
       get { return _ProposedNewTimeElement; }
       set { _ProposedNewTimeElement = value; OnPropertyChanged("ProposedNewTimeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ProposedNewTimeElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ProposedNewTimeElement;
 
     /// <summary>
     /// Indicator for a counter proposal
@@ -146,13 +149,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? ProposedNewTime
     {
-      get { return ProposedNewTimeElement != null ? ProposedNewTimeElement.Value : null; }
+      get => _ProposedNewTimeElement?.Value;
       set
       {
-        if (value == null)
-          ProposedNewTimeElement = null;
-        else
-          ProposedNewTimeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ProposedNewTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ProposedNewTime");
       }
     }
@@ -162,13 +162,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", Order=120, FiveWs="FiveWs.init")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant StartElement
+    public Hl7.Fhir.Model.Instant? StartElement
     {
       get { return _StartElement; }
       set { _StartElement = value; OnPropertyChanged("StartElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _StartElement;
+    private Hl7.Fhir.Model.Instant? _StartElement;
 
     /// <summary>
     /// Time from appointment, or requested new start time
@@ -177,13 +177,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get { return StartElement != null ? StartElement.Value : null; }
+      get => _StartElement?.Value;
       set
       {
-        if (value == null)
-          StartElement = null;
-        else
-          StartElement = new Hl7.Fhir.Model.Instant(value);
+        StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -193,13 +190,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("end", Order=130, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant EndElement
+    public Hl7.Fhir.Model.Instant? EndElement
     {
       get { return _EndElement; }
       set { _EndElement = value; OnPropertyChanged("EndElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _EndElement;
+    private Hl7.Fhir.Model.Instant? _EndElement;
 
     /// <summary>
     /// Time from appointment, or requested new end time
@@ -208,13 +205,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get { return EndElement != null ? EndElement.Value : null; }
+      get => _EndElement?.Value;
       set
       {
-        if (value == null)
-          EndElement = null;
-        else
-          EndElement = new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -228,11 +222,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
     {
-      get { if(_ParticipantType==null) _ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ParticipantType; }
+      get => _ParticipantType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _ParticipantType = value; OnPropertyChanged("ParticipantType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ParticipantType;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ParticipantType;
 
     /// <summary>
     /// Person(s), Location, HealthcareService, or Device.
@@ -241,13 +235,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Actor
+    public Hl7.Fhir.Model.ResourceReference? Actor
     {
       get { return _Actor; }
       set { _Actor = value; OnPropertyChanged("Actor"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Actor;
+    private Hl7.Fhir.Model.ResourceReference? _Actor;
 
     /// <summary>
     /// accepted | declined | tentative | needs-action | entered-in-error.
@@ -257,13 +251,13 @@ namespace Hl7.Fhir.Model
     [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus> ParticipantStatusElement
+    public Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>? ParticipantStatusElement
     {
       get { return _ParticipantStatusElement; }
       set { _ParticipantStatusElement = value; OnPropertyChanged("ParticipantStatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus> _ParticipantStatusElement;
+    private Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>? _ParticipantStatusElement;
 
     /// <summary>
     /// accepted | declined | tentative | needs-action | entered-in-error
@@ -272,13 +266,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus? ParticipantStatus
     {
-      get { return ParticipantStatusElement != null ? ParticipantStatusElement.Value : null; }
+      get => _ParticipantStatusElement?.Value;
       set
       {
-        if (value == null)
-          ParticipantStatusElement = null;
-        else
-          ParticipantStatusElement = new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
+        ParticipantStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
         OnPropertyChanged("ParticipantStatus");
       }
     }
@@ -288,28 +279,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comment", Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown CommentElement
+    public Hl7.Fhir.Model.Markdown? CommentElement
     {
       get { return _CommentElement; }
       set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _CommentElement;
+    private Hl7.Fhir.Model.Markdown? _CommentElement;
 
     /// <summary>
     /// Additional comments
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Comment
+    public string? Comment
     {
-      get { return CommentElement != null ? CommentElement.Value : null; }
+      get => _CommentElement?.Value;
       set
       {
-        if (value == null)
-          CommentElement = null;
-        else
-          CommentElement = new Hl7.Fhir.Model.Markdown(value);
+        CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -319,13 +307,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("recurring", Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean RecurringElement
+    public Hl7.Fhir.Model.FhirBoolean? RecurringElement
     {
       get { return _RecurringElement; }
       set { _RecurringElement = value; OnPropertyChanged("RecurringElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _RecurringElement;
+    private Hl7.Fhir.Model.FhirBoolean? _RecurringElement;
 
     /// <summary>
     /// This response is for all occurrences in a recurring request
@@ -334,13 +322,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Recurring
     {
-      get { return RecurringElement != null ? RecurringElement.Value : null; }
+      get => _RecurringElement?.Value;
       set
       {
-        if (value == null)
-          RecurringElement = null;
-        else
-          RecurringElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        RecurringElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Recurring");
       }
     }
@@ -350,28 +335,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurrenceDate", Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.Date OccurrenceDateElement
+    public Hl7.Fhir.Model.Date? OccurrenceDateElement
     {
       get { return _OccurrenceDateElement; }
       set { _OccurrenceDateElement = value; OnPropertyChanged("OccurrenceDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _OccurrenceDateElement;
+    private Hl7.Fhir.Model.Date? _OccurrenceDateElement;
 
     /// <summary>
     /// Original date within a recurring request
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string OccurrenceDate
+    public string? OccurrenceDate
     {
-      get { return OccurrenceDateElement != null ? OccurrenceDateElement.Value : null; }
+      get => _OccurrenceDateElement?.Value;
       set
       {
-        if (value == null)
-          OccurrenceDateElement = null;
-        else
-          OccurrenceDateElement = new Hl7.Fhir.Model.Date(value);
+        OccurrenceDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("OccurrenceDate");
       }
     }
@@ -381,13 +363,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("recurrenceId", Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt RecurrenceIdElement
+    public Hl7.Fhir.Model.PositiveInt? RecurrenceIdElement
     {
       get { return _RecurrenceIdElement; }
       set { _RecurrenceIdElement = value; OnPropertyChanged("RecurrenceIdElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _RecurrenceIdElement;
+    private Hl7.Fhir.Model.PositiveInt? _RecurrenceIdElement;
 
     /// <summary>
     /// The recurrence ID of the specific recurring request
@@ -396,13 +378,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? RecurrenceId
     {
-      get { return RecurrenceIdElement != null ? RecurrenceIdElement.Value : null; }
+      get => _RecurrenceIdElement?.Value;
       set
       {
-        if (value == null)
-          RecurrenceIdElement = null;
-        else
-          RecurrenceIdElement = new Hl7.Fhir.Model.PositiveInt(value);
+        RecurrenceIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("RecurrenceId");
       }
     }
@@ -411,26 +390,22 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as AppointmentResponse;
-
-      if (dest == null)
-      {
+      if(other is not AppointmentResponse dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopyInternal();
-      if(ProposedNewTimeElement != null) dest.ProposedNewTimeElement = (Hl7.Fhir.Model.FhirBoolean)ProposedNewTimeElement.DeepCopyInternal();
-      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopyInternal();
-      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopyInternal();
-      if(ParticipantType.Any()) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(ParticipantType.DeepCopyInternal());
-      if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
-      if(ParticipantStatusElement != null) dest.ParticipantStatusElement = (Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>)ParticipantStatusElement.DeepCopyInternal();
-      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopyInternal();
-      if(RecurringElement != null) dest.RecurringElement = (Hl7.Fhir.Model.FhirBoolean)RecurringElement.DeepCopyInternal();
-      if(OccurrenceDateElement != null) dest.OccurrenceDateElement = (Hl7.Fhir.Model.Date)OccurrenceDateElement.DeepCopyInternal();
-      if(RecurrenceIdElement != null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)RecurrenceIdElement.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Appointment is not null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)_Appointment.DeepCopyInternal();
+      if(_ProposedNewTimeElement is not null) dest.ProposedNewTimeElement = (Hl7.Fhir.Model.FhirBoolean)_ProposedNewTimeElement.DeepCopyInternal();
+      if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.Instant)_StartElement.DeepCopyInternal();
+      if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Instant)_EndElement.DeepCopyInternal();
+      if(_ParticipantType is not null) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(_ParticipantType.DeepCopyInternal());
+      if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
+      if(_ParticipantStatusElement is not null) dest.ParticipantStatusElement = (Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>)_ParticipantStatusElement.DeepCopyInternal();
+      if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)_CommentElement.DeepCopyInternal();
+      if(_RecurringElement is not null) dest.RecurringElement = (Hl7.Fhir.Model.FhirBoolean)_RecurringElement.DeepCopyInternal();
+      if(_OccurrenceDateElement is not null) dest.OccurrenceDateElement = (Hl7.Fhir.Model.Date)_OccurrenceDateElement.DeepCopyInternal();
+      if(_RecurrenceIdElement is not null) dest.RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)_RecurrenceIdElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -442,111 +417,111 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as AppointmentResponse;
-      if(otherT == null) return false;
+      if(other is not AppointmentResponse otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Appointment, otherT.Appointment)) return false;
-      if(!comparer.Equals(ProposedNewTimeElement, otherT.ProposedNewTimeElement)) return false;
-      if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-      if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
-      if(!comparer.ListEquals(ParticipantType, otherT.ParticipantType)) return false;
-      if(!comparer.Equals(Actor, otherT.Actor)) return false;
-      if(!comparer.Equals(ParticipantStatusElement, otherT.ParticipantStatusElement)) return false;
-      if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
-      if(!comparer.Equals(RecurringElement, otherT.RecurringElement)) return false;
-      if(!comparer.Equals(OccurrenceDateElement, otherT.OccurrenceDateElement)) return false;
-      if(!comparer.Equals(RecurrenceIdElement, otherT.RecurrenceIdElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Appointment, otherT._Appointment)) return false;
+      if(!comparer.Equals(_ProposedNewTimeElement, otherT._ProposedNewTimeElement)) return false;
+      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+      if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+      if(!comparer.ListEquals(_ParticipantType, otherT._ParticipantType)) return false;
+      if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+      if(!comparer.Equals(_ParticipantStatusElement, otherT._ParticipantStatusElement)) return false;
+      if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
+      if(!comparer.Equals(_RecurringElement, otherT._RecurringElement)) return false;
+      if(!comparer.Equals(_OccurrenceDateElement, otherT._OccurrenceDateElement)) return false;
+      if(!comparer.Equals(_RecurrenceIdElement, otherT._RecurrenceIdElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "appointment":
-          value = Appointment;
-          return Appointment is not null;
+          value = _Appointment;
+          return _Appointment is not null;
         case "proposedNewTime":
-          value = ProposedNewTimeElement;
-          return ProposedNewTimeElement is not null;
+          value = _ProposedNewTimeElement;
+          return _ProposedNewTimeElement is not null;
         case "start":
-          value = StartElement;
-          return StartElement is not null;
+          value = _StartElement;
+          return _StartElement is not null;
         case "end":
-          value = EndElement;
-          return EndElement is not null;
+          value = _EndElement;
+          return _EndElement is not null;
         case "participantType":
-          value = ParticipantType;
-          return ParticipantType?.Any() == true;
+          value = _ParticipantType;
+          return _ParticipantType?.Any() == true;
         case "actor":
-          value = Actor;
-          return Actor is not null;
+          value = _Actor;
+          return _Actor is not null;
         case "participantStatus":
-          value = ParticipantStatusElement;
-          return ParticipantStatusElement is not null;
+          value = _ParticipantStatusElement;
+          return _ParticipantStatusElement is not null;
         case "comment":
-          value = CommentElement;
-          return CommentElement is not null;
+          value = _CommentElement;
+          return _CommentElement is not null;
         case "recurring":
-          value = RecurringElement;
-          return RecurringElement is not null;
+          value = _RecurringElement;
+          return _RecurringElement is not null;
         case "occurrenceDate":
-          value = OccurrenceDateElement;
-          return OccurrenceDateElement is not null;
+          value = _OccurrenceDateElement;
+          return _OccurrenceDateElement is not null;
         case "recurrenceId":
-          value = RecurrenceIdElement;
-          return RecurrenceIdElement is not null;
+          value = _RecurrenceIdElement;
+          return _RecurrenceIdElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "appointment":
-          Appointment = (Hl7.Fhir.Model.ResourceReference)value;
+          Appointment = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "proposedNewTime":
-          ProposedNewTimeElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ProposedNewTimeElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "start":
-          StartElement = (Hl7.Fhir.Model.Instant)value;
+          StartElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.Instant)value;
+          EndElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "participantType":
-          ParticipantType = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ParticipantType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "actor":
-          Actor = (Hl7.Fhir.Model.ResourceReference)value;
+          Actor = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "participantStatus":
-          ParticipantStatusElement = (Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>)value;
+          ParticipantStatusElement = (Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>?)value;
           return this;
         case "comment":
-          CommentElement = (Hl7.Fhir.Model.Markdown)value;
+          CommentElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "recurring":
-          RecurringElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          RecurringElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "occurrenceDate":
-          OccurrenceDateElement = (Hl7.Fhir.Model.Date)value;
+          OccurrenceDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "recurrenceId":
-          RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt)value;
+          RecurrenceIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -557,18 +532,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Appointment is not null) yield return new KeyValuePair<string,object>("appointment",Appointment);
-      if (ProposedNewTimeElement is not null) yield return new KeyValuePair<string,object>("proposedNewTime",ProposedNewTimeElement);
-      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
-      if (ParticipantType?.Any() == true) yield return new KeyValuePair<string,object>("participantType",ParticipantType);
-      if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
-      if (ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",ParticipantStatusElement);
-      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (RecurringElement is not null) yield return new KeyValuePair<string,object>("recurring",RecurringElement);
-      if (OccurrenceDateElement is not null) yield return new KeyValuePair<string,object>("occurrenceDate",OccurrenceDateElement);
-      if (RecurrenceIdElement is not null) yield return new KeyValuePair<string,object>("recurrenceId",RecurrenceIdElement);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Appointment is not null) yield return new KeyValuePair<string,object>("appointment",_Appointment);
+      if (_ProposedNewTimeElement is not null) yield return new KeyValuePair<string,object>("proposedNewTime",_ProposedNewTimeElement);
+      if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_ParticipantType?.Any() == true) yield return new KeyValuePair<string,object>("participantType",_ParticipantType);
+      if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
+      if (_ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",_ParticipantStatusElement);
+      if (_CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_RecurringElement is not null) yield return new KeyValuePair<string,object>("recurring",_RecurringElement);
+      if (_OccurrenceDateElement is not null) yield return new KeyValuePair<string,object>("occurrenceDate",_OccurrenceDateElement);
+      if (_RecurrenceIdElement is not null) yield return new KeyValuePair<string,object>("recurrenceId",_RecurrenceIdElement);
     }
 
   }

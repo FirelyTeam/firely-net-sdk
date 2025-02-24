@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -135,13 +138,13 @@ namespace Hl7.Fhir.Model
       [Binding("EpisodeOfCareStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
+      public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>? StatusElement
       {
         get { return _StatusElement; }
         set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
+      private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>? _StatusElement;
 
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -150,13 +153,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
       {
-        get { return StatusElement != null ? StatusElement.Value : null; }
+        get => _StatusElement?.Value;
         set
         {
-          if (value == null)
-            StatusElement = null;
-          else
-            StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
+          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -167,26 +167,22 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Period Period
+      public Hl7.Fhir.Model.Period? Period
       {
         get { return _Period; }
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private Hl7.Fhir.Model.Period _Period;
+      private Hl7.Fhir.Model.Period? _Period;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StatusHistoryComponent;
-
-        if (dest == null)
-        {
+        if(other is not StatusHistoryComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopyInternal();
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+        if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)_StatusElement.DeepCopyInternal();
+        if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -198,41 +194,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StatusHistoryComponent;
-        if(otherT == null) return false;
+        if(other is not StatusHistoryComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-        if(!comparer.Equals(Period, otherT.Period)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+        if(!comparer.Equals(_Period, otherT._Period)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "status":
-            value = StatusElement;
-            return StatusElement is not null;
+            value = _StatusElement;
+            return _StatusElement is not null;
           case "period":
-            value = Period;
-            return Period is not null;
+            value = _Period;
+            return _Period is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "status":
-            StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)value;
+            StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>?)value;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period)value;
+            Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -243,8 +239,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
       }
 
     }
@@ -274,13 +270,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("use", InSummary=true, Order=40)]
       [Binding("reason-use")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Use
+      public Hl7.Fhir.Model.CodeableConcept? Use
       {
         get { return _Use; }
         set { _Use = value; OnPropertyChanged("Use"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Use;
+      private Hl7.Fhir.Model.CodeableConcept? _Use;
 
       /// <summary>
       /// Medical reason to be addressed.
@@ -291,24 +287,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Value
       {
-        get { if(_Value==null) _Value = new List<Hl7.Fhir.Model.CodeableReference>(); return _Value; }
+        get => _Value ?? new List<Hl7.Fhir.Model.CodeableReference>();
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference> _Value;
+      private List<Hl7.Fhir.Model.CodeableReference>? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ReasonComponent;
-
-        if (dest == null)
-        {
+        if(other is not ReasonComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Use != null) dest.Use = (Hl7.Fhir.Model.CodeableConcept)Use.DeepCopyInternal();
-        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.CodeableReference>(Value.DeepCopyInternal());
+        if(_Use is not null) dest.Use = (Hl7.Fhir.Model.CodeableConcept)_Use.DeepCopyInternal();
+        if(_Value is not null) dest.Value = new List<Hl7.Fhir.Model.CodeableReference>(_Value.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -320,41 +312,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ReasonComponent;
-        if(otherT == null) return false;
+        if(other is not ReasonComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Use, otherT.Use)) return false;
-        if(!comparer.ListEquals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Use, otherT._Use)) return false;
+        if(!comparer.ListEquals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "use":
-            value = Use;
-            return Use is not null;
+            value = _Use;
+            return _Use is not null;
           case "value":
-            value = Value;
-            return Value?.Any() == true;
+            value = _Value;
+            return _Value?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "use":
-            Use = (Hl7.Fhir.Model.CodeableConcept)value;
+            Use = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (List<Hl7.Fhir.Model.CodeableReference>)value;
+            Value = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -365,8 +357,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Use is not null) yield return new KeyValuePair<string,object>("use",Use);
-        if (Value?.Any() == true) yield return new KeyValuePair<string,object>("value",Value);
+        if (_Use is not null) yield return new KeyValuePair<string,object>("use",_Use);
+        if (_Value?.Any() == true) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -397,11 +389,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Condition
       {
-        get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.CodeableReference>(); return _Condition; }
+        get => _Condition ?? new List<Hl7.Fhir.Model.CodeableReference>();
         set { _Condition = value; OnPropertyChanged("Condition"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference> _Condition;
+      private List<Hl7.Fhir.Model.CodeableReference>? _Condition;
 
       /// <summary>
       /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …).
@@ -409,26 +401,22 @@ namespace Hl7.Fhir.Model
       [FhirElement("use", InSummary=true, Order=50)]
       [Binding("DiagnosisUse")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Use
+      public Hl7.Fhir.Model.CodeableConcept? Use
       {
         get { return _Use; }
         set { _Use = value; OnPropertyChanged("Use"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Use;
+      private Hl7.Fhir.Model.CodeableConcept? _Use;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DiagnosisComponent;
-
-        if (dest == null)
-        {
+        if(other is not DiagnosisComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Condition.Any()) dest.Condition = new List<Hl7.Fhir.Model.CodeableReference>(Condition.DeepCopyInternal());
-        if(Use != null) dest.Use = (Hl7.Fhir.Model.CodeableConcept)Use.DeepCopyInternal();
+        if(_Condition is not null) dest.Condition = new List<Hl7.Fhir.Model.CodeableReference>(_Condition.DeepCopyInternal());
+        if(_Use is not null) dest.Use = (Hl7.Fhir.Model.CodeableConcept)_Use.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -440,41 +428,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DiagnosisComponent;
-        if(otherT == null) return false;
+        if(other is not DiagnosisComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Condition, otherT.Condition)) return false;
-        if(!comparer.Equals(Use, otherT.Use)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Condition, otherT._Condition)) return false;
+        if(!comparer.Equals(_Use, otherT._Use)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "condition":
-            value = Condition;
-            return Condition?.Any() == true;
+            value = _Condition;
+            return _Condition?.Any() == true;
           case "use":
-            value = Use;
-            return Use is not null;
+            value = _Use;
+            return _Use is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "condition":
-            Condition = (List<Hl7.Fhir.Model.CodeableReference>)value;
+            Condition = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           case "use":
-            Use = (Hl7.Fhir.Model.CodeableConcept)value;
+            Use = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -485,8 +473,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
-        if (Use is not null) yield return new KeyValuePair<string,object>("use",Use);
+        if (_Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",_Condition);
+        if (_Use is not null) yield return new KeyValuePair<string,object>("use",_Use);
       }
 
     }
@@ -499,11 +487,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
@@ -513,13 +501,13 @@ namespace Hl7.Fhir.Model
     [Binding("EpisodeOfCareStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
+    public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>? _StatusElement;
 
     /// <summary>
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -528,13 +516,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -547,11 +532,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> StatusHistory
     {
-      get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(); return _StatusHistory; }
+      get => _StatusHistory ?? new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>();
       set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
     }
 
-    private List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> _StatusHistory;
+    private List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>? _StatusHistory;
 
     /// <summary>
     /// Type/class  - e.g. specialist referral, disease management.
@@ -562,11 +547,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
     /// <summary>
     /// The list of medical reasons that are expected to be addressed during the episode of care.
@@ -576,11 +561,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent> Reason
     {
-      get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>(); return _Reason; }
+      get => _Reason ?? new List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>();
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
-    private List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent> _Reason;
+    private List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>? _Reason;
 
     /// <summary>
     /// The list of medical conditions that were addressed during the episode of care.
@@ -590,11 +575,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> Diagnosis
     {
-      get { if(_Diagnosis==null) _Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(); return _Diagnosis; }
+      get => _Diagnosis ?? new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>();
       set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
     }
 
-    private List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> _Diagnosis;
+    private List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>? _Diagnosis;
 
     /// <summary>
     /// The patient who is the focus of this episode of care.
@@ -604,13 +589,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Organization that assumes responsibility for care coordination.
@@ -619,26 +604,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ManagingOrganization
+    public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
     {
       get { return _ManagingOrganization; }
       set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+    private Hl7.Fhir.Model.ResourceReference? _ManagingOrganization;
 
     /// <summary>
     /// Interval during responsibility is assumed.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=170, FiveWs="FiveWs.init")]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// Originating Referral Request(s).
@@ -650,11 +635,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
     {
-      get { if(_ReferralRequest==null) _ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReferralRequest; }
+      get => _ReferralRequest ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _ReferralRequest = value; OnPropertyChanged("ReferralRequest"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ReferralRequest;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ReferralRequest;
 
     /// <summary>
     /// Care manager/care coordinator for the patient.
@@ -663,13 +648,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference CareManager
+    public Hl7.Fhir.Model.ResourceReference? CareManager
     {
       get { return _CareManager; }
       set { _CareManager = value; OnPropertyChanged("CareManager"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _CareManager;
+    private Hl7.Fhir.Model.ResourceReference? _CareManager;
 
     /// <summary>
     /// Other practitioners facilitating this episode of care.
@@ -681,11 +666,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> CareTeam
     {
-      get { if(_CareTeam==null) _CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(); return _CareTeam; }
+      get => _CareTeam ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _CareTeam;
+    private List<Hl7.Fhir.Model.ResourceReference>? _CareTeam;
 
     /// <summary>
     /// The set of accounts that may be used for billing for this EpisodeOfCare.
@@ -697,37 +682,33 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
-      get { if(_Account==null) _Account = new List<Hl7.Fhir.Model.ResourceReference>(); return _Account; }
+      get => _Account ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Account = value; OnPropertyChanged("Account"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Account;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Account;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as EpisodeOfCare;
-
-      if (dest == null)
-      {
+      if(other is not EpisodeOfCare dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopyInternal();
-      if(StatusHistory.Any()) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(StatusHistory.DeepCopyInternal());
-      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>(Reason.DeepCopyInternal());
-      if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(Diagnosis.DeepCopyInternal());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(ReferralRequest.Any()) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopyInternal());
-      if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopyInternal();
-      if(CareTeam.Any()) dest.CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(CareTeam.DeepCopyInternal());
-      if(Account.Any()) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)_StatusElement.DeepCopyInternal();
+      if(_StatusHistory is not null) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(_StatusHistory.DeepCopyInternal());
+      if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+      if(_Reason is not null) dest.Reason = new List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>(_Reason.DeepCopyInternal());
+      if(_Diagnosis is not null) dest.Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(_Diagnosis.DeepCopyInternal());
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_ManagingOrganization is not null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)_ManagingOrganization.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_ReferralRequest is not null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(_ReferralRequest.DeepCopyInternal());
+      if(_CareManager is not null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)_CareManager.DeepCopyInternal();
+      if(_CareTeam is not null) dest.CareTeam = new List<Hl7.Fhir.Model.ResourceReference>(_CareTeam.DeepCopyInternal());
+      if(_Account is not null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(_Account.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -739,118 +720,118 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as EpisodeOfCare;
-      if(otherT == null) return false;
+      if(other is not EpisodeOfCare otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.ListEquals(StatusHistory, otherT.StatusHistory)) return false;
-      if(!comparer.ListEquals(Type, otherT.Type)) return false;
-      if(!comparer.ListEquals(Reason, otherT.Reason)) return false;
-      if(!comparer.ListEquals(Diagnosis, otherT.Diagnosis)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(ManagingOrganization, otherT.ManagingOrganization)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.ListEquals(ReferralRequest, otherT.ReferralRequest)) return false;
-      if(!comparer.Equals(CareManager, otherT.CareManager)) return false;
-      if(!comparer.ListEquals(CareTeam, otherT.CareTeam)) return false;
-      if(!comparer.ListEquals(Account, otherT.Account)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.ListEquals(_StatusHistory, otherT._StatusHistory)) return false;
+      if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+      if(!comparer.ListEquals(_Reason, otherT._Reason)) return false;
+      if(!comparer.ListEquals(_Diagnosis, otherT._Diagnosis)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_ManagingOrganization, otherT._ManagingOrganization)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.ListEquals(_ReferralRequest, otherT._ReferralRequest)) return false;
+      if(!comparer.Equals(_CareManager, otherT._CareManager)) return false;
+      if(!comparer.ListEquals(_CareTeam, otherT._CareTeam)) return false;
+      if(!comparer.ListEquals(_Account, otherT._Account)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "statusHistory":
-          value = StatusHistory;
-          return StatusHistory?.Any() == true;
+          value = _StatusHistory;
+          return _StatusHistory?.Any() == true;
         case "type":
-          value = Type;
-          return Type?.Any() == true;
+          value = _Type;
+          return _Type?.Any() == true;
         case "reason":
-          value = Reason;
-          return Reason?.Any() == true;
+          value = _Reason;
+          return _Reason?.Any() == true;
         case "diagnosis":
-          value = Diagnosis;
-          return Diagnosis?.Any() == true;
+          value = _Diagnosis;
+          return _Diagnosis?.Any() == true;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "managingOrganization":
-          value = ManagingOrganization;
-          return ManagingOrganization is not null;
+          value = _ManagingOrganization;
+          return _ManagingOrganization is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "referralRequest":
-          value = ReferralRequest;
-          return ReferralRequest?.Any() == true;
+          value = _ReferralRequest;
+          return _ReferralRequest?.Any() == true;
         case "careManager":
-          value = CareManager;
-          return CareManager is not null;
+          value = _CareManager;
+          return _CareManager is not null;
         case "careTeam":
-          value = CareTeam;
-          return CareTeam?.Any() == true;
+          value = _CareTeam;
+          return _CareTeam?.Any() == true;
         case "account":
-          value = Account;
-          return Account?.Any() == true;
+          value = _Account;
+          return _Account?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>?)value;
           return this;
         case "statusHistory":
-          StatusHistory = (List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>)value;
+          StatusHistory = (List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>?)value!;
           return this;
         case "type":
-          Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "reason":
-          Reason = (List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>)value;
+          Reason = (List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent>?)value!;
           return this;
         case "diagnosis":
-          Diagnosis = (List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>)value;
+          Diagnosis = (List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "managingOrganization":
-          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)value;
+          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "referralRequest":
-          ReferralRequest = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          ReferralRequest = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "careManager":
-          CareManager = (Hl7.Fhir.Model.ResourceReference)value;
+          CareManager = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "careTeam":
-          CareTeam = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          CareTeam = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "account":
-          Account = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Account = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -861,19 +842,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusHistory?.Any() == true) yield return new KeyValuePair<string,object>("statusHistory",StatusHistory);
-      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
-      if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (ReferralRequest?.Any() == true) yield return new KeyValuePair<string,object>("referralRequest",ReferralRequest);
-      if (CareManager is not null) yield return new KeyValuePair<string,object>("careManager",CareManager);
-      if (CareTeam?.Any() == true) yield return new KeyValuePair<string,object>("careTeam",CareTeam);
-      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_StatusHistory?.Any() == true) yield return new KeyValuePair<string,object>("statusHistory",_StatusHistory);
+      if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",_Diagnosis);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",_ManagingOrganization);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_ReferralRequest?.Any() == true) yield return new KeyValuePair<string,object>("referralRequest",_ReferralRequest);
+      if (_CareManager is not null) yield return new KeyValuePair<string,object>("careManager",_CareManager);
+      if (_CareTeam?.Any() == true) yield return new KeyValuePair<string,object>("careTeam",_CareTeam);
+      if (_Account?.Any() == true) yield return new KeyValuePair<string,object>("account",_Account);
     }
 
   }

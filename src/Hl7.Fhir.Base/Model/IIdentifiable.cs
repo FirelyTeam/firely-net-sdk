@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Model
     /// <typeparam name="T">The type that is used to identify the resource, usually a (list of) <see cref="Identifier"/>.</typeparam>
     public interface IIdentifiable<T> : IIdentifiable
     {
-        T? Identifier { get; set; }
+        T Identifier { get; set; }
     }
 
 

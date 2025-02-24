@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.FilterOperator??>? Operator
+      public IEnumerable<Hl7.Fhir.Model.FilterOperator?>? Operator
       {
         get => _OperatorElement?.Select(elem => elem.Value);
         set

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -134,13 +137,13 @@ namespace Hl7.Fhir.Model
       [Binding("DeviceUsageAdherenceCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// lost | stolen | prescribed | broken | burned | forgot.
@@ -151,24 +154,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
-        get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+        get => _Reason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Reason = value; OnPropertyChanged("Reason"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Reason;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AdherenceComponent;
-
-        if (dest == null)
-        {
+        if(other is not AdherenceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopyInternal());
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_Reason is not null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(_Reason.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -180,41 +179,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AdherenceComponent;
-        if(otherT == null) return false;
+        if(other is not AdherenceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.ListEquals(Reason, otherT.Reason)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.ListEquals(_Reason, otherT._Reason)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "reason":
-            value = Reason;
-            return Reason?.Any() == true;
+            value = _Reason;
+            return _Reason?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "reason":
-            Reason = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Reason = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -225,8 +224,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",_Reason);
       }
 
     }
@@ -239,11 +238,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Fulfills plan, proposal or order.
@@ -255,11 +254,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// active | completed | not-done | entered-in-error +.
@@ -269,13 +268,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceUsageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus> StatusElement
+    public Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>? _StatusElement;
 
     /// <summary>
     /// active | completed | not-done | entered-in-error +
@@ -284,13 +283,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -303,11 +299,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// Patient using device.
@@ -317,13 +313,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Supporting information.
@@ -335,11 +331,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
-      get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
+      get => _DerivedFrom ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
+    private List<Hl7.Fhir.Model.ResourceReference>? _DerivedFrom;
 
     /// <summary>
     /// The encounter or episode of care that establishes the context for this device use statement.
@@ -348,13 +344,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Context
+    public Hl7.Fhir.Model.ResourceReference? Context
     {
       get { return _Context; }
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Context;
+    private Hl7.Fhir.Model.ResourceReference? _Context;
 
     /// <summary>
     /// How often  the device was used.
@@ -363,41 +359,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Timing
+    public Hl7.Fhir.Model.DataType? Timing
     {
       get { return _Timing; }
       set { _Timing = value; OnPropertyChanged("Timing"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Timing;
+    private Hl7.Fhir.Model.DataType? _Timing;
 
     /// <summary>
     /// When the statement was made (and recorded).
     /// </summary>
     [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
+    public Hl7.Fhir.Model.FhirDateTime? DateAssertedElement
     {
       get { return _DateAssertedElement; }
       set { _DateAssertedElement = value; OnPropertyChanged("DateAssertedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateAssertedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateAssertedElement;
 
     /// <summary>
     /// When the statement was made (and recorded)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string DateAsserted
+    public string? DateAsserted
     {
-      get { return DateAssertedElement != null ? DateAssertedElement.Value : null; }
+      get => _DateAssertedElement?.Value;
       set
       {
-        if (value == null)
-          DateAssertedElement = null;
-        else
-          DateAssertedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateAssertedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateAsserted");
       }
     }
@@ -408,13 +401,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("usageStatus", Order=180)]
     [Binding("DeviceUsageStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept UsageStatus
+    public Hl7.Fhir.Model.CodeableConcept? UsageStatus
     {
       get { return _UsageStatus; }
       set { _UsageStatus = value; OnPropertyChanged("UsageStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _UsageStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _UsageStatus;
 
     /// <summary>
     /// The reason for asserting the usage status - for example forgot, lost, stolen, broken.
@@ -424,24 +417,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> UsageReason
     {
-      get { if(_UsageReason==null) _UsageReason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UsageReason; }
+      get => _UsageReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _UsageReason = value; OnPropertyChanged("UsageReason"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _UsageReason;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _UsageReason;
 
     /// <summary>
     /// How device is being used.
     /// </summary>
     [FhirElement("adherence", Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.DeviceUsage.AdherenceComponent Adherence
+    public Hl7.Fhir.Model.DeviceUsage.AdherenceComponent? Adherence
     {
       get { return _Adherence; }
       set { _Adherence = value; OnPropertyChanged("Adherence"); }
     }
 
-    private Hl7.Fhir.Model.DeviceUsage.AdherenceComponent _Adherence;
+    private Hl7.Fhir.Model.DeviceUsage.AdherenceComponent? _Adherence;
 
     /// <summary>
     /// Who made the statement.
@@ -450,13 +443,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference InformationSource
+    public Hl7.Fhir.Model.ResourceReference? InformationSource
     {
       get { return _InformationSource; }
       set { _InformationSource = value; OnPropertyChanged("InformationSource"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _InformationSource;
+    private Hl7.Fhir.Model.ResourceReference? _InformationSource;
 
     /// <summary>
     /// Code or Reference to device used.
@@ -464,13 +457,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("device", InSummary=true, Order=220, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference Device
+    public Hl7.Fhir.Model.CodeableReference? Device
     {
       get { return _Device; }
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
-    private Hl7.Fhir.Model.CodeableReference _Device;
+    private Hl7.Fhir.Model.CodeableReference? _Device;
 
     /// <summary>
     /// Why device was used.
@@ -480,11 +473,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference> _Reason;
+    private List<Hl7.Fhir.Model.CodeableReference>? _Reason;
 
     /// <summary>
     /// Target body site.
@@ -492,13 +485,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("bodySite", InSummary=true, Order=240)]
     [Binding("BodySite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference BodySite
+    public Hl7.Fhir.Model.CodeableReference? BodySite
     {
       get { return _BodySite; }
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
-    private Hl7.Fhir.Model.CodeableReference _BodySite;
+    private Hl7.Fhir.Model.CodeableReference? _BodySite;
 
     /// <summary>
     /// Addition details (comments, instructions).
@@ -508,41 +501,37 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DeviceUsage;
-
-      if (dest == null)
-      {
+      if(other is not DeviceUsage dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>)StatusElement.DeepCopyInternal();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopyInternal());
-      if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopyInternal();
-      if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopyInternal();
-      if(DateAssertedElement != null) dest.DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime)DateAssertedElement.DeepCopyInternal();
-      if(UsageStatus != null) dest.UsageStatus = (Hl7.Fhir.Model.CodeableConcept)UsageStatus.DeepCopyInternal();
-      if(UsageReason.Any()) dest.UsageReason = new List<Hl7.Fhir.Model.CodeableConcept>(UsageReason.DeepCopyInternal());
-      if(Adherence != null) dest.Adherence = (Hl7.Fhir.Model.DeviceUsage.AdherenceComponent)Adherence.DeepCopyInternal();
-      if(InformationSource != null) dest.InformationSource = (Hl7.Fhir.Model.ResourceReference)InformationSource.DeepCopyInternal();
-      if(Device != null) dest.Device = (Hl7.Fhir.Model.CodeableReference)Device.DeepCopyInternal();
-      if(Reason.Any()) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopyInternal());
-      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)BodySite.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>)_StatusElement.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_DerivedFrom is not null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(_DerivedFrom.DeepCopyInternal());
+      if(_Context is not null) dest.Context = (Hl7.Fhir.Model.ResourceReference)_Context.DeepCopyInternal();
+      if(_Timing is not null) dest.Timing = (Hl7.Fhir.Model.DataType)_Timing.DeepCopyInternal();
+      if(_DateAssertedElement is not null) dest.DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime)_DateAssertedElement.DeepCopyInternal();
+      if(_UsageStatus is not null) dest.UsageStatus = (Hl7.Fhir.Model.CodeableConcept)_UsageStatus.DeepCopyInternal();
+      if(_UsageReason is not null) dest.UsageReason = new List<Hl7.Fhir.Model.CodeableConcept>(_UsageReason.DeepCopyInternal());
+      if(_Adherence is not null) dest.Adherence = (Hl7.Fhir.Model.DeviceUsage.AdherenceComponent)_Adherence.DeepCopyInternal();
+      if(_InformationSource is not null) dest.InformationSource = (Hl7.Fhir.Model.ResourceReference)_InformationSource.DeepCopyInternal();
+      if(_Device is not null) dest.Device = (Hl7.Fhir.Model.CodeableReference)_Device.DeepCopyInternal();
+      if(_Reason is not null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(_Reason.DeepCopyInternal());
+      if(_BodySite is not null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)_BodySite.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -554,146 +543,146 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DeviceUsage;
-      if(otherT == null) return false;
+      if(other is not DeviceUsage otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.ListEquals(DerivedFrom, otherT.DerivedFrom)) return false;
-      if(!comparer.Equals(Context, otherT.Context)) return false;
-      if(!comparer.Equals(Timing, otherT.Timing)) return false;
-      if(!comparer.Equals(DateAssertedElement, otherT.DateAssertedElement)) return false;
-      if(!comparer.Equals(UsageStatus, otherT.UsageStatus)) return false;
-      if(!comparer.ListEquals(UsageReason, otherT.UsageReason)) return false;
-      if(!comparer.Equals(Adherence, otherT.Adherence)) return false;
-      if(!comparer.Equals(InformationSource, otherT.InformationSource)) return false;
-      if(!comparer.Equals(Device, otherT.Device)) return false;
-      if(!comparer.ListEquals(Reason, otherT.Reason)) return false;
-      if(!comparer.Equals(BodySite, otherT.BodySite)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.ListEquals(_DerivedFrom, otherT._DerivedFrom)) return false;
+      if(!comparer.Equals(_Context, otherT._Context)) return false;
+      if(!comparer.Equals(_Timing, otherT._Timing)) return false;
+      if(!comparer.Equals(_DateAssertedElement, otherT._DateAssertedElement)) return false;
+      if(!comparer.Equals(_UsageStatus, otherT._UsageStatus)) return false;
+      if(!comparer.ListEquals(_UsageReason, otherT._UsageReason)) return false;
+      if(!comparer.Equals(_Adherence, otherT._Adherence)) return false;
+      if(!comparer.Equals(_InformationSource, otherT._InformationSource)) return false;
+      if(!comparer.Equals(_Device, otherT._Device)) return false;
+      if(!comparer.ListEquals(_Reason, otherT._Reason)) return false;
+      if(!comparer.Equals(_BodySite, otherT._BodySite)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "derivedFrom":
-          value = DerivedFrom;
-          return DerivedFrom?.Any() == true;
+          value = _DerivedFrom;
+          return _DerivedFrom?.Any() == true;
         case "context":
-          value = Context;
-          return Context is not null;
+          value = _Context;
+          return _Context is not null;
         case "timing":
-          value = Timing;
-          return Timing is not null;
+          value = _Timing;
+          return _Timing is not null;
         case "dateAsserted":
-          value = DateAssertedElement;
-          return DateAssertedElement is not null;
+          value = _DateAssertedElement;
+          return _DateAssertedElement is not null;
         case "usageStatus":
-          value = UsageStatus;
-          return UsageStatus is not null;
+          value = _UsageStatus;
+          return _UsageStatus is not null;
         case "usageReason":
-          value = UsageReason;
-          return UsageReason?.Any() == true;
+          value = _UsageReason;
+          return _UsageReason?.Any() == true;
         case "adherence":
-          value = Adherence;
-          return Adherence is not null;
+          value = _Adherence;
+          return _Adherence is not null;
         case "informationSource":
-          value = InformationSource;
-          return InformationSource is not null;
+          value = _InformationSource;
+          return _InformationSource is not null;
         case "device":
-          value = Device;
-          return Device is not null;
+          value = _Device;
+          return _Device is not null;
         case "reason":
-          value = Reason;
-          return Reason?.Any() == true;
+          value = _Reason;
+          return _Reason?.Any() == true;
         case "bodySite":
-          value = BodySite;
-          return BodySite is not null;
+          value = _BodySite;
+          return _BodySite is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "derivedFrom":
-          DerivedFrom = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          DerivedFrom = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "context":
-          Context = (Hl7.Fhir.Model.ResourceReference)value;
+          Context = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "timing":
-          Timing = (Hl7.Fhir.Model.DataType)value;
+          Timing = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "dateAsserted":
-          DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "usageStatus":
-          UsageStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          UsageStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "usageReason":
-          UsageReason = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          UsageReason = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "adherence":
-          Adherence = (Hl7.Fhir.Model.DeviceUsage.AdherenceComponent)value;
+          Adherence = (Hl7.Fhir.Model.DeviceUsage.AdherenceComponent?)value;
           return this;
         case "informationSource":
-          InformationSource = (Hl7.Fhir.Model.ResourceReference)value;
+          InformationSource = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "device":
-          Device = (Hl7.Fhir.Model.CodeableReference)value;
+          Device = (Hl7.Fhir.Model.CodeableReference?)value;
           return this;
         case "reason":
-          Reason = (List<Hl7.Fhir.Model.CodeableReference>)value;
+          Reason = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "bodySite":
-          BodySite = (Hl7.Fhir.Model.CodeableReference)value;
+          BodySite = (Hl7.Fhir.Model.CodeableReference?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -704,23 +693,23 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",DateAssertedElement);
-      if (UsageStatus is not null) yield return new KeyValuePair<string,object>("usageStatus",UsageStatus);
-      if (UsageReason?.Any() == true) yield return new KeyValuePair<string,object>("usageReason",UsageReason);
-      if (Adherence is not null) yield return new KeyValuePair<string,object>("adherence",Adherence);
-      if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
-      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
-      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",_DerivedFrom);
+      if (_Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",_DateAssertedElement);
+      if (_UsageStatus is not null) yield return new KeyValuePair<string,object>("usageStatus",_UsageStatus);
+      if (_UsageReason?.Any() == true) yield return new KeyValuePair<string,object>("usageReason",_UsageReason);
+      if (_Adherence is not null) yield return new KeyValuePair<string,object>("adherence",_Adherence);
+      if (_InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",_InformationSource);
+      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (_Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

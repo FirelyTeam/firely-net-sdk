@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TestScript","http://hl7.org/fhir/StructureDefinition/TestScript")]
-  public partial class TestScript : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class TestScript : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? Origin
+      public IEnumerable<int?>? Origin
       {
         get => _OriginElement?.Select(elem => elem.Value);
         set
@@ -5932,7 +5932,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.TestScript.TeardownComponent? _Teardown;
 
-    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {

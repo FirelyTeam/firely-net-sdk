@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? NoteNumber
+      public IEnumerable<int?>? NoteNumber
       {
         get => _NoteNumberElement?.Select(elem => elem.Value);
         set
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? NoteNumber
+      public IEnumerable<int?>? NoteNumber
       {
         get => _NoteNumberElement?.Select(elem => elem.Value);
         set
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? NoteNumber
+      public IEnumerable<int?>? NoteNumber
       {
         get => _NoteNumberElement?.Select(elem => elem.Value);
         set
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? SequenceLinkId
+      public IEnumerable<int?>? SequenceLinkId
       {
         get => _SequenceLinkIdElement?.Select(elem => elem.Value);
         set
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? NoteNumber
+      public IEnumerable<int?>? NoteNumber
       {
         get => _NoteNumberElement?.Select(elem => elem.Value);
         set
@@ -1208,7 +1208,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int??>? NoteNumber
+      public IEnumerable<int?>? NoteNumber
       {
         get => _NoteNumberElement?.Select(elem => elem.Value);
         set

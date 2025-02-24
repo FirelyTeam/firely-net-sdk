@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition")]
-  public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent>? _AllowedResponse;
 
-    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {

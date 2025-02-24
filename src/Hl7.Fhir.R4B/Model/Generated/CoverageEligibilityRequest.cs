@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -116,13 +119,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt SequenceElement
+      public Hl7.Fhir.Model.PositiveInt? SequenceElement
       {
         get { return _SequenceElement; }
         set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _SequenceElement;
+      private Hl7.Fhir.Model.PositiveInt? _SequenceElement;
 
       /// <summary>
       /// Information instance identifier
@@ -131,13 +134,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get { return SequenceElement != null ? SequenceElement.Value : null; }
+        get => _SequenceElement?.Value;
         set
         {
-          if (value == null)
-            SequenceElement = null;
-          else
-            SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -150,26 +150,26 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Information
+      public Hl7.Fhir.Model.ResourceReference? Information
       {
         get { return _Information; }
         set { _Information = value; OnPropertyChanged("Information"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Information;
+      private Hl7.Fhir.Model.ResourceReference? _Information;
 
       /// <summary>
       /// Applies to all items.
       /// </summary>
       [FhirElement("appliesToAll", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean AppliesToAllElement
+      public Hl7.Fhir.Model.FhirBoolean? AppliesToAllElement
       {
         get { return _AppliesToAllElement; }
         set { _AppliesToAllElement = value; OnPropertyChanged("AppliesToAllElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _AppliesToAllElement;
+      private Hl7.Fhir.Model.FhirBoolean? _AppliesToAllElement;
 
       /// <summary>
       /// Applies to all items
@@ -178,30 +178,23 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AppliesToAll
       {
-        get { return AppliesToAllElement != null ? AppliesToAllElement.Value : null; }
+        get => _AppliesToAllElement?.Value;
         set
         {
-          if (value == null)
-            AppliesToAllElement = null;
-          else
-            AppliesToAllElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AppliesToAllElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AppliesToAll");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SupportingInformationComponent;
-
-        if (dest == null)
-        {
+        if(other is not SupportingInformationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopyInternal();
-        if(Information != null) dest.Information = (Hl7.Fhir.Model.ResourceReference)Information.DeepCopyInternal();
-        if(AppliesToAllElement != null) dest.AppliesToAllElement = (Hl7.Fhir.Model.FhirBoolean)AppliesToAllElement.DeepCopyInternal();
+        if(_SequenceElement is not null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)_SequenceElement.DeepCopyInternal();
+        if(_Information is not null) dest.Information = (Hl7.Fhir.Model.ResourceReference)_Information.DeepCopyInternal();
+        if(_AppliesToAllElement is not null) dest.AppliesToAllElement = (Hl7.Fhir.Model.FhirBoolean)_AppliesToAllElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -213,48 +206,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SupportingInformationComponent;
-        if(otherT == null) return false;
+        if(other is not SupportingInformationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(SequenceElement, otherT.SequenceElement)) return false;
-        if(!comparer.Equals(Information, otherT.Information)) return false;
-        if(!comparer.Equals(AppliesToAllElement, otherT.AppliesToAllElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
+        if(!comparer.Equals(_Information, otherT._Information)) return false;
+        if(!comparer.Equals(_AppliesToAllElement, otherT._AppliesToAllElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequence":
-            value = SequenceElement;
-            return SequenceElement is not null;
+            value = _SequenceElement;
+            return _SequenceElement is not null;
           case "information":
-            value = Information;
-            return Information is not null;
+            value = _Information;
+            return _Information is not null;
           case "appliesToAll":
-            value = AppliesToAllElement;
-            return AppliesToAllElement is not null;
+            value = _AppliesToAllElement;
+            return _AppliesToAllElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "sequence":
-            SequenceElement = (Hl7.Fhir.Model.PositiveInt)value;
+            SequenceElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "information":
-            Information = (Hl7.Fhir.Model.ResourceReference)value;
+            Information = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "appliesToAll":
-            AppliesToAllElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            AppliesToAllElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -265,9 +258,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (Information is not null) yield return new KeyValuePair<string,object>("information",Information);
-        if (AppliesToAllElement is not null) yield return new KeyValuePair<string,object>("appliesToAll",AppliesToAllElement);
+        if (_SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (_Information is not null) yield return new KeyValuePair<string,object>("information",_Information);
+        if (_AppliesToAllElement is not null) yield return new KeyValuePair<string,object>("appliesToAll",_AppliesToAllElement);
       }
 
     }
@@ -294,13 +287,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("focal", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean FocalElement
+      public Hl7.Fhir.Model.FhirBoolean? FocalElement
       {
         get { return _FocalElement; }
         set { _FocalElement = value; OnPropertyChanged("FocalElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _FocalElement;
+      private Hl7.Fhir.Model.FhirBoolean? _FocalElement;
 
       /// <summary>
       /// Applicable coverage
@@ -309,13 +302,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Focal
       {
-        get { return FocalElement != null ? FocalElement.Value : null; }
+        get => _FocalElement?.Value;
         set
         {
-          if (value == null)
-            FocalElement = null;
-          else
-            FocalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          FocalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Focal");
         }
       }
@@ -328,58 +318,51 @@ namespace Hl7.Fhir.Model
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Coverage
+      public Hl7.Fhir.Model.ResourceReference? Coverage
       {
         get { return _Coverage; }
         set { _Coverage = value; OnPropertyChanged("Coverage"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Coverage;
+      private Hl7.Fhir.Model.ResourceReference? _Coverage;
 
       /// <summary>
       /// Additional provider contract number.
       /// </summary>
       [FhirElement("businessArrangement", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString BusinessArrangementElement
+      public Hl7.Fhir.Model.FhirString? BusinessArrangementElement
       {
         get { return _BusinessArrangementElement; }
         set { _BusinessArrangementElement = value; OnPropertyChanged("BusinessArrangementElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _BusinessArrangementElement;
+      private Hl7.Fhir.Model.FhirString? _BusinessArrangementElement;
 
       /// <summary>
       /// Additional provider contract number
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string BusinessArrangement
+      public string? BusinessArrangement
       {
-        get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
+        get => _BusinessArrangementElement?.Value;
         set
         {
-          if (value == null)
-            BusinessArrangementElement = null;
-          else
-            BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
+          BusinessArrangementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("BusinessArrangement");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InsuranceComponent;
-
-        if (dest == null)
-        {
+        if(other is not InsuranceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(FocalElement != null) dest.FocalElement = (Hl7.Fhir.Model.FhirBoolean)FocalElement.DeepCopyInternal();
-        if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopyInternal();
-        if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopyInternal();
+        if(_FocalElement is not null) dest.FocalElement = (Hl7.Fhir.Model.FhirBoolean)_FocalElement.DeepCopyInternal();
+        if(_Coverage is not null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)_Coverage.DeepCopyInternal();
+        if(_BusinessArrangementElement is not null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)_BusinessArrangementElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -391,48 +374,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InsuranceComponent;
-        if(otherT == null) return false;
+        if(other is not InsuranceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(FocalElement, otherT.FocalElement)) return false;
-        if(!comparer.Equals(Coverage, otherT.Coverage)) return false;
-        if(!comparer.Equals(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_FocalElement, otherT._FocalElement)) return false;
+        if(!comparer.Equals(_Coverage, otherT._Coverage)) return false;
+        if(!comparer.Equals(_BusinessArrangementElement, otherT._BusinessArrangementElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "focal":
-            value = FocalElement;
-            return FocalElement is not null;
+            value = _FocalElement;
+            return _FocalElement is not null;
           case "coverage":
-            value = Coverage;
-            return Coverage is not null;
+            value = _Coverage;
+            return _Coverage is not null;
           case "businessArrangement":
-            value = BusinessArrangementElement;
-            return BusinessArrangementElement is not null;
+            value = _BusinessArrangementElement;
+            return _BusinessArrangementElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "focal":
-            FocalElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            FocalElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "coverage":
-            Coverage = (Hl7.Fhir.Model.ResourceReference)value;
+            Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "businessArrangement":
-            BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)value;
+            BusinessArrangementElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -443,9 +426,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (FocalElement is not null) yield return new KeyValuePair<string,object>("focal",FocalElement);
-        if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
-        if (BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",BusinessArrangementElement);
+        if (_FocalElement is not null) yield return new KeyValuePair<string,object>("focal",_FocalElement);
+        if (_Coverage is not null) yield return new KeyValuePair<string,object>("coverage",_Coverage);
+        if (_BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",_BusinessArrangementElement);
       }
 
     }
@@ -474,24 +457,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> SupportingInfoSequenceElement
       {
-        get { if(_SupportingInfoSequenceElement==null) _SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(); return _SupportingInfoSequenceElement; }
+        get => _SupportingInfoSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
         set { _SupportingInfoSequenceElement = value; OnPropertyChanged("SupportingInfoSequenceElement"); }
       }
 
-      private List<Hl7.Fhir.Model.PositiveInt> _SupportingInfoSequenceElement;
+      private List<Hl7.Fhir.Model.PositiveInt>? _SupportingInfoSequenceElement;
 
       /// <summary>
       /// Applicable exception or supporting information
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?> SupportingInfoSequence
+      public IEnumerable<int?>? SupportingInfoSequence
       {
-        get { return SupportingInfoSequenceElement != null ? SupportingInfoSequenceElement.Select(elem => elem.Value) : null; }
+        get => _SupportingInfoSequenceElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            SupportingInfoSequenceElement = null;
+            SupportingInfoSequenceElement = null!;
           else
             SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
           OnPropertyChanged("SupportingInfoSequence");
@@ -504,13 +487,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("category", Order=50)]
       [Binding("BenefitCategory")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Category
+      public Hl7.Fhir.Model.CodeableConcept? Category
       {
         get { return _Category; }
         set { _Category = value; OnPropertyChanged("Category"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Category;
+      private Hl7.Fhir.Model.CodeableConcept? _Category;
 
       /// <summary>
       /// Billing, service, product, or drug code.
@@ -518,13 +501,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("productOrService", Order=60)]
       [Binding("ServiceProduct")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept ProductOrService
+      public Hl7.Fhir.Model.CodeableConcept? ProductOrService
       {
         get { return _ProductOrService; }
         set { _ProductOrService = value; OnPropertyChanged("ProductOrService"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
+      private Hl7.Fhir.Model.CodeableConcept? _ProductOrService;
 
       /// <summary>
       /// Product or service billing modifiers.
@@ -535,11 +518,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get { if(_Modifier==null) _Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Modifier; }
+        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Modifier;
 
       /// <summary>
       /// Perfoming practitioner.
@@ -548,39 +531,39 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Provider
+      public Hl7.Fhir.Model.ResourceReference? Provider
       {
         get { return _Provider; }
         set { _Provider = value; OnPropertyChanged("Provider"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Provider;
+      private Hl7.Fhir.Model.ResourceReference? _Provider;
 
       /// <summary>
       /// Count of products or services.
       /// </summary>
       [FhirElement("quantity", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
       [FhirElement("unitPrice", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Money UnitPrice
+      public Hl7.Fhir.Model.Money? UnitPrice
       {
         get { return _UnitPrice; }
         set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
       }
 
-      private Hl7.Fhir.Model.Money _UnitPrice;
+      private Hl7.Fhir.Model.Money? _UnitPrice;
 
       /// <summary>
       /// Servicing facility.
@@ -589,13 +572,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Location","Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Facility
+      public Hl7.Fhir.Model.ResourceReference? Facility
       {
         get { return _Facility; }
         set { _Facility = value; OnPropertyChanged("Facility"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Facility;
+      private Hl7.Fhir.Model.ResourceReference? _Facility;
 
       /// <summary>
       /// Applicable diagnosis.
@@ -605,11 +588,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent> Diagnosis
       {
-        get { if(_Diagnosis==null) _Diagnosis = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>(); return _Diagnosis; }
+        get => _Diagnosis ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>();
         set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
       }
 
-      private List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent> _Diagnosis;
+      private List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>? _Diagnosis;
 
       /// <summary>
       /// Product or service details.
@@ -621,32 +604,28 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
-        get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
+        get => _Detail ?? new List<Hl7.Fhir.Model.ResourceReference>();
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Detail;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DetailsComponent;
-
-        if (dest == null)
-        {
+        if(other is not DetailsComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SupportingInfoSequenceElement.Any()) dest.SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(SupportingInfoSequenceElement.DeepCopyInternal());
-        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-        if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopyInternal();
-        if(Modifier.Any()) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopyInternal());
-        if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopyInternal();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopyInternal();
-        if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopyInternal();
-        if(Diagnosis.Any()) dest.Diagnosis = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>(Diagnosis.DeepCopyInternal());
-        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopyInternal());
+        if(_SupportingInfoSequenceElement is not null) dest.SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(_SupportingInfoSequenceElement.DeepCopyInternal());
+        if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+        if(_ProductOrService is not null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)_ProductOrService.DeepCopyInternal();
+        if(_Modifier is not null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(_Modifier.DeepCopyInternal());
+        if(_Provider is not null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)_Provider.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_UnitPrice is not null) dest.UnitPrice = (Hl7.Fhir.Model.Money)_UnitPrice.DeepCopyInternal();
+        if(_Facility is not null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)_Facility.DeepCopyInternal();
+        if(_Diagnosis is not null) dest.Diagnosis = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>(_Diagnosis.DeepCopyInternal());
+        if(_Detail is not null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(_Detail.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -658,97 +637,97 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DetailsComponent;
-        if(otherT == null) return false;
+        if(other is not DetailsComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(SupportingInfoSequenceElement, otherT.SupportingInfoSequenceElement)) return false;
-        if(!comparer.Equals(Category, otherT.Category)) return false;
-        if(!comparer.Equals(ProductOrService, otherT.ProductOrService)) return false;
-        if(!comparer.ListEquals(Modifier, otherT.Modifier)) return false;
-        if(!comparer.Equals(Provider, otherT.Provider)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.Equals(UnitPrice, otherT.UnitPrice)) return false;
-        if(!comparer.Equals(Facility, otherT.Facility)) return false;
-        if(!comparer.ListEquals(Diagnosis, otherT.Diagnosis)) return false;
-        if(!comparer.ListEquals(Detail, otherT.Detail)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_SupportingInfoSequenceElement, otherT._SupportingInfoSequenceElement)) return false;
+        if(!comparer.Equals(_Category, otherT._Category)) return false;
+        if(!comparer.Equals(_ProductOrService, otherT._ProductOrService)) return false;
+        if(!comparer.ListEquals(_Modifier, otherT._Modifier)) return false;
+        if(!comparer.Equals(_Provider, otherT._Provider)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_UnitPrice, otherT._UnitPrice)) return false;
+        if(!comparer.Equals(_Facility, otherT._Facility)) return false;
+        if(!comparer.ListEquals(_Diagnosis, otherT._Diagnosis)) return false;
+        if(!comparer.ListEquals(_Detail, otherT._Detail)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "supportingInfoSequence":
-            value = SupportingInfoSequenceElement;
-            return SupportingInfoSequenceElement?.Any() == true;
+            value = _SupportingInfoSequenceElement;
+            return _SupportingInfoSequenceElement?.Any() == true;
           case "category":
-            value = Category;
-            return Category is not null;
+            value = _Category;
+            return _Category is not null;
           case "productOrService":
-            value = ProductOrService;
-            return ProductOrService is not null;
+            value = _ProductOrService;
+            return _ProductOrService is not null;
           case "modifier":
-            value = Modifier;
-            return Modifier?.Any() == true;
+            value = _Modifier;
+            return _Modifier?.Any() == true;
           case "provider":
-            value = Provider;
-            return Provider is not null;
+            value = _Provider;
+            return _Provider is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "unitPrice":
-            value = UnitPrice;
-            return UnitPrice is not null;
+            value = _UnitPrice;
+            return _UnitPrice is not null;
           case "facility":
-            value = Facility;
-            return Facility is not null;
+            value = _Facility;
+            return _Facility is not null;
           case "diagnosis":
-            value = Diagnosis;
-            return Diagnosis?.Any() == true;
+            value = _Diagnosis;
+            return _Diagnosis?.Any() == true;
           case "detail":
-            value = Detail;
-            return Detail?.Any() == true;
+            value = _Detail;
+            return _Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "supportingInfoSequence":
-            SupportingInfoSequenceElement = (List<Hl7.Fhir.Model.PositiveInt>)value;
+            SupportingInfoSequenceElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept)value;
+            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "productOrService":
-            ProductOrService = (Hl7.Fhir.Model.CodeableConcept)value;
+            ProductOrService = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "modifier":
-            Modifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Modifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "provider":
-            Provider = (Hl7.Fhir.Model.ResourceReference)value;
+            Provider = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "unitPrice":
-            UnitPrice = (Hl7.Fhir.Model.Money)value;
+            UnitPrice = (Hl7.Fhir.Model.Money?)value;
             return this;
           case "facility":
-            Facility = (Hl7.Fhir.Model.ResourceReference)value;
+            Facility = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "diagnosis":
-            Diagnosis = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>)value;
+            Diagnosis = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>?)value!;
             return this;
           case "detail":
-            Detail = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Detail = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -759,16 +738,16 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SupportingInfoSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfoSequence",SupportingInfoSequenceElement);
-        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-        if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
-        if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
-        if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
-        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (_SupportingInfoSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfoSequence",_SupportingInfoSequenceElement);
+        if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+        if (_ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",_ProductOrService);
+        if (_Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",_Modifier);
+        if (_Provider is not null) yield return new KeyValuePair<string,object>("provider",_Provider);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",_UnitPrice);
+        if (_Facility is not null) yield return new KeyValuePair<string,object>("facility",_Facility);
+        if (_Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",_Diagnosis);
+        if (_Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",_Detail);
       }
 
     }
@@ -798,25 +777,21 @@ namespace Hl7.Fhir.Model
       [References("Condition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Diagnosis
+      public Hl7.Fhir.Model.DataType? Diagnosis
       {
         get { return _Diagnosis; }
         set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Diagnosis;
+      private Hl7.Fhir.Model.DataType? _Diagnosis;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DiagnosisComponent;
-
-        if (dest == null)
-        {
+        if(other is not DiagnosisComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Diagnosis != null) dest.Diagnosis = (Hl7.Fhir.Model.DataType)Diagnosis.DeepCopyInternal();
+        if(_Diagnosis is not null) dest.Diagnosis = (Hl7.Fhir.Model.DataType)_Diagnosis.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -828,34 +803,34 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DiagnosisComponent;
-        if(otherT == null) return false;
+        if(other is not DiagnosisComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Diagnosis, otherT.Diagnosis)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Diagnosis, otherT._Diagnosis)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "diagnosis":
-            value = Diagnosis;
-            return Diagnosis is not null;
+            value = _Diagnosis;
+            return _Diagnosis is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "diagnosis":
-            Diagnosis = (Hl7.Fhir.Model.DataType)value;
+            Diagnosis = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -866,7 +841,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+        if (_Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",_Diagnosis);
       }
 
     }
@@ -879,11 +854,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
@@ -893,13 +868,13 @@ namespace Hl7.Fhir.Model
     [Binding("EligibilityRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error
@@ -908,13 +883,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -925,13 +897,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("priority", Order=110, FiveWs="FiveWs.class")]
     [Binding("ProcessPriority")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Priority
+    public Hl7.Fhir.Model.CodeableConcept? Priority
     {
       get { return _Priority; }
       set { _Priority = value; OnPropertyChanged("Priority"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Priority;
+    private Hl7.Fhir.Model.CodeableConcept? _Priority;
 
     /// <summary>
     /// auth-requirements | benefits | discovery | validation.
@@ -943,24 +915,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> PurposeElement
     {
-      get { if(_PurposeElement==null) _PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(); return _PurposeElement; }
+      get => _PurposeElement ?? new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>();
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
-    private List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> _PurposeElement;
+    private List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>? _PurposeElement;
 
     /// <summary>
     /// auth-requirements | benefits | discovery | validation
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose?> Purpose
+    public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose?>? Purpose
     {
-      get { return PurposeElement != null ? PurposeElement.Select(elem => elem.Value) : null; }
+      get => _PurposeElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          PurposeElement = null;
+          PurposeElement = null!;
         else
           PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(value.Select(elem=>new Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>(elem)));
         OnPropertyChanged("Purpose");
@@ -975,13 +947,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Estimated date or dates of service.
@@ -990,13 +962,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Serviced
+    public Hl7.Fhir.Model.DataType? Serviced
     {
       get { return _Serviced; }
       set { _Serviced = value; OnPropertyChanged("Serviced"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Serviced;
+    private Hl7.Fhir.Model.DataType? _Serviced;
 
     /// <summary>
     /// Creation date.
@@ -1004,28 +976,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("created", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
       get { return _CreatedElement; }
       set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
 
     /// <summary>
     /// Creation date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get { return CreatedElement != null ? CreatedElement.Value : null; }
+      get => _CreatedElement?.Value;
       set
       {
-        if (value == null)
-          CreatedElement = null;
-        else
-          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -1037,13 +1006,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Enterer
+    public Hl7.Fhir.Model.ResourceReference? Enterer
     {
       get { return _Enterer; }
       set { _Enterer = value; OnPropertyChanged("Enterer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Enterer;
+    private Hl7.Fhir.Model.ResourceReference? _Enterer;
 
     /// <summary>
     /// Party responsible for the request.
@@ -1052,13 +1021,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Provider
+    public Hl7.Fhir.Model.ResourceReference? Provider
     {
       get { return _Provider; }
       set { _Provider = value; OnPropertyChanged("Provider"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Provider;
+    private Hl7.Fhir.Model.ResourceReference? _Provider;
 
     /// <summary>
     /// Coverage issuer.
@@ -1068,13 +1037,13 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Insurer
+    public Hl7.Fhir.Model.ResourceReference? Insurer
     {
       get { return _Insurer; }
       set { _Insurer = value; OnPropertyChanged("Insurer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Insurer;
+    private Hl7.Fhir.Model.ResourceReference? _Insurer;
 
     /// <summary>
     /// Servicing facility.
@@ -1083,13 +1052,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Facility
+    public Hl7.Fhir.Model.ResourceReference? Facility
     {
       get { return _Facility; }
       set { _Facility = value; OnPropertyChanged("Facility"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Facility;
+    private Hl7.Fhir.Model.ResourceReference? _Facility;
 
     /// <summary>
     /// Supporting information.
@@ -1099,11 +1068,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent> SupportingInfo
     {
-      get { if(_SupportingInfo==null) _SupportingInfo = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>(); return _SupportingInfo; }
+      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>();
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
-    private List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent> _SupportingInfo;
+    private List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>? _SupportingInfo;
 
     /// <summary>
     /// Patient insurance information.
@@ -1113,11 +1082,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent> Insurance
     {
-      get { if(_Insurance==null) _Insurance = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>(); return _Insurance; }
+      get => _Insurance ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>();
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
-    private List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent> _Insurance;
+    private List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>? _Insurance;
 
     /// <summary>
     /// Item to be evaluated for eligibiity.
@@ -1127,38 +1096,34 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent> Item
     {
-      get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>(); return _Item; }
+      get => _Item ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>();
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 
-    private List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent> _Item;
+    private List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>? _Item;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as CoverageEligibilityRequest;
-
-      if (dest == null)
-      {
+      if(other is not CoverageEligibilityRequest dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopyInternal();
-      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopyInternal();
-      if(PurposeElement.Any()) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(PurposeElement.DeepCopyInternal());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopyInternal();
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
-      if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopyInternal();
-      if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopyInternal();
-      if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopyInternal();
-      if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopyInternal();
-      if(SupportingInfo.Any()) dest.SupportingInfo = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>(SupportingInfo.DeepCopyInternal());
-      if(Insurance.Any()) dest.Insurance = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>(Insurance.DeepCopyInternal());
-      if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>(Item.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_Priority is not null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)_Priority.DeepCopyInternal();
+      if(_PurposeElement is not null) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(_PurposeElement.DeepCopyInternal());
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Serviced is not null) dest.Serviced = (Hl7.Fhir.Model.DataType)_Serviced.DeepCopyInternal();
+      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
+      if(_Enterer is not null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)_Enterer.DeepCopyInternal();
+      if(_Provider is not null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)_Provider.DeepCopyInternal();
+      if(_Insurer is not null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)_Insurer.DeepCopyInternal();
+      if(_Facility is not null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)_Facility.DeepCopyInternal();
+      if(_SupportingInfo is not null) dest.SupportingInfo = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>(_SupportingInfo.DeepCopyInternal());
+      if(_Insurance is not null) dest.Insurance = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>(_Insurance.DeepCopyInternal());
+      if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>(_Item.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1170,125 +1135,125 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as CoverageEligibilityRequest;
-      if(otherT == null) return false;
+      if(other is not CoverageEligibilityRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Priority, otherT.Priority)) return false;
-      if(!comparer.ListEquals(PurposeElement, otherT.PurposeElement)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Serviced, otherT.Serviced)) return false;
-      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
-      if(!comparer.Equals(Enterer, otherT.Enterer)) return false;
-      if(!comparer.Equals(Provider, otherT.Provider)) return false;
-      if(!comparer.Equals(Insurer, otherT.Insurer)) return false;
-      if(!comparer.Equals(Facility, otherT.Facility)) return false;
-      if(!comparer.ListEquals(SupportingInfo, otherT.SupportingInfo)) return false;
-      if(!comparer.ListEquals(Insurance, otherT.Insurance)) return false;
-      if(!comparer.ListEquals(Item, otherT.Item)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Priority, otherT._Priority)) return false;
+      if(!comparer.ListEquals(_PurposeElement, otherT._PurposeElement)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Serviced, otherT._Serviced)) return false;
+      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
+      if(!comparer.Equals(_Enterer, otherT._Enterer)) return false;
+      if(!comparer.Equals(_Provider, otherT._Provider)) return false;
+      if(!comparer.Equals(_Insurer, otherT._Insurer)) return false;
+      if(!comparer.Equals(_Facility, otherT._Facility)) return false;
+      if(!comparer.ListEquals(_SupportingInfo, otherT._SupportingInfo)) return false;
+      if(!comparer.ListEquals(_Insurance, otherT._Insurance)) return false;
+      if(!comparer.ListEquals(_Item, otherT._Item)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "priority":
-          value = Priority;
-          return Priority is not null;
+          value = _Priority;
+          return _Priority is not null;
         case "purpose":
-          value = PurposeElement;
-          return PurposeElement?.Any() == true;
+          value = _PurposeElement;
+          return _PurposeElement?.Any() == true;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "serviced":
-          value = Serviced;
-          return Serviced is not null;
+          value = _Serviced;
+          return _Serviced is not null;
         case "created":
-          value = CreatedElement;
-          return CreatedElement is not null;
+          value = _CreatedElement;
+          return _CreatedElement is not null;
         case "enterer":
-          value = Enterer;
-          return Enterer is not null;
+          value = _Enterer;
+          return _Enterer is not null;
         case "provider":
-          value = Provider;
-          return Provider is not null;
+          value = _Provider;
+          return _Provider is not null;
         case "insurer":
-          value = Insurer;
-          return Insurer is not null;
+          value = _Insurer;
+          return _Insurer is not null;
         case "facility":
-          value = Facility;
-          return Facility is not null;
+          value = _Facility;
+          return _Facility is not null;
         case "supportingInfo":
-          value = SupportingInfo;
-          return SupportingInfo?.Any() == true;
+          value = _SupportingInfo;
+          return _SupportingInfo?.Any() == true;
         case "insurance":
-          value = Insurance;
-          return Insurance?.Any() == true;
+          value = _Insurance;
+          return _Insurance?.Any() == true;
         case "item":
-          value = Item;
-          return Item?.Any() == true;
+          value = _Item;
+          return _Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "priority":
-          Priority = (Hl7.Fhir.Model.CodeableConcept)value;
+          Priority = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "purpose":
-          PurposeElement = (List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>)value;
+          PurposeElement = (List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "serviced":
-          Serviced = (Hl7.Fhir.Model.DataType)value;
+          Serviced = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "enterer":
-          Enterer = (Hl7.Fhir.Model.ResourceReference)value;
+          Enterer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "provider":
-          Provider = (Hl7.Fhir.Model.ResourceReference)value;
+          Provider = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "insurer":
-          Insurer = (Hl7.Fhir.Model.ResourceReference)value;
+          Insurer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "facility":
-          Facility = (Hl7.Fhir.Model.ResourceReference)value;
+          Facility = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "supportingInfo":
-          SupportingInfo = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>)value;
+          SupportingInfo = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>?)value!;
           return this;
         case "insurance":
-          Insurance = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>)value;
+          Insurance = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>?)value!;
           return this;
         case "item":
-          Item = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>)value;
+          Item = (List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1299,20 +1264,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
-      if (PurposeElement?.Any() == true) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
-      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
-      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
-      if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
-      if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
-      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
-      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Priority is not null) yield return new KeyValuePair<string,object>("priority",_Priority);
+      if (_PurposeElement?.Any() == true) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Serviced is not null) yield return new KeyValuePair<string,object>("serviced",_Serviced);
+      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Enterer is not null) yield return new KeyValuePair<string,object>("enterer",_Enterer);
+      if (_Provider is not null) yield return new KeyValuePair<string,object>("provider",_Provider);
+      if (_Insurer is not null) yield return new KeyValuePair<string,object>("insurer",_Insurer);
+      if (_Facility is not null) yield return new KeyValuePair<string,object>("facility",_Facility);
+      if (_SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",_SupportingInfo);
+      if (_Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",_Insurance);
+      if (_Item?.Any() == true) yield return new KeyValuePair<string,object>("item",_Item);
     }
 
   }

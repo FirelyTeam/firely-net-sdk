@@ -1223,7 +1223,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ResourceType??>? Resource
+    public IEnumerable<Hl7.Fhir.Model.ResourceType?>? Resource
     {
       get => _ResourceElement?.Select(elem => elem.Value);
       set

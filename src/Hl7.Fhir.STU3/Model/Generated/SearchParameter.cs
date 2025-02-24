@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ResourceType??>? Base
+    public IEnumerable<Hl7.Fhir.Model.ResourceType?>? Base
     {
       get => _BaseElement?.Select(elem => elem.Value);
       set
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ResourceType??>? Target
+    public IEnumerable<Hl7.Fhir.Model.ResourceType?>? Target
     {
       get => _TargetElement?.Select(elem => elem.Value);
       set
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchComparator??>? Comparator
+    public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchComparator?>? Comparator
     {
       get => _ComparatorElement?.Select(elem => elem.Value);
       set
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchModifierCode??>? Modifier
+    public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchModifierCode?>? Modifier
     {
       get => _ModifierElement?.Select(elem => elem.Value);
       set

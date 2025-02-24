@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition")]
-  public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class Composition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.Composition.CompositionAttestationMode??>? Mode
+      public IEnumerable<Hl7.Fhir.Model.Composition.CompositionAttestationMode?>? Mode
       {
         get => _ModeElement?.Select(elem => elem.Value);
         set
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Composition.SectionComponent>? _Section;
 
-    Identifier? IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {

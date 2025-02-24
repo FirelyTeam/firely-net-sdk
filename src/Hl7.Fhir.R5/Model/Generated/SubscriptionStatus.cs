@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -121,13 +124,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("eventNumber", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer64 EventNumberElement
+      public Hl7.Fhir.Model.Integer64? EventNumberElement
       {
         get { return _EventNumberElement; }
         set { _EventNumberElement = value; OnPropertyChanged("EventNumberElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer64 _EventNumberElement;
+      private Hl7.Fhir.Model.Integer64? _EventNumberElement;
 
       /// <summary>
       /// Sequencing index of this event
@@ -136,13 +139,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public long? EventNumber
       {
-        get { return EventNumberElement != null ? EventNumberElement.Value : null; }
+        get => _EventNumberElement?.Value;
         set
         {
-          if (value == null)
-            EventNumberElement = null;
-          else
-            EventNumberElement = new Hl7.Fhir.Model.Integer64(value);
+          EventNumberElement = value is null ? null : new Hl7.Fhir.Model.Integer64(value);
           OnPropertyChanged("EventNumber");
         }
       }
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("timestamp", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Instant TimestampElement
+      public Hl7.Fhir.Model.Instant? TimestampElement
       {
         get { return _TimestampElement; }
         set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
       }
 
-      private Hl7.Fhir.Model.Instant _TimestampElement;
+      private Hl7.Fhir.Model.Instant? _TimestampElement;
 
       /// <summary>
       /// The instant this event occurred
@@ -167,13 +167,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? Timestamp
       {
-        get { return TimestampElement != null ? TimestampElement.Value : null; }
+        get => _TimestampElement?.Value;
         set
         {
-          if (value == null)
-            TimestampElement = null;
-          else
-            TimestampElement = new Hl7.Fhir.Model.Instant(value);
+          TimestampElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
           OnPropertyChanged("Timestamp");
         }
       }
@@ -185,13 +182,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Focus
+      public Hl7.Fhir.Model.ResourceReference? Focus
       {
         get { return _Focus; }
         set { _Focus = value; OnPropertyChanged("Focus"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Focus;
+      private Hl7.Fhir.Model.ResourceReference? _Focus;
 
       /// <summary>
       /// References related to the focus resource and/or context of this event.
@@ -203,26 +200,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> AdditionalContext
       {
-        get { if(_AdditionalContext==null) _AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(); return _AdditionalContext; }
+        get => _AdditionalContext ?? new List<Hl7.Fhir.Model.ResourceReference>();
         set { _AdditionalContext = value; OnPropertyChanged("AdditionalContext"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _AdditionalContext;
+      private List<Hl7.Fhir.Model.ResourceReference>? _AdditionalContext;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as NotificationEventComponent;
-
-        if (dest == null)
-        {
+        if(other is not NotificationEventComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(EventNumberElement != null) dest.EventNumberElement = (Hl7.Fhir.Model.Integer64)EventNumberElement.DeepCopyInternal();
-        if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopyInternal();
-        if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopyInternal();
-        if(AdditionalContext.Any()) dest.AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(AdditionalContext.DeepCopyInternal());
+        if(_EventNumberElement is not null) dest.EventNumberElement = (Hl7.Fhir.Model.Integer64)_EventNumberElement.DeepCopyInternal();
+        if(_TimestampElement is not null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)_TimestampElement.DeepCopyInternal();
+        if(_Focus is not null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)_Focus.DeepCopyInternal();
+        if(_AdditionalContext is not null) dest.AdditionalContext = new List<Hl7.Fhir.Model.ResourceReference>(_AdditionalContext.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -234,55 +227,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as NotificationEventComponent;
-        if(otherT == null) return false;
+        if(other is not NotificationEventComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(EventNumberElement, otherT.EventNumberElement)) return false;
-        if(!comparer.Equals(TimestampElement, otherT.TimestampElement)) return false;
-        if(!comparer.Equals(Focus, otherT.Focus)) return false;
-        if(!comparer.ListEquals(AdditionalContext, otherT.AdditionalContext)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_EventNumberElement, otherT._EventNumberElement)) return false;
+        if(!comparer.Equals(_TimestampElement, otherT._TimestampElement)) return false;
+        if(!comparer.Equals(_Focus, otherT._Focus)) return false;
+        if(!comparer.ListEquals(_AdditionalContext, otherT._AdditionalContext)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "eventNumber":
-            value = EventNumberElement;
-            return EventNumberElement is not null;
+            value = _EventNumberElement;
+            return _EventNumberElement is not null;
           case "timestamp":
-            value = TimestampElement;
-            return TimestampElement is not null;
+            value = _TimestampElement;
+            return _TimestampElement is not null;
           case "focus":
-            value = Focus;
-            return Focus is not null;
+            value = _Focus;
+            return _Focus is not null;
           case "additionalContext":
-            value = AdditionalContext;
-            return AdditionalContext?.Any() == true;
+            value = _AdditionalContext;
+            return _AdditionalContext?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "eventNumber":
-            EventNumberElement = (Hl7.Fhir.Model.Integer64)value;
+            EventNumberElement = (Hl7.Fhir.Model.Integer64?)value;
             return this;
           case "timestamp":
-            TimestampElement = (Hl7.Fhir.Model.Instant)value;
+            TimestampElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           case "focus":
-            Focus = (Hl7.Fhir.Model.ResourceReference)value;
+            Focus = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "additionalContext":
-            AdditionalContext = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            AdditionalContext = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -293,10 +286,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (EventNumberElement is not null) yield return new KeyValuePair<string,object>("eventNumber",EventNumberElement);
-        if (TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",TimestampElement);
-        if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
-        if (AdditionalContext?.Any() == true) yield return new KeyValuePair<string,object>("additionalContext",AdditionalContext);
+        if (_EventNumberElement is not null) yield return new KeyValuePair<string,object>("eventNumber",_EventNumberElement);
+        if (_TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",_TimestampElement);
+        if (_Focus is not null) yield return new KeyValuePair<string,object>("focus",_Focus);
+        if (_AdditionalContext?.Any() == true) yield return new KeyValuePair<string,object>("additionalContext",_AdditionalContext);
       }
 
     }
@@ -308,13 +301,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("SubscriptionStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.SubscriptionStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.SubscriptionStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.SubscriptionStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.SubscriptionStatusCodes>? _StatusElement;
 
     /// <summary>
     /// requested | active | error | off | entered-in-error
@@ -323,13 +316,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -342,13 +332,13 @@ namespace Hl7.Fhir.Model
     [Binding("SubscriptionNotificationType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType> TypeElement
+    public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType> _TypeElement;
+    private Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>? _TypeElement;
 
     /// <summary>
     /// handshake | heartbeat | event-notification | query-status | query-event
@@ -357,13 +347,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -373,13 +360,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("eventsSinceSubscriptionStart", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer64 EventsSinceSubscriptionStartElement
+    public Hl7.Fhir.Model.Integer64? EventsSinceSubscriptionStartElement
     {
       get { return _EventsSinceSubscriptionStartElement; }
       set { _EventsSinceSubscriptionStartElement = value; OnPropertyChanged("EventsSinceSubscriptionStartElement"); }
     }
 
-    private Hl7.Fhir.Model.Integer64 _EventsSinceSubscriptionStartElement;
+    private Hl7.Fhir.Model.Integer64? _EventsSinceSubscriptionStartElement;
 
     /// <summary>
     /// Events since the Subscription was created
@@ -388,13 +375,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public long? EventsSinceSubscriptionStart
     {
-      get { return EventsSinceSubscriptionStartElement != null ? EventsSinceSubscriptionStartElement.Value : null; }
+      get => _EventsSinceSubscriptionStartElement?.Value;
       set
       {
-        if (value == null)
-          EventsSinceSubscriptionStartElement = null;
-        else
-          EventsSinceSubscriptionStartElement = new Hl7.Fhir.Model.Integer64(value);
+        EventsSinceSubscriptionStartElement = value is null ? null : new Hl7.Fhir.Model.Integer64(value);
         OnPropertyChanged("EventsSinceSubscriptionStart");
       }
     }
@@ -407,11 +391,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent> NotificationEvent
     {
-      get { if(_NotificationEvent==null) _NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(); return _NotificationEvent; }
+      get => _NotificationEvent ?? new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>();
       set { _NotificationEvent = value; OnPropertyChanged("NotificationEvent"); }
     }
 
-    private List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent> _NotificationEvent;
+    private List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>? _NotificationEvent;
 
     /// <summary>
     /// Reference to the Subscription responsible for this notification.
@@ -421,41 +405,38 @@ namespace Hl7.Fhir.Model
     [References("Subscription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subscription
+    public Hl7.Fhir.Model.ResourceReference? Subscription
     {
       get { return _Subscription; }
       set { _Subscription = value; OnPropertyChanged("Subscription"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subscription;
+    private Hl7.Fhir.Model.ResourceReference? _Subscription;
 
     /// <summary>
     /// Reference to the SubscriptionTopic this notification relates to.
     /// </summary>
     [FhirElement("topic", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical TopicElement
+    public Hl7.Fhir.Model.Canonical? TopicElement
     {
       get { return _TopicElement; }
       set { _TopicElement = value; OnPropertyChanged("TopicElement"); }
     }
 
-    private Hl7.Fhir.Model.Canonical _TopicElement;
+    private Hl7.Fhir.Model.Canonical? _TopicElement;
 
     /// <summary>
     /// Reference to the SubscriptionTopic this notification relates to
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Topic
+    public string? Topic
     {
-      get { return TopicElement != null ? TopicElement.Value : null; }
+      get => _TopicElement?.Value;
       set
       {
-        if (value == null)
-          TopicElement = null;
-        else
-          TopicElement = new Hl7.Fhir.Model.Canonical(value);
+        TopicElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Topic");
       }
     }
@@ -469,29 +450,25 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Error
     {
-      get { if(_Error==null) _Error = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Error; }
+      get => _Error ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _Error = value; OnPropertyChanged("Error"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Error;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Error;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SubscriptionStatus;
-
-      if (dest == null)
-      {
+      if(other is not SubscriptionStatus dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)StatusElement.DeepCopyInternal();
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>)TypeElement.DeepCopyInternal();
-      if(EventsSinceSubscriptionStartElement != null) dest.EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.Integer64)EventsSinceSubscriptionStartElement.DeepCopyInternal();
-      if(NotificationEvent.Any()) dest.NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(NotificationEvent.DeepCopyInternal());
-      if(Subscription != null) dest.Subscription = (Hl7.Fhir.Model.ResourceReference)Subscription.DeepCopyInternal();
-      if(TopicElement != null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)TopicElement.DeepCopyInternal();
-      if(Error.Any()) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>)_TypeElement.DeepCopyInternal();
+      if(_EventsSinceSubscriptionStartElement is not null) dest.EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.Integer64)_EventsSinceSubscriptionStartElement.DeepCopyInternal();
+      if(_NotificationEvent is not null) dest.NotificationEvent = new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>(_NotificationEvent.DeepCopyInternal());
+      if(_Subscription is not null) dest.Subscription = (Hl7.Fhir.Model.ResourceReference)_Subscription.DeepCopyInternal();
+      if(_TopicElement is not null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)_TopicElement.DeepCopyInternal();
+      if(_Error is not null) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(_Error.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -503,76 +480,76 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SubscriptionStatus;
-      if(otherT == null) return false;
+      if(other is not SubscriptionStatus otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(EventsSinceSubscriptionStartElement, otherT.EventsSinceSubscriptionStartElement)) return false;
-      if(!comparer.ListEquals(NotificationEvent, otherT.NotificationEvent)) return false;
-      if(!comparer.Equals(Subscription, otherT.Subscription)) return false;
-      if(!comparer.Equals(TopicElement, otherT.TopicElement)) return false;
-      if(!comparer.ListEquals(Error, otherT.Error)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_EventsSinceSubscriptionStartElement, otherT._EventsSinceSubscriptionStartElement)) return false;
+      if(!comparer.ListEquals(_NotificationEvent, otherT._NotificationEvent)) return false;
+      if(!comparer.Equals(_Subscription, otherT._Subscription)) return false;
+      if(!comparer.Equals(_TopicElement, otherT._TopicElement)) return false;
+      if(!comparer.ListEquals(_Error, otherT._Error)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "eventsSinceSubscriptionStart":
-          value = EventsSinceSubscriptionStartElement;
-          return EventsSinceSubscriptionStartElement is not null;
+          value = _EventsSinceSubscriptionStartElement;
+          return _EventsSinceSubscriptionStartElement is not null;
         case "notificationEvent":
-          value = NotificationEvent;
-          return NotificationEvent?.Any() == true;
+          value = _NotificationEvent;
+          return _NotificationEvent?.Any() == true;
         case "subscription":
-          value = Subscription;
-          return Subscription is not null;
+          value = _Subscription;
+          return _Subscription is not null;
         case "topic":
-          value = TopicElement;
-          return TopicElement is not null;
+          value = _TopicElement;
+          return _TopicElement is not null;
         case "error":
-          value = Error;
-          return Error?.Any() == true;
+          value = _Error;
+          return _Error?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>?)value;
           return this;
         case "eventsSinceSubscriptionStart":
-          EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.Integer64)value;
+          EventsSinceSubscriptionStartElement = (Hl7.Fhir.Model.Integer64?)value;
           return this;
         case "notificationEvent":
-          NotificationEvent = (List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>)value;
+          NotificationEvent = (List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>?)value!;
           return this;
         case "subscription":
-          Subscription = (Hl7.Fhir.Model.ResourceReference)value;
+          Subscription = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "topic":
-          TopicElement = (Hl7.Fhir.Model.Canonical)value;
+          TopicElement = (Hl7.Fhir.Model.Canonical?)value;
           return this;
         case "error":
-          Error = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Error = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -583,13 +560,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (EventsSinceSubscriptionStartElement is not null) yield return new KeyValuePair<string,object>("eventsSinceSubscriptionStart",EventsSinceSubscriptionStartElement);
-      if (NotificationEvent?.Any() == true) yield return new KeyValuePair<string,object>("notificationEvent",NotificationEvent);
-      if (Subscription is not null) yield return new KeyValuePair<string,object>("subscription",Subscription);
-      if (TopicElement is not null) yield return new KeyValuePair<string,object>("topic",TopicElement);
-      if (Error?.Any() == true) yield return new KeyValuePair<string,object>("error",Error);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_EventsSinceSubscriptionStartElement is not null) yield return new KeyValuePair<string,object>("eventsSinceSubscriptionStart",_EventsSinceSubscriptionStartElement);
+      if (_NotificationEvent?.Any() == true) yield return new KeyValuePair<string,object>("notificationEvent",_NotificationEvent);
+      if (_Subscription is not null) yield return new KeyValuePair<string,object>("subscription",_Subscription);
+      if (_TopicElement is not null) yield return new KeyValuePair<string,object>("topic",_TopicElement);
+      if (_Error?.Any() == true) yield return new KeyValuePair<string,object>("error",_Error);
     }
 
   }

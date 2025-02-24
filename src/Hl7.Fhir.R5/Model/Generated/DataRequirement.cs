@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -154,28 +157,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PathElement
+      public Hl7.Fhir.Model.FhirString? PathElement
       {
         get { return _PathElement; }
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PathElement;
+      private Hl7.Fhir.Model.FhirString? _PathElement;
 
       /// <summary>
       /// A code-valued attribute to filter on
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get { return PathElement != null ? PathElement.Value : null; }
+        get => _PathElement?.Value;
         set
         {
-          if (value == null)
-            PathElement = null;
-          else
-            PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -185,28 +185,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString SearchParamElement
+      public Hl7.Fhir.Model.FhirString? SearchParamElement
       {
         get { return _SearchParamElement; }
         set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _SearchParamElement;
+      private Hl7.Fhir.Model.FhirString? _SearchParamElement;
 
       /// <summary>
       /// A coded (token) parameter to search on
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string SearchParam
+      public string? SearchParam
       {
-        get { return SearchParamElement != null ? SearchParamElement.Value : null; }
+        get => _SearchParamElement?.Value;
         set
         {
-          if (value == null)
-            SearchParamElement = null;
-          else
-            SearchParamElement = new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -216,28 +213,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("valueSet", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Canonical ValueSetElement
+      public Hl7.Fhir.Model.Canonical? ValueSetElement
       {
         get { return _ValueSetElement; }
         set { _ValueSetElement = value; OnPropertyChanged("ValueSetElement"); }
       }
 
-      private Hl7.Fhir.Model.Canonical _ValueSetElement;
+      private Hl7.Fhir.Model.Canonical? _ValueSetElement;
 
       /// <summary>
       /// ValueSet for the filter
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ValueSet
+      public string? ValueSet
       {
-        get { return ValueSetElement != null ? ValueSetElement.Value : null; }
+        get => _ValueSetElement?.Value;
         set
         {
-          if (value == null)
-            ValueSetElement = null;
-          else
-            ValueSetElement = new Hl7.Fhir.Model.Canonical(value);
+          ValueSetElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("ValueSet");
         }
       }
@@ -250,26 +244,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
       {
-        get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
+        get => _Code ?? new List<Hl7.Fhir.Model.Coding>();
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private List<Hl7.Fhir.Model.Coding> _Code;
+      private List<Hl7.Fhir.Model.Coding>? _Code;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CodeFilterComponent;
-
-        if (dest == null)
-        {
+        if(other is not CodeFilterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
-        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopyInternal();
-        if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopyInternal();
-        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopyInternal());
+        if(_PathElement is not null) dest.PathElement = (Hl7.Fhir.Model.FhirString)_PathElement.DeepCopyInternal();
+        if(_SearchParamElement is not null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)_SearchParamElement.DeepCopyInternal();
+        if(_ValueSetElement is not null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)_ValueSetElement.DeepCopyInternal();
+        if(_Code is not null) dest.Code = new List<Hl7.Fhir.Model.Coding>(_Code.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -281,55 +271,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CodeFilterComponent;
-        if(otherT == null) return false;
+        if(other is not CodeFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.Equals(SearchParamElement, otherT.SearchParamElement)) return false;
-        if(!comparer.Equals(ValueSetElement, otherT.ValueSetElement)) return false;
-        if(!comparer.ListEquals(Code, otherT.Code)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.Equals(_SearchParamElement, otherT._SearchParamElement)) return false;
+        if(!comparer.Equals(_ValueSetElement, otherT._ValueSetElement)) return false;
+        if(!comparer.ListEquals(_Code, otherT._Code)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "path":
-            value = PathElement;
-            return PathElement is not null;
+            value = _PathElement;
+            return _PathElement is not null;
           case "searchParam":
-            value = SearchParamElement;
-            return SearchParamElement is not null;
+            value = _SearchParamElement;
+            return _SearchParamElement is not null;
           case "valueSet":
-            value = ValueSetElement;
-            return ValueSetElement is not null;
+            value = _ValueSetElement;
+            return _ValueSetElement is not null;
           case "code":
-            value = Code;
-            return Code?.Any() == true;
+            value = _Code;
+            return _Code?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString)value;
+            PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "searchParam":
-            SearchParamElement = (Hl7.Fhir.Model.FhirString)value;
+            SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "valueSet":
-            ValueSetElement = (Hl7.Fhir.Model.Canonical)value;
+            ValueSetElement = (Hl7.Fhir.Model.Canonical?)value;
             return this;
           case "code":
-            Code = (List<Hl7.Fhir.Model.Coding>)value;
+            Code = (List<Hl7.Fhir.Model.Coding>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -340,10 +330,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
-        if (ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
-        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
+        if (_ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",_ValueSetElement);
+        if (_Code?.Any() == true) yield return new KeyValuePair<string,object>("code",_Code);
       }
 
     }
@@ -369,28 +359,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PathElement
+      public Hl7.Fhir.Model.FhirString? PathElement
       {
         get { return _PathElement; }
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PathElement;
+      private Hl7.Fhir.Model.FhirString? _PathElement;
 
       /// <summary>
       /// A date-valued attribute to filter on
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get { return PathElement != null ? PathElement.Value : null; }
+        get => _PathElement?.Value;
         set
         {
-          if (value == null)
-            PathElement = null;
-          else
-            PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -400,28 +387,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString SearchParamElement
+      public Hl7.Fhir.Model.FhirString? SearchParamElement
       {
         get { return _SearchParamElement; }
         set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _SearchParamElement;
+      private Hl7.Fhir.Model.FhirString? _SearchParamElement;
 
       /// <summary>
       /// A date valued parameter to search on
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string SearchParam
+      public string? SearchParam
       {
-        get { return SearchParamElement != null ? SearchParamElement.Value : null; }
+        get => _SearchParamElement?.Value;
         set
         {
-          if (value == null)
-            SearchParamElement = null;
-          else
-            SearchParamElement = new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -433,27 +417,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DateFilterComponent;
-
-        if (dest == null)
-        {
+        if(other is not DateFilterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
-        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
+        if(_PathElement is not null) dest.PathElement = (Hl7.Fhir.Model.FhirString)_PathElement.DeepCopyInternal();
+        if(_SearchParamElement is not null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)_SearchParamElement.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -465,48 +445,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DateFilterComponent;
-        if(otherT == null) return false;
+        if(other is not DateFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.Equals(SearchParamElement, otherT.SearchParamElement)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.Equals(_SearchParamElement, otherT._SearchParamElement)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "path":
-            value = PathElement;
-            return PathElement is not null;
+            value = _PathElement;
+            return _PathElement is not null;
           case "searchParam":
-            value = SearchParamElement;
-            return SearchParamElement is not null;
+            value = _SearchParamElement;
+            return _SearchParamElement is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString)value;
+            PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "searchParam":
-            SearchParamElement = (Hl7.Fhir.Model.FhirString)value;
+            SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -517,9 +497,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -545,28 +525,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PathElement
+      public Hl7.Fhir.Model.FhirString? PathElement
       {
         get { return _PathElement; }
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PathElement;
+      private Hl7.Fhir.Model.FhirString? _PathElement;
 
       /// <summary>
       /// An attribute to filter on
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get { return PathElement != null ? PathElement.Value : null; }
+        get => _PathElement?.Value;
         set
         {
-          if (value == null)
-            PathElement = null;
-          else
-            PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -576,28 +553,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString SearchParamElement
+      public Hl7.Fhir.Model.FhirString? SearchParamElement
       {
         get { return _SearchParamElement; }
         set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _SearchParamElement;
+      private Hl7.Fhir.Model.FhirString? _SearchParamElement;
 
       /// <summary>
       /// A parameter to search on
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string SearchParam
+      public string? SearchParam
       {
-        get { return SearchParamElement != null ? SearchParamElement.Value : null; }
+        get => _SearchParamElement?.Value;
         set
         {
-          if (value == null)
-            SearchParamElement = null;
-          else
-            SearchParamElement = new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -609,13 +583,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("ValueFilterComparator")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator> ComparatorElement
+      public Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>? ComparatorElement
       {
         get { return _ComparatorElement; }
         set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator> _ComparatorElement;
+      private Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>? _ComparatorElement;
 
       /// <summary>
       /// eq | gt | lt | ge | le | sa | eb
@@ -624,13 +598,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DataRequirement.ValueFilterComparator? Comparator
       {
-        get { return ComparatorElement != null ? ComparatorElement.Value : null; }
+        get => _ComparatorElement?.Value;
         set
         {
-          if (value == null)
-            ComparatorElement = null;
-          else
-            ComparatorElement = new Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>(value);
+          ComparatorElement = value is null ? null : new Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>(value);
           OnPropertyChanged("Comparator");
         }
       }
@@ -642,28 +613,24 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ValueFilterComponent;
-
-        if (dest == null)
-        {
+        if(other is not ValueFilterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
-        if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopyInternal();
-        if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>)ComparatorElement.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
+        if(_PathElement is not null) dest.PathElement = (Hl7.Fhir.Model.FhirString)_PathElement.DeepCopyInternal();
+        if(_SearchParamElement is not null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)_SearchParamElement.DeepCopyInternal();
+        if(_ComparatorElement is not null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>)_ComparatorElement.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -675,55 +642,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ValueFilterComponent;
-        if(otherT == null) return false;
+        if(other is not ValueFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.Equals(SearchParamElement, otherT.SearchParamElement)) return false;
-        if(!comparer.Equals(ComparatorElement, otherT.ComparatorElement)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.Equals(_SearchParamElement, otherT._SearchParamElement)) return false;
+        if(!comparer.Equals(_ComparatorElement, otherT._ComparatorElement)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "path":
-            value = PathElement;
-            return PathElement is not null;
+            value = _PathElement;
+            return _PathElement is not null;
           case "searchParam":
-            value = SearchParamElement;
-            return SearchParamElement is not null;
+            value = _SearchParamElement;
+            return _SearchParamElement is not null;
           case "comparator":
-            value = ComparatorElement;
-            return ComparatorElement is not null;
+            value = _ComparatorElement;
+            return _ComparatorElement is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString)value;
+            PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "searchParam":
-            SearchParamElement = (Hl7.Fhir.Model.FhirString)value;
+            SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "comparator":
-            ComparatorElement = (Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>)value;
+            ComparatorElement = (Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -734,10 +701,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
-        if (ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",ComparatorElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
+        if (_ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -765,28 +732,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PathElement
+      public Hl7.Fhir.Model.FhirString? PathElement
       {
         get { return _PathElement; }
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PathElement;
+      private Hl7.Fhir.Model.FhirString? _PathElement;
 
       /// <summary>
       /// The name of the attribute to perform the sort
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get { return PathElement != null ? PathElement.Value : null; }
+        get => _PathElement?.Value;
         set
         {
-          if (value == null)
-            PathElement = null;
-          else
-            PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -799,13 +763,13 @@ namespace Hl7.Fhir.Model
       [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
+      public Code<Hl7.Fhir.Model.DataRequirement.SortDirection>? DirectionElement
       {
         get { return _DirectionElement; }
         set { _DirectionElement = value; OnPropertyChanged("DirectionElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.DataRequirement.SortDirection> _DirectionElement;
+      private Code<Hl7.Fhir.Model.DataRequirement.SortDirection>? _DirectionElement;
 
       /// <summary>
       /// ascending | descending
@@ -814,29 +778,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DataRequirement.SortDirection? Direction
       {
-        get { return DirectionElement != null ? DirectionElement.Value : null; }
+        get => _DirectionElement?.Value;
         set
         {
-          if (value == null)
-            DirectionElement = null;
-          else
-            DirectionElement = new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
+          DirectionElement = value is null ? null : new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
           OnPropertyChanged("Direction");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SortComponent;
-
-        if (dest == null)
-        {
+        if(other is not SortComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
-        if(DirectionElement != null) dest.DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>)DirectionElement.DeepCopyInternal();
+        if(_PathElement is not null) dest.PathElement = (Hl7.Fhir.Model.FhirString)_PathElement.DeepCopyInternal();
+        if(_DirectionElement is not null) dest.DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>)_DirectionElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -848,41 +805,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SortComponent;
-        if(otherT == null) return false;
+        if(other is not SortComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.Equals(DirectionElement, otherT.DirectionElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.Equals(_DirectionElement, otherT._DirectionElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "path":
-            value = PathElement;
-            return PathElement is not null;
+            value = _PathElement;
+            return _PathElement is not null;
           case "direction":
-            value = DirectionElement;
-            return DirectionElement is not null;
+            value = _DirectionElement;
+            return _DirectionElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString)value;
+            PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "direction":
-            DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>)value;
+            DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -893,8 +850,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",DirectionElement);
+        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",_DirectionElement);
       }
 
     }
@@ -907,13 +864,13 @@ namespace Hl7.Fhir.Model
     [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
+    public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FHIRAllTypes> _TypeElement;
+    private Code<Hl7.Fhir.Model.FHIRAllTypes>? _TypeElement;
 
     /// <summary>
     /// The type of the required data
@@ -922,13 +879,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -941,24 +895,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ProfileElement
     {
-      get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.Canonical>(); return _ProfileElement; }
+      get => _ProfileElement ?? new List<Hl7.Fhir.Model.Canonical>();
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
-    private List<Hl7.Fhir.Model.Canonical> _ProfileElement;
+    private List<Hl7.Fhir.Model.Canonical>? _ProfileElement;
 
     /// <summary>
     /// The profile of the required data
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Profile
+    public IEnumerable<string?>? Profile
     {
-      get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
+      get => _ProfileElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          ProfileElement = null;
+          ProfileElement = null!;
         else
           ProfileElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("Profile");
@@ -974,13 +928,13 @@ namespace Hl7.Fhir.Model
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Subject
+    public Hl7.Fhir.Model.DataType? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Subject;
+    private Hl7.Fhir.Model.DataType? _Subject;
 
     /// <summary>
     /// Indicates specific structure elements that are referenced by the knowledge module.
@@ -990,24 +944,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> MustSupportElement
     {
-      get { if(_MustSupportElement==null) _MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(); return _MustSupportElement; }
+      get => _MustSupportElement ?? new List<Hl7.Fhir.Model.FhirString>();
       set { _MustSupportElement = value; OnPropertyChanged("MustSupportElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _MustSupportElement;
+    private List<Hl7.Fhir.Model.FhirString>? _MustSupportElement;
 
     /// <summary>
     /// Indicates specific structure elements that are referenced by the knowledge module
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> MustSupport
+    public IEnumerable<string?>? MustSupport
     {
-      get { return MustSupportElement != null ? MustSupportElement.Select(elem => elem.Value) : null; }
+      get => _MustSupportElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          MustSupportElement = null;
+          MustSupportElement = null!;
         else
           MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("MustSupport");
@@ -1022,11 +976,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
     {
-      get { if(_CodeFilter==null) _CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(); return _CodeFilter; }
+      get => _CodeFilter ?? new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>();
       set { _CodeFilter = value; OnPropertyChanged("CodeFilter"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> _CodeFilter;
+    private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>? _CodeFilter;
 
     /// <summary>
     /// What dates/date ranges are expected.
@@ -1036,11 +990,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
     {
-      get { if(_DateFilter==null) _DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(); return _DateFilter; }
+      get => _DateFilter ?? new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>();
       set { _DateFilter = value; OnPropertyChanged("DateFilter"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> _DateFilter;
+    private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>? _DateFilter;
 
     /// <summary>
     /// What values are expected.
@@ -1050,24 +1004,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent> ValueFilter
     {
-      get { if(_ValueFilter==null) _ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(); return _ValueFilter; }
+      get => _ValueFilter ?? new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>();
       set { _ValueFilter = value; OnPropertyChanged("ValueFilter"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent> _ValueFilter;
+    private List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>? _ValueFilter;
 
     /// <summary>
     /// Number of results.
     /// </summary>
     [FhirElement("limit", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt LimitElement
+    public Hl7.Fhir.Model.PositiveInt? LimitElement
     {
       get { return _LimitElement; }
       set { _LimitElement = value; OnPropertyChanged("LimitElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt _LimitElement;
+    private Hl7.Fhir.Model.PositiveInt? _LimitElement;
 
     /// <summary>
     /// Number of results
@@ -1076,13 +1030,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Limit
     {
-      get { return LimitElement != null ? LimitElement.Value : null; }
+      get => _LimitElement?.Value;
       set
       {
-        if (value == null)
-          LimitElement = null;
-        else
-          LimitElement = new Hl7.Fhir.Model.PositiveInt(value);
+        LimitElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Limit");
       }
     }
@@ -1095,31 +1046,27 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.SortComponent> Sort
     {
-      get { if(_Sort==null) _Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(); return _Sort; }
+      get => _Sort ?? new List<Hl7.Fhir.Model.DataRequirement.SortComponent>();
       set { _Sort = value; OnPropertyChanged("Sort"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement.SortComponent> _Sort;
+    private List<Hl7.Fhir.Model.DataRequirement.SortComponent>? _Sort;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DataRequirement;
-
-      if (dest == null)
-      {
+      if(other is not DataRequirement dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopyInternal();
-      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopyInternal());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopyInternal();
-      if(MustSupportElement.Any()) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopyInternal());
-      if(CodeFilter.Any()) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopyInternal());
-      if(DateFilter.Any()) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopyInternal());
-      if(ValueFilter.Any()) dest.ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(ValueFilter.DeepCopyInternal());
-      if(LimitElement != null) dest.LimitElement = (Hl7.Fhir.Model.PositiveInt)LimitElement.DeepCopyInternal();
-      if(Sort.Any()) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(Sort.DeepCopyInternal());
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)_TypeElement.DeepCopyInternal();
+      if(_ProfileElement is not null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(_ProfileElement.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.DataType)_Subject.DeepCopyInternal();
+      if(_MustSupportElement is not null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(_MustSupportElement.DeepCopyInternal());
+      if(_CodeFilter is not null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(_CodeFilter.DeepCopyInternal());
+      if(_DateFilter is not null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(_DateFilter.DeepCopyInternal());
+      if(_ValueFilter is not null) dest.ValueFilter = new List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>(_ValueFilter.DeepCopyInternal());
+      if(_LimitElement is not null) dest.LimitElement = (Hl7.Fhir.Model.PositiveInt)_LimitElement.DeepCopyInternal();
+      if(_Sort is not null) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(_Sort.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1131,90 +1078,90 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DataRequirement;
-      if(otherT == null) return false;
+      if(other is not DataRequirement otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.ListEquals(ProfileElement, otherT.ProfileElement)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.ListEquals(MustSupportElement, otherT.MustSupportElement)) return false;
-      if(!comparer.ListEquals(CodeFilter, otherT.CodeFilter)) return false;
-      if(!comparer.ListEquals(DateFilter, otherT.DateFilter)) return false;
-      if(!comparer.ListEquals(ValueFilter, otherT.ValueFilter)) return false;
-      if(!comparer.Equals(LimitElement, otherT.LimitElement)) return false;
-      if(!comparer.ListEquals(Sort, otherT.Sort)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.ListEquals(_ProfileElement, otherT._ProfileElement)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.ListEquals(_MustSupportElement, otherT._MustSupportElement)) return false;
+      if(!comparer.ListEquals(_CodeFilter, otherT._CodeFilter)) return false;
+      if(!comparer.ListEquals(_DateFilter, otherT._DateFilter)) return false;
+      if(!comparer.ListEquals(_ValueFilter, otherT._ValueFilter)) return false;
+      if(!comparer.Equals(_LimitElement, otherT._LimitElement)) return false;
+      if(!comparer.ListEquals(_Sort, otherT._Sort)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "profile":
-          value = ProfileElement;
-          return ProfileElement?.Any() == true;
+          value = _ProfileElement;
+          return _ProfileElement?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "mustSupport":
-          value = MustSupportElement;
-          return MustSupportElement?.Any() == true;
+          value = _MustSupportElement;
+          return _MustSupportElement?.Any() == true;
         case "codeFilter":
-          value = CodeFilter;
-          return CodeFilter?.Any() == true;
+          value = _CodeFilter;
+          return _CodeFilter?.Any() == true;
         case "dateFilter":
-          value = DateFilter;
-          return DateFilter?.Any() == true;
+          value = _DateFilter;
+          return _DateFilter?.Any() == true;
         case "valueFilter":
-          value = ValueFilter;
-          return ValueFilter?.Any() == true;
+          value = _ValueFilter;
+          return _ValueFilter?.Any() == true;
         case "limit":
-          value = LimitElement;
-          return LimitElement is not null;
+          value = _LimitElement;
+          return _LimitElement is not null;
         case "sort":
-          value = Sort;
-          return Sort?.Any() == true;
+          value = _Sort;
+          return _Sort?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.Canonical>)value;
+          ProfileElement = (List<Hl7.Fhir.Model.Canonical>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.DataType)value;
+          Subject = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "mustSupport":
-          MustSupportElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          MustSupportElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "codeFilter":
-          CodeFilter = (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>)value;
+          CodeFilter = (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>?)value!;
           return this;
         case "dateFilter":
-          DateFilter = (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>)value;
+          DateFilter = (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>?)value!;
           return this;
         case "valueFilter":
-          ValueFilter = (List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>)value;
+          ValueFilter = (List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent>?)value!;
           return this;
         case "limit":
-          LimitElement = (Hl7.Fhir.Model.PositiveInt)value;
+          LimitElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "sort":
-          Sort = (List<Hl7.Fhir.Model.DataRequirement.SortComponent>)value;
+          Sort = (List<Hl7.Fhir.Model.DataRequirement.SortComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1225,15 +1172,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
-      if (CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",CodeFilter);
-      if (DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
-      if (ValueFilter?.Any() == true) yield return new KeyValuePair<string,object>("valueFilter",ValueFilter);
-      if (LimitElement is not null) yield return new KeyValuePair<string,object>("limit",LimitElement);
-      if (Sort?.Any() == true) yield return new KeyValuePair<string,object>("sort",Sort);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",_MustSupportElement);
+      if (_CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",_CodeFilter);
+      if (_DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",_DateFilter);
+      if (_ValueFilter?.Any() == true) yield return new KeyValuePair<string,object>("valueFilter",_ValueFilter);
+      if (_LimitElement is not null) yield return new KeyValuePair<string,object>("limit",_LimitElement);
+      if (_Sort?.Any() == true) yield return new KeyValuePair<string,object>("sort",_Sort);
     }
 
   }

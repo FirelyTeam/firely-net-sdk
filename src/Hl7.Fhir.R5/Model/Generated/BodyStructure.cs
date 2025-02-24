@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -82,13 +85,13 @@ namespace Hl7.Fhir.Model
       [Binding("BodySite")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Structure
+      public Hl7.Fhir.Model.CodeableConcept? Structure
       {
         get { return _Structure; }
         set { _Structure = value; OnPropertyChanged("Structure"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Structure;
+      private Hl7.Fhir.Model.CodeableConcept? _Structure;
 
       /// <summary>
       /// Code that represents the included structure laterality.
@@ -96,13 +99,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("laterality", Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("BodyStructureQualifier")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Laterality
+      public Hl7.Fhir.Model.CodeableConcept? Laterality
       {
         get { return _Laterality; }
         set { _Laterality = value; OnPropertyChanged("Laterality"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Laterality;
+      private Hl7.Fhir.Model.CodeableConcept? _Laterality;
 
       /// <summary>
       /// Landmark relative location.
@@ -112,11 +115,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> BodyLandmarkOrientation
       {
-        get { if(_BodyLandmarkOrientation==null) _BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(); return _BodyLandmarkOrientation; }
+        get => _BodyLandmarkOrientation ?? new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>();
         set { _BodyLandmarkOrientation = value; OnPropertyChanged("BodyLandmarkOrientation"); }
       }
 
-      private List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> _BodyLandmarkOrientation;
+      private List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>? _BodyLandmarkOrientation;
 
       /// <summary>
       /// Cartesian reference for structure.
@@ -128,11 +131,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SpatialReference
       {
-        get { if(_SpatialReference==null) _SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _SpatialReference; }
+        get => _SpatialReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
         set { _SpatialReference = value; OnPropertyChanged("SpatialReference"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _SpatialReference;
+      private List<Hl7.Fhir.Model.ResourceReference>? _SpatialReference;
 
       /// <summary>
       /// Code that represents the included structure qualifier.
@@ -143,27 +146,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
       {
-        get { if(_Qualifier==null) _Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Qualifier; }
+        get => _Qualifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Qualifier = value; OnPropertyChanged("Qualifier"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Qualifier;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Qualifier;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as IncludedStructureComponent;
-
-        if (dest == null)
-        {
+        if(other is not IncludedStructureComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Structure != null) dest.Structure = (Hl7.Fhir.Model.CodeableConcept)Structure.DeepCopyInternal();
-        if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.CodeableConcept)Laterality.DeepCopyInternal();
-        if(BodyLandmarkOrientation.Any()) dest.BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(BodyLandmarkOrientation.DeepCopyInternal());
-        if(SpatialReference.Any()) dest.SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(SpatialReference.DeepCopyInternal());
-        if(Qualifier.Any()) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopyInternal());
+        if(_Structure is not null) dest.Structure = (Hl7.Fhir.Model.CodeableConcept)_Structure.DeepCopyInternal();
+        if(_Laterality is not null) dest.Laterality = (Hl7.Fhir.Model.CodeableConcept)_Laterality.DeepCopyInternal();
+        if(_BodyLandmarkOrientation is not null) dest.BodyLandmarkOrientation = new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>(_BodyLandmarkOrientation.DeepCopyInternal());
+        if(_SpatialReference is not null) dest.SpatialReference = new List<Hl7.Fhir.Model.ResourceReference>(_SpatialReference.DeepCopyInternal());
+        if(_Qualifier is not null) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(_Qualifier.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -175,62 +174,62 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as IncludedStructureComponent;
-        if(otherT == null) return false;
+        if(other is not IncludedStructureComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Structure, otherT.Structure)) return false;
-        if(!comparer.Equals(Laterality, otherT.Laterality)) return false;
-        if(!comparer.ListEquals(BodyLandmarkOrientation, otherT.BodyLandmarkOrientation)) return false;
-        if(!comparer.ListEquals(SpatialReference, otherT.SpatialReference)) return false;
-        if(!comparer.ListEquals(Qualifier, otherT.Qualifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Structure, otherT._Structure)) return false;
+        if(!comparer.Equals(_Laterality, otherT._Laterality)) return false;
+        if(!comparer.ListEquals(_BodyLandmarkOrientation, otherT._BodyLandmarkOrientation)) return false;
+        if(!comparer.ListEquals(_SpatialReference, otherT._SpatialReference)) return false;
+        if(!comparer.ListEquals(_Qualifier, otherT._Qualifier)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "structure":
-            value = Structure;
-            return Structure is not null;
+            value = _Structure;
+            return _Structure is not null;
           case "laterality":
-            value = Laterality;
-            return Laterality is not null;
+            value = _Laterality;
+            return _Laterality is not null;
           case "bodyLandmarkOrientation":
-            value = BodyLandmarkOrientation;
-            return BodyLandmarkOrientation?.Any() == true;
+            value = _BodyLandmarkOrientation;
+            return _BodyLandmarkOrientation?.Any() == true;
           case "spatialReference":
-            value = SpatialReference;
-            return SpatialReference?.Any() == true;
+            value = _SpatialReference;
+            return _SpatialReference?.Any() == true;
           case "qualifier":
-            value = Qualifier;
-            return Qualifier?.Any() == true;
+            value = _Qualifier;
+            return _Qualifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "structure":
-            Structure = (Hl7.Fhir.Model.CodeableConcept)value;
+            Structure = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "laterality":
-            Laterality = (Hl7.Fhir.Model.CodeableConcept)value;
+            Laterality = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "bodyLandmarkOrientation":
-            BodyLandmarkOrientation = (List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>)value;
+            BodyLandmarkOrientation = (List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>?)value!;
             return this;
           case "spatialReference":
-            SpatialReference = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            SpatialReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "qualifier":
-            Qualifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Qualifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -241,11 +240,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
-        if (Laterality is not null) yield return new KeyValuePair<string,object>("laterality",Laterality);
-        if (BodyLandmarkOrientation?.Any() == true) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",BodyLandmarkOrientation);
-        if (SpatialReference?.Any() == true) yield return new KeyValuePair<string,object>("spatialReference",SpatialReference);
-        if (Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",Qualifier);
+        if (_Structure is not null) yield return new KeyValuePair<string,object>("structure",_Structure);
+        if (_Laterality is not null) yield return new KeyValuePair<string,object>("laterality",_Laterality);
+        if (_BodyLandmarkOrientation?.Any() == true) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",_BodyLandmarkOrientation);
+        if (_SpatialReference?.Any() == true) yield return new KeyValuePair<string,object>("spatialReference",_SpatialReference);
+        if (_Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",_Qualifier);
       }
 
     }
@@ -275,11 +274,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> LandmarkDescription
       {
-        get { if(_LandmarkDescription==null) _LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(); return _LandmarkDescription; }
+        get => _LandmarkDescription ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _LandmarkDescription = value; OnPropertyChanged("LandmarkDescription"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _LandmarkDescription;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _LandmarkDescription;
 
       /// <summary>
       /// Clockface orientation.
@@ -290,11 +289,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ClockFacePosition
       {
-        get { if(_ClockFacePosition==null) _ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ClockFacePosition; }
+        get => _ClockFacePosition ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _ClockFacePosition = value; OnPropertyChanged("ClockFacePosition"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _ClockFacePosition;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _ClockFacePosition;
 
       /// <summary>
       /// Landmark relative location.
@@ -304,11 +303,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> DistanceFromLandmark
       {
-        get { if(_DistanceFromLandmark==null) _DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(); return _DistanceFromLandmark; }
+        get => _DistanceFromLandmark ?? new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>();
         set { _DistanceFromLandmark = value; OnPropertyChanged("DistanceFromLandmark"); }
       }
 
-      private List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> _DistanceFromLandmark;
+      private List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>? _DistanceFromLandmark;
 
       /// <summary>
       /// Relative landmark surface orientation.
@@ -319,26 +318,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SurfaceOrientation
       {
-        get { if(_SurfaceOrientation==null) _SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SurfaceOrientation; }
+        get => _SurfaceOrientation ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _SurfaceOrientation = value; OnPropertyChanged("SurfaceOrientation"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _SurfaceOrientation;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _SurfaceOrientation;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as BodyLandmarkOrientationComponent;
-
-        if (dest == null)
-        {
+        if(other is not BodyLandmarkOrientationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(LandmarkDescription.Any()) dest.LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(LandmarkDescription.DeepCopyInternal());
-        if(ClockFacePosition.Any()) dest.ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(ClockFacePosition.DeepCopyInternal());
-        if(DistanceFromLandmark.Any()) dest.DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(DistanceFromLandmark.DeepCopyInternal());
-        if(SurfaceOrientation.Any()) dest.SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(SurfaceOrientation.DeepCopyInternal());
+        if(_LandmarkDescription is not null) dest.LandmarkDescription = new List<Hl7.Fhir.Model.CodeableConcept>(_LandmarkDescription.DeepCopyInternal());
+        if(_ClockFacePosition is not null) dest.ClockFacePosition = new List<Hl7.Fhir.Model.CodeableConcept>(_ClockFacePosition.DeepCopyInternal());
+        if(_DistanceFromLandmark is not null) dest.DistanceFromLandmark = new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>(_DistanceFromLandmark.DeepCopyInternal());
+        if(_SurfaceOrientation is not null) dest.SurfaceOrientation = new List<Hl7.Fhir.Model.CodeableConcept>(_SurfaceOrientation.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -350,55 +345,55 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as BodyLandmarkOrientationComponent;
-        if(otherT == null) return false;
+        if(other is not BodyLandmarkOrientationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(LandmarkDescription, otherT.LandmarkDescription)) return false;
-        if(!comparer.ListEquals(ClockFacePosition, otherT.ClockFacePosition)) return false;
-        if(!comparer.ListEquals(DistanceFromLandmark, otherT.DistanceFromLandmark)) return false;
-        if(!comparer.ListEquals(SurfaceOrientation, otherT.SurfaceOrientation)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_LandmarkDescription, otherT._LandmarkDescription)) return false;
+        if(!comparer.ListEquals(_ClockFacePosition, otherT._ClockFacePosition)) return false;
+        if(!comparer.ListEquals(_DistanceFromLandmark, otherT._DistanceFromLandmark)) return false;
+        if(!comparer.ListEquals(_SurfaceOrientation, otherT._SurfaceOrientation)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "landmarkDescription":
-            value = LandmarkDescription;
-            return LandmarkDescription?.Any() == true;
+            value = _LandmarkDescription;
+            return _LandmarkDescription?.Any() == true;
           case "clockFacePosition":
-            value = ClockFacePosition;
-            return ClockFacePosition?.Any() == true;
+            value = _ClockFacePosition;
+            return _ClockFacePosition?.Any() == true;
           case "distanceFromLandmark":
-            value = DistanceFromLandmark;
-            return DistanceFromLandmark?.Any() == true;
+            value = _DistanceFromLandmark;
+            return _DistanceFromLandmark?.Any() == true;
           case "surfaceOrientation":
-            value = SurfaceOrientation;
-            return SurfaceOrientation?.Any() == true;
+            value = _SurfaceOrientation;
+            return _SurfaceOrientation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "landmarkDescription":
-            LandmarkDescription = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            LandmarkDescription = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "clockFacePosition":
-            ClockFacePosition = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            ClockFacePosition = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "distanceFromLandmark":
-            DistanceFromLandmark = (List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>)value;
+            DistanceFromLandmark = (List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>?)value!;
             return this;
           case "surfaceOrientation":
-            SurfaceOrientation = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            SurfaceOrientation = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -409,10 +404,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (LandmarkDescription?.Any() == true) yield return new KeyValuePair<string,object>("landmarkDescription",LandmarkDescription);
-        if (ClockFacePosition?.Any() == true) yield return new KeyValuePair<string,object>("clockFacePosition",ClockFacePosition);
-        if (DistanceFromLandmark?.Any() == true) yield return new KeyValuePair<string,object>("distanceFromLandmark",DistanceFromLandmark);
-        if (SurfaceOrientation?.Any() == true) yield return new KeyValuePair<string,object>("surfaceOrientation",SurfaceOrientation);
+        if (_LandmarkDescription?.Any() == true) yield return new KeyValuePair<string,object>("landmarkDescription",_LandmarkDescription);
+        if (_ClockFacePosition?.Any() == true) yield return new KeyValuePair<string,object>("clockFacePosition",_ClockFacePosition);
+        if (_DistanceFromLandmark?.Any() == true) yield return new KeyValuePair<string,object>("distanceFromLandmark",_DistanceFromLandmark);
+        if (_SurfaceOrientation?.Any() == true) yield return new KeyValuePair<string,object>("surfaceOrientation",_SurfaceOrientation);
       }
 
     }
@@ -442,11 +437,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Device
       {
-        get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.CodeableReference>(); return _Device; }
+        get => _Device ?? new List<Hl7.Fhir.Model.CodeableReference>();
         set { _Device = value; OnPropertyChanged("Device"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference> _Device;
+      private List<Hl7.Fhir.Model.CodeableReference>? _Device;
 
       /// <summary>
       /// Measured distance from body landmark.
@@ -456,24 +451,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Quantity> Value
       {
-        get { if(_Value==null) _Value = new List<Hl7.Fhir.Model.Quantity>(); return _Value; }
+        get => _Value ?? new List<Hl7.Fhir.Model.Quantity>();
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private List<Hl7.Fhir.Model.Quantity> _Value;
+      private List<Hl7.Fhir.Model.Quantity>? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DistanceFromLandmarkComponent;
-
-        if (dest == null)
-        {
+        if(other is not DistanceFromLandmarkComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.CodeableReference>(Device.DeepCopyInternal());
-        if(Value.Any()) dest.Value = new List<Hl7.Fhir.Model.Quantity>(Value.DeepCopyInternal());
+        if(_Device is not null) dest.Device = new List<Hl7.Fhir.Model.CodeableReference>(_Device.DeepCopyInternal());
+        if(_Value is not null) dest.Value = new List<Hl7.Fhir.Model.Quantity>(_Value.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -485,41 +476,41 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DistanceFromLandmarkComponent;
-        if(otherT == null) return false;
+        if(other is not DistanceFromLandmarkComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Device, otherT.Device)) return false;
-        if(!comparer.ListEquals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Device, otherT._Device)) return false;
+        if(!comparer.ListEquals(_Value, otherT._Value)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "device":
-            value = Device;
-            return Device?.Any() == true;
+            value = _Device;
+            return _Device?.Any() == true;
           case "value":
-            value = Value;
-            return Value?.Any() == true;
+            value = _Value;
+            return _Value?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "device":
-            Device = (List<Hl7.Fhir.Model.CodeableReference>)value;
+            Device = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           case "value":
-            Value = (List<Hl7.Fhir.Model.Quantity>)value;
+            Value = (List<Hl7.Fhir.Model.Quantity>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -530,8 +521,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
-        if (Value?.Any() == true) yield return new KeyValuePair<string,object>("value",Value);
+        if (_Device?.Any() == true) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_Value?.Any() == true) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -544,24 +535,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this record is in active use
@@ -570,13 +561,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -587,13 +575,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureCode")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Morphology
+    public Hl7.Fhir.Model.CodeableConcept? Morphology
     {
       get { return _Morphology; }
       set { _Morphology = value; OnPropertyChanged("Morphology"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Morphology;
+    private Hl7.Fhir.Model.CodeableConcept? _Morphology;
 
     /// <summary>
     /// Included anatomic location(s).
@@ -603,11 +591,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> IncludedStructure
     {
-      get { if(_IncludedStructure==null) _IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(); return _IncludedStructure; }
+      get => _IncludedStructure ?? new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>();
       set { _IncludedStructure = value; OnPropertyChanged("IncludedStructure"); }
     }
 
-    private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> _IncludedStructure;
+    private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>? _IncludedStructure;
 
     /// <summary>
     /// Excluded anatomic locations(s).
@@ -617,39 +605,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> ExcludedStructure
     {
-      get { if(_ExcludedStructure==null) _ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(); return _ExcludedStructure; }
+      get => _ExcludedStructure ?? new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>();
       set { _ExcludedStructure = value; OnPropertyChanged("ExcludedStructure"); }
     }
 
-    private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> _ExcludedStructure;
+    private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>? _ExcludedStructure;
 
     /// <summary>
     /// Text description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown DescriptionElement
+    public Hl7.Fhir.Model.Markdown? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
 
     /// <summary>
     /// Text description
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -662,11 +647,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.Attachment>(); return _Image; }
+      get => _Image ?? new List<Hl7.Fhir.Model.Attachment>();
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 
-    private List<Hl7.Fhir.Model.Attachment> _Image;
+    private List<Hl7.Fhir.Model.Attachment>? _Image;
 
     /// <summary>
     /// Who this is about.
@@ -676,34 +661,30 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as BodyStructure;
-
-      if (dest == null)
-      {
+      if(other is not BodyStructure dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(Morphology != null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)Morphology.DeepCopyInternal();
-      if(IncludedStructure.Any()) dest.IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(IncludedStructure.DeepCopyInternal());
-      if(ExcludedStructure.Any()) dest.ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(ExcludedStructure.DeepCopyInternal());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopyInternal());
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_Morphology is not null) dest.Morphology = (Hl7.Fhir.Model.CodeableConcept)_Morphology.DeepCopyInternal();
+      if(_IncludedStructure is not null) dest.IncludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(_IncludedStructure.DeepCopyInternal());
+      if(_ExcludedStructure is not null) dest.ExcludedStructure = new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>(_ExcludedStructure.DeepCopyInternal());
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+      if(_Image is not null) dest.Image = new List<Hl7.Fhir.Model.Attachment>(_Image.DeepCopyInternal());
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -715,83 +696,83 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as BodyStructure;
-      if(otherT == null) return false;
+      if(other is not BodyStructure otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.Equals(Morphology, otherT.Morphology)) return false;
-      if(!comparer.ListEquals(IncludedStructure, otherT.IncludedStructure)) return false;
-      if(!comparer.ListEquals(ExcludedStructure, otherT.ExcludedStructure)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Image, otherT.Image)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.Equals(_Morphology, otherT._Morphology)) return false;
+      if(!comparer.ListEquals(_IncludedStructure, otherT._IncludedStructure)) return false;
+      if(!comparer.ListEquals(_ExcludedStructure, otherT._ExcludedStructure)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Image, otherT._Image)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "morphology":
-          value = Morphology;
-          return Morphology is not null;
+          value = _Morphology;
+          return _Morphology is not null;
         case "includedStructure":
-          value = IncludedStructure;
-          return IncludedStructure?.Any() == true;
+          value = _IncludedStructure;
+          return _IncludedStructure?.Any() == true;
         case "excludedStructure":
-          value = ExcludedStructure;
-          return ExcludedStructure?.Any() == true;
+          value = _ExcludedStructure;
+          return _ExcludedStructure?.Any() == true;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "image":
-          value = Image;
-          return Image?.Any() == true;
+          value = _Image;
+          return _Image?.Any() == true;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "morphology":
-          Morphology = (Hl7.Fhir.Model.CodeableConcept)value;
+          Morphology = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "includedStructure":
-          IncludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>)value;
+          IncludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>?)value!;
           return this;
         case "excludedStructure":
-          ExcludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>)value;
+          ExcludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>?)value!;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.Markdown)value;
+          DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "image":
-          Image = (List<Hl7.Fhir.Model.Attachment>)value;
+          Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -802,14 +783,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (Morphology is not null) yield return new KeyValuePair<string,object>("morphology",Morphology);
-      if (IncludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("includedStructure",IncludedStructure);
-      if (ExcludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("excludedStructure",ExcludedStructure);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_Morphology is not null) yield return new KeyValuePair<string,object>("morphology",_Morphology);
+      if (_IncludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("includedStructure",_IncludedStructure);
+      if (_ExcludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("excludedStructure",_ExcludedStructure);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Image?.Any() == true) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
     }
 
   }

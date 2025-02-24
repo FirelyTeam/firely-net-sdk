@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -238,13 +241,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("InformationType")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType> InformationTypeElement
+      public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>? InformationTypeElement
       {
         get { return _InformationTypeElement; }
         set { _InformationTypeElement = value; OnPropertyChanged("InformationTypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType> _InformationTypeElement;
+      private Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>? _InformationTypeElement;
 
       /// <summary>
       /// comment | classifier | rating | container | response | change-request
@@ -253,13 +256,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType? InformationType
       {
-        get { return InformationTypeElement != null ? InformationTypeElement.Value : null; }
+        get => _InformationTypeElement?.Value;
         set
         {
-          if (value == null)
-            InformationTypeElement = null;
-          else
-            InformationTypeElement = new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>(value);
+          InformationTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>(value);
           OnPropertyChanged("InformationType");
         }
       }
@@ -269,28 +269,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("summary", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown SummaryElement
+      public Hl7.Fhir.Model.Markdown? SummaryElement
       {
         get { return _SummaryElement; }
         set { _SummaryElement = value; OnPropertyChanged("SummaryElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _SummaryElement;
+      private Hl7.Fhir.Model.Markdown? _SummaryElement;
 
       /// <summary>
       /// Brief summary of the content
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Summary
+      public string? Summary
       {
-        get { return SummaryElement != null ? SummaryElement.Value : null; }
+        get => _SummaryElement?.Value;
         set
         {
-          if (value == null)
-            SummaryElement = null;
-          else
-            SummaryElement = new Hl7.Fhir.Model.Markdown(value);
+          SummaryElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Summary");
         }
       }
@@ -301,13 +298,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=60)]
       [Binding("EvidenceCertaintyType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Rating, classifier, or assessment.
@@ -318,24 +315,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
-        get { if(_Classifier==null) _Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Classifier; }
+        get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Classifier = value; OnPropertyChanged("Classifier"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Classifier;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Classifier;
 
       /// <summary>
       /// Quantitative rating.
       /// </summary>
       [FhirElement("quantity", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// Who authored the content.
@@ -344,13 +341,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Patient","Practitioner","PractitionerRole","Organization","Device")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Author
+      public Hl7.Fhir.Model.ResourceReference? Author
       {
         get { return _Author; }
         set { _Author = value; OnPropertyChanged("Author"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Author;
+      private Hl7.Fhir.Model.ResourceReference? _Author;
 
       /// <summary>
       /// What the comment is directed to.
@@ -360,24 +357,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> PathElement
       {
-        get { if(_PathElement==null) _PathElement = new List<Hl7.Fhir.Model.FhirUri>(); return _PathElement; }
+        get => _PathElement ?? new List<Hl7.Fhir.Model.FhirUri>();
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirUri> _PathElement;
+      private List<Hl7.Fhir.Model.FhirUri>? _PathElement;
 
       /// <summary>
       /// What the comment is directed to
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> Path
+      public IEnumerable<string?>? Path
       {
-        get { return PathElement != null ? PathElement.Select(elem => elem.Value) : null; }
+        get => _PathElement?.Select(elem => elem.Value);
         set
         {
           if (value == null)
-            PathElement = null;
+            PathElement = null!;
           else
             PathElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
           OnPropertyChanged("Path");
@@ -392,24 +389,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
       {
-        get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _RelatedArtifact; }
+        get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
         set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
       }
 
-      private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
+      private List<Hl7.Fhir.Model.RelatedArtifact>? _RelatedArtifact;
 
       /// <summary>
       /// Acceptable to publicly share the resource content.
       /// </summary>
       [FhirElement("freeToShare", Order=120)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean FreeToShareElement
+      public Hl7.Fhir.Model.FhirBoolean? FreeToShareElement
       {
         get { return _FreeToShareElement; }
         set { _FreeToShareElement = value; OnPropertyChanged("FreeToShareElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _FreeToShareElement;
+      private Hl7.Fhir.Model.FhirBoolean? _FreeToShareElement;
 
       /// <summary>
       /// Acceptable to publicly share the resource content
@@ -418,13 +415,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? FreeToShare
       {
-        get { return FreeToShareElement != null ? FreeToShareElement.Value : null; }
+        get => _FreeToShareElement?.Value;
         set
         {
-          if (value == null)
-            FreeToShareElement = null;
-          else
-            FreeToShareElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          FreeToShareElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("FreeToShare");
         }
       }
@@ -437,32 +431,28 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> Component
       {
-        get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(); return _Component; }
+        get => _Component ?? new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>();
         set { _Component = value; OnPropertyChanged("Component"); }
       }
 
-      private List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> _Component;
+      private List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>? _Component;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ContentComponent;
-
-        if (dest == null)
-        {
+        if(other is not ContentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(InformationTypeElement != null) dest.InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>)InformationTypeElement.DeepCopyInternal();
-        if(SummaryElement != null) dest.SummaryElement = (Hl7.Fhir.Model.Markdown)SummaryElement.DeepCopyInternal();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopyInternal());
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopyInternal();
-        if(PathElement.Any()) dest.PathElement = new List<Hl7.Fhir.Model.FhirUri>(PathElement.DeepCopyInternal());
-        if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopyInternal());
-        if(FreeToShareElement != null) dest.FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean)FreeToShareElement.DeepCopyInternal();
-        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Component.DeepCopyInternal());
+        if(_InformationTypeElement is not null) dest.InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>)_InformationTypeElement.DeepCopyInternal();
+        if(_SummaryElement is not null) dest.SummaryElement = (Hl7.Fhir.Model.Markdown)_SummaryElement.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Classifier is not null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(_Classifier.DeepCopyInternal());
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_Author is not null) dest.Author = (Hl7.Fhir.Model.ResourceReference)_Author.DeepCopyInternal();
+        if(_PathElement is not null) dest.PathElement = new List<Hl7.Fhir.Model.FhirUri>(_PathElement.DeepCopyInternal());
+        if(_RelatedArtifact is not null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(_RelatedArtifact.DeepCopyInternal());
+        if(_FreeToShareElement is not null) dest.FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean)_FreeToShareElement.DeepCopyInternal();
+        if(_Component is not null) dest.Component = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(_Component.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -474,97 +464,97 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ContentComponent;
-        if(otherT == null) return false;
+        if(other is not ContentComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(InformationTypeElement, otherT.InformationTypeElement)) return false;
-        if(!comparer.Equals(SummaryElement, otherT.SummaryElement)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.ListEquals(Classifier, otherT.Classifier)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.Equals(Author, otherT.Author)) return false;
-        if(!comparer.ListEquals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.ListEquals(RelatedArtifact, otherT.RelatedArtifact)) return false;
-        if(!comparer.Equals(FreeToShareElement, otherT.FreeToShareElement)) return false;
-        if(!comparer.ListEquals(Component, otherT.Component)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_InformationTypeElement, otherT._InformationTypeElement)) return false;
+        if(!comparer.Equals(_SummaryElement, otherT._SummaryElement)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.ListEquals(_Classifier, otherT._Classifier)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_Author, otherT._Author)) return false;
+        if(!comparer.ListEquals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.ListEquals(_RelatedArtifact, otherT._RelatedArtifact)) return false;
+        if(!comparer.Equals(_FreeToShareElement, otherT._FreeToShareElement)) return false;
+        if(!comparer.ListEquals(_Component, otherT._Component)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "informationType":
-            value = InformationTypeElement;
-            return InformationTypeElement is not null;
+            value = _InformationTypeElement;
+            return _InformationTypeElement is not null;
           case "summary":
-            value = SummaryElement;
-            return SummaryElement is not null;
+            value = _SummaryElement;
+            return _SummaryElement is not null;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "classifier":
-            value = Classifier;
-            return Classifier?.Any() == true;
+            value = _Classifier;
+            return _Classifier?.Any() == true;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "author":
-            value = Author;
-            return Author is not null;
+            value = _Author;
+            return _Author is not null;
           case "path":
-            value = PathElement;
-            return PathElement?.Any() == true;
+            value = _PathElement;
+            return _PathElement?.Any() == true;
           case "relatedArtifact":
-            value = RelatedArtifact;
-            return RelatedArtifact?.Any() == true;
+            value = _RelatedArtifact;
+            return _RelatedArtifact?.Any() == true;
           case "freeToShare":
-            value = FreeToShareElement;
-            return FreeToShareElement is not null;
+            value = _FreeToShareElement;
+            return _FreeToShareElement is not null;
           case "component":
-            value = Component;
-            return Component?.Any() == true;
+            value = _Component;
+            return _Component?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "informationType":
-            InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>)value;
+            InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>?)value;
             return this;
           case "summary":
-            SummaryElement = (Hl7.Fhir.Model.Markdown)value;
+            SummaryElement = (Hl7.Fhir.Model.Markdown?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "classifier":
-            Classifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Classifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "author":
-            Author = (Hl7.Fhir.Model.ResourceReference)value;
+            Author = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "path":
-            PathElement = (List<Hl7.Fhir.Model.FhirUri>)value;
+            PathElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
             return this;
           case "relatedArtifact":
-            RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>)value;
+            RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
             return this;
           case "freeToShare":
-            FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "component":
-            Component = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>)value;
+            Component = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -575,16 +565,16 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (InformationTypeElement is not null) yield return new KeyValuePair<string,object>("informationType",InformationTypeElement);
-        if (SummaryElement is not null) yield return new KeyValuePair<string,object>("summary",SummaryElement);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",Classifier);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-        if (PathElement?.Any() == true) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
-        if (FreeToShareElement is not null) yield return new KeyValuePair<string,object>("freeToShare",FreeToShareElement);
-        if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
+        if (_InformationTypeElement is not null) yield return new KeyValuePair<string,object>("informationType",_InformationTypeElement);
+        if (_SummaryElement is not null) yield return new KeyValuePair<string,object>("summary",_SummaryElement);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",_Classifier);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_PathElement?.Any() == true) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",_RelatedArtifact);
+        if (_FreeToShareElement is not null) yield return new KeyValuePair<string,object>("freeToShare",_FreeToShareElement);
+        if (_Component?.Any() == true) yield return new KeyValuePair<string,object>("component",_Component);
       }
 
     }
@@ -597,39 +587,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// A short title for the assessment for use in displaying and selecting.
     /// </summary>
     [FhirElement("title", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TitleElement
+    public Hl7.Fhir.Model.FhirString? TitleElement
     {
       get { return _TitleElement; }
       set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TitleElement;
+    private Hl7.Fhir.Model.FhirString? _TitleElement;
 
     /// <summary>
     /// A short title for the assessment for use in displaying and selecting
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Title
+    public string? Title
     {
-      get { return TitleElement != null ? TitleElement.Value : null; }
+      get => _TitleElement?.Value;
       set
       {
-        if (value == null)
-          TitleElement = null;
-        else
-          TitleElement = new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -642,41 +629,38 @@ namespace Hl7.Fhir.Model
     [References("Citation")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType CiteAs
+    public Hl7.Fhir.Model.DataType? CiteAs
     {
       get { return _CiteAs; }
       set { _CiteAs = value; OnPropertyChanged("CiteAs"); }
     }
 
-    private Hl7.Fhir.Model.DataType _CiteAs;
+    private Hl7.Fhir.Model.DataType? _CiteAs;
 
     /// <summary>
     /// Date last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateElement
+    public Hl7.Fhir.Model.FhirDateTime? DateElement
     {
       get { return _DateElement; }
       set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
     /// <summary>
     /// Date last changed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Date
+    public string? Date
     {
-      get { return DateElement != null ? DateElement.Value : null; }
+      get => _DateElement?.Value;
       set
       {
-        if (value == null)
-          DateElement = null;
-        else
-          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -686,28 +670,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("copyright", Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown CopyrightElement
+    public Hl7.Fhir.Model.Markdown? CopyrightElement
     {
       get { return _CopyrightElement; }
       set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _CopyrightElement;
+    private Hl7.Fhir.Model.Markdown? _CopyrightElement;
 
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Copyright
+    public string? Copyright
     {
-      get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+      get => _CopyrightElement?.Value;
       set
       {
-        if (value == null)
-          CopyrightElement = null;
-        else
-          CopyrightElement = new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -717,28 +698,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("approvalDate", Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.Date ApprovalDateElement
+    public Hl7.Fhir.Model.Date? ApprovalDateElement
     {
       get { return _ApprovalDateElement; }
       set { _ApprovalDateElement = value; OnPropertyChanged("ApprovalDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _ApprovalDateElement;
+    private Hl7.Fhir.Model.Date? _ApprovalDateElement;
 
     /// <summary>
     /// When the artifact assessment was approved by publisher
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ApprovalDate
+    public string? ApprovalDate
     {
-      get { return ApprovalDateElement != null ? ApprovalDateElement.Value : null; }
+      get => _ApprovalDateElement?.Value;
       set
       {
-        if (value == null)
-          ApprovalDateElement = null;
-        else
-          ApprovalDateElement = new Hl7.Fhir.Model.Date(value);
+        ApprovalDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ApprovalDate");
       }
     }
@@ -748,28 +726,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("lastReviewDate", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.Date LastReviewDateElement
+    public Hl7.Fhir.Model.Date? LastReviewDateElement
     {
       get { return _LastReviewDateElement; }
       set { _LastReviewDateElement = value; OnPropertyChanged("LastReviewDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _LastReviewDateElement;
+    private Hl7.Fhir.Model.Date? _LastReviewDateElement;
 
     /// <summary>
     /// When the artifact assessment was last reviewed by the publisher
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string LastReviewDate
+    public string? LastReviewDate
     {
-      get { return LastReviewDateElement != null ? LastReviewDateElement.Value : null; }
+      get => _LastReviewDateElement?.Value;
       set
       {
-        if (value == null)
-          LastReviewDateElement = null;
-        else
-          LastReviewDateElement = new Hl7.Fhir.Model.Date(value);
+        LastReviewDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("LastReviewDate");
       }
     }
@@ -783,13 +758,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Artifact
+    public Hl7.Fhir.Model.DataType? Artifact
     {
       get { return _Artifact; }
       set { _Artifact = value; OnPropertyChanged("Artifact"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Artifact;
+    private Hl7.Fhir.Model.DataType? _Artifact;
 
     /// <summary>
     /// Comment, classifier, or rating content.
@@ -799,11 +774,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> Content
     {
-      get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(); return _Content; }
+      get => _Content ?? new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>();
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 
-    private List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> _Content;
+    private List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>? _Content;
 
     /// <summary>
     /// submitted | triaged | waiting-for-input | resolved-no-change | resolved-change-required | deferred | duplicate | applied | published | entered-in-error.
@@ -812,13 +787,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("WorkflowStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus> WorkflowStatusElement
+    public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>? WorkflowStatusElement
     {
       get { return _WorkflowStatusElement; }
       set { _WorkflowStatusElement = value; OnPropertyChanged("WorkflowStatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus> _WorkflowStatusElement;
+    private Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>? _WorkflowStatusElement;
 
     /// <summary>
     /// submitted | triaged | waiting-for-input | resolved-no-change | resolved-change-required | deferred | duplicate | applied | published | entered-in-error
@@ -827,13 +802,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus? WorkflowStatus
     {
-      get { return WorkflowStatusElement != null ? WorkflowStatusElement.Value : null; }
+      get => _WorkflowStatusElement?.Value;
       set
       {
-        if (value == null)
-          WorkflowStatusElement = null;
-        else
-          WorkflowStatusElement = new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>(value);
+        WorkflowStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>(value);
         OnPropertyChanged("WorkflowStatus");
       }
     }
@@ -845,13 +817,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("Disposition")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition> DispositionElement
+    public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>? DispositionElement
     {
       get { return _DispositionElement; }
       set { _DispositionElement = value; OnPropertyChanged("DispositionElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition> _DispositionElement;
+    private Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>? _DispositionElement;
 
     /// <summary>
     /// unresolved | not-persuasive | persuasive | persuasive-with-modification | not-persuasive-with-modification
@@ -860,13 +832,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition? Disposition
     {
-      get { return DispositionElement != null ? DispositionElement.Value : null; }
+      get => _DispositionElement?.Value;
       set
       {
-        if (value == null)
-          DispositionElement = null;
-        else
-          DispositionElement = new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>(value);
+        DispositionElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -875,25 +844,21 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ArtifactAssessment;
-
-      if (dest == null)
-      {
+      if(other is not ArtifactAssessment dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopyInternal();
-      if(CiteAs != null) dest.CiteAs = (Hl7.Fhir.Model.DataType)CiteAs.DeepCopyInternal();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopyInternal();
-      if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopyInternal();
-      if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopyInternal();
-      if(Artifact != null) dest.Artifact = (Hl7.Fhir.Model.DataType)Artifact.DeepCopyInternal();
-      if(Content.Any()) dest.Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(Content.DeepCopyInternal());
-      if(WorkflowStatusElement != null) dest.WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>)WorkflowStatusElement.DeepCopyInternal();
-      if(DispositionElement != null) dest.DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>)DispositionElement.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_TitleElement is not null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)_TitleElement.DeepCopyInternal();
+      if(_CiteAs is not null) dest.CiteAs = (Hl7.Fhir.Model.DataType)_CiteAs.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+      if(_CopyrightElement is not null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)_CopyrightElement.DeepCopyInternal();
+      if(_ApprovalDateElement is not null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)_ApprovalDateElement.DeepCopyInternal();
+      if(_LastReviewDateElement is not null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)_LastReviewDateElement.DeepCopyInternal();
+      if(_Artifact is not null) dest.Artifact = (Hl7.Fhir.Model.DataType)_Artifact.DeepCopyInternal();
+      if(_Content is not null) dest.Content = new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>(_Content.DeepCopyInternal());
+      if(_WorkflowStatusElement is not null) dest.WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>)_WorkflowStatusElement.DeepCopyInternal();
+      if(_DispositionElement is not null) dest.DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>)_DispositionElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -905,104 +870,104 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ArtifactAssessment;
-      if(otherT == null) return false;
+      if(other is not ArtifactAssessment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(TitleElement, otherT.TitleElement)) return false;
-      if(!comparer.Equals(CiteAs, otherT.CiteAs)) return false;
-      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.Equals(CopyrightElement, otherT.CopyrightElement)) return false;
-      if(!comparer.Equals(ApprovalDateElement, otherT.ApprovalDateElement)) return false;
-      if(!comparer.Equals(LastReviewDateElement, otherT.LastReviewDateElement)) return false;
-      if(!comparer.Equals(Artifact, otherT.Artifact)) return false;
-      if(!comparer.ListEquals(Content, otherT.Content)) return false;
-      if(!comparer.Equals(WorkflowStatusElement, otherT.WorkflowStatusElement)) return false;
-      if(!comparer.Equals(DispositionElement, otherT.DispositionElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
+      if(!comparer.Equals(_CiteAs, otherT._CiteAs)) return false;
+      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.Equals(_CopyrightElement, otherT._CopyrightElement)) return false;
+      if(!comparer.Equals(_ApprovalDateElement, otherT._ApprovalDateElement)) return false;
+      if(!comparer.Equals(_LastReviewDateElement, otherT._LastReviewDateElement)) return false;
+      if(!comparer.Equals(_Artifact, otherT._Artifact)) return false;
+      if(!comparer.ListEquals(_Content, otherT._Content)) return false;
+      if(!comparer.Equals(_WorkflowStatusElement, otherT._WorkflowStatusElement)) return false;
+      if(!comparer.Equals(_DispositionElement, otherT._DispositionElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "title":
-          value = TitleElement;
-          return TitleElement is not null;
+          value = _TitleElement;
+          return _TitleElement is not null;
         case "citeAs":
-          value = CiteAs;
-          return CiteAs is not null;
+          value = _CiteAs;
+          return _CiteAs is not null;
         case "date":
-          value = DateElement;
-          return DateElement is not null;
+          value = _DateElement;
+          return _DateElement is not null;
         case "copyright":
-          value = CopyrightElement;
-          return CopyrightElement is not null;
+          value = _CopyrightElement;
+          return _CopyrightElement is not null;
         case "approvalDate":
-          value = ApprovalDateElement;
-          return ApprovalDateElement is not null;
+          value = _ApprovalDateElement;
+          return _ApprovalDateElement is not null;
         case "lastReviewDate":
-          value = LastReviewDateElement;
-          return LastReviewDateElement is not null;
+          value = _LastReviewDateElement;
+          return _LastReviewDateElement is not null;
         case "artifact":
-          value = Artifact;
-          return Artifact is not null;
+          value = _Artifact;
+          return _Artifact is not null;
         case "content":
-          value = Content;
-          return Content?.Any() == true;
+          value = _Content;
+          return _Content?.Any() == true;
         case "workflowStatus":
-          value = WorkflowStatusElement;
-          return WorkflowStatusElement is not null;
+          value = _WorkflowStatusElement;
+          return _WorkflowStatusElement is not null;
         case "disposition":
-          value = DispositionElement;
-          return DispositionElement is not null;
+          value = _DispositionElement;
+          return _DispositionElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "title":
-          TitleElement = (Hl7.Fhir.Model.FhirString)value;
+          TitleElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "citeAs":
-          CiteAs = (Hl7.Fhir.Model.DataType)value;
+          CiteAs = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "date":
-          DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "copyright":
-          CopyrightElement = (Hl7.Fhir.Model.Markdown)value;
+          CopyrightElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "approvalDate":
-          ApprovalDateElement = (Hl7.Fhir.Model.Date)value;
+          ApprovalDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "lastReviewDate":
-          LastReviewDateElement = (Hl7.Fhir.Model.Date)value;
+          LastReviewDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "artifact":
-          Artifact = (Hl7.Fhir.Model.DataType)value;
+          Artifact = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "content":
-          Content = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>)value;
+          Content = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>?)value!;
           return this;
         case "workflowStatus":
-          WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>)value;
+          WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>?)value;
           return this;
         case "disposition":
-          DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>)value;
+          DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1013,17 +978,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (CiteAs is not null) yield return new KeyValuePair<string,object>("citeAs",CiteAs);
-      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",CopyrightElement);
-      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
-      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
-      if (Artifact is not null) yield return new KeyValuePair<string,object>("artifact",Artifact);
-      if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
-      if (WorkflowStatusElement is not null) yield return new KeyValuePair<string,object>("workflowStatus",WorkflowStatusElement);
-      if (DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",DispositionElement);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (_CiteAs is not null) yield return new KeyValuePair<string,object>("citeAs",_CiteAs);
+      if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
+      if (_ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",_ApprovalDateElement);
+      if (_LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",_LastReviewDateElement);
+      if (_Artifact is not null) yield return new KeyValuePair<string,object>("artifact",_Artifact);
+      if (_Content?.Any() == true) yield return new KeyValuePair<string,object>("content",_Content);
+      if (_WorkflowStatusElement is not null) yield return new KeyValuePair<string,object>("workflowStatus",_WorkflowStatusElement);
+      if (_DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",_DispositionElement);
     }
 
   }

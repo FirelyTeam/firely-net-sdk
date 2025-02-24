@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -122,13 +125,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization","Practitioner","PractitionerRole")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Who
+      public Hl7.Fhir.Model.ResourceReference? Who
       {
         get { return _Who; }
         set { _Who = value; OnPropertyChanged("Who"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Who;
+      private Hl7.Fhir.Model.ResourceReference? _Who;
 
       /// <summary>
       /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source).
@@ -139,11 +142,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
       /// <summary>
       /// Method for exchanging information with the primary source.
@@ -154,11 +157,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CommunicationMethod
       {
-        get { if(_CommunicationMethod==null) _CommunicationMethod = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CommunicationMethod; }
+        get => _CommunicationMethod ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _CommunicationMethod = value; OnPropertyChanged("CommunicationMethod"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _CommunicationMethod;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _CommunicationMethod;
 
       /// <summary>
       /// successful | failed | unknown.
@@ -166,41 +169,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("validationStatus", Order=70)]
       [Binding("validation-status")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept ValidationStatus
+      public Hl7.Fhir.Model.CodeableConcept? ValidationStatus
       {
         get { return _ValidationStatus; }
         set { _ValidationStatus = value; OnPropertyChanged("ValidationStatus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _ValidationStatus;
+      private Hl7.Fhir.Model.CodeableConcept? _ValidationStatus;
 
       /// <summary>
       /// When the target was validated against the primary source.
       /// </summary>
       [FhirElement("validationDate", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime ValidationDateElement
+      public Hl7.Fhir.Model.FhirDateTime? ValidationDateElement
       {
         get { return _ValidationDateElement; }
         set { _ValidationDateElement = value; OnPropertyChanged("ValidationDateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _ValidationDateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _ValidationDateElement;
 
       /// <summary>
       /// When the target was validated against the primary source
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ValidationDate
+      public string? ValidationDate
       {
-        get { return ValidationDateElement != null ? ValidationDateElement.Value : null; }
+        get => _ValidationDateElement?.Value;
         set
         {
-          if (value == null)
-            ValidationDateElement = null;
-          else
-            ValidationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          ValidationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("ValidationDate");
         }
       }
@@ -211,13 +211,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("canPushUpdates", InSummary=true, Order=90)]
       [Binding("can-push-updates")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept CanPushUpdates
+      public Hl7.Fhir.Model.CodeableConcept? CanPushUpdates
       {
         get { return _CanPushUpdates; }
         set { _CanPushUpdates = value; OnPropertyChanged("CanPushUpdates"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _CanPushUpdates;
+      private Hl7.Fhir.Model.CodeableConcept? _CanPushUpdates;
 
       /// <summary>
       /// specific | any | source.
@@ -228,29 +228,25 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PushTypeAvailable
       {
-        get { if(_PushTypeAvailable==null) _PushTypeAvailable = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PushTypeAvailable; }
+        get => _PushTypeAvailable ?? new List<Hl7.Fhir.Model.CodeableConcept>();
         set { _PushTypeAvailable = value; OnPropertyChanged("PushTypeAvailable"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _PushTypeAvailable;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _PushTypeAvailable;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PrimarySourceComponent;
-
-        if (dest == null)
-        {
+        if(other is not PrimarySourceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopyInternal();
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-        if(CommunicationMethod.Any()) dest.CommunicationMethod = new List<Hl7.Fhir.Model.CodeableConcept>(CommunicationMethod.DeepCopyInternal());
-        if(ValidationStatus != null) dest.ValidationStatus = (Hl7.Fhir.Model.CodeableConcept)ValidationStatus.DeepCopyInternal();
-        if(ValidationDateElement != null) dest.ValidationDateElement = (Hl7.Fhir.Model.FhirDateTime)ValidationDateElement.DeepCopyInternal();
-        if(CanPushUpdates != null) dest.CanPushUpdates = (Hl7.Fhir.Model.CodeableConcept)CanPushUpdates.DeepCopyInternal();
-        if(PushTypeAvailable.Any()) dest.PushTypeAvailable = new List<Hl7.Fhir.Model.CodeableConcept>(PushTypeAvailable.DeepCopyInternal());
+        if(_Who is not null) dest.Who = (Hl7.Fhir.Model.ResourceReference)_Who.DeepCopyInternal();
+        if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+        if(_CommunicationMethod is not null) dest.CommunicationMethod = new List<Hl7.Fhir.Model.CodeableConcept>(_CommunicationMethod.DeepCopyInternal());
+        if(_ValidationStatus is not null) dest.ValidationStatus = (Hl7.Fhir.Model.CodeableConcept)_ValidationStatus.DeepCopyInternal();
+        if(_ValidationDateElement is not null) dest.ValidationDateElement = (Hl7.Fhir.Model.FhirDateTime)_ValidationDateElement.DeepCopyInternal();
+        if(_CanPushUpdates is not null) dest.CanPushUpdates = (Hl7.Fhir.Model.CodeableConcept)_CanPushUpdates.DeepCopyInternal();
+        if(_PushTypeAvailable is not null) dest.PushTypeAvailable = new List<Hl7.Fhir.Model.CodeableConcept>(_PushTypeAvailable.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -262,76 +258,76 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PrimarySourceComponent;
-        if(otherT == null) return false;
+        if(other is not PrimarySourceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Who, otherT.Who)) return false;
-        if(!comparer.ListEquals(Type, otherT.Type)) return false;
-        if(!comparer.ListEquals(CommunicationMethod, otherT.CommunicationMethod)) return false;
-        if(!comparer.Equals(ValidationStatus, otherT.ValidationStatus)) return false;
-        if(!comparer.Equals(ValidationDateElement, otherT.ValidationDateElement)) return false;
-        if(!comparer.Equals(CanPushUpdates, otherT.CanPushUpdates)) return false;
-        if(!comparer.ListEquals(PushTypeAvailable, otherT.PushTypeAvailable)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Who, otherT._Who)) return false;
+        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+        if(!comparer.ListEquals(_CommunicationMethod, otherT._CommunicationMethod)) return false;
+        if(!comparer.Equals(_ValidationStatus, otherT._ValidationStatus)) return false;
+        if(!comparer.Equals(_ValidationDateElement, otherT._ValidationDateElement)) return false;
+        if(!comparer.Equals(_CanPushUpdates, otherT._CanPushUpdates)) return false;
+        if(!comparer.ListEquals(_PushTypeAvailable, otherT._PushTypeAvailable)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "who":
-            value = Who;
-            return Who is not null;
+            value = _Who;
+            return _Who is not null;
           case "type":
-            value = Type;
-            return Type?.Any() == true;
+            value = _Type;
+            return _Type?.Any() == true;
           case "communicationMethod":
-            value = CommunicationMethod;
-            return CommunicationMethod?.Any() == true;
+            value = _CommunicationMethod;
+            return _CommunicationMethod?.Any() == true;
           case "validationStatus":
-            value = ValidationStatus;
-            return ValidationStatus is not null;
+            value = _ValidationStatus;
+            return _ValidationStatus is not null;
           case "validationDate":
-            value = ValidationDateElement;
-            return ValidationDateElement is not null;
+            value = _ValidationDateElement;
+            return _ValidationDateElement is not null;
           case "canPushUpdates":
-            value = CanPushUpdates;
-            return CanPushUpdates is not null;
+            value = _CanPushUpdates;
+            return _CanPushUpdates is not null;
           case "pushTypeAvailable":
-            value = PushTypeAvailable;
-            return PushTypeAvailable?.Any() == true;
+            value = _PushTypeAvailable;
+            return _PushTypeAvailable?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "who":
-            Who = (Hl7.Fhir.Model.ResourceReference)value;
+            Who = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "type":
-            Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "communicationMethod":
-            CommunicationMethod = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            CommunicationMethod = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "validationStatus":
-            ValidationStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+            ValidationStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "validationDate":
-            ValidationDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            ValidationDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "canPushUpdates":
-            CanPushUpdates = (Hl7.Fhir.Model.CodeableConcept)value;
+            CanPushUpdates = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "pushTypeAvailable":
-            PushTypeAvailable = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            PushTypeAvailable = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -342,13 +338,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
-        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-        if (CommunicationMethod?.Any() == true) yield return new KeyValuePair<string,object>("communicationMethod",CommunicationMethod);
-        if (ValidationStatus is not null) yield return new KeyValuePair<string,object>("validationStatus",ValidationStatus);
-        if (ValidationDateElement is not null) yield return new KeyValuePair<string,object>("validationDate",ValidationDateElement);
-        if (CanPushUpdates is not null) yield return new KeyValuePair<string,object>("canPushUpdates",CanPushUpdates);
-        if (PushTypeAvailable?.Any() == true) yield return new KeyValuePair<string,object>("pushTypeAvailable",PushTypeAvailable);
+        if (_Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
+        if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_CommunicationMethod?.Any() == true) yield return new KeyValuePair<string,object>("communicationMethod",_CommunicationMethod);
+        if (_ValidationStatus is not null) yield return new KeyValuePair<string,object>("validationStatus",_ValidationStatus);
+        if (_ValidationDateElement is not null) yield return new KeyValuePair<string,object>("validationDate",_ValidationDateElement);
+        if (_CanPushUpdates is not null) yield return new KeyValuePair<string,object>("canPushUpdates",_CanPushUpdates);
+        if (_PushTypeAvailable?.Any() == true) yield return new KeyValuePair<string,object>("pushTypeAvailable",_PushTypeAvailable);
       }
 
     }
@@ -373,13 +369,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Who
+      public Hl7.Fhir.Model.ResourceReference? Who
       {
         get { return _Who; }
         set { _Who = value; OnPropertyChanged("Who"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Who;
+      private Hl7.Fhir.Model.ResourceReference? _Who;
 
       /// <summary>
       /// When the who is asserting on behalf of another (organization or individual).
@@ -388,13 +384,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization","Practitioner","PractitionerRole")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+      public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
       {
         get { return _OnBehalfOf; }
         set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+      private Hl7.Fhir.Model.ResourceReference? _OnBehalfOf;
 
       /// <summary>
       /// The method by which attested information was submitted/retrieved.
@@ -402,41 +398,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
       [Binding("communication-method")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept CommunicationMethod
+      public Hl7.Fhir.Model.CodeableConcept? CommunicationMethod
       {
         get { return _CommunicationMethod; }
         set { _CommunicationMethod = value; OnPropertyChanged("CommunicationMethod"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _CommunicationMethod;
+      private Hl7.Fhir.Model.CodeableConcept? _CommunicationMethod;
 
       /// <summary>
       /// The date the information was attested to.
       /// </summary>
       [FhirElement("date", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Date DateElement
+      public Hl7.Fhir.Model.Date? DateElement
       {
         get { return _DateElement; }
         set { _DateElement = value; OnPropertyChanged("DateElement"); }
       }
 
-      private Hl7.Fhir.Model.Date _DateElement;
+      private Hl7.Fhir.Model.Date? _DateElement;
 
       /// <summary>
       /// The date the information was attested to
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Date
+      public string? Date
       {
-        get { return DateElement != null ? DateElement.Value : null; }
+        get => _DateElement?.Value;
         set
         {
-          if (value == null)
-            DateElement = null;
-          else
-            DateElement = new Hl7.Fhir.Model.Date(value);
+          DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("Date");
         }
       }
@@ -446,28 +439,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("sourceIdentityCertificate", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString SourceIdentityCertificateElement
+      public Hl7.Fhir.Model.FhirString? SourceIdentityCertificateElement
       {
         get { return _SourceIdentityCertificateElement; }
         set { _SourceIdentityCertificateElement = value; OnPropertyChanged("SourceIdentityCertificateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _SourceIdentityCertificateElement;
+      private Hl7.Fhir.Model.FhirString? _SourceIdentityCertificateElement;
 
       /// <summary>
       /// A digital identity certificate associated with the attestation source
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string SourceIdentityCertificate
+      public string? SourceIdentityCertificate
       {
-        get { return SourceIdentityCertificateElement != null ? SourceIdentityCertificateElement.Value : null; }
+        get => _SourceIdentityCertificateElement?.Value;
         set
         {
-          if (value == null)
-            SourceIdentityCertificateElement = null;
-          else
-            SourceIdentityCertificateElement = new Hl7.Fhir.Model.FhirString(value);
+          SourceIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SourceIdentityCertificate");
         }
       }
@@ -477,28 +467,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("proxyIdentityCertificate", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ProxyIdentityCertificateElement
+      public Hl7.Fhir.Model.FhirString? ProxyIdentityCertificateElement
       {
         get { return _ProxyIdentityCertificateElement; }
         set { _ProxyIdentityCertificateElement = value; OnPropertyChanged("ProxyIdentityCertificateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ProxyIdentityCertificateElement;
+      private Hl7.Fhir.Model.FhirString? _ProxyIdentityCertificateElement;
 
       /// <summary>
       /// A digital identity certificate associated with the proxy entity submitting attested information on behalf of the attestation source
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ProxyIdentityCertificate
+      public string? ProxyIdentityCertificate
       {
-        get { return ProxyIdentityCertificateElement != null ? ProxyIdentityCertificateElement.Value : null; }
+        get => _ProxyIdentityCertificateElement?.Value;
         set
         {
-          if (value == null)
-            ProxyIdentityCertificateElement = null;
-          else
-            ProxyIdentityCertificateElement = new Hl7.Fhir.Model.FhirString(value);
+          ProxyIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProxyIdentityCertificate");
         }
       }
@@ -508,45 +495,41 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("proxySignature", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Signature ProxySignature
+      public Hl7.Fhir.Model.Signature? ProxySignature
       {
         get { return _ProxySignature; }
         set { _ProxySignature = value; OnPropertyChanged("ProxySignature"); }
       }
 
-      private Hl7.Fhir.Model.Signature _ProxySignature;
+      private Hl7.Fhir.Model.Signature? _ProxySignature;
 
       /// <summary>
       /// Attester signature.
       /// </summary>
       [FhirElement("sourceSignature", Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.Signature SourceSignature
+      public Hl7.Fhir.Model.Signature? SourceSignature
       {
         get { return _SourceSignature; }
         set { _SourceSignature = value; OnPropertyChanged("SourceSignature"); }
       }
 
-      private Hl7.Fhir.Model.Signature _SourceSignature;
+      private Hl7.Fhir.Model.Signature? _SourceSignature;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AttestationComponent;
-
-        if (dest == null)
-        {
+        if(other is not AttestationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopyInternal();
-        if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopyInternal();
-        if(CommunicationMethod != null) dest.CommunicationMethod = (Hl7.Fhir.Model.CodeableConcept)CommunicationMethod.DeepCopyInternal();
-        if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopyInternal();
-        if(SourceIdentityCertificateElement != null) dest.SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)SourceIdentityCertificateElement.DeepCopyInternal();
-        if(ProxyIdentityCertificateElement != null) dest.ProxyIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)ProxyIdentityCertificateElement.DeepCopyInternal();
-        if(ProxySignature != null) dest.ProxySignature = (Hl7.Fhir.Model.Signature)ProxySignature.DeepCopyInternal();
-        if(SourceSignature != null) dest.SourceSignature = (Hl7.Fhir.Model.Signature)SourceSignature.DeepCopyInternal();
+        if(_Who is not null) dest.Who = (Hl7.Fhir.Model.ResourceReference)_Who.DeepCopyInternal();
+        if(_OnBehalfOf is not null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)_OnBehalfOf.DeepCopyInternal();
+        if(_CommunicationMethod is not null) dest.CommunicationMethod = (Hl7.Fhir.Model.CodeableConcept)_CommunicationMethod.DeepCopyInternal();
+        if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.Date)_DateElement.DeepCopyInternal();
+        if(_SourceIdentityCertificateElement is not null) dest.SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)_SourceIdentityCertificateElement.DeepCopyInternal();
+        if(_ProxyIdentityCertificateElement is not null) dest.ProxyIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)_ProxyIdentityCertificateElement.DeepCopyInternal();
+        if(_ProxySignature is not null) dest.ProxySignature = (Hl7.Fhir.Model.Signature)_ProxySignature.DeepCopyInternal();
+        if(_SourceSignature is not null) dest.SourceSignature = (Hl7.Fhir.Model.Signature)_SourceSignature.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -558,83 +541,83 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AttestationComponent;
-        if(otherT == null) return false;
+        if(other is not AttestationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Who, otherT.Who)) return false;
-        if(!comparer.Equals(OnBehalfOf, otherT.OnBehalfOf)) return false;
-        if(!comparer.Equals(CommunicationMethod, otherT.CommunicationMethod)) return false;
-        if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-        if(!comparer.Equals(SourceIdentityCertificateElement, otherT.SourceIdentityCertificateElement)) return false;
-        if(!comparer.Equals(ProxyIdentityCertificateElement, otherT.ProxyIdentityCertificateElement)) return false;
-        if(!comparer.Equals(ProxySignature, otherT.ProxySignature)) return false;
-        if(!comparer.Equals(SourceSignature, otherT.SourceSignature)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Who, otherT._Who)) return false;
+        if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
+        if(!comparer.Equals(_CommunicationMethod, otherT._CommunicationMethod)) return false;
+        if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+        if(!comparer.Equals(_SourceIdentityCertificateElement, otherT._SourceIdentityCertificateElement)) return false;
+        if(!comparer.Equals(_ProxyIdentityCertificateElement, otherT._ProxyIdentityCertificateElement)) return false;
+        if(!comparer.Equals(_ProxySignature, otherT._ProxySignature)) return false;
+        if(!comparer.Equals(_SourceSignature, otherT._SourceSignature)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "who":
-            value = Who;
-            return Who is not null;
+            value = _Who;
+            return _Who is not null;
           case "onBehalfOf":
-            value = OnBehalfOf;
-            return OnBehalfOf is not null;
+            value = _OnBehalfOf;
+            return _OnBehalfOf is not null;
           case "communicationMethod":
-            value = CommunicationMethod;
-            return CommunicationMethod is not null;
+            value = _CommunicationMethod;
+            return _CommunicationMethod is not null;
           case "date":
-            value = DateElement;
-            return DateElement is not null;
+            value = _DateElement;
+            return _DateElement is not null;
           case "sourceIdentityCertificate":
-            value = SourceIdentityCertificateElement;
-            return SourceIdentityCertificateElement is not null;
+            value = _SourceIdentityCertificateElement;
+            return _SourceIdentityCertificateElement is not null;
           case "proxyIdentityCertificate":
-            value = ProxyIdentityCertificateElement;
-            return ProxyIdentityCertificateElement is not null;
+            value = _ProxyIdentityCertificateElement;
+            return _ProxyIdentityCertificateElement is not null;
           case "proxySignature":
-            value = ProxySignature;
-            return ProxySignature is not null;
+            value = _ProxySignature;
+            return _ProxySignature is not null;
           case "sourceSignature":
-            value = SourceSignature;
-            return SourceSignature is not null;
+            value = _SourceSignature;
+            return _SourceSignature is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "who":
-            Who = (Hl7.Fhir.Model.ResourceReference)value;
+            Who = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "onBehalfOf":
-            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)value;
+            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "communicationMethod":
-            CommunicationMethod = (Hl7.Fhir.Model.CodeableConcept)value;
+            CommunicationMethod = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "date":
-            DateElement = (Hl7.Fhir.Model.Date)value;
+            DateElement = (Hl7.Fhir.Model.Date?)value;
             return this;
           case "sourceIdentityCertificate":
-            SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)value;
+            SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "proxyIdentityCertificate":
-            ProxyIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)value;
+            ProxyIdentityCertificateElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "proxySignature":
-            ProxySignature = (Hl7.Fhir.Model.Signature)value;
+            ProxySignature = (Hl7.Fhir.Model.Signature?)value;
             return this;
           case "sourceSignature":
-            SourceSignature = (Hl7.Fhir.Model.Signature)value;
+            SourceSignature = (Hl7.Fhir.Model.Signature?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -645,14 +628,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
-        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
-        if (CommunicationMethod is not null) yield return new KeyValuePair<string,object>("communicationMethod",CommunicationMethod);
-        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-        if (SourceIdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("sourceIdentityCertificate",SourceIdentityCertificateElement);
-        if (ProxyIdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("proxyIdentityCertificate",ProxyIdentityCertificateElement);
-        if (ProxySignature is not null) yield return new KeyValuePair<string,object>("proxySignature",ProxySignature);
-        if (SourceSignature is not null) yield return new KeyValuePair<string,object>("sourceSignature",SourceSignature);
+        if (_Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
+        if (_OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
+        if (_CommunicationMethod is not null) yield return new KeyValuePair<string,object>("communicationMethod",_CommunicationMethod);
+        if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_SourceIdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("sourceIdentityCertificate",_SourceIdentityCertificateElement);
+        if (_ProxyIdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("proxyIdentityCertificate",_ProxyIdentityCertificateElement);
+        if (_ProxySignature is not null) yield return new KeyValuePair<string,object>("proxySignature",_ProxySignature);
+        if (_SourceSignature is not null) yield return new KeyValuePair<string,object>("sourceSignature",_SourceSignature);
       }
 
     }
@@ -678,41 +661,38 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Organization
+      public Hl7.Fhir.Model.ResourceReference? Organization
       {
         get { return _Organization; }
         set { _Organization = value; OnPropertyChanged("Organization"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Organization;
+      private Hl7.Fhir.Model.ResourceReference? _Organization;
 
       /// <summary>
       /// A digital identity certificate associated with the validator.
       /// </summary>
       [FhirElement("identityCertificate", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString IdentityCertificateElement
+      public Hl7.Fhir.Model.FhirString? IdentityCertificateElement
       {
         get { return _IdentityCertificateElement; }
         set { _IdentityCertificateElement = value; OnPropertyChanged("IdentityCertificateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _IdentityCertificateElement;
+      private Hl7.Fhir.Model.FhirString? _IdentityCertificateElement;
 
       /// <summary>
       /// A digital identity certificate associated with the validator
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string IdentityCertificate
+      public string? IdentityCertificate
       {
-        get { return IdentityCertificateElement != null ? IdentityCertificateElement.Value : null; }
+        get => _IdentityCertificateElement?.Value;
         set
         {
-          if (value == null)
-            IdentityCertificateElement = null;
-          else
-            IdentityCertificateElement = new Hl7.Fhir.Model.FhirString(value);
+          IdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IdentityCertificate");
         }
       }
@@ -722,27 +702,23 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("attestationSignature", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Signature AttestationSignature
+      public Hl7.Fhir.Model.Signature? AttestationSignature
       {
         get { return _AttestationSignature; }
         set { _AttestationSignature = value; OnPropertyChanged("AttestationSignature"); }
       }
 
-      private Hl7.Fhir.Model.Signature _AttestationSignature;
+      private Hl7.Fhir.Model.Signature? _AttestationSignature;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ValidatorComponent;
-
-        if (dest == null)
-        {
+        if(other is not ValidatorComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
-        if(IdentityCertificateElement != null) dest.IdentityCertificateElement = (Hl7.Fhir.Model.FhirString)IdentityCertificateElement.DeepCopyInternal();
-        if(AttestationSignature != null) dest.AttestationSignature = (Hl7.Fhir.Model.Signature)AttestationSignature.DeepCopyInternal();
+        if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
+        if(_IdentityCertificateElement is not null) dest.IdentityCertificateElement = (Hl7.Fhir.Model.FhirString)_IdentityCertificateElement.DeepCopyInternal();
+        if(_AttestationSignature is not null) dest.AttestationSignature = (Hl7.Fhir.Model.Signature)_AttestationSignature.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -754,48 +730,48 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ValidatorComponent;
-        if(otherT == null) return false;
+        if(other is not ValidatorComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Organization, otherT.Organization)) return false;
-        if(!comparer.Equals(IdentityCertificateElement, otherT.IdentityCertificateElement)) return false;
-        if(!comparer.Equals(AttestationSignature, otherT.AttestationSignature)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Organization, otherT._Organization)) return false;
+        if(!comparer.Equals(_IdentityCertificateElement, otherT._IdentityCertificateElement)) return false;
+        if(!comparer.Equals(_AttestationSignature, otherT._AttestationSignature)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "organization":
-            value = Organization;
-            return Organization is not null;
+            value = _Organization;
+            return _Organization is not null;
           case "identityCertificate":
-            value = IdentityCertificateElement;
-            return IdentityCertificateElement is not null;
+            value = _IdentityCertificateElement;
+            return _IdentityCertificateElement is not null;
           case "attestationSignature":
-            value = AttestationSignature;
-            return AttestationSignature is not null;
+            value = _AttestationSignature;
+            return _AttestationSignature is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "organization":
-            Organization = (Hl7.Fhir.Model.ResourceReference)value;
+            Organization = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "identityCertificate":
-            IdentityCertificateElement = (Hl7.Fhir.Model.FhirString)value;
+            IdentityCertificateElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "attestationSignature":
-            AttestationSignature = (Hl7.Fhir.Model.Signature)value;
+            AttestationSignature = (Hl7.Fhir.Model.Signature?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -806,9 +782,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
-        if (IdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("identityCertificate",IdentityCertificateElement);
-        if (AttestationSignature is not null) yield return new KeyValuePair<string,object>("attestationSignature",AttestationSignature);
+        if (_Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+        if (_IdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("identityCertificate",_IdentityCertificateElement);
+        if (_AttestationSignature is not null) yield return new KeyValuePair<string,object>("attestationSignature",_AttestationSignature);
       }
 
     }
@@ -823,11 +799,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Target
     {
-      get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.ResourceReference>(); return _Target; }
+      get => _Target ?? new List<Hl7.Fhir.Model.ResourceReference>();
       set { _Target = value; OnPropertyChanged("Target"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Target;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Target;
 
     /// <summary>
     /// The fhirpath location(s) within the resource that was validated.
@@ -837,24 +813,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> TargetLocationElement
     {
-      get { if(_TargetLocationElement==null) _TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(); return _TargetLocationElement; }
+      get => _TargetLocationElement ?? new List<Hl7.Fhir.Model.FhirString>();
       set { _TargetLocationElement = value; OnPropertyChanged("TargetLocationElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _TargetLocationElement;
+    private List<Hl7.Fhir.Model.FhirString>? _TargetLocationElement;
 
     /// <summary>
     /// The fhirpath location(s) within the resource that was validated
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> TargetLocation
+    public IEnumerable<string?>? TargetLocation
     {
-      get { return TargetLocationElement != null ? TargetLocationElement.Select(elem => elem.Value) : null; }
+      get => _TargetLocationElement?.Select(elem => elem.Value);
       set
       {
         if (value == null)
-          TargetLocationElement = null;
+          TargetLocationElement = null!;
         else
           TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("TargetLocation");
@@ -867,13 +843,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("need", InSummary=true, Order=110)]
     [Binding("need")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Need
+    public Hl7.Fhir.Model.CodeableConcept? Need
     {
       get { return _Need; }
       set { _Need = value; OnPropertyChanged("Need"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Need;
+    private Hl7.Fhir.Model.CodeableConcept? _Need;
 
     /// <summary>
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail.
@@ -883,13 +859,13 @@ namespace Hl7.Fhir.Model
     [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.VerificationResult.StatusCode> StatusElement
+    public Code<Hl7.Fhir.Model.VerificationResult.StatusCode>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.VerificationResult.StatusCode> _StatusElement;
+    private Code<Hl7.Fhir.Model.VerificationResult.StatusCode>? _StatusElement;
 
     /// <summary>
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail
@@ -898,13 +874,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.VerificationResult.StatusCode? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -914,28 +887,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime StatusDateElement
+    public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
     {
       get { return _StatusDateElement; }
       set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _StatusDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _StatusDateElement;
 
     /// <summary>
     /// When the validation status was updated
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string StatusDate
+    public string? StatusDate
     {
-      get { return StatusDateElement != null ? StatusDateElement.Value : null; }
+      get => _StatusDateElement?.Value;
       set
       {
-        if (value == null)
-          StatusDateElement = null;
-        else
-          StatusDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -946,13 +916,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("validationType", InSummary=true, Order=140)]
     [Binding("validation-type")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ValidationType
+    public Hl7.Fhir.Model.CodeableConcept? ValidationType
     {
       get { return _ValidationType; }
       set { _ValidationType = value; OnPropertyChanged("ValidationType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ValidationType;
+    private Hl7.Fhir.Model.CodeableConcept? _ValidationType;
 
     /// <summary>
     /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context).
@@ -963,52 +933,49 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
     {
-      get { if(_ValidationProcess==null) _ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ValidationProcess; }
+      get => _ValidationProcess ?? new List<Hl7.Fhir.Model.CodeableConcept>();
       set { _ValidationProcess = value; OnPropertyChanged("ValidationProcess"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ValidationProcess;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ValidationProcess;
 
     /// <summary>
     /// Frequency of revalidation.
     /// </summary>
     [FhirElement("frequency", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Timing Frequency
+    public Hl7.Fhir.Model.Timing? Frequency
     {
       get { return _Frequency; }
       set { _Frequency = value; OnPropertyChanged("Frequency"); }
     }
 
-    private Hl7.Fhir.Model.Timing _Frequency;
+    private Hl7.Fhir.Model.Timing? _Frequency;
 
     /// <summary>
     /// The date/time validation was last completed (including failed validations).
     /// </summary>
     [FhirElement("lastPerformed", Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime LastPerformedElement
+    public Hl7.Fhir.Model.FhirDateTime? LastPerformedElement
     {
       get { return _LastPerformedElement; }
       set { _LastPerformedElement = value; OnPropertyChanged("LastPerformedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _LastPerformedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _LastPerformedElement;
 
     /// <summary>
     /// The date/time validation was last completed (including failed validations)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string LastPerformed
+    public string? LastPerformed
     {
-      get { return LastPerformedElement != null ? LastPerformedElement.Value : null; }
+      get => _LastPerformedElement?.Value;
       set
       {
-        if (value == null)
-          LastPerformedElement = null;
-        else
-          LastPerformedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        LastPerformedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastPerformed");
       }
     }
@@ -1018,28 +985,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("nextScheduled", Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.Date NextScheduledElement
+    public Hl7.Fhir.Model.Date? NextScheduledElement
     {
       get { return _NextScheduledElement; }
       set { _NextScheduledElement = value; OnPropertyChanged("NextScheduledElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _NextScheduledElement;
+    private Hl7.Fhir.Model.Date? _NextScheduledElement;
 
     /// <summary>
     /// The date when target is next validated, if appropriate
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string NextScheduled
+    public string? NextScheduled
     {
-      get { return NextScheduledElement != null ? NextScheduledElement.Value : null; }
+      get => _NextScheduledElement?.Value;
       set
       {
-        if (value == null)
-          NextScheduledElement = null;
-        else
-          NextScheduledElement = new Hl7.Fhir.Model.Date(value);
+        NextScheduledElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("NextScheduled");
       }
     }
@@ -1050,13 +1014,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("failureAction", InSummary=true, Order=190)]
     [Binding("failure-action")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept FailureAction
+    public Hl7.Fhir.Model.CodeableConcept? FailureAction
     {
       get { return _FailureAction; }
       set { _FailureAction = value; OnPropertyChanged("FailureAction"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _FailureAction;
+    private Hl7.Fhir.Model.CodeableConcept? _FailureAction;
 
     /// <summary>
     /// Information about the primary source(s) involved in validation.
@@ -1066,24 +1030,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent> PrimarySource
     {
-      get { if(_PrimarySource==null) _PrimarySource = new List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>(); return _PrimarySource; }
+      get => _PrimarySource ?? new List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>();
       set { _PrimarySource = value; OnPropertyChanged("PrimarySource"); }
     }
 
-    private List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent> _PrimarySource;
+    private List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>? _PrimarySource;
 
     /// <summary>
     /// Information about the entity attesting to information.
     /// </summary>
     [FhirElement("attestation", Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.VerificationResult.AttestationComponent Attestation
+    public Hl7.Fhir.Model.VerificationResult.AttestationComponent? Attestation
     {
       get { return _Attestation; }
       set { _Attestation = value; OnPropertyChanged("Attestation"); }
     }
 
-    private Hl7.Fhir.Model.VerificationResult.AttestationComponent _Attestation;
+    private Hl7.Fhir.Model.VerificationResult.AttestationComponent? _Attestation;
 
     /// <summary>
     /// Information about the entity validating information.
@@ -1093,36 +1057,32 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent> Validator
     {
-      get { if(_Validator==null) _Validator = new List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>(); return _Validator; }
+      get => _Validator ?? new List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>();
       set { _Validator = value; OnPropertyChanged("Validator"); }
     }
 
-    private List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent> _Validator;
+    private List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>? _Validator;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as VerificationResult;
-
-      if (dest == null)
-      {
+      if(other is not VerificationResult dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Target.Any()) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopyInternal());
-      if(TargetLocationElement.Any()) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopyInternal());
-      if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>)StatusElement.DeepCopyInternal();
-      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopyInternal();
-      if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopyInternal();
-      if(ValidationProcess.Any()) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopyInternal());
-      if(Frequency != null) dest.Frequency = (Hl7.Fhir.Model.Timing)Frequency.DeepCopyInternal();
-      if(LastPerformedElement != null) dest.LastPerformedElement = (Hl7.Fhir.Model.FhirDateTime)LastPerformedElement.DeepCopyInternal();
-      if(NextScheduledElement != null) dest.NextScheduledElement = (Hl7.Fhir.Model.Date)NextScheduledElement.DeepCopyInternal();
-      if(FailureAction != null) dest.FailureAction = (Hl7.Fhir.Model.CodeableConcept)FailureAction.DeepCopyInternal();
-      if(PrimarySource.Any()) dest.PrimarySource = new List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>(PrimarySource.DeepCopyInternal());
-      if(Attestation != null) dest.Attestation = (Hl7.Fhir.Model.VerificationResult.AttestationComponent)Attestation.DeepCopyInternal();
-      if(Validator.Any()) dest.Validator = new List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>(Validator.DeepCopyInternal());
+      if(_Target is not null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(_Target.DeepCopyInternal());
+      if(_TargetLocationElement is not null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(_TargetLocationElement.DeepCopyInternal());
+      if(_Need is not null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)_Need.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>)_StatusElement.DeepCopyInternal();
+      if(_StatusDateElement is not null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)_StatusDateElement.DeepCopyInternal();
+      if(_ValidationType is not null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)_ValidationType.DeepCopyInternal();
+      if(_ValidationProcess is not null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(_ValidationProcess.DeepCopyInternal());
+      if(_Frequency is not null) dest.Frequency = (Hl7.Fhir.Model.Timing)_Frequency.DeepCopyInternal();
+      if(_LastPerformedElement is not null) dest.LastPerformedElement = (Hl7.Fhir.Model.FhirDateTime)_LastPerformedElement.DeepCopyInternal();
+      if(_NextScheduledElement is not null) dest.NextScheduledElement = (Hl7.Fhir.Model.Date)_NextScheduledElement.DeepCopyInternal();
+      if(_FailureAction is not null) dest.FailureAction = (Hl7.Fhir.Model.CodeableConcept)_FailureAction.DeepCopyInternal();
+      if(_PrimarySource is not null) dest.PrimarySource = new List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>(_PrimarySource.DeepCopyInternal());
+      if(_Attestation is not null) dest.Attestation = (Hl7.Fhir.Model.VerificationResult.AttestationComponent)_Attestation.DeepCopyInternal();
+      if(_Validator is not null) dest.Validator = new List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>(_Validator.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1134,125 +1094,125 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as VerificationResult;
-      if(otherT == null) return false;
+      if(other is not VerificationResult otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Target, otherT.Target)) return false;
-      if(!comparer.ListEquals(TargetLocationElement, otherT.TargetLocationElement)) return false;
-      if(!comparer.Equals(Need, otherT.Need)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(StatusDateElement, otherT.StatusDateElement)) return false;
-      if(!comparer.Equals(ValidationType, otherT.ValidationType)) return false;
-      if(!comparer.ListEquals(ValidationProcess, otherT.ValidationProcess)) return false;
-      if(!comparer.Equals(Frequency, otherT.Frequency)) return false;
-      if(!comparer.Equals(LastPerformedElement, otherT.LastPerformedElement)) return false;
-      if(!comparer.Equals(NextScheduledElement, otherT.NextScheduledElement)) return false;
-      if(!comparer.Equals(FailureAction, otherT.FailureAction)) return false;
-      if(!comparer.ListEquals(PrimarySource, otherT.PrimarySource)) return false;
-      if(!comparer.Equals(Attestation, otherT.Attestation)) return false;
-      if(!comparer.ListEquals(Validator, otherT.Validator)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Target, otherT._Target)) return false;
+      if(!comparer.ListEquals(_TargetLocationElement, otherT._TargetLocationElement)) return false;
+      if(!comparer.Equals(_Need, otherT._Need)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_StatusDateElement, otherT._StatusDateElement)) return false;
+      if(!comparer.Equals(_ValidationType, otherT._ValidationType)) return false;
+      if(!comparer.ListEquals(_ValidationProcess, otherT._ValidationProcess)) return false;
+      if(!comparer.Equals(_Frequency, otherT._Frequency)) return false;
+      if(!comparer.Equals(_LastPerformedElement, otherT._LastPerformedElement)) return false;
+      if(!comparer.Equals(_NextScheduledElement, otherT._NextScheduledElement)) return false;
+      if(!comparer.Equals(_FailureAction, otherT._FailureAction)) return false;
+      if(!comparer.ListEquals(_PrimarySource, otherT._PrimarySource)) return false;
+      if(!comparer.Equals(_Attestation, otherT._Attestation)) return false;
+      if(!comparer.ListEquals(_Validator, otherT._Validator)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "target":
-          value = Target;
-          return Target?.Any() == true;
+          value = _Target;
+          return _Target?.Any() == true;
         case "targetLocation":
-          value = TargetLocationElement;
-          return TargetLocationElement?.Any() == true;
+          value = _TargetLocationElement;
+          return _TargetLocationElement?.Any() == true;
         case "need":
-          value = Need;
-          return Need is not null;
+          value = _Need;
+          return _Need is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "statusDate":
-          value = StatusDateElement;
-          return StatusDateElement is not null;
+          value = _StatusDateElement;
+          return _StatusDateElement is not null;
         case "validationType":
-          value = ValidationType;
-          return ValidationType is not null;
+          value = _ValidationType;
+          return _ValidationType is not null;
         case "validationProcess":
-          value = ValidationProcess;
-          return ValidationProcess?.Any() == true;
+          value = _ValidationProcess;
+          return _ValidationProcess?.Any() == true;
         case "frequency":
-          value = Frequency;
-          return Frequency is not null;
+          value = _Frequency;
+          return _Frequency is not null;
         case "lastPerformed":
-          value = LastPerformedElement;
-          return LastPerformedElement is not null;
+          value = _LastPerformedElement;
+          return _LastPerformedElement is not null;
         case "nextScheduled":
-          value = NextScheduledElement;
-          return NextScheduledElement is not null;
+          value = _NextScheduledElement;
+          return _NextScheduledElement is not null;
         case "failureAction":
-          value = FailureAction;
-          return FailureAction is not null;
+          value = _FailureAction;
+          return _FailureAction is not null;
         case "primarySource":
-          value = PrimarySource;
-          return PrimarySource?.Any() == true;
+          value = _PrimarySource;
+          return _PrimarySource?.Any() == true;
         case "attestation":
-          value = Attestation;
-          return Attestation is not null;
+          value = _Attestation;
+          return _Attestation is not null;
         case "validator":
-          value = Validator;
-          return Validator?.Any() == true;
+          value = _Validator;
+          return _Validator?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "target":
-          Target = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Target = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "targetLocation":
-          TargetLocationElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          TargetLocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "need":
-          Need = (Hl7.Fhir.Model.CodeableConcept)value;
+          Need = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>?)value;
           return this;
         case "statusDate":
-          StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          StatusDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "validationType":
-          ValidationType = (Hl7.Fhir.Model.CodeableConcept)value;
+          ValidationType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "validationProcess":
-          ValidationProcess = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ValidationProcess = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "frequency":
-          Frequency = (Hl7.Fhir.Model.Timing)value;
+          Frequency = (Hl7.Fhir.Model.Timing?)value;
           return this;
         case "lastPerformed":
-          LastPerformedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          LastPerformedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "nextScheduled":
-          NextScheduledElement = (Hl7.Fhir.Model.Date)value;
+          NextScheduledElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "failureAction":
-          FailureAction = (Hl7.Fhir.Model.CodeableConcept)value;
+          FailureAction = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "primarySource":
-          PrimarySource = (List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>)value;
+          PrimarySource = (List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>?)value!;
           return this;
         case "attestation":
-          Attestation = (Hl7.Fhir.Model.VerificationResult.AttestationComponent)value;
+          Attestation = (Hl7.Fhir.Model.VerificationResult.AttestationComponent?)value;
           return this;
         case "validator":
-          Validator = (List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>)value;
+          Validator = (List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1263,20 +1223,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
-      if (TargetLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("targetLocation",TargetLocationElement);
-      if (Need is not null) yield return new KeyValuePair<string,object>("need",Need);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
-      if (ValidationType is not null) yield return new KeyValuePair<string,object>("validationType",ValidationType);
-      if (ValidationProcess?.Any() == true) yield return new KeyValuePair<string,object>("validationProcess",ValidationProcess);
-      if (Frequency is not null) yield return new KeyValuePair<string,object>("frequency",Frequency);
-      if (LastPerformedElement is not null) yield return new KeyValuePair<string,object>("lastPerformed",LastPerformedElement);
-      if (NextScheduledElement is not null) yield return new KeyValuePair<string,object>("nextScheduled",NextScheduledElement);
-      if (FailureAction is not null) yield return new KeyValuePair<string,object>("failureAction",FailureAction);
-      if (PrimarySource?.Any() == true) yield return new KeyValuePair<string,object>("primarySource",PrimarySource);
-      if (Attestation is not null) yield return new KeyValuePair<string,object>("attestation",Attestation);
-      if (Validator?.Any() == true) yield return new KeyValuePair<string,object>("validator",Validator);
+      if (_Target?.Any() == true) yield return new KeyValuePair<string,object>("target",_Target);
+      if (_TargetLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("targetLocation",_TargetLocationElement);
+      if (_Need is not null) yield return new KeyValuePair<string,object>("need",_Need);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_ValidationType is not null) yield return new KeyValuePair<string,object>("validationType",_ValidationType);
+      if (_ValidationProcess?.Any() == true) yield return new KeyValuePair<string,object>("validationProcess",_ValidationProcess);
+      if (_Frequency is not null) yield return new KeyValuePair<string,object>("frequency",_Frequency);
+      if (_LastPerformedElement is not null) yield return new KeyValuePair<string,object>("lastPerformed",_LastPerformedElement);
+      if (_NextScheduledElement is not null) yield return new KeyValuePair<string,object>("nextScheduled",_NextScheduledElement);
+      if (_FailureAction is not null) yield return new KeyValuePair<string,object>("failureAction",_FailureAction);
+      if (_PrimarySource?.Any() == true) yield return new KeyValuePair<string,object>("primarySource",_PrimarySource);
+      if (_Attestation is not null) yield return new KeyValuePair<string,object>("attestation",_Attestation);
+      if (_Validator?.Any() == true) yield return new KeyValuePair<string,object>("validator",_Validator);
     }
 
   }

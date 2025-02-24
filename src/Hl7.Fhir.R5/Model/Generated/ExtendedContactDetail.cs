@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,13 +69,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("purpose", InSummary=true, Order=30)]
     [Binding("Purpose")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Purpose
+    public Hl7.Fhir.Model.CodeableConcept? Purpose
     {
       get { return _Purpose; }
       set { _Purpose = value; OnPropertyChanged("Purpose"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Purpose;
+    private Hl7.Fhir.Model.CodeableConcept? _Purpose;
 
     /// <summary>
     /// Name of an individual to contact.
@@ -82,11 +85,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
-      get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
+      get => _Name ?? new List<Hl7.Fhir.Model.HumanName>();
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
-    private List<Hl7.Fhir.Model.HumanName> _Name;
+    private List<Hl7.Fhir.Model.HumanName>? _Name;
 
     /// <summary>
     /// Contact details (e.g.phone/fax/url).
@@ -96,24 +99,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
 
     /// <summary>
     /// Address for the contact.
     /// </summary>
     [FhirElement("address", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.Address Address
+    public Hl7.Fhir.Model.Address? Address
     {
       get { return _Address; }
       set { _Address = value; OnPropertyChanged("Address"); }
     }
 
-    private Hl7.Fhir.Model.Address _Address;
+    private Hl7.Fhir.Model.Address? _Address;
 
     /// <summary>
     /// This contact detail is handled/monitored by a specific organization.
@@ -122,43 +125,39 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Organization
+    public Hl7.Fhir.Model.ResourceReference? Organization
     {
       get { return _Organization; }
       set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Organization;
+    private Hl7.Fhir.Model.ResourceReference? _Organization;
 
     /// <summary>
     /// Period that this contact was valid for usage.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ExtendedContactDetail;
-
-      if (dest == null)
-      {
+      if(other is not ExtendedContactDetail dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.CodeableConcept)Purpose.DeepCopyInternal();
-      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopyInternal());
-      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
-      if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopyInternal();
-      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(_Purpose is not null) dest.Purpose = (Hl7.Fhir.Model.CodeableConcept)_Purpose.DeepCopyInternal();
+      if(_Name is not null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(_Name.DeepCopyInternal());
+      if(_Telecom is not null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(_Telecom.DeepCopyInternal());
+      if(_Address is not null) dest.Address = (Hl7.Fhir.Model.Address)_Address.DeepCopyInternal();
+      if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -170,69 +169,69 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ExtendedContactDetail;
-      if(otherT == null) return false;
+      if(other is not ExtendedContactDetail otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Purpose, otherT.Purpose)) return false;
-      if(!comparer.ListEquals(Name, otherT.Name)) return false;
-      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
-      if(!comparer.Equals(Address, otherT.Address)) return false;
-      if(!comparer.Equals(Organization, otherT.Organization)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Purpose, otherT._Purpose)) return false;
+      if(!comparer.ListEquals(_Name, otherT._Name)) return false;
+      if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
+      if(!comparer.Equals(_Address, otherT._Address)) return false;
+      if(!comparer.Equals(_Organization, otherT._Organization)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "purpose":
-          value = Purpose;
-          return Purpose is not null;
+          value = _Purpose;
+          return _Purpose is not null;
         case "name":
-          value = Name;
-          return Name?.Any() == true;
+          value = _Name;
+          return _Name?.Any() == true;
         case "telecom":
-          value = Telecom;
-          return Telecom?.Any() == true;
+          value = _Telecom;
+          return _Telecom?.Any() == true;
         case "address":
-          value = Address;
-          return Address is not null;
+          value = _Address;
+          return _Address is not null;
         case "organization":
-          value = Organization;
-          return Organization is not null;
+          value = _Organization;
+          return _Organization is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "purpose":
-          Purpose = (Hl7.Fhir.Model.CodeableConcept)value;
+          Purpose = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "name":
-          Name = (List<Hl7.Fhir.Model.HumanName>)value;
+          Name = (List<Hl7.Fhir.Model.HumanName>?)value!;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "address":
-          Address = (Hl7.Fhir.Model.Address)value;
+          Address = (Hl7.Fhir.Model.Address?)value;
           return this;
         case "organization":
-          Organization = (Hl7.Fhir.Model.ResourceReference)value;
+          Organization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -243,12 +242,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
-      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
-      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
-      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
-      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (_Purpose is not null) yield return new KeyValuePair<string,object>("purpose",_Purpose);
+      if (_Name?.Any() == true) yield return new KeyValuePair<string,object>("name",_Name);
+      if (_Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
+      if (_Address is not null) yield return new KeyValuePair<string,object>("address",_Address);
+      if (_Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

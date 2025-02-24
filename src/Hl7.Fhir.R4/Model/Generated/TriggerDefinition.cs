@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -126,13 +129,13 @@ namespace Hl7.Fhir.Model
     [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement
+    public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> _TypeElement;
+    private Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? _TypeElement;
 
     /// <summary>
     /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
@@ -141,13 +144,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TriggerDefinition.TriggerType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -157,28 +157,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Name or URI that identifies the event
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -191,13 +188,13 @@ namespace Hl7.Fhir.Model
     [References("Schedule")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Timing
+    public Hl7.Fhir.Model.DataType? Timing
     {
       get { return _Timing; }
       set { _Timing = value; OnPropertyChanged("Timing"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Timing;
+    private Hl7.Fhir.Model.DataType? _Timing;
 
     /// <summary>
     /// Triggering data of the event (multiple = 'and').
@@ -207,40 +204,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement> Data
     {
-      get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.DataRequirement>(); return _Data; }
+      get => _Data ?? new List<Hl7.Fhir.Model.DataRequirement>();
       set { _Data = value; OnPropertyChanged("Data"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement> _Data;
+    private List<Hl7.Fhir.Model.DataRequirement>? _Data;
 
     /// <summary>
     /// Whether the event triggers (boolean expression).
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Expression Condition
+    public Hl7.Fhir.Model.Expression? Condition
     {
       get { return _Condition; }
       set { _Condition = value; OnPropertyChanged("Condition"); }
     }
 
-    private Hl7.Fhir.Model.Expression _Condition;
+    private Hl7.Fhir.Model.Expression? _Condition;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as TriggerDefinition;
-
-      if (dest == null)
-      {
+      if(other is not TriggerDefinition dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopyInternal();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopyInternal();
-      if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.DataRequirement>(Data.DeepCopyInternal());
-      if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Expression)Condition.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)_TypeElement.DeepCopyInternal();
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_Timing is not null) dest.Timing = (Hl7.Fhir.Model.DataType)_Timing.DeepCopyInternal();
+      if(_Data is not null) dest.Data = new List<Hl7.Fhir.Model.DataRequirement>(_Data.DeepCopyInternal());
+      if(_Condition is not null) dest.Condition = (Hl7.Fhir.Model.Expression)_Condition.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -252,62 +245,62 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as TriggerDefinition;
-      if(otherT == null) return false;
+      if(other is not TriggerDefinition otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(Timing, otherT.Timing)) return false;
-      if(!comparer.ListEquals(Data, otherT.Data)) return false;
-      if(!comparer.Equals(Condition, otherT.Condition)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_Timing, otherT._Timing)) return false;
+      if(!comparer.ListEquals(_Data, otherT._Data)) return false;
+      if(!comparer.Equals(_Condition, otherT._Condition)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "timing":
-          value = Timing;
-          return Timing is not null;
+          value = _Timing;
+          return _Timing is not null;
         case "data":
-          value = Data;
-          return Data?.Any() == true;
+          value = _Data;
+          return _Data?.Any() == true;
         case "condition":
-          value = Condition;
-          return Condition is not null;
+          value = _Condition;
+          return _Condition is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "timing":
-          Timing = (Hl7.Fhir.Model.DataType)value;
+          Timing = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "data":
-          Data = (List<Hl7.Fhir.Model.DataRequirement>)value;
+          Data = (List<Hl7.Fhir.Model.DataRequirement>?)value!;
           return this;
         case "condition":
-          Condition = (Hl7.Fhir.Model.Expression)value;
+          Condition = (Hl7.Fhir.Model.Expression?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -318,11 +311,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (Data?.Any() == true) yield return new KeyValuePair<string,object>("data",Data);
-      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_Data?.Any() == true) yield return new KeyValuePair<string,object>("data",_Data);
+      if (_Condition is not null) yield return new KeyValuePair<string,object>("condition",_Condition);
     }
 
   }

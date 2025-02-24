@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,28 +67,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Natural language description of the condition
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -95,28 +95,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Code NameElement
+    public Hl7.Fhir.Model.Code? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _NameElement;
+    private Hl7.Fhir.Model.Code? _NameElement;
 
     /// <summary>
     /// Short name assigned to expression for reuse
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.Code(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Name");
       }
     }
@@ -127,28 +124,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("language", InSummary=true, Order=50)]
     [Binding("ExpressionLanguage")]
     [DataMember]
-    public Hl7.Fhir.Model.Code LanguageElement
+    public Hl7.Fhir.Model.Code? LanguageElement
     {
       get { return _LanguageElement; }
       set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _LanguageElement;
+    private Hl7.Fhir.Model.Code? _LanguageElement;
 
     /// <summary>
     /// text/cql | text/fhirpath | application/x-fhir-query | etc.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Language
+    public string? Language
     {
-      get { return LanguageElement != null ? LanguageElement.Value : null; }
+      get => _LanguageElement?.Value;
       set
       {
-        if (value == null)
-          LanguageElement = null;
-        else
-          LanguageElement = new Hl7.Fhir.Model.Code(value);
+        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }
@@ -158,28 +152,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("expression", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ExpressionElement
+    public Hl7.Fhir.Model.FhirString? ExpressionElement
     {
       get { return _ExpressionElement; }
       set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ExpressionElement;
+    private Hl7.Fhir.Model.FhirString? _ExpressionElement;
 
     /// <summary>
     /// Expression in specified language
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Expression_
+    public string? Expression_
     {
-      get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+      get => _ExpressionElement?.Value;
       set
       {
-        if (value == null)
-          ExpressionElement = null;
-        else
-          ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+        ExpressionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Expression_");
       }
     }
@@ -189,47 +180,40 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri ReferenceElement
+    public Hl7.Fhir.Model.FhirUri? ReferenceElement
     {
       get { return _ReferenceElement; }
       set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _ReferenceElement;
+    private Hl7.Fhir.Model.FhirUri? _ReferenceElement;
 
     /// <summary>
     /// Where the expression is found
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Reference
+    public string? Reference
     {
-      get { return ReferenceElement != null ? ReferenceElement.Value : null; }
+      get => _ReferenceElement?.Value;
       set
       {
-        if (value == null)
-          ReferenceElement = null;
-        else
-          ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
+        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Reference");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Expression;
-
-      if (dest == null)
-      {
+      if(other is not Expression dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Code)NameElement.DeepCopyInternal();
-      if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopyInternal();
-      if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopyInternal();
-      if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.Code)_NameElement.DeepCopyInternal();
+      if(_LanguageElement is not null) dest.LanguageElement = (Hl7.Fhir.Model.Code)_LanguageElement.DeepCopyInternal();
+      if(_ExpressionElement is not null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)_ExpressionElement.DeepCopyInternal();
+      if(_ReferenceElement is not null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)_ReferenceElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -241,62 +225,62 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Expression;
-      if(otherT == null) return false;
+      if(other is not Expression otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(LanguageElement, otherT.LanguageElement)) return false;
-      if(!comparer.Equals(ExpressionElement, otherT.ExpressionElement)) return false;
-      if(!comparer.Equals(ReferenceElement, otherT.ReferenceElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_LanguageElement, otherT._LanguageElement)) return false;
+      if(!comparer.Equals(_ExpressionElement, otherT._ExpressionElement)) return false;
+      if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
+#pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "language":
-          value = LanguageElement;
-          return LanguageElement is not null;
+          value = _LanguageElement;
+          return _LanguageElement is not null;
         case "expression":
-          value = ExpressionElement;
-          return ExpressionElement is not null;
+          value = _ExpressionElement;
+          return _ExpressionElement is not null;
         case "reference":
-          value = ReferenceElement;
-          return ReferenceElement is not null;
+          value = _ReferenceElement;
+          return _ReferenceElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.Code)value;
+          NameElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "language":
-          LanguageElement = (Hl7.Fhir.Model.Code)value;
+          LanguageElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "expression":
-          ExpressionElement = (Hl7.Fhir.Model.FhirString)value;
+          ExpressionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "reference":
-          ReferenceElement = (Hl7.Fhir.Model.FhirUri)value;
+          ReferenceElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -307,11 +291,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
-      if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
-      if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+      if (_ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
+      if (_ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
     }
 
   }
